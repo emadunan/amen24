@@ -1,0 +1,596 @@
+[
+  {
+    "title": "genesis",
+    "titleEn": "genesis",
+    "titleAr": "التكوين",
+    "titleArCleaned": "التكوين",
+    "titleArDiacrited": "التَّكْوِينِ",
+    "titleArAbbreviated": "تك",
+    "writter": "moses"
+  },
+  {
+    "title": "exodus",
+    "titleEn": "exodus",
+    "titleAr": "الخروج",
+    "titleArCleaned": "الخروج",
+    "titleArDiacrited": "اَلْخُرُوجُ",
+    "titleArAbbreviated": "خر",
+    "writter": "moses"
+  },
+  {
+    "title": "leviticus",
+    "titleEn": "leviticus",
+    "titleAr": "اللاويين",
+    "titleArCleaned": "اللاويين",
+    "titleArDiacrited": "اللاَّوِيِّينَ",
+    "titleArAbbreviated": "لا",
+    "writter": "moses"
+  },
+  {
+    "title": "numbers",
+    "titleEn": "numbers",
+    "titleAr": "العدد",
+    "titleArCleaned": "العدد",
+    "titleArDiacrited": "اَلْعَدَد",
+    "titleArAbbreviated": "عد",
+    "writter": "moses"
+  },
+  {
+    "title": "deuteronomy",
+    "titleEn": "deuteronomy",
+    "titleAr": "التثنية",
+    "titleArCleaned": "التثنيه",
+    "titleArDiacrited": "اَلتَّثْنِيَة",
+    "titleArAbbreviated": "تث",
+    "writter": "moses"
+  },
+  {
+    "title": "joshua",
+    "titleEn": "joshua",
+    "titleAr": "يشوع",
+    "titleArCleaned": "يشوع",
+    "titleArDiacrited": "يَشُوع",
+    "titleArAbbreviated": "يش",
+    "writter": "joshua"
+  },
+  {
+    "title": "judges",
+    "titleEn": "judges",
+    "titleAr": "القضاة",
+    "titleArCleaned": "القضاه",
+    "titleArDiacrited": "اَلْقُضَاة",
+    "titleArAbbreviated": "قض",
+    "writter": "samuel"
+  },
+  {
+    "title": "ruth",
+    "titleEn": "ruth",
+    "titleAr": "راعوث",
+    "titleArCleaned": "راعوث",
+    "titleArDiacrited": "رَاعُوث",
+    "titleArAbbreviated": "را",
+    "writter": "samuel"
+  },
+  {
+    "title": "samuel1",
+    "titleEn": "samuel-1",
+    "titleAr": "صموئيل الأول",
+    "titleArCleaned": "صموئيل الاول",
+    "titleArDiacrited": "صَمُوئِيلَ الأَوَّلُ",
+    "titleArAbbreviated": "۱صم",
+    "writter": "samuel"
+  },
+  {
+    "title": "samuel2",
+    "titleEn": "samuel-2",
+    "titleAr": "صموئيل الثاني",
+    "titleArCleaned": "صموئيل الثاني",
+    "titleArDiacrited": "صَمُوئِيلَ الثَّانِي",
+    "titleArAbbreviated": "۲صم",
+    "writter": "samuel"
+  },
+  {
+    "title": "kings1",
+    "titleEn": "kings-1",
+    "titleAr": "الملوك الأول",
+    "titleArCleaned": "الملوك الاول",
+    "titleArDiacrited": "اَلْمُلُوكِ الأَوَّلُ",
+    "titleArAbbreviated": "۱مل",
+    "writter": "jeremiah"
+  },
+  {
+    "title": "kings2",
+    "titleEn": "kings-2",
+    "titleAr": "الملوك الثاني",
+    "titleArCleaned": "الملوك الثاني",
+    "titleArDiacrited": "اَلْمُلُوكِ الثَّانِي",
+    "titleArAbbreviated": "۲مل",
+    "writter": "jeremiah"
+  },
+  {
+    "title": "chronicles1",
+    "titleEn": "chronicles-1",
+    "titleAr": "أخبار الأيام الأول",
+    "titleArCleaned": "اخبار الايام الاول",
+    "titleArDiacrited": "أَخْبَارِ الأَيَّامِ الأَوَّلُ",
+    "titleArAbbreviated": "۱اخ",
+    "writter": "ezra"
+  },
+  {
+    "title": "chronicles2",
+    "titleEn": "chronicles-2",
+    "titleAr": "أخبار الأيام الثاني",
+    "titleArCleaned": "اخبار الايام الثاني",
+    "titleArDiacrited": "أَخْبَارِ الأَيَّامِ الثَّانِي",
+    "titleArAbbreviated": "۲اخ",
+    "writter": "ezra"
+  },
+  {
+    "title": "ezra",
+    "titleEn": "ezra",
+    "titleAr": "عزرا",
+    "titleArCleaned": "عزرا",
+    "titleArDiacrited": "عَزْرَا",
+    "titleArAbbreviated": "عز",
+    "writter": "ezra"
+  },
+  {
+    "title": "nehemiah",
+    "titleEn": "nehemiah",
+    "titleAr": "نحميا",
+    "titleArCleaned": "نحميا",
+    "titleArDiacrited": "نَحَمْيَا",
+    "titleArAbbreviated": "نح",
+    "writter": "nehemiah"
+  },
+  {
+    "title": "esther",
+    "titleEn": "esther",
+    "titleAr": "أستير",
+    "titleArCleaned": "استير",
+    "titleArDiacrited": "أَسْتِير",
+    "titleArAbbreviated": "اس",
+    "writter": "mordecai"
+  },
+  {
+    "title": "job",
+    "titleEn": "job",
+    "titleAr": "أيوب",
+    "titleArCleaned": "ايوب",
+    "titleArDiacrited": "أَيُّوبَ",
+    "titleArAbbreviated": "اي",
+    "writter": "moses"
+  },
+  {
+    "title": "psalm",
+    "titleEn": "psalm",
+    "titleAr": "المزامير",
+    "titleArCleaned": "المزامير",
+    "titleArDiacrited": "اَلْمَزَامِيرُ",
+    "titleArAbbreviated": "مز",
+    "writter": "david"
+  },
+  {
+    "title": "proverbs",
+    "titleEn": "proverbs",
+    "titleAr": "الأمثال",
+    "titleArCleaned": "الامثال",
+    "titleArDiacrited": "الأَمْثَالِ",
+    "titleArAbbreviated": "ام",
+    "writter": "solomon"
+  },
+  {
+    "title": "ecclesiastes",
+    "titleEn": "ecclesiastes",
+    "titleAr": "الجامعة",
+    "titleArCleaned": "الجامعه",
+    "titleArDiacrited": "اَلْجَامِعَةِ",
+    "titleArAbbreviated": "جا",
+    "writter": "solomon"
+  },
+  {
+    "title": "song_of_songs",
+    "titleEn": "song of songs",
+    "titleAr": "نشيد الأنشاد",
+    "titleArCleaned": "نشيد الانشاد",
+    "titleArDiacrited": "نَشِيدُ الأَنْشَادِ",
+    "titleArAbbreviated": "نش",
+    "writter": "solomon"
+  },
+  {
+    "title": "isaiah",
+    "titleEn": "isaiah",
+    "titleAr": "إشعياء",
+    "titleArCleaned": "اشعياء",
+    "titleArDiacrited": "إِشَعْيَاءَ",
+    "titleArAbbreviated": "اش",
+    "writter": "isaiah"
+  },
+  {
+    "title": "jeremiah",
+    "titleEn": "jeremiah",
+    "titleAr": "إرميا",
+    "titleArCleaned": "ارميا",
+    "titleArDiacrited": "إِرْمِيَا",
+    "titleArAbbreviated": "ار",
+    "writter": "jeremiah"
+  },
+  {
+    "title": "lamentations",
+    "titleEn": "lamentations",
+    "titleAr": "مراثي إرميا",
+    "titleArCleaned": "مراثي ارميا",
+    "titleArDiacrited": "مَرَاثِي إِرْمِيَا",
+    "titleArAbbreviated": "مرا",
+    "writter": "jeremiah"
+  },
+  {
+    "title": "ezekiel",
+    "titleEn": "ezekiel",
+    "titleAr": "حزقيال",
+    "titleArCleaned": "حزقيال",
+    "titleArDiacrited": "حِزْقِيَال",
+    "titleArAbbreviated": "حز",
+    "writter": "ezekiel"
+  },
+  {
+    "title": "daniel",
+    "titleEn": "daniel",
+    "titleAr": "دانيآل",
+    "titleArCleaned": "دانيال",
+    "titleArDiacrited": "دَانِيآل",
+    "titleArAbbreviated": "دا",
+    "writter": "daniel"
+  },
+  {
+    "title": "hosea",
+    "titleEn": "hosea",
+    "titleAr": "هوشع",
+    "titleArCleaned": "هوشع",
+    "titleArDiacrited": "هُوشَع",
+    "titleArAbbreviated": "هو",
+    "writter": "hosea"
+  },
+  {
+    "title": "joel",
+    "titleEn": "joel",
+    "titleAr": "يوئيل",
+    "titleArCleaned": "يوئيل",
+    "titleArDiacrited": "يُوئِيل",
+    "titleArAbbreviated": "يؤ",
+    "writter": "joel"
+  },
+  {
+    "title": "amos",
+    "titleEn": "amos",
+    "titleAr": "عاموس",
+    "titleArCleaned": "عاموس",
+    "titleArDiacrited": "عَامُوس",
+    "titleArAbbreviated": "عا",
+    "writter": "amos"
+  },
+  {
+    "title": "obadiah",
+    "titleEn": "obadiah",
+    "titleAr": "عوبديا",
+    "titleArCleaned": "عوبديا",
+    "titleArDiacrited": "عُوبَدْيَا",
+    "titleArAbbreviated": "عو",
+    "writter": "obadiah"
+  },
+  {
+    "title": "jonah",
+    "titleEn": "jonah",
+    "titleAr": "يونان",
+    "titleArCleaned": "يونان",
+    "titleArDiacrited": "يُونَان",
+    "titleArAbbreviated": "يون",
+    "writter": "jonah"
+  },
+  {
+    "title": "micah",
+    "titleEn": "micah",
+    "titleAr": "ميخا",
+    "titleArCleaned": "ميخا",
+    "titleArDiacrited": "مِيخَا",
+    "titleArAbbreviated": "مي",
+    "writter": "micah"
+  },
+  {
+    "title": "nahum",
+    "titleEn": "nahum",
+    "titleAr": "ناحوم",
+    "titleArCleaned": "ناحوم",
+    "titleArDiacrited": "نَاحُوم",
+    "titleArAbbreviated": "نا",
+    "writter": "nahum"
+  },
+  {
+    "title": "habakkuk",
+    "titleEn": "habakkuk",
+    "titleAr": "حبقوق",
+    "titleArCleaned": "حبقوق",
+    "titleArDiacrited": "حَبَقُّوق",
+    "titleArAbbreviated": "حب",
+    "writter": "habakkuk"
+  },
+  {
+    "title": "zephaniah",
+    "titleEn": "zephaniah",
+    "titleAr": "صفنيا",
+    "titleArCleaned": "صفنيا",
+    "titleArDiacrited": "صَفَنْيَا",
+    "titleArAbbreviated": "صف",
+    "writter": "zephaniah"
+  },
+  {
+    "title": "haggai",
+    "titleEn": "haggai",
+    "titleAr": "حجي",
+    "titleArCleaned": "حجي",
+    "titleArDiacrited": "حَجَّي",
+    "titleArAbbreviated": "حج",
+    "writter": "haggai"
+  },
+  {
+    "title": "zechariah",
+    "titleEn": "zechariah",
+    "titleAr": "زكريا",
+    "titleArCleaned": "زكريا",
+    "titleArDiacrited": "زَكَريَّا",
+    "titleArAbbreviated": "زك",
+    "writter": "zechariah"
+  },
+  {
+    "title": "malachi",
+    "titleEn": "malachi",
+    "titleAr": "ملاخي",
+    "titleArCleaned": "ملاخي",
+    "titleArDiacrited": "مَلاَخِي",
+    "titleArAbbreviated": "ملا",
+    "writter": "malachi"
+  },
+  {
+    "title": "matthew",
+    "titleEn": "matthew",
+    "titleAr": "انجيل متى",
+    "titleArCleaned": "إنجيل متي",
+    "titleArDiacrited": "إِنجيل مَتَّى",
+    "titleArAbbreviated": "مت",
+    "writter": "matthew"
+  },
+  {
+    "title": "mark",
+    "titleEn": "mark",
+    "titleAr": "انجيل مرقس",
+    "titleArCleaned": "إنجيل مرقس",
+    "titleArDiacrited": "إِنجيل مَرْقُسَ",
+    "titleArAbbreviated": "مر",
+    "writter": "mark"
+  },
+  {
+    "title": "luke",
+    "titleEn": "luke",
+    "titleAr": "انجيل لوقا",
+    "titleArCleaned": "إنجيل لوقا",
+    "titleArDiacrited": "إِنجيل لُوقَا",
+    "titleArAbbreviated": "لو",
+    "writter": "luke"
+  },
+  {
+    "title": "john",
+    "titleEn": "john",
+    "titleAr": "انجيل يوحنا",
+    "titleArCleaned": "إنجيل يوحنا",
+    "titleArDiacrited": "إِنجيل يُوحَنَّا",
+    "titleArAbbreviated": "يو",
+    "writter": "john"
+  },
+  {
+    "title": "acts",
+    "titleEn": "acts",
+    "titleAr": "أعمال الرسل",
+    "titleArCleaned": "اعمال الرسل",
+    "titleArDiacrited": "أَعْمَالُ الرُّسُلِ",
+    "titleArAbbreviated": "اع",
+    "writter": "luke"
+  },
+  {
+    "title": "romans",
+    "titleEn": "romans",
+    "titleAr": "رومية",
+    "titleArCleaned": "روميه",
+    "titleArDiacrited": "رُومِيَةَ",
+    "titleArAbbreviated": "رو",
+    "writter": "paul"
+  },
+  {
+    "title": "corinthians1",
+    "titleEn": "corinthians-1",
+    "titleAr": "كورنثوس الأولى",
+    "titleArCleaned": "كورنثوس الاولي",
+    "titleArDiacrited": "كُورِنْثُوسَ الأُولَى",
+    "titleArAbbreviated": "۱كو",
+    "writter": "paul"
+  },
+  {
+    "title": "corinthians2",
+    "titleEn": "corinthians-2",
+    "titleAr": "كورنثوس الثانية",
+    "titleArCleaned": "كورنثوس الثانيه",
+    "titleArDiacrited": "كُورِنْثُوسَ الثَّانِيةُ",
+    "titleArAbbreviated": "۲كو",
+    "writter": "paul"
+  },
+  {
+    "title": "galatians",
+    "titleEn": "galatians",
+    "titleAr": "غلاطية",
+    "titleArCleaned": "غلاطيه",
+    "titleArDiacrited": "غَلاَطِيَّةَ",
+    "titleArAbbreviated": "غل",
+    "writter": "paul"
+  },
+  {
+    "title": "ephesians",
+    "titleEn": "ephesians",
+    "titleAr": "أفسس",
+    "titleArCleaned": "افسس",
+    "titleArDiacrited": "أَفَسُسَ",
+    "titleArAbbreviated": "اف",
+    "writter": "paul"
+  },
+  {
+    "title": "philippians",
+    "titleEn": "philippians",
+    "titleAr": "فيلبي",
+    "titleArCleaned": "فيلبي",
+    "titleArDiacrited": "فِيلِبِّي",
+    "titleArAbbreviated": "في",
+    "writter": "paul"
+  },
+  {
+    "title": "colossians",
+    "titleEn": "colossians",
+    "titleAr": "كولوسي",
+    "titleArCleaned": "كولوسي",
+    "titleArDiacrited": "كُولُوسِّي",
+    "titleArAbbreviated": "كو",
+    "writter": "paul"
+  },
+  {
+    "title": "thessalonians1",
+    "titleEn": "thessalonians-1",
+    "titleAr": "تسالونيكي الأولى",
+    "titleArCleaned": "تسالونيكي الاولى",
+    "titleArDiacrited": "تَسَالُونِيكِي الأُولَى",
+    "titleArAbbreviated": "۱تس",
+    "writter": "paul"
+  },
+  {
+    "title": "thessalonians2",
+    "titleEn": "thessalonians-2",
+    "titleAr": "تسالونيكي الثانية",
+    "titleArCleaned": "تسالونيكي الثانيه",
+    "titleArDiacrited": "تَسَالُونِيكِي الثَّانِيةُ",
+    "titleArAbbreviated": "۲تس",
+    "writter": "paul"
+  },
+  {
+    "title": "timothy1",
+    "titleEn": "timothy-1",
+    "titleAr": "تيموثاوس الأولى",
+    "titleArCleaned": "تيموثاوس الاولي",
+    "titleArDiacrited": "تِيمُوثَاوُسَ الأُولَى",
+    "titleArAbbreviated": "۱تي",
+    "writter": "paul"
+  },
+  {
+    "title": "timothy2",
+    "titleEn": "timothy-2",
+    "titleAr": "تيموثاوس الثانية",
+    "titleArCleaned": "تيموثاوس الثانيه",
+    "titleArDiacrited": "تِيمُوثَاوُسَ الثَّانِيةُ",
+    "titleArAbbreviated": "۲تي",
+    "writter": "paul"
+  },
+  {
+    "title": "titus",
+    "titleEn": "titus",
+    "titleAr": "تيطس",
+    "titleArCleaned": "تيطس",
+    "titleArDiacrited": "تِيطُسَ",
+    "titleArAbbreviated": "تي",
+    "writter": "paul"
+  },
+  {
+    "title": "philemon",
+    "titleEn": "philemon",
+    "titleAr": "فليمون",
+    "titleArCleaned": "فليمون",
+    "titleArDiacrited": "فِلِيمُونَ",
+    "titleArAbbreviated": "فل",
+    "writter": "paul"
+  },
+  {
+    "title": "hebrews",
+    "titleEn": "hebrews",
+    "titleAr": "العبرانيين",
+    "titleArCleaned": "العبرانيين",
+    "titleArDiacrited": "الْعِبْرَانِيِّينَ",
+    "titleArAbbreviated": "عب",
+    "writter": "paul"
+  },
+  {
+    "title": "james",
+    "titleEn": "james",
+    "titleAr": "يعقوب",
+    "titleArCleaned": "يعقوب",
+    "titleArDiacrited": "يَعْقُوبَ",
+    "titleArAbbreviated": "يع",
+    "writter": "james"
+  },
+  {
+    "title": "peter1",
+    "titleEn": "peter-1",
+    "titleAr": "بطرس الأولى",
+    "titleArCleaned": "بطرس الاولي",
+    "titleArDiacrited": "بُطْرُسَ الأُولَى",
+    "titleArAbbreviated": "۱بط",
+    "writter": "peter"
+  },
+  {
+    "title": "peter2",
+    "titleEn": "peter-2",
+    "titleAr": "بطرس الثانية",
+    "titleArCleaned": "بطرس الثانيه",
+    "titleArDiacrited": "بُطْرُسَ الثَّانِيَةُ",
+    "titleArAbbreviated": "۲بط",
+    "writter": "peter"
+  },
+  {
+    "title": "john1",
+    "titleEn": "john-1",
+    "titleAr": "يوحنا الأولى",
+    "titleArCleaned": "يوحنا الاولي",
+    "titleArDiacrited": "يُوحَنَّا الأُولَى",
+    "titleArAbbreviated": "۱يو",
+    "writter": "john"
+  },
+  {
+    "title": "john2",
+    "titleEn": "john-2",
+    "titleAr": "يوحنا الثانية",
+    "titleArCleaned": "يوحنا الثانيه",
+    "titleArDiacrited": "يُوحَنَّا الثَّانِيَةُ",
+    "titleArAbbreviated": "۲يو",
+    "writter": "john"
+  },
+  {
+    "title": "john3",
+    "titleEn": "john-3",
+    "titleAr": "يوحنا الثالثة",
+    "titleArCleaned": "يوحنا الثالثه",
+    "titleArDiacrited": "يُوحَنَّا الثَّالِثَةُ",
+    "titleArAbbreviated": "۳يو",
+    "writter": "john"
+  },
+  {
+    "title": "jude",
+    "titleEn": "jude",
+    "titleAr": "يهوذا",
+    "titleArCleaned": "يهوذا",
+    "titleArDiacrited": "يَهُوذَا",
+    "titleArAbbreviated": "يهـ",
+    "writter": "jude"
+  },
+  {
+    "title": "revelation",
+    "titleEn": "revelation",
+    "titleAr": "الرؤيا",
+    "titleArCleaned": "الرؤيا",
+    "titleArDiacrited": "الرُّؤْيَا",
+    "titleArAbbreviated": "رؤ",
+    "writter": "john"
+  }
+]

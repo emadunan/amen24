@@ -1,10 +1,45 @@
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 import React from 'react'
-import { Text, View } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native';
+import data from "../../data/books.json";
+import { useColorScheme } from "../../hooks/useColorScheme";
+import { Colors } from '@/constants/Colors';
 
-const bible = () => {
+const Bible = () => {
+  const colorScheme = useColorScheme();
+  const themedTextStyle = {
+    borderColor: colorScheme === "light" ? Colors.light.tint : Colors.dark.tint,
+  }
+
   return (
-    <View><Text>Bible</Text></View>
+    <ScrollView>
+      <ThemedView style={styles.container}>
+        {data.map(b => <ThemedText key={b.title} style={[styles.bookText, themedTextStyle]}>{b.title}</ThemedText>)}
+      </ThemedView>
+    </ScrollView>
   )
 }
 
-export default bible;
+export default Bible;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 16,
+    paddingTop: 48,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  bookText: {
+    width: 132,
+    margin: 8,
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 4,
+    fontWeight: "bold",
+    textAlign: "center"
+  }
+});
