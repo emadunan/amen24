@@ -26,7 +26,7 @@ export default Bible;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingTop: 48,
+    paddingVertical: 16,
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",

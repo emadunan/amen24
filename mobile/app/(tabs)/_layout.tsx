@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -13,9 +13,16 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      initialRouteName='bible'
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].background,
+        tabBarInactiveBackgroundColor: Colors[colorScheme ?? 'light'].text,
+        tabBarActiveBackgroundColor: Colors[colorScheme ?? 'light'].text,
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: Colors[colorScheme ?? 'light'].text,
+        },
+        headerTintColor: Colors[colorScheme ?? 'light'].background,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
