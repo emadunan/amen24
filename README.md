@@ -1,5 +1,5 @@
 # Amen24
-Is a free non-profitable service to spread the truth and bible for all nations.
+Is a free non-profitable service to spread the truth and bible for all.
 
 ## Project structure
 /amen24
@@ -12,4 +12,3 @@ Is a free non-profitable service to spread the truth and bible for all nations.
   /README.md            # Project overview and documentation
   /package.json         # Root-level package file (for shared tools or workspaces)
   /tsconfig.json        # Root-level TypeScript configuration (if using workspaces)
-
