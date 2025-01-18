@@ -1,6 +1,12 @@
 # Amen24
 Amen24 is a free non-profitable project to introduce bible content for all.
 
+## Run bible database scripts
+```bash
+npx tsc createBibleDb.ts --resolveJsonModule --esModuleInterop # Compile the script to JS
+node createBibleDb.js # Run the migration program
+```
+
 ## Amen24 project structure
 /backend # NestJS backend (API)
 /frontend # Next.js frontend (website)
