@@ -1,596 +1,332 @@
-[
-  {
+{
+  "GEN": {
     "title": "genesis",
-    "titleEn": "genesis",
-    "titleAr": "التكوين",
-    "titleArCleaned": "التكوين",
-    "titleArDiacrited": "التَّكْوِينِ",
-    "titleArAbbreviated": "تك",
-    "writter": "moses"
+    "writer": "moses",
+    "len": 50
   },
-  {
+  "EXO" : {
     "title": "exodus",
-    "titleEn": "exodus",
-    "titleAr": "الخروج",
-    "titleArCleaned": "الخروج",
-    "titleArDiacrited": "اَلْخُرُوجُ",
-    "titleArAbbreviated": "خر",
-    "writter": "moses"
+    "writer": "moses",
+    "len": 40
   },
-  {
+  "LEV": {
     "title": "leviticus",
-    "titleEn": "leviticus",
-    "titleAr": "اللاويين",
-    "titleArCleaned": "اللاويين",
-    "titleArDiacrited": "اللاَّوِيِّينَ",
-    "titleArAbbreviated": "لا",
-    "writter": "moses"
+    "writer": "moses",
+    "len": 27
   },
-  {
+  "NUM": {
     "title": "numbers",
-    "titleEn": "numbers",
-    "titleAr": "العدد",
-    "titleArCleaned": "العدد",
-    "titleArDiacrited": "اَلْعَدَد",
-    "titleArAbbreviated": "عد",
-    "writter": "moses"
+    "writer": "moses",
+    "len": 36
   },
-  {
+  "DEU": {
     "title": "deuteronomy",
-    "titleEn": "deuteronomy",
-    "titleAr": "التثنية",
-    "titleArCleaned": "التثنيه",
-    "titleArDiacrited": "اَلتَّثْنِيَة",
-    "titleArAbbreviated": "تث",
-    "writter": "moses"
+    "writer": "moses",
+    "len": 34
   },
-  {
+  "JOS": {
     "title": "joshua",
-    "titleEn": "joshua",
-    "titleAr": "يشوع",
-    "titleArCleaned": "يشوع",
-    "titleArDiacrited": "يَشُوع",
-    "titleArAbbreviated": "يش",
-    "writter": "joshua"
+    "writer": "joshua",
+    "len": 24
   },
-  {
+  "JDG": {
     "title": "judges",
-    "titleEn": "judges",
-    "titleAr": "القضاة",
-    "titleArCleaned": "القضاه",
-    "titleArDiacrited": "اَلْقُضَاة",
-    "titleArAbbreviated": "قض",
-    "writter": "samuel"
+    "writer": "samuel",
+    "len": 21
   },
-  {
+  "RUT": {
     "title": "ruth",
-    "titleEn": "ruth",
-    "titleAr": "راعوث",
-    "titleArCleaned": "راعوث",
-    "titleArDiacrited": "رَاعُوث",
-    "titleArAbbreviated": "را",
-    "writter": "samuel"
+    "writer": "samuel",
+    "len": 4
   },
-  {
+  "1SA": {
     "title": "samuel1",
-    "titleEn": "samuel-1",
-    "titleAr": "صموئيل الأول",
-    "titleArCleaned": "صموئيل الاول",
-    "titleArDiacrited": "صَمُوئِيلَ الأَوَّلُ",
-    "titleArAbbreviated": "۱صم",
-    "writter": "samuel"
+    "writer": "samuel",
+    "len": 31
   },
-  {
+  "2SA": {
     "title": "samuel2",
-    "titleEn": "samuel-2",
-    "titleAr": "صموئيل الثاني",
-    "titleArCleaned": "صموئيل الثاني",
-    "titleArDiacrited": "صَمُوئِيلَ الثَّانِي",
-    "titleArAbbreviated": "۲صم",
-    "writter": "samuel"
+    "writer": "samuel",
+    "len": 24
   },
-  {
+  "1KI": {
     "title": "kings1",
-    "titleEn": "kings-1",
-    "titleAr": "الملوك الأول",
-    "titleArCleaned": "الملوك الاول",
-    "titleArDiacrited": "اَلْمُلُوكِ الأَوَّلُ",
-    "titleArAbbreviated": "۱مل",
-    "writter": "jeremiah"
+    "writer": "jeremiah",
+    "len": 22
   },
-  {
+  "2KI": {
     "title": "kings2",
-    "titleEn": "kings-2",
-    "titleAr": "الملوك الثاني",
-    "titleArCleaned": "الملوك الثاني",
-    "titleArDiacrited": "اَلْمُلُوكِ الثَّانِي",
-    "titleArAbbreviated": "۲مل",
-    "writter": "jeremiah"
+    "writer": "jeremiah",
+    "len": 25
   },
-  {
+  "1CH": {
     "title": "chronicles1",
-    "titleEn": "chronicles-1",
-    "titleAr": "أخبار الأيام الأول",
-    "titleArCleaned": "اخبار الايام الاول",
-    "titleArDiacrited": "أَخْبَارِ الأَيَّامِ الأَوَّلُ",
-    "titleArAbbreviated": "۱اخ",
-    "writter": "ezra"
+    "writer": "ezra",
+    "len": 29
   },
-  {
+  "2CH": {
     "title": "chronicles2",
-    "titleEn": "chronicles-2",
-    "titleAr": "أخبار الأيام الثاني",
-    "titleArCleaned": "اخبار الايام الثاني",
-    "titleArDiacrited": "أَخْبَارِ الأَيَّامِ الثَّانِي",
-    "titleArAbbreviated": "۲اخ",
-    "writter": "ezra"
+    "writer": "ezra",
+    "len": 36
   },
-  {
+  "EZR": {
     "title": "ezra",
-    "titleEn": "ezra",
-    "titleAr": "عزرا",
-    "titleArCleaned": "عزرا",
-    "titleArDiacrited": "عَزْرَا",
-    "titleArAbbreviated": "عز",
-    "writter": "ezra"
+    "writer": "ezra",
+    "len": 10
   },
-  {
+  "NEH": {
     "title": "nehemiah",
-    "titleEn": "nehemiah",
-    "titleAr": "نحميا",
-    "titleArCleaned": "نحميا",
-    "titleArDiacrited": "نَحَمْيَا",
-    "titleArAbbreviated": "نح",
-    "writter": "nehemiah"
+    "writer": "nehemiah",
+    "len": 13
   },
-  {
+  "EST": {
     "title": "esther",
-    "titleEn": "esther",
-    "titleAr": "أستير",
-    "titleArCleaned": "استير",
-    "titleArDiacrited": "أَسْتِير",
-    "titleArAbbreviated": "اس",
-    "writter": "mordecai"
+    "writer": "mordecai",
+    "len": 10
   },
-  {
+  "JOB": {
     "title": "job",
-    "titleEn": "job",
-    "titleAr": "أيوب",
-    "titleArCleaned": "ايوب",
-    "titleArDiacrited": "أَيُّوبَ",
-    "titleArAbbreviated": "اي",
-    "writter": "moses"
+    "writer": "moses",
+    "len": 42
   },
-  {
-    "title": "psalm",
-    "titleEn": "psalm",
-    "titleAr": "المزامير",
-    "titleArCleaned": "المزامير",
-    "titleArDiacrited": "اَلْمَزَامِيرُ",
-    "titleArAbbreviated": "مز",
-    "writter": "david"
+  "PSA": {
+    "title": "psalms",
+    "writer": "david",
+    "len": 150
   },
-  {
+  "PRO": {
     "title": "proverbs",
-    "titleEn": "proverbs",
-    "titleAr": "الأمثال",
-    "titleArCleaned": "الامثال",
-    "titleArDiacrited": "الأَمْثَالِ",
-    "titleArAbbreviated": "ام",
-    "writter": "solomon"
+    "writer": "solomon",
+    "len": 31
   },
-  {
+  "ECC": {
     "title": "ecclesiastes",
-    "titleEn": "ecclesiastes",
-    "titleAr": "الجامعة",
-    "titleArCleaned": "الجامعه",
-    "titleArDiacrited": "اَلْجَامِعَةِ",
-    "titleArAbbreviated": "جا",
-    "writter": "solomon"
+    "writer": "solomon",
+    "len": 12
   },
-  {
-    "title": "song_of_songs",
-    "titleEn": "song of songs",
-    "titleAr": "نشيد الأنشاد",
-    "titleArCleaned": "نشيد الانشاد",
-    "titleArDiacrited": "نَشِيدُ الأَنْشَادِ",
-    "titleArAbbreviated": "نش",
-    "writter": "solomon"
+  "SOL": {
+    "title": "songofsongs",
+    "writer": "solomon",
+    "len": 8
   },
-  {
+  "ISA": {
     "title": "isaiah",
-    "titleEn": "isaiah",
-    "titleAr": "إشعياء",
-    "titleArCleaned": "اشعياء",
-    "titleArDiacrited": "إِشَعْيَاءَ",
-    "titleArAbbreviated": "اش",
-    "writter": "isaiah"
+    "writer": "isaiah",
+    "len": 66
   },
-  {
+  "JER": {
     "title": "jeremiah",
-    "titleEn": "jeremiah",
-    "titleAr": "إرميا",
-    "titleArCleaned": "ارميا",
-    "titleArDiacrited": "إِرْمِيَا",
-    "titleArAbbreviated": "ار",
-    "writter": "jeremiah"
+    "writer": "jeremiah",
+    "len": 52
   },
-  {
+  "LAM": {
     "title": "lamentations",
-    "titleEn": "lamentations",
-    "titleAr": "مراثي إرميا",
-    "titleArCleaned": "مراثي ارميا",
-    "titleArDiacrited": "مَرَاثِي إِرْمِيَا",
-    "titleArAbbreviated": "مرا",
-    "writter": "jeremiah"
+    "writer": "jeremiah",
+    "len": 5
   },
-  {
+  "EZE": {
     "title": "ezekiel",
-    "titleEn": "ezekiel",
-    "titleAr": "حزقيال",
-    "titleArCleaned": "حزقيال",
-    "titleArDiacrited": "حِزْقِيَال",
-    "titleArAbbreviated": "حز",
-    "writter": "ezekiel"
+    "writer": "ezekiel",
+    "len": 48
   },
-  {
+  "DAN": {
     "title": "daniel",
-    "titleEn": "daniel",
-    "titleAr": "دانيآل",
-    "titleArCleaned": "دانيال",
-    "titleArDiacrited": "دَانِيآل",
-    "titleArAbbreviated": "دا",
-    "writter": "daniel"
+    "writer": "daniel",
+    "len": 12
   },
-  {
+  "HOS": {
     "title": "hosea",
-    "titleEn": "hosea",
-    "titleAr": "هوشع",
-    "titleArCleaned": "هوشع",
-    "titleArDiacrited": "هُوشَع",
-    "titleArAbbreviated": "هو",
-    "writter": "hosea"
+    "writer": "hosea",
+    "len": 14
   },
-  {
+  "JOE": {
     "title": "joel",
-    "titleEn": "joel",
-    "titleAr": "يوئيل",
-    "titleArCleaned": "يوئيل",
-    "titleArDiacrited": "يُوئِيل",
-    "titleArAbbreviated": "يؤ",
-    "writter": "joel"
+    "writer": "joel",
+    "len": 3
   },
-  {
+  "AMO": {
     "title": "amos",
-    "titleEn": "amos",
-    "titleAr": "عاموس",
-    "titleArCleaned": "عاموس",
-    "titleArDiacrited": "عَامُوس",
-    "titleArAbbreviated": "عا",
-    "writter": "amos"
+    "writer": "amos",
+    "len": 9
   },
-  {
+  "OBA": {
     "title": "obadiah",
-    "titleEn": "obadiah",
-    "titleAr": "عوبديا",
-    "titleArCleaned": "عوبديا",
-    "titleArDiacrited": "عُوبَدْيَا",
-    "titleArAbbreviated": "عو",
-    "writter": "obadiah"
+    "writer": "obadiah",
+    "len": 1
   },
-  {
+  "JON": {
     "title": "jonah",
-    "titleEn": "jonah",
-    "titleAr": "يونان",
-    "titleArCleaned": "يونان",
-    "titleArDiacrited": "يُونَان",
-    "titleArAbbreviated": "يون",
-    "writter": "jonah"
+    "writer": "jonah",
+    "len": 4
   },
-  {
+  "MIC": {
     "title": "micah",
-    "titleEn": "micah",
-    "titleAr": "ميخا",
-    "titleArCleaned": "ميخا",
-    "titleArDiacrited": "مِيخَا",
-    "titleArAbbreviated": "مي",
-    "writter": "micah"
+    "writer": "micah",
+    "len": 7
   },
-  {
+  "NAH": {
     "title": "nahum",
-    "titleEn": "nahum",
-    "titleAr": "ناحوم",
-    "titleArCleaned": "ناحوم",
-    "titleArDiacrited": "نَاحُوم",
-    "titleArAbbreviated": "نا",
-    "writter": "nahum"
+    "writer": "nahum",
+    "len": 3
   },
-  {
+  "HAB": {
     "title": "habakkuk",
-    "titleEn": "habakkuk",
-    "titleAr": "حبقوق",
-    "titleArCleaned": "حبقوق",
-    "titleArDiacrited": "حَبَقُّوق",
-    "titleArAbbreviated": "حب",
-    "writter": "habakkuk"
+    "writer": "habakkuk",
+    "len": 3
   },
-  {
+  "ZEP": {
     "title": "zephaniah",
-    "titleEn": "zephaniah",
-    "titleAr": "صفنيا",
-    "titleArCleaned": "صفنيا",
-    "titleArDiacrited": "صَفَنْيَا",
-    "titleArAbbreviated": "صف",
-    "writter": "zephaniah"
+    "writer": "zephaniah",
+    "len": 3
   },
-  {
+  "HAG": {
     "title": "haggai",
-    "titleEn": "haggai",
-    "titleAr": "حجي",
-    "titleArCleaned": "حجي",
-    "titleArDiacrited": "حَجَّي",
-    "titleArAbbreviated": "حج",
-    "writter": "haggai"
+    "writer": "haggai",
+    "len": 2
   },
-  {
+  "ZEC": {
     "title": "zechariah",
-    "titleEn": "zechariah",
-    "titleAr": "زكريا",
-    "titleArCleaned": "زكريا",
-    "titleArDiacrited": "زَكَريَّا",
-    "titleArAbbreviated": "زك",
-    "writter": "zechariah"
+    "writer": "zechariah",
+    "len": 14
   },
-  {
+  "MAL": {
     "title": "malachi",
-    "titleEn": "malachi",
-    "titleAr": "ملاخي",
-    "titleArCleaned": "ملاخي",
-    "titleArDiacrited": "مَلاَخِي",
-    "titleArAbbreviated": "ملا",
-    "writter": "malachi"
+    "writer": "malachi",
+    "len": 4
   },
-  {
+  "MAT": {
     "title": "matthew",
-    "titleEn": "matthew",
-    "titleAr": "انجيل متى",
-    "titleArCleaned": "إنجيل متي",
-    "titleArDiacrited": "إِنجيل مَتَّى",
-    "titleArAbbreviated": "مت",
-    "writter": "matthew"
+    "writer": "matthew",
+    "len": 28
   },
-  {
+  "MAR": {
     "title": "mark",
-    "titleEn": "mark",
-    "titleAr": "انجيل مرقس",
-    "titleArCleaned": "إنجيل مرقس",
-    "titleArDiacrited": "إِنجيل مَرْقُسَ",
-    "titleArAbbreviated": "مر",
-    "writter": "mark"
+    "writer": "mark",
+    "len": 16
   },
-  {
+  "LUK": {
     "title": "luke",
-    "titleEn": "luke",
-    "titleAr": "انجيل لوقا",
-    "titleArCleaned": "إنجيل لوقا",
-    "titleArDiacrited": "إِنجيل لُوقَا",
-    "titleArAbbreviated": "لو",
-    "writter": "luke"
+    "writer": "luke",
+    "len": 24
   },
-  {
+  "JOH": {
     "title": "john",
-    "titleEn": "john",
-    "titleAr": "انجيل يوحنا",
-    "titleArCleaned": "إنجيل يوحنا",
-    "titleArDiacrited": "إِنجيل يُوحَنَّا",
-    "titleArAbbreviated": "يو",
-    "writter": "john"
+    "writer": "john",
+    "len": 21
   },
-  {
+  "ACT": {
     "title": "acts",
-    "titleEn": "acts",
-    "titleAr": "أعمال الرسل",
-    "titleArCleaned": "اعمال الرسل",
-    "titleArDiacrited": "أَعْمَالُ الرُّسُلِ",
-    "titleArAbbreviated": "اع",
-    "writter": "luke"
+    "writer": "luke",
+    "len": 28
   },
-  {
+  "ROM": {
     "title": "romans",
-    "titleEn": "romans",
-    "titleAr": "رومية",
-    "titleArCleaned": "روميه",
-    "titleArDiacrited": "رُومِيَةَ",
-    "titleArAbbreviated": "رو",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 16
   },
-  {
+  "1CO": {
     "title": "corinthians1",
-    "titleEn": "corinthians-1",
-    "titleAr": "كورنثوس الأولى",
-    "titleArCleaned": "كورنثوس الاولي",
-    "titleArDiacrited": "كُورِنْثُوسَ الأُولَى",
-    "titleArAbbreviated": "۱كو",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 16
   },
-  {
+  "2CO": {
     "title": "corinthians2",
-    "titleEn": "corinthians-2",
-    "titleAr": "كورنثوس الثانية",
-    "titleArCleaned": "كورنثوس الثانيه",
-    "titleArDiacrited": "كُورِنْثُوسَ الثَّانِيةُ",
-    "titleArAbbreviated": "۲كو",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 13
   },
-  {
+  "GAL": {
     "title": "galatians",
-    "titleEn": "galatians",
-    "titleAr": "غلاطية",
-    "titleArCleaned": "غلاطيه",
-    "titleArDiacrited": "غَلاَطِيَّةَ",
-    "titleArAbbreviated": "غل",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 6
   },
-  {
+  "EPH": {
     "title": "ephesians",
-    "titleEn": "ephesians",
-    "titleAr": "أفسس",
-    "titleArCleaned": "افسس",
-    "titleArDiacrited": "أَفَسُسَ",
-    "titleArAbbreviated": "اف",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 6
   },
-  {
+  "PHI": {
     "title": "philippians",
-    "titleEn": "philippians",
-    "titleAr": "فيلبي",
-    "titleArCleaned": "فيلبي",
-    "titleArDiacrited": "فِيلِبِّي",
-    "titleArAbbreviated": "في",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 4
   },
-  {
+  "COL": {
     "title": "colossians",
-    "titleEn": "colossians",
-    "titleAr": "كولوسي",
-    "titleArCleaned": "كولوسي",
-    "titleArDiacrited": "كُولُوسِّي",
-    "titleArAbbreviated": "كو",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 4
   },
-  {
+  "1TH": {
     "title": "thessalonians1",
-    "titleEn": "thessalonians-1",
-    "titleAr": "تسالونيكي الأولى",
-    "titleArCleaned": "تسالونيكي الاولى",
-    "titleArDiacrited": "تَسَالُونِيكِي الأُولَى",
-    "titleArAbbreviated": "۱تس",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 5
   },
-  {
+  "2TH": {
     "title": "thessalonians2",
-    "titleEn": "thessalonians-2",
-    "titleAr": "تسالونيكي الثانية",
-    "titleArCleaned": "تسالونيكي الثانيه",
-    "titleArDiacrited": "تَسَالُونِيكِي الثَّانِيةُ",
-    "titleArAbbreviated": "۲تس",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 3
   },
-  {
+  "1TI": {
     "title": "timothy1",
-    "titleEn": "timothy-1",
-    "titleAr": "تيموثاوس الأولى",
-    "titleArCleaned": "تيموثاوس الاولي",
-    "titleArDiacrited": "تِيمُوثَاوُسَ الأُولَى",
-    "titleArAbbreviated": "۱تي",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 6
   },
-  {
+  "2TI": {
     "title": "timothy2",
-    "titleEn": "timothy-2",
-    "titleAr": "تيموثاوس الثانية",
-    "titleArCleaned": "تيموثاوس الثانيه",
-    "titleArDiacrited": "تِيمُوثَاوُسَ الثَّانِيةُ",
-    "titleArAbbreviated": "۲تي",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 4
   },
-  {
+  "TIT": {
     "title": "titus",
-    "titleEn": "titus",
-    "titleAr": "تيطس",
-    "titleArCleaned": "تيطس",
-    "titleArDiacrited": "تِيطُسَ",
-    "titleArAbbreviated": "تي",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 3
   },
-  {
+  "PHM": {
     "title": "philemon",
-    "titleEn": "philemon",
-    "titleAr": "فليمون",
-    "titleArCleaned": "فليمون",
-    "titleArDiacrited": "فِلِيمُونَ",
-    "titleArAbbreviated": "فل",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 1
   },
-  {
+  "HEB": {
     "title": "hebrews",
-    "titleEn": "hebrews",
-    "titleAr": "العبرانيين",
-    "titleArCleaned": "العبرانيين",
-    "titleArDiacrited": "الْعِبْرَانِيِّينَ",
-    "titleArAbbreviated": "عب",
-    "writter": "paul"
+    "writer": "paul",
+    "len": 13
   },
-  {
+  "JAM": {
     "title": "james",
-    "titleEn": "james",
-    "titleAr": "يعقوب",
-    "titleArCleaned": "يعقوب",
-    "titleArDiacrited": "يَعْقُوبَ",
-    "titleArAbbreviated": "يع",
-    "writter": "james"
+    "writer": "james",
+    "len": 5
   },
-  {
+  "1PE": {
     "title": "peter1",
-    "titleEn": "peter-1",
-    "titleAr": "بطرس الأولى",
-    "titleArCleaned": "بطرس الاولي",
-    "titleArDiacrited": "بُطْرُسَ الأُولَى",
-    "titleArAbbreviated": "۱بط",
-    "writter": "peter"
+    "writer": "peter",
+    "len": 5
   },
-  {
+  "2PE": {
     "title": "peter2",
-    "titleEn": "peter-2",
-    "titleAr": "بطرس الثانية",
-    "titleArCleaned": "بطرس الثانيه",
-    "titleArDiacrited": "بُطْرُسَ الثَّانِيَةُ",
-    "titleArAbbreviated": "۲بط",
-    "writter": "peter"
+    "writer": "peter",
+    "len": 3
   },
-  {
+  "1JO": {
     "title": "john1",
-    "titleEn": "john-1",
-    "titleAr": "يوحنا الأولى",
-    "titleArCleaned": "يوحنا الاولي",
-    "titleArDiacrited": "يُوحَنَّا الأُولَى",
-    "titleArAbbreviated": "۱يو",
-    "writter": "john"
+    "writer": "john",
+    "len": 5
   },
-  {
+  "2JO": {
     "title": "john2",
-    "titleEn": "john-2",
-    "titleAr": "يوحنا الثانية",
-    "titleArCleaned": "يوحنا الثانيه",
-    "titleArDiacrited": "يُوحَنَّا الثَّانِيَةُ",
-    "titleArAbbreviated": "۲يو",
-    "writter": "john"
+    "writer": "john",
+    "len": 1
   },
-  {
+  "3JO": {
     "title": "john3",
-    "titleEn": "john-3",
-    "titleAr": "يوحنا الثالثة",
-    "titleArCleaned": "يوحنا الثالثه",
-    "titleArDiacrited": "يُوحَنَّا الثَّالِثَةُ",
-    "titleArAbbreviated": "۳يو",
-    "writter": "john"
+    "writer": "john",
+    "len": 1
   },
-  {
+  "JUD": {
     "title": "jude",
-    "titleEn": "jude",
-    "titleAr": "يهوذا",
-    "titleArCleaned": "يهوذا",
-    "titleArDiacrited": "يَهُوذَا",
-    "titleArAbbreviated": "يهـ",
-    "writter": "jude"
+    "writer": "jude",
+    "len": 1
   },
-  {
+  "REV": {
     "title": "revelation",
-    "titleEn": "revelation",
-    "titleAr": "الرؤيا",
-    "titleArCleaned": "الرؤيا",
-    "titleArDiacrited": "الرُّؤْيَا",
-    "titleArAbbreviated": "رؤ",
-    "writter": "john"
+    "writer": "john",
+    "len": 22
   }
-]
+}
