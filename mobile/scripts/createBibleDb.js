@@ -35,37 +35,60 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var sqlite3_1 = require("sqlite3");
 var sqlite_1 = require("sqlite");
+var books_json_1 = __importDefault(require("../data/books.json"));
 // this is a top-level await
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var db;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var db, _a, _b, _c, _i, key;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
             case 0: return [4 /*yield*/, (0, sqlite_1.open)({
-                    filename: "data/database.db",
+                    filename: "../data/bible.db",
                     driver: sqlite3_1.Database,
                 })];
             case 1:
-                db = _a.sent();
+                db = _d.sent();
                 // CREATE Books Entity
                 return [4 /*yield*/, db.exec("CREATE TABLE IF NOT EXISTS books (\n      id INTEGER PRIMARY KEY AUTOINCREMENT,\n      key TEXT NOT NULL UNIQUE\n      )")];
             case 2:
                 // CREATE Books Entity
-                _a.sent();
+                _d.sent();
                 // CREATE Chapters Entity
                 return [4 /*yield*/, db.exec("CREATE TABLE IF NOT EXISTS chapters (\n      id INTEGER PRIMARY KEY AUTOINCREMENT,\n      num INTEGER NOT NULL,\n      bookId INTEGER NOT NULL,\n      FOREIGN KEY (bookId) REFERENCES books (id),\n      UNIQUE (num, bookId)\n      )")];
             case 3:
                 // CREATE Chapters Entity
-                _a.sent();
+                _d.sent();
                 // CREATE Verses Entity -- ENGLISH
                 return [4 /*yield*/, db.exec("CREATE TABLE IF NOT EXISTS versesEn (\n      id INTEGER PRIMARY KEY AUTOINCREMENT,\n      num INTEGER NOT NULL,\n      text TEXT NOT NULL,\n      chapterId INTEGER NOT NULL,\n      FOREIGN KEY (chapterId) REFERENCES chapters (id)\n      )")];
             case 4:
                 // CREATE Verses Entity -- ENGLISH
-                _a.sent();
+                _d.sent();
                 console.log("Books, Chapters, and VersesEn tables have been created!!!");
-                return [2 /*return*/];
+                _a = books_json_1.default;
+                _b = [];
+                for (_c in _a)
+                    _b.push(_c);
+                _i = 0;
+                _d.label = 5;
+            case 5:
+                if (!(_i < _b.length)) return [3 /*break*/, 8];
+                _c = _b[_i];
+                if (!(_c in _a)) return [3 /*break*/, 7];
+                key = _c;
+                if (!Object.prototype.hasOwnProperty.call(books_json_1.default, key)) return [3 /*break*/, 7];
+                return [4 /*yield*/, db.run("INSERT INTO books (key) VALUES (?)", [key])];
+            case 6:
+                _d.sent();
+                _d.label = 7;
+            case 7:
+                _i++;
+                return [3 /*break*/, 5];
+            case 8: return [2 /*return*/];
         }
     });
 }); })();

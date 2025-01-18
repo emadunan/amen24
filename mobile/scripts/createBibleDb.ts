@@ -1,11 +1,12 @@
 import { Database } from "sqlite3";
 import { open } from "sqlite";
+import books from "../data/books.json";
 
 // this is a top-level await
 (async () => {
   // open the database
   const db = await open({
-    filename: "data/database.db",
+    filename: "../data/bible.db",
     driver: Database,
   });
 
@@ -40,5 +41,10 @@ import { open } from "sqlite";
   );
 
   console.log("Books, Chapters, and VersesEn tables have been created!!!");
-  
+
+  for (const key in books) {
+    if (Object.prototype.hasOwnProperty.call(books, key)) {
+      await db.run(`INSERT INTO books (key) VALUES (?)`, [key]);
+    }
+  }
 })();
