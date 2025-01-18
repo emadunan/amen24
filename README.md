@@ -1,5 +1,5 @@
 # Amen24
-Is a free non-profitable service to spread the truth and bible for all.
+Amen24 is a free non-profitable project to introduce bible content for all.
 
 ## Amen24 project structure
 /backend # NestJS backend (API)
