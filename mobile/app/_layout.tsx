@@ -29,7 +29,7 @@ export default function RootLayout() {
   }
 
   return (
-    <SQLiteProvider databaseName="bible.db" assetSource={{ assetId: require('@/assets/database.db') }}>
+    <SQLiteProvider databaseName="bible.db" assetSource={{ assetId: require('@/data/bible.db') }}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
