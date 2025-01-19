@@ -1,5 +1,4 @@
-import { Database } from "sqlite3";
-import { open } from "sqlite";
+import { open, Database } from "sqlite";
 
 import books from "../data/books.json";
 import { readFile } from "fs/promises";
@@ -8,7 +7,7 @@ type BookKey = keyof typeof books;
 
 async function initDatabase() {
   // open the database
-  const db = await open({
+  const db: Database = await open({
     filename: "../data/bible.db",
     driver: Database,
   });
@@ -57,18 +56,27 @@ async function initDatabase() {
     }
   }
 
+  await migrate(
+    db,
+    "../../content/Holy-Bible---English---Free-Bible-Version---Source-Edition.VPL.txt",
+    "versesEn"
+  );
+
+  await migrate(
+    db,
+    "../../content/Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt",
+    "versesAr"
+  );
+
+  await migrate(db, "../../content/original-scripts.txt", "versesNative");
+
   await db.close();
 }
 
-async function migrate(filePath: string, bibleVersion: string) {
+async function migrate(db: Database, filePath: string, bibleVersion: string) {
   if (!/^[a-zA-Z0-9_]+$/.test(bibleVersion)) {
     throw new Error("Invalid table name");
   }
-
-  const db = await open({
-    filename: "../data/bible.db",
-    driver: Database,
-  });
 
   try {
     await db.exec(
@@ -129,19 +137,4 @@ async function migrate(filePath: string, bibleVersion: string) {
   await db.close();
 }
 
-// Entry point
-(async () => {
-  await initDatabase();
-
-  await migrate(
-    "../../content/Holy-Bible---English---Free-Bible-Version---Source-Edition.VPL.txt",
-    "versesEn"
-  );
-
-  await migrate(
-    "../../content/Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt",
-    "versesAr"
-  );
-  
-  await migrate("../../content/original-scripts.txt", "versesNative");
-})();
+initDatabase();
