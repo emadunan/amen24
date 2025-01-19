@@ -40,7 +40,8 @@
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "expo-sqlite": "~15.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

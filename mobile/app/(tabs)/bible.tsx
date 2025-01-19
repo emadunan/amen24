@@ -15,7 +15,7 @@ const Bible = () => {
   return (
     <ScrollView>
       <ThemedView style={styles.container}>
-        {data.map(b => <ThemedText key={b.title} style={[styles.bookText, themedTextStyle]}>{b.title}</ThemedText>)}
+        {/* {data.map(b => <ThemedText key={b.title} style={[styles.bookText, themedTextStyle]}>{b.title}</ThemedText>)} */}
       </ThemedView>
     </ScrollView>
   )
