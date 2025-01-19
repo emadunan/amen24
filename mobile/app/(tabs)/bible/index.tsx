@@ -1,18 +1,15 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import React, { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet } from 'react-native';
-import { useColorScheme } from "../../hooks/useColorScheme";
+import { Pressable, ScrollView, StyleSheet } from 'react-native';
+import { useColorScheme } from "../../../hooks/useColorScheme";
 import { Colors } from '@/constants/Colors';
 import { useSQLiteContext } from 'expo-sqlite';
-
-interface Todo {
-  value: string;
-  intValue: number;
-}
+import { useRouter } from 'expo-router';
 
 
 const Bible = () => {
+  const router = useRouter();
   const colorScheme = useColorScheme();
   const themedTextStyle = {
     borderColor: colorScheme === "light" ? Colors.light.tint : Colors.dark.tint,
@@ -34,7 +31,10 @@ const Bible = () => {
   return (
     <ScrollView>
       <ThemedView style={styles.container}>
-        {books.map(b => <ThemedText key={b.id} style={[styles.bookText, themedTextStyle]}>{b.key}</ThemedText>)}
+        {books.map(b => <Pressable onPress={() => {
+          console.log(b.id)
+          router.push(`/(tabs)/bible/${b.id}`);
+        }} key={b.id}><ThemedText style={[styles.bookText, themedTextStyle]}>{b.key}</ThemedText></Pressable>)}
       </ThemedView>
     </ScrollView>
   )

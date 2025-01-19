@@ -13,7 +13,6 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      initialRouteName='bible'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].background,
         tabBarInactiveBackgroundColor: Colors[colorScheme ?? 'light'].text,
