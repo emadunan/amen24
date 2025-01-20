@@ -3,11 +3,9 @@ import React from 'react'
 
 const BibleLayout = () => {
   return (
-    <Stack screenOptions={
-      {
-        headerTitleAlign: "center"
-      }
-    }>
+    <Stack screenOptions={{
+      headerTitleAlign: "center"
+    }}>
       <Stack.Screen name='index' options={{ title: 'Holy Bible' }} />
       <Stack.Screen name='[key]' />
     </Stack>

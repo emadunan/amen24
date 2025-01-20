@@ -33,7 +33,7 @@ const Bible = () => {
       <ThemedView style={styles.container}>
         {books.map(b => <Pressable onPress={() => {
           console.log(b.id)
-          router.push(`/(tabs)/bible/${b.key}?bookId=${b.id}&chapterId=1`);
+          router.push(`/(tabs)/bible/${b.key}?bookId=${b.id}&chapterNum=1`);
         }} key={b.id}><ThemedText style={[styles.bookText, themedTextStyle]}>{b.key}</ThemedText></Pressable>)}
       </ThemedView>
     </ScrollView>

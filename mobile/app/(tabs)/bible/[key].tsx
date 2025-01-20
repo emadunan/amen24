@@ -6,7 +6,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 
 const Chapter = () => {
-  const { key, bookId, chapterId } = useLocalSearchParams<{ key: string, bookId: string, chapterId: string }>();
+  const { key, bookId, chapterNum } = useLocalSearchParams<{ key: string, bookId: string, chapterNum: string }>();
 
   const [verses, setVerses] = useState<{ num: number, text: string }[]>([]);
   const navigation = useNavigation();
@@ -16,14 +16,15 @@ const Chapter = () => {
   useLayoutEffect(() => {
     if (key) {
       navigation.setOptions({
-        title: key
+        title: key,
+        headerRight: () => <ThemedText>{chapterNum}</ThemedText>
       });
     }
   }, [])
 
   useEffect(() => {
     const fetchChapter = async () => {
-      const data = await db.getAllAsync<{ num: number, text: string }>(`SELECT versesEn.num, text FROM versesEn LEFT JOIN chapters ON versesEn.chapterId = chapters.id LEFT JOIN books ON chapters.bookId = books.id WHERE chapters.num = ? AND books.id = ?;`, [chapterId, bookId]);
+      const data = await db.getAllAsync<{ num: number, text: string }>(`SELECT versesEn.num, text FROM versesEn LEFT JOIN chapters ON versesEn.chapterId = chapters.id LEFT JOIN books ON chapters.bookId = books.id WHERE chapters.num = ? AND books.id = ?;`, [chapterNum, bookId]);
 
       setVerses(data);
     }
