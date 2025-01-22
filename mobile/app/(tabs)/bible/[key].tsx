@@ -5,6 +5,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { convertToSuperscript } from '@/utils';
 
 
 const Chapter = () => {
@@ -51,7 +52,7 @@ const Chapter = () => {
     <ScrollView>
       <ThemedView key={`${bookId}-${chapterNum}`} style={styles.chapterContainer}>
         <Text style={styles.chapterText}>
-          {verses.map(v => <ThemedText key={v.num} style={styles.verseText}>{v.text} </ThemedText>)}
+          {verses.map(v => <ThemedText key={v.num} style={styles.verseText}><Text style={styles.verseNum}>{convertToSuperscript(v.num)}</Text> {v.text} </ThemedText>)}
         </Text>
       </ThemedView>
     </ScrollView>
@@ -77,5 +78,9 @@ const styles = StyleSheet.create({
   verseText: {
     fontSize: 18,
     lineHeight: 24,
+    alignItems: "flex-start"
+  },
+  verseNum: {
+    color: "#f00",
   }
 });
