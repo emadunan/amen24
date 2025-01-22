@@ -1,21 +1,17 @@
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { Pressable, StyleSheet, ScrollView, Text } from 'react-native';
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
+import { useSQLiteContext } from 'expo-sqlite';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
-import { useSQLiteContext } from 'expo-sqlite';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
 
 
 const Chapter = () => {
   const { key, bookId, chapterNum } = useLocalSearchParams<{ key: string, bookId: string, chapterNum: string }>();
-  
+
   const router = useRouter();
-
-  const [verses, setVerses] = useState<{ num: number, text: string }[]>([]);
   const navigation = useNavigation();
-
-  const db = useSQLiteContext();
 
   function handleNextChapter() {
     router.push(`/(tabs)/bible/${key}?bookId=${bookId}&chapterNum=${parseInt(chapterNum) + 1}`);
@@ -31,12 +27,15 @@ const Chapter = () => {
         title: key,
         headerRight: () => <ThemedView style={styles.chapterGroup} >
           <Pressable onPress={handlePrevChapter}><IconSymbol name='chevron.left' color={`#000`} /></Pressable>
-          <ThemedText>{chapterNum}</ThemedText>
+          <ThemedText style={styles.chapterNum} >{chapterNum}</ThemedText>
           <Pressable onPress={handleNextChapter}><IconSymbol name='chevron.right' color={`#000`} /></Pressable>
         </ThemedView>
       });
     }
-  }, [chapterNum, chapterNum])
+  }, [chapterNum, chapterNum]);
+
+  const db = useSQLiteContext();
+  const [verses, setVerses] = useState<{ num: number, text: string }[]>([]);
 
   useEffect(() => {
     const fetchChapter = async () => {
@@ -47,10 +46,15 @@ const Chapter = () => {
 
     fetchChapter();
   }, [chapterNum, bookId]);
+
   return (
-    <ThemedView key={`${bookId}-${chapterNum}`}>
-      {verses.map(v => <ThemedText key={v.num}>{v.text}</ThemedText>)}
-    </ThemedView>
+    <ScrollView>
+      <ThemedView key={`${bookId}-${chapterNum}`} style={styles.chapterContainer}>
+        <Text style={styles.chapterText}>
+          {verses.map(v => <ThemedText key={v.num} style={styles.verseText}>{v.text}</ThemedText>)}
+        </Text>
+      </ThemedView>
+    </ScrollView>
   )
 }
 
@@ -60,5 +64,18 @@ const styles = StyleSheet.create({
   chapterGroup: {
     flexDirection: "row",
     backgroundColor: "#fff"
+  },
+  chapterNum: {
+    marginHorizontal: 4
+  },
+  chapterContainer: {
+    padding: 16,
+  },
+  chapterText: {
+    textAlign: 'justify',
+  },
+  verseText: {
+    fontSize: 20,
+    lineHeight: 28
   }
-})
+});
