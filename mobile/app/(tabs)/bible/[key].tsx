@@ -1,26 +1,42 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { IconSymbol } from '@/components/ui/IconSymbol';
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 
 
 const Chapter = () => {
   const { key, bookId, chapterNum } = useLocalSearchParams<{ key: string, bookId: string, chapterNum: string }>();
+  
+  const router = useRouter();
 
   const [verses, setVerses] = useState<{ num: number, text: string }[]>([]);
   const navigation = useNavigation();
 
   const db = useSQLiteContext();
 
+  function handleNextChapter() {
+    router.push(`/(tabs)/bible/${key}?bookId=${bookId}&chapterNum=${parseInt(chapterNum) + 1}`);
+  }
+
+  function handlePrevChapter() {
+    router.push(`/(tabs)/bible/${key}?bookId=${bookId}&chapterNum=${parseInt(chapterNum) - 1}`);
+  }
+
   useLayoutEffect(() => {
     if (key) {
       navigation.setOptions({
         title: key,
-        headerRight: () => <ThemedText>{chapterNum}</ThemedText>
+        headerRight: () => <ThemedView style={styles.chapterGroup} >
+          <Pressable onPress={handlePrevChapter}><IconSymbol name='chevron.left' color={`#000`} /></Pressable>
+          <ThemedText>{chapterNum}</ThemedText>
+          <Pressable onPress={handleNextChapter}><IconSymbol name='chevron.right' color={`#000`} /></Pressable>
+        </ThemedView>
       });
     }
-  }, [])
+  }, [chapterNum, chapterNum])
 
   useEffect(() => {
     const fetchChapter = async () => {
@@ -30,12 +46,19 @@ const Chapter = () => {
     }
 
     fetchChapter();
-  });
+  }, [chapterNum, bookId]);
   return (
-    <ThemedView >
+    <ThemedView key={`${bookId}-${chapterNum}`}>
       {verses.map(v => <ThemedText key={v.num}>{v.text}</ThemedText>)}
     </ThemedView>
   )
 }
 
 export default Chapter;
+
+const styles = StyleSheet.create({
+  chapterGroup: {
+    flexDirection: "row",
+    backgroundColor: "#fff"
+  }
+})
