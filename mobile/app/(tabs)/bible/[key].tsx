@@ -51,7 +51,7 @@ const Chapter = () => {
     <ScrollView>
       <ThemedView key={`${bookId}-${chapterNum}`} style={styles.chapterContainer}>
         <Text style={styles.chapterText}>
-          {verses.map(v => <ThemedText key={v.num} style={styles.verseText}>{v.text}</ThemedText>)}
+          {verses.map(v => <ThemedText key={v.num} style={styles.verseText}>{v.text} </ThemedText>)}
         </Text>
       </ThemedView>
     </ScrollView>
@@ -63,10 +63,10 @@ export default Chapter;
 const styles = StyleSheet.create({
   chapterGroup: {
     flexDirection: "row",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   chapterNum: {
-    marginHorizontal: 4
+    marginHorizontal: 4,
   },
   chapterContainer: {
     padding: 16,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
   },
   verseText: {
-    fontSize: 20,
-    lineHeight: 28
+    fontSize: 18,
+    lineHeight: 24,
   }
 });
