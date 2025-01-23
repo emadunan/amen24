@@ -7,9 +7,12 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  const { t } = useTranslation();
 
   return (
     <Tabs
@@ -35,21 +38,21 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: t('home'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="newspaper" color={color} />,
         }}
       />
       <Tabs.Screen
         name="bible"
         options={{
-          title: 'Bible',
+          title: t('bible'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="book.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
+          title: t('search'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="manatsign" color={color} />,
         }}
       />

@@ -8,6 +8,8 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { SQLiteProvider } from 'expo-sqlite';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '@/i18n/i18n';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -29,14 +31,17 @@ export default function RootLayout() {
   }
 
   return (
-    <SQLiteProvider databaseName="bible.db" assetSource={{ assetId: require('@/data/bible.db') }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </SQLiteProvider>
+    <I18nextProvider i18n={i18n}>
+
+      <SQLiteProvider databaseName="bible.db" assetSource={{ assetId: require('@/data/bible.db') }}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </SQLiteProvider>
+    </I18nextProvider>
   );
 }
