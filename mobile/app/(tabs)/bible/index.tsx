@@ -1,11 +1,11 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet } from 'react-native';
 import { useColorScheme } from "../../../hooks/useColorScheme";
 import { Colors } from '@/constants/Colors';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useRouter } from 'expo-router';
+import { useRouter, useNavigation } from 'expo-router';
 
 
 const Bible = () => {
@@ -23,7 +23,6 @@ const Bible = () => {
     async function setup() {
       const result = await db.getAllAsync<{ id: number, key: string }>('SELECT * FROM books');
       setBooks(result);
-
     }
     setup();
   }, []);

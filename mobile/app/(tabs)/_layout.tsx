@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform, Text } from 'react-native';
+import { Button, Platform, StyleSheet, View } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -8,6 +8,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useTranslation } from 'react-i18next';
+import AppHeader from '@/components/app-header/AppHeader';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -20,6 +21,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].background,
         tabBarInactiveBackgroundColor: Colors[colorScheme ?? 'light'].text,
         tabBarActiveBackgroundColor: Colors[colorScheme ?? 'light'].text,
+        headerRight: () => <AppHeader />,
         headerShown: true,
         headerStyle: {
           backgroundColor: Colors[colorScheme ?? 'light'].text,

@@ -17,6 +17,9 @@ const MAPPING = {
   'book.fill': 'book',
   'newspaper': 'newspaper',
   'manatsign': 'manage-search',
+  'login': 'login',
+  'logout': 'logout',
+  'language': 'language'
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],
