@@ -28,6 +28,6 @@ export const RtlSlice = createSlice({
 export const { toggleRtl, setRtl } = RtlSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectIsRtl = (state: RootState) => state.rtl
+export const selectIsRtl = (state: RootState) => state.rtl.isRtl;
 
 export default RtlSlice.reducer;

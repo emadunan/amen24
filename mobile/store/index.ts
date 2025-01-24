@@ -3,7 +3,7 @@ import RtlReducer from "./rtl/rtlSlice";
 
 export const store = configureStore({
   reducer: {
-    posts: RtlReducer,
+    rtl: RtlReducer,
   },
 });
 
