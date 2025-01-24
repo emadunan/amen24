@@ -15,11 +15,19 @@ const Chapter = () => {
   const navigation = useNavigation();
 
   function handleNextChapter() {
-    router.push(`/(tabs)/bible/${key}?bookId=${bookId}&chapterNum=${parseInt(chapterNum) + 1}`);
+    const nextChapterNum = parseInt(chapterNum) + 1;
+
+    if (nextChapterNum > 100) return;
+
+    router.push(`/(tabs)/bible/${key}?bookId=${bookId}&chapterNum=${nextChapterNum}`);
   }
 
   function handlePrevChapter() {
-    router.push(`/(tabs)/bible/${key}?bookId=${bookId}&chapterNum=${parseInt(chapterNum) - 1}`);
+    const prevChapterNum = parseInt(chapterNum) - 1;
+
+    if (prevChapterNum < 1) return;
+
+    router.push(`/(tabs)/bible/${key}?bookId=${bookId}&chapterNum=${prevChapterNum}`);
   }
 
   useLayoutEffect(() => {

@@ -50,7 +50,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="search"
         options={{
           title: t('search'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="manatsign" color={color} />,
