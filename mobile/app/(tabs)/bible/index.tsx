@@ -1,11 +1,12 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet } from 'react-native';
 import { useColorScheme } from "../../../hooks/useColorScheme";
 import { Colors } from '@/constants/Colors';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useRouter, useNavigation } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 
 const Bible = () => {
@@ -19,6 +20,8 @@ const Bible = () => {
 
   const [books, setBooks] = useState<{ id: number, key: string }[]>([]);
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     async function setup() {
       const result = await db.getAllAsync<{ id: number, key: string }>('SELECT * FROM books');
@@ -27,13 +30,19 @@ const Bible = () => {
     setup();
   }, []);
 
+  function handlePress(b: any) {
+    router.push(`/(tabs)/bible/${b.key}?bookId=${b.id}&chapterNum=1`);
+  }
+
   return (
     <ScrollView>
       <ThemedView style={styles.container}>
-        {books.map(b => <Pressable onPress={() => {
-          console.log(b.id)
-          router.push(`/(tabs)/bible/${b.key}?bookId=${b.id}&chapterNum=1`);
-        }} key={b.id}><ThemedText style={[styles.bookText, themedTextStyle]}>{b.key}</ThemedText></Pressable>)}
+        {books.map(b => (
+          <Pressable onPress={handlePress.bind(this, b)} key={b.id}>
+            <ThemedText style={[styles.bookText, themedTextStyle]}>
+              {t(b.key, { ns: 'book' })}
+            </ThemedText>
+          </Pressable>))}
       </ThemedView>
     </ScrollView>
   )
@@ -58,6 +67,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   }
 });

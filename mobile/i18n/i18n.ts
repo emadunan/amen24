@@ -4,13 +4,17 @@ import * as Localization from "expo-localization";
 
 import commonEn from "./locales/en/common.json";
 import commonAr from "./locales/ar/common.json";
+import bookEn from "./locales/en/book.json";
+import bookAr from "./locales/ar/book.json";
 
 const resources = {
   en: {
     common: commonEn,
+    book: bookEn,
   },
   ar: {
     common: commonAr,
+    book: bookAr,
   },
 };
 
@@ -20,8 +24,8 @@ i18n.use(initReactI18next).init<Resources>({
   resources,
   fallbackLng: "en",
   lng: Localization.getLocales()[0].languageCode ?? "en",
-  defaultNS: 'common',
-  ns: ['common']
+  defaultNS: "common",
+  ns: ["common", "book"],
 });
 
 export default i18n;

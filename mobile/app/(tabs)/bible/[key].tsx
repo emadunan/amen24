@@ -1,14 +1,16 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Pressable, StyleSheet, ScrollView, Text } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { Pressable, StyleSheet, ScrollView, Text, View } from 'react-native';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
-import { useSQLiteContext } from 'expo-sqlite';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { convertToSuperscript } from '@/utils';
+import BibleChapterEn from '@/components/bible/BibleChapterEn';
+import BibleChapterAr from '@/components/bible/BibleChapterAr';
+import { useTranslation } from 'react-i18next';
 
 
 const Chapter = () => {
+  const { t, i18n } = useTranslation();
   const { key, bookId, chapterNum } = useLocalSearchParams<{ key: string, bookId: string, chapterNum: string }>();
 
   const router = useRouter();
@@ -33,7 +35,7 @@ const Chapter = () => {
   useLayoutEffect(() => {
     if (key) {
       navigation.setOptions({
-        title: key,
+        title:t(key, { ns: "book" }),
         headerRight: () => <ThemedView style={styles.chapterGroup} >
           <Pressable onPress={handlePrevChapter}><IconSymbol name='chevron.left' color={`#000`} /></Pressable>
           <ThemedText style={styles.chapterNum} >{chapterNum}</ThemedText>
@@ -41,27 +43,14 @@ const Chapter = () => {
         </ThemedView>
       });
     }
-  }, [chapterNum, chapterNum]);
-
-  const db = useSQLiteContext();
-  const [verses, setVerses] = useState<{ num: number, text: string }[]>([]);
-
-  useEffect(() => {
-    const fetchChapter = async () => {
-      const data = await db.getAllAsync<{ num: number, text: string }>(`SELECT versesEn.num, text FROM versesEn LEFT JOIN chapters ON versesEn.chapterId = chapters.id LEFT JOIN books ON chapters.bookId = books.id WHERE chapters.num = ? AND books.id = ?;`, [chapterNum, bookId]);
-
-      setVerses(data);
-    }
-
-    fetchChapter();
-  }, [chapterNum, bookId]);
+  }, [key, chapterNum, t]);
 
   return (
     <ScrollView>
       <ThemedView key={`${bookId}-${chapterNum}`} style={styles.chapterContainer}>
-        <Text style={styles.chapterText}>
-          {verses.map(v => <ThemedText key={v.num} style={styles.verseText}><Text style={styles.verseNum}>{convertToSuperscript(v.num)}</Text> {v.text} </ThemedText>)}
-        </Text>
+        {i18n.language === 'ar' ?
+          <BibleChapterAr bookId={bookId} chapterNum={chapterNum} /> :
+          <BibleChapterEn bookId={bookId} chapterNum={chapterNum} />}
       </ThemedView>
     </ScrollView>
   )
@@ -79,16 +68,5 @@ const styles = StyleSheet.create({
   },
   chapterContainer: {
     padding: 16,
-  },
-  chapterText: {
-    textAlign: 'justify',
-  },
-  verseText: {
-    fontSize: 18,
-    lineHeight: 24,
-    alignItems: "flex-start"
-  },
-  verseNum: {
-    color: "#f00",
   }
 });
