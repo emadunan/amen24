@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { Pressable, StyleSheet, ScrollView, Text, View } from 'react-native';
+import { Pressable, StyleSheet, ScrollView, View } from 'react-native';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -35,7 +35,7 @@ const Chapter = () => {
   useLayoutEffect(() => {
     if (key) {
       navigation.setOptions({
-        title:t(key, { ns: "book" }),
+        title: t(key, { ns: "book" }),
         headerRight: () => <ThemedView style={styles.chapterGroup} >
           <Pressable onPress={handlePrevChapter}><IconSymbol name='chevron.left' color={`#000`} /></Pressable>
           <ThemedText style={styles.chapterNum} >{chapterNum}</ThemedText>
@@ -46,19 +46,24 @@ const Chapter = () => {
   }, [key, chapterNum, t]);
 
   return (
-    <ScrollView>
-      <ThemedView key={`${bookId}-${chapterNum}`} style={styles.chapterContainer}>
-        {i18n.language === 'ar' ?
-          <BibleChapterAr bookId={bookId} chapterNum={chapterNum} /> :
-          <BibleChapterEn bookId={bookId} chapterNum={chapterNum} />}
-      </ThemedView>
-    </ScrollView>
+    <ThemedView style={styles.container}>
+      <ScrollView>
+        <View key={`${bookId}-${chapterNum}`} style={styles.chapterContainer}>
+          {i18n.language === 'ar' ?
+            <BibleChapterAr bookId={bookId} chapterNum={chapterNum} /> :
+            <BibleChapterEn bookId={bookId} chapterNum={chapterNum} />}
+        </View>
+      </ScrollView>
+    </ThemedView>
   )
 }
 
 export default Chapter;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   chapterGroup: {
     flexDirection: "row",
     backgroundColor: "#fff",
