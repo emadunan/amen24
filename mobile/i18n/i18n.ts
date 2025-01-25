@@ -23,7 +23,7 @@ type Resources = typeof resources;
 i18n.use(initReactI18next).init<Resources>({
   resources,
   fallbackLng: "en",
-  lng: Localization.getLocales()[0].languageCode ?? "en",
+  lng: Localization.getLocales()?.[0]?.languageCode ?? "en",
   defaultNS: "common",
   ns: ["common", "book"],
 });
