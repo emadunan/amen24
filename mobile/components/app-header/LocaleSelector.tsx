@@ -7,7 +7,7 @@ import * as Updates from "expo-updates";
 
 const LocaleSelector = () => {
 
-  function handleLocale() {
+  async function handleLocale() {
 
     const newLanguage = i18n.language === 'en' ? 'ar' : 'en';
     i18n.changeLanguage(newLanguage);
@@ -17,7 +17,17 @@ const LocaleSelector = () => {
     // if (isRtl !== I18nManager.isRTL && Platform.OS !== 'web') {}
     I18nManager.allowRTL(isRtl);
     I18nManager.forceRTL(isRtl);
-    Updates.reloadAsync();
+    
+    if (!__DEV__) { // Only run in production
+      try {
+        await Updates.reloadAsync();
+      } catch (e) {
+        console.error("Failed to reload app: ", e);
+      }
+    } else {
+      console.warn("Updates.reloadAsync() does not work in Expo Go or development mode.");
+    }
+
   }
 
   return (
