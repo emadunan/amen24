@@ -39,6 +39,11 @@ npx expo run:android --variant release
 git push origin +HEAD^:"$name_of_your_branch"
 ```
 
+## After merging the feature branch with main in the remote, perform fetch prune localy as clean up
+``` bash
+git fetch --all --prune
+```
+
 ## Amen24 project structure
 /backend # NestJS backend (API)
 /frontend # Next.js frontend (website)
