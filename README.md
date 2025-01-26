@@ -7,6 +7,38 @@ npx tsc createBibleDb.ts --resolveJsonModule --esModuleInterop # Compile the scr
 node createBibleDb.js # Run the migration program
 ```
 
+## Handle app restart for RTL on language change (For Android)
+- Locate Android main configurations file
+  mobile/android/app/src/main/java/com/anonymous/mobile/MainApplication.kt
+
+- initialize expo-updates in onCreate
+``` kt
+override fun onCreate() {
+    super.onCreate()
+    SoLoader.init(this, OpenSourceMergedSoMapping)
+
+    // Initialize expo-updates
+    expo.modules.updates.UpdatesController.initialize(this)
+
+    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
+      // If you opted-in for the New Architecture, we load the native entry point for this app.
+      load()
+    }
+    ApplicationLifecycleDispatcher.onApplicationCreate(this)
+  }
+```
+
+- Launch the app in production mode
+``` bash
+npx expo run:android --variant release
+
+```
+
+## Sometimes it's necessary to delete your last commit pushed to the remote, here is how to do
+``` bash
+git push origin +HEAD^:"$name_of_your_branch"
+```
+
 ## Amen24 project structure
 /backend # NestJS backend (API)
 /frontend # Next.js frontend (website)
