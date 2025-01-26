@@ -8,6 +8,10 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_APP_START"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.mobile"
