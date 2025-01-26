@@ -34,6 +34,11 @@ npx expo run:android --variant release
 
 ```
 
+## Sometimes it's necessary to delete your last commit pushed to the remote, here is how to do
+``` bash
+git push origin +HEAD^:"$name_of_your_branch"
+```
+
 ## Amen24 project structure
 /backend # NestJS backend (API)
 /frontend # Next.js frontend (website)
