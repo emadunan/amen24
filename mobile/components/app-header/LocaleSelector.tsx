@@ -1,8 +1,8 @@
 import React from 'react';
 import { I18nManager, Platform, Pressable } from 'react-native';
-import { IconSymbol } from '../ui/IconSymbol';
 import i18n from '@/i18n/i18n';
 import * as Updates from "expo-updates";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 
 const LocaleSelector = () => {
@@ -32,7 +32,7 @@ const LocaleSelector = () => {
 
   return (
     <Pressable onPress={handleLocale}>
-      <IconSymbol size={28} name="language" color={"#fff"} />
+      <MaterialIcons name="language" size={24} color="black" />
     </Pressable>
   )
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Pressable } from 'react-native'
-import { IconSymbol } from '../ui/IconSymbol'
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const LoginBtn = () => {
   return (
     <Pressable onPress={() => {}}>
-      <IconSymbol size={28} name="login" color={"#fff"} />
+      <AntDesign name="login" size={24} color="black" />
     </Pressable>
   )
 }

@@ -3,7 +3,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import BibleChapterEn from '@/components/bible/BibleChapterEn';
 import BibleChapterAr from '@/components/bible/BibleChapterAr';
 import { useTranslation } from 'react-i18next';
@@ -41,12 +41,12 @@ const BibleChapter: FC<Props> = (props) => {
       navigation.setOptions({
         title: t(key, { ns: "book" }),
         headerRight: () => <ThemedView style={styles.chapterGroup} >
-          <Pressable onPress={handlePrevChapter}><IconSymbol name='chevron.left' color={`#000`} /></Pressable>
+          <Pressable onPress={handlePrevChapter}><AntDesign name="caretleft" size={24} color="black" /></Pressable>
           <Pressable onPress={() => {
             console.log("Pressed");
             navigation.dispatch(DrawerActions.openDrawer());
           }}><ThemedText style={styles.chapterNum} >{chapterNum}</ThemedText></Pressable>
-          <Pressable onPress={handleNextChapter}><IconSymbol name='chevron.right' color={`#000`} /></Pressable>
+          <Pressable onPress={handleNextChapter}><AntDesign name="caretright" size={24} color="black" /></Pressable>
         </ThemedView>
       });
     }

@@ -1,14 +1,14 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Button, Platform, StyleSheet, View } from 'react-native';
-
+import { Platform } from 'react-native';
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useTranslation } from 'react-i18next';
 import AppHeader from '@/components/app-header/AppHeader';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -41,21 +41,21 @@ export default function TabLayout() {
         name="index"
         options={{
           title: t('home'),
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="newspaper" color={color} />,
+          tabBarIcon: ({ color }) => <Feather name="home" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="bible"
         options={{
           title: t('bible'),
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="book.fill" color={color} />,
+          tabBarIcon: ({ color }) => <Feather name="book-open" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
           title: t('search'),
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="manatsign" color={color} />,
+          tabBarIcon: ({ color }) => <Feather name="search" size={24} color={color} />,
         }}
       />
     </Tabs>

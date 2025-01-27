@@ -3,8 +3,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import BibleChapter from '@/components/bible/BibleChapter';
 import BookDrawerContent from '@/components/book-drawer/BookDrawerContent';
-import { Pressable } from 'react-native';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import BackBtn from '@/components/ui/BackBtn';
 
 const Drawer = createDrawerNavigator();
 
@@ -18,7 +17,7 @@ const BookDrawer: FC = () => {
       screenOptions={{
         headerStyle: { backgroundColor: "#f4f4f4" },
         drawerStyle: { width: 160 },
-        headerLeft: () => <Pressable><IconSymbol name='chevron.right' color={`#000`} /></Pressable>
+        headerLeft: () => <BackBtn />
       }}
     >
       {chapters.map((chapter) => (
