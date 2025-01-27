@@ -24,14 +24,14 @@ const Bible = () => {
 
   useEffect(() => {
     async function setup() {
-      const result = await db.getAllAsync<{ id: number, key: string }>('SELECT * FROM books');
+      const result = await db.getAllAsync<{ id: number, key: string }>('SELECT books.id, books.key, COUNT(chapters.id) as bookLen FROM books LEFT JOIN chapters ON books.id = chapters.bookId GROUP BY key ORDER BY books.id;');
       setBooks(result);
     }
     setup();
   }, []);
 
   function handlePress(b: any) {
-    router.push(`/(tabs)/bible/${b.key}?bookId=${b.id}&chapterNum=1`);
+    router.push(`/(tabs)/bible/${b.key}?bookId=${b.id}&bookLen=${b.bookLen}&chapterNum=1`);
   }
 
   return (
