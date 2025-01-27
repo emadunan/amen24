@@ -15,6 +15,6 @@ export function convertToSuperscript(num: number): string {
   return num
     .toString()
     .split("")
-    .map(digit => superscripts[digit] || digit)
+    .map((digit) => superscripts[digit] || digit)
     .join("");
 }

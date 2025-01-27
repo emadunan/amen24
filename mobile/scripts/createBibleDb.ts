@@ -18,7 +18,7 @@ async function initDatabase() {
       `CREATE TABLE IF NOT EXISTS books (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         key TEXT NOT NULL UNIQUE
-        )`
+        )`,
     );
 
     await db.exec(
@@ -28,7 +28,7 @@ async function initDatabase() {
         bookId INTEGER NOT NULL,
         FOREIGN KEY (bookId) REFERENCES books (id),
         UNIQUE (num, bookId)
-        )`
+        )`,
     );
 
     console.log("Books and Chapters tables has been created!!!");
@@ -59,13 +59,13 @@ async function initDatabase() {
   await migrate(
     db,
     "../../content/Holy-Bible---English---Free-Bible-Version---Source-Edition.VPL.txt",
-    "versesEn"
+    "versesEn",
   );
 
   await migrate(
     db,
     "../../content/Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt",
-    "versesAr"
+    "versesAr",
   );
 
   await migrate(db, "../../content/original-scripts.txt", "versesNative");
@@ -86,7 +86,7 @@ async function migrate(db: Database, filePath: string, bibleVersion: string) {
         text TEXT NOT NULL,
         chapterId INTEGER NOT NULL,
         FOREIGN KEY (chapterId) REFERENCES chapters (id)
-        )`
+        )`,
     );
 
     console.log("Verses table has been created!!!");
@@ -129,7 +129,7 @@ async function migrate(db: Database, filePath: string, bibleVersion: string) {
 
       await db.run(
         `INSERT INTO ${bibleVersion} (num, text, chapterId) VALUES (?, ?, ?)`,
-        [verseNum, verseText, chapterId]
+        [verseNum, verseText, chapterId],
       );
     }
   }

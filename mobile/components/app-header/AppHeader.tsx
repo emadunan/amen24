@@ -1,7 +1,7 @@
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import LocaleSelector from './LocaleSelector'
-import LoginBtn from './LoginBtn'
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import LocaleSelector from "./LocaleSelector";
+import LoginBtn from "./LoginBtn";
 
 const AppHeader = () => {
   return (
@@ -9,8 +9,8 @@ const AppHeader = () => {
       <LocaleSelector />
       <LoginBtn />
     </View>
-  )
-}
+  );
+};
 
 export default AppHeader;
 
@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
   btnsContainer: {
     flexDirection: "row",
     gap: 12,
-    marginHorizontal: 16
-  }
+    marginHorizontal: 16,
+  },
 });
