@@ -12,7 +12,7 @@ const Bible = () => {
   const router = useRouter();
   const colorScheme = useColorScheme();
   const themedTextStyle = {
-    borderColor: colorScheme === "light" ? Colors.light.tint : Colors.dark.tint,
+    borderColor: colorScheme === "light" ? Colors.light.text : Colors.dark.text,
   };
 
   const db = useSQLiteContext();

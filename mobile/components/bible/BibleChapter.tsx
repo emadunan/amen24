@@ -1,17 +1,17 @@
 import React, { FC, useLayoutEffect } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import BibleChapterEn from "@/components/bible/BibleChapterEn";
 import BibleChapterAr from "@/components/bible/BibleChapterAr";
 import { useTranslation } from "react-i18next";
 import { DrawerActions } from "@react-navigation/native";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
-interface Props {}
-
-const BibleChapter: FC<Props> = (props) => {
+const BibleChapter: FC = () => {
   const { t, i18n } = useTranslation();
   const { key, bookId, bookLen, chapterNum } = useLocalSearchParams<{
     key: string;
@@ -20,6 +20,8 @@ const BibleChapter: FC<Props> = (props) => {
     chapterNum: string;
   }>();
 
+  const colorScheme = useColorScheme();
+
   const router = useRouter();
   const navigation = useNavigation();
 
@@ -27,7 +29,7 @@ const BibleChapter: FC<Props> = (props) => {
     const nextChapterNum = parseInt(chapterNum) + 1;
     const bookLength = parseInt(bookLen);
 
-    if (nextChapterNum > bookLength - 1) return;
+    if (nextChapterNum > bookLength) return;
 
     router.push(
       `/(tabs)/bible/${key}?bookId=${bookId}&bookLen=${bookLen}&chapterNum=${nextChapterNum}`,
@@ -44,27 +46,48 @@ const BibleChapter: FC<Props> = (props) => {
     );
   }
 
+  const chapterNumContainerTheme = {
+    backgroundColor: Colors[colorScheme ?? "light"].background,
+  };
+  const chapterNumTextTheme = {
+    color: Colors[colorScheme ?? "light"].primary,
+  };
+
   useLayoutEffect(() => {
     if (key) {
       navigation.setOptions({
-        title: t(key, { ns: "book" }),
+        title: (
+          <Text style={{ color: Colors[colorScheme ?? "light"].primary }}>
+            {t(key, { ns: "book" }).toLocaleUpperCase()}
+          </Text>
+        ),
         headerRight: () => (
-          <ThemedView style={styles.chapterGroup}>
+          <View style={styles.chapterGroup}>
             <Pressable onPress={handlePrevChapter}>
-              <AntDesign name="caretleft" size={24} color="black" />
+              <AntDesign
+                name="caretleft"
+                size={24}
+                color={Colors[colorScheme ?? "light"].background}
+              />
             </Pressable>
             <Pressable
               onPress={() => {
-                console.log("Pressed");
                 navigation.dispatch(DrawerActions.openDrawer());
               }}
+              style={[styles.chapterNumContainer, chapterNumContainerTheme]}
             >
-              <ThemedText style={styles.chapterNum}>{chapterNum}</ThemedText>
+              <Text style={[styles.chapterNumText, chapterNumTextTheme]}>
+                {chapterNum}
+              </Text>
             </Pressable>
             <Pressable onPress={handleNextChapter}>
-              <AntDesign name="caretright" size={24} color="black" />
+              <AntDesign
+                name="caretright"
+                size={24}
+                color={Colors[colorScheme ?? "light"].background}
+              />
             </Pressable>
-          </ThemedView>
+          </View>
         ),
       });
     }
@@ -93,10 +116,17 @@ const styles = StyleSheet.create({
   },
   chapterGroup: {
     flexDirection: "row",
-    backgroundColor: "#fff",
+    marginHorizontal: 16,
+    alignItems: "center",
   },
-  chapterNum: {
-    marginHorizontal: 4,
+  chapterNumContainer: {
+    width: 44,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 2,
+  },
+  chapterNumText: {
+    fontSize: 20,
   },
   chapterContainer: {
     padding: 16,

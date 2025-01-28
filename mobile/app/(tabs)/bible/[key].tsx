@@ -4,6 +4,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import BibleChapter from "@/components/bible/BibleChapter";
 import BookDrawerContent from "@/components/book-drawer/BookDrawerContent";
 import BackBtn from "@/components/ui/BackBtn";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { Colors } from "@/constants/Colors";
 
 const Drawer = createDrawerNavigator();
 
@@ -15,6 +17,8 @@ const BookDrawer: FC = () => {
     chapterNum: string;
   }>();
   const chapters = Array.from({ length: parseInt(bookLen) }, (_, i) => i + 1);
+
+  const colorScheme = useColorScheme();
 
   return (
     <Drawer.Navigator
@@ -28,9 +32,13 @@ const BookDrawer: FC = () => {
         />
       )}
       screenOptions={{
-        headerStyle: { backgroundColor: "#f4f4f4" },
-        drawerStyle: { width: 160 },
-        headerLeft: () => <BackBtn />,
+        headerStyle: {
+          backgroundColor: Colors[colorScheme ?? "light"].secondary,
+        },
+        drawerStyle: { width: 128 },
+        headerLeft: () => (
+          <BackBtn color={Colors[colorScheme ?? "light"].primary} />
+        ),
       }}
     >
       {chapters.map((chapter) => (

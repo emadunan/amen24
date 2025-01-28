@@ -1,6 +1,15 @@
 import React, { FC } from "react";
 import { useRouter } from "expo-router";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from "react-native";
+import { Colors } from "@/constants/Colors";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   bookKey: string;
@@ -18,10 +27,26 @@ const BookDrawerContent: FC<Props> = ({
 }) => {
   const chapters = Array.from({ length: parseInt(bookLen) }, (_, i) => i + 1);
 
+
+    const { t } = useTranslation();
+
+  const colorScheme = useColorScheme();
+
+  const containerTheme = {
+    backgroundColor: Colors[colorScheme ?? "light"].background,
+  };
+  const headerTheme = { color: Colors[colorScheme ?? "light"].primary };
+  const chapterTextTheme = {
+    color: Colors[colorScheme ?? "light"].primary,
+  };
+  const pressedItemTheme = {
+    backgroundColor: Colors[colorScheme ?? "light"].background,
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={[styles.container, containerTheme]}>
       {/* <Text style={styles.header}>{bookKey}</Text> */}
-      <View style={styles.chapterList}>
+      <View style={[styles.chapterList]}>
         {chapters.map((chapter) => {
           const router = useRouter();
 
@@ -38,10 +63,12 @@ const BookDrawerContent: FC<Props> = ({
               key={chapter}
               style={({ pressed }) => [
                 styles.chapterItem,
-                pressed && styles.pressedItem,
+                pressed && pressedItemTheme,
               ]}
             >
-              <Text style={styles.chapterText}>Chapter {chapter}</Text>
+              <Text style={[styles.chapterText, chapterTextTheme]}>
+                 {`${t('chapter')} ${chapter}`}
+              </Text>
             </Pressable>
           );
         })}
@@ -49,10 +76,10 @@ const BookDrawerContent: FC<Props> = ({
     </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f5f5dc", // Creamy background
-    padding: 16,
+    padding: 4,
   },
   header: {
     fontSize: 20,
@@ -60,21 +87,17 @@ const styles = StyleSheet.create({
     color: "#ffcc00", // Dark yellow text
     marginBottom: 16,
   },
-  chapterList: {
-    gap: 8, // Space between chapter items
-  },
+  chapterList: {},
   chapterItem: {
-    padding: 12,
-    backgroundColor: "#fff8e1", // Light cream for the item background
-    borderRadius: 8,
-    alignItems: "center",
+    padding: 8,
+    paddingLeft: 16,
     justifyContent: "center",
-    elevation: 2, // Subtle shadow for elevation
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
   },
   chapterText: {
     fontSize: 16,
     fontWeight: "500",
-    color: "#654321", // Dark yellow text
   },
   pressedItem: {
     backgroundColor: "#ffe4b2", // Slightly darker cream on press

@@ -4,10 +4,11 @@ import React, { FC } from "react";
 import { I18nManager, Pressable, StyleSheet } from "react-native";
 
 interface Props {
+  color?: string;
   uri?: string;
 }
 
-const BackBtn: FC<Props> = ({ uri }) => {
+const BackBtn: FC<Props> = ({ uri, color }) => {
   const router = useRouter();
   function handlePress() {
     if (!uri) return router.back();
@@ -17,9 +18,9 @@ const BackBtn: FC<Props> = ({ uri }) => {
   return (
     <Pressable onPress={handlePress} style={styles.button}>
       {I18nManager.isRTL ? (
-        <AntDesign name="arrowright" size={24} color="black" />
+        <AntDesign name="arrowright" size={24} color={color || "black"} />
       ) : (
-        <AntDesign name="arrowleft" size={24} color="black" />
+        <AntDesign name="arrowleft" size={24} color={color || "black"} />
       )}
     </Pressable>
   );
