@@ -23,12 +23,12 @@ const BookDrawerContent: FC<Props> = ({
   bookKey,
   bookId,
   bookLen,
+  currentChapter, 
   navigation,
 }) => {
   const chapters = Array.from({ length: parseInt(bookLen) }, (_, i) => i + 1);
 
-
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const colorScheme = useColorScheme();
 
@@ -39,6 +39,15 @@ const BookDrawerContent: FC<Props> = ({
   const chapterTextTheme = {
     color: Colors[colorScheme ?? "light"].primary,
   };
+
+  const selectedChapterItemTheme = {
+    backgroundColor: Colors[colorScheme ?? "light"].primary,
+  };
+
+  const selectedChapterTextTheme = {
+    color: Colors[colorScheme ?? "light"].background,
+  }
+
   const pressedItemTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].background,
   };
@@ -49,6 +58,8 @@ const BookDrawerContent: FC<Props> = ({
       <View style={[styles.chapterList]}>
         {chapters.map((chapter) => {
           const router = useRouter();
+
+          const selected = chapter.toString() === currentChapter;
 
           function handlePress() {
             navigation.closeDrawer();
@@ -63,11 +74,12 @@ const BookDrawerContent: FC<Props> = ({
               key={chapter}
               style={({ pressed }) => [
                 styles.chapterItem,
+                selected && selectedChapterItemTheme,
                 pressed && pressedItemTheme,
               ]}
             >
-              <Text style={[styles.chapterText, chapterTextTheme]}>
-                 {`${t('chapter')} ${chapter}`}
+              <Text style={[styles.chapterText, chapterTextTheme, selected && selectedChapterTextTheme]}>
+                {`${t('chapter')} ${chapter}`}
               </Text>
             </Pressable>
           );
