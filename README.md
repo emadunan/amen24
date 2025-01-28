@@ -46,11 +46,12 @@ git fetch --all --prune
 
 ## Amen24 project structure
 /backend # NestJS backend (API)
-/frontend # Next.js frontend (website)
 /mobile # React Native mobile app
+/README.md # Project overview and documentation
+
+/frontend # Next.js frontend (website)
 /shared # Shared code (types, utilities, etc.)
 /scripts # Scripts for deployment, build, etc.
 /docker # Docker configuration files (if using Docker)
-/README.md # Project overview and documentation
 /package.json # Root-level package file (for shared tools or workspaces)
 /tsconfig.json # Root-level TypeScript configuration (if using workspaces)
