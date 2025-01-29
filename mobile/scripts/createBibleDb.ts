@@ -1,4 +1,5 @@
 import { open, Database } from "sqlite";
+import sqlite3 from "sqlite3";
 
 import books from "../data/books.json";
 import { readFile } from "fs/promises";
@@ -9,7 +10,7 @@ async function initDatabase() {
   // open the database
   const db: Database = await open({
     filename: "../data/bible.db",
-    driver: Database,
+    driver: sqlite3.Database,
   });
 
   // Create Books and Chapters Entities

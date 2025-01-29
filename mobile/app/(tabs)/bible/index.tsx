@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   bookText: {
-    width: 132,
+    width: 144,
     margin: 8,
     padding: 8,
     borderWidth: 1,
