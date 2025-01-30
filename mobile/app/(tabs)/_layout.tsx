@@ -16,6 +16,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      initialRouteName="bible"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].text,
         tabBarInactiveTintColor: Colors[colorScheme ?? "light"].primary,
@@ -41,6 +42,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          href: null,
           title: t("home"),
           tabBarIcon: ({ color }) => (
             <Feather name="home" size={24} color={color} />

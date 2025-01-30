@@ -35,6 +35,10 @@ export default function SearchScreen() {
     setQuery(inputText);
   }
 
+  const backgroundTheme = {
+    backgroundColor: Colors[colorScheme ?? "light"].secondary
+  }
+
   async function handleSearch() {
     if (!query.trim() || query.trim().length < 2) return;
 
@@ -76,7 +80,7 @@ export default function SearchScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedView style={styles.searchGroup}>
+      <ThemedView style={[styles.searchGroup, backgroundTheme]}>
         <ThemedTextInput
           style={styles.searchInput}
           value={query}
