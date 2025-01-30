@@ -2,9 +2,6 @@ import {
   FlatList,
   Pressable,
   StyleSheet,
-  Text,
-  TextInput,
-  View,
 } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { Feather } from "@expo/vector-icons";
@@ -13,6 +10,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IVerse } from "@/interfaces/verse";
 import VerseSearchResult from "@/components/bible/VerseSearchResult";
+import { ThemedTextInput } from "@/components/ThemedTextInput";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 function detectLanguage(text: string): "ar" | "en" {
   return /[\u0600-\u06FF]/.test(text) ? "ar" : "en";
@@ -24,6 +24,8 @@ export default function SearchScreen() {
   const [verses, setVerses] = useState<IVerse[]>([]);
   const [query, setQuery] = useState<string>("");
   const [queryLang, setQuerylang] = useState(i18n.language);
+
+  const colorScheme = useColorScheme();
 
   function handleQuery(inputText: string) {
     setQuery(inputText);
@@ -52,24 +54,25 @@ export default function SearchScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.searchGroup}>
-        <TextInput
+      <ThemedView style={styles.searchGroup}>
+        <ThemedTextInput
           style={styles.searchInput}
           value={query}
           onChangeText={handleQuery}
         />
         <Pressable style={styles.searchBtn} onPress={handleSearch}>
-          <Feather name="search" size={32} color={"black"} />
+          <Feather name="search" size={32} color={Colors[colorScheme ?? "light"].text} />
         </Pressable>
-      </View>
-      <View>
+      </ThemedView>
+      <ThemedView>
         <FlatList
+          style={styles.versesList}
           data={verses}
           renderItem={({ item }) => (
             <VerseSearchResult v={item} queryLang={queryLang} />
           )}
         />
-      </View>
+      </ThemedView>
     </ThemedView>
   );
 }
@@ -77,20 +80,23 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
   searchGroup: {
     flexDirection: "row",
     alignItems: "center",
+    padding: 16,
   },
   searchInput: {
     flex: 1,
     paddingHorizontal: 12,
     borderRadius: 2,
     borderWidth: 1,
-    borderColor: "#000",
   },
   searchBtn: {
     marginLeft: 8,
   },
+  versesList: {
+    paddingHorizontal: 16,
+    marginBottom: 74,
+  }
 });

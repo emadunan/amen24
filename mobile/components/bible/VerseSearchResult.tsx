@@ -1,7 +1,9 @@
 import { IVerse } from "@/interfaces/verse";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { ThemedView } from "../ThemedView";
+import { ThemedText } from "../ThemedText";
 
 interface Props {
   v: IVerse;
@@ -18,10 +20,10 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang }) => {
   };
 
   return (
-    <View key={v.id} style={[styles.verseContainer, isRtlQuery && rtlStyles]}>
-      <Text style={styles.verseText}>{v.text}</Text>
-      <Text style={styles.verseRef}>
-        ({t(v.bookKey, { ns: "book", lng: queryLang })}{" "}
+    <ThemedView key={v.id} style={[styles.verseContainer, isRtlQuery && rtlStyles]}>
+      <ThemedText style={styles.verseText}>{v.text}</ThemedText>
+      <ThemedText style={styles.verseRef}>
+        ({" "}{t(v.bookKey, { ns: "book", lng: queryLang })}{" "}
         {queryLang === "ar"
           ? Number(v.chapterNum).toLocaleString("ar-EG")
           : v.chapterNum}{" "}
@@ -29,9 +31,9 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang }) => {
         {queryLang === "ar"
           ? Number(v.verseNum).toLocaleString("ar-EG")
           : v.verseNum}
-        )
-      </Text>
-    </View>
+        {" "})
+      </ThemedText>
+    </ThemedView>
   );
 };
 
@@ -44,12 +46,10 @@ const styles = StyleSheet.create({
   },
   verseText: {
     fontSize: 18,
-    lineHeight: 26,
+    lineHeight: 24,
     textAlign: "justify",
   },
   verseRef: {
-    fontSize: 18,
-    lineHeight: 26,
     flexWrap: "nowrap",
     textAlign: "center",
   },

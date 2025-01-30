@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   verseText: {
     fontSize: 18,
-    lineHeight: 24,
+    lineHeight: 28,
     alignItems: "flex-start",
   },
   verseNum: {
