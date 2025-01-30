@@ -84,7 +84,11 @@ const styles = StyleSheet.create({
   searchGroup: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc"
   },
   searchInput: {
     flex: 1,
