@@ -42,7 +42,7 @@ const BookDrawerContent: FC<Props> = ({
 
   const chapterListTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].background,
-  }
+  };
 
   const selectedChapterItemTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].primary,

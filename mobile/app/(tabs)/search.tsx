@@ -36,8 +36,8 @@ export default function SearchScreen() {
   }
 
   const backgroundTheme = {
-    backgroundColor: Colors[colorScheme ?? "light"].secondary
-  }
+    backgroundColor: Colors[colorScheme ?? "light"].secondary,
+  };
 
   async function handleSearch() {
     if (!query.trim() || query.trim().length < 2) return;

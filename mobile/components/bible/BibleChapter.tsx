@@ -1,5 +1,12 @@
 import React, { FC, useLayoutEffect } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  I18nManager,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -64,11 +71,19 @@ const BibleChapter: FC = () => {
         headerRight: () => (
           <View style={styles.chapterGroup}>
             <Pressable onPress={handlePrevChapter}>
-              <AntDesign
-                name="caretleft"
-                size={24}
-                color={Colors[colorScheme ?? "light"].background}
-              />
+              {I18nManager.isRTL ? (
+                <AntDesign
+                  name="caretright"
+                  size={24}
+                  color={Colors[colorScheme ?? "light"].background}
+                />
+              ) : (
+                <AntDesign
+                  name="caretleft"
+                  size={24}
+                  color={Colors[colorScheme ?? "light"].background}
+                />
+              )}
             </Pressable>
             <Pressable
               onPress={() => {
@@ -81,11 +96,19 @@ const BibleChapter: FC = () => {
               </Text>
             </Pressable>
             <Pressable onPress={handleNextChapter}>
-              <AntDesign
-                name="caretright"
-                size={24}
-                color={Colors[colorScheme ?? "light"].background}
-              />
+              {I18nManager.isRTL ? (
+                <AntDesign
+                  name="caretleft"
+                  size={24}
+                  color={Colors[colorScheme ?? "light"].background}
+                />
+              ) : (
+                <AntDesign
+                  name="caretright"
+                  size={24}
+                  color={Colors[colorScheme ?? "light"].background}
+                />
+              )}
             </Pressable>
           </View>
         ),
