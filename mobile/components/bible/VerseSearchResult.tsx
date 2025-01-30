@@ -20,18 +20,21 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang }) => {
   };
 
   return (
-    <ThemedView key={v.id} style={[styles.verseContainer, isRtlQuery && rtlStyles]}>
+    <ThemedView
+      key={v.id}
+      style={[styles.verseContainer, isRtlQuery && rtlStyles]}
+    >
       <ThemedText style={styles.verseText}>{v.text}</ThemedText>
       <ThemedText style={styles.verseRef}>
-        ({" "}{t(v.bookKey, { ns: "book", lng: queryLang })}{" "}
+        ( {t(v.bookKey, { ns: "book", lng: queryLang })}{" "}
         {queryLang === "ar"
           ? Number(v.chapterNum).toLocaleString("ar-EG")
           : v.chapterNum}{" "}
         :{" "}
         {queryLang === "ar"
           ? Number(v.verseNum).toLocaleString("ar-EG")
-          : v.verseNum}
-        {" "})
+          : v.verseNum}{" "}
+        )
       </ThemedText>
     </ThemedView>
   );
