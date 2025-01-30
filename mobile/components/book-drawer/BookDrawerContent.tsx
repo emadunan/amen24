@@ -40,6 +40,10 @@ const BookDrawerContent: FC<Props> = ({
     color: Colors[colorScheme ?? "light"].primary,
   };
 
+  const chapterListTheme = {
+    backgroundColor: Colors[colorScheme ?? "light"].background,
+  }
+
   const selectedChapterItemTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].primary,
   };
@@ -55,7 +59,7 @@ const BookDrawerContent: FC<Props> = ({
   return (
     <ScrollView contentContainerStyle={[styles.container, containerTheme]}>
       {/* <Text style={styles.header}>{bookKey}</Text> */}
-      <View style={[styles.chapterList]}>
+      <View style={[styles.chapterList, chapterListTheme]}>
         {chapters.map((chapter) => {
           const router = useRouter();
 
@@ -98,14 +102,16 @@ const BookDrawerContent: FC<Props> = ({
 const styles = StyleSheet.create({
   container: {
     padding: 4,
+    flexGrow: 1,
   },
   header: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#ffcc00", // Dark yellow text
     marginBottom: 16,
   },
-  chapterList: {},
+  chapterList: {
+    flexGrow: 1,
+  },
   chapterItem: {
     padding: 8,
     paddingLeft: 16,
