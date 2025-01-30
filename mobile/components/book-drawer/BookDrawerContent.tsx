@@ -23,7 +23,7 @@ const BookDrawerContent: FC<Props> = ({
   bookKey,
   bookId,
   bookLen,
-  currentChapter, 
+  currentChapter,
   navigation,
 }) => {
   const chapters = Array.from({ length: parseInt(bookLen) }, (_, i) => i + 1);
@@ -46,7 +46,7 @@ const BookDrawerContent: FC<Props> = ({
 
   const selectedChapterTextTheme = {
     color: Colors[colorScheme ?? "light"].background,
-  }
+  };
 
   const pressedItemTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].background,
@@ -78,8 +78,14 @@ const BookDrawerContent: FC<Props> = ({
                 pressed && pressedItemTheme,
               ]}
             >
-              <Text style={[styles.chapterText, chapterTextTheme, selected && selectedChapterTextTheme]}>
-                {`${t('chapter')} ${chapter}`}
+              <Text
+                style={[
+                  styles.chapterText,
+                  chapterTextTheme,
+                  selected && selectedChapterTextTheme,
+                ]}
+              >
+                {`${t("chapter")} ${chapter}`}
               </Text>
             </Pressable>
           );

@@ -8,7 +8,7 @@ import { useSQLiteContext } from "expo-sqlite";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-const Bible = () => {
+const BibleScreen = () => {
   const router = useRouter();
   const colorScheme = useColorScheme();
   const themedTextStyle = {
@@ -52,7 +52,7 @@ const Bible = () => {
   );
 };
 
-export default Bible;
+export default BibleScreen;
 
 const styles = StyleSheet.create({
   container: {
