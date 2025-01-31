@@ -110,9 +110,6 @@ function normalizeTextAttribute(table) {
             case 0: return [4 /*yield*/, normalizeTextAttribute("versesAr")];
             case 1:
                 _a.sent();
-                return [4 /*yield*/, normalizeTextAttribute("versesEn")];
-            case 2:
-                _a.sent();
                 return [2 /*return*/];
         }
     });
