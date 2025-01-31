@@ -1,15 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
+import { Redirect } from "expo-router";
 
 export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}><ThemedText>Home</ThemedText></ThemedView>
-  );
+  return <Redirect href="/bible" />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});

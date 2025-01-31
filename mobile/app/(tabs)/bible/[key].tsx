@@ -1,77 +1,57 @@
-import React, { useLayoutEffect } from 'react';
-import { Pressable, StyleSheet, ScrollView, View } from 'react-native';
-import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import BibleChapterEn from '@/components/bible/BibleChapterEn';
-import BibleChapterAr from '@/components/bible/BibleChapterAr';
-import { useTranslation } from 'react-i18next';
+import React, { FC } from "react";
+import { useLocalSearchParams } from "expo-router";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import BibleChapter from "@/components/bible/BibleChapter";
+import BookDrawerContent from "@/components/book-drawer/BookDrawerContent";
+import BackBtn from "@/components/ui/BackBtn";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { Colors } from "@/constants/Colors";
 
+const Drawer = createDrawerNavigator();
 
-const Chapter = () => {
-  const { t, i18n } = useTranslation();
-  const { key, bookId, chapterNum } = useLocalSearchParams<{ key: string, bookId: string, chapterNum: string }>();
+const BookDrawer: FC = () => {
+  const { key, bookId, bookLen, chapterNum } = useLocalSearchParams<{
+    key: string;
+    bookId: string;
+    bookLen: string;
+    chapterNum: string;
+  }>();
+  const chapters = Array.from({ length: parseInt(bookLen) }, (_, i) => i + 1);
 
-  const router = useRouter();
-  const navigation = useNavigation();
-
-  function handleNextChapter() {
-    const nextChapterNum = parseInt(chapterNum) + 1;
-
-    if (nextChapterNum > 100) return;
-
-    router.push(`/(tabs)/bible/${key}?bookId=${bookId}&chapterNum=${nextChapterNum}`);
-  }
-
-  function handlePrevChapter() {
-    const prevChapterNum = parseInt(chapterNum) - 1;
-
-    if (prevChapterNum < 1) return;
-
-    router.push(`/(tabs)/bible/${key}?bookId=${bookId}&chapterNum=${prevChapterNum}`);
-  }
-
-  useLayoutEffect(() => {
-    if (key) {
-      navigation.setOptions({
-        title: t(key, { ns: "book" }),
-        headerRight: () => <ThemedView style={styles.chapterGroup} >
-          <Pressable onPress={handlePrevChapter}><IconSymbol name='chevron.left' color={`#000`} /></Pressable>
-          <ThemedText style={styles.chapterNum} >{chapterNum}</ThemedText>
-          <Pressable onPress={handleNextChapter}><IconSymbol name='chevron.right' color={`#000`} /></Pressable>
-        </ThemedView>
-      });
-    }
-  }, [key, chapterNum, t]);
+  const colorScheme = useColorScheme();
 
   return (
-    <ThemedView style={styles.container}>
-      <ScrollView>
-        <View key={`${bookId}-${chapterNum}`} style={styles.chapterContainer}>
-          {i18n.language === 'ar' ?
-            <BibleChapterAr bookId={bookId} chapterNum={chapterNum} /> :
-            <BibleChapterEn bookId={bookId} chapterNum={chapterNum} />}
-        </View>
-      </ScrollView>
-    </ThemedView>
-  )
-}
+    <Drawer.Navigator
+      drawerContent={(props) => (
+        <BookDrawerContent
+          bookKey={key}
+          bookId={bookId}
+          bookLen={bookLen}
+          currentChapter={chapterNum}
+          navigation={props.navigation}
+        />
+      )}
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Colors[colorScheme ?? "light"].secondary,
+        },
+        drawerStyle: { width: 128 },
+        headerLeft: () => (
+          <BackBtn color={Colors[colorScheme ?? "light"].primary} />
+        ),
+      }}
+    >
+      {chapters.map((chapter) => (
+        <Drawer.Screen
+          key={chapter}
+          name={`Chapter ${chapter}`}
+          // initialParams={{ chapter }}
+        >
+          {() => <BibleChapter />}
+        </Drawer.Screen>
+      ))}
+    </Drawer.Navigator>
+  );
+};
 
-export default Chapter;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  chapterGroup: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-  },
-  chapterNum: {
-    marginHorizontal: 4,
-  },
-  chapterContainer: {
-    padding: 16,
-  }
-});
+export default BookDrawer;

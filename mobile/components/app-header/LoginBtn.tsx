@@ -1,13 +1,14 @@
-import React from 'react'
-import { Pressable } from 'react-native'
-import { IconSymbol } from '../ui/IconSymbol'
+import React from "react";
+import { Pressable } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { Colors } from "@/constants/Colors";
 
 const LoginBtn = () => {
   return (
     <Pressable onPress={() => {}}>
-      <IconSymbol size={28} name="login" color={"#fff"} />
+      <AntDesign name="login" size={24} color={Colors.light.primary} />
     </Pressable>
-  )
-}
+  );
+};
 
-export default LoginBtn
+export default LoginBtn;
