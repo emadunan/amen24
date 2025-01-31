@@ -102,7 +102,6 @@ const BookDrawerContent: FC<Props> = ({
 const styles = StyleSheet.create({
   container: {
     padding: 4,
-    flexGrow: 1,
   },
   header: {
     fontSize: 20,
@@ -110,7 +109,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   chapterList: {
-    flexGrow: 1,
   },
   chapterItem: {
     padding: 8,
