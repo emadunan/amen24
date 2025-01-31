@@ -44,7 +44,7 @@ export default function SearchScreen() {
   async function handleSearch() {
     if (!query.trim() || query.trim().length < 2) return;
 
-    lastQueryRef.current = query
+    lastQueryRef.current = query;
 
     setLoading(true);
     setSearchPerformed(true);
@@ -66,7 +66,7 @@ export default function SearchScreen() {
     try {
       const result = await db.getAllAsync<IVerse>(
         `SELECT ${table}.id, ${table}.num as verseNum, ${table}.text, 
-                chapters.num as chapterNum, books.key as bookKey 
+                chapters.num as chapterNum, books.key as bookKey, books.id as bookId, (SELECT COUNT(*) FROM chapters WHERE chapters.bookId = books.id) as bookLen 
          FROM ${table} 
          LEFT JOIN chapters ON ${table}.chapterId = chapters.id 
          LEFT JOIN books ON chapters.bookId = books.id 
@@ -112,7 +112,11 @@ export default function SearchScreen() {
             data={verses}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <VerseSearchResult v={item} queryLang={queryLang} query={lastQueryRef.current} />
+              <VerseSearchResult
+                v={item}
+                queryLang={queryLang}
+                query={lastQueryRef.current}
+              />
             )}
           />
         ) : (

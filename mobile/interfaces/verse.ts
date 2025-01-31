@@ -4,4 +4,6 @@ export interface IVerse {
   text: string;
   chapterNum: string;
   bookKey: string;
+  bookId: number;
+  bookLen: number;
 }

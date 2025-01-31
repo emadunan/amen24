@@ -3,16 +3,25 @@ import { StyleSheet, Text } from "react-native";
 import { ThemedText } from "../ThemedText";
 import { convertToSuperscript } from "@/utils";
 import { useSQLiteContext } from "expo-sqlite";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 interface Props {
   bookId: string;
   chapterNum: string;
+  verseNum?: string;
 }
 
-const BibleChapterEn: FC<Props> = ({ bookId, chapterNum }) => {
+const BibleChapterEn: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
   const db = useSQLiteContext();
 
   const [verses, setVerses] = useState<{ num: number; text: string }[]>([]);
+
+  const colorScheme = useColorScheme();
+
+  const highlightTheme = {
+    backgroundColor: Colors[colorScheme ?? "light"].highlight,
+  };
 
   useEffect(() => {
     const fetchChapter = async () => {
@@ -29,7 +38,13 @@ const BibleChapterEn: FC<Props> = ({ bookId, chapterNum }) => {
   return (
     <Text style={styles.chapterText}>
       {verses.map((v) => (
-        <ThemedText key={v.num} style={styles.verseText}>
+        <ThemedText
+          key={v.num}
+          style={[
+            styles.verseText,
+            v.num.toString() === verseNum && highlightTheme,
+          ]}
+        >
           <Text style={styles.verseNum}>{convertToSuperscript(v.num)}</Text>{" "}
           {v.text}{" "}
         </ThemedText>

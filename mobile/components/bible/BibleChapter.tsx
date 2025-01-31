@@ -19,11 +19,12 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 
 const BibleChapter: FC = () => {
   const { t, i18n } = useTranslation();
-  const { key, bookId, bookLen, chapterNum } = useLocalSearchParams<{
+  const { key, bookId, bookLen, chapterNum, verseNum } = useLocalSearchParams<{
     key: string;
     bookId: string;
     bookLen: string;
     chapterNum: string;
+    verseNum?: string;
   }>();
 
   const colorScheme = useColorScheme();
@@ -120,9 +121,17 @@ const BibleChapter: FC = () => {
       <ScrollView>
         <View key={`${bookId}-${chapterNum}`} style={styles.chapterContainer}>
           {i18n.language === "ar" ? (
-            <BibleChapterAr bookId={bookId} chapterNum={chapterNum} />
+            <BibleChapterAr
+              bookId={bookId}
+              chapterNum={chapterNum}
+              verseNum={verseNum}
+            />
           ) : (
-            <BibleChapterEn bookId={bookId} chapterNum={chapterNum} />
+            <BibleChapterEn
+              bookId={bookId}
+              chapterNum={chapterNum}
+              verseNum={verseNum}
+            />
           )}
         </View>
       </ScrollView>
