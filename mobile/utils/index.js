@@ -33,8 +33,8 @@ var normalizeArabicText = function (text) {
         ٱ: "ا", // Alef Wasla → Alef (Missed in original)
         ة: "ه", // Teh Marbuta → Heh
         ى: "ي", // Alef Maksura → Yeh
-        // ؤ: "و", // Waw with Hamza → Waw
-        // ئ: "ي", // Yeh with Hamza → Yeh
+        // ؤ: "و", // Waw with Hamza → Waw (removed)
+        // ئ: "ي", // Yeh with Hamza → Yeh (removed)
         ٮ: "ب", // Old Arabic Ba → Ba
         ٯ: "ف", // Old Arabic Fa → Fa
         ڤ: "ف", // Persian V → Fa (used in some Arabic dialects)
@@ -52,7 +52,7 @@ var normalizeArabicText = function (text) {
         "٨": "8",
         "٩": "9", // Arabic digits → Standard digits
     };
-    text = text.replace(/[آأإٱةىؤئٮٯڤپچگ٠-٩]/g, function (char) { return normalizationMap[char]; });
+    text = text.replace(/[آأإٱةىٮٯڤپچگ٠-٩]/g, function (char) { return normalizationMap[char]; });
     return text;
 };
 exports.normalizeArabicText = normalizeArabicText;
