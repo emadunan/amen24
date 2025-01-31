@@ -22,6 +22,7 @@ const BookDrawer: FC = () => {
 
   return (
     <Drawer.Navigator
+      key={key}
       drawerContent={(props) => (
         <BookDrawerContent
           bookKey={key}
