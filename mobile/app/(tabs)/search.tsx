@@ -7,7 +7,7 @@ import {
 import { ThemedView } from "@/components/ThemedView";
 import { Feather } from "@expo/vector-icons";
 import { useSQLiteContext } from "expo-sqlite";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IVerse } from "@/interfaces/verse";
 import VerseSearchResult from "@/components/bible/VerseSearchResult";
@@ -29,6 +29,8 @@ export default function SearchScreen() {
   const [loading, setLoading] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
 
+  const lastQueryRef = useRef<string>("");
+
   const colorScheme = useColorScheme();
 
   function handleQuery(inputText: string) {
@@ -41,6 +43,8 @@ export default function SearchScreen() {
 
   async function handleSearch() {
     if (!query.trim() || query.trim().length < 2) return;
+
+    lastQueryRef.current = query
 
     setLoading(true);
     setSearchPerformed(true);
@@ -108,7 +112,7 @@ export default function SearchScreen() {
             data={verses}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <VerseSearchResult v={item} queryLang={queryLang} />
+              <VerseSearchResult v={item} queryLang={queryLang} query={lastQueryRef.current} />
             )}
           />
         ) : (

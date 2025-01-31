@@ -8,7 +8,6 @@ import {
   View,
 } from "react-native";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import BibleChapterEn from "@/components/bible/BibleChapterEn";
 import BibleChapterAr from "@/components/bible/BibleChapterAr";
