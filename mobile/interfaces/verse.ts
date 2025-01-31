@@ -1,7 +1,7 @@
 export interface IVerse {
   id: number;
-  verseNum: number;
   text: string;
+  verseNum: number;
   chapterNum: string;
   bookKey: string;
   bookId: number;

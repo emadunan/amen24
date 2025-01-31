@@ -85,6 +85,7 @@ async function migrate(db: Database, filePath: string, bibleVersion: string) {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         num INTEGER NOT NULL,
         text TEXT NOT NULL,
+        textNormalized TEXT,
         chapterId INTEGER NOT NULL,
         FOREIGN KEY (chapterId) REFERENCES chapters (id)
         )`,
@@ -134,8 +135,6 @@ async function migrate(db: Database, filePath: string, bibleVersion: string) {
       );
     }
   }
-
-  await db.close();
 }
 
 initDatabase();

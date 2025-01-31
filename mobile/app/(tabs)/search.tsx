@@ -15,6 +15,7 @@ import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemedText } from "@/components/ThemedText";
+import { normalizeArabicText } from "@/utils";
 
 function detectLanguage(text: string): "ar" | "en" {
   return /[\u0600-\u06FF]/.test(text) ? "ar" : "en";
@@ -44,20 +45,22 @@ export default function SearchScreen() {
   async function handleSearch() {
     if (!query.trim() || query.trim().length < 2) return;
 
-    lastQueryRef.current = query;
+    const noramlizedText = normalizeArabicText(query);
+
+    lastQueryRef.current = noramlizedText;
 
     setLoading(true);
     setSearchPerformed(true);
     setVerses([]); // Clear old results before fetching new ones
 
-    const language = detectLanguage(query);
+    const language = detectLanguage(noramlizedText);
     setQuerylang(language);
 
     const table = language === "ar" ? "versesAr" : "versesEn";
     const attribute = language === "ar" ? "textNormalized" : "text";
 
     // Normalize query and split into words
-    const words = query.trim().split(/\s+/);
+    const words = noramlizedText.trim().split(/\s+/);
 
     // Generate the WHERE clause with multiple LIKE conditions
     const whereClause = words.map(() => `${attribute} LIKE ?`).join(" AND ");
@@ -65,8 +68,8 @@ export default function SearchScreen() {
 
     try {
       const result = await db.getAllAsync<IVerse>(
-        `SELECT ${table}.id, ${table}.num as verseNum, ${table}.text, 
-                chapters.num as chapterNum, books.key as bookKey, books.id as bookId, (SELECT COUNT(*) FROM chapters WHERE chapters.bookId = books.id) as bookLen 
+        `SELECT ${table}.id, ${table}.num as verseNum, ${table}.textNormalized as text, 
+            chapters.num as chapterNum, books.key as bookKey, books.id as bookId, (SELECT COUNT(*) FROM chapters WHERE chapters.bookId = books.id) as bookLen 
          FROM ${table} 
          LEFT JOIN chapters ON ${table}.chapterId = chapters.id 
          LEFT JOIN books ON chapters.bookId = books.id 

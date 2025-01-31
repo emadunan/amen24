@@ -1,38 +1,33 @@
-import { normalizeArabicText } from "@/utils";
+import { normalizeArabicText } from "../utils";
 import { open, Database } from "sqlite";
 import sqlite3 from "sqlite3";
 
-async function main() {
-  console.log("START SCRIPT!!");
+async function normalizeTextAttribute(table: string) {
+  console.log(`Working on ${table} table ...`);
 
   const db: Database = await open({
     filename: "../data/bible.db",
     driver: sqlite3.Database,
   });
 
-  console.log("START MAN");
-
   try {
-    const rows = await db.all(`PRAGMA table_info(versesAr)`);
-
-    if (!rows.some((row) => row.name === "textNormalized")) {
-      await db.exec(`ALTER TABLE versesAr ADD COLUMN textNormalized TEXT`);
-      console.log("column 'textNormalized' added successfully.");
-    }
-
     const allVerses = await db.all<
       { id: number; text: string; textNormalized: string }[]
-    >(`SELECT * FROM versesAr`);
+    >(`SELECT * FROM ${table}`);
 
     const updateStmt = await db.prepare(
-      `UPDATE versesAr SET textNormalized = ? WHERE id = ?`,
+      `UPDATE ${table} SET textNormalized = ? WHERE id = ?`,
     );
 
     for (const verse of allVerses) {
-      const textNormalized = normalizeArabicText(verse.text);
-
-      await updateStmt.run(textNormalized, verse.id);
-      console.log("Verse number " + verse.id + " has been normalized");
+      if (table === "versesAr") {
+        const textNormalized = normalizeArabicText(verse.text);
+        await updateStmt.run(textNormalized, verse.id);
+        console.log("Verse number " + verse.id + " has been normalized");
+      } else if (table === "versesEn") {
+        await updateStmt.run(verse.text, verse.id);
+        console.log("Verse number " + verse.id + " has been normalized");
+      }
     }
 
     await updateStmt.finalize();
@@ -43,5 +38,7 @@ async function main() {
     await db.close();
   }
 }
-
-main();
+(async () => {
+  await normalizeTextAttribute("versesAr");
+  await normalizeTextAttribute("versesEn");
+})()
