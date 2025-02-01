@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text } from "react-native";
+import { ThemedView } from "../ThemedView";
 
 interface Props {
   chapter: any;
@@ -40,10 +41,6 @@ const ChapterLink: FC<Props> = ({
     color: Colors[colorScheme ?? "light"].background,
   };
 
-  const pressedItemTheme = {
-    backgroundColor: Colors[colorScheme ?? "light"].background,
-  };
-
   const selected = chapter.toString() === currentChapter;
 
   function handlePress() {
@@ -52,36 +49,23 @@ const ChapterLink: FC<Props> = ({
   }
 
   return (
-    <Pressable
-      onPress={handlePress}
-      style={({ pressed }) => [
-        styles.chapterItem,
-        selected && selectedChapterItemTheme,
-        pressed && pressedItemTheme,
-      ]}
-    >
-      <Text
-        style={[
-          styles.chapterText,
-          chapterTextTheme,
-          selected && selectedChapterTextTheme,
-        ]}
-      >
-        {`${t("chapter")} ${chapter}`}
-      </Text>
-    </Pressable>
+    <ThemedView style={[styles.chapterItem, selected && selectedChapterItemTheme]}>
+      <Pressable onPress={handlePress}>
+        <Text
+          style={[
+            styles.chapterText,
+            chapterTextTheme,
+            selected && selectedChapterTextTheme,
+          ]}
+        >
+          {`${t("chapter")} ${chapter}`}
+        </Text>
+      </Pressable>
+    </ThemedView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 4,
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
   chapterItem: {
     padding: 8,
     paddingLeft: 16,

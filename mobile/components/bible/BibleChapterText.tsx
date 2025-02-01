@@ -66,7 +66,6 @@ const BibleChapterText: FC<Props> = ({
   }
 
   return (
-    <ThemedView>
       <Text style={styles.chapterText}>
         {verses.map((v, index) => (
           <Pressable key={v.num} onPress={() => handleHighlight(v.num)}>
@@ -88,7 +87,6 @@ const BibleChapterText: FC<Props> = ({
           </Pressable>
         ))}
       </Text>
-    </ThemedView>
   );
 };
 

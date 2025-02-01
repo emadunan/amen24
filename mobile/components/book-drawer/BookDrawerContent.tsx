@@ -2,6 +2,8 @@ import React, { FC } from "react";
 import { FlatList } from "react-native";
 import ChapterLink from "./ChapterLink";
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
+import { ThemedView } from "../ThemedView";
+import { ThemedText } from "../ThemedText";
 
 interface Props {
   bookKey: string;
@@ -18,7 +20,9 @@ const BookDrawerContent: FC<Props> = (props) => {
   );
 
   return (
+  <ThemedView style={{flex: 1}}>
     <FlatList data={chapters} renderItem={({ item }) => <ChapterLink key={item} chapter={item} {...props} />} />
+  </ThemedView>
   );
 };
 
