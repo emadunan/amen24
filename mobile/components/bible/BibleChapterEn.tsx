@@ -81,5 +81,6 @@ const styles = StyleSheet.create({
   },
   verseNum: {
     color: "#f00",
+    fontWeight: "bold",
   },
 });

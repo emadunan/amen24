@@ -75,7 +75,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
     >
       <ThemedText style={styles.verseText}>{highlightText(v.text)}</ThemedText>
       <Pressable onPress={handleDirectToChapter}>
-        <ThemedText style={styles.verseRef}>
+        <ThemedText style={[styles.verseRef, {color: Colors[colorScheme ?? "light"].primary}]}>
           ( {t(v.bookKey, { ns: "book", lng: queryLang })}{" "}
           {queryLang === "ar"
             ? Number(v.chapterNum).toLocaleString("ar-EG")
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
   verseRef: {
     flexWrap: "nowrap",
     textAlign: "center",
+    fontWeight: "bold",
   },
 });
 
