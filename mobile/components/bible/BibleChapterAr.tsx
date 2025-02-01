@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemedText } from "../ThemedText";
 import { convertToSuperscript } from "@/utils";
 import { useSQLiteContext } from "expo-sqlite";
@@ -16,6 +16,7 @@ const BibleChapterAr: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
   const db = useSQLiteContext();
 
   const [verses, setVerses] = useState<{ num: number; text: string }[]>([]);
+  const [highlighted, setHighlighted] = useState<string[]>([]);
 
   const colorScheme = useColorScheme();
 
@@ -31,10 +32,18 @@ const BibleChapterAr: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
       );
 
       setVerses(data);
+      if (verseNum) setHighlighted([verseNum]);
     };
 
     fetchChapter();
   }, [chapterNum, bookId]);
+
+  function handleHighlight(verseNum: number) {    
+    const num = verseNum.toString();
+
+    setHighlighted(prevState => [...prevState, num]);
+  }
+
   return (
     <Text style={styles.chapterText}>
       {verses.map((v) => (
@@ -42,10 +51,12 @@ const BibleChapterAr: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
           key={v.num}
           style={[
             styles.verseText,
-            v.num.toString() === verseNum && highlightTheme,
+            highlighted.includes(v.num.toString()) && highlightTheme,
           ]}
         >
-          <Text style={styles.verseNum}>{convertToSuperscript(v.num)}</Text>{" "}
+          <Pressable onPress={handleHighlight.bind(this, v.num)}>
+            <Text style={styles.verseNum}>{convertToSuperscript(v.num)}</Text>
+          </Pressable>
           {v.text}{" "}
         </ThemedText>
       ))}
@@ -57,7 +68,7 @@ export default BibleChapterAr;
 
 const styles = StyleSheet.create({
   chapterText: {
-    textAlign: "justify",
+    // textAlign: "justify",
   },
   verseText: {
     fontSize: 18,

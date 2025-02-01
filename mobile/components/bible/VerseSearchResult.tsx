@@ -33,10 +33,6 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
   };
 
   function handleDirectToChapter() {
-    console.log(
-      `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}`,
-    );
-
     router.push(
       `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}&verseNum=${v.verseNum}`,
     );
