@@ -1,4 +1,4 @@
-import React, { FC, useLayoutEffect } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import {
   I18nManager,
   Pressable,
@@ -9,13 +9,15 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { ThemedView } from "@/components/ThemedView";
-import BibleChapterEn from "@/components/bible/BibleChapterEn";
-import BibleChapterAr from "@/components/bible/BibleChapterAr";
 import { useTranslation } from "react-i18next";
 import { DrawerActions } from "@react-navigation/native";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import BibleChapterText from "@/components/bible/BibleChapterText";
+import { useSQLiteContext } from "expo-sqlite";
+import { IVerseRaw } from "@/interfaces/verse";
+import * as Clipboard from "expo-clipboard"; // Import Clipboard API
 
 const BibleChapter: FC = () => {
   const { t, i18n } = useTranslation();
@@ -29,8 +31,11 @@ const BibleChapter: FC = () => {
 
   const colorScheme = useColorScheme();
 
+  const db = useSQLiteContext();
+
   const router = useRouter();
   const navigation = useNavigation();
+  const [highlighted, setHighlighted] = useState<string[]>([]);
 
   function handleNextChapter() {
     const nextChapterNum = parseInt(chapterNum) + 1;
@@ -53,6 +58,47 @@ const BibleChapter: FC = () => {
     );
   }
 
+  async function handleCopySelected() {
+    if (highlighted.length === 0) {
+      console.log("No verses selected");
+      return;
+    }
+
+    const bibleLang = i18n.language === "ar" ? "Ar" : "En";
+
+    const verses = await db.getAllAsync<IVerseRaw>(
+      `SELECT text, verses${bibleLang}.num as num FROM verses${bibleLang} LEFT JOIN chapters ON chapters.id = chapterId WHERE bookId = ? AND chapters.num = ? AND verses${bibleLang}.num IN (${highlighted.map(() => "?").join(",")}) ORDER BY verses${bibleLang}.id`,
+      [bookId, chapterNum, ...highlighted],
+    );
+
+    console.log(verses);
+
+    let formattedText = "";
+    let previousNum = verses[0].num - 1; // Start one number before the first verse
+
+    for (const verse of verses) {
+      if (verse.num - previousNum > 1) {
+        // If there's a gap, add "..."
+        formattedText += " ...";
+      }
+      // Append verse text
+      formattedText += ` ${verse.text}`;
+      previousNum = verse.num;
+    }
+
+    formattedText += ` ( ${t(key, { ns: "book" })} ${i18n.language === "ar" ? Number(chapterNum).toLocaleString("ar-EG") : chapterNum} : ${i18n.language === "ar" ? Number(verses[0].num) : verses[0].num} `;
+
+    if (verses.length > 1) {
+      formattedText += `- ${i18n.language === "ar" ? Number(verses[verses.length - 1].num) : verses[verses.length - 1].num} )`;
+    } else {
+      formattedText += `)`;
+    }
+
+    const content = formattedText.trim();
+
+    await Clipboard.setStringAsync(content);
+  }
+
   const chapterNumContainerTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].background,
   };
@@ -62,6 +108,7 @@ const BibleChapter: FC = () => {
 
   useLayoutEffect(() => {
     if (key) {
+      setHighlighted([]);
       navigation.setOptions({
         title: (
           <Text style={{ color: Colors[colorScheme ?? "light"].primary }}>
@@ -118,19 +165,36 @@ const BibleChapter: FC = () => {
 
   return (
     <ThemedView style={styles.container}>
+      {highlighted.length > 0 && (
+        <Pressable onPress={handleCopySelected}>
+          <View style={styles.toolbar}>
+            <AntDesign
+              name="copy1"
+              size={24}
+              color={Colors[colorScheme ?? "light"].primary}
+            />
+          </View>
+        </Pressable>
+      )}
       <ScrollView>
-        <View key={`${bookId}-${chapterNum}`} style={styles.chapterContainer}>
+        <View key={`${i18n.language}-${bookId}-${chapterNum}`} style={styles.chapterContainer}>
           {i18n.language === "ar" ? (
-            <BibleChapterAr
+            <BibleChapterText
+              bibleLang="Ar"
               bookId={bookId}
               chapterNum={chapterNum}
               verseNum={verseNum}
+              highlighted={highlighted}
+              setHighlighted={setHighlighted}
             />
           ) : (
-            <BibleChapterEn
+            <BibleChapterText
+              bibleLang="En"
               bookId={bookId}
               chapterNum={chapterNum}
               verseNum={verseNum}
+              highlighted={highlighted}
+              setHighlighted={setHighlighted}
             />
           )}
         </View>
@@ -161,5 +225,11 @@ const styles = StyleSheet.create({
   },
   chapterContainer: {
     padding: 16,
+  },
+  toolbar: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
 });

@@ -26,7 +26,7 @@ const BookDrawerContent: FC<Props> = (props) => {
   return (
     <ScrollView contentContainerStyle={[styles.container, containerTheme]}>
       {chapters.map((chapter) => (
-        <ChapterLink chapter={chapter} {...props} />
+        <ChapterLink key={chapter} chapter={chapter} {...props} />
       ))}
     </ScrollView>
   );

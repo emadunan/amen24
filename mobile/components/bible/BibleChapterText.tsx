@@ -3,20 +3,34 @@ import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemedText } from "../ThemedText";
 import { convertToSuperscript } from "@/utils";
 import { useSQLiteContext } from "expo-sqlite";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { useTranslation } from "react-i18next";
+
+type BibleLang = "En" | "Ar";
 
 interface Props {
+  bibleLang: BibleLang;
   bookId: string;
   chapterNum: string;
   verseNum?: string;
+  highlighted: string[];
+  setHighlighted: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const BibleChapterAr: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
+const BibleChapterText: FC<Props> = ({
+  bibleLang,
+  bookId,
+  chapterNum,
+  verseNum,
+  highlighted,
+  setHighlighted,
+}) => {
   const db = useSQLiteContext();
 
+  const { i18n } = useTranslation();
+
   const [verses, setVerses] = useState<{ num: number; text: string }[]>([]);
-  const [highlighted, setHighlighted] = useState<string[]>([]);
 
   const colorScheme = useColorScheme();
 
@@ -27,7 +41,7 @@ const BibleChapterAr: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
   useEffect(() => {
     const fetchChapter = async () => {
       const data = await db.getAllAsync<{ num: number; text: string }>(
-        `SELECT versesAr.num, text FROM versesAr LEFT JOIN chapters ON versesAr.chapterId = chapters.id LEFT JOIN books ON chapters.bookId = books.id WHERE chapters.num = ? AND books.id = ?;`,
+        `SELECT verses${bibleLang}.num, text FROM verses${bibleLang} LEFT JOIN chapters ON verses${bibleLang}.chapterId = chapters.id LEFT JOIN books ON chapters.bookId = books.id WHERE chapters.num = ? AND books.id = ?;`,
         [chapterNum, bookId],
       );
 
@@ -59,7 +73,7 @@ const BibleChapterAr: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
           ]}
         >
           <Pressable onPress={handleHighlight.bind(this, v.num)}>
-            <Text style={styles.verseNum}>{convertToSuperscript(v.num)}</Text>
+            <Text style={styles.verseNum}>{i18n.language === "ar" ? v.num.toLocaleString("ar-EG") : v.num}</Text>
           </Pressable>
           {v.text}{" "}
         </ThemedText>
@@ -68,11 +82,11 @@ const BibleChapterAr: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
   );
 };
 
-export default BibleChapterAr;
+export default BibleChapterText;
 
 const styles = StyleSheet.create({
   chapterText: {
-    // textAlign: "justify",
+    // textAlign: "justify"
   },
   verseText: {
     fontSize: 18,
@@ -81,6 +95,6 @@ const styles = StyleSheet.create({
   },
   verseNum: {
     color: "#f00",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 });

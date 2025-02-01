@@ -7,3 +7,11 @@ export interface IVerse {
   bookId: number;
   bookLen: number;
 }
+
+export interface IVerseRaw {
+  id: number;
+  num: number;
+  text: string;
+  textNormalized: string;
+  chapterId: number;
+}

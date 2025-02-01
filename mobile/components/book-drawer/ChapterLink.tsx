@@ -55,7 +55,6 @@ const ChapterLink: FC<Props> = ({
   return (
     <Pressable
       onPress={handlePress}
-      key={chapter}
       style={({ pressed }) => [
         styles.chapterItem,
         selected && selectedChapterItemTheme,
