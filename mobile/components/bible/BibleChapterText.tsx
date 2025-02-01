@@ -31,6 +31,10 @@ const BibleChapterText: FC<Props> = ({
   const [verses, setVerses] = useState<{ num: number; text: string }[]>([]);
   const colorScheme = useColorScheme();
 
+  const verseTheme = {
+    color: Colors[colorScheme ?? "light"].text,
+  }
+
   const highlightTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].highlight,
   };
@@ -69,6 +73,7 @@ const BibleChapterText: FC<Props> = ({
             <Text
               style={[
                 styles.verseText,
+                verseTheme,
                 highlighted.includes(v.num.toString()) && highlightTheme,
               ]}
             >
