@@ -41,4 +41,4 @@ async function normalizeTextAttribute(table: string) {
 (async () => {
   await normalizeTextAttribute("versesAr");
   // await normalizeTextAttribute("versesEn");
-})()
+})();

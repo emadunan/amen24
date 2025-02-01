@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   flipIcon: {
-    transform: [{ scaleX: -1 }]
+    transform: [{ scaleX: -1 }],
   },
   versesList: {
     paddingHorizontal: 16,

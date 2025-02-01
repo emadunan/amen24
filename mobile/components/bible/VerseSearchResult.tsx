@@ -40,18 +40,18 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
 
   const highlightText = (text: string) => {
     if (!query) return text; // If there's no query, return the text as is
-  
+
     // Escape special regex characters in the query words
     const escapedWords = words.map((word) =>
-      word.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&")
+      word.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"),
     );
-  
+
     // Create a regex pattern to match any of the words in the array
     const regex = new RegExp(`(${escapedWords.join("|")})`, "gi");
-  
+
     // Split the text into words and spaces, keeping track of spaces
     const parts = text.split(/(\s+)/); // Split by spaces but keep the spaces in the array
-  
+
     // Process each part and wrap matching words in a highlight style
     return parts.map((part, index) => {
       if (regex.test(part)) {
@@ -66,8 +66,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
         return <Text key={index}>{part}</Text>;
       }
     });
-  };  
-  
+  };
 
   return (
     <ThemedView

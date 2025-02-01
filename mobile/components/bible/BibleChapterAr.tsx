@@ -38,10 +38,14 @@ const BibleChapterAr: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
     fetchChapter();
   }, [chapterNum, bookId]);
 
-  function handleHighlight(verseNum: number) {    
+  function handleHighlight(verseNum: number) {
     const num = verseNum.toString();
 
-    setHighlighted(prevState => [...prevState, num]);
+    setHighlighted((prevState) =>
+      prevState.includes(num)
+        ? prevState.filter((v) => v !== num)
+        : [...prevState, num],
+    );
   }
 
   return (

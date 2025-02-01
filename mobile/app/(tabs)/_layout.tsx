@@ -63,7 +63,12 @@ export default function TabLayout() {
         options={{
           title: t("search"),
           tabBarIcon: ({ color }) => (
-            <Feather name="search" size={24} color={color} style={I18nManager.isRTL && styles.flipIcon} />
+            <Feather
+              name="search"
+              size={24}
+              color={color}
+              style={I18nManager.isRTL && styles.flipIcon}
+            />
           ),
         }}
       />
@@ -73,6 +78,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   flipIcon: {
-    transform: [{ scaleX: -1 }]
-  }
-})
+    transform: [{ scaleX: -1 }],
+  },
+});

@@ -36,7 +36,7 @@ const BookDrawer: FC = () => {
         headerStyle: {
           backgroundColor: Colors[colorScheme ?? "light"].secondary,
         },
-        drawerStyle: { width: 128 },
+        drawerStyle: { width: 128, backgroundColor: Colors[colorScheme ?? "light"].background },
         headerLeft: () => (
           <BackBtn color={Colors[colorScheme ?? "light"].primary} />
         ),

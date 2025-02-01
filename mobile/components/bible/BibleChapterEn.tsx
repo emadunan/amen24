@@ -18,7 +18,6 @@ const BibleChapterEn: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
   const [verses, setVerses] = useState<{ num: number; text: string }[]>([]);
   const [highlighted, setHighlighted] = useState<string[]>([]);
 
-
   const colorScheme = useColorScheme();
 
   const highlightTheme = {
@@ -42,7 +41,11 @@ const BibleChapterEn: FC<Props> = ({ bookId, chapterNum, verseNum }) => {
   function handleHighlight(verseNum: number) {
     const num = verseNum.toString();
 
-    setHighlighted(prevState => prevState.includes(num) ? prevState.filter(v => v !== num) : [...prevState, num]);
+    setHighlighted((prevState) =>
+      prevState.includes(num)
+        ? prevState.filter((v) => v !== num)
+        : [...prevState, num],
+    );
   }
 
   return (
