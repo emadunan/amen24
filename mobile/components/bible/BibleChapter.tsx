@@ -14,6 +14,7 @@ import { DrawerActions } from "@react-navigation/native";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import BibleChapterText from "@/components/bible/BibleChapterText";
 import { useSQLiteContext } from "expo-sqlite";
 import { IVerseRaw } from "@/interfaces/verse";
@@ -71,8 +72,6 @@ const BibleChapter: FC = () => {
       [bookId, chapterNum, ...highlighted],
     );
 
-    console.log(verses);
-
     let formattedText = "";
     let previousNum = verses[0].num - 1; // Start one number before the first verse
 
@@ -97,6 +96,10 @@ const BibleChapter: FC = () => {
     const content = formattedText.trim();
 
     await Clipboard.setStringAsync(content);
+  }
+
+  function handleRemoveHighlights() {
+    setHighlighted([]);
   }
 
   const chapterNumContainerTheme = {
@@ -166,15 +169,18 @@ const BibleChapter: FC = () => {
   return (
     <ThemedView style={styles.container}>
       {highlighted.length > 0 && (
-        <Pressable onPress={handleCopySelected}>
-          <View style={styles.toolbar}>
+        <View style={styles.toolbar}>
+          <Pressable onPress={handleRemoveHighlights}>
+            <MaterialIcons name="highlight-off" size={24} color={Colors[colorScheme ?? "light"].primary} />
+          </Pressable>
+          <Pressable onPress={handleCopySelected}>
             <AntDesign
               name="copy1"
               size={24}
               color={Colors[colorScheme ?? "light"].primary}
             />
-          </View>
-        </Pressable>
+          </Pressable>
+        </View>
       )}
       <ScrollView>
         <View key={`${i18n.language}-${bookId}-${chapterNum}`} style={styles.chapterContainer}>
@@ -227,6 +233,8 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   toolbar: {
+    flexDirection: "row",
+    gap: 16,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderBottomWidth: 1,

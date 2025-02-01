@@ -1,5 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
 import { useRouter } from "expo-router";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,7 +12,7 @@ interface Props {
   bookId: string;
   bookLen: string;
   currentChapter: string;
-  navigation: any;
+  navigation: DrawerNavigationHelpers;
 }
 
 const ChapterLink: FC<Props> = ({
@@ -47,9 +48,7 @@ const ChapterLink: FC<Props> = ({
 
   function handlePress() {
     navigation.closeDrawer();
-    router.push(
-      `/(tabs)/bible/${bookKey}?bookId=${bookId}&bookLen=${bookLen}&chapterNum=${chapter}`,
-    );
+    router.push(`/(tabs)/bible/${bookKey}?bookId=${bookId}&bookLen=${bookLen}&chapterNum=${chapter}`,);
   }
 
   return (
