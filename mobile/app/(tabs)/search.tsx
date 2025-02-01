@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   FlatList,
+  I18nManager,
   Pressable,
   StyleSheet,
 } from "react-native";
@@ -98,6 +99,7 @@ export default function SearchScreen() {
             name="search"
             size={32}
             color={Colors[colorScheme ?? "light"].text}
+            style={I18nManager.isRTL && styles.flipIcon}
           />
         </Pressable>
       </ThemedView>
@@ -157,6 +159,9 @@ const styles = StyleSheet.create({
   },
   searchBtn: {
     marginLeft: 8,
+  },
+  flipIcon: {
+    transform: [{ scaleX: -1 }]
   },
   versesList: {
     paddingHorizontal: 16,
