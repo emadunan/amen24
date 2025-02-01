@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   FlatList,
   I18nManager,
+  Keyboard,
   Pressable,
   StyleSheet,
 } from "react-native";
@@ -45,6 +46,8 @@ export default function SearchScreen() {
 
   async function handleSearch() {
     if (!query.trim() || query.trim().length < 2) return;
+
+    Keyboard.dismiss();
 
     const noramlizedText = normalizeArabicText(query);
 
