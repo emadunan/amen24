@@ -42,6 +42,7 @@ git push origin +HEAD^:"$name_of_your_branch"
 ## After merging the feature branch with main in the remote, perform fetch prune localy as clean up
 ``` bash
 git fetch --all --prune
+git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d
 ```
 
 ## Amen24 project structure
