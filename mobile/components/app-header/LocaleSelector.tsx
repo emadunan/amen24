@@ -1,11 +1,14 @@
 import React from "react";
-import { I18nManager, Platform, Pressable } from "react-native";
+import { I18nManager, Pressable } from "react-native";
 import i18n from "@/i18n/i18n";
 import * as Updates from "expo-updates";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "@/constants/Colors";
+import { useRouter } from "expo-router";
 
 const LocaleSelector = () => {
+  const router = useRouter();
+
   async function handleLocale() {
     const newLanguage = i18n.language === "en" ? "ar" : "en";
     i18n.changeLanguage(newLanguage);
@@ -30,8 +33,12 @@ const LocaleSelector = () => {
     }
   }
 
+  function handleRedirect() {
+    router.push("/locale");
+  }
+
   return (
-    <Pressable onPress={handleLocale}>
+    <Pressable onPress={handleRedirect}>
       <MaterialIcons name="language" size={24} color={Colors.light.primary} />
     </Pressable>
   );

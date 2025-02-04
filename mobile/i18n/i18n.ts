@@ -6,16 +6,20 @@ import commonEn from "./locales/en/common.json";
 import commonAr from "./locales/ar/common.json";
 import bookEn from "./locales/en/book.json";
 import bookAr from "./locales/ar/book.json";
+import langEn from "./locales/en/lang.json";
+import langAr from "./locales/ar/lang.json";
 import { I18nManager } from "react-native";
 
 const resources = {
   en: {
     common: commonEn,
     book: bookEn,
+    lang: langEn,
   },
   ar: {
     common: commonAr,
     book: bookAr,
+    lang: langAr,
   },
 };
 
@@ -27,7 +31,7 @@ i18n.use(initReactI18next).init<Resources>({
   // lng: Localization.getLocales()?.[0]?.languageCode ?? "en",
   lng: I18nManager.isRTL ? "ar" : "en",
   defaultNS: "common",
-  ns: ["common", "book"],
+  ns: ["common", "book", "lang"],
 });
 
 export default i18n;
