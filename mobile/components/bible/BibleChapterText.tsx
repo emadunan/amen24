@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { ThemedText } from "../ThemedText";
 import { useSQLiteContext } from "expo-sqlite";
 import { Colors } from "@/constants/Colors";
@@ -30,10 +30,6 @@ const BibleChapterText: FC<Props> = ({
   const { i18n } = useTranslation();
   const [verses, setVerses] = useState<{ num: number; text: string }[]>([]);
   const colorScheme = useColorScheme();
-
-  const verseTheme = {
-    color: Colors[colorScheme ?? "light"].text,
-  }
 
   const highlightTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].highlight,
@@ -66,45 +62,33 @@ const BibleChapterText: FC<Props> = ({
   }
 
   return (
-      <Text style={styles.chapterText}>
-        {verses.map((v, index) => (
-          <Pressable key={v.num} onPress={() => handleHighlight(v.num)}>
-            <Text
-              style={[
-                styles.verseText,
-                verseTheme,
-                highlighted.includes(v.num.toString()) && highlightTheme,
-              ]}
-            >
-              <Text style={styles.verseNum}>
-                {i18n.language === "ar"
-                  ? v.num.toLocaleString("ar-EG") // Arabic numerals
-                  : v.num}
-              </Text>{" "}
-              {v.text}
-              {index < verses.length - 1 ? " " : ""} {/* Space between verses */}
-            </Text>
-          </Pressable>
-        ))}
-      </Text>
+    <ThemedText style={styles.chapterContent}>
+      {verses.map(verse => <ThemedText key={verse.num} onPress={handleHighlight.bind(this, verse.num)} style={[highlighted.includes(verse.num.toString()) && highlightTheme]}>
+        <ThemedText style={[styles.verseNum]} numberOfLines={1}>
+          {i18n.language === "ar"
+            ? verse.num.toLocaleString("ar-EG") // Arabic numerals
+            : verse.num
+          }
+          {"\u00A0"}
+        </ThemedText>
+        <ThemedText style={styles.verseText}>{verse.text}</ThemedText>
+        <ThemedText>{" "}</ThemedText>
+      </ThemedText>)}
+    </ThemedText>
   );
 };
 
 export default BibleChapterText;
 
 const styles = StyleSheet.create({
-  chapterText: {
-    fontSize: 18,
-    lineHeight: 28,
+  chapterContent: {
     textAlign: "justify",
   },
   verseText: {
     fontSize: 18,
-    lineHeight: 28,
   },
   verseNum: {
-    fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 12,
     color: "#f00",
   },
 });
