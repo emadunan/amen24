@@ -24,7 +24,7 @@ const ChapterLink: FC<Props> = ({
   bookLen,
   navigation,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const router = useRouter();
   const colorScheme = useColorScheme();
@@ -62,7 +62,7 @@ const ChapterLink: FC<Props> = ({
             selected && selectedChapterTextTheme,
           ]}
         >
-          {`${t("chapter")} ${chapter}`}
+          {`${t("chapter")} ${i18n.language === "ar" ? Number(chapter).toLocaleString("ar-EG") : chapter}`}
         </Text>
       </Pressable>
     </ThemedView>
@@ -72,7 +72,7 @@ const ChapterLink: FC<Props> = ({
 const styles = StyleSheet.create({
   chapterItem: {
     padding: 8,
-    paddingLeft: 16,
+    paddingHorizontal: 16,
     justifyContent: "center",
     borderBottomWidth: 1,
     borderColor: "#ccc",
