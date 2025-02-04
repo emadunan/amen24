@@ -42,7 +42,7 @@ const BibleChapterText: FC<Props> = ({
         LEFT JOIN chapters ON verses${bibleLang}.chapterId = chapters.id 
         LEFT JOIN books ON chapters.bookId = books.id 
         WHERE chapters.num = ? AND books.id = ?;`,
-        [chapterNum, bookId]
+        [chapterNum, bookId],
       );
 
       setVerses(data);
@@ -57,23 +57,28 @@ const BibleChapterText: FC<Props> = ({
     setHighlighted((prevState) =>
       prevState.includes(num)
         ? prevState.filter((v) => v !== num)
-        : [...prevState, num]
+        : [...prevState, num],
     );
   }
 
   return (
     <ThemedText style={styles.chapterContent}>
-      {verses.map(verse => <ThemedText key={verse.num} onPress={handleHighlight.bind(this, verse.num)} style={[highlighted.includes(verse.num.toString()) && highlightTheme]}>
-        <ThemedText style={[styles.verseNum]} numberOfLines={1}>
-          {i18n.language === "ar"
-            ? verse.num.toLocaleString("ar-EG") // Arabic numerals
-            : verse.num
-          }
-          {"\u00A0"}
+      {verses.map((verse) => (
+        <ThemedText
+          key={verse.num}
+          onPress={handleHighlight.bind(this, verse.num)}
+          style={[highlighted.includes(verse.num.toString()) && highlightTheme]}
+        >
+          <ThemedText style={[styles.verseNum]} numberOfLines={1}>
+            {i18n.language === "ar"
+              ? verse.num.toLocaleString("ar-EG") // Arabic numerals
+              : verse.num}
+            {"\u00A0"}
+          </ThemedText>
+          <ThemedText style={styles.verseText}>{verse.text}</ThemedText>
+          <ThemedText> </ThemedText>
         </ThemedText>
-        <ThemedText style={styles.verseText}>{verse.text}</ThemedText>
-        <ThemedText>{" "}</ThemedText>
-      </ThemedText>)}
+      ))}
     </ThemedText>
   );
 };

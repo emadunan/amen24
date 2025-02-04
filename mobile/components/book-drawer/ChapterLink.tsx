@@ -45,11 +45,15 @@ const ChapterLink: FC<Props> = ({
 
   function handlePress() {
     navigation.closeDrawer();
-    router.push(`/(tabs)/bible/${bookKey}?bookId=${bookId}&bookLen=${bookLen}&chapterNum=${chapter}`,);
+    router.push(
+      `/(tabs)/bible/${bookKey}?bookId=${bookId}&bookLen=${bookLen}&chapterNum=${chapter}`,
+    );
   }
 
   return (
-    <ThemedView style={[styles.chapterItem, selected && selectedChapterItemTheme]}>
+    <ThemedView
+      style={[styles.chapterItem, selected && selectedChapterItemTheme]}
+    >
       <Pressable onPress={handlePress}>
         <Text
           style={[

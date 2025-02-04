@@ -14,7 +14,7 @@ import { DrawerActions } from "@react-navigation/native";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import BibleChapterText from "@/components/bible/BibleChapterText";
 import { useSQLiteContext } from "expo-sqlite";
 import { IVerseRaw } from "@/interfaces/verse";
@@ -171,7 +171,11 @@ const BibleChapter: FC = () => {
       {highlighted.length > 0 && (
         <View style={styles.toolbar}>
           <Pressable onPress={handleRemoveHighlights}>
-            <MaterialIcons name="highlight-off" size={24} color={Colors[colorScheme ?? "light"].primary} />
+            <MaterialIcons
+              name="highlight-off"
+              size={24}
+              color={Colors[colorScheme ?? "light"].primary}
+            />
           </Pressable>
           <Pressable onPress={handleCopySelected}>
             <AntDesign
@@ -183,7 +187,10 @@ const BibleChapter: FC = () => {
         </View>
       )}
       <ScrollView>
-        <View key={`${i18n.language}-${bookId}-${chapterNum}`} style={styles.chapterContainer}>
+        <View
+          key={`${i18n.language}-${bookId}-${chapterNum}`}
+          style={styles.chapterContainer}
+        >
           {i18n.language === "ar" ? (
             <BibleChapterText
               bibleLang="Ar"

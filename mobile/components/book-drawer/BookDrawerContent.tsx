@@ -20,9 +20,14 @@ const BookDrawerContent: FC<Props> = (props) => {
   );
 
   return (
-  <ThemedView style={{flex: 1}}>
-    <FlatList data={chapters} renderItem={({ item }) => <ChapterLink key={item} chapter={item} {...props} />} />
-  </ThemedView>
+    <ThemedView style={{ flex: 1 }}>
+      <FlatList
+        data={chapters}
+        renderItem={({ item }) => (
+          <ChapterLink key={item} chapter={item} {...props} />
+        )}
+      />
+    </ThemedView>
   );
 };
 
