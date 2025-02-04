@@ -14,6 +14,8 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { SQLiteProvider } from "expo-sqlite";
 import { I18nextProvider } from "react-i18next";
 import i18n from "@/i18n/i18n";
+import * as SystemUI from 'expo-system-ui';
+import { Colors } from "@/constants/Colors";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -23,6 +25,11 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
+
+  useEffect(() => {
+    // Set background color dynamically
+    SystemUI.setBackgroundColorAsync(Colors[colorScheme ?? "light"].background);
+  }, [colorScheme]);
 
   useEffect(() => {
     if (loaded) {

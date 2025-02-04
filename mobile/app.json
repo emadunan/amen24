@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "amen24",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "updates": {
@@ -20,9 +20,9 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#F4EFE6"
       },
-      "package": "com.anonymous.mobile"
+      "package": "yeshua.emadunan.amen24"
     },
     "web": {
       "bundler": "metro",
@@ -37,7 +37,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#F4EFE6"
         }
       ],
       [
