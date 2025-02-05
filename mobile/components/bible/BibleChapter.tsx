@@ -142,7 +142,9 @@ const BibleChapter: FC = () => {
               style={[styles.chapterNumContainer, chapterNumContainerTheme]}
             >
               <Text style={[styles.chapterNumText, chapterNumTextTheme]}>
-                {i18n.language === "ar" ? Number(chapterNum).toLocaleString("ar-EG") : chapterNum}
+                {i18n.language === "ar"
+                  ? Number(chapterNum).toLocaleString("ar-EG")
+                  : chapterNum}
               </Text>
             </Pressable>
             <Pressable onPress={handleNextChapter}>

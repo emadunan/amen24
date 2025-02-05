@@ -1,20 +1,23 @@
-import { useFocusEffect } from 'expo-router';
-import { Alert, BackHandler } from 'react-native';
+import { useFocusEffect } from "expo-router";
+import { useTranslation } from "react-i18next";
+import { Alert, BackHandler } from "react-native";
 
 const useBackAsExit = () => {
+  const { t } = useTranslation();
   useFocusEffect(() => {
     const onBackPress = () => {
-      Alert.alert("Exit App", "Do you want to exit?", [
-        { text: "Cancel", style: "cancel" },
-        { text: "Exit", onPress: () => BackHandler.exitApp() },
+      Alert.alert(t("exit-title", {ns: "ui"}), t("exit-dialog", {ns: "ui"}), [
+        { text: t("cancel", {ns: "ui"}), style: "cancel" },
+        { text: t("exit", {ns: "ui"}), onPress: () => BackHandler.exitApp() },
       ]);
       return true; // Prevent default back behavior
     };
 
     BackHandler.addEventListener("hardwareBackPress", onBackPress);
-    
-    return () => BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-  });
-}
 
-export default useBackAsExit
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+  });
+};
+
+export default useBackAsExit;

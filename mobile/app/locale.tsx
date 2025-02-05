@@ -1,13 +1,13 @@
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView'
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import React, { FC, useLayoutEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next';
-import { I18nManager, Platform, Pressable, StyleSheet } from 'react-native';
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import React, { FC, useLayoutEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { I18nManager, Platform, Pressable, StyleSheet } from "react-native";
 import * as Updates from "expo-updates";
-import { useNavigation } from 'expo-router';
-import useMobileBackBtn from '@/hooks/useBackAsExit';
+import { useNavigation } from "expo-router";
+import useMobileBackBtn from "@/hooks/useBackAsExit";
 
 interface RadioButtonProps {
   label: string;
@@ -16,7 +16,12 @@ interface RadioButtonProps {
   onPress: (value: string) => void;
 }
 
-const RadioButton: FC<RadioButtonProps> = ({ label, value, selected, onPress }) => {
+const RadioButton: FC<RadioButtonProps> = ({
+  label,
+  value,
+  selected,
+  onPress,
+}) => {
   const colorScheme = useColorScheme();
   const { t } = useTranslation();
 
@@ -26,8 +31,12 @@ const RadioButton: FC<RadioButtonProps> = ({ label, value, selected, onPress }) 
 
   return (
     <Pressable style={styles.radioContainer} onPress={() => onPress(value)}>
-      <ThemedView style={[styles.radioCircle, selected === value && selectedTheme]} />
-      <ThemedText style={styles.radioText}>{t(`${label}`, { ns: "lang" })}</ThemedText>
+      <ThemedView
+        style={[styles.radioCircle, selected === value && selectedTheme]}
+      />
+      <ThemedText style={styles.radioText}>
+        {t(`${label}`, { ns: "lang" })}
+      </ThemedText>
     </Pressable>
   );
 };
@@ -49,7 +58,7 @@ const LocaleScreen = () => {
 
     const newIsRtl = newLanguage === "ar";
 
-    if (newIsRtl !== I18nManager.isRTL && Platform.OS !== 'web') {
+    if (newIsRtl !== I18nManager.isRTL && Platform.OS !== "web") {
       I18nManager.allowRTL(newIsRtl);
       I18nManager.forceRTL(newIsRtl);
 
@@ -60,7 +69,9 @@ const LocaleScreen = () => {
           console.error("Failed to reload app: ", e);
         }
       } else {
-        console.warn("Updates.reloadAsync() does not work in Expo Go or development mode.");
+        console.warn(
+          "Updates.reloadAsync() does not work in Expo Go or development mode.",
+        );
       }
     }
   }
@@ -68,8 +79,18 @@ const LocaleScreen = () => {
   return (
     <ThemedView style={styles.container}>
       <ThemedView>
-        <RadioButton label="en" value="en" selected={selected} onPress={handleLocale} />
-        <RadioButton label="ar" value="ar" selected={selected} onPress={handleLocale} />
+        <RadioButton
+          label="en"
+          value="en"
+          selected={selected}
+          onPress={handleLocale}
+        />
+        <RadioButton
+          label="ar"
+          value="ar"
+          selected={selected}
+          onPress={handleLocale}
+        />
       </ThemedView>
     </ThemedView>
   );
