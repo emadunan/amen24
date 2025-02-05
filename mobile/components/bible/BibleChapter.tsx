@@ -85,10 +85,10 @@ const BibleChapter: FC = () => {
       previousNum = verse.num;
     }
 
-    formattedText += ` ( ${t(key, { ns: "book" })} ${i18n.language === "ar" ? Number(chapterNum).toLocaleString("ar-EG") : chapterNum} : ${i18n.language === "ar" ? Number(verses[0].num) : verses[0].num} `;
+    formattedText += ` ( ${t(key, { ns: "book" })} ${i18n.language === "ar" ? Number(chapterNum).toLocaleString("ar-EG") : chapterNum} : ${i18n.language === "ar" ? Number(verses[0].num).toLocaleString("ar-EG") : verses[0].num} `;
 
     if (verses.length > 1) {
-      formattedText += `- ${i18n.language === "ar" ? Number(verses[verses.length - 1].num) : verses[verses.length - 1].num} )`;
+      formattedText += `- ${i18n.language === "ar" ? Number(verses[verses.length - 1].num).toLocaleString("ar-EG") : verses[verses.length - 1].num} )`;
     } else {
       formattedText += `)`;
     }
