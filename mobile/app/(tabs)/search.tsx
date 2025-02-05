@@ -85,6 +85,7 @@ export default function SearchScreen() {
     } catch (error) {
       console.error("Search error:", error);
     } finally {
+      setQuery("");
       setLoading(false); // Hide loading indicator when search is complete
     }
   }
@@ -159,6 +160,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 2,
     borderWidth: 1,
+    textAlign: "center",
   },
   searchBtn: {
     marginLeft: 8,
