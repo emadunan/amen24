@@ -8,7 +8,6 @@ import { I18nManager, Platform, Pressable, StyleSheet } from 'react-native';
 import * as Updates from "expo-updates";
 import { useNavigation } from 'expo-router';
 
-
 interface RadioButtonProps {
   label: string;
   value: string;
@@ -22,13 +21,15 @@ const RadioButton: FC<RadioButtonProps> = ({ label, value, selected, onPress }) 
 
   const selectedTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].text,
-  }
-  return <Pressable style={styles.radioContainer} onPress={() => onPress(value)}>
-    <ThemedView style={[styles.radioCircle, selected === value && selectedTheme]} />
-    <ThemedText style={styles.radioText}>{t(label, { ns: "lang" })}</ThemedText>
-  </Pressable>
-};
+  };
 
+  return (
+    <Pressable style={styles.radioContainer} onPress={() => onPress(value)}>
+      <ThemedView style={[styles.radioCircle, selected === value && selectedTheme]} />
+      <ThemedText style={styles.radioText}>{t(`languages.${label}`)}</ThemedText>
+    </Pressable>
+  );
+};
 
 const LocaleScreen = () => {
   const { t, i18n } = useTranslation();
@@ -36,33 +37,29 @@ const LocaleScreen = () => {
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      title: t("locale")
-    })
-  }, [navigation, i18n.language]);
-
-  const isRtl = i18n.language === "ar";
+    navigation.setOptions({ title: t("locale") });
+  }, [t, navigation]);
 
   async function handleLocale(newLanguage: string) {
+    if (selected === newLanguage) return; // Avoid unnecessary re-renders
+
     setSelected(newLanguage);
     i18n.changeLanguage(newLanguage);
 
-    if (isRtl !== I18nManager.isRTL && Platform.OS !== 'web') {
-
-      I18nManager.allowRTL(isRtl);
-      I18nManager.forceRTL(isRtl);
+    const newIsRtl = newLanguage === "ar";
+    
+    if (newIsRtl !== I18nManager.isRTL && Platform.OS !== 'web') {
+      I18nManager.allowRTL(newIsRtl);
+      I18nManager.forceRTL(newIsRtl);
 
       if (!__DEV__) {
-        // Only run in production
         try {
           await Updates.reloadAsync();
         } catch (e) {
           console.error("Failed to reload app: ", e);
         }
       } else {
-        console.warn(
-          "Updates.reloadAsync() does not work in Expo Go or development mode.",
-        );
+        console.warn("Updates.reloadAsync() does not work in Expo Go or development mode.");
       }
     }
   }
@@ -74,8 +71,8 @@ const LocaleScreen = () => {
         <RadioButton label="ar" value="ar" selected={selected} onPress={handleLocale} />
       </ThemedView>
     </ThemedView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -103,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LocaleScreen
+export default LocaleScreen;
