@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { I18nManager, Platform, Pressable, StyleSheet } from 'react-native';
 import * as Updates from "expo-updates";
 import { useNavigation } from 'expo-router';
+import useMobileBackBtn from '@/hooks/useBackAsExit';
 
 interface RadioButtonProps {
   label: string;
@@ -26,7 +27,7 @@ const RadioButton: FC<RadioButtonProps> = ({ label, value, selected, onPress }) 
   return (
     <Pressable style={styles.radioContainer} onPress={() => onPress(value)}>
       <ThemedView style={[styles.radioCircle, selected === value && selectedTheme]} />
-      <ThemedText style={styles.radioText}>{t(`languages.${label}`)}</ThemedText>
+      <ThemedText style={styles.radioText}>{t(`${label}`, { ns: "lang" })}</ThemedText>
     </Pressable>
   );
 };
@@ -47,7 +48,7 @@ const LocaleScreen = () => {
     i18n.changeLanguage(newLanguage);
 
     const newIsRtl = newLanguage === "ar";
-    
+
     if (newIsRtl !== I18nManager.isRTL && Platform.OS !== 'web') {
       I18nManager.allowRTL(newIsRtl);
       I18nManager.forceRTL(newIsRtl);
