@@ -6,10 +6,17 @@ const useBackAsExit = () => {
   const { t } = useTranslation();
   useFocusEffect(() => {
     const onBackPress = () => {
-      Alert.alert(t("exit-title", {ns: "ui"}), t("exit-dialog", {ns: "ui"}), [
-        { text: t("cancel", {ns: "ui"}), style: "cancel" },
-        { text: t("exit", {ns: "ui"}), onPress: () => BackHandler.exitApp() },
-      ]);
+      Alert.alert(
+        t("exit-title", { ns: "ui" }),
+        t("exit-dialog", { ns: "ui" }),
+        [
+          { text: t("cancel", { ns: "ui" }), style: "cancel" },
+          {
+            text: t("exit", { ns: "ui" }),
+            onPress: () => BackHandler.exitApp(),
+          },
+        ],
+      );
       return true; // Prevent default back behavior
     };
 

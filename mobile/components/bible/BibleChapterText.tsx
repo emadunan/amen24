@@ -1,11 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, TextStyle } from "react-native";
 import { ThemedText } from "../ThemedText";
 import { useSQLiteContext } from "expo-sqlite";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { useTranslation } from "react-i18next";
-import { ThemedView } from "../ThemedView";
 
 type BibleLang = "En" | "Ar";
 
@@ -29,10 +26,9 @@ const BibleChapterText: FC<Props> = ({
   const db = useSQLiteContext();
   const { i18n } = useTranslation();
   const [verses, setVerses] = useState<{ num: number; text: string }[]>([]);
-  const colorScheme = useColorScheme();
 
-  const highlightTheme = {
-    backgroundColor: Colors[colorScheme ?? "light"].highlight,
+  const highlightTheme: TextStyle = {
+    textDecorationLine: "underline",
   };
 
   useEffect(() => {
@@ -67,7 +63,6 @@ const BibleChapterText: FC<Props> = ({
         <ThemedText
           key={verse.num}
           onPress={handleHighlight.bind(this, verse.num)}
-          style={[highlighted.includes(verse.num.toString()) && highlightTheme]}
         >
           <ThemedText style={[styles.verseNum]} numberOfLines={1}>
             {i18n.language === "ar"
@@ -75,8 +70,14 @@ const BibleChapterText: FC<Props> = ({
               : verse.num}
             {"\u00A0"}
           </ThemedText>
-          <ThemedText style={styles.verseText}>{verse.text}</ThemedText>
-          <ThemedText> </ThemedText>
+          <ThemedText
+            style={[
+              styles.verseText,
+              highlighted.includes(verse.num.toString()) && highlightTheme,
+            ]}
+          >
+            {verse.text}{" "}
+          </ThemedText>
         </ThemedText>
       ))}
     </ThemedText>
@@ -90,10 +91,12 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   verseText: {
-    fontSize: 18,
+    fontSize: 20,
+    lineHeight: 32,
   },
   verseNum: {
     fontSize: 12,
+    lineHeight: 32,
     color: "#f00",
   },
 });
