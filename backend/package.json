@@ -17,12 +17,17 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migrate:up": "cross-env NODE_ENV=${npm_package_env:-development} typeorm-ts-node-commonjs migration:run -d src/_config/dataSource.config.ts",
+    "migrate:down": "cross-env NODE_ENV=${npm_package_env:-development} typeorm-ts-node-commonjs migration:revert -d src/_config/dataSource.config.ts",
+    "migrate:create": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:create src/migrations/$npm_config_name",
+    "migrate:generate": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:generate src/migrations/${npm_config_name:-unnamed} -d src/_config/dataSource.config.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/typeorm": "^11.0.0",
