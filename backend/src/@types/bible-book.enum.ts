@@ -1,4 +1,4 @@
-export enum BibleBooks {
+export enum BibleBook {
   GENESIS = "GEN",
   EXODUS = "EXO",
   LEVITICUS = "LEV",

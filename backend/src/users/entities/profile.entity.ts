@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { UserCategory, BibleBook, Language } from "../../@types";
 import { User } from "./user.entity";
-import { UserCategory } from "../../@types/user-category.enum";
-import { BibleBooks } from "../../@types/bible-book.enum";
+
 
 @Entity()
 export class Profile {
@@ -17,11 +17,14 @@ export class Profile {
   @Column({ nullable: true })
   lastLogin: Date;
 
-  @Column({ default: BibleBooks.GENESIS })
-  currentBook: string;
+  @Column({ default: BibleBook.GENESIS })
+  currentBook: BibleBook;
 
   @Column({ default: 1 })
   currentChapter: number;
+
+  @Column({ nullable: true })
+  uilanguage: Language;
 
   @Column({ default: 1 })
   fontSize: number;
@@ -29,6 +32,6 @@ export class Profile {
   @Column({ default: true })
   diacrited: boolean;
 
-  @Column({default: false})
+  @Column({ default: false })
   darkMode: boolean;
 }
