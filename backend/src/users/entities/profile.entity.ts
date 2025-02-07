@@ -1,5 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { User } from "./user.entity";
+import { UserCategory } from "../../@types/user-category.enum";
+import { BibleBooks } from "../../@types/bible-book.enum";
 
 @Entity()
 export class Profile {
@@ -9,21 +11,24 @@ export class Profile {
   @OneToMany(() => User, (user) => user.profile)
   users: User[];
 
-  @Column({ default: 'client' })
-  privilege: string;
+  @Column({ default: UserCategory.MEMBER })
+  privilege: UserCategory;
 
   @Column({ nullable: true })
   lastLogin: Date;
 
-  @Column({ default: "genesis" })
+  @Column({ default: BibleBooks.GENESIS })
   currentBook: string;
 
   @Column({ default: 1 })
   currentChapter: number;
 
+  @Column({ default: 1 })
+  fontSize: number;
+
   @Column({ default: true })
   diacrited: boolean;
 
-  @Column({ default: 1 })
-  fontSize: number;
+  @Column({default: false})
+  darkMode: boolean;
 }

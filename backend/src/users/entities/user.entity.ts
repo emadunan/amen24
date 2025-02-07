@@ -32,7 +32,7 @@ export class User {
   displayName: string;
 
   @Column({ nullable: true })
-  photoUrl: string;
+  photoUri: string;
 
   @Column({ default: true })
   isActive: boolean;
