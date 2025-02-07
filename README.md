@@ -1,6 +1,28 @@
 # Amen24
 Amen24 is a free non-profitable project to introduce bible content for all.
 
+## Install database engine locally and configure it
+``` bash
+sudo apt update     # Update apt repository
+sudo apt install postgresql postgresql-contrib  # Install postgresql and some additional utilities
+
+sudo -i -u postgres
+psql  # Login through peer authentication
+```
+
+``` sql
+ALTER USER postgres WITH PASSWORD 'hiJack7';
+\q
+```
+
+``` bash
+exit
+sudo nano /etc/postgresql/16/main/pg_hba.conf # Modify database login from peer to md5
+sudo systemctl restart postgresql.service # Restart postgresql service
+sudo systemctl status postgresql.service # Check service availability
+psql -U postgres # Login with postgres through md5 authentication
+```
+
 ## Run bible database scripts
 ```bash
 npx tsc createBibleDb.ts --resolveJsonModule --esModuleInterop # Compile the script to JS
