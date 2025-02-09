@@ -14,7 +14,7 @@ export class Profile {
   @Column({ default: UserCategory.MEMBER })
   privilege: UserCategory;
 
-  @Column({ nullable: true })
+  @Column({ default: new Date() })
   lastLogin: Date;
 
   @Column({ default: BibleBook.GENESIS })

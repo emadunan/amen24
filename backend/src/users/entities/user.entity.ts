@@ -22,7 +22,7 @@ export class User {
   providerId: string;
 
   @ManyToOne(() => Profile, (profile) => profile.users)
-  @JoinColumn()
+  @JoinColumn({ name: "email" })
   profile: Profile;
 
   @Column()
