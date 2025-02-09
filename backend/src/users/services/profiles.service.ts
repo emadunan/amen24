@@ -33,4 +33,8 @@ export class ProfilesService {
     return `This action removes a #${id} user`;
   }
 
+  async updateLastLogin(email: string) {
+    return await this.profilesRepo.update(email, { lastLogin: new Date() })
+  }
+
 }

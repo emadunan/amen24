@@ -6,5 +6,10 @@ POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-  "email": "emadunan@outlook.com"
+  "email": "emadunan@yahoo.com",
+  "password": "apassw0rd",
+  "provider": "local",
+  "providerId": "emadunan",
+  "displayName": "Emad Younan",
+  "isActive": true
 }

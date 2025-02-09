@@ -1,10 +1,10 @@
+import { Optional } from "@nestjs/common";
 import { IsBoolean, IsDate, IsDefined, IsEmail, IsEnum, IsNumber } from "class-validator";
 import { BibleBook, Language, UserCategory } from "src/@types";
 
 
 export class CreateProfileDto {
   @IsEmail()
-  @IsDefined()
   email: string;
 
   @IsEnum(UserCategory)
@@ -20,6 +20,7 @@ export class CreateProfileDto {
   currentChapter: number;
 
   @IsEnum(Language)
+  @Optional()
   uilanguage: Language;
 
   @IsNumber()

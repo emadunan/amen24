@@ -1,28 +1,28 @@
-import { IsBoolean, IsDefined, IsEmail, IsString } from "class-validator";
+import { IsBoolean, IsEmail, IsOptional, IsString, MinLength, ValidateIf } from "class-validator";
 
 
 export class CreateUserDto {
   @IsString()
-  password: string;
-
-  @IsString()
-  @IsDefined()
   provider: string;
 
   @IsString()
-  @IsDefined()
+  @IsOptional()
   providerId: string;
 
   @IsEmail()
-  @IsDefined()
   email: string;
 
+  @ValidateIf(o => o.provider === "local")
   @IsString()
-  @IsDefined()
+  @MinLength(6, { message: "Password must be at least 6 characters long" })
+  password?: string;
+
+  @IsString()
   displayName: string;
 
   @IsString()
-  photoUri: string;
+  @IsOptional()
+  photoUri?: string;
 
   @IsBoolean()
   isActive: boolean;

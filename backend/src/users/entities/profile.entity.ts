@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { UserCategory, BibleBook, Language } from "../../@types";
 import { User } from "./user.entity";
 
@@ -14,7 +14,10 @@ export class Profile {
   @Column({ default: UserCategory.MEMBER })
   privilege: UserCategory;
 
-  @Column({ default: new Date() })
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
   lastLogin: Date;
 
   @Column({ default: BibleBook.GENESIS })

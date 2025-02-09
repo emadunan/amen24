@@ -4,13 +4,15 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 import { Profile } from './profile.entity';
 
 @Entity()
+@Unique(['email', 'provider'])
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ nullable: true })
   password: string;
