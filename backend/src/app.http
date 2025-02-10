@@ -1,4 +1,5 @@
-GET http://127.0.0.1:5000 HTTP/1.1
+GET http://localhost:5000/users HTTP/1.1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImI1NjNjMDA1LTc3YzQtNDUwOS1hNmE5LWUxYzkzNTM4MDMxMiIsImlhdCI6MTczOTIxODA2OCwiZXhwIjoxNzM5MjIxNjY4fQ.8tqttNfKJ1qZEbXnoLrbKOkovD9PDBN2Gcgno5RXqp8
 
 ###
 
