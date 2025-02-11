@@ -1,7 +1,13 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
-import { UserCategory, BibleBook, Language } from "../../@types";
-import { User } from "./user.entity";
-
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { UserCategory, BibleBook, Language } from '../../@types';
+import { User } from './user.entity';
 
 @Entity()
 export class Profile {

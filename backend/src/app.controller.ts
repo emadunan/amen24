@@ -1,4 +1,11 @@
-import { Controller, Get, HttpCode, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { LocalAuthGuard } from './auth/guards/local-auth.guard';
 import { AuthService } from './auth/auth.service';
@@ -7,8 +14,8 @@ import { AuthService } from './auth/auth.service';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   @Get()
   getHello(): string {
@@ -22,12 +29,10 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
-
   @UseGuards(LocalAuthGuard)
   @Post('auth/logout')
   @HttpCode(200)
   async logout(@Request() req) {
     return req.logout();
   }
-
 }

@@ -22,5 +22,9 @@ Content-Type: application/json
 
 ###
 
+DELETE http://localhost:5000/users/7b54832c-e75a-48bf-ad56-c632a29a690c HTTP/1.1
+
+###
+
 GET http://localhost:5000/users HTTP/1.1
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImI1NjNjMDA1LTc3YzQtNDUwOS1hNmE5LWUxYzkzNTM4MDMxMiIsImlhdCI6MTczOTMwMjk5MSwiZXhwIjoxNzM5MzA2NTkxfQ.PygXqt6lq6jtQk0szwoRlzPHU-ci0DoFR8hxz6DWSIE
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImI1NjNjMDA1LTc3YzQtNDUwOS1hNmE5LWUxYzkzNTM4MDMxMiIsImlhdCI6MTczOTMwNzg5OSwiZXhwIjoxNzM5MzExNDk5fQ.2QrqIs6yU6WEbIJ6P5P82CcGPa8coj644UqgwlevTkA

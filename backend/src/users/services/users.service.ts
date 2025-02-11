@@ -1,13 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
+import { ProfilesService } from './profiles.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private usersRepo: Repository<User>) { }
+  constructor(
+    @InjectRepository(User) private usersRepo: Repository<User>,
+    private profilesService: ProfilesService,
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     const user = this.usersRepo.create(createUserDto);
@@ -15,8 +19,8 @@ export class UsersService {
     return await this.usersRepo.save(user);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.usersRepo.find();
   }
 
   async findOne(id: string) {
@@ -27,15 +31,25 @@ export class UsersService {
     return await this.usersRepo.findOneBy({ email });
   }
 
-  async findOneByEmailProvider(email: string, provider: string = "local") {
+  async findOneByEmailProvider(email: string, provider: string = 'local') {
     return await this.usersRepo.findBy({ email, provider });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.usersRepo.findOneBy({ id });
+
+    if (!user) throw new NotFoundException('User was not found');
+
+    Object.assign(user, updateUserDto);
+
+    return await this.usersRepo.save(user);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    const user = await this.usersRepo.findOneBy({ id });
+
+    if (!user) throw new NotFoundException('User was not found');
+
+    return await this.profilesService.remove(user.email);
   }
 }

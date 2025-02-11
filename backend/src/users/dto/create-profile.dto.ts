@@ -1,7 +1,13 @@
-import { Optional } from "@nestjs/common";
-import { IsBoolean, IsDate, IsDefined, IsEmail, IsEnum, IsNumber } from "class-validator";
-import { BibleBook, Language, UserCategory } from "src/@types";
-
+import { Optional } from '@nestjs/common';
+import {
+  IsBoolean,
+  IsDate,
+  IsDefined,
+  IsEmail,
+  IsEnum,
+  IsNumber,
+} from 'class-validator';
+import { BibleBook, Language, UserCategory } from 'src/@types';
 
 export class CreateProfileDto {
   @IsEmail()

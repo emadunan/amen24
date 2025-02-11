@@ -11,7 +11,7 @@ import { Profile } from './profile.entity';
 @Entity()
 @Unique(['email', 'provider'])
 export class User {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ nullable: true })
@@ -23,8 +23,8 @@ export class User {
   @Column({ nullable: true })
   providerId: string;
 
-  @ManyToOne(() => Profile, (profile) => profile.users)
-  @JoinColumn({ name: "email" })
+  @ManyToOne(() => Profile, (profile) => profile.users, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'email' })
   profile: Profile;
 
   @Column()
