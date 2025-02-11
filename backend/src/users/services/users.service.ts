@@ -27,6 +27,10 @@ export class UsersService {
     return await this.usersRepo.findOneBy({ email });
   }
 
+  async findOneByEmailProvider(email: string, provider: string = "local") {
+    return await this.usersRepo.findBy({ email, provider });
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }

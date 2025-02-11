@@ -11,21 +11,21 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
+    const existUser = await this.usersService.findOneByEmailProvider(createUserDto.email, createUserDto.provider);
+
+    if (existUser) {
+      throw new BadRequestException("User duplication")
+    }
+
     const profile = await this.profilesService.create({ "email": createUserDto.email });
 
     await this.profilesService.updateLastLogin(profile.email);
 
     if (!profile) throw new NotFoundException("Profile was not found");
 
-    try {
-      const user = await this.usersService.create(createUserDto);
+    const user = await this.usersService.create(createUserDto);
 
-      return user;
-    } catch (error) {
-      console.log(error);
-
-      throw new BadRequestException("User duplication")
-    }
+    return user;
   }
 
   @UseGuards(JwtAuthGuard)
