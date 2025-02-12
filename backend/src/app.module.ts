@@ -22,4 +22,4 @@ import joiConfig from './_config/joi.config';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
