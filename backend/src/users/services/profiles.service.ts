@@ -9,7 +9,7 @@ import { Profile } from '../entities/profile.entity';
 export class ProfilesService {
   constructor(
     @InjectRepository(Profile) private profilesRepo: Repository<Profile>,
-  ) { }
+  ) {}
 
   async create(createProfileDto: Partial<CreateProfileDto>) {
     const profile = this.profilesRepo.create(createProfileDto);
