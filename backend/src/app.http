@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "email": "emadunan@gmail.com",
   "password": "emadunan",
-  "provider": "local",
+  "provider": "facebook",
   "providerId": "emadunan",
   "displayName": "Emad Younan",
   "isActive": true
@@ -22,9 +22,9 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:5000/users/7b54832c-e75a-48bf-ad56-c632a29a690c HTTP/1.1
+DELETE http://localhost:5000/users/c423e3ae-eb95-410b-80b0-0f04e2e726b4 HTTP/1.1
 
 ###
 
 GET http://localhost:5000/users HTTP/1.1
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImI1NjNjMDA1LTc3YzQtNDUwOS1hNmE5LWUxYzkzNTM4MDMxMiIsImlhdCI6MTczOTMwNzg5OSwiZXhwIjoxNzM5MzExNDk5fQ.2QrqIs6yU6WEbIJ6P5P82CcGPa8coj644UqgwlevTkA
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImI1NjNjMDA1LTc3YzQtNDUwOS1hNmE5LWUxYzkzNTM4MDMxMiIsImlhdCI6MTczOTM3MTYzOCwiZXhwIjoxNzM5Mzc1MjM4fQ.il3oIHWmd2JJ8IHuyK0_KQouuoooi3ySReMife0T7qw
