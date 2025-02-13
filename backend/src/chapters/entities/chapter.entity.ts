@@ -1,7 +1,8 @@
-import { Book } from "src/books/entities/book.entity";
-import { VerseEn } from "src/verses-en/entities/verse-en.entity";
-import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Book } from "../../books/entities/book.entity";
+import { VerseEn } from "../../verses-en/entities/verse-en.entity";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Chapter {
   @PrimaryGeneratedColumn()
   id: number;

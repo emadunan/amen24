@@ -1,4 +1,4 @@
-import { Chapter } from "src/chapters/entities/chapter.entity";
+import { Chapter } from "../../chapters/entities/chapter.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
