@@ -6,10 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { VersesService } from './verses.service';
 import { CreateVerseDto } from './dto/create-verse.dto';
 import { UpdateVerseDto } from './dto/update-verse.dto';
+import { FindChapterParamsDto } from './dto/find-chapter-params.dto';
+import { BibleBook, Language } from 'shared';
 
 @Controller('verses')
 export class VersesController {
@@ -23,6 +26,15 @@ export class VersesController {
   @Get()
   findAll() {
     return this.versesService.findAll();
+  }
+
+  @Get(':title/:chapterNum/:lang')
+  findChapter(
+    @Param('title') title: BibleBook,
+    @Param('chapterNum', ParseIntPipe) chapterNum: number,
+    @Param('lang') lang: Language,
+  ) {
+    return this.versesService.findChapter(title, chapterNum, lang);
   }
 
   @Get(':id')

@@ -6,7 +6,12 @@ import { Verse } from './entities/verse.entity';
 import { Repository } from 'typeorm';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
-import { BookKeys, Language, normalizeArabicText } from '@amen24/shared';
+import {
+  BibleBook,
+  BookKeys,
+  Language,
+  normalizeArabicText,
+} from '@amen24/shared';
 import { ChaptersService } from '../chapters/chapters.service';
 
 @Injectable()
@@ -14,7 +19,7 @@ export class VersesService {
   constructor(
     @InjectRepository(Verse) private versesRepo: Repository<Verse>,
     private chaptersService: ChaptersService,
-  ) { }
+  ) {}
 
   create(createVerseDto: CreateVerseDto) {
     return 'This action adds a new verse';
@@ -22,6 +27,19 @@ export class VersesService {
 
   findAll() {
     return `This action returns all verses`;
+  }
+
+  async findChapter(
+    bookKey: BibleBook,
+    chapterNumber: number,
+    language: Language,
+  ) {
+    return await this.versesRepo.find({
+      where: {
+        chapter: { num: chapterNumber, book: { title: bookKey } },
+        language,
+      },
+    });
   }
 
   findOne(id: number) {
@@ -49,23 +67,32 @@ export class VersesService {
 
     switch (language) {
       case Language.NATIVE:
-        filename = 'original-scripts.txt'
+        filename = 'original-scripts.txt';
         break;
 
       case Language.ENGLISH:
-        filename = 'Holy-Bible---English---Free-Bible-Version---Source-Edition.VPL.txt'
+        filename =
+          'Holy-Bible---English---Free-Bible-Version---Source-Edition.VPL.txt';
         break;
 
       case Language.ARABIC:
-        filename = 'Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt'
+        filename =
+          'Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt';
         break;
 
       default:
-        throw new BadRequestException("Language miss configurations!")
+        throw new BadRequestException('Language miss configurations!');
         break;
     }
 
-    const contentFilePath = resolve(__dirname, '..', '..', '..', 'content', filename);
+    const contentFilePath = resolve(
+      __dirname,
+      '..',
+      '..',
+      '..',
+      'content',
+      filename,
+    );
 
     const fileContent = readFileSync(contentFilePath, 'utf-8');
 
@@ -90,12 +117,14 @@ export class VersesService {
         await this.versesRepo.insert({
           num: +verseNum,
           text: verseText,
-          textNormalized: language === Language.ARABIC ? normalizeArabicText(verseText) : verseText,
+          textNormalized:
+            language === Language.ARABIC
+              ? normalizeArabicText(verseText)
+              : verseText,
           chapter: { id: chapter!.id },
           language,
         });
       }
     }
   }
-
 }
