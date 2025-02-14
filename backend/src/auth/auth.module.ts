@@ -24,4 +24,4 @@ import { ConfigService } from '@nestjs/config';
   providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}

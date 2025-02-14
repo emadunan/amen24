@@ -8,7 +8,9 @@ import { InsertChapterDto } from './dto/insert-chapter.dto';
 
 @Injectable()
 export class ChaptersService {
-  constructor(@InjectRepository(Chapter) private chaptersRepo: Repository<Chapter>) { }
+  constructor(
+    @InjectRepository(Chapter) private chaptersRepo: Repository<Chapter>,
+  ) {}
 
   async insert(insertChapterDto: InsertChapterDto) {
     await this.chaptersRepo.insert(insertChapterDto);
@@ -24,6 +26,12 @@ export class ChaptersService {
 
   findOne(id: number) {
     return `This action returns a #${id} chapter`;
+  }
+
+  async findOneByBookId(bookId: number, num: number) {
+    return await this.chaptersRepo.findOne({
+      where: { book: { id: bookId }, num },
+    });
   }
 
   update(id: number, updateChapterDto: UpdateChapterDto) {

@@ -1,6 +1,6 @@
-import { Language } from "@amen24/shared";
-import { Chapter } from "../../chapters/entities/chapter.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Language } from '@amen24/shared';
+import { Chapter } from '../../chapters/entities/chapter.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Verse {
@@ -19,6 +19,8 @@ export class Verse {
   @Column({ type: 'enum', enum: Language })
   language: Language;
 
-  @ManyToOne(() => Chapter, chapter => chapter.verses, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Chapter, (chapter) => chapter.verses, {
+    onDelete: 'CASCADE',
+  })
   chapter: Chapter;
 }

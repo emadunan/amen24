@@ -9,6 +9,6 @@ import { ChaptersModule } from '../chapters/chapters.module';
   imports: [TypeOrmModule.forFeature([Book]), ChaptersModule],
   controllers: [BooksController],
   providers: [BooksService],
-  exports: [BooksService]
+  exports: [BooksService],
 })
-export class BooksModule { }
+export class BooksModule {}

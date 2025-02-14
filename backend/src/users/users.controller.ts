@@ -21,7 +21,7 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
-  ) { }
+  ) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
