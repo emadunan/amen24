@@ -1,5 +1,5 @@
 import { Book } from "../../books/entities/book.entity";
-import { VerseEn } from "../../verses-en/entities/verse-en.entity";
+import { Verse } from "../../verses/entities/verse.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -13,6 +13,6 @@ export class Chapter {
   @ManyToOne(() => Book, (book) => book.chapters)
   book: Book;
 
-  @OneToMany(() => VerseEn, verseEn => verseEn.chapter)
-  versesEn: VerseEn[]
+  @OneToMany(() => Verse, verse => verse.chapter)
+  verses: Verse[]
 }

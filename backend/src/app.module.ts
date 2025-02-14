@@ -11,6 +11,7 @@ import { ChaptersModule } from './chapters/chapters.module';
 import { VersesEnModule } from './verses-en/verses-en.module';
 import { VersesArModule } from './verses-ar/verses-ar.module';
 import { VersesNativeModule } from './verses-native/verses-native.module';
+import { VersesModule } from './verses/verses.module';
 import joiConfig from './_config/joi.config';
 
 @Module({
@@ -28,6 +29,7 @@ import joiConfig from './_config/joi.config';
     VersesEnModule,
     VersesArModule,
     VersesNativeModule,
+    VersesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

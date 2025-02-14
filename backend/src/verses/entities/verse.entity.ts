@@ -1,9 +1,9 @@
+import { Language } from "../../@types";
 import { Chapter } from "../../chapters/entities/chapter.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class VerseEn {
-
+export class Verse {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -16,6 +16,9 @@ export class VerseEn {
   @Column()
   textNormalized: string;
 
-  @ManyToOne(() => Chapter)
+  @Column({ type: 'enum', enum: Language })
+  language: Language;
+
+  @ManyToOne(() => Chapter, chapter => chapter.verses, { onDelete: 'CASCADE' })
   chapter: Chapter;
 }

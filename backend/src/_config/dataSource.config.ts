@@ -14,7 +14,7 @@ const dataSourceOptions: DataSourceOptions = {
   database: process.env.DB_NAME,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  migrations: ['**/migrations/*.ts'],
+  migrations: ['**/_migrations/*.ts'],
   entities: ['**/*.entity.ts'],
   subscribers: ['**/*.subscriber.ts'],
   synchronize: false,
