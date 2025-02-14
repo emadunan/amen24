@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateVerseDto } from './dto/create-verse.dto';
 import { UpdateVerseDto } from './dto/update-verse.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,7 +14,7 @@ export class VersesService {
   constructor(
     @InjectRepository(Verse) private versesRepo: Repository<Verse>,
     private chaptersService: ChaptersService,
-  ) {}
+  ) { }
 
   create(createVerseDto: CreateVerseDto) {
     return 'This action adds a new verse';
@@ -37,14 +37,35 @@ export class VersesService {
   }
 
   async seed() {
-    const contentFilePath = resolve(
-      __dirname,
-      '..',
-      '..',
-      '..',
-      'content',
-      'Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt',
-    );
+    await this.seedBible(Language.NATIVE);
+    await this.seedBible(Language.ENGLISH);
+    await this.seedBible(Language.ARABIC);
+  }
+
+  private async seedBible(language: Language) {
+    console.log(`Seeding ${language}...`);
+
+    let filename: string;
+
+    switch (language) {
+      case Language.NATIVE:
+        filename = 'original-scripts.txt'
+        break;
+
+      case Language.ENGLISH:
+        filename = 'Holy-Bible---English---Free-Bible-Version---Source-Edition.VPL.txt'
+        break;
+
+      case Language.ARABIC:
+        filename = 'Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt'
+        break;
+
+      default:
+        throw new BadRequestException("Language miss configurations!")
+        break;
+    }
+
+    const contentFilePath = resolve(__dirname, '..', '..', '..', 'content', filename);
 
     const fileContent = readFileSync(contentFilePath, 'utf-8');
 
@@ -66,20 +87,15 @@ export class VersesService {
           +chapterNum,
         );
 
-        if (!chapter) {
-          console.log("CHAPTER!! ", bookKey, chapterNum, verseText);
-          
-          return;
-        }
-
         await this.versesRepo.insert({
           num: +verseNum,
           text: verseText,
-          textNormalized: normalizeArabicText(verseText),
-          chapter: { id: chapter.id },
-          language: Language.ARABIC,
+          textNormalized: language === Language.ARABIC ? normalizeArabicText(verseText) : verseText,
+          chapter: { id: chapter!.id },
+          language,
         });
       }
     }
   }
+
 }

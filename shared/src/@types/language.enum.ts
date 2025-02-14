@@ -1,4 +1,5 @@
 export enum Language {
+  NATIVE = 'na',
   ENGLISH = 'en',
   ARABIC = 'ar',
   HEBREW = 'he',
