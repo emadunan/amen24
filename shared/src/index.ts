@@ -1,4 +1,4 @@
 export * from "./constants/Colors";
-export * from "./constants/BookMeta";
+export * from "./constants/BookKeys";
 export * from "./utils";
 export * from "./@types";
