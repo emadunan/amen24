@@ -1,9 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateChapterDto } from './dto/create-chapter.dto';
 import { UpdateChapterDto } from './dto/update-chapter.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Chapter } from './entities/chapter.entity';
+import { Repository } from 'typeorm';
+import { InsertChapterDto } from './dto/insert-chapter.dto';
 
 @Injectable()
 export class ChaptersService {
+  constructor(@InjectRepository(Chapter) private chaptersRepo: Repository<Chapter>) { }
+
+  async insert(insertChapterDto: InsertChapterDto) {
+    await this.chaptersRepo.insert(insertChapterDto);
+  }
+
   create(createChapterDto: CreateChapterDto) {
     return 'This action adds a new chapter';
   }
