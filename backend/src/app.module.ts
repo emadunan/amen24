@@ -8,9 +8,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './_config/database.config';
 import { BooksModule } from './books/books.module';
 import { ChaptersModule } from './chapters/chapters.module';
-import { VersesEnModule } from './verses-en/verses-en.module';
-import { VersesArModule } from './verses-ar/verses-ar.module';
-import { VersesNativeModule } from './verses-native/verses-native.module';
 import { VersesModule } from './verses/verses.module';
 import joiConfig from './_config/joi.config';
 
@@ -26,9 +23,6 @@ import joiConfig from './_config/joi.config';
     UsersModule,
     BooksModule,
     ChaptersModule,
-    VersesEnModule,
-    VersesArModule,
-    VersesNativeModule,
     VersesModule,
   ],
   controllers: [AppController],

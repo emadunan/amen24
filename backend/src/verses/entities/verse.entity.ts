@@ -1,4 +1,4 @@
-import { Language } from "../../@types";
+import { Language } from "@amen24/shared";
 import { Chapter } from "../../chapters/entities/chapter.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 

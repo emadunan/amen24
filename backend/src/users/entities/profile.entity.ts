@@ -6,7 +6,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserCategory, BibleBook, Language } from '../../@types';
+import { UserCategory, BibleBook, Language } from '@amen24/shared';
 import { User } from './user.entity';
 
 @Entity()

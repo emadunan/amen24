@@ -7,7 +7,7 @@ import {
   IsEnum,
   IsNumber,
 } from 'class-validator';
-import { BibleBook, Language, UserCategory } from 'src/@types';
+import { BibleBook, Language, UserCategory } from '@amen24/shared';
 
 export class CreateProfileDto {
   @IsEmail()
