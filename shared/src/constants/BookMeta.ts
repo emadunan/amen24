@@ -1,0 +1,332 @@
+export const BookMeta = {
+  "GEN": {
+    "title": "genesis",
+    "writer": "moses",
+    "len": 50
+  },
+  "EXO": {
+    "title": "exodus",
+    "writer": "moses",
+    "len": 40
+  },
+  "LEV": {
+    "title": "leviticus",
+    "writer": "moses",
+    "len": 27
+  },
+  "NUM": {
+    "title": "numbers",
+    "writer": "moses",
+    "len": 36
+  },
+  "DEU": {
+    "title": "deuteronomy",
+    "writer": "moses",
+    "len": 34
+  },
+  "JOS": {
+    "title": "joshua",
+    "writer": "joshua",
+    "len": 24
+  },
+  "JDG": {
+    "title": "judges",
+    "writer": "samuel",
+    "len": 21
+  },
+  "RUT": {
+    "title": "ruth",
+    "writer": "samuel",
+    "len": 4
+  },
+  "1SA": {
+    "title": "samuel1",
+    "writer": "samuel",
+    "len": 31
+  },
+  "2SA": {
+    "title": "samuel2",
+    "writer": "samuel",
+    "len": 24
+  },
+  "1KI": {
+    "title": "kings1",
+    "writer": "jeremiah",
+    "len": 22
+  },
+  "2KI": {
+    "title": "kings2",
+    "writer": "jeremiah",
+    "len": 25
+  },
+  "1CH": {
+    "title": "chronicles1",
+    "writer": "ezra",
+    "len": 29
+  },
+  "2CH": {
+    "title": "chronicles2",
+    "writer": "ezra",
+    "len": 36
+  },
+  "EZR": {
+    "title": "ezra",
+    "writer": "ezra",
+    "len": 10
+  },
+  "NEH": {
+    "title": "nehemiah",
+    "writer": "nehemiah",
+    "len": 13
+  },
+  "EST": {
+    "title": "esther",
+    "writer": "mordecai",
+    "len": 10
+  },
+  "JOB": {
+    "title": "job",
+    "writer": "moses",
+    "len": 42
+  },
+  "PSA": {
+    "title": "psalms",
+    "writer": "david",
+    "len": 150
+  },
+  "PRO": {
+    "title": "proverbs",
+    "writer": "solomon",
+    "len": 31
+  },
+  "ECC": {
+    "title": "ecclesiastes",
+    "writer": "solomon",
+    "len": 12
+  },
+  "SOL": {
+    "title": "songofsongs",
+    "writer": "solomon",
+    "len": 8
+  },
+  "ISA": {
+    "title": "isaiah",
+    "writer": "isaiah",
+    "len": 66
+  },
+  "JER": {
+    "title": "jeremiah",
+    "writer": "jeremiah",
+    "len": 52
+  },
+  "LAM": {
+    "title": "lamentations",
+    "writer": "jeremiah",
+    "len": 5
+  },
+  "EZE": {
+    "title": "ezekiel",
+    "writer": "ezekiel",
+    "len": 48
+  },
+  "DAN": {
+    "title": "daniel",
+    "writer": "daniel",
+    "len": 12
+  },
+  "HOS": {
+    "title": "hosea",
+    "writer": "hosea",
+    "len": 14
+  },
+  "JOE": {
+    "title": "joel",
+    "writer": "joel",
+    "len": 4
+  },
+  "AMO": {
+    "title": "amos",
+    "writer": "amos",
+    "len": 9
+  },
+  "OBA": {
+    "title": "obadiah",
+    "writer": "obadiah",
+    "len": 1
+  },
+  "JON": {
+    "title": "jonah",
+    "writer": "jonah",
+    "len": 4
+  },
+  "MIC": {
+    "title": "micah",
+    "writer": "micah",
+    "len": 7
+  },
+  "NAH": {
+    "title": "nahum",
+    "writer": "nahum",
+    "len": 3
+  },
+  "HAB": {
+    "title": "habakkuk",
+    "writer": "habakkuk",
+    "len": 3
+  },
+  "ZEP": {
+    "title": "zephaniah",
+    "writer": "zephaniah",
+    "len": 3
+  },
+  "HAG": {
+    "title": "haggai",
+    "writer": "haggai",
+    "len": 2
+  },
+  "ZEC": {
+    "title": "zechariah",
+    "writer": "zechariah",
+    "len": 14
+  },
+  "MAL": {
+    "title": "malachi",
+    "writer": "malachi",
+    "len": 4
+  },
+  "MAT": {
+    "title": "matthew",
+    "writer": "matthew",
+    "len": 28
+  },
+  "MAR": {
+    "title": "mark",
+    "writer": "mark",
+    "len": 16
+  },
+  "LUK": {
+    "title": "luke",
+    "writer": "luke",
+    "len": 24
+  },
+  "JOH": {
+    "title": "john",
+    "writer": "john",
+    "len": 21
+  },
+  "ACT": {
+    "title": "acts",
+    "writer": "luke",
+    "len": 28
+  },
+  "ROM": {
+    "title": "romans",
+    "writer": "paul",
+    "len": 16
+  },
+  "1CO": {
+    "title": "corinthians1",
+    "writer": "paul",
+    "len": 16
+  },
+  "2CO": {
+    "title": "corinthians2",
+    "writer": "paul",
+    "len": 13
+  },
+  "GAL": {
+    "title": "galatians",
+    "writer": "paul",
+    "len": 6
+  },
+  "EPH": {
+    "title": "ephesians",
+    "writer": "paul",
+    "len": 6
+  },
+  "PHI": {
+    "title": "philippians",
+    "writer": "paul",
+    "len": 4
+  },
+  "COL": {
+    "title": "colossians",
+    "writer": "paul",
+    "len": 4
+  },
+  "1TH": {
+    "title": "thessalonians1",
+    "writer": "paul",
+    "len": 5
+  },
+  "2TH": {
+    "title": "thessalonians2",
+    "writer": "paul",
+    "len": 3
+  },
+  "1TI": {
+    "title": "timothy1",
+    "writer": "paul",
+    "len": 6
+  },
+  "2TI": {
+    "title": "timothy2",
+    "writer": "paul",
+    "len": 4
+  },
+  "TIT": {
+    "title": "titus",
+    "writer": "paul",
+    "len": 3
+  },
+  "PHM": {
+    "title": "philemon",
+    "writer": "paul",
+    "len": 1
+  },
+  "HEB": {
+    "title": "hebrews",
+    "writer": "paul",
+    "len": 13
+  },
+  "JAM": {
+    "title": "james",
+    "writer": "james",
+    "len": 5
+  },
+  "1PE": {
+    "title": "peter1",
+    "writer": "peter",
+    "len": 5
+  },
+  "2PE": {
+    "title": "peter2",
+    "writer": "peter",
+    "len": 3
+  },
+  "1JO": {
+    "title": "john1",
+    "writer": "john",
+    "len": 5
+  },
+  "2JO": {
+    "title": "john2",
+    "writer": "john",
+    "len": 1
+  },
+  "3JO": {
+    "title": "john3",
+    "writer": "john",
+    "len": 1
+  },
+  "JUD": {
+    "title": "jude",
+    "writer": "jude",
+    "len": 1
+  },
+  "REV": {
+    "title": "revelation",
+    "writer": "john",
+    "len": 22
+  }
+}
