@@ -65,11 +65,18 @@ export class VersesService {
           bookId,
           +chapterNum,
         );
+
+        if (!chapter) {
+          console.log("CHAPTER!! ", bookKey, chapterNum, verseText);
+          
+          return;
+        }
+
         await this.versesRepo.insert({
           num: +verseNum,
           text: verseText,
           textNormalized: normalizeArabicText(verseText),
-          chapter: { id: chapter!.id },
+          chapter: { id: chapter.id },
           language: Language.ARABIC,
         });
       }

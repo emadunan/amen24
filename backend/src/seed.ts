@@ -8,20 +8,20 @@ async function seed() {
   const app = await NestFactory.createApplicationContext(AppModule);
 
   try {
-    // console.log('🗑 Dropping database...');
-    // await dataSource.initialize();
-    // await dataSource.dropDatabase();
-    // await dataSource.destroy();
+    console.log('🗑 Dropping database...');
+    await dataSource.initialize();
+    await dataSource.dropDatabase();
+    await dataSource.destroy();
 
-    // console.log('🛠 Creating database...');
-    // const appDataSource = app.get(dataSource.constructor);
+    console.log('🛠 Creating database...');
+    const appDataSource = app.get(dataSource.constructor);
 
-    // console.log('📜 Running migrations...');
-    // await appDataSource.runMigrations();
+    console.log('📜 Running migrations...');
+    await appDataSource.runMigrations();
 
-    // console.log('🌱 Seeding database...');
-    // const booksService = app.get(BooksService);
-    // await booksService.seed();
+    console.log('🌱 Seeding database...');
+    const booksService = app.get(BooksService);
+    await booksService.seed();
 
     const versesService = app.get(VersesService);
     await versesService.seed();

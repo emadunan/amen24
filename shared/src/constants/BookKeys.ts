@@ -61,5 +61,8 @@ export const BookKeys = {
   "1PE": { "id": 60, "title": "peter1", "writer": "peter", "len": 5 },
   "2PE": { "id": 61, "title": "peter2", "writer": "peter", "len": 3 },
   "1JO": { "id": 62, "title": "john1", "writer": "john", "len": 5 },
+  "2JO": { "id": 63, "title": "john2", "writer": "john", "len": 1 },
+  "3JO": { "id": 64, "title": "john3", "writer": "john", "len": 1 },
+  "JUD": { "id": 65, "title": "jude", "writer": "jude", "len": 1 },
   "REV": { "id": 66, "title": "revelation", "writer": "john", "len": 22 }
 };
