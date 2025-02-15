@@ -29,12 +29,16 @@
     }
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Shared utilities and types for amen24 project",
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^22.13.4",
     "typescript": "^5.7.3"

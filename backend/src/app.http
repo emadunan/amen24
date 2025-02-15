@@ -2,7 +2,7 @@
 GET http://localhost:5000
 
 ###
-GET http://localhost:5000/verses/GEN/1/na
+GET http://localhost:5000/verses/GEN/1/ar
 
 ###
 POST http://localhost:5000/users HTTP/1.1

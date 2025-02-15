@@ -19,13 +19,13 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate:up": "cross-env NODE_ENV=${npm_package_env:-development} typeorm-ts-node-commonjs migration:run -d src/_config/dataSource.config.ts",
-    "migrate:down": "cross-env NODE_ENV=${npm_package_env:-development} typeorm-ts-node-commonjs migration:revert -d src/_config/dataSource.config.ts",
+    "migrate:up": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:run -d src/_config/dataSource.config.ts",
+    "migrate:down": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:revert -d src/_config/dataSource.config.ts",
     "migrate:create": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:create src/_migrations/$npm_config_name",
     "migrate:generate": "cross-env NODE_ENV=development typeorm-ts-node-commonjs migration:generate src/_migrations/${npm_config_name:-unnamed} -d src/_config/dataSource.config.ts"
   },
   "dependencies": {
-    "@amen24/shared": "file:../shared",
+    "@amen24/shared": "link:../shared",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.1",
@@ -45,7 +45,6 @@
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "shared": "file:../shared",
     "typeorm": "^0.3.20"
   },
   "devDependencies": {
