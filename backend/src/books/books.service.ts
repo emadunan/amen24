@@ -12,14 +12,14 @@ export class BooksService {
   constructor(
     @InjectRepository(Book) private booksRepo: Repository<Book>,
     private chaptersService: ChaptersService,
-  ) {}
+  ) { }
 
   create(createBookDto: CreateBookDto) {
     return 'This action adds a new book';
   }
 
-  findAll() {
-    return `This action returns all books`;
+  async findAll() {
+    return await this.booksRepo.find();
   }
 
   findOne(id: number) {
