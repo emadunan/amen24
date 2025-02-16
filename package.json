@@ -7,14 +7,28 @@
   "workspaces": [
     "backend",
     "frontend",
+    "mobile",
     "shared"
   ],
   "scripts": {
+    "clean": "find ./ -name node_modules -type d -exec rm -rf {} +",
     "dev": "pnpm run dev:backend & pnpm run dev:frontend & pnpm run dev:shared",
     "dev:backend": "pnpm --filter @amen24/backend run start:dev",
     "dev:frontend": "pnpm --filter @amen24/frontend run dev",
     "dev:shared": "pnpm --filter @amen24/shared run watch"
   },
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependenciesMeta": {
+    "react": {
+      "injected": true
+    },
+    "react-dom": {
+      "injected": true
+    }
+  },
+  "engines": {
+    "node": ">= 20.11.0",
+    "pnpm": ">= 10.4.0"
+  }
 }
