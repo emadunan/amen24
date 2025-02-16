@@ -1,3 +1,20 @@
 {
-  "private": true
+  "name": "@amen24/root",
+  "version": "1.0.0",
+  "author": "emadunan",
+  "private": true,
+  "description": "Amen24 is a free non-profitable project to introduce bible content for all.",
+  "workspaces": [
+    "backend",
+    "frontend",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "pnpm run dev:backend & pnpm run dev:frontend & pnpm run dev:shared",
+    "dev:backend": "pnpm --filter @amen24/backend run start:dev",
+    "dev:frontend": "pnpm --filter @amen24/frontend run dev",
+    "dev:shared": "pnpm --filter @amen24/shared run watch"
+  },
+  "license": "ISC",
+  "devDependencies": {}
 }
