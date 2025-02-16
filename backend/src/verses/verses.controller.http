@@ -1,0 +1,2 @@
+### Get verses of one chapter
+GET http://localhost:5000/verses/GEN/1/ar
