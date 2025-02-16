@@ -7,10 +7,9 @@ import {
   Text,
   View,
 } from "react-native";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { ThemedView } from "@/components/ThemedView";
 import { useTranslation } from "react-i18next";
-import { DrawerActions } from "@react-navigation/native";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -18,45 +17,44 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import BibleChapterText from "@/components/bible/BibleChapterText";
 import { useSQLiteContext } from "expo-sqlite";
 import { IVerseRaw } from "@/interfaces/verse";
-import * as Clipboard from "expo-clipboard"; // Import Clipboard API
+import * as Clipboard from "expo-clipboard";
+import BibleChapterSelector from "./BibleChapterSelector";
+
+type SearchParams = {
+  key: string;
+  bookId: string;
+  bookLen: string;
+  chapterNum: string;
+  verseNum?: string;
+}
 
 const BibleChapter: FC = () => {
   const { t, i18n } = useTranslation();
-  const { key, bookId, bookLen, chapterNum, verseNum } = useLocalSearchParams<{
-    key: string;
-    bookId: string;
-    bookLen: string;
-    chapterNum: string;
-    verseNum?: string;
-  }>();
-
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
-
+  const params = useLocalSearchParams<SearchParams>();
   const db = useSQLiteContext();
 
-  const router = useRouter();
-  const navigation = useNavigation();
+  const { key, bookId, bookLen, chapterNum, verseNum } = params;
   const [highlighted, setHighlighted] = useState<string[]>([]);
+  const bibleLang = i18n.language === "ar" ? "Ar" : "En";
 
-  function handleNextChapter() {
-    const nextChapterNum = parseInt(chapterNum) + 1;
-    const bookLength = parseInt(bookLen);
+  useLayoutEffect(() => {
+    if (key) {
+      setHighlighted([]);
+      navigation.setOptions({
+        title: (
+          <Text style={{ color: Colors[colorScheme ?? "light"].primary }}>
+            {t(key, { ns: "book" }).toLocaleUpperCase()}
+          </Text>
+        ),
+        headerRight: <BibleChapterSelector chapterNum={chapterNum} bookId={bookId} bookLen={bookLen} bookKey={key} />
+      });
+    }
+  }, [key, chapterNum, t, I18nManager.isRTL]);
 
-    if (nextChapterNum > bookLength) return;
-
-    router.push(
-      `/(tabs)/bible/${key}?bookId=${bookId}&bookLen=${bookLen}&chapterNum=${nextChapterNum}`,
-    );
-  }
-
-  function handlePrevChapter() {
-    const prevChapterNum = parseInt(chapterNum) - 1;
-
-    if (prevChapterNum < 1) return;
-
-    router.push(
-      `/(tabs)/bible/${key}?bookId=${bookId}&bookLen=${bookLen}&chapterNum=${prevChapterNum}`,
-    );
+  function handleRemoveHighlights() {
+    setHighlighted([]);
   }
 
   async function handleCopySelected() {
@@ -64,8 +62,6 @@ const BibleChapter: FC = () => {
       console.log("No verses selected");
       return;
     }
-
-    const bibleLang = i18n.language === "ar" ? "Ar" : "En";
 
     const verses = await db.getAllAsync<IVerseRaw>(
       `SELECT text, verses${bibleLang}.num as num FROM verses${bibleLang} LEFT JOIN chapters ON chapters.id = chapterId WHERE bookId = ? AND chapters.num = ? AND verses${bibleLang}.num IN (${highlighted.map(() => "?").join(",")}) ORDER BY verses${bibleLang}.id`,
@@ -97,76 +93,6 @@ const BibleChapter: FC = () => {
 
     await Clipboard.setStringAsync(content);
   }
-
-  function handleRemoveHighlights() {
-    setHighlighted([]);
-  }
-
-  const chapterNumContainerTheme = {
-    backgroundColor: Colors[colorScheme ?? "light"].background,
-  };
-  const chapterNumTextTheme = {
-    color: Colors[colorScheme ?? "light"].primary,
-  };
-
-  useLayoutEffect(() => {
-    if (key) {
-      setHighlighted([]);
-      navigation.setOptions({
-        title: (
-          <Text style={{ color: Colors[colorScheme ?? "light"].primary }}>
-            {t(key, { ns: "book" }).toLocaleUpperCase()}
-          </Text>
-        ),
-        headerRight: () => (
-          <View style={styles.chapterGroup}>
-            <Pressable onPress={handlePrevChapter}>
-              {I18nManager.isRTL ? (
-                <AntDesign
-                  name="caretright"
-                  size={24}
-                  color={Colors[colorScheme ?? "light"].background}
-                />
-              ) : (
-                <AntDesign
-                  name="caretleft"
-                  size={24}
-                  color={Colors[colorScheme ?? "light"].background}
-                />
-              )}
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                navigation.dispatch(DrawerActions.openDrawer());
-              }}
-              style={[styles.chapterNumContainer, chapterNumContainerTheme]}
-            >
-              <Text style={[styles.chapterNumText, chapterNumTextTheme]}>
-                {i18n.language === "ar"
-                  ? Number(chapterNum).toLocaleString("ar-EG")
-                  : chapterNum}
-              </Text>
-            </Pressable>
-            <Pressable onPress={handleNextChapter}>
-              {I18nManager.isRTL ? (
-                <AntDesign
-                  name="caretleft"
-                  size={24}
-                  color={Colors[colorScheme ?? "light"].background}
-                />
-              ) : (
-                <AntDesign
-                  name="caretright"
-                  size={24}
-                  color={Colors[colorScheme ?? "light"].background}
-                />
-              )}
-            </Pressable>
-          </View>
-        ),
-      });
-    }
-  }, [key, chapterNum, t]);
 
   return (
     <ThemedView style={styles.container}>
@@ -223,20 +149,6 @@ export default BibleChapter;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  chapterGroup: {
-    flexDirection: "row",
-    marginHorizontal: 16,
-    alignItems: "center",
-  },
-  chapterNumContainer: {
-    width: 44,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 2,
-  },
-  chapterNumText: {
-    fontSize: 20,
   },
   chapterContainer: {
     padding: 16,
