@@ -1,45 +1,11 @@
-import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import React, { FC, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { I18nManager, Platform, Pressable, StyleSheet } from "react-native";
+import { I18nManager, Platform, StyleSheet, ViewStyle } from "react-native";
 import * as Updates from "expo-updates";
 import { useNavigation } from "expo-router";
-import useMobileBackBtn from "@/hooks/useBackAsExit";
-
-interface RadioButtonProps {
-  label: string;
-  value: string;
-  selected: string;
-  onPress: (value: string) => void;
-}
-
-const RadioButton: FC<RadioButtonProps> = ({
-  label,
-  value,
-  selected,
-  onPress,
-}) => {
-  const colorScheme = useColorScheme();
-  const { t } = useTranslation();
-
-  const selectedTheme = {
-    backgroundColor: Colors[colorScheme ?? "light"].text,
-  };
-
-  return (
-    <Pressable style={styles.radioContainer} onPress={() => onPress(value)}>
-      <ThemedView
-        style={[styles.radioCircle, selected === value && selectedTheme]}
-      />
-      <ThemedText style={styles.radioText}>
-        {t(`${label}`, { ns: "lang" })}
-      </ThemedText>
-    </Pressable>
-  );
-};
+import BackBtn from "@/components/ui/BackBtn";
+import RadioBtn from "@/components/ui/RadioBtn";
 
 const LocaleScreen = () => {
   const { t, i18n } = useTranslation();
@@ -76,22 +42,28 @@ const LocaleScreen = () => {
     }
   }
 
+  const homeUri = "/bible";
+
+  const backBtnDirStyle: ViewStyle =
+    i18n.language === "ar" ? { right: 0 } : { left: 0 };
+
   return (
     <ThemedView style={styles.container}>
       <ThemedView>
-        <RadioButton
+        <RadioBtn
           label="en"
           value="en"
           selected={selected}
           onPress={handleLocale}
         />
-        <RadioButton
+        <RadioBtn
           label="ar"
           value="ar"
           selected={selected}
           onPress={handleLocale}
         />
       </ThemedView>
+      <BackBtn uri={homeUri} style={[styles.backBtn, backBtnDirStyle]} />
     </ThemedView>
   );
 };
@@ -102,23 +74,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  radioContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 5,
-  },
-  radioCircle: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#000",
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 8,
-  },
-  radioText: {
-    fontSize: 16,
+  backBtn: {
+    position: "absolute",
+    top: 16,
   },
 });
 
