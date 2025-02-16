@@ -11,8 +11,7 @@ import {
 import { VersesService } from './verses.service';
 import { CreateVerseDto } from './dto/create-verse.dto';
 import { UpdateVerseDto } from './dto/update-verse.dto';
-import { FindChapterParamsDto } from './dto/find-chapter-params.dto';
-import { BibleBook, Language } from 'shared';
+import { BibleBook, Language } from '@amen24/shared';
 
 @Controller('verses')
 export class VersesController {
