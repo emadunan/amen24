@@ -48,10 +48,10 @@ const BibleChapter: FC = () => {
             {t(key, { ns: "book" }).toLocaleUpperCase()}
           </Text>
         ),
-        headerRight: <BibleChapterSelector chapterNum={chapterNum} bookId={bookId} bookLen={bookLen} bookKey={key} />
+        headerRight: () => <BibleChapterSelector chapterNum={chapterNum} bookId={bookId} bookLen={bookLen} bookKey={key} />
       });
     }
-  }, [key, chapterNum, t, I18nManager.isRTL]);
+  }, [key, chapterNum, t, I18nManager.isRTL, colorScheme]);
 
   function handleRemoveHighlights() {
     setHighlighted([]);
