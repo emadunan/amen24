@@ -1,11 +1,11 @@
 import React from "react";
 import { Pressable } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { Colors } from "@/constants/Colors";
+import { Colors } from "@amen24/shared";
 
 const LoginBtn = () => {
   return (
-    <Pressable onPress={() => {}}>
+    <Pressable onPress={() => { }}>
       <AntDesign name="login" size={24} color={Colors.light.primary} />
     </Pressable>
   );

@@ -10,7 +10,7 @@ import {
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { ThemedView } from "@/components/ThemedView";
 import { useTranslation } from "react-i18next";
-import { Colors } from "@/constants/Colors";
+import { Colors } from "@amen24/shared";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";

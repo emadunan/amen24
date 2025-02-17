@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
 import { useRouter } from "expo-router";
-import { Colors } from "@/constants/Colors";
+import { Colors } from "@amen24/shared";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 interface Props {

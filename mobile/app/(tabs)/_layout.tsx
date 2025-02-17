@@ -3,7 +3,7 @@ import React from "react";
 import { I18nManager, Platform, StyleSheet } from "react-native";
 import { HapticTab } from "@/components/HapticTab";
 import TabBarBackground from "@/components/ui/TabBarBackground";
-import { Colors } from "@/constants/Colors";
+import { Colors } from "@amen24/shared";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { useTranslation } from "react-i18next";
 import AppHeader from "@/components/app-header/AppHeader";

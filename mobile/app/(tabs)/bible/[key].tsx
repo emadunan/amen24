@@ -5,7 +5,7 @@ import BibleChapter from "@/components/bible/BibleChapter";
 import BookDrawerContent from "@/components/book-drawer/BookDrawerContent";
 import BackBtn from "@/components/ui/BackBtn";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { Colors } from "@/constants/Colors";
+import { Colors } from "@amen24/shared";
 
 const Drawer = createDrawerNavigator();
 
@@ -49,7 +49,7 @@ const BookDrawer: FC = () => {
         <Drawer.Screen
           key={chapter}
           name={`Chapter ${chapter}`}
-          // initialParams={{ chapter }}
+        // initialParams={{ chapter }}
         >
           {() => <BibleChapter />}
         </Drawer.Screen>

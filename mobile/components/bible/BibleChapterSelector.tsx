@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { I18nManager, Pressable, StyleSheet, View, } from "react-native";
 import { DrawerActions } from "@react-navigation/native";
-import { Colors } from "@/constants/Colors";
+import { Colors } from "@amen24/shared";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { ThemedText } from "../ThemedText";
 import { useNavigation, useRouter } from "expo-router";

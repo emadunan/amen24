@@ -3,7 +3,7 @@ import { ThemedView } from "@/components/ThemedView";
 import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet } from "react-native";
 import { useColorScheme } from "../../../hooks/useColorScheme";
-import { Colors } from "@/constants/Colors";
+import { Colors } from "@amen24/shared";
 import { useSQLiteContext } from "expo-sqlite";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
