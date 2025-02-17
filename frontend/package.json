@@ -1,7 +1,7 @@
 {
   "name": "@amen24/frontend",
-  "version": "0.1.0",
   "author": "emadunan",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
