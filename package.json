@@ -15,6 +15,7 @@
     "dev": "pnpm run dev:backend & pnpm run dev:frontend & pnpm run dev:shared",
     "dev:backend": "pnpm --filter @amen24/backend run start:dev",
     "dev:frontend": "pnpm --filter @amen24/frontend run dev",
+    "dev:mobile": "pnpm --filter @amen24/mobile run start",
     "dev:shared": "pnpm --filter @amen24/shared run watch"
   },
   "license": "ISC",
@@ -26,9 +27,5 @@
     "react-dom": {
       "injected": true
     }
-  },
-  "engines": {
-    "node": ">= 20.11.0",
-    "pnpm": ">= 10.4.0"
   }
 }
