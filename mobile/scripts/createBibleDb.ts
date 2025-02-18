@@ -1,8 +1,8 @@
 import { open, Database } from "sqlite";
 import sqlite3 from "sqlite3";
 
-import books from "../data/books.json";
 import { readFile } from "fs/promises";
+import { BookKeys as books } from "@amen24/shared";
 
 type BookKey = keyof typeof books;
 
