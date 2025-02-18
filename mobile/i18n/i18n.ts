@@ -2,28 +2,21 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import * as Localization from "expo-localization";
 
-import commonEn from "./locales/en/common.json";
-import commonAr from "./locales/ar/common.json";
-import bookEn from "./locales/en/book.json";
-import bookAr from "./locales/ar/book.json";
-import langEn from "./locales/en/lang.json";
-import langAr from "./locales/ar/lang.json";
-import uiEn from "./locales/en/ui.json";
-import uiAr from "./locales/ar/ui.json";
 import { I18nManager } from "react-native";
+import { locales } from "@amen24/shared";
 
 const resources = {
   en: {
-    common: commonEn,
-    book: bookEn,
-    lang: langEn,
-    ui: uiEn,
+    common: locales.en.common,
+    book: locales.en.book,
+    lang: locales.en.lang,
+    ui: locales.en.ui,
   },
   ar: {
-    common: commonAr,
-    book: bookAr,
-    lang: langAr,
-    ui: uiAr,
+    common: locales.ar.common,
+    book: locales.ar.book,
+    lang: locales.ar.lang,
+    ui: locales.ar.ui,
   },
 };
 
