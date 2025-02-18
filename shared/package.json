@@ -6,31 +6,6 @@
   "description": "Shared utilities and types for amen24 project",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./constants": {
-      "import": "./dist/constants/index.js",
-      "require": "./dist/constants.js",
-      "types": "./dist/constants/index.d.ts"
-    },
-    "./utils": {
-      "import": "./dist/utils/index.js",
-      "require": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
-    },
-    "./types": {
-      "import": "./dist/@types/index.js",
-      "require": "./dist/@types/index.js",
-      "types": "./dist/@types/index.d.ts"
-    }
-  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",

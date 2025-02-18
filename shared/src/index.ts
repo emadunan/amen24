@@ -1,4 +1,4 @@
-export * from "./constants/Colors";
-export * from "./constants/BookKeys";
-export * from "./utils";
+export * from "./constants";
+export * from "./locales"; 
 export * from "./@types";
+export * from "./utils";
