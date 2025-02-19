@@ -24,6 +24,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+main {
+  background-color: #F4EFE6;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
