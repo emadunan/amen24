@@ -28,9 +28,20 @@
 }
 
 .navItem {
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
 .navItem:hover {
   transform: scale(1.2);
+}
+
+.loginBtn {
+  border-radius: 50%;
+  border: none;
+  background-color: #D6CCB1;
+  margin-left: auto;
+}
+
+.loginBtn:hover {
+  cursor: pointer;
 }
