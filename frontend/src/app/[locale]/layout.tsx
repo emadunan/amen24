@@ -4,6 +4,9 @@ import "./globals.css";
 import AppHeader from "@/components/layout/AppHeader";
 import AppFooter from "@/components/layout/AppFooter";
 import styles from "./layout.module.css";
+import { notFound } from "next/navigation";
+import i18nConfig from "@/config/next-i18n-router.config";
+import { FC } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,11 +23,18 @@ export const metadata: Metadata = {
   description: "Amen24 is a free non-profitable project to introduce bible content for all",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface Props {
   children: React.ReactNode;
-}>) {
+  params: { locale: string }
+}
+
+const RootLayout: FC<Props> = async  ({ children, params}) => {  
+  const { locale } = await params;
+
+  if (!i18nConfig.locales.includes(locale)) {
+    notFound();
+  }
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
@@ -37,3 +47,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export default RootLayout;
