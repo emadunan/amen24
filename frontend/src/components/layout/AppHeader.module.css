@@ -35,11 +35,14 @@
   transform: scale(1.2);
 }
 
+.actions {
+  margin-left: auto;
+}
+
 .loginBtn {
   border-radius: 50%;
   border: none;
   background-color: var(--background);
-  margin-left: auto;
 }
 
 .loginBtn:hover {

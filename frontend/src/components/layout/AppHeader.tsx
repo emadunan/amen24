@@ -16,8 +16,10 @@ const AppHeader = () => {
             <li className={styles.navItem}><Link href={"/search"}><h3>Search</h3></Link></li>
           </ul>
         </nav>
-        <ThemeSwitcher />
-        <button className={styles.loginBtn}><IoMdLogIn size={38} /></button>
+        <div className={styles.actions}>
+          {/* <button className={styles.loginBtn}><IoMdLogIn size={38} /></button> */}
+          <ThemeSwitcher />
+        </div>
       </div>
     </header>
   )
