@@ -2,7 +2,7 @@
   position: fixed;
   width: 100%;
   position: relative;
-  background-color: #D6CCB1;
+  background-color: var(--secondary);
 }
 
 .container {
@@ -38,7 +38,7 @@
 .loginBtn {
   border-radius: 50%;
   border: none;
-  background-color: #D6CCB1;
+  background-color: var(--background);
   margin-left: auto;
 }
 

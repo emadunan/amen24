@@ -1,5 +1,6 @@
-import Image from "next/image";
+import BookCover from "@/components/bible/BookCover";
 import styles from "./page.module.css";
+import { Book } from "@amen24/shared";
 
 const HomePage = async () => {
   const response = await fetch("http://localhost:5000/books");
@@ -8,11 +9,9 @@ const HomePage = async () => {
 
   const books = await response.json();
 
-
   return (
     <div className={styles.home}>
-      {books.map(b => <div key={b.id}>{b.title}</div>)}
-
+      {books.map((b: Book) => <BookCover key={b.id} id={b.id} bookKey={b.title} />)}
     </div>
   );
 }

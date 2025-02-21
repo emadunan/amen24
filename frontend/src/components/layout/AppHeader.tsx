@@ -2,6 +2,7 @@ import React from 'react';
 import styles from "./AppHeader.module.css";
 import Link from 'next/link';
 import { IoMdLogIn } from "react-icons/io";
+import ThemeSwitcher from '../ui/ThemeSwitcher';
 
 
 const AppHeader = () => {
@@ -15,7 +16,8 @@ const AppHeader = () => {
             <li className={styles.navItem}><Link href={"/search"}><h3>Search</h3></Link></li>
           </ul>
         </nav>
-        <button className={styles.loginBtn}><IoMdLogIn size={38}/></button>
+        <ThemeSwitcher />
+        <button className={styles.loginBtn}><IoMdLogIn size={38} /></button>
       </div>
     </header>
   )

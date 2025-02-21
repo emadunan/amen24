@@ -1,0 +1,39 @@
+.bookCover {
+  height: 16.5rem;
+  width: 11rem;
+  transition: transform 0.3s ease-in-out;
+  border-radius: 2px;
+  border: var(--text) 2px solid;
+  position: relative;
+}
+
+.bookCover:hover {
+  transform: scale(1.1);
+}
+
+.imgOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(
+      rgba(var(--background-rgb), 0.9) 5%,
+      rgba(var(--text-rgb), 0.2) 30%,
+      rgba(var(--text-rgb), 0.1) 70%,
+      rgba(var(--background-rgb), 0) 100%
+    );
+  z-index: 1;
+}
+
+.bookTitle {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 2;
+  color: var(--text);
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(var(--background-rgb), 0.6);
+  /* Adds contrast for readability */
+}

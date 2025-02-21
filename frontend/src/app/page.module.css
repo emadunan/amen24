@@ -1,0 +1,10 @@
+.home {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  max-width: 92rem;
+  gap: 2rem;
+}

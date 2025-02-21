@@ -9,7 +9,7 @@ export const Colors = {
     background: "#F4EFE6", // Light beige-taupe for background
     primary: "#8A6E4A", // Rich taupe for buttons and active elements
     secondary: "#D6CCB1", // Muted taupe for cards or containers
-    accent: "#C99A3A", // Gold for highlights and small decorative elements
+    accent: "#3B754C", // Gold for highlights and small decorative elements
     highlight: "#ffeb3b",
   },
   dark: {
@@ -17,7 +17,7 @@ export const Colors = {
     background: "#3A332B", // Deep taupe for background
     primary: "#A68A5E", // Warm muted taupe for buttons and active elements
     secondary: "#524A3F", // Dark taupe for cards or containers
-    accent: "#C99A3A", // Gold for highlights and decorative elements
+    accent: "#3B754C", // Gold for highlights and decorative elements
     highlight: "#B88B4A",
   },
 };

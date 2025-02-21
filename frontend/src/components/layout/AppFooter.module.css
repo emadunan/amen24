@@ -1,4 +1,13 @@
 .appFooter {
-  background-color: #D6CCB1;
+  background-color: var(--secondary);
   height: 12rem;
+  position: relative;
+}
+
+.container {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  max-width: 92rem;
+  padding: 2rem;
 }

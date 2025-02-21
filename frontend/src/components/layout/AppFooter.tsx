@@ -3,7 +3,11 @@ import styles from "./AppFooter.module.css";
 
 const AppFooter = () => {
   return (
-    <footer className={styles.appFooter}>AppFooter</footer>
+    <footer className={styles.appFooter}>
+      <div className={styles.container}>
+        App footer
+      </div>
+    </footer>
   )
 }
 
