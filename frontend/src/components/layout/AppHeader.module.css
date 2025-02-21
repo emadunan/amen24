@@ -1,15 +1,15 @@
 .appHeader {
   position: fixed;
-  width: 100%;
-  position: relative;
   background-color: var(--secondary);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: 11;
+  border-bottom: var(--primary) solid 2px;
 }
 
 .container {
-  position: relative;
-  left: 50%;
-  transform: translate(-50%);
-  max-width: 92rem;
+  width: 92rem;
   padding: .5rem 2rem;
   display: flex;
   justify-content: flex-start;
@@ -17,7 +17,18 @@
 }
 
 .appLogo {
-  margin-right: 1rem;
+  margin-inline-end: 1rem;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navGroup {
+  display: flex;
+  align-items: baseline;
 }
 
 .navList {
@@ -36,15 +47,6 @@
 }
 
 .actions {
-  margin-left: auto;
-}
-
-.loginBtn {
-  border-radius: 50%;
-  border: none;
-  background-color: var(--background);
-}
-
-.loginBtn:hover {
-  cursor: pointer;
+  display: flex;
+  gap: 1rem;
 }

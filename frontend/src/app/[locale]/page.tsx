@@ -17,7 +17,9 @@ const HomePage: FC<Props> = async ({ params }) => {
 
   return (
     <div className={styles.home}>
-      {books.map((b: Book) => <BookCover key={b.id} id={b.id} bookKey={b.title} locale={locale} />)}
+      <div className={styles.container}>
+        {books.map((b: Book) => <BookCover key={b.id} id={b.id} bookKey={b.title} locale={locale} />)}
+      </div>
     </div>
   );
 }

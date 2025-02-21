@@ -3,7 +3,7 @@
   width: 11rem;
   transition: transform 0.3s ease-in-out;
   border-radius: 2px;
-  border: var(--text) 2px solid;
+  border: var(--primary) 2px solid;
   position: relative;
 }
 
@@ -27,6 +27,7 @@
 }
 
 .bookTitle {
+  margin-top: .5rem;
   position: absolute;
   left: 50%;
   transform: translate(-50%);
