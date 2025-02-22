@@ -1,6 +1,6 @@
 import BookCover from "@/components/bible/BookCover";
 import styles from "./page.module.css";
-import { Book } from "@amen24/shared";
+import { Book, BookKeys } from "@amen24/shared";
 import { FC } from "react";
 
 interface Props {
@@ -18,7 +18,7 @@ const HomePage: FC<Props> = async ({ params }) => {
   return (
     <div className={styles.home}>
       <div className={styles.container}>
-        {books.map((b: Book) => <BookCover key={b.id} id={b.id} bookKey={b.title} locale={locale} />)}
+        {books.map((b: Book) => <BookCover key={b.id} bookId={b.id} bookLen={BookKeys[b.title].len as number} bookKey={b.title} locale={locale} />)}
       </div>
     </div>
   );

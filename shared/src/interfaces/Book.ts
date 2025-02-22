@@ -1,4 +1,6 @@
+import { BibleBook } from "../@types";
+
 export interface Book {
   id: number;
-  title: string;
+  title: BibleBook;
 }
