@@ -9,34 +9,22 @@
   height: var(--header-height);
 }
 
-.container {
-  width: 92rem;
-  padding: .5rem 2rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.appLogo {
-  margin-inline-end: 1rem;
+.logo {
+  position: absolute;
 }
 
 .nav {
-  flex: 1;
+  width: 92rem;
+  padding: .5rem 2rem;
   display: flex;
   justify-content: space-between;
-}
-
-.navGroup {
-  display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 
 .navList {
   list-style: none;
   display: flex;
   gap: 1rem;
-  margin-bottom: .2rem;
 }
 
 .navItem {
@@ -47,7 +35,7 @@
   transform: scale(1.1);
 }
 
-.actions {
+.navActions {
   display: flex;
   gap: 1rem;
 }
