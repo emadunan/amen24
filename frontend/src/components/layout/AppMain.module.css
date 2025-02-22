@@ -1,0 +1,10 @@
+.appContainer {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.appMain {
+  width: 92rem;
+  padding: calc(var(--header-height) + 2rem) 2rem 2rem 2rem;
+}

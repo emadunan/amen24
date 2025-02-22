@@ -9,6 +9,7 @@ import i18nConfig from "@/config/next-i18n-router.config";
 import { FC } from "react";
 import initTranslations from "../i18n";
 import TranslationsProvider from "@/providers/TranslationsProvider";
+import AppMain from "@/components/layout/AppMain";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,9 +53,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <TranslationsProvider namespaces={i18nNamespaces} locale={locale} resources={resources}>
           <AppHeader />
-          <main className={styles.main}>
-            {children}
-          </main>
+          <AppMain>{children}</AppMain>
           <AppFooter />
         </TranslationsProvider>
       </body>

@@ -1,0 +1,26 @@
+.pageContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.chapterContainer {
+  padding: 1rem;
+  max-width: 44rem;
+}
+
+.chapterContent {
+  text-align: justify;
+}
+
+.verse {
+  display: inline;
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+}
+
+.chapterTitle {
+  text-align: center;
+  padding: .5rem 0rem;
+  border-bottom: var(--primary) solid 1px;
+  margin-bottom: 1rem;
+}

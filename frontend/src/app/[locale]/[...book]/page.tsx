@@ -1,5 +1,6 @@
 import { Verse } from '@amen24/shared';
 import React, { FC } from 'react';
+import styles from "./page.module.css";
 
 interface Props {
   params: { book: string[], locale: string };
@@ -13,10 +14,17 @@ const BookPage: FC<Props> = async ({ params }) => {
 
   if (!response.ok) throw new Error("Failed to fetch data!");
 
-  const verses = await response.json();  
+  const verses = await response.json();
 
   return (
-    <div>{verses.map((v: Verse ) => <p>{v.text}</p>)}</div>
+    <div className={styles.pageContainer}>
+      <div className={styles.chapterContainer}>
+        <h5 className={styles.chapterTitle}>Chapter {chapterNum}</h5>
+        <div className={styles.chapterContent}>
+          {verses.map((v: Verse) => <p className={styles.verse}>{v.text}</p>)}
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -1,15 +1,6 @@
-.home {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 4rem;
-}
-
-.container {
+.bibleIndex {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  position: relative;
-  max-width: 92rem;
   gap: 2rem;
 }

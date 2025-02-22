@@ -16,10 +16,8 @@ const HomePage: FC<Props> = async ({ params }) => {
   const books = await response.json();
 
   return (
-    <div className={styles.home}>
-      <div className={styles.container}>
-        {books.map((b: Book) => <BookCover key={b.id} bookId={b.id} bookLen={BookKeys[b.title].len as number} bookKey={b.title} locale={locale} />)}
-      </div>
+    <div className={styles.bibleIndex}>
+      {books.map((b: Book) => <BookCover key={b.id} bookId={b.id} bookLen={BookKeys[b.title].len as number} bookKey={b.title} locale={locale} />)}
     </div>
   );
 }

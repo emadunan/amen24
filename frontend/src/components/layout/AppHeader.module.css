@@ -6,6 +6,7 @@
   width: 100%;
   z-index: 11;
   border-bottom: var(--primary) solid 2px;
+  height: var(--header-height);
 }
 
 .container {
@@ -13,7 +14,7 @@
   padding: .5rem 2rem;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .appLogo {
@@ -43,7 +44,7 @@
 }
 
 .navItem:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .actions {
