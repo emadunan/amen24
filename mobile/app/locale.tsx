@@ -1,20 +1,29 @@
 import { ThemedView } from "@/components/ThemedView";
 import React, { useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { I18nManager, Platform, StyleSheet, ViewStyle } from "react-native";
+import { I18nManager, Platform, StyleSheet, useColorScheme } from "react-native";
 import * as Updates from "expo-updates";
 import { useNavigation } from "expo-router";
 import BackBtn from "@/components/ui/BackBtn";
 import RadioBtn from "@/components/ui/RadioBtn";
+import { Colors } from "@/constants";
 
 const LocaleScreen = () => {
   const { t, i18n } = useTranslation();
   const [selected, setSelected] = useState(i18n.language);
   const navigation = useNavigation();
 
+  const colorScheme = useColorScheme();
+
   useLayoutEffect(() => {
-    navigation.setOptions({ title: t("locale") });
-  }, [t, navigation]);
+    navigation.setOptions({
+      title: t("locale"),
+      headerStyle: {
+        color: Colors[colorScheme ?? "light"].text,
+        backgroundColor: Colors[colorScheme ?? "light"].background, // Change this to your preferred color
+      },
+    });
+  }, [t, navigation, colorScheme]);
 
   async function handleLocale(newLanguage: string) {
     if (selected === newLanguage) return; // Avoid unnecessary re-renders
@@ -44,9 +53,6 @@ const LocaleScreen = () => {
 
   const homeUri = "/bible";
 
-  const backBtnDirStyle: ViewStyle =
-    i18n.language === "ar" ? { right: 0 } : { left: 0 };
-
   return (
     <ThemedView style={styles.container}>
       <ThemedView>
@@ -63,7 +69,7 @@ const LocaleScreen = () => {
           onPress={handleLocale}
         />
       </ThemedView>
-      <BackBtn uri={homeUri} style={[styles.backBtn, backBtnDirStyle]} />
+      <BackBtn uri={homeUri} style={[styles.backBtn]} color={Colors[colorScheme ?? "light"].text} />
     </ThemedView>
   );
 };
@@ -77,6 +83,7 @@ const styles = StyleSheet.create({
   backBtn: {
     position: "absolute",
     top: 16,
+    left: 0,
   },
 });
 

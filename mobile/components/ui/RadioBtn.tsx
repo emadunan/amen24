@@ -17,6 +17,10 @@ const RadioBtn: FC<Props> = ({ label, value, selected, onPress }) => {
   const colorScheme = useColorScheme();
   const { t, i18n } = useTranslation();
 
+  const allTheme: ViewStyle = {
+    borderColor: Colors[colorScheme ?? "light"].primary,
+  }
+
   const selectedTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].text,
   };
@@ -26,7 +30,7 @@ const RadioBtn: FC<Props> = ({ label, value, selected, onPress }) => {
   return (
     <Pressable style={[styles.radioContainer, flexDirStyle]} onPress={() => onPress(value)}>
       <ThemedView
-        style={[styles.radioCircle, selected === value && selectedTheme]}
+        style={[styles.radioCircle, allTheme, selected === value && selectedTheme]}
       />
       <ThemedText style={styles.radioText}>
         {t(`${label}`, { ns: "lang" })}
@@ -46,7 +50,6 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "#000",
     alignItems: "center",
     justifyContent: "center",
   },
