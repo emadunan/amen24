@@ -3,7 +3,7 @@
  * https://docs.expo.dev/guides/color-schemes/
  */
 
-import { Colors } from "@amen24/shared";
+import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 export function useThemeColor(

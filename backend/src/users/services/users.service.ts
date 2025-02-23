@@ -11,7 +11,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User) private usersRepo: Repository<User>,
     private profilesService: ProfilesService,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     const user = this.usersRepo.create(createUserDto);
@@ -24,7 +24,7 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    return await this.usersRepo.findOneBy({ id });
+    return await this.usersRepo.findOne({ where: { id }, relations: ['profile'] });
   }
 
   async findOneByEmail(email: string) {

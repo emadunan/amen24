@@ -2,7 +2,7 @@ import { open, Database } from "sqlite";
 import sqlite3 from "sqlite3";
 
 import { readFile } from "fs/promises";
-import { BookKeys as books } from "@amen24/shared";
+import { BookKeys as books } from "@/constants";
 
 type BookKey = keyof typeof books;
 

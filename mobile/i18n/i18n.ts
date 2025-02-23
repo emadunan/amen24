@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import * as Localization from "expo-localization";
 
 import { I18nManager } from "react-native";
-import { locales } from "@amen24/shared";
+import { locales } from "@/i18n/locales";
 
 const resources = {
   en: {

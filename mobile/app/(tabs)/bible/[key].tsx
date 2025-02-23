@@ -5,7 +5,7 @@ import BibleChapter from "@/components/bible/BibleChapter";
 import BookDrawerContent from "@/components/book-drawer/BookDrawerContent";
 import BackBtn from "@/components/ui/BackBtn";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { Colors } from "@amen24/shared";
+import { Colors } from "@/constants";
 
 const Drawer = createDrawerNavigator();
 

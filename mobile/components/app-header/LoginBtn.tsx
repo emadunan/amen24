@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { Colors } from "@amen24/shared";
+import { Colors } from "@/constants";
 
 const LoginBtn = () => {
   return (

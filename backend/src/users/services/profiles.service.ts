@@ -9,7 +9,7 @@ import { Profile } from '../entities/profile.entity';
 export class ProfilesService {
   constructor(
     @InjectRepository(Profile) private profilesRepo: Repository<Profile>,
-  ) {}
+  ) { }
 
   async create(createProfileDto: Partial<CreateProfileDto>) {
     const profile = this.profilesRepo.create(createProfileDto);
@@ -39,5 +39,15 @@ export class ProfilesService {
 
   async updateLastLogin(email: string) {
     return await this.profilesRepo.update(email, { lastLogin: new Date() });
+  }
+
+  async toggleTheme(email: string) {
+    const profile = await this.profilesRepo.findOne({ where: { email } });
+
+    if (!profile) {
+      throw new Error("User not found");
+    }
+    
+    return await this.profilesRepo.update(email, { darkMode: !profile.darkMode })
   }
 }

@@ -9,6 +9,7 @@ import {
   NotFoundException,
   BadRequestException,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -21,7 +22,7 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -64,5 +65,12 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
+  }
+
+  @Patch('profile/toggle-theme/')
+  async toggleTheme(@Body() body: any) {
+    // Extract email from JWT payload
+
+    return this.profilesService.toggleTheme(body.email);
   }
 }

@@ -1,4 +1,4 @@
-import { Colors } from "@amen24/shared";
+import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
 import { useRouter } from "expo-router";

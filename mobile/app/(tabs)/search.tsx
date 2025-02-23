@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 import { IVerse } from "@/interfaces/verse";
 import VerseSearchResult from "@/components/bible/VerseSearchResult";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
-import { Colors } from "@amen24/shared";
+import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemedText } from "@/components/ThemedText";
 import { normalizeArabicText } from "@/utils";

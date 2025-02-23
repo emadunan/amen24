@@ -1,4 +1,5 @@
-GET http://localhost:5000/users
+GET http://localhost:5000/users/fc89a78c-8019-4ea1-aeb9-9793eff5e339
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImZjODlhNzhjLTgwMTktNGVhMS1hZWI5LTk3OTNlZmY1ZTMzOSIsImlhdCI6MTc0MDMwOTUxMSwiZXhwIjoxNzQwMzEzMTExfQ.rxkSHIh7dWMkc4Ys4Xt2HvLG8kiw_EdRrgZlrngqYKk
 
 ###
 
@@ -12,4 +13,13 @@ Content-Type: application/json
   "providerId": "emadunan",
   "displayName": "Emad Younan",
   "isActive": true
+}
+
+###
+PATCH http://localhost:5000/users/profile/toggle-theme
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImZjODlhNzhjLTgwMTktNGVhMS1hZWI5LTk3OTNlZmY1ZTMzOSIsImlhdCI6MTc0MDMwOTUxMSwiZXhwIjoxNzQwMzEzMTExfQ.rxkSHIh7dWMkc4Ys4Xt2HvLG8kiw_EdRrgZlrngqYKk
+Content-Type: application/json
+
+{
+  "email": "emadunan@gmail.com"
 }

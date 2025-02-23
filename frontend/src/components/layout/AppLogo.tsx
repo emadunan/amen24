@@ -1,18 +1,15 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./AppLogo.module.css";
+import { useGetProfileByEmailQuery } from "@/store/profileSlice";
 
 const AppLogo = () => {
-  const [theme, setTheme] = useState("light");
-
-  useEffect(() => {
-    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
-    setTheme(currentTheme);
-  }, []);
+  const { data: user, error, isLoading } = useGetProfileByEmailQuery('');
+  const isDarkMode = useMemo(() => user?.profile?.darkMode ?? false, [user]);
 
   return (
     <Image
-      src={theme === "dark" ? "/img/logo-dark.png" : "/img/logo-light.png"}
+      src={isDarkMode ? "/img/logo-dark.png" : "/img/logo-light.png"}
       className={styles.logo}
       alt="Amen24 Logo"
       width={104}

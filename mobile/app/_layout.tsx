@@ -15,7 +15,7 @@ import { SQLiteProvider } from "expo-sqlite";
 import { I18nextProvider } from "react-i18next";
 import i18n from "@/i18n/i18n";
 import * as SystemUI from "expo-system-ui";
-import { Colors } from "@amen24/shared";
+import { Colors } from "@/constants";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

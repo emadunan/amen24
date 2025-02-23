@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Colors } from "@amen24/shared";
+import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";

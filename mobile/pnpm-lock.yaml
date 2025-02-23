@@ -8,7 +8,7 @@ importers:
 
   .:
     dependencies:
-      '@amen24/shared':
+      '@/constants':
         specifier: file:../shared
         version: file:../shared
       '@babel/runtime':
@@ -161,7 +161,7 @@ packages:
       graphql:
         optional: true
 
-  '@amen24/shared@file:../shared':
+  '@/constants@file:../shared':
     resolution: {directory: ../shared, type: directory}
 
   '@ampproject/remapping@2.3.0':
@@ -4975,7 +4975,7 @@ snapshots:
 
   '@0no-co/graphql.web@1.1.1': {}
 
-  '@amen24/shared@file:../shared': {}
+  '@/constants@file:../shared': {}
 
   '@ampproject/remapping@2.3.0':
     dependencies:

@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable } from "react-native";
-import { Colors } from "@amen24/shared";
+import { Colors } from "@/constants";
 import { useRouter } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 

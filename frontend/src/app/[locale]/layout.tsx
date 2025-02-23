@@ -10,6 +10,7 @@ import { FC } from "react";
 import initTranslations from "../i18n";
 import TranslationsProvider from "@/providers/TranslationsProvider";
 import AppMain from "@/components/layout/AppMain";
+import StoreProvider from '../../providers/StoreProvider'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,11 +52,13 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
   return (
     <html lang={locale} dir={dir}>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <TranslationsProvider namespaces={i18nNamespaces} locale={locale} resources={resources}>
-          <AppHeader />
-          <AppMain>{children}</AppMain>
-          <AppFooter />
-        </TranslationsProvider>
+        <StoreProvider>
+          <TranslationsProvider namespaces={i18nNamespaces} locale={locale} resources={resources}>
+            <AppHeader />
+            <AppMain>{children}</AppMain>
+            <AppFooter />
+          </TranslationsProvider>
+        </StoreProvider>
       </body>
     </html>
   );
