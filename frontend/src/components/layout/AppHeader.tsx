@@ -3,18 +3,18 @@
 import React from 'react';
 import styles from "./AppHeader.module.css";
 import Link from 'next/link';
-import { IoMdLogIn } from "react-icons/io";
 import ThemeSwitcher from '../ui/ThemeSwitcher';
 import { useTranslation } from 'react-i18next';
 import LanguageChanger from '../ui/LanguageChanger';
-import Image from 'next/image';
+import AppLogo from './AppLogo';
 
 
 const AppHeader = () => {
   const { t } = useTranslation();
   return (
     <header className={styles.appHeader}>
-      <Image src={`/logo.png`} alt='logo' width={104} height={104} className={styles.logo} />
+
+      <AppLogo />
 
       <nav className={styles.nav}>
         <ul className={styles.navList}>

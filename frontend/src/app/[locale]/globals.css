@@ -1,4 +1,5 @@
 :root {
+  --logo: url("/img/logo-light.png");
   --text: #3B3A34;
   --text-rgb: 59, 58, 52;
   --background: #F4EFE6;
@@ -14,6 +15,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --logo: url("/img/logo-dark.png");
+
     --text: #F4EFE6;
     --text-rgb: 244, 239, 230;
     --background: #3A332B;
