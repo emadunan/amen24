@@ -22,7 +22,7 @@
   "submit": {
     "production": {
       "android": {
-        "serviceAccountKeyPath": "./secrets/amen24-8168029cd7cc.json",
+        "serviceAccountKeyPath": "./secrets/amen24-service-account-key.json",
         "track": "internal"
       },
       "ios": {
