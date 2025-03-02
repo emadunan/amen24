@@ -45,9 +45,9 @@ export class ProfilesService {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
-      throw new Error("User not found");
+      throw new Error("User profile was not found");
     }
     
-    return await this.profilesRepo.update(email, { darkMode: !profile.darkMode })
+    return await this.profilesRepo.update(email, { darkMode: !profile.darkMode });
   }
 }

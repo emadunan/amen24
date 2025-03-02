@@ -21,7 +21,7 @@ const BookPage: FC<Props> = async ({ params }) => {
       <div className={styles.chapterContainer}>
         <h4 className={styles.chapterTitle}>Chapter {chapterNum}</h4>
         <div className={styles.chapterContent}>
-          {verses.map((v: Verse) => <p className={styles.verse}>{v.text}</p>)}
+          {verses.map((v: Verse) => <p className={styles.verse}>{v.text}{" "}</p>)}
         </div>
       </div>
     </div>

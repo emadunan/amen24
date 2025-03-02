@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Profile } from '@amen24/shared'
+import { Profile, User } from '@amen24/shared'
 
 // Define a service using a base URL and expected endpoints
 export const profileApi = createApi({
@@ -7,11 +7,11 @@ export const profileApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/users/' }),
   tagTypes: ['theme'],
   endpoints: (builder) => ({
-    getProfileByEmail: builder.query<Profile, string>({
+    getProfileByEmail: builder.query<User, string>({
       query: () => `fc89a78c-8019-4ea1-aeb9-9793eff5e339`,
       providesTags: ['theme'],
     }),
-    toggleProfileTheme: builder.mutation({
+    toggleProfileTheme: builder.mutation<void, void>({
       query: () => ({
         url: `profile/toggle-theme/`,
         method: 'PATCH',
@@ -30,4 +30,4 @@ export const profileApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetProfileByEmailQuery, useToggleProfileThemeMutation } = profileApi
+export const { useGetProfileByEmailQuery, useToggleProfileThemeMutation } = profileApi;

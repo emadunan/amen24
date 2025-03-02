@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useMemo, useCallback } from "react";
 import styles from "./ThemeSwitcher.module.css";
 import { useGetProfileByEmailQuery, useToggleProfileThemeMutation } from "@/store/profileSlice";
@@ -8,7 +9,7 @@ const ThemeSwitcher = () => {
   const [mutate, { isLoading: isMutating }] = useToggleProfileThemeMutation();
 
   // Memoize dark mode state to prevent unnecessary re-renders
-  const isDarkMode = useMemo(() => user?.profile?.darkMode ?? false, [user]);
+  const isDarkMode = useMemo(() => user?.profile.darkMode ?? false, [user]);
 
   // Apply theme to document
   useEffect(() => {
@@ -18,7 +19,7 @@ const ThemeSwitcher = () => {
 
   // Handle theme toggle with optimistic UI update
   const handleToggle = useCallback(() => {
-    mutate(); // Fire mutation request
+    mutate();
   }, [mutate]);
 
   if (error) return <p>Error loading theme</p>;
