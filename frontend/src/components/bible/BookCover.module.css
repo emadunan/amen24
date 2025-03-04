@@ -27,14 +27,17 @@
 }
 
 .bookTitle {
-  margin-top: .5rem;
+  width: 100%;
+  margin-top: .3rem;
   position: absolute;
-  left: 50%;
-  transform: translate(-50%);
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: var(--text);
   text-align: center;
   font-weight: bold;
+  font-size: 1.3rem;
   text-shadow: 1px 1px 3px rgba(var(--background-rgb), 0.6);
   /* Adds contrast for readability */
 }

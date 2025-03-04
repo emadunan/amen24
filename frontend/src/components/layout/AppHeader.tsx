@@ -7,6 +7,7 @@ import ThemeSwitcher from '../ui/ThemeSwitcher';
 import { useTranslation } from 'react-i18next';
 import LanguageChanger from '../ui/LanguageSelector';
 import AppLogo from './AppLogo';
+import LoginButton from '../ui/LoginButton';
 
 
 const AppHeader = () => {
@@ -25,6 +26,7 @@ const AppHeader = () => {
         <div className={styles.navActions}>
           <LanguageChanger />
           <ThemeSwitcher />
+          <LoginButton />
         </div>
       </nav>
     </header>

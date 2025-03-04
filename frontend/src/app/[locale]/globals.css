@@ -1,17 +1,31 @@
 :root {
   --logo: url("/img/logo-light.png");
+  --max: #fff;
   --text: #3B3A34;
   --text-rgb: 59, 58, 52;
   --background: #F4EFE6;
   --background-rgb: 244, 239, 230;
   --primary: #8A6E4A;
   --secondary: #D6CCB1;
-  --secondary-hover: #c4b89a;
-  --accent: #3B754C;
+  --accent: #3D6B50;
+  --accent-hover: #2E5840;
   --highlight: #ffeb3b;
 
   --header-height: 4rem;
   --footer-height: 12rem;
+}
+
+[data-theme="dark"] {
+  --max: #000;
+  --text: #F4EFE6;
+  --text-rgb: 244, 239, 230;
+  --background: #3A332B;
+  --background-rgb: 58, 51, 43;
+  --primary: #A68A5E;
+  --secondary: #524A3F;
+  --accent: #82B48A;
+  --accent-hover:  #9CC9A4;
+  --highlight: #B88B4A;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,24 +38,13 @@
     --background-rgb: 58, 51, 43;
     --primary: #A68A5E;
     --secondary: #524A3F;
-    --accent: #3B754C;
+    --accent: #82B48A;
     --highlight: #B88B4A;
   }
 
   html {
     color-scheme: dark;
   }
-}
-
-[data-theme="dark"] {
-  --text: #F4EFE6;
-  --text-rgb: 244, 239, 230;
-  --background: #3A332B;
-  --background-rgb: 58, 51, 43;
-  --primary: #A68A5E;
-  --secondary: #524A3F;
-  --accent: #3B754C;
-  --highlight: #B88B4A;
 }
 
 html,
@@ -54,7 +57,7 @@ body {
 body {
   color: var(--text);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-amiri);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

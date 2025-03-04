@@ -5,13 +5,15 @@
 
 .button {
   width: 5.2rem;
+  font-family: var(--font-amiri);
+  font-weight: 700;
   background: var(--secondary);
   color: var(--text);
   border: 1px solid var(--primary);
   padding: 0.4rem;
   border-radius: 2px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
 }
 
 .button:focus {
@@ -41,6 +43,7 @@
   padding: 0.4rem;
   background: var(--background);
   color: var(--text);
+  font-family: var(--font-amiri);
   border: none;
   text-align: left;
   cursor: pointer;

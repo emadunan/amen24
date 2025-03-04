@@ -46,4 +46,5 @@
 .toggleWrapper:hover,
 .toggleWrapper:focus-within {
   border-color: var(--accent);
+  background-color: var(--background);
 }

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AppHeader from "@/components/layout/AppHeader";
 import AppFooter from "@/components/layout/AppFooter";
-import styles from "./layout.module.css";
 import { notFound } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
 import { FC } from "react";
@@ -12,14 +10,32 @@ import TranslationsProvider from "@/providers/TranslationsProvider";
 import AppMain from "@/components/layout/AppMain";
 import StoreProvider from '../../providers/StoreProvider'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import localFont from 'next/font/local'
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const amiri = localFont({
+  src: [
+    {
+      path: '../../assets/fonts/Amiri/Amiri-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../assets/fonts/Amiri/Amiri-Italic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../../assets/fonts/Amiri/Amiri-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../../assets/fonts/Amiri/Amiri-BoldItalic.ttf',
+      weight: '700',
+      style: 'italic',
+    },
+  ],
+  variable: "--font-amiri"
 });
 
 export const metadata: Metadata = {
@@ -51,7 +67,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
 
   return (
     <html lang={locale} dir={dir}>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={amiri.className}>
         <StoreProvider>
           <TranslationsProvider namespaces={i18nNamespaces} locale={locale} resources={resources}>
             <AppHeader />
