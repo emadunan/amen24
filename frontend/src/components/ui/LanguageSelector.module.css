@@ -1,0 +1,63 @@
+.languageChanger {
+  position: relative;
+  display: inline-block;
+}
+
+.button {
+  width: 5.2rem;
+  background: var(--secondary);
+  color: var(--text);
+  border: 1px solid var(--primary);
+  padding: 0.4rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.button:focus {
+  background: var(--background); /* Slightly darker version of secondary */
+}
+
+.button:hover {
+  background: var(--background);
+  border-color: var(--accent);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--background);
+  border: 1px solid var(--primary);
+  border-radius: 2px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.option {
+  width: 5.1rem;
+  display: block;
+  padding: 0.4rem;
+  background: var(--background);
+  color: var(--text);
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+[dir="rtl"] .option {
+  text-align: right;
+}
+
+
+.option:hover {
+  background: var(--secondary); /* Darker hover effect */
+}
+
+.option:disabled {
+  opacity: 0.5;
+  background: var(--background); /* Keep background unchanged */
+}

@@ -5,7 +5,7 @@ import styles from "./AppHeader.module.css";
 import Link from 'next/link';
 import ThemeSwitcher from '../ui/ThemeSwitcher';
 import { useTranslation } from 'react-i18next';
-import LanguageChanger from '../ui/LanguageChanger';
+import LanguageChanger from '../ui/LanguageSelector';
 import AppLogo from './AppLogo';
 
 

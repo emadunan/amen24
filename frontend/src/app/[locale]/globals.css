@@ -6,7 +6,8 @@
   --background-rgb: 244, 239, 230;
   --primary: #8A6E4A;
   --secondary: #D6CCB1;
-  --accent: #C99A3A;
+  --secondary-hover: #c4b89a;
+  --accent: #3B754C;
   --highlight: #ffeb3b;
 
   --header-height: 4rem;

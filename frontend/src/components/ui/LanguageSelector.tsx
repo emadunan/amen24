@@ -1,20 +1,20 @@
 'use client';
 
+import styles from "./LanguageSelector.module.css";
 import i18nConfig from '@/config/next-i18n-router.config';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function LanguageChanger() {
-  const { i18n } = useTranslation();
+const LanguageSelector = () => {
+  const { i18n, t } = useTranslation();
   const currentLocale = i18n.language;
   const router = useRouter();
   const currentPathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
-  function handleChange (event: React.ChangeEvent<HTMLSelectElement>) {
-    const newLocale = event.target.value;
-
+  function handleClick(newLocale: string) {
     // set cookie for next-i18n-router
     const days = 30;
     const date = new Date();
@@ -38,9 +38,19 @@ export default function LanguageChanger() {
   };
 
   return (
-    <select onChange={handleChange} value={currentLocale}>
-      <option value="en">English</option>
-      <option value="ar">Arabic</option>
-    </select>
+    <div className={styles.languageChanger}>
+      <button className={styles.button} onClick={() => setIsOpen(!isOpen)}>
+        {currentLocale === "ar" ? "🇪🇬" : "🇺🇸"} {t(currentLocale, { ns: "lang" })}
+      </button>
+
+      {isOpen && (
+        <div className={styles.dropdown}>
+          <button className={styles.option} disabled={currentLocale === "en"} onClick={() => handleClick("en")}>🇺🇸 {t("en", { ns: "lang" })}</button>
+          <button className={styles.option} disabled={currentLocale === "ar"} onClick={() => handleClick("ar")}>🇪🇬 {t("ar", { ns: "lang" })}</button>
+        </div>
+      )}
+    </div>
   );
 }
+
+export default LanguageSelector;
