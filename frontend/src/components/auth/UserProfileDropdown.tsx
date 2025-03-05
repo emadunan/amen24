@@ -36,16 +36,15 @@ export default function UserProfileDropdown({ user }: UserProfileProps) {
         <ul className={styles.dropdown}>
           <li className={styles.listItem}>
             <RiStarLine />
-            <span className={styles.listItemText}>{t('favorite')}</span>
-
+            <span className={styles.listItemText}>{t("favorite")}</span>
           </li>
           <li className={styles.listItem}>
             <RiSettings3Line />
-            <span className={styles.listItemText}>{t('settings')}</span>
+            <span className={styles.listItemText}>{t("settings")}</span>
           </li>
           <li className={styles.listItem}>
             <RiLogoutBoxLine className={styles.flipIcon} />
-            <span className={styles.listItemText}>{t('logout')}</span>
+            <span className={styles.listItemText}>{t("logout")}</span>
           </li>
         </ul>
       )}

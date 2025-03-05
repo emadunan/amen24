@@ -31,6 +31,7 @@
 .navItem {
   position: relative;
   color: var(--gray);
+  font-size: 0.95rem;
   transition: transform 0.2s ease-in-out;
 }
 
@@ -60,5 +61,5 @@
 
 .active {
   color: var(--text);
-  font-size: large;
+  font-size: 1rem;
 }

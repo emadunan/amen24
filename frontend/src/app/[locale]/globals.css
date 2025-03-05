@@ -9,6 +9,7 @@
   --accent: #3d6b50;
   --accent-hover: #2e5840;
   --gray: #5c564a;
+  --red: #c62828;
   --highlight: #ffeb3b;
 
   --header-height: 4rem;
@@ -26,6 +27,7 @@
   --accent: #82b48a;
   --accent-hover: #9cc9a4;
   --gray: #d6cfc7;
+  --red: #e57373;
   --highlight: #b88b4a;
 }
 
@@ -40,6 +42,7 @@
     --primary: #a68a5e;
     --secondary: #524a3f;
     --accent: #82b48a;
+    --red: #e57373;
     --highlight: #b88b4a;
   }
 
@@ -72,4 +75,8 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+[dir="rtl"] .flip-icon {
+  transform: scaleX(-1);
 }

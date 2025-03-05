@@ -1,6 +1,10 @@
 import { Verse } from "@amen24/shared";
-import React, { FC } from "react";
+import React, { FC, Fragment } from "react";
 import styles from "./page.module.css";
+import initTranslations from "@/app/i18n";
+import Link from "next/link";
+import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
+
 
 interface Props {
   params: { book: string[]; locale: string };
@@ -8,6 +12,9 @@ interface Props {
 
 const BookPage: FC<Props> = async ({ params }) => {
   const { book, locale } = await params;
+
+  const { t } = await initTranslations(locale, ["common", "book"]);
+
   const [bookId, bookKey, bookLen, chapterNum] = book;
 
   const response = await fetch(
@@ -18,14 +25,56 @@ const BookPage: FC<Props> = async ({ params }) => {
 
   const verses = await response.json();
 
+  const chapterNumber =
+    locale === "ar" ? (+chapterNum).toLocaleString("ar-EG") : chapterNum;
+
   return (
     <div className={styles.pageContainer}>
       <div className={styles.chapterContainer}>
-        <h4 className={styles.chapterTitle}>Chapter {chapterNum}</h4>
+        <div className={styles.chapterNav}>
+          {+chapterNum > 1 ? (
+            <Link
+              href={`/${bookId}/${bookKey}/${bookLen}/${+chapterNum - 1}`}
+              className={styles.chapterLink}
+            >
+              <GrLinkPrevious className="flip-icon" />
+              {t("prev")}
+            </Link>
+          ) : (
+            <span className={`${styles.chapterLink} ${styles.disabled}`} aria-disabled="true">
+              <GrLinkPrevious className="flip-icon" />
+              {t("prev")}
+            </span>
+          )}
+          <h3 className={styles.chapterTitle}>
+            {t(bookKey, { ns: "book" })} {chapterNumber}
+          </h3>
+          {+chapterNum < +bookLen ? (
+            <Link href={`/${bookId}/${bookKey}/${bookLen}/${+chapterNum + 1}`} className={styles.chapterLink}>
+              {t("next")}
+              <GrLinkNext className="flip-icon" />
+            </Link>) : (
+              <span className={`${styles.chapterLink} ${styles.disabled}`} aria-disabled="true">
+              {t("next")}
+              <GrLinkNext className="flip-icon" />
+            </span>
+            )
+          }
+        </div>
         <div className={styles.chapterContent}>
-          {verses.map((v: Verse) => (
-            <p className={styles.verse}>{v.text} </p>
-          ))}
+          {verses.map((v: Verse) => {
+            const verseNumber =
+              locale === "ar" ? v.num.toLocaleString("ar-EG") : v.num;
+            return (
+              <Fragment>
+                {" "}
+                <p className={styles.verse} key={v.id}>
+                  <span className={styles.verseNumber}>{verseNumber}</span>
+                  {v.text}
+                </p>
+              </Fragment>
+            );
+          })}
         </div>
       </div>
     </div>

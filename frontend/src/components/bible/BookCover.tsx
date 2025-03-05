@@ -17,7 +17,7 @@ const BookCover: FC<Props> = async ({ bookId, bookKey, bookLen, locale }) => {
   return (
     <article className={styles.bookCover}>
       <Link href={`/${bookId}/${bookKey}/${bookLen}/1`}>
-        <h4 className={styles.bookTitle}>{t(bookKey, { ns: "book" })}</h4>
+        <h2 className={styles.bookTitle}>{t(bookKey, { ns: "book" })}</h2>
         <div className={styles.imgOverlay} />
         <Image
           src={`/img/book-cover/${bookId}-${bookKey}.jpg`}

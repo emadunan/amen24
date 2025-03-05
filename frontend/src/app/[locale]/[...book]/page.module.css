@@ -8,6 +8,21 @@
   max-width: 44rem;
 }
 
+.chapterNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0.5rem 0rem;
+  border-bottom: var(--primary) solid 1px;
+  margin-bottom: 1rem;
+}
+
+.chapterLink {
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+}
+
 .chapterContent {
   text-align: justify;
 }
@@ -15,12 +30,32 @@
 .verse {
   display: inline;
   font-size: 1.3rem;
+  line-height: 2rem;
+}
+
+[dir="rtl"] .verse {
   line-height: 2.6rem;
 }
 
+.verseNumber {
+  color: var(--red);
+  font-size: small;
+  vertical-align: top;
+  position: relative;
+  top: -0.6rem; /* Adjust as needed */
+}
+
+[dir="ltr"] .verseNumber {
+  top: -0.2rem;
+  left: -0.1rem;
+}
+
 .chapterTitle {
-  text-align: center;
-  padding: 0.5rem 0rem;
-  border-bottom: var(--primary) solid 1px;
-  margin-bottom: 1rem;
+  
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none; /* Prevents clicking */
+  cursor: default;
 }

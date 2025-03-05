@@ -3,6 +3,8 @@
   "bible": "Holy-Bible",
   "search": "Search-Engine",
   "chapter": "Chapter",
+  "prev": "Prev",
+  "next": "Next",
   "no-result": "No results",
   "search-welcome": "Start searching for Bible verses by entering keywords above.",
   "locale": "Language",

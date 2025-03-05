@@ -19,7 +19,7 @@ export class VersesService {
   constructor(
     @InjectRepository(Verse) private versesRepo: Repository<Verse>,
     private chaptersService: ChaptersService,
-  ) {}
+  ) { }
 
   create(createVerseDto: CreateVerseDto) {
     return 'This action adds a new verse';
@@ -39,6 +39,9 @@ export class VersesService {
         chapter: { num: chapterNumber, book: { title: bookKey } },
         language,
       },
+      order: {
+        num: "ASC"
+      }
     });
   }
 
