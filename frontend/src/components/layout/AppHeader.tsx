@@ -9,10 +9,24 @@ import LanguageChanger from "../ui/LanguageSelector";
 import AppLogo from "./AppLogo";
 import LoginButton from "../ui/LoginButton";
 import { usePathname } from "next/navigation";
+import i18nConfig from "@/config/next-i18n-router.config";
 
 const AppHeader = () => {
   const pathname = usePathname();
   const { t } = useTranslation();
+
+  // Extract locale from the pathname
+  const localePrefixes = i18nConfig.locales.map((locale) => `/${locale}`);
+  let normalizedPath = pathname;
+
+  // Remove locale prefix if it exists
+  localePrefixes.forEach((prefix) => {
+    if (pathname.startsWith(prefix + "/")) {
+      normalizedPath = pathname.replace(prefix, ""); // Remove prefix
+    } else if (pathname === prefix) {
+      normalizedPath = "/"; // Convert "/ar" to "/"
+    }
+  });
 
   return (
     <header className={styles.appHeader}>
@@ -22,7 +36,7 @@ const AppHeader = () => {
         <ul className={styles.navList}>
           <li className={styles.navItem}>
             <Link
-              className={`link ${pathname === "/" ? "active" : ""}`}
+              className={`link ${normalizedPath === "/" ? `${styles.active}` : ""}`}
               href={"/"}
             >
               {" "}
@@ -31,7 +45,7 @@ const AppHeader = () => {
           </li>
           <li className={styles.navItem}>
             <Link
-              className={`link ${pathname === "/about" ? "active" : ""}`}
+              className={`link ${normalizedPath === "/search" ? `${styles.active}` : ""}`}
               href={"/search"}
             >
               <h3>{t("search", { ns: "common" })}</h3>

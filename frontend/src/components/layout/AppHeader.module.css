@@ -24,12 +24,14 @@
 .navList {
   list-style: none;
   display: flex;
+  align-items: baseline;
   gap: 1rem;
 }
 
 .navItem {
   position: relative;
   transition: transform 0.2s ease-in-out;
+  color: var(--gray);
 }
 
 .navItem::after {
@@ -54,4 +56,9 @@
   display: flex;
   gap: 0.5rem;
   align-items: stretch;
+}
+
+.active {
+  color: var(--text);
+  font-size: large;
 }

@@ -1,6 +1,5 @@
 :root {
   --logo: url("/img/logo-light.png");
-  --max: #fff;
   --text: #3b3a34;
   --text-rgb: 59, 58, 52;
   --background: #f4efe6;
@@ -9,6 +8,7 @@
   --secondary: #d6ccb1;
   --accent: #3d6b50;
   --accent-hover: #2e5840;
+  --gray: #5C564A;
   --highlight: #ffeb3b;
 
   --header-height: 4rem;
@@ -16,7 +16,7 @@
 }
 
 [data-theme="dark"] {
-  --max: #000;
+  --logo: url("/img/logo-dark.png");
   --text: #f4efe6;
   --text-rgb: 244, 239, 230;
   --background: #3a332b;
@@ -25,6 +25,7 @@
   --secondary: #524a3f;
   --accent: #82b48a;
   --accent-hover: #9cc9a4;
+  --gray: #D6CFC7;
   --highlight: #b88b4a;
 }
 
