@@ -30,8 +30,8 @@
 
 .navItem {
   position: relative;
-  transition: transform 0.2s ease-in-out;
   color: var(--gray);
+  transition: transform 0.2s ease-in-out;
 }
 
 .navItem::after {

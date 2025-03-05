@@ -11,6 +11,7 @@ import AppMain from "@/components/layout/AppMain";
 import StoreProvider from "../../providers/StoreProvider";
 
 import localFont from "next/font/local";
+import { cookies } from "next/headers";
 
 const amiri = localFont({
   src: [
@@ -55,7 +56,30 @@ interface Props {
   params: { locale: string };
 }
 
+async function getUser() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("access_token")?.value;
+
+  console.log(token);
+
+  if (!token) return null;
+
+  const res = await fetch(`http://localhost:5000/users/me`, {
+    headers: { Cookie: `access_token=${token}` },
+    credentials: "include",
+    cache: "no-store", // Ensure fresh auth state
+  });
+
+  if (!res.ok) return null;
+
+  return res.json();
+}
+
 const RootLayout: FC<Props> = async ({ children, params }) => {
+  const user = await getUser();
+
+  console.log(user);
+
   const { locale } = await params;
 
   if (!i18nConfig.locales.includes(locale)) {
@@ -75,7 +99,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
             locale={locale}
             resources={resources}
           >
-            <AppHeader />
+            <AppHeader user={user} />
             <AppMain>{children}</AppMain>
             <AppFooter />
           </TranslationsProvider>

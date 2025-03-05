@@ -1,0 +1,59 @@
+.container {
+  position: relative;
+}
+
+.menuButton {
+  width: 6.2rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 2px;
+  background-color: var(--accent);
+  color: var(--background);
+  border: none;
+  height: 100%;
+  transition: background 0.3sec ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+
+.menuButton:hover {
+  background-color: var(--accent-hover);
+}
+
+.buttonText {
+  font-weight: 700;
+}
+
+.dropdown {
+  position: absolute;
+  top: 2.4rem;
+  right: 0;
+  background-color: var(--background);
+  list-style: none;
+  border: 1px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.listItemText {
+  font-weight: 700;
+}
+
+.listItem:hover {
+  cursor: pointer;
+  background-color: var(--secondary);
+}
+
+[dir="rtl"] .flipIcon {
+  transform: scaleX(-1);
+}

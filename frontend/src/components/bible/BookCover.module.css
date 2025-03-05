@@ -28,7 +28,7 @@
 
 .bookTitle {
   width: 100%;
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
   position: absolute;
   z-index: 2;
   display: flex;
@@ -36,8 +36,8 @@
   align-items: center;
   color: var(--text);
   text-align: center;
-  font-weight: bold;
-  font-size: 1.3rem;
+  /* font-weight: 700; */
+  font-size: 1.2rem;
   text-shadow: 1px 1px 3px rgba(var(--background-rgb), 0.6);
   /* Adds contrast for readability */
 }

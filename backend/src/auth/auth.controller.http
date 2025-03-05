@@ -1,0 +1,8 @@
+### Login
+POST http://localhost:5000/auth/local-login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "emadunan@gmail.com",
+  "password": "emadunan"
+}

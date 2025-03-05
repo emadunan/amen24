@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useRef } from "react";
-import styles from "./localLogin.module.css";
+import styles from "./LocalLogin.module.css";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { RiLoginBoxLine } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 const LocalLogin = () => {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const emailElRef = useRef<HTMLInputElement | null>(null);
   const passwordElRef = useRef<HTMLInputElement | null>(null);
@@ -15,8 +17,9 @@ const LocalLogin = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    fetch("http://localhost:5000/auth/login", {
+    fetch("http://localhost:5000/auth/local-login", {
       method: "post",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -25,8 +28,12 @@ const LocalLogin = () => {
         password: passwordElRef.current?.value,
       }),
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((response) => {
+        if (!response.ok) throw new Error("Login failed");
+
+        return response.json();
+      })
+      .then((_data) => router.replace("/"));
   }
 
   return (

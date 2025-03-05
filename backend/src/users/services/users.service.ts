@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { ProfilesService } from './profiles.service';
+import { UserProfile } from "@amen24/shared";
 
 @Injectable()
 export class UsersService {
@@ -24,11 +25,38 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    return await this.usersRepo.findOne({ where: { id }, relations: ['profile'] });
+    return await this.usersRepo.findOne({
+      where: { id },
+      relations: ['profile'],
+    });
   }
 
   async findOneByEmail(email: string) {
     return await this.usersRepo.findOneBy({ email });
+  }
+
+  async findUserProfileByEmail(email: string): Promise<Partial<UserProfile> | undefined> {
+    const userProfile = await this.usersRepo.findOne({
+      where: { email },
+      relations: ['profile'],
+    });
+
+    if (!userProfile) return;
+
+    const { profile, ...user } = userProfile;
+
+    return {
+      ...user,
+      privilege: userProfile?.profile.privilege,
+      createdAt: userProfile?.profile.createdAt,
+      lastLogin: userProfile?.profile.lastLogin,
+      currentBook: userProfile?.profile.currentBook,
+      currentChapter: userProfile?.profile.currentChapter,
+      uilanguage: userProfile?.profile.uilanguage,
+      fontSize: userProfile?.profile.fontSize,
+      diacrited: userProfile?.profile.diacrited,
+      darkMode: userProfile?.profile.darkMode,
+    };
   }
 
   async findOneByEmailProvider(email: string, provider: string = 'local') {

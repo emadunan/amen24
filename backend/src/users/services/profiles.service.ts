@@ -9,7 +9,7 @@ import { Profile } from '../entities/profile.entity';
 export class ProfilesService {
   constructor(
     @InjectRepository(Profile) private profilesRepo: Repository<Profile>,
-  ) { }
+  ) {}
 
   async create(createProfileDto: Partial<CreateProfileDto>) {
     const profile = this.profilesRepo.create(createProfileDto);
@@ -45,9 +45,11 @@ export class ProfilesService {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
-      throw new Error("User profile was not found");
+      throw new Error('User profile was not found');
     }
-    
-    return await this.profilesRepo.update(email, { darkMode: !profile.darkMode });
+
+    return await this.profilesRepo.update(email, {
+      darkMode: !profile.darkMode,
+    });
   }
 }

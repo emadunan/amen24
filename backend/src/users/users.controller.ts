@@ -16,13 +16,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ProfilesService } from './services/profiles.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { User } from 'src/auth/decorators/user.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
-  ) { }
+  ) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -43,6 +44,12 @@ export class UsersController {
 
     const user = await this.usersService.create(createUserDto);
 
+    return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  findMe(@User() user) {
     return user;
   }
 

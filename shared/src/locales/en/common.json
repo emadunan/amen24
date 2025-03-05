@@ -7,5 +7,8 @@
   "search-welcome": "Start searching for Bible verses by entering keywords above.",
   "locale": "Language",
   "signup-invite": "Don't have an account? Sign up now and get started!",
-  "login": "Login"
+  "login": "Login",
+  "logout": "Logout",
+  "favorite": "Favorite",
+  "settings": "Settings" 
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { FC } from "react";
 import styles from "./AppHeader.module.css";
 import Link from "next/link";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
@@ -10,8 +10,14 @@ import AppLogo from "./AppLogo";
 import LoginButton from "../ui/LoginButton";
 import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
+import { UserProfile } from "@amen24/shared";
+import UserProfileDropdown from "../auth/UserProfileDropdown";
 
-const AppHeader = () => {
+interface Props {
+  user: UserProfile;
+}
+
+const AppHeader: FC<Props> = ({ user }) => {
   const pathname = usePathname();
   const { t } = useTranslation();
 
@@ -56,7 +62,8 @@ const AppHeader = () => {
         <div className={styles.navActions}>
           <LanguageChanger />
           <ThemeSwitcher />
-          <LoginButton />
+          {normalizedPath !== "/login" && !user && <LoginButton />}
+          {user && <UserProfileDropdown user={user} />}
         </div>
       </nav>
     </header>
