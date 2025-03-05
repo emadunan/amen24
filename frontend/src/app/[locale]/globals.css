@@ -1,14 +1,14 @@
 :root {
   --logo: url("/img/logo-light.png");
   --max: #fff;
-  --text: #3B3A34;
+  --text: #3b3a34;
   --text-rgb: 59, 58, 52;
-  --background: #F4EFE6;
+  --background: #f4efe6;
   --background-rgb: 244, 239, 230;
-  --primary: #8A6E4A;
-  --secondary: #D6CCB1;
-  --accent: #3D6B50;
-  --accent-hover: #2E5840;
+  --primary: #8a6e4a;
+  --secondary: #d6ccb1;
+  --accent: #3d6b50;
+  --accent-hover: #2e5840;
   --highlight: #ffeb3b;
 
   --header-height: 4rem;
@@ -17,29 +17,29 @@
 
 [data-theme="dark"] {
   --max: #000;
-  --text: #F4EFE6;
+  --text: #f4efe6;
   --text-rgb: 244, 239, 230;
-  --background: #3A332B;
+  --background: #3a332b;
   --background-rgb: 58, 51, 43;
-  --primary: #A68A5E;
-  --secondary: #524A3F;
-  --accent: #82B48A;
-  --accent-hover:  #9CC9A4;
-  --highlight: #B88B4A;
+  --primary: #a68a5e;
+  --secondary: #524a3f;
+  --accent: #82b48a;
+  --accent-hover: #9cc9a4;
+  --highlight: #b88b4a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --logo: url("/img/logo-dark.png");
 
-    --text: #F4EFE6;
+    --text: #f4efe6;
     --text-rgb: 244, 239, 230;
-    --background: #3A332B;
+    --background: #3a332b;
     --background-rgb: 58, 51, 43;
-    --primary: #A68A5E;
-    --secondary: #524A3F;
-    --accent: #82B48A;
-    --highlight: #B88B4A;
+    --primary: #a68a5e;
+    --secondary: #524a3f;
+    --accent: #82b48a;
+    --highlight: #b88b4a;
   }
 
   html {

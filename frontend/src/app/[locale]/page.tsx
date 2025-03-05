@@ -17,9 +17,17 @@ const HomePage: FC<Props> = async ({ params }) => {
 
   return (
     <div className={styles.bibleIndex}>
-      {books.map((b: Book) => <BookCover key={b.id} bookId={b.id} bookLen={BookKeys[b.title].len as number} bookKey={b.title} locale={locale} />)}
+      {books.map((b: Book) => (
+        <BookCover
+          key={b.id}
+          bookId={b.id}
+          bookLen={BookKeys[b.title].len as number}
+          bookKey={b.title}
+          locale={locale}
+        />
+      ))}
     </div>
   );
-}
+};
 
 export default HomePage;

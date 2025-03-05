@@ -8,50 +8,51 @@ import { FC } from "react";
 import initTranslations from "../i18n";
 import TranslationsProvider from "@/providers/TranslationsProvider";
 import AppMain from "@/components/layout/AppMain";
-import StoreProvider from '../../providers/StoreProvider'
+import StoreProvider from "../../providers/StoreProvider";
 
-import localFont from 'next/font/local'
+import localFont from "next/font/local";
 
 const amiri = localFont({
   src: [
     {
-      path: '../../assets/fonts/Amiri/Amiri-Regular.ttf',
-      weight: '400',
-      style: 'normal',
+      path: "../../assets/fonts/Amiri/Amiri-Regular.ttf",
+      weight: "400",
+      style: "normal",
     },
     {
-      path: '../../assets/fonts/Amiri/Amiri-Italic.ttf',
-      weight: '400',
-      style: 'italic',
+      path: "../../assets/fonts/Amiri/Amiri-Italic.ttf",
+      weight: "400",
+      style: "italic",
     },
     {
-      path: '../../assets/fonts/Amiri/Amiri-Bold.ttf',
-      weight: '700',
-      style: 'normal',
+      path: "../../assets/fonts/Amiri/Amiri-Bold.ttf",
+      weight: "700",
+      style: "normal",
     },
     {
-      path: '../../assets/fonts/Amiri/Amiri-BoldItalic.ttf',
-      weight: '700',
-      style: 'italic',
+      path: "../../assets/fonts/Amiri/Amiri-BoldItalic.ttf",
+      weight: "700",
+      style: "italic",
     },
   ],
-  variable: "--font-amiri"
+  variable: "--font-amiri",
 });
 
 export const metadata: Metadata = {
   title: "amen24",
-  description: "Amen24 is a free non-profitable project to introduce bible content for all",
+  description:
+    "Amen24 is a free non-profitable project to introduce bible content for all",
 };
 
-const i18nNamespaces = ['common', 'book', 'lang', 'ui'];
+const i18nNamespaces = ["common", "book", "lang", "ui"];
 
 export function generateStaticParams() {
-  return i18nConfig.locales.map(locale => ({ locale }));
+  return i18nConfig.locales.map((locale) => ({ locale }));
 }
 
 interface Props {
   children: React.ReactNode;
-  params: { locale: string }
+  params: { locale: string };
 }
 
 const RootLayout: FC<Props> = async ({ children, params }) => {
@@ -63,13 +64,17 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
 
   const { t, resources } = await initTranslations(locale, i18nNamespaces);
 
-  const dir = locale === "ar" ? 'rtl' : 'ltr';
+  const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <html lang={locale} dir={dir}>
       <body className={amiri.className}>
         <StoreProvider>
-          <TranslationsProvider namespaces={i18nNamespaces} locale={locale} resources={resources}>
+          <TranslationsProvider
+            namespaces={i18nNamespaces}
+            locale={locale}
+            resources={resources}
+          >
             <AppHeader />
             <AppMain>{children}</AppMain>
             <AppFooter />
@@ -78,6 +83,6 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
       </body>
     </html>
   );
-}
+};
 
 export default RootLayout;

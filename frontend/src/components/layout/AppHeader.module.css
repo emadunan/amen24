@@ -15,7 +15,7 @@
 
 .nav {
   width: 92rem;
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,7 +36,7 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: -2px; /* Adjust spacing */
+  bottom: 0px; /* Adjust spacing */
   width: 100%;
   height: 2px; /* Thickness of the underline */
   background-color: var(--text); /* Underline color */

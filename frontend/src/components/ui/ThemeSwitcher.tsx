@@ -2,10 +2,13 @@
 
 import { useEffect, useMemo, useCallback } from "react";
 import styles from "./ThemeSwitcher.module.css";
-import { useGetProfileByEmailQuery, useToggleProfileThemeMutation } from "@/store/profileSlice";
+import {
+  useGetProfileByEmailQuery,
+  useToggleProfileThemeMutation,
+} from "@/store/profileSlice";
 
 const ThemeSwitcher = () => {
-  const { data: user, error, isLoading } = useGetProfileByEmailQuery('');
+  const { data: user, error, isLoading } = useGetProfileByEmailQuery("");
   const [mutate, { isLoading: isMutating }] = useToggleProfileThemeMutation();
 
   // Memoize dark mode state to prevent unnecessary re-renders
@@ -13,7 +16,10 @@ const ThemeSwitcher = () => {
 
   // Apply theme to document
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", isDarkMode ? "dark" : "light");
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDarkMode ? "dark" : "light",
+    );
     localStorage.setItem("theme", isDarkMode ? "dark" : "light"); // Persist theme
   }, [isDarkMode]);
 

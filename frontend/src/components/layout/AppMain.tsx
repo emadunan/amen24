@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC } from "react";
 import styles from "./AppMain.module.css";
 
 interface Props {
@@ -8,11 +8,9 @@ interface Props {
 const AppMain: FC<Props> = ({ children }) => {
   return (
     <div className={styles.appContainer}>
-      <main className={styles.appMain}>
-        {children}
-      </main>
+      <main className={styles.appMain}>{children}</main>
     </div>
-  )
-}
+  );
+};
 
-export default AppMain
+export default AppMain;

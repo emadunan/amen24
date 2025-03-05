@@ -4,7 +4,7 @@ import styles from "./AppLogo.module.css";
 import { useGetProfileByEmailQuery } from "@/store/profileSlice";
 
 const AppLogo = () => {
-  const { data: user, error, isLoading } = useGetProfileByEmailQuery('');
+  const { data: user, error, isLoading } = useGetProfileByEmailQuery("");
   const isDarkMode = useMemo(() => user?.profile?.darkMode ?? false, [user]);
 
   return (

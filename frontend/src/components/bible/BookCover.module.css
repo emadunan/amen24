@@ -18,17 +18,17 @@
   height: 100%;
   width: 100%;
   background-image: linear-gradient(
-      rgba(var(--background-rgb), 0.9) 5%,
-      rgba(var(--text-rgb), 0.2) 30%,
-      rgba(var(--text-rgb), 0.1) 70%,
-      rgba(var(--background-rgb), 0) 100%
-    );
+    rgba(var(--background-rgb), 0.9) 5%,
+    rgba(var(--text-rgb), 0.2) 30%,
+    rgba(var(--text-rgb), 0.1) 70%,
+    rgba(var(--background-rgb), 0) 100%
+  );
   z-index: 1;
 }
 
 .bookTitle {
   width: 100%;
-  margin-top: .3rem;
+  margin-top: 0.3rem;
   position: absolute;
   z-index: 2;
   display: flex;

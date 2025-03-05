@@ -2,13 +2,15 @@
   background-color: var(--accent);
   color: var(--background);
   font-weight: bold;
-  font-size: .8rem;
+  font-size: 0.8rem;
   border-radius: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s ease-in-out, border 0.3s ease-in-out;
-  padding: .2rem .4rem;
+  transition:
+    all 0.3s ease-in-out,
+    border 0.3s ease-in-out;
+  padding: 0.2rem 0.4rem;
 }
 
 .loginLink:hover {

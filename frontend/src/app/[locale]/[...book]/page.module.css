@@ -20,7 +20,7 @@
 
 .chapterTitle {
   text-align: center;
-  padding: .5rem 0rem;
+  padding: 0.5rem 0rem;
   border-bottom: var(--primary) solid 1px;
   margin-bottom: 1rem;
 }
