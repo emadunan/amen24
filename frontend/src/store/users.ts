@@ -7,11 +7,11 @@ export const userApi = createApi({
     baseUrl: "http://localhost:5000/users",
     credentials: "include",
   }),
-  tagTypes: ["User", "Theme"], // 👈 Define User tag type
+  tagTypes: ["User"], // 👈 Define User tag type
   endpoints: (builder) => ({
     getMe: builder.query<UserProfile | null, void>({
       query: () => "/me",
-      providesTags: ["User", "Theme"],
+      providesTags: ["User"],
     }),
     login: builder.mutation<void, { email: string; password: string }>({
       query: (credentials) => ({
@@ -33,7 +33,7 @@ export const userApi = createApi({
         url: "/theme",
         method: "PATCH",
       }),
-      invalidatesTags: ["Theme"],
+      invalidatesTags: ["User"],
     }),
   }),
 });

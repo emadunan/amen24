@@ -59,7 +59,6 @@ export class UsersController {
   @Post('logout')
   @HttpCode(200)
   async logout(@Res() res: Response) {
-    console.log("Logout endpoint called");
 
     res.clearCookie('access_token', {
       httpOnly: true,
@@ -72,7 +71,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Patch('theme')
-  async toggleTheme(@User() user: UserProfile, @Res() res: Response) {    
+  async toggleTheme(@User() user: UserProfile, @Res() res: Response) {
     const userProfile = await this.profilesService.toggleTheme(user.email);
 
     const { access_token } = await this.authService.generateAccessToken(userProfile!);

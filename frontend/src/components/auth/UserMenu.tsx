@@ -7,26 +7,29 @@ import { RiLogoutBoxLine, RiSettings3Line, RiStarLine } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
 import useClickOutside from "@/hooks/useClickOutside";
-import { useGetMeQuery } from "@/store/users";
+import { useGetMeQuery, useLogoutMutation } from "@/store/users";
+import { useRouter } from "next/navigation";
 
 interface UserMenuProps {
   user?: UserProfile;
 }
 
-const UserMenu: FC<UserMenuProps> = () => {
+const UserMenu: FC<UserMenuProps> = ({ user }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useClickOutside(dropdownRef, isOpen, setIsOpen);
 
-  const { data: user, isLoading, error } = useGetMeQuery();
+  const [mutate] = useLogoutMutation();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading user</p>;
+  // if (isLoading) return <p>Loading...</p>;
+  // if (error) return <p>Error loading user</p>;
 
   async function handleLogout() {
-    await fetch("http://localhost:5000/auth/logout", { method: "post" });
+    await mutate().unwrap();
+    router.replace("/");
   }
 
   return (
@@ -38,7 +41,7 @@ const UserMenu: FC<UserMenuProps> = () => {
         aria-expanded={isOpen}
       >
         <span className={styles.buttonText}>
-          {user!.displayName.split(" ").at(0)}
+          {user?.displayName.split(" ").at(0)}
         </span>
         <PiUserListFill size={22} />
       </button>
@@ -54,7 +57,7 @@ const UserMenu: FC<UserMenuProps> = () => {
             <span className={styles.listItemText}>{t("settings")}</span>
           </li>
           <div className={styles.separator} />
-          <button className={`${styles.logoutBtn} ${styles.listItem}`}>
+          <button className={`${styles.logoutBtn} ${styles.listItem}`} onClick={handleLogout}>
             <RiLogoutBoxLine className={styles.flipIcon} />
             <span className={styles.listItemText}>{t("logout")}</span>
           </button>

@@ -37,6 +37,9 @@ const AppHeader: FC<Props> = () => {
     }
   });
 
+  const showLogin = normalizedPath !== "/login" && (!user || error);
+  const showUserMenu = user && !error;
+
   return (
     <header className={styles.appHeader}>
       <AppLogo />
@@ -65,8 +68,8 @@ const AppHeader: FC<Props> = () => {
         <div className={styles.navActions}>
           <LanguageChanger />
           <ThemeSwitcher />
-          {normalizedPath !== "/login" && !user && <LoginButton />}
-          {user && <UserMenu />}
+          {showLogin && <LoginButton />}
+          {showUserMenu && <UserMenu user={user} />}
         </div>
       </nav>
     </header>
