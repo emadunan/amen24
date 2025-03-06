@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import styles from "./UserProfileDropdown.module.css";
+import { FC, useRef, useState } from "react";
+import styles from "./UserMenu.module.css";
 import { UserProfile } from "@amen24/shared";
 import { RiLogoutBoxLine, RiSettings3Line, RiStarLine } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
@@ -10,11 +9,11 @@ import { useTranslation } from "react-i18next";
 import useClickOutside from "@/hooks/useClickOutside";
 import { useGetMeQuery } from "@/store/users";
 
-interface UserProfileProps {
+interface UserMenuProps {
   user?: UserProfile;
 }
 
-export default function UserProfileDropdown() {
+const UserMenu: FC<UserMenuProps> = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -64,3 +63,5 @@ export default function UserProfileDropdown() {
     </div>
   );
 }
+
+export default UserMenu;

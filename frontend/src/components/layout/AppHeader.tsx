@@ -11,7 +11,7 @@ import LoginButton from "../ui/LoginButton";
 import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
 import { UserProfile } from "@amen24/shared";
-import UserProfileDropdown from "../auth/UserProfileDropdown";
+import UserMenu from "../auth/UserMenu";
 import { useGetMeQuery } from "@/store/users";
 
 interface Props {
@@ -66,7 +66,7 @@ const AppHeader: FC<Props> = () => {
           <LanguageChanger />
           <ThemeSwitcher />
           {normalizedPath !== "/login" && !user && <LoginButton />}
-          {user && <UserProfileDropdown />}
+          {user && <UserMenu />}
         </div>
       </nav>
     </header>
