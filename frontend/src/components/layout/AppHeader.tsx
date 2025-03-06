@@ -10,7 +10,7 @@ import AppLogo from "./AppLogo";
 import LoginButton from "../ui/LoginButton";
 import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
-import { UserProfile } from "@amen24/shared";
+import { BibleBook, UserProfile } from "@amen24/shared";
 import UserMenu from "../auth/UserMenu";
 import { useGetMeQuery } from "@/store/users";
 
@@ -40,6 +40,8 @@ const AppHeader: FC<Props> = () => {
   const showLogin = normalizedPath !== "/login" && (!user || error);
   const showUserMenu = user && !error;
 
+  const isBookPath = Object.values(BibleBook).some((path) => pathname.includes(path));
+
   return (
     <header className={styles.appHeader}>
       <AppLogo />
@@ -48,7 +50,7 @@ const AppHeader: FC<Props> = () => {
         <ul className={styles.navList}>
           <li className={styles.navItem}>
             <Link
-              className={`link ${normalizedPath === "/" ? `${styles.active}` : ""}`}
+              className={`link ${normalizedPath === "/" || isBookPath ? `${styles.active}` : ""}`}
               href={"/"}
             >
               {" "}

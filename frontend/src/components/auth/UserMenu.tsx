@@ -24,9 +24,6 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
 
   const [mutate] = useLogoutMutation();
 
-  // if (isLoading) return <p>Loading...</p>;
-  // if (error) return <p>Error loading user</p>;
-
   async function handleLogout() {
     await mutate().unwrap();
     router.replace("/");
