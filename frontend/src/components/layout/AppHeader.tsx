@@ -12,14 +12,17 @@ import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
 import { UserProfile } from "@amen24/shared";
 import UserProfileDropdown from "../auth/UserProfileDropdown";
+import { useGetMeQuery } from "@/store/users";
 
 interface Props {
-  user: UserProfile;
+  user?: UserProfile;
 }
 
-const AppHeader: FC<Props> = ({ user }) => {
+const AppHeader: FC<Props> = () => {
   const pathname = usePathname();
   const { t } = useTranslation();
+
+  const { data: user, isLoading, error } = useGetMeQuery();
 
   // Extract locale from the pathname
   const localePrefixes = i18nConfig.locales.map((locale) => `/${locale}`);
@@ -63,7 +66,7 @@ const AppHeader: FC<Props> = ({ user }) => {
           <LanguageChanger />
           <ThemeSwitcher />
           {normalizedPath !== "/login" && !user && <LoginButton />}
-          {user && <UserProfileDropdown user={user} />}
+          {user && <UserProfileDropdown />}
         </div>
       </nav>
     </header>

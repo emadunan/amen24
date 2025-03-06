@@ -27,7 +27,5 @@ export async function withAuth(
 
   const user = await res.json();
 
-  console.log(user);
-
   return { props: { user } };
 }

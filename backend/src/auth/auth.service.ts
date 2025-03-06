@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/services/users.service';
+import { UserProfile } from '@amen24/shared';
 
 @Injectable()
 export class AuthService {
@@ -10,8 +10,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) { }
 
-  async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.usersService.findUserProfileByEmail(email);
+  async validateUser(email: string, pass: string): Promise<Partial<UserProfile> | null> {
+    const user = await this.usersService.findLocalProfile(email);
 
     if (user && user.password === pass) {
       const { password, ...result } = user;
@@ -20,7 +20,7 @@ export class AuthService {
     return null;
   }
 
-  async login(user: User) {
+  async generateAccessToken(user: Partial<UserProfile>) {
     return {
       access_token: this.jwtService.sign(user),
     };

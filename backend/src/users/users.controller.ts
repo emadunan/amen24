@@ -10,6 +10,8 @@ import {
   BadRequestException,
   UseGuards,
   Req,
+  HttpCode,
+  Res,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,13 +19,73 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ProfilesService } from './services/profiles.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from 'src/auth/decorators/user.decorator';
+import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
+import { Request, Response } from 'express'
+import { ConfigService } from '@nestjs/config';
+import { AuthService } from 'src/auth/auth.service';
+import { UserProfile } from '@amen24/shared';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
-  ) {}
+    private readonly configService: ConfigService,
+    private readonly authService: AuthService,
+  ) { }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  findMe(@User() user: UserProfile) {
+    return user;
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('local-login')
+  @HttpCode(200)
+  async login(@Req() req, @Res() res: Response) {
+    const { access_token } = await this.authService.generateAccessToken(req.user);
+
+    res.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure:
+        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
+      maxAge: 60 * 60 * 1000,
+    });
+
+    res.json({ message: 'Logged in sucessfully' });
+  }
+
+  @Post('logout')
+  @HttpCode(200)
+  async logout(@Res() res: Response) {
+    console.log("Logout endpoint called");
+
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Ensure secure cookie in production
+      path: '/', // Must match cookie path when set
+    });
+
+    return res.json({ message: 'Logged out successfully' });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('theme')
+  async toggleTheme(@User() user: UserProfile, @Res() res: Response) {    
+    const userProfile = await this.profilesService.toggleTheme(user.email);
+
+    const { access_token } = await this.authService.generateAccessToken(userProfile!);
+
+    res.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure:
+        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
+      maxAge: 60 * 60 * 1000,
+    });
+
+    res.json({ message: 'User profile has been successfully updated' });
+  }
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -48,12 +110,6 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('me')
-  findMe(@User() user) {
-    return user;
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -72,12 +128,5 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
-  }
-
-  @Patch('profile/toggle-theme/')
-  async toggleTheme(@Body() body: any) {
-    // Extract email from JWT payload
-
-    return this.profilesService.toggleTheme(body.email);
   }
 }

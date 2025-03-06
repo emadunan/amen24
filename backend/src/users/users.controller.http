@@ -3,8 +3,8 @@ POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-  "email": "emadunan@yahoo.com",
-  "password": "apassw0rd",
+  "email": "emadunan@gmail.com",
+  "password": "emadunan",
   "provider": "local",
   "providerId": "emadunan",
   "displayName": "Emad Younan",
@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://localhost:5000/auth/local-login HTTP/1.1
+POST http://localhost:5000/users/local-login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -22,16 +22,3 @@ Content-Type: application/json
 
 ### Get logged in user (decode user)
 GET http://localhost:5000/users/me
-
-### Get all users
-GET http://localhost:5000/users/fc89a78c-8019-4ea1-aeb9-9793eff5e339
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImZjODlhNzhjLTgwMTktNGVhMS1hZWI5LTk3OTNlZmY1ZTMzOSIsImlhdCI6MTc0MDMwOTUxMSwiZXhwIjoxNzQwMzEzMTExfQ.rxkSHIh7dWMkc4Ys4Xt2HvLG8kiw_EdRrgZlrngqYKk
-
-### Update user's theme (Toggle between light/dark mode)
-PATCH http://localhost:5000/users/profile/toggle-theme
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImZjODlhNzhjLTgwMTktNGVhMS1hZWI5LTk3OTNlZmY1ZTMzOSIsImlhdCI6MTc0MDMwOTUxMSwiZXhwIjoxNzQwMzEzMTExfQ.rxkSHIh7dWMkc4Ys4Xt2HvLG8kiw_EdRrgZlrngqYKk
-Content-Type: application/json
-
-{
-  "email": "emadunan@gmail.com"
-}

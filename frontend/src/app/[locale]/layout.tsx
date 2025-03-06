@@ -56,30 +56,24 @@ interface Props {
   params: { locale: string };
 }
 
-async function getUser() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("access_token")?.value;
+// async function getUser() {
+//   const cookieStore = await cookies();
+//   const token = cookieStore.get("access_token")?.value;
 
-  console.log(token);
+//   if (!token) return null;
 
-  if (!token) return null;
+//   const res = await fetch(`http://localhost:5000/users/me`, {
+//     headers: { Cookie: `access_token=${token}` },
+//     credentials: "include",
+//     cache: "no-store", // Ensure fresh auth state
+//   });
 
-  const res = await fetch(`http://localhost:5000/users/me`, {
-    headers: { Cookie: `access_token=${token}` },
-    credentials: "include",
-    cache: "no-store", // Ensure fresh auth state
-  });
+//   if (!res.ok) return null;
 
-  if (!res.ok) return null;
-
-  return res.json();
-}
+//   return res.json();
+// }
 
 const RootLayout: FC<Props> = async ({ children, params }) => {
-  const user = await getUser();
-
-  console.log(user);
-
   const { locale } = await params;
 
   if (!i18nConfig.locales.includes(locale)) {
@@ -99,7 +93,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
             locale={locale}
             resources={resources}
           >
-            <AppHeader user={user} />
+            <AppHeader />
             <AppMain>{children}</AppMain>
             <AppFooter />
           </TranslationsProvider>

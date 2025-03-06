@@ -35,9 +35,9 @@ export class UsersService {
     return await this.usersRepo.findOneBy({ email });
   }
 
-  async findUserProfileByEmail(email: string): Promise<Partial<UserProfile> | undefined> {
+  async findLocalProfile(email: string): Promise<Partial<UserProfile> | undefined> {
     const userProfile = await this.usersRepo.findOne({
-      where: { email },
+      where: { email, provider: "local" },
       relations: ['profile'],
     });
 

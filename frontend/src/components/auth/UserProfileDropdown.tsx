@@ -8,21 +8,27 @@ import { RiLogoutBoxLine, RiSettings3Line, RiStarLine } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
 import useClickOutside from "@/hooks/useClickOutside";
+import { useGetMeQuery } from "@/store/users";
 
 interface UserProfileProps {
-  user: UserProfile;
+  user?: UserProfile;
 }
 
-export default function UserProfileDropdown({ user }: UserProfileProps) {
+export default function UserProfileDropdown() {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  useClickOutside(dropdownRef, isOpen, setIsOpen);
+
+  const { data: user, isLoading, error } = useGetMeQuery();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading user</p>;
+
   async function handleLogout() {
     await fetch("http://localhost:5000/auth/logout", { method: "post" });
   }
-
-  useClickOutside(dropdownRef, isOpen, setIsOpen);
 
   return (
     <div className={styles.container} ref={dropdownRef}>
@@ -33,7 +39,7 @@ export default function UserProfileDropdown({ user }: UserProfileProps) {
         aria-expanded={isOpen}
       >
         <span className={styles.buttonText}>
-          {user.displayName.split(" ").at(0)}
+          {user!.displayName.split(" ").at(0)}
         </span>
         <PiUserListFill size={22} />
       </button>

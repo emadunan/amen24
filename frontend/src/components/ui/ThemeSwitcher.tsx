@@ -1,43 +1,69 @@
 "use client";
 
-import { useEffect, useMemo, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styles from "./ThemeSwitcher.module.css";
-import {
-  useGetProfileByEmailQuery,
-  useToggleProfileThemeMutation,
-} from "@/store/profileSlice";
+import { useGetMeQuery, useToggleThemeMutation } from "@/store/users";
+
+const LOCAL_STORAGE_KEY = "theme";
 
 const ThemeSwitcher = () => {
-  const { data: user, error, isLoading } = useGetProfileByEmailQuery("");
-  const [mutate, { isLoading: isMutating }] = useToggleProfileThemeMutation();
+  // Fetch user data (contains darkMode preference)
+  const { data: user, isLoading: isFetching } = useGetMeQuery();
 
-  // Memoize dark mode state to prevent unnecessary re-renders
-  const isDarkMode = useMemo(() => user?.profile.darkMode ?? false, [user]);
+  // Mutation to toggle theme
+  const [toggleTheme, { isLoading: isMutating }] = useToggleThemeMutation();
 
-  // Apply theme to document
+  // Local state for non-logged-in users
+  const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
+
+  // Effect: Initialize theme state
   useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      isDarkMode ? "dark" : "light",
-    );
-    localStorage.setItem("theme", isDarkMode ? "dark" : "light"); // Persist theme
-  }, [isDarkMode]);
+    let theme: boolean;
 
-  // Handle theme toggle with optimistic UI update
-  const handleToggle = useCallback(() => {
-    mutate();
-  }, [mutate]);
+    if (user) {
+      // If logged in, use backend preference and remove local storage
+      theme = user.darkMode;
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    } else {
+      // If not logged in, load from localStorage
+      const savedTheme = localStorage.getItem(LOCAL_STORAGE_KEY);
+      theme = savedTheme === "dark";
+    }
 
-  if (error) return <p>Error loading theme</p>;
+    setIsDarkMode(theme);
+    document.documentElement.setAttribute("data-theme", theme ? "dark" : "light");
+  }, [user]);
+
+  // Function to handle theme toggle
+  const handleToggle = useCallback(async () => {
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+
+    // Update data-theme attribute on <html>
+    document.documentElement.setAttribute("data-theme", newTheme ? "dark" : "light");
+
+    if (user) {
+      try {
+        await toggleTheme(); // Toggle via backend
+      } catch (error) {
+        console.error("Failed to toggle theme:", error);
+      }
+    } else {
+      // Save preference locally for non-logged-in users
+      localStorage.setItem(LOCAL_STORAGE_KEY, newTheme ? "dark" : "light");
+    }
+  }, [isDarkMode, user, toggleTheme]);
+
+  if (isDarkMode === null) return null; // Avoid rendering before theme is determined
 
   return (
     <label className={styles.toggleWrapper}>
       <input
         type="checkbox"
         className={styles.toggleInput}
-        checked={isDarkMode}
-        onChange={handleToggle}
-        disabled={isLoading || isMutating} // Prevent changes while loading
+        checked={isDarkMode} // Set the checkbox state
+        onChange={handleToggle} // Call the toggle function on change
+        disabled={isFetching || isMutating} // Disable while fetching/mutating
       />
       <span className={styles.toggleSlider}>
         <span className={styles.icon}>{isDarkMode ? "🌙" : "🌞"}</span>
