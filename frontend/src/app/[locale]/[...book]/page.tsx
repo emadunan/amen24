@@ -5,7 +5,6 @@ import initTranslations from "@/app/i18n";
 import Link from "next/link";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 
-
 interface Props {
   params: { book: string[]; locale: string };
 }
@@ -41,7 +40,10 @@ const BookPage: FC<Props> = async ({ params }) => {
               {t("prev")}
             </Link>
           ) : (
-            <span className={`${styles.chapterLink} ${styles.disabled}`} aria-disabled="true">
+            <span
+              className={`${styles.chapterLink} ${styles.disabled}`}
+              aria-disabled="true"
+            >
               <GrLinkPrevious className="flip-icon" />
               {t("prev")}
             </span>
@@ -50,25 +52,31 @@ const BookPage: FC<Props> = async ({ params }) => {
             {t(bookKey, { ns: "book" })} {chapterNumber}
           </h3>
           {+chapterNum < +bookLen ? (
-            <Link href={`/${bookId}/${bookKey}/${bookLen}/${+chapterNum + 1}`} className={styles.chapterLink}>
+            <Link
+              href={`/${bookId}/${bookKey}/${bookLen}/${+chapterNum + 1}`}
+              className={styles.chapterLink}
+            >
               {t("next")}
               <GrLinkNext className="flip-icon" />
-            </Link>) : (
-              <span className={`${styles.chapterLink} ${styles.disabled}`} aria-disabled="true">
+            </Link>
+          ) : (
+            <span
+              className={`${styles.chapterLink} ${styles.disabled}`}
+              aria-disabled="true"
+            >
               {t("next")}
               <GrLinkNext className="flip-icon" />
             </span>
-            )
-          }
+          )}
         </div>
         <div className={styles.chapterContent}>
           {verses.map((v: Verse) => {
             const verseNumber =
               locale === "ar" ? v.num.toLocaleString("ar-EG") : v.num;
             return (
-              <Fragment>
+              <Fragment key={v.id}>
                 {" "}
-                <p className={styles.verse} key={v.id}>
+                <p className={styles.verse}>
                   <span className={styles.verseNumber}>{verseNumber}</span>
                   {v.text}
                 </p>

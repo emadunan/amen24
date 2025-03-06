@@ -20,7 +20,7 @@
 .chapterLink {
   display: flex;
   align-items: center;
-  gap: .2rem;
+  gap: 0.2rem;
 }
 
 .chapterContent {
@@ -51,7 +51,6 @@
 }
 
 .chapterTitle {
-  
 }
 
 .disabled {

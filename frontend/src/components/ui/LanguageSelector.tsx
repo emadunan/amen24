@@ -1,10 +1,11 @@
 "use client";
 
+import useClickOutside from "@/hooks/useClickOutside";
 import styles from "./LanguageSelector.module.css";
 import i18nConfig from "@/config/next-i18n-router.config";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const LanguageSelector = () => {
@@ -13,6 +14,9 @@ const LanguageSelector = () => {
   const router = useRouter();
   const currentPathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useClickOutside(dropdownRef, isOpen, setIsOpen);
 
   function handleClick(newLocale: string) {
     // set cookie for next-i18n-router
@@ -38,7 +42,7 @@ const LanguageSelector = () => {
   }
 
   return (
-    <div className={styles.languageChanger}>
+    <div className={styles.languageChanger} ref={dropdownRef}>
       <button className={styles.button} onClick={() => setIsOpen(!isOpen)}>
         {currentLocale === "ar" ? "🇪🇬" : "🇺🇸"}{" "}
         {t(currentLocale, { ns: "lang" })}

@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./UserProfileDropdown.module.css";
 import { UserProfile } from "@amen24/shared";
 import { RiLogoutBoxLine, RiSettings3Line, RiStarLine } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
+import useClickOutside from "@/hooks/useClickOutside";
 
 interface UserProfileProps {
   user: UserProfile;
@@ -15,16 +16,21 @@ interface UserProfileProps {
 export default function UserProfileDropdown({ user }: UserProfileProps) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   async function handleLogout() {
     await fetch("http://localhost:5000/auth/logout", { method: "post" });
   }
 
+  useClickOutside(dropdownRef, isOpen, setIsOpen);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={dropdownRef}>
       <button
         className={styles.menuButton}
         onClick={() => setIsOpen((prev) => !prev)}
+        aria-haspopup="true"
+        aria-expanded={isOpen}
       >
         <span className={styles.buttonText}>
           {user.displayName.split(" ").at(0)}
@@ -34,18 +40,19 @@ export default function UserProfileDropdown({ user }: UserProfileProps) {
 
       {isOpen && (
         <ul className={styles.dropdown}>
-          <li className={styles.listItem}>
+          <li className={styles.listItem} tabIndex={0}>
             <RiStarLine />
             <span className={styles.listItemText}>{t("favorite")}</span>
           </li>
-          <li className={styles.listItem}>
+          <li className={styles.listItem} tabIndex={0}>
             <RiSettings3Line />
             <span className={styles.listItemText}>{t("settings")}</span>
           </li>
-          <li className={styles.listItem}>
+          <div className={styles.separator} />
+          <button className={`${styles.logoutBtn} ${styles.listItem}`}>
             <RiLogoutBoxLine className={styles.flipIcon} />
             <span className={styles.listItemText}>{t("logout")}</span>
-          </li>
+          </button>
         </ul>
       )}
     </div>
