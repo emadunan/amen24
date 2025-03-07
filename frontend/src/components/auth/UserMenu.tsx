@@ -57,10 +57,10 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
 
       {isOpen && (
         <ul className={styles.dropdown}>
-          <li className={styles.listItem} tabIndex={0}>
+          {/* <li className={styles.listItem} tabIndex={0}>
             <RiStarLine />
             <span className={styles.listItemText}>{t("favorite")}</span>
-          </li>
+          </li> */}
           <li className={styles.listItem} tabIndex={0}>
             <RiSettings3Line />
             <span className={styles.listItemText}>{t("settings")}</span>
