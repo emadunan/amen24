@@ -1,12 +1,15 @@
 "use client";
 
+import dynamic from 'next/dynamic'
+ 
+const AppLogo = dynamic(() => import('./AppLogo'), { ssr: false })
+
 import React, { FC } from "react";
 import styles from "./AppHeader.module.css";
 import Link from "next/link";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
 import { useTranslation } from "react-i18next";
 import LanguageChanger from "../ui/LanguageSelector";
-import AppLogo from "./AppLogo";
 import LoginButton from "../ui/LoginButton";
 import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";

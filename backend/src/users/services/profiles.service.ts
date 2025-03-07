@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { Profile } from '../entities/profile.entity';
 import { AuthService } from 'src/auth/auth.service';
 import { UsersService } from './users.service';
-import { UserProfile } from '@amen24/shared';
+import { Language, UserProfile } from '@amen24/shared';
 
 @Injectable()
 export class ProfilesService {
@@ -52,9 +52,21 @@ export class ProfilesService {
       throw new Error('User profile was not found');
     }
 
-    profile.darkMode = !profile.darkMode; // Toggle dark mode
+    profile.darkMode = !profile.darkMode;
+    await this.profilesRepo.save(profile);
 
-    await this.profilesRepo.save(profile); // Save the updated profile
+    return await this.usersService.findLocalProfile(profile.email);
+  }
+
+  async changeLang(email: string, lang: Language): Promise<Partial<UserProfile> | undefined> {
+    const profile = await this.profilesRepo.findOne({ where: { email } });
+
+    if (!profile) {
+      throw new Error('User profile was not found');
+    }
+
+    profile.uilanguage = lang;
+    await this.profilesRepo.save(profile);
 
     return await this.usersService.findLocalProfile(profile.email);
   }

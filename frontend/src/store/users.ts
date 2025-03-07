@@ -30,8 +30,16 @@ export const userApi = createApi({
     }),
     toggleTheme: builder.mutation<void, void>({
       query: () => ({
-        url: "/theme",
+        url: "/me/theme",
         method: "PATCH",
+      }),
+      invalidatesTags: ["User"],
+    }),
+    changeLang: builder.mutation<void, string>({
+      query: (lang) => ({
+        url: "/me/lang",
+        method: "PATCH",
+        body: { lang },
       }),
       invalidatesTags: ["User"],
     }),
@@ -42,5 +50,6 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useToggleThemeMutation,
+  useChangeLangMutation,
   useGetMeQuery,
 } = userApi;

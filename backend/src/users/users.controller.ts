@@ -70,9 +70,26 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('theme')
+  @Patch('me/theme')
   async toggleTheme(@User() user: UserProfile, @Res() res: Response) {
     const userProfile = await this.profilesService.toggleTheme(user.email);
+
+    const { access_token } = await this.authService.generateAccessToken(userProfile!);
+
+    res.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure:
+        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
+      maxAge: 60 * 60 * 1000,
+    });
+
+    res.json({ message: 'User profile has been successfully updated' });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('me/lang')
+  async changeLang(@User() user: UserProfile, @Body() body: any, @Res() res: Response) {
+    const userProfile = await this.profilesService.changeLang(user.email, body.lang);
 
     const { access_token } = await this.authService.generateAccessToken(userProfile!);
 
