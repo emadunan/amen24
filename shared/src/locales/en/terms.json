@@ -1,0 +1,55 @@
+{
+  "title": "Terms of Service",
+  "intro": "Welcome to Amen24. By using our services, you agree to these terms.",
+  
+  "agreement": {
+    "title": "Agreement to Terms",
+    "description": "By accessing or using our website, you agree to be bound by these Terms of Service."
+  },
+  
+  "account": {
+    "title": "User Accounts",
+    "responsibility": "You are responsible for maintaining the confidentiality of your account.",
+    "security": "You must notify us immediately if you suspect unauthorized access to your account."
+  },
+
+  "usage": {
+    "title": "Acceptable Use",
+    "lawful": "You agree to use our services only for lawful purposes.",
+    "prohibitedActivities": "You may not engage in any activity that disrupts or harms the website."
+  },
+
+  "contentRights": {
+    "title": "Intellectual Property",
+    "ownership": "All content on this site is owned by Amen24 or its licensors.",
+    "license": "You are granted a limited license to use the site for personal, non-commercial purposes."
+  },
+
+  "termination": {
+    "title": "Termination",
+    "description": "We reserve the right to terminate your account if you violate these terms."
+  },
+
+  "disclaimer": {
+    "title": "Disclaimer",
+    "description": "Our services are provided 'as is' without warranties of any kind."
+  },
+
+  "liability": {
+    "title": "Limitation of Liability",
+    "description": "We are not liable for any damages resulting from your use of our services."
+  },
+
+  "changes": {
+    "title": "Changes to Terms",
+    "description": "We may update these terms, and your continued use of the site constitutes agreement to the new terms."
+  },
+
+  "contact": {
+    "title": "Contact Us",
+    "email": "Email: emadunan@gmail.com",
+    "phone": "Phone: +201003379933"
+  },
+
+  "lastUpdated": "Last Updated: 7 March 2025"
+}

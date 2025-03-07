@@ -12,5 +12,10 @@
   "login": "Login",
   "logout": "Logout",
   "favorite": "Favorite",
-  "settings": "Settings" 
+  "settings": "Settings",
+  "footer": {
+    "copyright": "Amen24. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  }
 }

@@ -51,6 +51,8 @@
 }
 
 .chapterTitle {
+  margin: 0rem 1rem;
+  text-align: center;
 }
 
 .disabled {

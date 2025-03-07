@@ -1,0 +1,49 @@
+{
+  "title": "Privacy Policy for Amen24",
+  "intro": "Your privacy is important to us. This Privacy Policy explains how we collect, use, and safeguard your data.",
+  "information": {
+    "title": "Information We Collect",
+    "name": "Name",
+    "email": "Email Address",
+    "preferences": "Preferences"
+  },
+  "collection": {
+    "title": "How We Collect Information",
+    "registration": "Through registration forms when you create an account.",
+    "thirdPartyLogin": "When logging in with Google or Facebook."
+  },
+  "usage": {
+    "title": "How We Use Your Information",
+    "improveServices": "To improve our services.",
+    "sendEmails": "To send updates and promotions.",
+    "personalization": "To personalize your experience.",
+    "ads": "To display relevant advertisements."
+  },
+  "thirdParty": {
+    "title": "Third-Party Services",
+    "analytics": "We use Google Analytics to analyze website traffic.",
+    "ads": "We use Google AdSense to display advertisements."
+  },
+  "userRights": {
+    "title": "User Rights & Account Management",
+    "edit": "Edit or delete your personal data.",
+    "deleteAccount": "Request full account deletion.",
+    "optOutEmails": "Opt-out of marketing emails."
+  },
+  "security": {
+    "title": "Data Protection Measures",
+    "encryption": "User passwords are securely encrypted.",
+    "accessControls": "Only authorized personnel have access.",
+    "audits": "Regular security audits ensure safety."
+  },
+  "compliance": {
+    "title": "Legal Compliance",
+    "description": "We comply with Egyptian data protection laws."
+  },
+  "contact": {
+    "title": "Contact Information",
+    "email": "Email: emadunan@gmail.com",
+    "phone": "Phone: +201003379933"
+  },
+  "lastUpdated": "Last Updated: 7 March 2025"
+}
