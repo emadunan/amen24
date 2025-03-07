@@ -14,7 +14,7 @@ export interface User {
 }
 
 export interface UserProfile {
-  userId: string;
+  id: string;
   password: string;
   provider: string;
   providerId: string;

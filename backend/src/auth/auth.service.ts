@@ -21,8 +21,10 @@ export class AuthService {
   }
 
   async generateAccessToken(user: Partial<UserProfile>) {
+    const { password, ...userProfile } = user;
+
     return {
-      access_token: this.jwtService.sign(user),
+      access_token: this.jwtService.sign(userProfile),
     };
   }
 }
