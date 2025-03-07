@@ -1,24 +1,17 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./LocalLogin.module.css";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
-import { useGetMeQuery, useLoginMutation } from "@/store/users";
+import { useLoginMutation } from "@/store/users";
 import Spinner from "../ui/Spinner";
 
 const LocalLogin = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data: user } = useGetMeQuery();
-
-  useEffect(() => {
-    if (user) {
-      router.replace("/");
-    }
-  }, [user, router]);
 
   const emailElRef = useRef<HTMLInputElement | null>(null);
   const passwordElRef = useRef<HTMLInputElement | null>(null);
