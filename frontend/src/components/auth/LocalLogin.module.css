@@ -56,5 +56,10 @@
 }
 
 .signupLink {
+  transition: color 0.2s ease-in-out;
+}
+
+.signupLink:hover {
   text-decoration: underline;
+  color: var(--accent);
 }
