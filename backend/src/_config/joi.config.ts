@@ -5,6 +5,7 @@ export default Joi.object({
     .valid('development', 'production', 'test')
     .default('development'),
   PORT: Joi.number().port().default(5000),
+  ROUNDS: Joi.number(),
   JWT_SECRET: Joi.string(),
   DB_HOST: Joi.string(),
   DB_PORT: Joi.number(),

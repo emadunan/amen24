@@ -12,6 +12,7 @@ import {
   Req,
   HttpCode,
   Res,
+  ConflictException,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -110,7 +111,7 @@ export class UsersController {
       createUserDto.provider,
     );
 
-    if (existUser) throw new BadRequestException('User duplication');
+    if (existUser) throw new ConflictException('User duplication');
 
     const profile = await this.profilesService.create({
       email: createUserDto.email,
@@ -119,6 +120,8 @@ export class UsersController {
     await this.profilesService.updateLastLogin(profile.email);
 
     if (!profile) throw new NotFoundException('Profile was not found');
+
+
 
     await this.usersService.create(createUserDto);
 

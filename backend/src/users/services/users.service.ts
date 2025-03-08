@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,16 +6,31 @@ import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { ProfilesService } from './profiles.service';
 import { UserProfile } from "@amen24/shared";
+import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private usersRepo: Repository<User>,
+    private readonly configService: ConfigService,
     private profilesService: ProfilesService,
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    const user = this.usersRepo.create(createUserDto);
+    const { password, provider } = createUserDto;
+
+    let user: Partial<User> | undefined;
+
+    if (provider === "local" && password) {
+      const hash = await bcrypt.hash(password, this.configService.getOrThrow<string>("ROUNDS"));
+
+      user = { ...createUserDto, password: hash };
+
+      this.usersRepo.create(user)
+    }
+
+    if (!user) throw new BadRequestException("User could not be created");
 
     return await this.usersRepo.save(user);
   }
