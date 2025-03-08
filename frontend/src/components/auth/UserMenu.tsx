@@ -10,6 +10,7 @@ import useClickOutside from "@/hooks/useClickOutside";
 import { userApi, useLogoutMutation } from "@/store/users";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 
 interface UserMenuProps {
   user?: UserProfile;
@@ -48,7 +49,7 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
         aria-expanded={isOpen}
       >
         <span className={styles.buttonText}>
-          {user?.displayName.split(" ").at(0)}
+          {user?.displayName.split(" ").at(0)?.substring(0, 6)}
         </span>
         <PiUserListFill size={22} />
       </button>
@@ -59,9 +60,11 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
             <RiStarLine />
             <span className={styles.listItemText}>{t("favorite")}</span>
           </li> */}
-          <li className={styles.listItem} tabIndex={0}>
-            <RiSettings3Line />
-            <span className={styles.listItemText}>{t("settings")}</span>
+          <li tabIndex={0}>
+            <Link href="/settings" className={styles.listItem}>
+              <RiSettings3Line />
+              <span className={styles.listItemText}>{t("settings")}</span>
+            </Link>
           </li>
           <div className={styles.separator} />
           <button

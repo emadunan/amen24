@@ -1,4 +1,4 @@
-import { UserProfile } from "@amen24/shared";
+import { User, UserProfile } from "@amen24/shared";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const userApi = createApi({
@@ -12,6 +12,14 @@ export const userApi = createApi({
     getMe: builder.query<UserProfile | null, void>({
       query: () => "/me",
       providesTags: ["User"],
+    }),
+    signup: builder.mutation<void, Partial<User>>({
+      query: (user) => ({
+        url: "/",
+        method: "POST",
+        body: user,
+      }),
+      invalidatesTags: ["User"],
     }),
     login: builder.mutation<void, { email: string; password: string }>({
       query: (credentials) => ({
@@ -51,5 +59,6 @@ export const {
   useLogoutMutation,
   useToggleThemeMutation,
   useChangeLangMutation,
+  useSignupMutation,
   useGetMeQuery,
 } = userApi;

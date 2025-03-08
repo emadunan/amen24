@@ -104,7 +104,7 @@ export class UsersController {
   }
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     const existUser = await this.usersService.findOneByEmailProvider(
       createUserDto.email,
       createUserDto.provider,
@@ -120,9 +120,9 @@ export class UsersController {
 
     if (!profile) throw new NotFoundException('Profile was not found');
 
-    const user = await this.usersService.create(createUserDto);
+    await this.usersService.create(createUserDto);
 
-    return user;
+    return res.redirect(307, '/users/local-login');
   }
 
   @UseGuards(JwtAuthGuard)

@@ -8,7 +8,6 @@ import { RiLoginBoxLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import { useLoginMutation } from "@/store/users";
 import Spinner from "../ui/Spinner";
-import { TiArrowBack } from "react-icons/ti";
 import BackButton from "../ui/BackButton";
 
 const LocalLogin = () => {
