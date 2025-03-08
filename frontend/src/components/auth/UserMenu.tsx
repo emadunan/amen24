@@ -11,7 +11,6 @@ import { userApi, useLogoutMutation } from "@/store/users";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 
-
 interface UserMenuProps {
   user?: UserProfile;
 }
@@ -39,7 +38,6 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
       console.error("Logout failed:", error);
     }
   }, [mutate, router]);
-  
 
   return (
     <div className={styles.container} ref={dropdownRef}>
@@ -66,7 +64,10 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
             <span className={styles.listItemText}>{t("settings")}</span>
           </li>
           <div className={styles.separator} />
-          <button className={`${styles.logoutBtn} ${styles.listItem}`} onClick={handleLogout}>
+          <button
+            className={`${styles.logoutBtn} ${styles.listItem}`}
+            onClick={handleLogout}
+          >
             <RiLogoutBoxLine className={styles.flipIcon} />
             <span className={styles.listItemText}>{t("logout")}</span>
           </button>
@@ -74,6 +75,6 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
       )}
     </div>
   );
-}
+};
 
 export default UserMenu;

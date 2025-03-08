@@ -9,6 +9,7 @@
   --accent: #3d6b50;
   --accent-hover: #2e5840;
   --gray: #5c564a;
+  --gray-hover: #4a443a;
   --red: #c62828;
   --highlight: #ffeb3b;
 
@@ -27,6 +28,7 @@
   --accent: #82b48a;
   --accent-hover: #9cc9a4;
   --gray: #d6cfc7;
+  --gray-hover: #e4ddd6;
   --red: #e57373;
   --highlight: #b88b4a;
 }

@@ -31,7 +31,10 @@ const ThemeSwitcher = () => {
     }
 
     setIsDarkMode(theme);
-    document.documentElement.setAttribute("data-theme", theme ? "dark" : "light");
+    document.documentElement.setAttribute(
+      "data-theme",
+      theme ? "dark" : "light",
+    );
   }, [user]);
 
   // Function to handle theme toggle
@@ -40,7 +43,10 @@ const ThemeSwitcher = () => {
     setIsDarkMode(newTheme);
 
     // Update data-theme attribute on <html>
-    document.documentElement.setAttribute("data-theme", newTheme ? "dark" : "light");
+    document.documentElement.setAttribute(
+      "data-theme",
+      newTheme ? "dark" : "light",
+    );
 
     if (user) {
       try {

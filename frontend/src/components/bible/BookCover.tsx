@@ -15,7 +15,10 @@ const BookCover: FC<Props> = async ({ bookId, bookKey, bookLen, locale }) => {
   const { t } = await initTranslations(locale, ["book"]);
 
   return (
-    <Link className={styles.bookLink} href={`/${bookId}/${bookKey}/${bookLen}/1`}>
+    <Link
+      className={styles.bookLink}
+      href={`/${bookId}/${bookKey}/${bookLen}/1`}
+    >
       <article className={styles.bookCover}>
         <h2 className={styles.bookTitle}>{t(bookKey, { ns: "book" })}</h2>
         <div className={styles.imgOverlay} />

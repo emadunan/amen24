@@ -1,5 +1,6 @@
 {
   "home": "Home",
+  "back": "Back",
   "bible": "Holy-Bible",
   "search": "Search-Engine",
   "chapter": "Chapter",
@@ -8,11 +9,20 @@
   "no-result": "No results",
   "search-welcome": "Start searching for Bible verses by entering keywords above.",
   "locale": "Language",
-  "signup-invite": "Don't have an account? Sign up now and get started!",
-  "login": "Login",
-  "logout": "Logout",
-  "favorite": "Favorite",
-  "settings": "Settings",
+  "signin": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "displayName": "Display Name",
+    "login": "Login",
+    "signup": "Sign-up",
+    "signup-invite": "Don't have an account? Sign up now and get started!"
+  },
+  "userMenu": {
+    "favorite": "Favorite",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
   "footer": {
     "copyright": "Amen24. All rights reserved.",
     "privacyPolicy": "Privacy Policy",

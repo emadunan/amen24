@@ -1,8 +1,8 @@
 "use client";
 
-import dynamic from 'next/dynamic'
- 
-const AppLogo = dynamic(() => import('./AppLogo'), { ssr: false })
+import dynamic from "next/dynamic";
+
+const AppLogo = dynamic(() => import("./AppLogo"), { ssr: false });
 
 import React, { FC } from "react";
 import styles from "./AppHeader.module.css";
@@ -40,10 +40,15 @@ const AppHeader: FC<Props> = () => {
     }
   });
 
-  const showLogin = normalizedPath !== "/login" && (!user || error);
+  const showLogin =
+    normalizedPath !== "/login" &&
+    normalizedPath !== "/signup" &&
+    (!user || error);
   const showUserMenu = user && !error;
 
-  const isBookPath = Object.values(BibleBook).some((path) => pathname.includes(path));
+  const isBookPath = Object.values(BibleBook).some((path) =>
+    pathname.includes(path),
+  );
 
   return (
     <header className={styles.appHeader}>

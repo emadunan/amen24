@@ -23,13 +23,20 @@ const LanguageSelector = () => {
   const [changeLang] = useChangeLangMutation();
 
   useEffect(() => {
-    if (user?.uilanguage && user.uilanguage !== i18n.language && !hasSetLanguage.current) {
+    if (
+      user?.uilanguage &&
+      user.uilanguage !== i18n.language &&
+      !hasSetLanguage.current
+    ) {
       hasSetLanguage.current = true; // Prevent multiple calls
       handleLanguageChange(user.uilanguage, false);
     }
   }, [user?.uilanguage, i18n.language]);
 
-  async function handleLanguageChange(newLocale: string, shouldUpdateBackend = true) {
+  async function handleLanguageChange(
+    newLocale: string,
+    shouldUpdateBackend = true,
+  ) {
     if (newLocale === i18n.language) return; // Avoid redundant updates
 
     // Set cookie for next-i18n-router
@@ -39,7 +46,7 @@ const LanguageSelector = () => {
     const expires = date.toUTCString();
     document.cookie = `NEXT_LOCALE=${newLocale};expires=${expires};path=/`;
 
-    // Only update backend if the user is logged in    
+    // Only update backend if the user is logged in
     if (user?.id && shouldUpdateBackend) {
       try {
         await changeLang(newLocale).unwrap();
@@ -55,17 +62,19 @@ const LanguageSelector = () => {
     ) {
       router.push("/" + newLocale + currentPathname);
     } else {
-      router.push(currentPathname.replace(`/${currentLocale}`, `/${newLocale}`));
+      router.push(
+        currentPathname.replace(`/${currentLocale}`, `/${newLocale}`),
+      );
     }
 
     router.refresh();
   }
 
-
   return (
     <div className={styles.languageChanger} ref={dropdownRef}>
       <button className={styles.button} onClick={() => setIsOpen(!isOpen)}>
-        {currentLocale === "ar" ? "🇪🇬" : "🇺🇸"} {t(currentLocale, { ns: "lang" })}
+        {currentLocale === "ar" ? "🇪🇬" : "🇺🇸"}{" "}
+        {t(currentLocale, { ns: "lang" })}
       </button>
 
       {isOpen && (

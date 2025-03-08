@@ -1,17 +1,17 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import styles from "./LocalLogin.module.css";
-import Link from "next/link";
+import styles from "./LocalSignup.module.css";
 import { useTranslation } from "react-i18next";
-import { RiLoginBoxLine } from "react-icons/ri";
+import { TiUserAdd } from "react-icons/ti";
+import { TiArrowBack } from "react-icons/ti";
 import { useRouter } from "next/navigation";
 import { useLoginMutation } from "@/store/users";
 import Spinner from "../ui/Spinner";
-import { TiArrowBack } from "react-icons/ti";
+import Link from "next/link";
 import BackButton from "../ui/BackButton";
 
-const LocalLogin = () => {
+const LocalSignup = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -27,10 +27,11 @@ const LocalLogin = () => {
     setLocalLoading(true);
 
     try {
-      await login({
-        email: emailElRef.current?.value || "",
-        password: passwordElRef.current?.value || "",
-      }).unwrap(); // ✅ `unwrap()` to handle promise properly
+      // Sign-up
+      // await login({
+      //   email: emailElRef.current?.value || "",
+      //   password: passwordElRef.current?.value || "",
+      // }).unwrap();
 
       router.replace("/");
     } catch (err) {
@@ -52,6 +53,7 @@ const LocalLogin = () => {
         required
         placeholder={t("signin.email")}
       />
+
       <input
         className={styles.input}
         type="password"
@@ -60,23 +62,34 @@ const LocalLogin = () => {
         placeholder={t("signin.password")}
       />
 
+      <input
+        className={styles.input}
+        type="password"
+        ref={passwordElRef}
+        required
+        placeholder={t("signin.confirmPassword")}
+      />
+
+      <input
+        className={styles.input}
+        type="text"
+        ref={emailElRef}
+        placeholder={t("signin.displayName")}
+      />
+
       <div className={styles.btnGroup}>
-        <BackButton />
+        <BackButton href="/login"/>
         <button className={styles.btn} type="submit">
-          <RiLoginBoxLine size={22} className={styles.flipIcon} />
-          {t("signin.login", { ns: "common" })}
+          <TiUserAdd size={22} className={styles.flipIcon} />
+          {t("signin.signup", { ns: "common" })}
         </button>
       </div>
 
       {error && (
-        <p className={styles.error}>{t("login_failed", { ns: "common" })}</p>
+        <p className={styles.error}>{t("signup_failed", { ns: "common" })}</p>
       )}
-
-      <Link className={styles.signupLink} href={"/signup"}>
-        {t("signin.signup-invite", { ns: "common" })}
-      </Link>
     </form>
   );
 };
 
-export default LocalLogin;
+export default LocalSignup;

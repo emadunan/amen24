@@ -31,10 +31,15 @@ const AppLogo = () => {
   // Effect to detect theme changes from ThemeSwitcher
   useEffect(() => {
     const observer = new MutationObserver(() => {
-      setIsDarkMode(document.documentElement.getAttribute("data-theme") === "dark");
+      setIsDarkMode(
+        document.documentElement.getAttribute("data-theme") === "dark",
+      );
     });
 
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     return () => observer.disconnect();
   }, []);

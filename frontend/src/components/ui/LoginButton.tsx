@@ -11,7 +11,7 @@ const LoginButton = () => {
 
   return (
     <Link href={"/login"} className={styles.loginLink}>
-      {t("login")} <RiLoginBoxLine size={22} className={styles.flipIcon} />
+      {t("signin.login")} <RiLoginBoxLine size={22} className={styles.flipIcon} />
     </Link>
   );
 };

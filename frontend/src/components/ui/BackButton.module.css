@@ -1,0 +1,26 @@
+.btn {
+  flex: 1;
+  height: 2.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  font-family: var(--font-amiri);
+  color: var(--background);
+  border-radius: 2px;
+  border: none;
+  background-color: var(--gray);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: var(--gray-hover);
+}
+
+.btn:active {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
