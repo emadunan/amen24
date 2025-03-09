@@ -12,6 +12,7 @@ import StoreProvider from "../../providers/StoreProvider";
 
 import localFont from "next/font/local";
 import { cookies } from "next/headers";
+import { ToastContainer } from "react-toastify";
 
 const amiri = localFont({
   src: [
@@ -98,7 +99,8 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
             <AppFooter />
           </TranslationsProvider>
         </StoreProvider>
-      </body>
+        <ToastContainer toastStyle={{ fontFamily: "amiri, serif" }}/>
+        </body>
     </html>
   );
 };

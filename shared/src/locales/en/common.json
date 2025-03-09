@@ -27,5 +27,8 @@
     "copyright": "Amen24. All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
+  },
+  "error": {
+    "loginFailed": "The email or password you entered is incorrect. Please check your credentials and try again."
   }
 }

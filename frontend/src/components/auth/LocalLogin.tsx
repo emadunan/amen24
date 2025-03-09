@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { Fragment, useState } from "react";
 import styles from "./LocalLogin.module.css";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -9,37 +9,41 @@ import { useRouter } from "next/navigation";
 import { useLoginMutation } from "@/store/users";
 import Spinner from "../ui/Spinner";
 import BackButton from "../ui/BackButton";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LocalLogin = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const emailElRef = useRef<HTMLInputElement | null>(null);
-  const passwordElRef = useRef<HTMLInputElement | null>(null);
-
-  // ✅ Use RTK Query mutation hook
-  const [login, { isLoading, error }] = useLoginMutation();
+  // ✅ Controlled Inputs
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
+
+  // ✅ Use RTK Query mutation hook (No `localLoading`)
+  const [login, { isLoading }] = useLoginMutation();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setLocalLoading(true);
 
     try {
-      await login({
-        email: emailElRef.current?.value || "",
-        password: passwordElRef.current?.value || "",
-      }).unwrap(); // ✅ `unwrap()` to handle promise properly
-
+      setLocalLoading(true);
+      await login({ email, password }).unwrap();
       router.replace("/");
     } catch (err) {
-      console.error("Login failed:", err);
+      // ✅ Show error notification
+      toast.error(t("error.loginFailed", { ns: "common" }), {
+        position: "top-right",
+        autoClose: 7000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
       setLocalLoading(false);
     }
-  }
-
-  if (isLoading || localLoading) {
-    return <Spinner />;
   }
 
   return (
@@ -47,29 +51,26 @@ const LocalLogin = () => {
       <input
         className={styles.input}
         type="email"
-        ref={emailElRef}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         required
         placeholder={t("signin.email")}
       />
       <input
         className={styles.input}
         type="password"
-        ref={passwordElRef}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         required
         placeholder={t("signin.password")}
       />
 
       <div className={styles.btnGroup}>
         <BackButton />
-        <button className={styles.btn} type="submit">
-          <RiLoginBoxLine size={22} className={styles.flipIcon} />
-          {t("signin.login", { ns: "common" })}
+        <button className={styles.btn} type="submit" disabled={isLoading}>
+          {isLoading || localLoading ? <Spinner size="1rem" borderColor="background" /> : <Fragment> <RiLoginBoxLine size={22} className={styles.flipIcon} />{t("signin.login", { ns: "common" })}</Fragment>}
         </button>
       </div>
-
-      {error && (
-        <p className={styles.error}>{t("login_failed", { ns: "common" })}</p>
-      )}
 
       <Link className={styles.signupLink} href={"/signup"}>
         {t("signin.signup-invite", { ns: "common" })}
