@@ -10,16 +10,18 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
   ) { }
-  async validateUser(email: string, pass: string): Promise<Partial<UserProfile> | null> {
+  async validateUser(
+    email: string,
+    pass: string,
+  ): Promise<Partial<UserProfile> | null> {
     const user = await this.usersService.findLocalProfile(email);
-    if (!user) throw new UnauthorizedException();
+    if (!user) throw new UnauthorizedException("emailNotFound");
 
     const match = await bcrypt.compare(pass, user.password as string);
-    if (!match) throw new UnauthorizedException();
+    if (!match) throw new UnauthorizedException("invalidPassword");
 
     const { password, ...result } = user;
     return result;
-
   }
 
   async generateAccessToken(user: Partial<UserProfile>) {

@@ -20,7 +20,7 @@ const BookPage: FC<Props> = async ({ params }) => {
     `http://localhost:5000/verses/${bookKey}/${chapterNum}/${locale}`,
   );
 
-  if (!response.ok) throw new Error("Failed to fetch data!");
+  if (!response.ok) throw new Error("failedToFetch");
 
   const verses = await response.json();
 

@@ -1,11 +1,15 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { ProfilesService } from './profiles.service';
-import { UserProfile } from "@amen24/shared";
+import { UserProfile } from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 
@@ -22,15 +26,18 @@ export class UsersService {
 
     let user: Partial<User> | undefined;
 
-    if (provider === "local" && password) {
-      const hash = await bcrypt.hash(password, this.configService.getOrThrow<string>("ROUNDS"));
+    if (provider === 'local' && password) {
+      const hash = await bcrypt.hash(
+        password,
+        this.configService.getOrThrow<string>('ROUNDS'),
+      );
 
       user = { ...createUserDto, password: hash };
 
-      this.usersRepo.create(user)
+      this.usersRepo.create(user);
     }
 
-    if (!user) throw new BadRequestException("User could not be created");
+    if (!user) throw new BadRequestException("userNotCreated");
 
     return await this.usersRepo.save(user);
   }
@@ -50,9 +57,11 @@ export class UsersService {
     return await this.usersRepo.findOneBy({ email });
   }
 
-  async findLocalProfile(email: string): Promise<Partial<UserProfile> | undefined> {
+  async findLocalProfile(
+    email: string,
+  ): Promise<Partial<UserProfile> | undefined> {
     const userProfile = await this.usersRepo.findOne({
-      where: { email, provider: "local" },
+      where: { email, provider: 'local' },
       relations: ['profile'],
     });
 
@@ -81,7 +90,7 @@ export class UsersService {
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.usersRepo.findOneBy({ id });
 
-    if (!user) throw new NotFoundException('User was not found');
+    if (!user) throw new NotFoundException('userNotFound');
 
     Object.assign(user, updateUserDto);
 
@@ -91,7 +100,7 @@ export class UsersService {
   async remove(id: string) {
     const user = await this.usersRepo.findOneBy({ id });
 
-    if (!user) throw new NotFoundException('User was not found');
+    if (!user) throw new NotFoundException('userNotFound');
 
     return await this.profilesService.remove(user.email);
   }

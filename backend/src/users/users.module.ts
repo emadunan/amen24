@@ -8,9 +8,12 @@ import { Profile } from './entities/profile.entity';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Profile]), forwardRef(() => AuthModule)],
+  imports: [
+    TypeOrmModule.forFeature([User, Profile]),
+    forwardRef(() => AuthModule),
+  ],
   controllers: [UsersController],
   providers: [UsersService, ProfilesService],
   exports: [UsersService, ProfilesService],
 })
-export class UsersModule { }
+export class UsersModule {}

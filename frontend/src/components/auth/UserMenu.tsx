@@ -58,12 +58,12 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
         <ul className={styles.dropdown}>
           {/* <li className={styles.listItem} tabIndex={0}>
             <RiStarLine />
-            <span className={styles.listItemText}>{t("favorite")}</span>
+            <span className={styles.listItemText}>{t("userMenu.favorite")}</span>
           </li> */}
           <li tabIndex={0}>
             <Link href="/settings" className={styles.listItem}>
               <RiSettings3Line />
-              <span className={styles.listItemText}>{t("settings")}</span>
+              <span className={styles.listItemText}>{t("userMenu.settings")}</span>
             </Link>
           </li>
           <div className={styles.separator} />
@@ -72,7 +72,7 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
             onClick={handleLogout}
           >
             <RiLogoutBoxLine className={styles.flipIcon} />
-            <span className={styles.listItemText}>{t("logout")}</span>
+            <span className={styles.listItemText}>{t("userMenu.logout")}</span>
           </button>
         </ul>
       )}

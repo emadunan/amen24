@@ -99,8 +99,8 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
             <AppFooter />
           </TranslationsProvider>
         </StoreProvider>
-        <ToastContainer toastStyle={{ fontFamily: "amiri, serif" }}/>
-        </body>
+        <ToastContainer toastStyle={{ fontFamily: "amiri, serif" }} />
+      </body>
     </html>
   );
 };

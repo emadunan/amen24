@@ -7,12 +7,21 @@ interface SpinnerProps {
   borderTopColor?: "background" | "text" | "primary" | "secondary" | "accent";
 }
 
-const Spinner: React.FC<SpinnerProps> = ({ size = "4rem", borderColor = "accent", borderTopColor = "secondary" }) => {
+const Spinner: React.FC<SpinnerProps> = ({
+  size = "4rem",
+  borderColor = "accent",
+  borderTopColor = "secondary",
+}) => {
   return (
     <div className={styles.spinnerContainer}>
       <div
         className={styles.spinner}
-        style={{ width: size, height: size, border: `4px solid var(--${borderColor})`, borderTop: `4px solid var(--${borderTopColor})` }}
+        style={{
+          width: size,
+          height: size,
+          border: `4px solid var(--${borderColor})`,
+          borderTop: `4px solid var(--${borderTopColor})`,
+        }}
       ></div>
     </div>
   );

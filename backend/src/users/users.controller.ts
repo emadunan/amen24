@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   NotFoundException,
-  BadRequestException,
   UseGuards,
   Req,
   HttpCode,
@@ -21,7 +20,7 @@ import { ProfilesService } from './services/profiles.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from 'src/auth/decorators/user.decorator';
 import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from 'src/auth/auth.service';
 import { UserProfile } from '@amen24/shared';
@@ -33,7 +32,7 @@ export class UsersController {
     private readonly profilesService: ProfilesService,
     private readonly configService: ConfigService,
     private readonly authService: AuthService,
-  ) { }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
@@ -45,7 +44,9 @@ export class UsersController {
   @Post('local-login')
   @HttpCode(200)
   async login(@Req() req, @Res() res: Response) {
-    const { access_token } = await this.authService.generateAccessToken(req.user);
+    const { access_token } = await this.authService.generateAccessToken(
+      req.user,
+    );
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
@@ -60,7 +61,6 @@ export class UsersController {
   @Post('logout')
   @HttpCode(200)
   async logout(@Res() res: Response) {
-
     res.clearCookie('access_token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production', // Ensure secure cookie in production
@@ -75,7 +75,9 @@ export class UsersController {
   async toggleTheme(@User() user: UserProfile, @Res() res: Response) {
     const userProfile = await this.profilesService.toggleTheme(user.email);
 
-    const { access_token } = await this.authService.generateAccessToken(userProfile!);
+    const { access_token } = await this.authService.generateAccessToken(
+      userProfile!,
+    );
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
@@ -89,10 +91,19 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Patch('me/lang')
-  async changeLang(@User() user: UserProfile, @Body() body: any, @Res() res: Response) {
-    const userProfile = await this.profilesService.changeLang(user.email, body.lang);
+  async changeLang(
+    @User() user: UserProfile,
+    @Body() body: any,
+    @Res() res: Response,
+  ) {
+    const userProfile = await this.profilesService.changeLang(
+      user.email,
+      body.lang,
+    );
 
-    const { access_token } = await this.authService.generateAccessToken(userProfile!);
+    const { access_token } = await this.authService.generateAccessToken(
+      userProfile!,
+    );
 
     res.cookie('access_token', access_token, {
       httpOnly: true,
@@ -111,7 +122,7 @@ export class UsersController {
       createUserDto.provider,
     );
 
-    if (existUser) throw new ConflictException('User duplication');
+    if (existUser) throw new ConflictException('userDuplication');
 
     const profile = await this.profilesService.create({
       email: createUserDto.email,
@@ -119,9 +130,8 @@ export class UsersController {
 
     await this.profilesService.updateLastLogin(profile.email);
 
-    if (!profile) throw new NotFoundException('Profile was not found');
-
-
+    if (!profile)
+      throw new NotFoundException("profileNotFound");
 
     await this.usersService.create(createUserDto);
 

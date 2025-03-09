@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 import { useLoginMutation } from "@/store/users";
 import Spinner from "../ui/Spinner";
 import BackButton from "../ui/BackButton";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { showToast } from "@/utils/toast";
 
 const LocalLogin = () => {
   const { t } = useTranslation();
@@ -32,18 +32,14 @@ const LocalLogin = () => {
       await login({ email, password }).unwrap();
       router.replace("/");
     } catch (err) {
-      // ✅ Show error notification
-      toast.error(t("error.loginFailed", { ns: "common" }), {
-        position: "top-right",
-        autoClose: 7000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      showToast(t("error.loginFailed"), "error");
 
       setLocalLoading(false);
     }
+  }
+
+  if (isLoading || localLoading) {
+    return <Spinner />;
   }
 
   return (
@@ -68,7 +64,15 @@ const LocalLogin = () => {
       <div className={styles.btnGroup}>
         <BackButton />
         <button className={styles.btn} type="submit" disabled={isLoading}>
-          {isLoading || localLoading ? <Spinner size="1rem" borderColor="background" /> : <Fragment> <RiLoginBoxLine size={22} className={styles.flipIcon} />{t("signin.login", { ns: "common" })}</Fragment>}
+          {isLoading || localLoading ? (
+            <Spinner size="1rem" borderColor="background" />
+          ) : (
+            <Fragment>
+              {" "}
+              <RiLoginBoxLine size={22} className={styles.flipIcon} />
+              {t("signin.login", { ns: "common" })}
+            </Fragment>
+          )}
         </button>
       </div>
 
