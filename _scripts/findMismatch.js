@@ -43,6 +43,6 @@ async function compareFiles(file1, file2) {
 }
 
 const file1Path = "Bible_En_ESV_2001.VPL.txt";
-const file2Path = "Bible_Ar_SVD_1865.VPL.txt";
+const file2Path = "Bible_He_Masoretic-OT.VPL.txt";
 
 compareFiles(file1Path, file2Path);
