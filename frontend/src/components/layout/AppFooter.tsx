@@ -8,7 +8,10 @@ export default function AppFooter() {
   const { t, i18n } = useTranslation();
   return (
     <footer className={styles.footer}>
-      <p className={styles.copyright} dir={i18n.language === "ar" ? "rtl" : "ltr"}>
+      <p
+        className={styles.copyright}
+        dir={i18n.language === "ar" ? "rtl" : "ltr"}
+      >
         &copy; {new Date().getFullYear()}&mdash;{t("footer.copyright")}
       </p>
       <nav className={styles.nav}>

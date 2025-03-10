@@ -63,7 +63,9 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
           <li tabIndex={0}>
             <Link href="/settings" className={styles.listItem}>
               <RiSettings3Line />
-              <span className={styles.listItemText}>{t("userMenu.settings")}</span>
+              <span className={styles.listItemText}>
+                {t("userMenu.settings")}
+              </span>
             </Link>
           </li>
           <div className={styles.separator} />

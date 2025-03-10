@@ -3,12 +3,14 @@
 import React, { useState } from "react";
 import styles from "./LocalSignup.module.css";
 import { useTranslation } from "react-i18next";
-import { TiUserAdd } from "react-icons/ti";
 import { useRouter } from "next/navigation";
 import { useSignupMutation } from "@/store/users";
 import Spinner from "../ui/Spinner";
 import BackButton from "../ui/BackButton";
 import { showToast } from "@/utils/toast";
+import InputItem from "../ui/InputItem";
+import SubmitButton from "../ui/SubmitButton";
+import { handleApiError } from "@/utils/handleApiError";
 
 const LocalSignup = () => {
   const { t } = useTranslation();
@@ -47,25 +49,7 @@ const LocalSignup = () => {
 
       router.replace("/");
     } catch (err: unknown) {
-      if (
-        typeof err === "object" &&
-        err !== null &&
-        "data" in err &&
-        typeof (err as any).data === "object"
-      ) {
-        const errorData = (err as any).data;
-        
-        // If error message is an object with a key
-        if (typeof errorData.message === "object" && "key" in errorData.message) {
-          showToast(t(`error.${errorData.message.key}`), "error");
-        } 
-        // If message is a simple string
-        else {
-          showToast(t(`error.${errorData.message}`), "error");
-        }
-      } else {
-        showToast(t("error.unknownError"), "error");
-      }
+      handleApiError(err, t);
       setLocalLoading(false);
     }
   }
@@ -76,47 +60,40 @@ const LocalSignup = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <input
-        className={styles.input}
+      <InputItem
         type="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onSetValue={setEmail}
         required
         placeholder={t("signin.email")}
       />
 
-      <input
-        className={styles.input}
+      <InputItem
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onSetValue={setPassword}
         required
         placeholder={t("signin.password")}
       />
 
-      <input
-        className={styles.input}
+      <InputItem
         type="password"
         value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
+        onSetValue={setConfirmPassword}
         required
         placeholder={t("signin.confirmPassword")}
       />
 
-      <input
-        className={styles.input}
+      <InputItem
         type="text"
         value={displayName}
-        onChange={(e) => setDisplayName(e.target.value)}
+        onSetValue={setDisplayName}
         placeholder={t("signin.displayName")}
       />
 
       <div className={styles.btnGroup}>
         <BackButton href="/login" />
-        <button className={styles.btn} type="submit">
-          <TiUserAdd size={22} className={styles.flipIcon} />
-          {t("signin.signup", { ns: "common" })}
-        </button>
+        <SubmitButton text={t("signin.signup", { ns: "common" })} />
       </div>
     </form>
   );

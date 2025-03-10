@@ -8,7 +8,10 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Redirect logged-in users away from any "/login" or "/signup" page
-  if (isLoggedIn && (pathname.endsWith("/login") || pathname.endsWith("/signup"))) {
+  if (
+    isLoggedIn &&
+    (pathname.endsWith("/login") || pathname.endsWith("/signup"))
+  ) {
     return NextResponse.redirect(new URL("/", request.url)); // Redirect to home page
   }
 

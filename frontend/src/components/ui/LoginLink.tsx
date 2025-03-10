@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import styles from "./LoginButton.module.css";
+import styles from "./LoginLink.module.css";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { RiLoginBoxLine } from "react-icons/ri";

@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btnGroup {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+}
+
+.signupLink {
+  transition: color 0.2s ease-in-out;
+}
+
+.signupLink:hover {
+  text-decoration: underline;
+  color: var(--accent);
+}

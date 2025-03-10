@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styles from "./page.module.css";
-import LocalLogin from "@/components/auth/LocalLogin";
+import LocalLogin from "@/components/profile/LocalLogin";
 
 interface Props {
   params: { locale: string };

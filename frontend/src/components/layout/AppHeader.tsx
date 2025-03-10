@@ -10,11 +10,11 @@ import Link from "next/link";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
 import { useTranslation } from "react-i18next";
 import LanguageChanger from "../ui/LanguageSelector";
-import LoginButton from "../ui/LoginButton";
+import LoginButton from "../ui/LoginLink";
 import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
 import { BookKey, UserProfile } from "@amen24/shared";
-import UserMenu from "../auth/UserMenu";
+import UserMenu from "../profile/UserMenu";
 import { useGetMeQuery } from "@/store/users";
 
 interface Props {
