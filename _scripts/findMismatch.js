@@ -42,7 +42,7 @@ async function compareFiles(file1, file2) {
   stream2.close();
 }
 
-const file1Path = "Bible_ESV_2001.txt";
-const file2Path = "Bible_ORIGINAL.txt";
+const file1Path = "Bible_En_ESV_2001.VPL.txt";
+const file2Path = "Bible_Ar_SVD_1865.VPL.txt";
 
 compareFiles(file1Path, file2Path);

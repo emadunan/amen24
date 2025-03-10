@@ -13,7 +13,7 @@ import LanguageChanger from "../ui/LanguageSelector";
 import LoginButton from "../ui/LoginButton";
 import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
-import { BibleBook, UserProfile } from "@amen24/shared";
+import { BookKey, UserProfile } from "@amen24/shared";
 import UserMenu from "../auth/UserMenu";
 import { useGetMeQuery } from "@/store/users";
 
@@ -46,7 +46,7 @@ const AppHeader: FC<Props> = () => {
     (!user || error);
   const showUserMenu = user && !error;
 
-  const isBookPath = Object.values(BibleBook).some((path) =>
+  const isBookPath = Object.values(BookKey).some((path) =>
     pathname.includes(path),
   );
 

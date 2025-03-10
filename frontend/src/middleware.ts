@@ -5,9 +5,10 @@ import { NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
   const isLoggedIn = request.cookies.has("access_token"); // Check for access_token presence
+  const { pathname } = request.nextUrl;
 
-  // Redirect logged-in users away from the login page
-  if (isLoggedIn && request.nextUrl.pathname === "/login") {
+  // Redirect logged-in users away from any "/login" or "/signup" page
+  if (isLoggedIn && (pathname.endsWith("/login") || pathname.endsWith("/signup"))) {
     return NextResponse.redirect(new URL("/", request.url)); // Redirect to home page
   }
 

@@ -58,7 +58,6 @@ export class VersesService {
   }
 
   async seed() {
-    await this.seedBible(Lang.NATIVE);
     await this.seedBible(Lang.ENGLISH);
     await this.seedBible(Lang.ARABIC);
   }
@@ -75,12 +74,12 @@ export class VersesService {
 
       case Lang.ENGLISH:
         filename =
-          'ESV_Bible_2001.txt';
+          'Bible_En_ESV_2001.VPL.txt';
         break;
 
       case Lang.ARABIC:
         filename =
-          'Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt';
+          'Bible_Ar_SVD_1865.VPL.txt';
         break;
 
       default:
