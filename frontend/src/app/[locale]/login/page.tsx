@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import styles from "./page.module.css";
 import LocalLogin from "@/components/profile/LocalLogin";
+import PageContainer from "@/components/ui/PageContainer";
 
 interface Props {
   params: { locale: string };
@@ -8,9 +8,9 @@ interface Props {
 
 const LoginPage: FC<Props> = async ({ params }) => {
   return (
-    <div className={styles.container}>
+    <PageContainer>
       <LocalLogin />
-    </div>
+    </PageContainer>
   );
 };
 

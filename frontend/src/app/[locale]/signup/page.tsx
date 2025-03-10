@@ -1,12 +1,12 @@
 import LocalSignup from "@/components/profile/LocalSignup";
 import React from "react";
-import styles from "./page.module.css";
+import PageContainer from "@/components/ui/PageContainer";
 
 const SignupPage = () => {
   return (
-    <div className={styles.container}>
+    <PageContainer>
       <LocalSignup />
-    </div>
+    </PageContainer>
   );
 };
 
