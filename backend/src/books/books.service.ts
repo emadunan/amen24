@@ -4,7 +4,7 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from './entities/book.entity';
 import { Repository } from 'typeorm';
-import { BibleBook, BookKeys } from '@amen24/shared';
+import { BookKey, BookKeys } from '@amen24/shared';
 import { ChaptersService } from '../chapters/chapters.service';
 
 @Injectable()
@@ -41,7 +41,7 @@ export class BooksService {
       if (Object.prototype.hasOwnProperty.call(BookKeys, key)) {
         bookId++;
 
-        await this.booksRepo.insert({ title: key as BibleBook });
+        await this.booksRepo.insert({ title: key as BookKey });
 
         const chapterNums = Array.from(
           { length: BookKeys[key].len },

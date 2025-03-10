@@ -11,7 +11,7 @@ import {
 import { VersesService } from './verses.service';
 import { CreateVerseDto } from './dto/create-verse.dto';
 import { UpdateVerseDto } from './dto/update-verse.dto';
-import { BibleBook, Language } from '@amen24/shared';
+import { BookKey, Lang } from '@amen24/shared';
 
 @Controller('verses')
 export class VersesController {
@@ -29,9 +29,9 @@ export class VersesController {
 
   @Get(':title/:chapterNum/:lang')
   findChapter(
-    @Param('title') title: BibleBook,
+    @Param('title') title: BookKey,
     @Param('chapterNum', ParseIntPipe) chapterNum: number,
-    @Param('lang') lang: Language,
+    @Param('lang') lang: Lang,
   ) {
     return this.versesService.findChapter(title, chapterNum, lang);
   }

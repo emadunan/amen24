@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import styles from "./ThemeSwitcher.module.css";
 import { useGetMeQuery, useToggleThemeMutation } from "@/store/users";
+import { ThemeMode } from "@amen24/shared";
 
 const LOCAL_STORAGE_KEY = "theme";
 
@@ -22,7 +23,7 @@ const ThemeSwitcher = () => {
 
     if (user) {
       // If logged in, use backend preference and remove local storage
-      theme = user.darkMode;
+      theme = user.themeMode === ThemeMode.DARK;
       localStorage.removeItem(LOCAL_STORAGE_KEY);
     } else {
       // If not logged in, load from localStorage

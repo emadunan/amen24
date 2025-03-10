@@ -1,7 +1,7 @@
-import { BibleBook, Language } from '@amen24/shared';
+import { BookKey, Lang } from '@amen24/shared';
 
 export class FindChapterParamsDto {
-  title: BibleBook;
+  title: BookKey;
   chapterNum: number;
-  lang: Language;
+  lang: Lang;
 }

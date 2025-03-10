@@ -1,14 +1,14 @@
-import { BibleBook, Language, UserCategory } from "../@types";
+import { BookKey, Lang, ThemeMode, UserCategory } from "../@types";
 
 export interface Profile {
   email: string;
   privilege: UserCategory;
   createdAt: Date;
   lastLogin: Date;
-  currentBook: BibleBook;
+  currentBook: BookKey;
   currentChapter: number;
-  uilanguage: Language;
+  uilanguage: Lang;
   fontSize: number;
-  diacrited: boolean;
-  darkMode: boolean;
+  themeMode: ThemeMode;
+  isDiacritized: boolean;
 }

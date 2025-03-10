@@ -1,4 +1,4 @@
-import { BibleBook, Language, UserCategory } from "../@types";
+import { BookKey, Lang, ThemeMode, UserCategory } from "../@types";
 import { Profile } from "./Profile";
 
 export interface User {
@@ -11,6 +11,7 @@ export interface User {
   displayName: string;
   photoUri: string;
   isActive: boolean;
+  isVerified: boolean;
 }
 
 export interface UserProfile {
@@ -22,13 +23,14 @@ export interface UserProfile {
   displayName: string;
   photoUri: string;
   isActive: boolean;
+  isVerified: boolean;
   privilege: UserCategory;
   createdAt: Date;
   lastLogin: Date;
-  currentBook: BibleBook;
+  currentBook: BookKey;
   currentChapter: number;
-  uilanguage: Language;
+  themeMode: ThemeMode;
+  uilanguage: Lang;
   fontSize: number;
-  diacrited: boolean;
-  darkMode: boolean;
+  isDiacritized: boolean;
 }

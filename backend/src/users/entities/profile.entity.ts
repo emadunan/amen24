@@ -6,7 +6,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserCategory, BibleBook, Language } from '@amen24/shared';
+import { UserCategory, BookKey, Lang, ThemeMode } from '@amen24/shared';
 import { User } from './user.entity';
 
 @Entity()
@@ -26,21 +26,21 @@ export class Profile {
   @UpdateDateColumn()
   lastLogin: Date;
 
-  @Column({ default: BibleBook.GENESIS })
-  currentBook: BibleBook;
+  @Column({ default: BookKey.GENESIS })
+  currentBook: BookKey;
 
   @Column({ default: 1 })
   currentChapter: number;
 
   @Column({ nullable: true })
-  uilanguage: Language;
+  uilang: Lang;
 
   @Column({ default: 1 })
   fontSize: number;
 
-  @Column({ default: true })
-  diacrited: boolean;
-
   @Column({ default: false })
-  darkMode: boolean;
+  themeMode: ThemeMode;
+
+  @Column({ default: true })
+  isDiacritized: boolean;
 }

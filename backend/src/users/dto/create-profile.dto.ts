@@ -2,12 +2,11 @@ import { Optional } from '@nestjs/common';
 import {
   IsBoolean,
   IsDate,
-  IsDefined,
   IsEmail,
   IsEnum,
   IsNumber,
 } from 'class-validator';
-import { BibleBook, Language, UserCategory } from '@amen24/shared';
+import { BookKey, Lang, ThemeMode, UserCategory } from '@amen24/shared';
 
 export class CreateProfileDto {
   @IsEmail()
@@ -19,22 +18,22 @@ export class CreateProfileDto {
   @IsDate()
   lastLogin: Date;
 
-  @IsEnum(BibleBook)
-  currentBook: BibleBook;
+  @IsEnum(BookKey)
+  currentBook: BookKey;
 
   @IsNumber()
   currentChapter: number;
 
-  @IsEnum(Language)
+  @IsEnum(Lang)
   @Optional()
-  uilanguage: Language;
+  uilanguage: Lang;
 
   @IsNumber()
   fontSize: number;
 
   @IsBoolean()
-  darkMode: boolean;
+  themeMode: ThemeMode;
 
   @IsBoolean()
-  diacrited: boolean;
+  isDiacritized: boolean;
 }

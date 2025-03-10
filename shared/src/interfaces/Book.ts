@@ -1,6 +1,6 @@
-import { BibleBook } from "../@types";
+import { BookKey } from "../@types";
 
 export interface Book {
   id: number;
-  title: BibleBook;
+  title: BookKey;
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./AppLogo.module.css";
 import { useGetMeQuery } from "@/store/users";
+import { ThemeMode } from "@amen24/shared";
 
 const LOCAL_STORAGE_KEY = "theme";
 
@@ -19,12 +20,12 @@ const AppLogo = () => {
   useEffect(() => {
     if (user) {
       // If user is logged in, use backend preference
-      setIsDarkMode(user.darkMode);
+      setIsDarkMode(user.themeMode === ThemeMode.DARK);
       localStorage.removeItem(LOCAL_STORAGE_KEY); // Remove stored theme to avoid conflicts
     } else {
       // If user is not logged in, use localStorage preference
       const savedTheme = localStorage.getItem(LOCAL_STORAGE_KEY);
-      setIsDarkMode(savedTheme === "dark");
+      setIsDarkMode(savedTheme === ThemeMode.DARK);
     }
   }, [user]);
 
@@ -32,7 +33,7 @@ const AppLogo = () => {
   useEffect(() => {
     const observer = new MutationObserver(() => {
       setIsDarkMode(
-        document.documentElement.getAttribute("data-theme") === "dark",
+        document.documentElement.getAttribute("data-theme") === ThemeMode.DARK,
       );
     });
 

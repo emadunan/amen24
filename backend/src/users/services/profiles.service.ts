@@ -10,7 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Profile } from '../entities/profile.entity';
 import { UsersService } from './users.service';
-import { Language, UserProfile } from '@amen24/shared';
+import { Lang, ThemeMode, UserProfile } from '@amen24/shared';
 
 @Injectable()
 export class ProfilesService {
@@ -57,7 +57,7 @@ export class ProfilesService {
       throw new Error('profileNotFound');
     }
 
-    profile.darkMode = !profile.darkMode;
+    profile.themeMode = profile.themeMode === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK;
     await this.profilesRepo.save(profile);
 
     return await this.usersService.findLocalProfile(profile.email);
@@ -65,7 +65,7 @@ export class ProfilesService {
 
   async changeLang(
     email: string,
-    lang: Language,
+    lang: Lang,
   ): Promise<Partial<UserProfile> | undefined> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
@@ -73,7 +73,7 @@ export class ProfilesService {
       throw new Error('profileNotFound');
     }
 
-    profile.uilanguage = lang;
+    profile.uilang = lang;
     await this.profilesRepo.save(profile);
 
     return await this.usersService.findLocalProfile(profile.email);

@@ -18,11 +18,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ProfilesService } from './services/profiles.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { User } from 'src/auth/decorators/user.decorator';
-import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
-import { Request, Response } from 'express';
+import { User } from '../auth/decorators/user.decorator';
+import { LocalAuthGuard } from '../auth/guards/local-auth.guard';
+import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { UserProfile } from '@amen24/shared';
 
 @Controller('users')

@@ -7,9 +7,9 @@ import { Repository } from 'typeorm';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 import {
-  BibleBook,
+  BookKey,
   BookKeys,
-  Language,
+  Lang,
   normalizeArabicText,
 } from '@amen24/shared';
 import { ChaptersService } from '../chapters/chapters.service';
@@ -30,14 +30,14 @@ export class VersesService {
   }
 
   async findChapter(
-    bookKey: BibleBook,
+    bookKey: BookKey,
     chapterNumber: number,
-    language: Language,
+    lang: Lang,
   ) {
     return await this.versesRepo.find({
       where: {
         chapter: { num: chapterNumber, book: { title: bookKey } },
-        language,
+        lang,
       },
       order: {
         num: 'ASC',
@@ -58,27 +58,27 @@ export class VersesService {
   }
 
   async seed() {
-    await this.seedBible(Language.NATIVE);
-    await this.seedBible(Language.ENGLISH);
-    await this.seedBible(Language.ARABIC);
+    await this.seedBible(Lang.NATIVE);
+    await this.seedBible(Lang.ENGLISH);
+    await this.seedBible(Lang.ARABIC);
   }
 
-  private async seedBible(language: Language) {
-    console.log(`Seeding ${language}...`);
+  private async seedBible(lang: Lang) {
+    console.log(`Seeding ${lang}...`);
 
     let filename: string;
 
-    switch (language) {
-      case Language.NATIVE:
+    switch (lang) {
+      case Lang.NATIVE:
         filename = 'original-scripts.txt';
         break;
 
-      case Language.ENGLISH:
+      case Lang.ENGLISH:
         filename =
-          'Holy-Bible---English---Free-Bible-Version---Source-Edition.VPL.txt';
+          'ESV_Bible_2001.txt';
         break;
 
-      case Language.ARABIC:
+      case Lang.ARABIC:
         filename =
           'Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt';
         break;
@@ -93,7 +93,7 @@ export class VersesService {
       '..',
       '..',
       '..',
-      'content',
+      '_content',
       filename,
     );
 
@@ -105,7 +105,7 @@ export class VersesService {
       const result = line.match(/^(\S+)\s(\d+):(\d+)\s(.*)$/);
 
       if (result) {
-        const bookKey = result.at(1) as keyof typeof BookKeys;
+        const bookKey = result.at(1)?.toUpperCase() as keyof typeof BookKeys;
         const chapterNum = result.at(2) as string;
         const verseNum = result.at(3) as string;
         const verseText = result.at(4) as string;
@@ -121,11 +121,11 @@ export class VersesService {
           num: +verseNum,
           text: verseText,
           textNormalized:
-            language === Language.ARABIC
+            lang === Lang.ARABIC
               ? normalizeArabicText(verseText)
               : verseText,
           chapter: { id: chapter!.id },
-          language,
+          lang,
         });
       }
     }

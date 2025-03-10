@@ -76,10 +76,10 @@ export class UsersService {
       lastLogin: userProfile?.profile.lastLogin,
       currentBook: userProfile?.profile.currentBook,
       currentChapter: userProfile?.profile.currentChapter,
-      uilanguage: userProfile?.profile.uilanguage,
+      uilanguage: userProfile?.profile.uilang,
       fontSize: userProfile?.profile.fontSize,
-      diacrited: userProfile?.profile.diacrited,
-      darkMode: userProfile?.profile.darkMode,
+      isDiacritized: userProfile?.profile.isDiacritized,
+      themeMode: userProfile?.profile.themeMode,
     };
   }
 
