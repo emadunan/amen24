@@ -1,22 +1,30 @@
-import React from "react";
+"use client"
+
+import React, { useState } from "react";
 import styles from "./ProfileSettings.module.css";
+import { useTranslation } from "react-i18next";
+
+const FONT_SIZES = ["Small", "Medium", "Large"];
 
 const ProfileSettings = () => {
+  const [selectedFontSize, setSelectedFontSize] = useState("Medium");
+  const [isDiacritized, setIsDiacritized] = useState(false);
+
+  const { t } = useTranslation();
+
   return (
     <div className={styles.profileContainer}>
-      <h2 className={styles.title}>Profile Settings</h2>
+      <h2 className={styles.title}>{t("profileSettings.title")}</h2>
 
       {/* Email Display */}
       <div className={styles.profileSection}>
-        <label className={styles.label}>Email</label>
-        <div className={styles.email}>
-          {/* User Email Here */} user@example.com
-        </div>
+        <label className={styles.label}>{t("profileSettings.email")}</label>
+        <div className={styles.email}>user@example.com</div>
       </div>
 
       {/* Connected Accounts */}
-      <div className={styles.profileSection}>
-        <label className={styles.label}>Connected Accounts</label>
+      {/* <div className={styles.profileSection}>
+        <label className={styles.label}>{t("profileSettings.connectedAccounts")}</label>
         <ul className={styles.accountList}>
           <li className={styles.accountItem}>
             Google <button className={styles.deleteBtn}>✖</button>
@@ -25,27 +33,44 @@ const ProfileSettings = () => {
             Facebook <button className={styles.deleteBtn}>✖</button>
           </li>
         </ul>
-      </div>
+      </div> */}
 
-      {/* Font Size Slider */}
-      <div className={styles.profileSection}>
-        <label className={styles.label}>Font Size</label>
-        <input type="range" min="12" max="24" className={styles.slider} />
-      </div>
+      {/* Font Size Selector */}
+      {/* <div className={styles.profileSection}>
+        <label className={styles.label}>{t("profileSettings.fontSize")}</label>
+        <div className={styles.fontSizeGroup}>
+          {FONT_SIZES.map((size) => (
+            <button
+              key={size}
+              className={`${styles.fontSizeButton} ${selectedFontSize === size ? styles.active : ""
+                }`}
+              onClick={() => setSelectedFontSize(size)}
+            >
+              {size}
+            </button>
+          ))}
+        </div>
+      </div> */}
 
       {/* Diacritization Toggle */}
-      <div className={styles.profileSection}>
-        <label className={styles.label}>Diacritized Text</label>
+      {/* <div className={styles.profileSection}>
+        <label className={styles.label}>{t("profileSettings.diacritizedText")}</label>
         <label className={styles.switch}>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={isDiacritized}
+            onChange={() => setIsDiacritized((prev) => !prev)}
+          />
           <span className={styles.sliderRound}></span>
         </label>
-      </div>
+      </div> */}
 
-      {/* Delete Account Button */}
+      {/* Delete Account */}
       <div className={styles.deleteSection}>
-        <button className={styles.deleteAccountBtn}>
-          Delete Account Permanently
+        <button className={styles.deleteAccountBtn} onClick={() => alert("profileSettings.Are you sure?")}>
+          <strong>
+            {t("profileSettings.deleteAccount")}
+          </strong>
         </button>
       </div>
     </div>

@@ -38,11 +38,12 @@
 }
 
 .verseNumber {
-  color: var(--red);
+  color: var(--danger);
   font-size: small;
   vertical-align: top;
   position: relative;
-  top: -0.6rem; /* Adjust as needed */
+  top: -0.6rem;
+  /* Adjust as needed */
 }
 
 [dir="ltr"] .verseNumber {
@@ -57,7 +58,8 @@
 
 .disabled {
   opacity: 0.5;
-  pointer-events: none; /* Prevents clicking */
+  pointer-events: none;
+  /* Prevents clicking */
   cursor: default;
 }
 

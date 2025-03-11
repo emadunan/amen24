@@ -23,6 +23,17 @@
     "settings": "Settings",
     "logout": "Logout"
   },
+  "profileSettings" : {
+    "title": "Profile Settings",
+    "email": "Email",
+    "connectedAccounts": "Connected Accounts",
+    "fontSize": "Font Size",
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
+    "diacritizedText": "Diacritized Text",
+    "deleteAccount": "Delete Account Permanently"
+  },
   "footer": {
     "copyright": "Amen24. All rights reserved.",
     "privacyPolicy": "Privacy Policy",

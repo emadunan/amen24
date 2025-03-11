@@ -23,6 +23,17 @@
     "settings": "ٱلْإِعْدَادَاتُ",
     "logout": "ٱلْخُرُوجِ"
   },
+  "profileSettings": {
+    "title": "إعدادات الحساب",
+    "email": "البريد الإلكتروني",
+    "connectedAccounts": "الحسابات المرتبطة",
+    "fontSize": "حجم الخط",
+    "small": "صغير",
+    "medium": "متوسط",
+    "large": "كبير",
+    "diacritizedText": "النص المشكّل",
+    "deleteAccount": "حذف الحساب نهائيًا"
+  },
   "footer": {
     "copyright": "Amen24. جميعُ الحقوقِ محفوظةٌ.",
     "privacyPolicy": "سياسةُ الخصوصيَّةِ",

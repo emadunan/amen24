@@ -1,12 +1,14 @@
+/* Profile Container */
 .profileContainer {
   background: var(--background);
   max-width: 500px;
   margin: auto;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
 }
 
+/* Title */
 .title {
   text-align: center;
   font-size: 1.5rem;
@@ -14,6 +16,7 @@
   margin-bottom: 1.5rem;
 }
 
+/* Profile Sections */
 .profileSection {
   margin-bottom: 1.5rem;
 }
@@ -25,14 +28,17 @@
   color: var(--text);
 }
 
+/* Email Display (Read-Only) */
 .email {
-  background: var(--gray-hover);
+  background: var(--secondary);
   padding: 0.8rem;
   border-radius: 5px;
   font-weight: bold;
   color: var(--text);
+  text-align: center;
 }
 
+/* Connected Accounts */
 .accountList {
   list-style: none;
   padding: 0;
@@ -46,11 +52,12 @@
   margin-bottom: 0.5rem;
   border-radius: 5px;
   font-size: 1rem;
+  align-items: center;
 }
 
 .deleteBtn {
-  background: var(--red);
-  color: white;
+  background: var(--danger);
+  color: var(--background);
   border: none;
   padding: 0.3rem 0.5rem;
   border-radius: 3px;
@@ -59,16 +66,38 @@
 }
 
 .deleteBtn:hover {
-  background: darkred;
+  background: var(--danger-hover);
 }
 
-/* Font Size Slider */
-.slider {
-  width: 100%;
-  accent-color: var(--primary);
+/* 🔹 Font Size Selector */
+.fontSizeGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-/* Toggle Switch */
+.fontSizeButton {
+  flex: 1;
+  background: var(--secondary);
+  color: var(--text);
+  border: 1px solid var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.fontSizeButton.active {
+  background: var(--primary);
+  color: white;
+}
+
+.fontSizeButton:hover {
+  background: var(--accent-hover);
+  color: white;
+}
+
+/* 🔹 Toggle Switch (Diacritization) */
 .switch {
   position: relative;
   display: inline-block;
@@ -94,7 +123,7 @@
   transition: 0.4s;
 }
 
-.switch input:checked + .sliderRound {
+.switch input:checked+.sliderRound {
   background: var(--accent);
 }
 
@@ -103,28 +132,29 @@
   position: absolute;
   height: 16px;
   width: 16px;
-  background: white;
+  background: var(--background);
   border-radius: 50%;
   left: 4px;
   bottom: 3px;
   transition: 0.4s;
 }
 
-.switch input:checked + .sliderRound::before {
+.switch input:checked+.sliderRound::before {
   transform: translateX(18px);
 }
 
-/* Delete Account */
+/* 🔹 Delete Account */
 .deleteSection {
   text-align: center;
 }
 
 .deleteAccountBtn {
-  background: var(--red);
-  color: white;
+  background: var(--danger);
+  color: var(--background);
   border: none;
   padding: 0.8rem;
   font-size: 1rem;
+  font-family: "amiri";
   width: 100%;
   border-radius: 5px;
   cursor: pointer;
@@ -132,5 +162,5 @@
 }
 
 .deleteAccountBtn:hover {
-  background: darkred;
+  background: var(--danger-hover);
 }

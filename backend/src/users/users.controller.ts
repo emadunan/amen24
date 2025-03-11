@@ -32,7 +32,7 @@ export class UsersController {
     private readonly profilesService: ProfilesService,
     private readonly configService: ConfigService,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
@@ -152,6 +152,12 @@ export class UsersController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/profile')
+  removePermanently(@User() user: UserProfile) {
+    return this.profilesService.remove(user.email);
   }
 
   @Delete(':id')

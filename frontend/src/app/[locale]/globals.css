@@ -10,7 +10,8 @@
   --accent-hover: #2e5840;
   --gray: #5c564a;
   --gray-hover: #4a443a;
-  --red: #c62828;
+  --danger: #c62828;
+  --danger-hover: #b71c1c;
   --highlight: #ffeb3b;
 
   --header-height: 4rem;
@@ -29,7 +30,8 @@
   --accent-hover: #9cc9a4;
   --gray: #d6cfc7;
   --gray-hover: #e4ddd6;
-  --red: #e57373;
+  --danger: #e57373;
+  --danger-hover: #f28b82;
   --highlight: #b88b4a;
 }
 
@@ -44,7 +46,7 @@
     --primary: #a68a5e;
     --secondary: #524a3f;
     --accent: #82b48a;
-    --red: #e57373;
+    --danger: #e57373;
     --highlight: #b88b4a;
   }
 
@@ -61,7 +63,6 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: var(--accent);
 }
 
 body {
