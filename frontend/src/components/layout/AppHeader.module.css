@@ -13,6 +13,12 @@
   position: absolute;
 }
 
+.logoLoading {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0.2rem);
+}
+
 .nav {
   width: 92rem;
   padding: 0.5rem 2rem;
@@ -39,10 +45,13 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: 0px; /* Adjust spacing */
+  bottom: 0px;
+  /* Adjust spacing */
   width: 100%;
-  height: 2px; /* Thickness of the underline */
-  background-color: var(--text); /* Underline color */
+  height: 2px;
+  /* Thickness of the underline */
+  background-color: var(--text);
+  /* Underline color */
   transform: scaleX(0);
   transform-origin: center;
   transition: transform 0.3s ease-in-out;

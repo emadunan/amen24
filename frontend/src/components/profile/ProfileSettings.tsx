@@ -1,6 +1,5 @@
-import React from 'react';
+import React from "react";
 import styles from "./ProfileSettings.module.css";
-
 
 const ProfileSettings = () => {
   return (
@@ -10,7 +9,9 @@ const ProfileSettings = () => {
       {/* Email Display */}
       <div className={styles.profileSection}>
         <label className={styles.label}>Email</label>
-        <div className={styles.email}>{/* User Email Here */} user@example.com</div>
+        <div className={styles.email}>
+          {/* User Email Here */} user@example.com
+        </div>
       </div>
 
       {/* Connected Accounts */}
@@ -43,10 +44,12 @@ const ProfileSettings = () => {
 
       {/* Delete Account Button */}
       <div className={styles.deleteSection}>
-        <button className={styles.deleteAccountBtn}>Delete Account Permanently</button>
+        <button className={styles.deleteAccountBtn}>
+          Delete Account Permanently
+        </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileSettings
+export default ProfileSettings;

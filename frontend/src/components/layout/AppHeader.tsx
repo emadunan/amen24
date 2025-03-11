@@ -1,9 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-
-const AppLogo = dynamic(() => import("./AppLogo"), { ssr: false });
-
 import React, { FC } from "react";
 import styles from "./AppHeader.module.css";
 import Link from "next/link";
@@ -16,6 +13,16 @@ import i18nConfig from "@/config/next-i18n-router.config";
 import { BookKey, UserProfile } from "@amen24/shared";
 import UserMenu from "../profile/UserMenu";
 import { useGetMeQuery } from "@/store/users";
+import Spinner from "../ui/Spinner";
+
+const AppLogo = dynamic(() => import("./AppLogo"), {
+  ssr: false,
+  loading: () => (
+    <div className={styles.logoLoading}>
+      <Spinner size="6rem" />
+    </div>
+  ),
+});
 
 interface Props {
   user?: UserProfile;
@@ -25,7 +32,11 @@ const AppHeader: FC<Props> = () => {
   const pathname = usePathname();
   const { t } = useTranslation();
 
-  const { data: user, isLoading, error } = useGetMeQuery();
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useGetMeQuery(undefined, { skip: typeof window === "undefined" });
 
   // Extract locale from the pathname
   const localePrefixes = i18nConfig.locales.map((locale) => `/${locale}`);
