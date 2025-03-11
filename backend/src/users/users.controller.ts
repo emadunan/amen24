@@ -156,8 +156,10 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('/profile')
-  removePermanently(@User() user: UserProfile) {
-    return this.profilesService.remove(user.email);
+  async removePermanently(@User() user: UserProfile, @Res() res: Response) {
+    await this.profilesService.remove(user.email);
+
+    return this.logout(res);
   }
 
   @Delete(':id')

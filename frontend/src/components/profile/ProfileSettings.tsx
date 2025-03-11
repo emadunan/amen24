@@ -3,12 +3,24 @@
 import React, { useState } from "react";
 import styles from "./ProfileSettings.module.css";
 import { useTranslation } from "react-i18next";
+import { useDeleteAccountMutation } from "@/store/users";
+import { useRouter } from "next/navigation";
 
 const FONT_SIZES = ["Small", "Medium", "Large"];
 
 const ProfileSettings = () => {
   const [selectedFontSize, setSelectedFontSize] = useState("Medium");
   const [isDiacritized, setIsDiacritized] = useState(false);
+
+  const [deleteAccount, { isLoading }] = useDeleteAccountMutation();
+
+  const router = useRouter();
+
+  async function handleDeleteAccount() {
+    await deleteAccount().unwrap();
+
+    router.replace("/");
+  }
 
   const { t } = useTranslation();
 
@@ -67,7 +79,7 @@ const ProfileSettings = () => {
 
       {/* Delete Account */}
       <div className={styles.deleteSection}>
-        <button className={styles.deleteAccountBtn} onClick={() => alert("profileSettings.Are you sure?")}>
+        <button className={styles.deleteAccountBtn} onClick={handleDeleteAccount}>
           <strong>
             {t("profileSettings.deleteAccount")}
           </strong>
