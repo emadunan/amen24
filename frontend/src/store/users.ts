@@ -54,10 +54,10 @@ export const userApi = createApi({
     deleteAccount: builder.mutation<void, void>({
       query: () => ({
         url: "profile",
-        method: "DELETE"
+        method: "DELETE",
       }),
       invalidatesTags: ["User"],
-    })
+    }),
   }),
 });
 

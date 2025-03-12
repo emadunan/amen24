@@ -9,6 +9,11 @@
   "no-result": "No results",
   "search-welcome": "Start searching for Bible verses by entering keywords above.",
   "locale": "Language",
+  "searchEngine": {
+    "inviteMessage": "Search in the bible",
+    "searchButtonText": "Search",
+    "filterButtonText": "Filter books"
+  },
   "signin": {
     "email": "Email",
     "password": "Password",

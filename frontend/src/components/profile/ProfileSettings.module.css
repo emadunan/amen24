@@ -84,7 +84,9 @@
   padding: 0.5rem 1rem;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s;
 }
 
 .fontSizeButton.active {
@@ -123,7 +125,7 @@
   transition: 0.4s;
 }
 
-.switch input:checked+.sliderRound {
+.switch input:checked + .sliderRound {
   background: var(--accent);
 }
 
@@ -139,7 +141,7 @@
   transition: 0.4s;
 }
 
-.switch input:checked+.sliderRound::before {
+.switch input:checked + .sliderRound::before {
   transform: translateX(18px);
 }
 

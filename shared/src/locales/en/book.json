@@ -1,4 +1,7 @@
 {
+  "ALL": "Whole Bible",
+  "OTS": "Old Testament",
+  "NTS": "New Testament",
   "GEN": "Genesis",
   "EXO": "Exodus",
   "LEV": "Leviticus",

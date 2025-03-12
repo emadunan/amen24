@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import styles from "./ProfileSettings.module.css";
 import { useTranslation } from "react-i18next";
-import { useDeleteAccountMutation } from "@/store/users";
+import { useDeleteAccountMutation, useGetMeQuery } from "@/store/users";
 import { useRouter } from "next/navigation";
 
 const FONT_SIZES = ["Small", "Medium", "Large"];
@@ -24,6 +24,8 @@ const ProfileSettings = () => {
 
   const { t } = useTranslation();
 
+  const { data: user } = useGetMeQuery();
+
   return (
     <div className={styles.profileContainer}>
       <h2 className={styles.title}>{t("profileSettings.title")}</h2>
@@ -31,7 +33,7 @@ const ProfileSettings = () => {
       {/* Email Display */}
       <div className={styles.profileSection}>
         <label className={styles.label}>{t("profileSettings.email")}</label>
-        <div className={styles.email}>user@example.com</div>
+        <div className={styles.email}>{user?.email}</div>
       </div>
 
       {/* Connected Accounts */}
@@ -79,10 +81,11 @@ const ProfileSettings = () => {
 
       {/* Delete Account */}
       <div className={styles.deleteSection}>
-        <button className={styles.deleteAccountBtn} onClick={handleDeleteAccount}>
-          <strong>
-            {t("profileSettings.deleteAccount")}
-          </strong>
+        <button
+          className={styles.deleteAccountBtn}
+          onClick={handleDeleteAccount}
+        >
+          <strong>{t("profileSettings.deleteAccount")}</strong>
         </button>
       </div>
     </div>

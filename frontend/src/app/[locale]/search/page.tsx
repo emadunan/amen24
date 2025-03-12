@@ -1,7 +1,8 @@
+import BibleSearch from "@/components/bible/BibleSearch";
 import React from "react";
 
 const SearchPage = () => {
-  return <div>SearchPage</div>;
+  return <BibleSearch />;
 };
 
 export default SearchPage;
