@@ -5,23 +5,8 @@ import styles from "./BibleSearch.module.css";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
 import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
-import { BookKey } from "@amen24/shared";
+import { bookList, books } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
-
-const books: string[] = Object.values(BookKey);
-
-const bookList = [
-  "WholeBible",
-  "OldTestament",
-  "NewTestament",
-  "Torah",
-  "Historical",
-  "Wisdom",
-  "Prophetic",
-  "Gospels",
-  "Epistles",
-  ...books,
-];
 
 const oldTestamentBooks = books.slice(0, 39);
 const newTestamentBooks = books.slice(39, 66);

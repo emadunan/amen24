@@ -1,3 +1,5 @@
+import { BookKey } from "../@types";
+
 export const BookKeys = {
   "GEN": { "id": 1, "title": "genesis", "writer": "moses", "len": 50 },
   "EXO": { "id": 2, "title": "exodus", "writer": "moses", "len": 40 },
@@ -66,3 +68,18 @@ export const BookKeys = {
   "JUD": { "id": 65, "title": "jude", "writer": "jude", "len": 1 },
   "REV": { "id": 66, "title": "revelation", "writer": "john", "len": 22 }
 };
+
+export const books: string[] = Object.values(BookKey);
+
+export const bookList = [
+  "WholeBible",
+  "OldTestament",
+  "NewTestament",
+  "Torah",
+  "Historical",
+  "Wisdom",
+  "Prophetic",
+  "Gospels",
+  "Epistles",
+  ...books,
+];
