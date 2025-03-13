@@ -10,7 +10,19 @@ import { useTranslation } from "react-i18next";
 
 const books: string[] = Object.values(BookKey);
 
-const bookList = ["ALL", "OTS", "NTS", ...books];
+const bookList = [
+  "WholeBible",
+  "OldTestament",
+  "NewTestament",
+  "Torah",
+  "Historical",
+  "Wisdom",
+  "Prophetic",
+  "Gospels",
+  "Epistles",
+  ...books,
+];
+
 const oldTestamentBooks = books.slice(0, 39);
 const newTestamentBooks = books.slice(39, 66);
 const torahBooks = books.slice(0, 5);
@@ -18,21 +30,19 @@ const historicalBooks = books.slice(5, 17);
 const wisdomBooks = books.slice(17, 22);
 const propheticBooks = books.slice(22, 39);
 const gospelsBooks = books.slice(39, 43);
-const actsEpistlesBooks = books.slice(43, 65);
-const apocalypticBooks = books.slice(65, 66);
+const actsEpistlesBooks = books.slice(43, 66);
 
 // Constants for category keys
-const categoryList = {
-  ALL: books,
-  OTS: oldTestamentBooks,
-  NTS: newTestamentBooks,
+const categoryList: Record<string, string[]> = {
+  WholeBible: books,
+  OldTestament: oldTestamentBooks,
+  NewTestament: newTestamentBooks,
   Torah: torahBooks,
   Historical: historicalBooks,
   Wisdom: wisdomBooks,
   Prophetic: propheticBooks,
   Gospels: gospelsBooks,
   Epistles: actsEpistlesBooks,
-  Apocalyptic: apocalypticBooks,
 };
 
 export default function BibleSearch() {
@@ -44,60 +54,42 @@ export default function BibleSearch() {
 
   const { t } = useTranslation("book");
 
-  const isWholeBibleSelected =
-    selectedBooks.length === books.length + 3; // Includes WholeBible, OT, NT
+  const isWholeBibleSelected = selectedBooks.length === books.length + 9; // Includes all categories
 
-  const isOldTestamentSelected = oldTestamentBooks.every(book => selectedBooks.includes(book));
-  const isNewTestamentSelected = newTestamentBooks.every(book => selectedBooks.includes(book));
+  const isCategorySelected = (category: string) =>
+    categoryList[category]?.every((book) => selectedBooks.includes(book));
 
   const toggleBookSelection = (book: string) => {
     let updatedSelection = [...selectedBooks];
 
-    if (book === "ALL") {
-      // Select all books if "ALL" is checked
-      updatedSelection = isWholeBibleSelected ? [] : ["ALL", "OTS", "NTS", ...books];
-    } else if (book === "OTS") {
-      updatedSelection = isOldTestamentSelected
-        ? selectedBooks.filter((b) => !oldTestamentBooks.includes(b) && b !== "OTS")
-        : [...selectedBooks, "OTS", ...oldTestamentBooks];
-    } else if (book === "NTS") {
-      updatedSelection = isNewTestamentSelected
-        ? selectedBooks.filter((b) => !newTestamentBooks.includes(b) && b !== "NTS")
-        : [...selectedBooks, "NTS", ...newTestamentBooks];
+    if (book === "WholeBible") {
+      updatedSelection = isWholeBibleSelected ? [] : [...bookList];
+    } else if (categoryList[book]) {
+      updatedSelection = isCategorySelected(book)
+        ? selectedBooks.filter(
+            (b) => !categoryList[book].includes(b) && b !== book,
+          )
+        : [...selectedBooks, book, ...categoryList[book]];
     } else {
-      // Toggle individual books
       updatedSelection = selectedBooks.includes(book)
         ? selectedBooks.filter((b) => b !== book)
         : [...selectedBooks, book];
     }
 
-    // Auto-select "OTS" if all OT books are checked
-    if (oldTestamentBooks.every((b) => updatedSelection.includes(b))) {
-      updatedSelection = [...new Set([...updatedSelection, "OTS"])];
-    } else {
-      updatedSelection = updatedSelection.filter((b) => b !== "OTS");
-    }
-
-    // Auto-select "NTS" if all NT books are checked
-    if (newTestamentBooks.every((b) => updatedSelection.includes(b))) {
-      updatedSelection = [...new Set([...updatedSelection, "NTS"])];
-    } else {
-      updatedSelection = updatedSelection.filter((b) => b !== "NTS");
-    }
-
-    // ✅ Auto-select "ALL" if both OT & NT are selected
-    if (updatedSelection.includes("OTS") && updatedSelection.includes("NTS")) {
-      updatedSelection = [...new Set([...updatedSelection, "ALL"])];
-    } else {
-      updatedSelection = updatedSelection.filter((b) => b !== "ALL");
-    }
+    // Auto-select categories if all their books are selected
+    Object.keys(categoryList).forEach((category) => {
+      if (categoryList[category].every((b) => updatedSelection.includes(b))) {
+        updatedSelection = [...new Set([...updatedSelection, category])];
+      } else {
+        updatedSelection = updatedSelection.filter((b) => b !== category);
+      }
+    });
 
     setSelectedBooks(updatedSelection);
   };
 
   const handleSearch = () => {
     if (query.trim()) {
-      // Fake search logic (Replace with actual API call)
       setResults([
         `Genesis 1:1 - In the beginning God created the heavens and the earth.`,
         `John 3:16 - For God so loved the world...`,
@@ -105,17 +97,15 @@ export default function BibleSearch() {
     }
   };
 
-  const clearSelection = () => {
-    setSelectedBooks([]); // Reset selected books
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.searchBox}>
-        <FiFilter
-          className={styles.filterIcon}
+        <button
+          className={styles.filterBtn}
           onClick={() => setShowDropdown(!showDropdown)}
-        />
+        >
+          <FiFilter className={styles.filterIcon} />
+        </button>
         <input
           type="text"
           placeholder={`${t("searchEngine.inviteMessage")} ...`}
@@ -135,23 +125,6 @@ export default function BibleSearch() {
 
         {showDropdown && (
           <div className={styles.dropdown}>
-            {/* Search Filter Inside Dropdown */}
-            {/* <div className={styles.filterContainer}>
-              <input
-                className={styles.filterInput}
-                type="text"
-                placeholder={`${t("searchEngine.filterButtonText")} ...`}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              {selectedBooks.length > 0 && (
-                <AiOutlineClose
-                  className={styles.clearFilterIcon}
-                  onClick={clearSelection}
-                />
-              )}
-            </div> */}
-
             <div className={styles.bookList}>
               {bookList
                 .filter((book) =>
@@ -177,7 +150,6 @@ export default function BibleSearch() {
         )}
       </div>
 
-      {/* Search Results */}
       {results.length > 0 && (
         <div className={styles.results}>
           {results.map((verse, idx) => (
