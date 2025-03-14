@@ -28,7 +28,7 @@
     "settings": "Settings",
     "logout": "Logout"
   },
-  "profileSettings" : {
+  "profileSettings": {
     "title": "Profile Settings",
     "email": "Email",
     "connectedAccounts": "Connected Accounts",

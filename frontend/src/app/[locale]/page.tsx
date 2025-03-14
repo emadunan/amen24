@@ -21,7 +21,7 @@ const HomePage: FC<Props> = async ({ params }) => {
         <BookCover
           key={b.id}
           bookId={b.id}
-          bookLen={BookKeys[b.title].len as number}
+          bookLen={BookKeys[b.title].len}
           bookKey={b.title}
           locale={locale}
         />

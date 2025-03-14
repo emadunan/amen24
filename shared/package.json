@@ -13,9 +13,9 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [],
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^22.13.4",
+    "prettier": "3.5.3",
     "typescript": "^5.7.3"
   }
 }

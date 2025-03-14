@@ -5,9 +5,10 @@ import styles from "./BibleSearch.module.css";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
 import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
-import { BookKey, books, VerseResultData } from "@amen24/shared";
+import { BookKey, BookKeys, books, VerseResultData } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import VerseResult from "./VerseResult";
+import Spinner from "../ui/Spinner";
 
 const oldTestamentBooks = books.slice(0, 39);
 const newTestamentBooks = books.slice(39, 66);
@@ -35,6 +36,7 @@ export default function BibleSearch() {
   const [selectedBooks, setSelectedBooks] = useState<string[]>(books);
   const [showDropdown, setShowDropdown] = useState(false);
   const [result, setResult] = useState<VerseResultData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { t } = useTranslation("book");
 
@@ -75,8 +77,7 @@ export default function BibleSearch() {
   };
 
   async function handleSearch() {
-    console.log(selectedBooks);
-
+    setIsLoading(true);
     const response = await fetch("http://localhost:5000/verses/query", {
       method: "POST",
       body: JSON.stringify({ query, selectedBooks }),
@@ -89,9 +90,9 @@ export default function BibleSearch() {
 
     const searchResult = await response.json();
 
-    console.log(searchResult);
     setResult(searchResult);
     setShowDropdown(false);
+    setIsLoading(false);
   }
 
   return (
@@ -159,18 +160,22 @@ export default function BibleSearch() {
         )}
       </div>
       <div style={{ marginTop: "1rem" }}>
-        {result.map((verse: VerseResultData) => (
-          <VerseResult
-          totalChapters={verse.totalChapters}
-            bookId={verse.bookId}
-            key={verse.id}
-            bookKey={verse.bookKey}
-            chapterNumber={verse.chapterNumber}
-            verseNumber={verse.verseNumber}
-            text={verse.text}
-            lang={verse.lang}
-          />
-        ))}
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          result.map((verse: VerseResultData) => (
+            <VerseResult
+              totalChapters={BookKeys[verse.bookKey].len}
+              bookId={verse.bookId}
+              key={verse.id}
+              bookKey={verse.bookKey}
+              chapterNumber={verse.chapterNumber}
+              verseNumber={verse.verseNumber}
+              text={verse.text}
+              lang={verse.lang}
+            />
+          ))
+        )}
       </div>
     </div>
   );

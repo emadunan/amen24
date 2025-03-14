@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./VerseResult.module.css";
 import { useTranslation } from "react-i18next";
-import { formatNumber, Lang } from "@amen24/shared";
+import { BookKey, BookKeys, formatNumber, Lang } from "@amen24/shared";
 import Link from "next/link";
 
 interface VerseResultProps {
   bookId: number;
-  bookKey: string;
+  bookKey: BookKey;
   chapterNumber: number;
   totalChapters: number;
   verseNumber: number;
@@ -21,18 +21,28 @@ const VerseResult: React.FC<VerseResultProps> = ({
   totalChapters,
   verseNumber,
   text,
-  lang
+  lang,
 }) => {
-  const { t } = useTranslation("book");
+  console.log(lang);
+
+  const { t } = useTranslation("book", { lng: lang });
 
   const formattedChapterNumber = formatNumber(chapterNumber, lang);
   const formattedVerseNumber = formatNumber(verseNumber, lang);
 
   return (
-    <div className={styles.verseContainer} dir={lang === Lang.ENGLISH ? "ltr" : "rtl"}>
+    <div
+      className={styles.verseContainer}
+      dir={lang === Lang.ENGLISH ? "ltr" : "rtl"}
+    >
       <p className={styles.text}>{text}</p>
-      <Link target="_blank" className={styles.reference} href={`/${bookId}/${bookKey}/${totalChapters}/${chapterNumber}`}>
-        &mdash; {t(bookKey, { lng: lang })} {formattedChapterNumber} : {formattedVerseNumber}
+      <Link
+        target="_blank"
+        className={styles.reference}
+        href={`/${bookId}/${bookKey}/${totalChapters}/${chapterNumber}`}
+      >
+        &mdash; {BookKeys[bookKey].title[lang as Lang.ARABIC | Lang.ENGLISH]}{" "}
+        {formattedChapterNumber} : {formattedVerseNumber}
       </Link>
     </div>
   );

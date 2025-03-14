@@ -1,5 +1,5 @@
 export enum UserCategory {
-  MEMBER = 'member',
-  MODERATOR = 'moderator',
-  ADMIN = 'admin',
+  MEMBER = "member",
+  MODERATOR = "moderator",
+  ADMIN = "admin",
 }

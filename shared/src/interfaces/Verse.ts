@@ -12,7 +12,6 @@ export interface VerseResultData {
   bookId: number;
   bookKey: BookKey;
   chapterNumber: number;
-  totalChapters: number;
   verseNumber: number;
   text: string;
   textNormalized: string;
