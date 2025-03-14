@@ -1,3 +1,5 @@
+import { Lang } from "../@types";
+
 export function convertToSuperscript(num: number): string {
   const superscripts: Record<string, string> = {
     "0": "⁰",
@@ -19,7 +21,18 @@ export function convertToSuperscript(num: number): string {
     .join("");
 }
 
-export const normalizeArabicText = (text: string): string => {
+export function detectLanguage(text: string): Lang {
+  // Trim spaces and get the first meaningful character
+  const firstChar = text.trim().replace(/^[^a-zA-Z\u0600-\u06FF]+/, '')[0];
+
+  if (!firstChar) return Lang.ENGLISH; // Default fallback
+
+  return firstChar.charCodeAt(0) >= 0x0600 && firstChar.charCodeAt(0) <= 0x06FF
+    ? Lang.ARABIC
+    : Lang.ENGLISH;
+}
+
+export function normalizeArabicText(text: string): string {
   // Remove Arabic diacritics
   const diacriticsRegex = /[\u064B-\u065F]/g;
   text = text.replace(diacriticsRegex, "");

@@ -9,22 +9,18 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { VersesService } from './verses.service';
-import { CreateVerseDto } from './dto/create-verse.dto';
 import { UpdateVerseDto } from './dto/update-verse.dto';
 import { BookKey, Lang } from '@amen24/shared';
 
 @Controller('verses')
 export class VersesController {
-  constructor(private readonly versesService: VersesService) {}
+  constructor(private readonly versesService: VersesService) { }
 
-  @Post()
-  create(@Body() createVerseDto: CreateVerseDto) {
-    return this.versesService.create(createVerseDto);
-  }
+  @Post("query")
+  async findVerses(@Body() body: { query: string, selectedBooks: BookKey[] }) {
+    const { query, selectedBooks } = body;
 
-  @Get()
-  findAll() {
-    return this.versesService.findAll();
+    return await this.versesService.findVerses(query, selectedBooks);
   }
 
   @Get(':title/:chapterNum/:lang')

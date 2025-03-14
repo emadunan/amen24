@@ -1,2 +1,11 @@
 ### Get verses of one chapter
 GET http://localhost:5000/verses/GEN/1/ar
+
+### Find a verse contains search keywords
+POST http://localhost:5000/verses/query
+Content-Type: application/json
+
+{
+  "query": "david said",
+  "selectedBooks": ["GEN"]
+}

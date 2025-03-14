@@ -1,0 +1,37 @@
+.verseContainer {
+  background-color: var(--background);
+  color: var(--text);
+  border-left: 4px solid var(--primary);
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(var(--text-rgb), 0.1);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.verseContainer[dir="rtl"] {
+  border-left: none;
+  border-right: 4px solid var(--primary);
+}
+
+.verseContainer[dir="rtl"] p {
+  line-height: 2;
+}
+
+.reference {
+  font-weight: bold;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.text {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.verseContainer:hover {
+  background-color: var(--secondary);
+}

@@ -3,7 +3,7 @@ import { CreateVerseDto } from './dto/create-verse.dto';
 import { UpdateVerseDto } from './dto/update-verse.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Verse } from './entities/verse.entity';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 import {
@@ -11,6 +11,7 @@ import {
   BookKeys,
   Lang,
   normalizeArabicText,
+  VerseResultData,
 } from '@amen24/shared';
 import { ChaptersService } from '../chapters/chapters.service';
 
@@ -19,15 +20,7 @@ export class VersesService {
   constructor(
     @InjectRepository(Verse) private versesRepo: Repository<Verse>,
     private chaptersService: ChaptersService,
-  ) {}
-
-  create(createVerseDto: CreateVerseDto) {
-    return 'This action adds a new verse';
-  }
-
-  findAll() {
-    return `This action returns all verses`;
-  }
+  ) { }
 
   async findChapter(
     bookKey: BookKey,
@@ -44,6 +37,42 @@ export class VersesService {
       },
     });
   }
+
+  async findVerses(query: string, selectedBooks: BookKey[]): Promise<VerseResultData[]> {
+    console.log(selectedBooks);
+
+    if (!query.trim()) return [];
+
+    const formattedQuery = query.trim().replace(/\s+/g, ' & ');
+
+    return this.versesRepo
+      .createQueryBuilder('verse')
+      .select([
+        'verse.id AS "id"',
+        'verse.num AS "verseNumber"',
+        'verse.text AS "text"',
+        'verse.textNormalized AS "textNormalized"',
+        'verse.lang AS "lang"',
+        'book.title AS "bookKey"',
+        'chapter.num AS "chapterNumber"',
+      ])
+      .innerJoin('verse.chapter', 'chapter')
+      .innerJoin('chapter.book', 'book')
+      .where(
+        new Brackets((qb) => {
+          qb.where('verse.textNormalized ILIKE :exactMatch', { exactMatch: `%${query}%` })
+            .orWhere(`to_tsvector('english', verse.textNormalized) @@ to_tsquery(:searchQuery)`, {
+              searchQuery: formattedQuery,
+            });
+        })
+      )
+      .andWhere(selectedBooks.length > 0 ? 'book.title IN (:...books)' : '1=1', { books: selectedBooks })
+      .orderBy('book.title', 'ASC')
+      .addOrderBy('chapter.num', 'ASC')
+      .addOrderBy('verse.num', 'ASC')
+      .getRawMany();
+  }
+
 
   findOne(id: number) {
     return `This action returns a #${id} verse`;

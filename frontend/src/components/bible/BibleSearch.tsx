@@ -5,8 +5,9 @@ import styles from "./BibleSearch.module.css";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
 import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
-import { bookList, books } from "@amen24/shared";
+import { BookKey, books, VerseResultData } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
+import VerseResult from "./VerseResult";
 
 const oldTestamentBooks = books.slice(0, 39);
 const newTestamentBooks = books.slice(39, 66);
@@ -17,9 +18,8 @@ const propheticBooks = books.slice(22, 39);
 const gospelsBooks = books.slice(39, 43);
 const actsEpistlesBooks = books.slice(43, 66);
 
-// Constants for category keys
 const categoryList: Record<string, string[]> = {
-  WholeBible: books,
+  WholeBible: Object.values(BookKey),
   OldTestament: oldTestamentBooks,
   NewTestament: newTestamentBooks,
   Torah: torahBooks,
@@ -32,55 +32,67 @@ const categoryList: Record<string, string[]> = {
 
 export default function BibleSearch() {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<string[]>([]);
-  const [selectedBooks, setSelectedBooks] = useState<string[]>([...bookList]);
+  const [selectedBooks, setSelectedBooks] = useState<string[]>(books);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [result, setResult] = useState<VerseResultData[]>([]);
 
   const { t } = useTranslation("book");
 
-  const isWholeBibleSelected = selectedBooks.length === books.length + 9; // Includes all categories
+  const isWholeBibleSelected =
+    selectedBooks.length === Object.values(BookKey).length;
 
   const isCategorySelected = (category: string) =>
     categoryList[category]?.every((book) => selectedBooks.includes(book));
 
   const toggleBookSelection = (book: string) => {
-    let updatedSelection = [...selectedBooks];
-
     if (book === "WholeBible") {
-      updatedSelection = isWholeBibleSelected ? [] : [...bookList];
-    } else if (categoryList[book]) {
-      updatedSelection = isCategorySelected(book)
-        ? selectedBooks.filter(
-            (b) => !categoryList[book].includes(b) && b !== book,
-          )
-        : [...selectedBooks, book, ...categoryList[book]];
-    } else {
-      updatedSelection = selectedBooks.includes(book)
-        ? selectedBooks.filter((b) => b !== book)
-        : [...selectedBooks, book];
+      setSelectedBooks(isWholeBibleSelected ? [] : [...Object.values(BookKey)]);
+      return;
     }
 
-    // Auto-select categories if all their books are selected
-    Object.keys(categoryList).forEach((category) => {
-      if (categoryList[category].every((b) => updatedSelection.includes(b))) {
-        updatedSelection = [...new Set([...updatedSelection, category])];
-      } else {
-        updatedSelection = updatedSelection.filter((b) => b !== category);
+    setSelectedBooks((prevSelected) => {
+      const selectedSet = new Set(prevSelected);
+
+      if (Object.values(BookKey).includes(book as BookKey)) {
+        // Toggle single book selection
+        selectedSet.has(book)
+          ? selectedSet.delete(book)
+          : selectedSet.add(book);
+      } else if (categoryList[book]) {
+        // Toggle category selection
+        const allBooksInCategory = new Set(categoryList[book]);
+        const allSelected = categoryList[book].every((b) => selectedSet.has(b));
+
+        if (allSelected) {
+          allBooksInCategory.forEach((b) => selectedSet.delete(b));
+        } else {
+          allBooksInCategory.forEach((b) => selectedSet.add(b));
+        }
       }
+
+      return [...selectedSet]; // Convert Set back to Array
+    });
+  };
+
+  async function handleSearch() {
+    console.log(selectedBooks);
+
+    const response = await fetch("http://localhost:5000/verses/query", {
+      method: "POST",
+      body: JSON.stringify({ query, selectedBooks }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
-    setSelectedBooks(updatedSelection);
-  };
+    if (!response.ok) throw new Error("failedToFetch");
 
-  const handleSearch = () => {
-    if (query.trim()) {
-      setResults([
-        `Genesis 1:1 - In the beginning God created the heavens and the earth.`,
-        `John 3:16 - For God so loved the world...`,
-      ]);
-    }
-  };
+    const searchResult = await response.json();
+
+    console.log(searchResult);
+    setResult(searchResult);
+    setShowDropdown(false);
+  }
 
   return (
     <div className={styles.container}>
@@ -111,39 +123,53 @@ export default function BibleSearch() {
         {showDropdown && (
           <div className={styles.dropdown}>
             <div className={styles.bookList}>
-              {bookList
-                .filter((book) =>
-                  book.toLowerCase().includes(searchTerm.toLowerCase()),
-                )
-                .map((book) => (
-                  <label key={book} className={styles.option}>
-                    <input
-                      type="checkbox"
-                      checked={selectedBooks.includes(book)}
-                      onChange={() => toggleBookSelection(book)}
-                    />
-                    {selectedBooks.includes(book) ? (
-                      <FaCheckSquare className={styles.checkIcon} />
-                    ) : (
-                      <FaRegSquare className={styles.checkIcon} />
-                    )}
-                    {t(book)}
-                  </label>
-                ))}
+              {Object.keys(categoryList).map((category) => (
+                <label key={category} className={styles.option}>
+                  <input
+                    type="checkbox"
+                    checked={isCategorySelected(category)}
+                    onChange={() => toggleBookSelection(category)}
+                  />
+                  {isCategorySelected(category) ? (
+                    <FaCheckSquare className={styles.checkIcon} />
+                  ) : (
+                    <FaRegSquare className={styles.checkIcon} />
+                  )}
+                  {t(category)}
+                </label>
+              ))}
+              <div className={styles.separator} />
+              {books.map((book) => (
+                <label key={book} className={styles.option}>
+                  <input
+                    type="checkbox"
+                    checked={selectedBooks.includes(book)}
+                    onChange={() => toggleBookSelection(book)}
+                  />
+                  {selectedBooks.includes(book) ? (
+                    <FaCheckSquare className={styles.checkIcon} />
+                  ) : (
+                    <FaRegSquare className={styles.checkIcon} />
+                  )}
+                  {t(book)}
+                </label>
+              ))}
             </div>
           </div>
         )}
       </div>
-
-      {results.length > 0 && (
-        <div className={styles.results}>
-          {results.map((verse, idx) => (
-            <div key={idx} className={styles.verse}>
-              {verse}
-            </div>
-          ))}
-        </div>
-      )}
+      <div style={{marginTop: "1rem"}}>
+        {result.map((verse: VerseResultData) => (
+          <VerseResult
+            key={verse.id}
+            bookKey={verse.bookKey}
+            chapterNumber={verse.chapterNumber}
+            verseNumber={verse.verseNumber}
+            text={verse.text}
+            lang={verse.lang}
+          />
+        ))}
+      </div>
     </div>
   );
 }
