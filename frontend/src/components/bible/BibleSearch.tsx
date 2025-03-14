@@ -158,9 +158,11 @@ export default function BibleSearch() {
           </div>
         )}
       </div>
-      <div style={{marginTop: "1rem"}}>
+      <div style={{ marginTop: "1rem" }}>
         {result.map((verse: VerseResultData) => (
           <VerseResult
+          totalChapters={verse.totalChapters}
+            bookId={verse.bookId}
             key={verse.id}
             bookKey={verse.bookKey}
             chapterNumber={verse.chapterNumber}

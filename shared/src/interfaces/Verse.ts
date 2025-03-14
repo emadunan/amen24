@@ -9,8 +9,10 @@ export interface Verse {
 
 export interface VerseResultData {
   id: number;
+  bookId: number;
   bookKey: BookKey;
   chapterNumber: number;
+  totalChapters: number;
   verseNumber: number;
   text: string;
   textNormalized: string;

@@ -53,8 +53,10 @@ export class VersesService {
         'verse.text AS "text"',
         'verse.textNormalized AS "textNormalized"',
         'verse.lang AS "lang"',
-        'book.title AS "bookKey"',
         'chapter.num AS "chapterNumber"',
+        'book.title AS "bookKey"',
+        'book.id AS "bookId"',
+        '(SELECT COUNT(*) FROM chapter WHERE chapter.bookId = book.id) AS "totalChapters"',
       ])
       .innerJoin('verse.chapter', 'chapter')
       .innerJoin('chapter.book', 'book')

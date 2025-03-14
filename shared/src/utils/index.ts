@@ -69,3 +69,5 @@ export function normalizeArabicText(text: string): string {
 
   return text;
 };
+
+export * from "./formatNumber";
