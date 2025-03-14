@@ -41,4 +41,10 @@ export class User {
 
   @Column({ default: false })
   isVerified: boolean;
+
+  @Column({ default: 0 })
+  failedAttempts: number;
+
+  @Column({ nullable: true })
+  lockUntil: Date;
 }

@@ -12,16 +12,17 @@ export class AuthService {
   ) { }
   async validateUser(
     email: string,
-    pass: string,
-  ): Promise<Partial<UserProfile> | null> {
+    pass: string
+  ): Promise<Partial<Omit<UserProfile, "password">>> {
     const user = await this.usersService.findLocalProfile(email);
     if (!user) throw new UnauthorizedException("emailNotFound");
 
-    const match = await bcrypt.compare(pass, user.password as string);
-    if (!match) throw new UnauthorizedException("invalidPassword");
+    if (!(await bcrypt.compare(pass, user.password as string))) {
+      throw new UnauthorizedException("invalidPassword");
+    }
 
-    const { password, ...result } = user;
-    return result;
+    const { password, ...userProfile } = user;
+    return userProfile;
   }
 
   async generateAccessToken(user: Partial<UserProfile>) {
