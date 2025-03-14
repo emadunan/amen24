@@ -5,7 +5,7 @@ import styles from "./BibleSearch.module.css";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
 import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
-import { BookKey, BookKeys, books, VerseResultData } from "@amen24/shared";
+import { BookKey, BookKeys, books, formatNumber, Lang, VerseResultData } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import VerseResult from "./VerseResult";
 import Spinner from "../ui/Spinner";
@@ -38,7 +38,7 @@ export default function BibleSearch() {
   const [result, setResult] = useState<VerseResultData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { t } = useTranslation("book");
+  const { t, i18n } = useTranslation("book");
 
   const isWholeBibleSelected =
     selectedBooks.length === Object.values(BookKey).length;
@@ -77,6 +77,7 @@ export default function BibleSearch() {
   };
 
   async function handleSearch() {
+    setShowDropdown(false);
     setIsLoading(true);
     const response = await fetch("http://localhost:5000/verses/query", {
       method: "POST",
@@ -91,7 +92,6 @@ export default function BibleSearch() {
     const searchResult = await response.json();
 
     setResult(searchResult);
-    setShowDropdown(false);
     setIsLoading(false);
   }
 
@@ -163,18 +163,25 @@ export default function BibleSearch() {
         {isLoading ? (
           <Spinner />
         ) : (
-          result.map((verse: VerseResultData) => (
-            <VerseResult
-              totalChapters={BookKeys[verse.bookKey].len}
-              bookId={verse.bookId}
-              key={verse.id}
-              bookKey={verse.bookKey}
-              chapterNumber={verse.chapterNumber}
-              verseNumber={verse.verseNumber}
-              text={verse.text}
-              lang={verse.lang}
-            />
-          ))
+          <>
+            {result.length > 0 && (
+              <p style={{ fontWeight: "bold", marginBottom: "0.5rem" }}>
+                {t("searchEngine.resultsCount")}: {formatNumber(result.length, i18n.language as Lang)}
+              </p>
+            )}
+            {result.map((verse: VerseResultData) => (
+              <VerseResult
+                totalChapters={BookKeys[verse.bookKey].len}
+                bookId={verse.bookId}
+                key={verse.id}
+                bookKey={verse.bookKey}
+                chapterNumber={verse.chapterNumber}
+                verseNumber={verse.verseNumber}
+                text={verse.text}
+                lang={verse.lang}
+              />
+            ))}
+          </>
         )}
       </div>
     </div>

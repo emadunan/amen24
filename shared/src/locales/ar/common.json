@@ -12,7 +12,8 @@
   "searchEngine": {
     "inviteMessage": "ابحث في الكتاب المقدس",
     "searchButtonText": "بحث",
-    "filterButtonText": "تصفية الكتب"
+    "filterButtonText": "تصفية الكتب",
+    "resultsCount": "عدد النتائج"
   },
   "signin": {
     "email": "البريدُ الإلكترونيُّ",
