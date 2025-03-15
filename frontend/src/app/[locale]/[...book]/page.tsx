@@ -79,7 +79,7 @@ const BookPage: FC<Props> = async ({ params }) => {
             return (
               <Fragment key={v.id}>
                 {" "}
-                <HighlightVerse>
+                <HighlightVerse verseNum={v.num}>
                   <p className={styles.verse}>
                     <span className={styles.verseNumber}>{verseNumber}</span>
                     {v.text}
