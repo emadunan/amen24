@@ -1,0 +1,7 @@
+.verseContainer {
+  display: inline;
+}
+
+.highlight {
+  background-color: var(--highlight);
+}

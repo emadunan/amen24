@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import initTranslations from "@/app/i18n";
 import Link from "next/link";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
+import HighlightVerse from "@/components/bible/HighlightVerse";
 
 const apiUrl = process.env.API_URL;
 
@@ -78,10 +79,12 @@ const BookPage: FC<Props> = async ({ params }) => {
             return (
               <Fragment key={v.id}>
                 {" "}
-                <p className={styles.verse}>
-                  <span className={styles.verseNumber}>{verseNumber}</span>
-                  {v.text}
-                </p>
+                <HighlightVerse>
+                  <p className={styles.verse}>
+                    <span className={styles.verseNumber}>{verseNumber}</span>
+                    {v.text}
+                  </p>
+                </HighlightVerse>
               </Fragment>
             );
           })}

@@ -5,7 +5,14 @@ import styles from "./BibleSearch.module.css";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
 import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
-import { BookKey, BookKeys, books, formatNumber, Lang, VerseResultData } from "@amen24/shared";
+import {
+  BookKey,
+  BookKeys,
+  books,
+  formatNumber,
+  Lang,
+  VerseResultData,
+} from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import VerseResult from "./VerseResult";
 import Spinner from "../ui/Spinner";
@@ -168,7 +175,8 @@ export default function BibleSearch() {
           <>
             {result.length > 0 && (
               <p style={{ fontWeight: "bold", marginBottom: "0.5rem" }}>
-                {t("searchEngine.resultsCount")}: {formatNumber(result.length, i18n.language as Lang)}
+                {t("searchEngine.resultsCount")}:{" "}
+                {formatNumber(result.length, i18n.language as Lang)}
               </p>
             )}
             {result.map((verse: VerseResultData) => (

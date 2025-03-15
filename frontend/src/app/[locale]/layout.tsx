@@ -16,7 +16,6 @@ import { ToastContainer } from "react-toastify";
 
 const apiUrl = process.env.API_URL;
 
-
 const amiri = localFont({
   src: [
     {

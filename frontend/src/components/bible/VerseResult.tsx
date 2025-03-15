@@ -39,7 +39,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
       <Link
         target="_blank"
         className={styles.reference}
-        href={`/${bookId}/${bookKey}/${totalChapters}/${chapterNumber}`}
+        href={`/${bookId}/${bookKey}/${totalChapters}/${chapterNumber}?v=${verseNumber}`}
       >
         &mdash; {BookKeys[bookKey].title[lang as Lang.ARABIC | Lang.ENGLISH]}{" "}
         {formattedChapterNumber} : {formattedVerseNumber}
