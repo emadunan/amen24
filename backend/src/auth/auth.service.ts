@@ -41,6 +41,7 @@ export class AuthService {
 
     user.failedAttempts = 0;
     user.lockUntil = null;
+    
     await this.usersService.update(user.id, user);
 
     const fullUserProfile = await this.usersService.findLocalProfile(user.email);

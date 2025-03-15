@@ -5,6 +5,8 @@ import initTranslations from "@/app/i18n";
 import Link from "next/link";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 
+const apiUrl = process.env.API_URL;
+
 interface Props {
   params: { book: string[]; locale: string };
 }
@@ -17,7 +19,7 @@ const BookPage: FC<Props> = async ({ params }) => {
   const [bookId, bookKey, bookLen, chapterNum] = book;
 
   const response = await fetch(
-    `http://localhost:5000/verses/${bookKey}/${chapterNum}/${locale}`,
+    `${apiUrl}/verses/${bookKey}/${chapterNum}/${locale}`,
   );
 
   if (!response.ok) throw new Error("failedToFetch");

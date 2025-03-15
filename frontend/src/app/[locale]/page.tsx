@@ -3,13 +3,15 @@ import styles from "./page.module.css";
 import { Book, BookKeys } from "@amen24/shared";
 import { FC } from "react";
 
+const apiUrl = process.env.API_URL;
+
 interface Props {
   params: { locale: string };
 }
 
 const HomePage: FC<Props> = async ({ params }) => {
   const { locale } = await params;
-  const response = await fetch("http://localhost:5000/books");
+  const response = await fetch(`${apiUrl}/books`);
 
   if (!response.ok) throw new Error("Failed to fetch data");
 

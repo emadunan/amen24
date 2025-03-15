@@ -1,5 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 
+const apiUrl = process.env.API_URL;
+
 export async function withAuth(
   context: GetServerSidePropsContext,
   mode: "strict" | "non",
@@ -13,7 +15,7 @@ export async function withAuth(
     };
   }
 
-  const res = await fetch("http://localhost:5000/users/me", {
+  const res = await fetch(`${apiUrl}/users/me`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

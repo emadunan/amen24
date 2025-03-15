@@ -10,6 +10,8 @@ import { useTranslation } from "react-i18next";
 import VerseResult from "./VerseResult";
 import Spinner from "../ui/Spinner";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const oldTestamentBooks = books.slice(0, 39);
 const newTestamentBooks = books.slice(39, 66);
 const torahBooks = books.slice(0, 5);
@@ -79,7 +81,7 @@ export default function BibleSearch() {
   async function handleSearch() {
     setShowDropdown(false);
     setIsLoading(true);
-    const response = await fetch("http://localhost:5000/verses/query", {
+    const response = await fetch(`${apiUrl}/verses/query`, {
       method: "POST",
       body: JSON.stringify({ query, selectedBooks }),
       headers: {

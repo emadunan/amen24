@@ -14,6 +14,9 @@ import localFont from "next/font/local";
 import { cookies } from "next/headers";
 import { ToastContainer } from "react-toastify";
 
+const apiUrl = process.env.API_URL;
+
+
 const amiri = localFont({
   src: [
     {
@@ -57,22 +60,22 @@ interface Props {
   params: { locale: string };
 }
 
-// async function getUser() {
-//   const cookieStore = await cookies();
-//   const token = cookieStore.get("access_token")?.value;
+async function getUser() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("access_token")?.value;
 
-//   if (!token) return null;
+  if (!token) return null;
 
-//   const res = await fetch(`http://localhost:5000/users/me`, {
-//     headers: { Cookie: `access_token=${token}` },
-//     credentials: "include",
-//     cache: "no-store", // Ensure fresh auth state
-//   });
+  const res = await fetch(`${apiUrl}/users/me`, {
+    headers: { Cookie: `access_token=${token}` },
+    credentials: "include",
+    cache: "no-store", // Ensure fresh auth state
+  });
 
-//   if (!res.ok) return null;
+  if (!res.ok) return null;
 
-//   return res.json();
-// }
+  return res.json();
+}
 
 const RootLayout: FC<Props> = async ({ children, params }) => {
   const { locale } = await params;
