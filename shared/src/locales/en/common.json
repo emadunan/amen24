@@ -48,6 +48,7 @@
   "error": {
     "unknownError": "An unexpected error occurred. Please try again later.",
     "failedToFetch": "Failed to fetch data",
+    "accountLocked": "Account locked. Try again later or contact the system administrator at support@example.com.",
     "loginFailed": "The email or password you entered is incorrect. Please check your credentials and try again.",
     "userDuplication": "A user with this email already exists. Please use a different email.",
     "userNotCreated": "The user account could not be created due to an unexpected error. Please try again later.",
