@@ -25,7 +25,13 @@ const HighlightVerse: FC<Props> = ({ children, verseNum }) => {
   }, [highlightedNum, verseNum]);
 
   function handleHighlight() {
-    setHighlighted((prev) => !(highlightedNum === verseNum && prev));
+    setHighlighted((prev) => {
+      if (highlightedNum === verseNum) {
+        return !prev;
+      }
+
+      return !prev;
+    });
   }
 
   return (
