@@ -40,6 +40,12 @@
     "diacritizedText": "Diacritized Text",
     "deleteAccount": "Delete Account Permanently"
   },
+  "toolbox": {
+    "title": "Toolbox",
+    "copy": "Copy Highlighted",
+    "addToFavorites": "Add to Favorites",
+    "clearHighlighting": "Clear Highlighting"
+  },
   "footer": {
     "copyright": "Amen24. All rights reserved.",
     "privacyPolicy": "Privacy Policy",

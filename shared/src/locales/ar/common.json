@@ -40,6 +40,12 @@
     "diacritizedText": "النص المشكّل",
     "deleteAccount": "حذف الحساب نهائيًا"
   },
+  "toolbox": {
+    "title": "صندوق الأدوات",
+    "copy": "نسخ التظليل",
+    "addToFavorites": "إضافة إلى المفضلة",
+    "clearHighlighting": "إزالة التظليل"
+  },
   "footer": {
     "copyright": "Amen24. جميعُ الحقوقِ محفوظةٌ.",
     "privacyPolicy": "سياسةُ الخصوصيَّةِ",
