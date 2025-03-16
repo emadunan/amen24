@@ -50,49 +50,55 @@ const ChapterContent: FC<Props> = ({
     const highlightedVerses = verses
       .filter((v) => highlighted.includes(v.num))
       .sort((a, b) => a.num - b.num);
-  
+
     if (highlightedVerses.length === 0) return; // Prevents errors
-  
+
     console.log("handle copy highlighted verses");
-  
+
     // Extract and format numbers safely
     const formattedChapterNum = formatNumber(chapterNum, i18n.language as Lang);
-  
+
     // Build verse text with ".." for non-sequential verses
     let previousVerseNum: number | null = null;
     const verseString = highlightedVerses
       .map((v) => {
         const verseText = v.text;
-        const separator = previousVerseNum !== null && v.num !== previousVerseNum + 1 ? " .. " : " ";
+        const separator =
+          previousVerseNum !== null && v.num !== previousVerseNum + 1
+            ? " .. "
+            : " ";
         previousVerseNum = v.num;
         return separator + verseText;
       })
       .join("")
       .trim(); // Trim to remove leading separator if present
-  
+
     // Get formatted verse numbers
     const firstVerseNum = highlightedVerses[0]?.num;
     const lastVerseNum = highlightedVerses[highlightedVerses.length - 1]?.num;
-    const formattedFirstVerseNum = formatNumber(firstVerseNum, i18n.language as Lang);
-    const formattedLastVerseNum = formatNumber(lastVerseNum, i18n.language as Lang);
-  
+    const formattedFirstVerseNum = formatNumber(
+      firstVerseNum,
+      i18n.language as Lang,
+    );
+    const formattedLastVerseNum = formatNumber(
+      lastVerseNum,
+      i18n.language as Lang,
+    );
+
     // Construct formatted string
-    const verseRefString =  `(${t(bookKey)} ${formattedChapterNum} : ${formattedFirstVerseNum}${
-      formattedFirstVerseNum !== formattedLastVerseNum ? ` - ${formattedLastVerseNum}` : ""
-    })`
+    const verseRefString = `(${t(bookKey)} ${formattedChapterNum} : ${formattedFirstVerseNum}${
+      formattedFirstVerseNum !== formattedLastVerseNum
+        ? ` - ${formattedLastVerseNum}`
+        : ""
+    })`;
     const formattedText = `${verseString} ${verseRefString}`;
 
-    console.log(formattedText);
-    
-  
     // Copy to clipboard
     navigator.clipboard.writeText(formattedText).then(
       () => showToast(`${verseRefString} ${t("toolbox.copiedToClipboard")}`),
-      (err) => console.error("Failed to copy: ", err)
+      (err) => console.error("Failed to copy: ", err),
     );
   }
-  
-  
 
   function clearHighlighted() {
     setHighlighted([]);

@@ -3,6 +3,7 @@
   --text: #3b3a34;
   --text-rgb: 59, 58, 52;
   --background: #f4efe6;
+  --background-hover: #e6dfd2;
   --background-rgb: 244, 239, 230;
   --primary: #8a6e4a;
   --secondary: #d6ccb1;
@@ -23,6 +24,7 @@
   --text: #f4efe6;
   --text-rgb: 244, 239, 230;
   --background: #3a332b;
+  --background-hover: #403831;
   --background-rgb: 58, 51, 43;
   --primary: #a68a5e;
   --secondary: #524a3f;

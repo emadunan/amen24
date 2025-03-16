@@ -1,5 +1,5 @@
 .toolbox {
-  position: absolute;
+  position: fixed;
   background-color: var(
     --secondary,
     #ffeb3b
@@ -48,4 +48,5 @@
 }
 
 .toolboxContainer button:hover {
+  background-color: var(--background-hover);
 }
