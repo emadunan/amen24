@@ -32,12 +32,18 @@ const ChapterToolbox = () => {
     (e: MouseEvent) => {
       if (!dragging) return;
 
-      const newX = Math.max(0, Math.min(window.innerWidth - 200, e.clientX - offsetRef.current.x));
-      const newY = Math.max(0, Math.min(window.innerHeight - 100, e.clientY - offsetRef.current.y));
+      const newX = Math.max(
+        0,
+        Math.min(window.innerWidth - 200, e.clientX - offsetRef.current.x),
+      );
+      const newY = Math.max(
+        0,
+        Math.min(window.innerHeight - 100, e.clientY - offsetRef.current.y),
+      );
 
       setPosition({ x: newX, y: newY });
     },
-    [dragging]
+    [dragging],
   );
 
   const handleMouseUp = useCallback(() => setDragging(false), []);

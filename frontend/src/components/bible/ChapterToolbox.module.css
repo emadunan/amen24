@@ -17,7 +17,7 @@
 .toolboxHeader {
   display: flex;
   align-items: center;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
 }
 
 .toolbox:active {
