@@ -4,7 +4,8 @@ import styles from "./page.module.css";
 import initTranslations from "@/app/i18n";
 import Link from "next/link";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
-import HighlightVerse from "@/components/bible/HighlightVerse";
+import HighlightVerse from "@/components/bible/VerseHighlight";
+import ChapterContent from "@/components/bible/ChapterContent";
 
 const apiUrl = process.env.API_URL;
 
@@ -72,7 +73,7 @@ const BookPage: FC<Props> = async ({ params }) => {
             </span>
           )}
         </div>
-        <div className={styles.chapterContent}>
+        <ChapterContent>
           {verses.map((v: Verse) => {
             const verseNumber =
               locale === "ar" ? v.num.toLocaleString("ar-EG") : v.num;
@@ -88,7 +89,7 @@ const BookPage: FC<Props> = async ({ params }) => {
               </Fragment>
             );
           })}
-        </div>
+        </ChapterContent>
       </div>
     </div>
   );

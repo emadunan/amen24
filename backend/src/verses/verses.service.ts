@@ -39,8 +39,6 @@ export class VersesService {
   }
 
   async findVerses(query: string, selectedBooks: BookKey[]): Promise<VerseResultData[]> {
-    console.log(selectedBooks);
-
     if (!query.trim()) return [];
 
     const formattedQuery = query.trim().replace(/\s+/g, ' & ');
