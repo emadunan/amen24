@@ -50,15 +50,28 @@ const ChapterContent: FC<Props> = ({
       .filter((v) => highlighted.includes(v.num))
       .sort((a, b) => a.num - b.num);
   
-    if (highlightedVerses.length === 0) return;
-    
-    // Extract formatted verse texts
-    const verseString = highlightedVerses.map((v) => v.text).join(" ");
+    if (highlightedVerses.length === 0) return; // Prevents errors
+  
+    console.log("handle copy highlighted verses");
   
     // Extract and format numbers safely
+    const formattedChapterNum = formatNumber(chapterNum, i18n.language as Lang);
+  
+    // Build verse text with ".." for non-sequential verses
+    let previousVerseNum: number | null = null;
+    const verseString = highlightedVerses
+      .map((v) => {
+        const verseText = v.text;
+        const separator = previousVerseNum !== null && v.num !== previousVerseNum + 1 ? " .. " : " ";
+        previousVerseNum = v.num;
+        return separator + verseText;
+      })
+      .join("")
+      .trim(); // Trim to remove leading separator if present
+  
+    // Get formatted verse numbers
     const firstVerseNum = highlightedVerses[0]?.num;
     const lastVerseNum = highlightedVerses[highlightedVerses.length - 1]?.num;
-    const formattedChapterNum = formatNumber(chapterNum, i18n.language as Lang);
     const formattedFirstVerseNum = formatNumber(firstVerseNum, i18n.language as Lang);
     const formattedLastVerseNum = formatNumber(lastVerseNum, i18n.language as Lang);
   
@@ -66,6 +79,9 @@ const ChapterContent: FC<Props> = ({
     const formattedText = `${verseString} (${t(bookKey)} ${formattedChapterNum} : ${formattedFirstVerseNum}${
       formattedFirstVerseNum !== formattedLastVerseNum ? ` - ${formattedLastVerseNum}` : ""
     })`;
+
+    console.log(formattedText);
+    
   
     // Copy to clipboard
     navigator.clipboard.writeText(formattedText).then(
@@ -73,6 +89,7 @@ const ChapterContent: FC<Props> = ({
       (err) => console.error("Failed to copy: ", err)
     );
   }
+  
   
 
   function clearHighlighted() {
