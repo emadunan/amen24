@@ -11,6 +11,7 @@ import styles from "./ChapterContent.module.css";
 import ChapterToolbox from "./ChapterToolbox";
 import { BookKey, formatNumber, Lang, Verse } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
+import { showToast } from "@/utils/toast";
 
 interface Props {
   children: ReactNode;
@@ -76,16 +77,17 @@ const ChapterContent: FC<Props> = ({
     const formattedLastVerseNum = formatNumber(lastVerseNum, i18n.language as Lang);
   
     // Construct formatted string
-    const formattedText = `${verseString} (${t(bookKey)} ${formattedChapterNum} : ${formattedFirstVerseNum}${
+    const verseRefString =  `(${t(bookKey)} ${formattedChapterNum} : ${formattedFirstVerseNum}${
       formattedFirstVerseNum !== formattedLastVerseNum ? ` - ${formattedLastVerseNum}` : ""
-    })`;
+    })`
+    const formattedText = `${verseString} ${verseRefString}`;
 
     console.log(formattedText);
     
   
     // Copy to clipboard
     navigator.clipboard.writeText(formattedText).then(
-      () => console.log("Copied to clipboard"),
+      () => showToast(`${verseRefString} ${t("toolbox.copiedToClipboard")}`),
       (err) => console.error("Failed to copy: ", err)
     );
   }
