@@ -1,10 +1,8 @@
 .toolbox {
   position: fixed;
-  background-color: var(
-    --secondary,
-    #ffeb3b
-  ); /* Default to yellow if --highlight is not set */
-  padding: 0.75rem;
+  background-color: var(--secondary);
+  padding: 0.3rem 1rem 1rem 1rem;
+  border-top: 1px solid var(--primary);
   border-radius: 2px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.1s ease-in-out;
@@ -16,12 +14,14 @@
   user-select: none;
 }
 
-.toolbox:active {
-  cursor: grabbing;
+.toolboxHeader {
+  display: flex;
+  align-items: center;
+  padding-bottom: .5rem;
 }
 
-.toolbox h4 {
-  margin-bottom: 1rem;
+.toolbox:active {
+  cursor: grabbing;
 }
 
 .toolboxContainer {

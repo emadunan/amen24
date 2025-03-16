@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./ChapterToolbox.module.css";
-import { FaCopy, FaStar, FaEraser } from "react-icons/fa";
+import { FaCopy, FaEraser } from "react-icons/fa";
+import { RxDragHandleDots2 } from "react-icons/rx";
 import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
@@ -9,7 +10,7 @@ const ChapterToolbox = () => {
   const [position, setPosition] = useState({ x: 100, y: 100 });
   const [dragging, setDragging] = useState(false);
   const offsetRef = useRef({ x: 0, y: 0 });
-  
+
   const { clearHighlighted, copyHighlighted } = useHighlightContext();
 
   const { t } = useTranslation();
@@ -70,7 +71,10 @@ const ChapterToolbox = () => {
         top: position.y,
       }}
     >
-      <h4>{t("toolbox.title")}</h4>
+      <div className={styles.toolboxHeader}>
+        <RxDragHandleDots2 />
+        <h4>{t("toolbox.title")}</h4>
+      </div>
       <div className={styles.toolboxContainer}>
         <button onClick={copyHighlighted}>
           <FaCopy /> {t("toolbox.copy")}
