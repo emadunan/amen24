@@ -8,7 +8,7 @@ const ChapterToolbox = () => {
   const [position, setPosition] = useState({ x: 100, y: 100 });
   const [dragging, setDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const { clearHighlighted } = useHighlightContext();
+  const { clearHighlighted, copyHighlighted } = useHighlightContext();
 
   const { t } = useTranslation();
 
@@ -60,7 +60,7 @@ const ChapterToolbox = () => {
     >
       <h4>{t("toolbox.title")}</h4>
       <div className={styles.toolboxContainer}>
-        <button>
+        <button onClick={copyHighlighted}>
           <FaCopy /> {t("toolbox.copy")}
         </button>
         {/* <button><FaStar /> {t('toolbox.addToFavorites')}</button> */}

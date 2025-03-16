@@ -1,4 +1,4 @@
-import { Verse } from "@amen24/shared";
+import { BookKey, Verse } from "@amen24/shared";
 import React, { FC, Fragment } from "react";
 import styles from "./page.module.css";
 import initTranslations from "@/app/i18n";
@@ -26,7 +26,7 @@ const BookPage: FC<Props> = async ({ params }) => {
 
   if (!response.ok) throw new Error("failedToFetch");
 
-  const verses = await response.json();
+  const verses: Verse[] = await response.json();
 
   const chapterNumber =
     locale === "ar" ? (+chapterNum).toLocaleString("ar-EG") : chapterNum;
@@ -73,7 +73,11 @@ const BookPage: FC<Props> = async ({ params }) => {
             </span>
           )}
         </div>
-        <ChapterContent>
+        <ChapterContent
+          bookKey={bookKey as BookKey}
+          chapterNum={+chapterNum}
+          verses={verses}
+        >
           {verses.map((v: Verse) => {
             const verseNumber =
               locale === "ar" ? v.num.toLocaleString("ar-EG") : v.num;
