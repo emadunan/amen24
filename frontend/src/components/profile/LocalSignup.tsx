@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styles from "./LocalSignup.module.css";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
-import { useSignupMutation } from "@/store/users";
+import { useSignupMutation } from "@/store/userApi";
 import Spinner from "../ui/Spinner";
 import BackButton from "../ui/BackButton";
 import { showToast } from "@/utils/toast";

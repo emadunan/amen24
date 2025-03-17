@@ -1,9 +1,9 @@
 "use client";
 
-import React, { FC, ReactNode, useEffect, useMemo } from "react";
 import styles from "./VerseHighlight.module.css";
 import { useSearchParams } from "next/navigation";
 import { useHighlightContext } from "./ChapterContent";
+import React, { FC, ReactNode, useEffect, useMemo } from "react";
 
 interface Props {
   children: ReactNode;

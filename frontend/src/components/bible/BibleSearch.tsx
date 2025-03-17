@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import styles from "./BibleSearch.module.css";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
-import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
+import { FaCheckSquare, FaRegSquare, FaSync } from "react-icons/fa";
 import {
   BookKey,
   BookKeys,
@@ -16,6 +15,16 @@ import {
 import { useTranslation } from "react-i18next";
 import VerseResult from "./VerseResult";
 import Spinner from "../ui/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import {
+  setIsLoading,
+  setQuery,
+  setResults,
+  setSelectedBooks,
+  toggleDropdown,
+} from "@/store/searchSlice";
+import { showToast } from "@/utils/toast";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -41,13 +50,10 @@ const categoryList: Record<string, string[]> = {
 };
 
 export default function BibleSearch() {
-  const [query, setQuery] = useState("");
-  const [selectedBooks, setSelectedBooks] = useState<string[]>(books);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [result, setResult] = useState<VerseResultData[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
   const { t, i18n } = useTranslation("book");
+  const dispatch = useDispatch();
+  const { query, selectedBooks, showDropdown, results, isLoading } =
+    useSelector((state: RootState) => state.search);
 
   const isWholeBibleSelected =
     selectedBooks.length === Object.values(BookKey).length;
@@ -57,51 +63,65 @@ export default function BibleSearch() {
 
   const toggleBookSelection = (book: string) => {
     if (book === "WholeBible") {
-      setSelectedBooks(isWholeBibleSelected ? [] : [...Object.values(BookKey)]);
+      dispatch(
+        setSelectedBooks(
+          isWholeBibleSelected ? [] : [...Object.values(BookKey)],
+        ),
+      );
       return;
     }
 
-    setSelectedBooks((prevSelected) => {
-      const selectedSet = new Set(prevSelected);
+    const selectedSet = new Set(selectedBooks);
 
-      if (Object.values(BookKey).includes(book as BookKey)) {
-        // Toggle single book selection
-        selectedSet.has(book)
-          ? selectedSet.delete(book)
-          : selectedSet.add(book);
-      } else if (categoryList[book]) {
-        // Toggle category selection
-        const allBooksInCategory = new Set(categoryList[book]);
-        const allSelected = categoryList[book].every((b) => selectedSet.has(b));
+    if (Object.values(BookKey).includes(book as BookKey)) {
+      // Toggle single book selection
+      selectedSet.has(book) ? selectedSet.delete(book) : selectedSet.add(book);
+    } else if (categoryList[book]) {
+      // Toggle category selection
+      const allBooksInCategory = new Set(categoryList[book]);
+      const allSelected = categoryList[book].every((b) => selectedSet.has(b));
 
-        if (allSelected) {
-          allBooksInCategory.forEach((b) => selectedSet.delete(b));
-        } else {
-          allBooksInCategory.forEach((b) => selectedSet.add(b));
-        }
+      if (allSelected) {
+        allBooksInCategory.forEach((b) => selectedSet.delete(b));
+      } else {
+        allBooksInCategory.forEach((b) => selectedSet.add(b));
       }
+    }
 
-      return [...selectedSet]; // Convert Set back to Array
-    });
+    dispatch(setSelectedBooks(Array.from(selectedSet))); // Convert Set back to Array and update Redux state
   };
 
   async function handleSearch() {
-    setShowDropdown(false);
-    setIsLoading(true);
-    const response = await fetch(`${apiUrl}/verses/query`, {
-      method: "POST",
-      body: JSON.stringify({ query, selectedBooks }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    if (showDropdown) dispatch(toggleDropdown());
+    dispatch(setIsLoading(true));
 
-    if (!response.ok) throw new Error("failedToFetch");
+    try {
+      const response = await fetch(`${apiUrl}/verses/query`, {
+        method: "POST",
+        body: JSON.stringify({ query, selectedBooks }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    const searchResult = await response.json();
+      if (!response.ok) throw new Error("failedToFetch");
 
-    setResult(searchResult);
-    setIsLoading(false);
+      const searchResult = await response.json();
+      dispatch(setResults(searchResult));
+    } catch (error) {
+      console.log(error);
+      showToast("unknownError", "error");
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  }
+
+  function handleClearForm() {
+    dispatch(setQuery(""));
+    dispatch(setResults([]));
+    dispatch(setIsLoading(false));
+    if (showDropdown) dispatch(toggleDropdown());
+    dispatch(setSelectedBooks(Object.values(BookKey)));
   }
 
   return (
@@ -109,7 +129,7 @@ export default function BibleSearch() {
       <div className={styles.searchBox}>
         <button
           className={styles.filterBtn}
-          onClick={() => setShowDropdown(!showDropdown)}
+          onClick={() => dispatch(toggleDropdown())}
         >
           <FiFilter className={styles.filterIcon} />
         </button>
@@ -117,12 +137,12 @@ export default function BibleSearch() {
           type="text"
           placeholder={`${t("searchEngine.inviteMessage")} ...`}
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => dispatch(setQuery(e.target.value))}
         />
         {query && (
           <AiOutlineClose
             className={styles.clearIcon}
-            onClick={() => setQuery("")}
+            onClick={() => dispatch(setQuery(""))}
           />
         )}
         <button className={styles.searchBtn} onClick={handleSearch}>
@@ -168,18 +188,23 @@ export default function BibleSearch() {
           </div>
         )}
       </div>
-      <div style={{ marginTop: "1rem" }}>
+      <div className={styles.results}>
         {isLoading ? (
           <Spinner />
         ) : (
           <>
-            {result.length > 0 && (
-              <p style={{ fontWeight: "bold", marginBottom: "0.5rem" }}>
-                {t("searchEngine.resultsCount")}:{" "}
-                {formatNumber(result.length, i18n.language as Lang)}
-              </p>
+            {results.length > 0 && (
+              <div className={styles.resultsSummary}>
+                <p>
+                  {t("searchEngine.resultsCount")}:{" "}
+                  {formatNumber(results.length, i18n.language as Lang)}
+                </p>
+                <button onClick={handleClearForm}>
+                  <FaSync /> {t("searchEngine.resetSearch")}
+                </button>
+              </div>
             )}
-            {result.map((verse: VerseResultData) => (
+            {results.map((verse: VerseResultData) => (
               <VerseResult
                 totalChapters={BookKeys[verse.bookKey].len}
                 bookId={verse.bookId}

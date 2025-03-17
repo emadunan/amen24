@@ -7,7 +7,7 @@ import { RiLogoutBoxLine, RiSettings3Line, RiStarLine } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
 import useClickOutside from "@/hooks/useClickOutside";
-import { userApi, useLogoutMutation } from "@/store/users";
+import { userApi, useLogoutMutation } from "@/store/userApi";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Link from "next/link";

@@ -5,7 +5,7 @@ import styles from "./LocalLogin.module.css";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
-import { useLoginMutation } from "@/store/users";
+import { useLoginMutation } from "@/store/userApi";
 import Spinner from "../ui/Spinner";
 import BackButton from "../ui/BackButton";
 import InputItem from "../ui/InputItem";

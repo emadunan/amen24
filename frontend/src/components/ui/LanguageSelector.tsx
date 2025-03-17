@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useChangeLangMutation, useGetMeQuery } from "@/store/users";
+import { useChangeLangMutation, useGetMeQuery } from "@/store/userApi";
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation();

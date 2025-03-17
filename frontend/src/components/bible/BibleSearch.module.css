@@ -157,8 +157,34 @@
   left: 0.3rem;
 }
 
+.resultsSummary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resultsSummary button {
+  padding: .5rem;
+  margin: .5rem 0rem;
+  border: none;
+  border-radius: 2px;
+  background-color: var(--secondary);
+  color: var(--text);
+  font-family: "amiri";
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  transition: background .2s ease-in-out;
+}
+
+.resultsSummary button:hover {
+  cursor: pointer;
+  background-color: var(--secondary-hover);
+}
+
 .results {
-  margin-top: 1rem;
+  
 }
 
 .verse {

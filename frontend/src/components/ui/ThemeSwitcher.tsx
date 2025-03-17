@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import styles from "./ThemeSwitcher.module.css";
-import { useGetMeQuery, useToggleThemeMutation } from "@/store/users";
+import { useGetMeQuery, useToggleThemeMutation } from "@/store/userApi";
 import { ThemeMode } from "@amen24/shared";
 
 const LOCAL_STORAGE_KEY = "theme";

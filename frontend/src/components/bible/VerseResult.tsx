@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./VerseResult.module.css";
-import { useTranslation } from "react-i18next";
 import { BookKey, BookKeys, formatNumber, Lang } from "@amen24/shared";
 import Link from "next/link";
 
@@ -23,10 +22,6 @@ const VerseResult: React.FC<VerseResultProps> = ({
   text,
   lang,
 }) => {
-  console.log(lang);
-
-  const { t } = useTranslation("book", { lng: lang });
-
   const formattedChapterNumber = formatNumber(chapterNumber, lang);
   const formattedVerseNumber = formatNumber(verseNumber, lang);
 
@@ -37,7 +32,6 @@ const VerseResult: React.FC<VerseResultProps> = ({
     >
       <p className={styles.text}>{text}</p>
       <Link
-        target="_blank"
         className={styles.reference}
         href={`/${bookId}/${bookKey}/${totalChapters}/${chapterNumber}?v=${verseNumber}`}
       >

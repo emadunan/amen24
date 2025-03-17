@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./AppLogo.module.css";
-import { useGetMeQuery } from "@/store/users";
+import { useGetMeQuery } from "@/store/userApi";
 import { ThemeMode } from "@amen24/shared";
 
 const LOCAL_STORAGE_KEY = "theme";

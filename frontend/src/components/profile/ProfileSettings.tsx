@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "./ProfileSettings.module.css";
 import { useTranslation } from "react-i18next";
-import { useDeleteAccountMutation, useGetMeQuery } from "@/store/users";
+import { useDeleteAccountMutation, useGetMeQuery } from "@/store/userApi";
 import { useRouter } from "next/navigation";
 
 const FONT_SIZES = ["Small", "Medium", "Large"];

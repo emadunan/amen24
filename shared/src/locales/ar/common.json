@@ -13,7 +13,8 @@
     "inviteMessage": "ابحث في الكتاب المقدس",
     "searchButtonText": "بحث",
     "filterButtonText": "تصفية الكتب",
-    "resultsCount": "عدد النتائج"
+    "resultsCount": "عدد النتائج",
+    "resetSearch": "إعادة تعيين البحث"
   },
   "signin": {
     "email": "البريدُ الإلكترونيُّ",

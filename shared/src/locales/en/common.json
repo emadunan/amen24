@@ -13,7 +13,8 @@
     "inviteMessage": "Search in the bible",
     "searchButtonText": "Search",
     "filterButtonText": "Filter books",
-    "resultsCount": "Results Count"
+    "resultsCount": "Results Count",
+    "resetSearch": "Reset Search"
   },
   "signin": {
     "email": "Email",

@@ -12,7 +12,7 @@ import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
 import { BookKey, UserProfile } from "@amen24/shared";
 import UserMenu from "../profile/UserMenu";
-import { useGetMeQuery } from "@/store/users";
+import { useGetMeQuery } from "@/store/userApi";
 import Spinner from "../ui/Spinner";
 
 const AppLogo = dynamic(() => import("./AppLogo"), {
