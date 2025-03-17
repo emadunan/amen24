@@ -183,6 +183,10 @@
   background-color: var(--secondary-hover);
 }
 
+.spinnerContainer {
+  padding: 2rem;
+}
+
 .results {
   
 }

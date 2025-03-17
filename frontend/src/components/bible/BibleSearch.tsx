@@ -190,7 +190,9 @@ export default function BibleSearch() {
       </div>
       <div className={styles.results}>
         {isLoading ? (
-          <Spinner />
+          <div className={styles.spinnerContainer}>
+            <Spinner />
+          </div>
         ) : (
           <>
             {results.length > 0 && (
