@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "./index";
 import { BookKey, VerseResultData } from "@amen24/shared";
 
 // Define a type for the slice state

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import HighlightVerse from "@/components/bible/VerseHighlight";
 import ChapterContent from "@/components/bible/ChapterContent";
+import ChapterTitleAction from "@/components/bible/ChapterTitleAction";
 
 const apiUrl = process.env.API_URL;
 
@@ -52,9 +53,11 @@ const BookPage: FC<Props> = async ({ params }) => {
               {t("prev")}
             </span>
           )}
-          <h3 className={styles.chapterTitle}>
-            {t(bookKey, { ns: "book" })} {chapterNumber}
-          </h3>
+          <ChapterTitleAction>
+            <h3 className={styles.chapterTitle}>
+              {t(bookKey, { ns: "book" })} {chapterNumber}
+            </h3>
+          </ChapterTitleAction>
           {+chapterNum < +bookLen ? (
             <Link
               href={`/${bookId}/${bookKey}/${bookLen}/${+chapterNum + 1}`}

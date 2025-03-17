@@ -9,38 +9,12 @@ import initTranslations from "../i18n";
 import TranslationsProvider from "@/providers/TranslationsProvider";
 import AppMain from "@/components/layout/AppMain";
 import StoreProvider from "../../providers/StoreProvider";
-
-import localFont from "next/font/local";
 import { cookies } from "next/headers";
 import { ToastContainer } from "react-toastify";
+import BibleNavigation from "@/components/bible/BibleNavigator";
+import { amiri } from "@/config/fonts.config";
 
 const apiUrl = process.env.API_URL;
-
-const amiri = localFont({
-  src: [
-    {
-      path: "../../assets/fonts/Amiri/Amiri-Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../../assets/fonts/Amiri/Amiri-Italic.ttf",
-      weight: "400",
-      style: "italic",
-    },
-    {
-      path: "../../assets/fonts/Amiri/Amiri-Bold.ttf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../../assets/fonts/Amiri/Amiri-BoldItalic.ttf",
-      weight: "700",
-      style: "italic",
-    },
-  ],
-  variable: "--font-amiri",
-});
 
 export const metadata: Metadata = {
   title: "amen24",
@@ -97,6 +71,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
             resources={resources}
           >
             <AppHeader />
+            <BibleNavigation />
             <AppMain>{children}</AppMain>
             <AppFooter />
           </TranslationsProvider>

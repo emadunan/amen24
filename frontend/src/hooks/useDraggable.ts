@@ -25,8 +25,14 @@ export const useDraggable = (initialX = 100, initialY = 100) => {
 
       const { offsetWidth: width, offsetHeight: height } = elementRef.current;
 
-      const newX = Math.max(0, Math.min(window.innerWidth - width, e.clientX - offsetRef.current.x));
-      const newY = Math.max(0, Math.min(window.innerHeight - height, e.clientY - offsetRef.current.y));
+      const newX = Math.max(
+        0,
+        Math.min(window.innerWidth - width, e.clientX - offsetRef.current.x),
+      );
+      const newY = Math.max(
+        0,
+        Math.min(window.innerHeight - height, e.clientY - offsetRef.current.y),
+      );
 
       setPosition({ x: newX, y: newY });
     },

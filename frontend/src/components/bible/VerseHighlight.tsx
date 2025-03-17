@@ -13,7 +13,7 @@ interface Props {
 const VerseHighlight: FC<Props> = ({ children, verseNum }) => {
   const { highlighted, toggleHighlight } = useHighlightContext();
   const searchParams = useSearchParams();
-  
+
   // Ensure it only runs once
   const isFirstLoad = useRef(true);
 
@@ -21,10 +21,14 @@ const VerseHighlight: FC<Props> = ({ children, verseNum }) => {
     if (isFirstLoad.current) {
       const highlightedNum = searchParams.get("v");
 
-      if (highlightedNum && +highlightedNum === verseNum && !highlighted.includes(verseNum)) {
+      if (
+        highlightedNum &&
+        +highlightedNum === verseNum &&
+        !highlighted.includes(verseNum)
+      ) {
         toggleHighlight(verseNum);
       }
-      
+
       isFirstLoad.current = false; // Prevents future updates
     }
   }, []); // Runs only once on mount

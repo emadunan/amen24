@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { userApi } from "./userApi";
 import searchReducer from "./searchSlice";
+import navigatorReducer from "./navigatorSlice";
 
 export const MakeStore = () => {
   const store = configureStore({
     reducer: {
+      navigator: navigatorReducer,
       search: searchReducer,
       [userApi.reducerPath]: userApi.reducer,
     },

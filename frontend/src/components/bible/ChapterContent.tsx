@@ -53,8 +53,6 @@ const ChapterContent: FC<Props> = ({
 
     if (highlightedVerses.length === 0) return; // Prevents errors
 
-    console.log("handle copy highlighted verses");
-
     // Extract and format numbers safely
     const formattedChapterNum = formatNumber(chapterNum, i18n.language as Lang);
 

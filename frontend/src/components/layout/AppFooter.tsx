@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./AppFooter.module.css";
 import { useTranslation } from "react-i18next";
 
-export default function AppFooter() {
+const AppFooter = () => {
   const { t, i18n } = useTranslation();
   return (
     <footer className={styles.footer}>
@@ -25,4 +25,6 @@ export default function AppFooter() {
       </nav>
     </footer>
   );
-}
+};
+
+export default AppFooter;
