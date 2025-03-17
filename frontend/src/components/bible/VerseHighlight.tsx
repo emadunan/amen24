@@ -3,7 +3,7 @@
 import styles from "./VerseHighlight.module.css";
 import { useSearchParams } from "next/navigation";
 import { useHighlightContext } from "./ChapterContent";
-import React, { FC, ReactNode, useEffect, useMemo } from "react";
+import React, { FC, ReactNode, useEffect, useRef } from "react";
 
 interface Props {
   children: ReactNode;
@@ -12,23 +12,26 @@ interface Props {
 
 const VerseHighlight: FC<Props> = ({ children, verseNum }) => {
   const { highlighted, toggleHighlight } = useHighlightContext();
-
   const searchParams = useSearchParams();
-
-  const highlightedNum = useMemo(() => {
-    const param = searchParams.get("v");
-    return param ? +param : null;
-  }, [searchParams]);
+  
+  // Ensure it only runs once
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    if (highlightedNum === verseNum) {
-      toggleHighlight(verseNum);
+    if (isFirstLoad.current) {
+      const highlightedNum = searchParams.get("v");
+
+      if (highlightedNum && +highlightedNum === verseNum && !highlighted.includes(verseNum)) {
+        toggleHighlight(verseNum);
+      }
+      
+      isFirstLoad.current = false; // Prevents future updates
     }
-  }, [highlightedNum, verseNum]);
+  }, []); // Runs only once on mount
 
   return (
     <div
-      onClick={toggleHighlight.bind(undefined, verseNum)}
+      onClick={() => toggleHighlight(verseNum)}
       className={`${styles.verseContainer} ${highlighted.includes(verseNum) ? styles.highlight : ""}`}
     >
       {children}
