@@ -27,18 +27,18 @@
 
 .open {
   transform: rotate(180deg);
+  transition: transform 0.3s ease-in-out;
 }
 
 .accordionContent {
-  max-height: 0;
-  overflow: hidden;
-  transition:
-    max-height 0.3s ease,
-    padding 0.3s ease;
-  background: var(--background);
-  color: var(--text);
+  display: grid;
+  grid-template-rows: 0fr; /* Initially collapsed */
+  opacity: 0;
+  transition: grid-template-rows 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 .show {
-  max-height: 100rem; /* Adjust as needed */
+  grid-template-rows: 1fr; /* Expands naturally */
+  opacity: 1;
 }
+

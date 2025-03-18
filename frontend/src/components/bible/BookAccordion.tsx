@@ -1,21 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./BookAccordion.module.css";
+import { BookKey } from "@amen24/shared";
+import { useTranslation } from "react-i18next";
 
 interface AccordionProps {
-  title: string;
+  bookKey: BookKey;
+  openBook: BookKey | null;
+  onOpenBook: (bookKey: BookKey) => void;
   children: React.ReactNode;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const Accordion: React.FC<AccordionProps> = ({ children, bookKey, openBook, onOpenBook }) => {
+  const { t } = useTranslation("book");
+  const isOpen = openBook === bookKey;
   return (
     <div className={styles.accordion}>
       <button
         className={styles.accordionHeader}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onOpenBook.bind(this, bookKey)}
       >
-        {title}
+        {t(bookKey)}
         <span className={`${styles.icon} ${isOpen ? styles.open : ""}`}>▼</span>
       </button>
       <div
