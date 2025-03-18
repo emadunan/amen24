@@ -1,29 +1,64 @@
 .navigator {
   position: fixed;
-  z-index: 3;
-  top: var(--header-height); /* Starts right after the header */
-  right: 1rem;
+  z-index: 1000; /* Ensure it's above other elements */
+  top: var(--header-height);
+  width: 12rem;
   min-height: 15.3rem;
   max-height: calc(
     100vh - var(--header-height) - var(--footer-height)
-  ); /* Adjusts to stop before the footer */
-  overflow-y: auto; /* Enables vertical scrolling */
+  ); /* Prevents overflow */
+  background-color: var(--background);
+  border: 1px solid var(--primary);
+  border-radius: 0rem 0.5rem 0.5rem 0rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    top 0.2s ease-out,
+    left 0.2s ease-out; /* Smooth dragging */
+  display: flex;
+  flex-direction: column;
 }
 
 .navigatorHeader {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
   background-color: var(--secondary);
-  border: 1px solid var(--primary);
+  border-bottom: 1px solid var(--primary);
+  padding: 0.5rem;
+  cursor: grab; /* Indicate draggable area */
+  user-select: none;
+}
+
+.navigatorBody {
+  flex: 1; /* Expands to fill available space */
+  overflow-y: auto; /* Enables scrolling only in the body */
+  max-height: calc(
+    100vh - var(--header-height) - var(--footer-height) - 3rem
+  ); /* Adjust based on header height */
+}
+
+.navigatorHeader:active {
+  cursor: grabbing;
 }
 
 .chaptersContainer {
-  width: 10rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+}
+
+.chaptersContainer a {
+  text-decoration: none;
+  color: var(--text);
+  transition: background 0.2s ease-in-out;
+  text-align: center;
+  border-bottom: 1px solid var(--primary); /* Horizontal separator */
+  border-left: 1px solid var(--primary); /* Vertical separator */
+  width: 100%; /* Ensures full-width border */
+}
+
+.chaptersContainer a:hover {
+  background-color: var(--accent);
 }

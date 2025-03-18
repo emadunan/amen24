@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { toggle } from "@/store/navigatorSlice";
 import React, { FC, ReactNode } from "react";

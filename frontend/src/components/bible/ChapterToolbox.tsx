@@ -15,8 +15,8 @@ const ChapterToolbox = () => {
 
   const toolboxComponent = (
     <div
-      ref={elementRef}
       className={styles.toolbox}
+      ref={elementRef}
       onMouseDown={handleMouseDown}
       style={{
         left: position.x,

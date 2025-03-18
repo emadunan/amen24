@@ -1,61 +1,51 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
-export const useDraggable = (initialX = 100, initialY = 100) => {
+export function useDraggable(initialX = 1400, initialY = 100) {
   const [position, setPosition] = useState({ x: initialX, y: initialY });
-  const [dragging, setDragging] = useState(false);
-  const offsetRef = useRef({ x: 0, y: 0 });
   const elementRef = useRef<HTMLDivElement | null>(null);
+  const dragState = useRef<{
+    startX: number;
+    startY: number;
+    initX: number;
+    initY: number;
+  } | null>(null);
 
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      if ((e.target as HTMLElement).tagName === "BUTTON") return;
-      e.preventDefault();
-      setDragging(true);
-      offsetRef.current = {
-        x: e.clientX - position.x,
-        y: e.clientY - position.y,
-      };
-    },
-    [position],
-  );
+  const handleMouseDown = useCallback((event: React.MouseEvent) => {
+    event.preventDefault();
+    if (!elementRef.current) return;
 
-  const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
-      if (!dragging || !elementRef.current) return;
+    const rect = elementRef.current.getBoundingClientRect();
+    dragState.current = {
+      startX: event.clientX,
+      startY: event.clientY,
+      initX: rect.left,
+      initY: rect.top,
+    };
 
-      const { offsetWidth: width, offsetHeight: height } = elementRef.current;
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      if (!dragState.current) return;
 
-      const newX = Math.max(
-        0,
-        Math.min(window.innerWidth - width, e.clientX - offsetRef.current.x),
-      );
-      const newY = Math.max(
-        0,
-        Math.min(window.innerHeight - height, e.clientY - offsetRef.current.y),
-      );
+      const newX =
+        dragState.current.initX +
+        (moveEvent.clientX - dragState.current.startX);
+      const newY =
+        dragState.current.initY +
+        (moveEvent.clientY - dragState.current.startY);
 
-      setPosition({ x: newX, y: newY });
-    },
-    [dragging],
-  );
+      requestAnimationFrame(() => {
+        setPosition({ x: newX, y: newY });
+      });
+    };
 
-  const handleMouseUp = useCallback(() => setDragging(false), []);
-
-  useEffect(() => {
-    if (!dragging) return;
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      dragState.current = null;
+    };
 
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [dragging, handleMouseMove, handleMouseUp]);
-
-  useEffect(() => {
-    document.body.style.userSelect = dragging ? "none" : "";
-  }, [dragging]);
+  }, []);
 
   return { position, handleMouseDown, elementRef };
-};
+}
