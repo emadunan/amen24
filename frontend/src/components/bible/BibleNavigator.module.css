@@ -1,4 +1,4 @@
-.navigation {
+.navigator {
   position: fixed;
   z-index: 3;
   top: var(--header-height); /* Starts right after the header */
@@ -8,6 +8,15 @@
     100vh - var(--header-height) - var(--footer-height)
   ); /* Adjusts to stop before the footer */
   overflow-y: auto; /* Enables vertical scrolling */
+}
+
+.navigatorHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: .5rem;
+  background-color: var(--secondary);
+  border: 1px solid var(--primary);
 }
 
 .chaptersContainer {
