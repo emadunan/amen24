@@ -23,7 +23,7 @@ const BibleNavigator = () => {
   const bookParams = params.book ?? []; // Ensure it's an array
   const [_bookId, urlBookKey, _bookLen, chapterNum] = bookParams as [string?, BookKey?, string?, string?];
 
-  const { position, handleMouseDown, elementRef } = useDraggable(100, 100);
+  const { position, handleMouseDown, elementRef } = useDraggable(5, 5, i18n.language === "ar" ? true : false, 12);
   const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d+\/[^/]+\/\d+\/\d+$/.test(pathname);
   const [openBook, setOpenBook] = useState<BookKey | null>(null);
 

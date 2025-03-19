@@ -1,14 +1,57 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
-export function useDraggable(initialX = 1400, initialY = 100) {
-  const [position, setPosition] = useState({ x: initialX, y: initialY });
+function remToPx(rem: number) {
+  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}
+
+export function useDraggable(
+  initialX = 10, // in rem
+  initialY = 10, // in rem
+  fromRight = false,
+  elementWidthRem = 0 // Width in rem
+) {
   const elementRef = useRef<HTMLDivElement | null>(null);
+  const [position, setPosition] = useState(() => {
+    const viewportWidth = window.innerWidth;
+    const x = fromRight
+      ? viewportWidth - remToPx(elementWidthRem) - remToPx(initialX)
+      : remToPx(initialX);
+
+    return { x, y: remToPx(initialY) };
+  });
+
   const dragState = useRef<{
     startX: number;
     startY: number;
     initX: number;
     initY: number;
   } | null>(null);
+
+  const updatePositionOnResize = useCallback(() => {
+    if (!elementRef.current) return;
+    
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const elementRect = elementRef.current.getBoundingClientRect();
+
+    let newX = position.x;
+    let newY = position.y;
+
+    if (fromRight) {
+      newX = viewportWidth - remToPx(elementWidthRem) - remToPx(initialX);
+    } else {
+      newX = Math.max(0, Math.min(viewportWidth - elementRect.width, position.x));
+    }
+
+    newY = Math.max(0, Math.min(viewportHeight - elementRect.height, position.y));
+
+    setPosition({ x: newX, y: newY });
+  }, [fromRight, position.x, position.y, initialX, elementWidthRem]);
+
+  useEffect(() => {
+    window.addEventListener("resize", updatePositionOnResize);
+    return () => window.removeEventListener("resize", updatePositionOnResize);
+  }, [updatePositionOnResize]);
 
   const handleMouseDown = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
@@ -29,7 +72,6 @@ export function useDraggable(initialX = 1400, initialY = 100) {
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
-      // Calculate new position
       let newX =
         dragState.current.initX +
         (moveEvent.clientX - dragState.current.startX);
@@ -37,10 +79,7 @@ export function useDraggable(initialX = 1400, initialY = 100) {
         dragState.current.initY +
         (moveEvent.clientY - dragState.current.startY);
 
-      // Clamp X within viewport
       newX = Math.max(0, Math.min(viewportWidth - elementRect.width, newX));
-
-      // Clamp Y within viewport
       newY = Math.max(0, Math.min(viewportHeight - elementRect.height, newY));
 
       requestAnimationFrame(() => {
