@@ -23,14 +23,25 @@ export function useDraggable(initialX = 1400, initialY = 100) {
     };
 
     const handleMouseMove = (moveEvent: MouseEvent) => {
-      if (!dragState.current) return;
+      if (!dragState.current || !elementRef.current) return;
 
-      const newX =
+      const elementRect = elementRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      // Calculate new position
+      let newX =
         dragState.current.initX +
         (moveEvent.clientX - dragState.current.startX);
-      const newY =
+      let newY =
         dragState.current.initY +
         (moveEvent.clientY - dragState.current.startY);
+
+      // Clamp X within viewport
+      newX = Math.max(0, Math.min(viewportWidth - elementRect.width, newX));
+
+      // Clamp Y within viewport
+      newY = Math.max(0, Math.min(viewportHeight - elementRect.height, newY));
 
       requestAnimationFrame(() => {
         setPosition({ x: newX, y: newY });
