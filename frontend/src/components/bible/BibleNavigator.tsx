@@ -18,6 +18,7 @@ const BibleNavigator = () => {
   const pathname = usePathname();
   const params = useParams<{ book: [string, BookKey, string, string] }>();
   const { i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const bookParams = params.book ?? []; // Ensure it's an array
   const [_bookId, urlBookKey, _bookLen, chapterNum] = bookParams as [string?, BookKey?, string?, string?];
@@ -74,7 +75,7 @@ const BibleNavigator = () => {
     >
       <div className={styles.navigatorHeader}>
         <RxDragHandleDots2 />
-        <h4>الفهرس</h4>
+        <h4>{t("bibleIndex")}</h4>
       </div>
       <div className={styles.navigatorBody}>
         {Object.values(BookKeys).map((book) => (
@@ -86,7 +87,7 @@ const BibleNavigator = () => {
                   const formattedNum = formatNumber(chapterIndex, i18n.language as Lang);
                   return (
                     <Link
-                      className={chapterIndex.toString() === chapterNum && book.key === urlBookKey  ? styles.currentChapter : ""}
+                      className={chapterIndex.toString() === chapterNum && book.key === urlBookKey ? styles.currentChapter : ""}
                       key={chapterIndex}
                       href={`/${book.id}/${book.key}/${book.len}/${chapterIndex}`}
                       ref={(el) => chapterRefs.current.set(chapterIndex, el)}

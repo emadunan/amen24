@@ -8,8 +8,8 @@
     100vh - var(--header-height) - var(--footer-height)
   ); /* Prevents overflow */
   background-color: var(--background);
-  border: 1px solid var(--primary);
-  border-radius: 0rem 0.5rem 0.5rem 0rem;
+  border-right: 1px solid var(--primary);
+  border-bottom: 1px solid var(--primary);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition:
     top 0.2s ease-out,
@@ -18,16 +18,28 @@
   flex-direction: column;
 }
 
+[dir="rtl"] .navigator {
+  border-right: none;
+  border-left: 1px solid var(--primary);
+}
+
 .navigatorHeader {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
   background-color: var(--secondary);
+  border-top: 1px solid var(--primary);
   border-bottom: 1px solid var(--primary);
+  border-left: 1px solid var(--primary);
   padding: 0.5rem;
   cursor: grab; /* Indicate draggable area */
   user-select: none;
+}
+
+[dir="rtl"] .navigatorHeader {
+  border-left: none;
+  border-right: 1px solid var(--primary);
 }
 
 .navigatorBody {

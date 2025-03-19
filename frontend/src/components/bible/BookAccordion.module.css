@@ -5,6 +5,10 @@
   overflow: hidden;
 }
 
+.accordion:last-child {
+  border-bottom: none;
+}
+
 .accordionHeader {
   width: 100%;
   background: var(--secondary);
