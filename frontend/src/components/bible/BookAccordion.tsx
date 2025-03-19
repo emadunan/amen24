@@ -10,7 +10,12 @@ interface AccordionProps {
   children: React.ReactNode;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ children, bookKey, openBook, onOpenBook }) => {
+const Accordion: React.FC<AccordionProps> = ({
+  children,
+  bookKey,
+  openBook,
+  onOpenBook,
+}) => {
   const { t } = useTranslation("book");
   const isOpen = openBook === bookKey;
   return (

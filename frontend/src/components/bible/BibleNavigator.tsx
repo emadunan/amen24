@@ -21,10 +21,22 @@ const BibleNavigator = () => {
   const { t } = useTranslation();
 
   const bookParams = params.book ?? []; // Ensure it's an array
-  const [_bookId, urlBookKey, _bookLen, chapterNum] = bookParams as [string?, BookKey?, string?, string?];
+  const [_bookId, urlBookKey, _bookLen, chapterNum] = bookParams as [
+    string?,
+    BookKey?,
+    string?,
+    string?,
+  ];
 
-  const { position, handleMouseDown, elementRef } = useDraggable(5, 5, i18n.language === "ar" ? true : false, 12);
-  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d+\/[^/]+\/\d+\/\d+$/.test(pathname);
+  const { position, handleMouseDown, elementRef } = useDraggable(
+    5,
+    5,
+    i18n.language === "ar" ? true : false,
+    12,
+  );
+  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d+\/[^/]+\/\d+\/\d+$/.test(
+    pathname,
+  );
   const [openBook, setOpenBook] = useState<BookKey | null>(null);
 
   // Ref for the current chapter element
@@ -79,15 +91,28 @@ const BibleNavigator = () => {
       </div>
       <div className={styles.navigatorBody}>
         {Object.values(BookKeys).map((book) => (
-          <Accordion key={book.key} bookKey={book.key as BookKey} openBook={openBook} onOpenBook={handleOpenBook}>
+          <Accordion
+            key={book.key}
+            bookKey={book.key as BookKey}
+            openBook={openBook}
+            onOpenBook={handleOpenBook}
+          >
             {openBook === book.key ? (
               <div className={styles.chaptersContainer}>
                 {Array.from({ length: book.len }, (_, i) => {
                   const chapterIndex = i + 1;
-                  const formattedNum = formatNumber(chapterIndex, i18n.language as Lang);
+                  const formattedNum = formatNumber(
+                    chapterIndex,
+                    i18n.language as Lang,
+                  );
                   return (
                     <Link
-                      className={chapterIndex.toString() === chapterNum && book.key === urlBookKey ? styles.currentChapter : ""}
+                      className={
+                        chapterIndex.toString() === chapterNum &&
+                        book.key === urlBookKey
+                          ? styles.currentChapter
+                          : ""
+                      }
                       key={chapterIndex}
                       href={`/${book.id}/${book.key}/${book.len}/${chapterIndex}`}
                       ref={(el) => chapterRefs.current.set(chapterIndex, el)}

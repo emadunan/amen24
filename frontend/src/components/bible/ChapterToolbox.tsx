@@ -9,9 +9,14 @@ import { useDraggable } from "@/hooks/useDraggable";
 
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted } = useHighlightContext();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const { position, handleMouseDown, elementRef } = useDraggable(100, 100);
+  const { position, handleMouseDown, elementRef } = useDraggable(
+    5,
+    5,
+    i18n.language === "ar" ? false : true,
+    i18n.language === "ar" ? 9 : 13,
+  );
 
   const toolboxComponent = (
     <div
@@ -21,6 +26,7 @@ const ChapterToolbox = () => {
       style={{
         left: position.x,
         top: position.y,
+        width: i18n.language === "ar" ? "9rem" : "13rem",
       }}
     >
       <div className={styles.toolboxHeader}>

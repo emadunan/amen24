@@ -38,11 +38,12 @@
   display: grid;
   grid-template-rows: 0fr; /* Initially collapsed */
   opacity: 0;
-  transition: grid-template-rows 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    grid-template-rows 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
 
 .show {
   grid-template-rows: 1fr; /* Expands naturally */
   opacity: 1;
 }
-

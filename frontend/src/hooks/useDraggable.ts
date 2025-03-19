@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useLayoutEffect } from "react";
 
 function remToPx(rem: number) {
   return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -8,17 +8,24 @@ export function useDraggable(
   initialX = 10, // in rem
   initialY = 10, // in rem
   fromRight = false,
-  elementWidthRem = 0 // Width in rem
+  elementWidthRem = 0, // Width in rem
 ) {
   const elementRef = useRef<HTMLDivElement | null>(null);
-  const [position, setPosition] = useState(() => {
-    const viewportWidth = window.innerWidth;
-    const x = fromRight
-      ? viewportWidth - remToPx(elementWidthRem) - remToPx(initialX)
-      : remToPx(initialX);
+  const [position, setPosition] = useState<{ x: number; y: number }>(() => ({
+    x: 0, // Temporary default (will update in useEffect)
+    y: 0,
+  }));
 
-    return { x, y: remToPx(initialY) };
-  });
+  useLayoutEffect(() => {
+    if (typeof window !== "undefined") {
+      const viewportWidth = window.innerWidth;
+      const x = fromRight
+        ? viewportWidth - remToPx(elementWidthRem) - remToPx(initialX)
+        : remToPx(initialX);
+
+      setPosition({ x, y: remToPx(initialY) });
+    }
+  }, [fromRight, elementWidthRem, initialX, initialY]);
 
   const dragState = useRef<{
     startX: number;
@@ -29,7 +36,7 @@ export function useDraggable(
 
   const updatePositionOnResize = useCallback(() => {
     if (!elementRef.current) return;
-    
+
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     const elementRect = elementRef.current.getBoundingClientRect();
@@ -40,10 +47,16 @@ export function useDraggable(
     if (fromRight) {
       newX = viewportWidth - remToPx(elementWidthRem) - remToPx(initialX);
     } else {
-      newX = Math.max(0, Math.min(viewportWidth - elementRect.width, position.x));
+      newX = Math.max(
+        0,
+        Math.min(viewportWidth - elementRect.width, position.x),
+      );
     }
 
-    newY = Math.max(0, Math.min(viewportHeight - elementRect.height, position.y));
+    newY = Math.max(
+      0,
+      Math.min(viewportHeight - elementRect.height, position.y),
+    );
 
     setPosition({ x: newX, y: newY });
   }, [fromRight, position.x, position.y, initialX, elementWidthRem]);
