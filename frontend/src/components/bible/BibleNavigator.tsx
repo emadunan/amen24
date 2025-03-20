@@ -84,7 +84,7 @@ const BibleNavigator = () => {
       onMouseDown={handleMouseDown}
       style={{
         left: position.x,
-        top: position.y,headerRef
+        top: position.y,
       }}
     >
       <div className={styles.navigatorHeader} ref={headerRef}>
@@ -117,7 +117,9 @@ const BibleNavigator = () => {
                       }
                       key={chapterIndex}
                       href={`/${book.id}/${book.key}/${book.len}/${chapterIndex}`}
-                      ref={(el) => chapterRefs.current.set(chapterIndex, el)}
+                      ref={(el) => {
+                        chapterRefs.current.set(chapterIndex, el);
+                      }}
                     >
                       {formattedNum}
                     </Link>
