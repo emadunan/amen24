@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./ChapterToolbox.module.css";
 import { FaCopy, FaEraser } from "react-icons/fa";
 import { RxDragHandleDots2 } from "react-icons/rx";
@@ -10,12 +10,14 @@ import { useDraggable } from "@/hooks/useDraggable";
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted } = useHighlightContext();
   const { t, i18n } = useTranslation();
+  const headerRef = useRef<HTMLDivElement | null>(null);
 
   const { position, handleMouseDown, elementRef } = useDraggable(
     5,
     5,
     i18n.language === "ar" ? false : true,
     i18n.language === "ar" ? 9 : 13,
+    headerRef
   );
 
   const toolboxComponent = (
@@ -29,7 +31,7 @@ const ChapterToolbox = () => {
         width: i18n.language === "ar" ? "9rem" : "13rem",
       }}
     >
-      <div className={styles.toolboxHeader}>
+      <div className={styles.toolboxHeader} ref={headerRef}>
         <RxDragHandleDots2 />
         <h4>{t("toolbox.title")}</h4>
       </div>

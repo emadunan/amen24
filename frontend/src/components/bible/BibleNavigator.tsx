@@ -19,6 +19,7 @@ const BibleNavigator = () => {
   const params = useParams<{ book: [string, BookKey, string, string] }>();
   const { i18n } = useTranslation();
   const { t } = useTranslation();
+  const headerRef = useRef<HTMLDivElement | null>(null)
 
   const bookParams = params.book ?? []; // Ensure it's an array
   const [_bookId, urlBookKey, _bookLen, chapterNum] = bookParams as [
@@ -33,6 +34,7 @@ const BibleNavigator = () => {
     5,
     i18n.language === "ar" ? true : false,
     12,
+    headerRef
   );
   const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d+\/[^/]+\/\d+\/\d+$/.test(
     pathname,
@@ -82,10 +84,10 @@ const BibleNavigator = () => {
       onMouseDown={handleMouseDown}
       style={{
         left: position.x,
-        top: position.y,
+        top: position.y,headerRef
       }}
     >
-      <div className={styles.navigatorHeader}>
+      <div className={styles.navigatorHeader} ref={headerRef}>
         <RxDragHandleDots2 />
         <h4>{t("bibleIndex")}</h4>
       </div>
@@ -109,7 +111,7 @@ const BibleNavigator = () => {
                     <Link
                       className={
                         chapterIndex.toString() === chapterNum &&
-                        book.key === urlBookKey
+                          book.key === urlBookKey
                           ? styles.currentChapter
                           : ""
                       }
