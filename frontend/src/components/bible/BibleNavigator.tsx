@@ -11,6 +11,7 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { useParams, usePathname } from "next/navigation";
 import { useDraggable } from "@/hooks/useDraggable";
 import { useTranslation } from "react-i18next";
+import { FaRegWindowClose, FaWindowClose } from "react-icons/fa";
 
 const BibleNavigator = () => {
   const isOpen = useSelector(selectNavigator);
@@ -90,6 +91,9 @@ const BibleNavigator = () => {
       <div className={styles.navigatorHeader} ref={headerRef}>
         <RxDragHandleDots2 />
         <h4>{t("bibleIndex")}</h4>
+        <button className={styles.closeButton} onClick={() => dispatch(close())}>
+          <FaWindowClose size=".9rem" className={styles.closeIcon}/>
+        </button>
       </div>
       <div className={styles.navigatorBody}>
         {Object.values(BookKeys).map((book) => (
