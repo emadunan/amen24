@@ -1,11 +1,5 @@
 import { Optional } from '@nestjs/common';
-import {
-  IsBoolean,
-  IsDate,
-  IsEmail,
-  IsEnum,
-  IsNumber,
-} from 'class-validator';
+import { IsBoolean, IsDate, IsEmail, IsEnum, IsNumber } from 'class-validator';
 import { BookKey, Lang, ThemeMode, UserCategory } from '@amen24/shared';
 
 export class CreateProfileDto {

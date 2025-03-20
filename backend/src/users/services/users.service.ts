@@ -19,7 +19,7 @@ export class UsersService {
     @InjectRepository(User) private usersRepo: Repository<User>,
     private readonly configService: ConfigService,
     private profilesService: ProfilesService,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const { password, provider } = createUserDto;
@@ -37,7 +37,7 @@ export class UsersService {
       this.usersRepo.create(user);
     }
 
-    if (!user) throw new BadRequestException("userNotCreated");
+    if (!user) throw new BadRequestException('userNotCreated');
 
     return await this.usersRepo.save(user);
   }

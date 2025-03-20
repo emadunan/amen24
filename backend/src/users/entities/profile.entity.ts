@@ -6,8 +6,9 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserCategory, BookKey, Lang, ThemeMode } from '@amen24/shared';
+import { UserCategory, Lang, ThemeMode } from '@amen24/shared';
 import { User } from './user.entity';
+import { Bookmark } from './bookmark.entity';
 
 @Entity()
 export class Profile {
@@ -26,21 +27,21 @@ export class Profile {
   @UpdateDateColumn()
   lastLogin: Date;
 
-  @Column({ default: BookKey.GENESIS })
-  currentBook: BookKey;
-
-  @Column({ default: 1 })
-  currentChapter: number;
-
   @Column({ nullable: true })
   uilang: Lang;
 
   @Column({ default: 1 })
   fontSize: number;
 
-  @Column({ default: false })
+  @Column({ type: 'enum', enum: ThemeMode, default: ThemeMode.LIGHT })
   themeMode: ThemeMode;
 
   @Column({ default: true })
   isDiacritized: boolean;
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.profile, {
+    cascade: true,
+    eager: true,
+  })
+  bookmarks: Bookmark[];
 }

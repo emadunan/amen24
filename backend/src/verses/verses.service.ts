@@ -20,13 +20,9 @@ export class VersesService {
   constructor(
     @InjectRepository(Verse) private versesRepo: Repository<Verse>,
     private chaptersService: ChaptersService,
-  ) { }
+  ) {}
 
-  async findChapter(
-    bookKey: BookKey,
-    chapterNumber: number,
-    lang: Lang,
-  ) {
+  async findChapter(bookKey: BookKey, chapterNumber: number, lang: Lang) {
     return await this.versesRepo.find({
       where: {
         chapter: { num: chapterNumber, book: { title: bookKey } },
@@ -38,7 +34,10 @@ export class VersesService {
     });
   }
 
-  async findVerses(query: string, selectedBooks: BookKey[]): Promise<VerseResultData[]> {
+  async findVerses(
+    query: string,
+    selectedBooks: BookKey[],
+  ): Promise<VerseResultData[]> {
     if (!query.trim()) return [];
 
     const formattedQuery = query.trim().replace(/\s+/g, ' & ');
@@ -59,19 +58,25 @@ export class VersesService {
       .innerJoin('chapter.book', 'book')
       .where(
         new Brackets((qb) => {
-          qb.where('verse.textNormalized ILIKE :exactMatch', { exactMatch: `%${query}%` })
-            .orWhere(`to_tsvector('english', verse.textNormalized) @@ to_tsquery(:searchQuery)`, {
+          qb.where('verse.textNormalized ILIKE :exactMatch', {
+            exactMatch: `%${query}%`,
+          }).orWhere(
+            `to_tsvector('english', verse.textNormalized) @@ to_tsquery(:searchQuery)`,
+            {
               searchQuery: formattedQuery,
-            });
-        })
+            },
+          );
+        }),
       )
-      .andWhere(selectedBooks.length > 0 ? 'book.title IN (:...books)' : '1=1', { books: selectedBooks })
+      .andWhere(
+        selectedBooks.length > 0 ? 'book.title IN (:...books)' : '1=1',
+        { books: selectedBooks },
+      )
       .orderBy('book.title', 'ASC')
       .addOrderBy('chapter.num', 'ASC')
       .addOrderBy('verse.num', 'ASC')
       .getRawMany();
   }
-
 
   findOne(id: number) {
     return `This action returns a #${id} verse`;
@@ -101,13 +106,11 @@ export class VersesService {
         break;
 
       case Lang.ENGLISH:
-        filename =
-          'Bible_En_ESV_2001.VPL.txt';
+        filename = 'Bible_En_ESV_2001.VPL.txt';
         break;
 
       case Lang.ARABIC:
-        filename =
-          'Bible_Ar_SVD_1865.VPL.txt';
+        filename = 'Bible_Ar_SVD_1865.VPL.txt';
         break;
 
       default:
@@ -148,9 +151,7 @@ export class VersesService {
           num: +verseNum,
           text: verseText,
           textNormalized:
-            lang === Lang.ARABIC
-              ? normalizeArabicText(verseText)
-              : verseText,
+            lang === Lang.ARABIC ? normalizeArabicText(verseText) : verseText,
           chapter: { id: chapter!.id },
           lang,
         });

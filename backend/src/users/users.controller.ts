@@ -32,7 +32,7 @@ export class UsersController {
     private readonly profilesService: ProfilesService,
     private readonly configService: ConfigService,
     private readonly authService: AuthService,
-  ) { }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
@@ -130,8 +130,7 @@ export class UsersController {
 
     await this.profilesService.updateLastLogin(profile.email);
 
-    if (!profile)
-      throw new NotFoundException("profileNotFound");
+    if (!profile) throw new NotFoundException('profileNotFound');
 
     await this.usersService.create(createUserDto);
 

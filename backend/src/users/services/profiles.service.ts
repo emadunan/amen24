@@ -57,7 +57,8 @@ export class ProfilesService {
       throw new Error('profileNotFound');
     }
 
-    profile.themeMode = profile.themeMode === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK;
+    profile.themeMode =
+      profile.themeMode === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK;
     await this.profilesRepo.save(profile);
 
     return await this.usersService.findLocalProfile(profile.email);

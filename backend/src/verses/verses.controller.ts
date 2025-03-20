@@ -14,10 +14,10 @@ import { BookKey, Lang } from '@amen24/shared';
 
 @Controller('verses')
 export class VersesController {
-  constructor(private readonly versesService: VersesService) { }
+  constructor(private readonly versesService: VersesService) {}
 
-  @Post("query")
-  async findVerses(@Body() body: { query: string, selectedBooks: BookKey[] }) {
+  @Post('query')
+  async findVerses(@Body() body: { query: string; selectedBooks: BookKey[] }) {
     const { query, selectedBooks } = body;
 
     return await this.versesService.findVerses(query, selectedBooks);
