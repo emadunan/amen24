@@ -11,7 +11,7 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { useParams, usePathname } from "next/navigation";
 import { useDraggable } from "@/hooks/useDraggable";
 import { useTranslation } from "react-i18next";
-import { FaRegWindowClose, FaWindowClose } from "react-icons/fa";
+import { FaWindowClose } from "react-icons/fa";
 
 const BibleNavigator = () => {
   const isOpen = useSelector(selectNavigator);
