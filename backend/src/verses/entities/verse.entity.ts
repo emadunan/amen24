@@ -1,6 +1,6 @@
 import { Lang, BookKey } from '@amen24/shared';
 import { Chapter } from '../../chapters/entities/chapter.entity';
-import { Column, Entity, ManyToOne, PrimaryColumn, JoinColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn, JoinColumn, Index } from 'typeorm';
 
 @Entity()
 export class Verse {
@@ -24,6 +24,10 @@ export class Verse {
 
   @Column({ type: 'text', nullable: true })
   textDiacritized?: string;
+
+  @Column({ type: 'tsvector', nullable: true })
+  @Index({ fulltext: true })
+  textSearch: string;
 
   @ManyToOne(() => Chapter, (chapter) => chapter.verses, {
     onDelete: 'CASCADE',
