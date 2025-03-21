@@ -17,7 +17,7 @@ const ChapterToolbox = () => {
     5,
     i18n.language === "ar" ? false : true,
     i18n.language === "ar" ? 9 : 13,
-    headerRef
+    headerRef,
   );
 
   const toolboxComponent = (

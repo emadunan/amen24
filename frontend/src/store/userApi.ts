@@ -1,7 +1,9 @@
-import { User, UserProfile } from "@amen24/shared";
+import { Lang, User } from "@amen24/shared";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+type UserLogin = Pick<User, "email" | "password">;
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -11,11 +13,11 @@ export const userApi = createApi({
   }),
   tagTypes: ["User"], // 👈 Define User tag type
   endpoints: (builder) => ({
-    getMe: builder.query<UserProfile | null, void>({
+    getMe: builder.query<User | null, void>({
       query: () => "/me",
       providesTags: ["User"],
     }),
-    signup: builder.mutation<void, Partial<User>>({
+    signup: builder.mutation<void, Partial<User> & { uiLang: Lang }>({
       query: (user) => ({
         url: "/",
         method: "POST",
@@ -23,7 +25,7 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    login: builder.mutation<void, { email: string; password: string }>({
+    login: builder.mutation<void, UserLogin>({
       query: (credentials) => ({
         url: "/local-login",
         method: "POST",
@@ -46,10 +48,10 @@ export const userApi = createApi({
       invalidatesTags: ["User"],
     }),
     changeLang: builder.mutation<void, string>({
-      query: (lang) => ({
+      query: (uiLang) => ({
         url: "/me/lang",
         method: "PATCH",
-        body: { lang },
+        body: { uiLang },
       }),
       invalidatesTags: ["User"],
     }),

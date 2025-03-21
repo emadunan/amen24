@@ -20,30 +20,25 @@ export class VersesController {
   async findVerses(@Body() body: { query: string; selectedBooks: BookKey[] }) {
     const { query, selectedBooks } = body;
 
-    return await this.versesService.findVerses(query, selectedBooks);
+    return [];
   }
 
-  @Get(':title/:chapterNum/:lang')
+  @Get(':bookKey/:chapterNo/:lang')
   findChapter(
-    @Param('title') title: BookKey,
-    @Param('chapterNum', ParseIntPipe) chapterNum: number,
+    @Param('bookKey') bookKey: BookKey,
+    @Param('chapterNo', ParseIntPipe) chapterNo: number,
     @Param('lang') lang: Lang,
   ) {
-    return this.versesService.findChapter(title, chapterNum, lang);
+    return this.versesService.findChapter(bookKey, chapterNo, lang);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.versesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVerseDto: UpdateVerseDto) {
-    return this.versesService.update(+id, updateVerseDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.versesService.remove(+id);
+  @Get(':bookKey/:chapterNo/:verseNo/:lang')
+  findOne(
+    @Param('bookKey') bookKey: BookKey,
+    @Param('chapterNo', ParseIntPipe) chapterNo: number,
+    @Param('verseNo', ParseIntPipe) verseNo: number,
+    @Param('lang') lang: Lang,
+  ) {
+    return this.versesService.findOne(bookKey, chapterNo, verseNo, lang);
   }
 }

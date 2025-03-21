@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Accordion from "./BookAccordion";
 import styles from "./BibleNavigator.module.css";
-import { BookKey, BookKeys, formatNumber, Lang } from "@amen24/shared";
+import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { close, selectNavigator } from "@/store/navigatorSlice";
@@ -17,29 +17,24 @@ const BibleNavigator = () => {
   const isOpen = useSelector(selectNavigator);
   const dispatch = useDispatch();
   const pathname = usePathname();
-  const params = useParams<{ book: [string, BookKey, string, string] }>();
+  const params = useParams<{ book: [BookKey, string, string] }>();
   const { i18n } = useTranslation();
   const { t } = useTranslation();
-  const headerRef = useRef<HTMLDivElement | null>(null)
+  const headerRef = useRef<HTMLDivElement | null>(null);
 
   const bookParams = params.book ?? []; // Ensure it's an array
-  const [_bookId, urlBookKey, _bookLen, chapterNum] = bookParams as [
-    string?,
-    BookKey?,
-    string?,
-    string?,
-  ];
+  const [urlBookKey, chapterNo] = bookParams as [BookKey?, string?, string?];
 
   const { position, handleMouseDown, elementRef } = useDraggable(
     5,
     5,
     i18n.language === "ar" ? true : false,
     12,
-    headerRef
+    headerRef,
   );
-  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d+\/[^/]+\/\d+\/\d+$/.test(
-    pathname,
-  );
+  
+  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d{2}_[A-Z]+\/\d+\/\d+$/.test(pathname);
+
   const [openBook, setOpenBook] = useState<BookKey | null>(null);
 
   // Ref for the current chapter element
@@ -63,8 +58,8 @@ const BibleNavigator = () => {
 
   // Scroll to the current chapter
   useEffect(() => {
-    if (chapterNum) {
-      const chapterIndex = parseInt(chapterNum, 10);
+    if (chapterNo) {
+      const chapterIndex = parseInt(chapterNo, 10);
       const chapterElement = chapterRefs.current.get(chapterIndex);
 
       if (chapterElement) {
@@ -74,7 +69,7 @@ const BibleNavigator = () => {
         });
       }
     }
-  }, [chapterNum, openBook, isOpen]);
+  }, [chapterNo, openBook, isOpen]);
 
   if (!isOpen || !isBookChapterPage) return null;
 
@@ -91,14 +86,17 @@ const BibleNavigator = () => {
       <div className={styles.navigatorHeader} ref={headerRef}>
         <RxDragHandleDots2 />
         <h4>{t("bibleIndex")}</h4>
-        <button className={styles.closeButton} onClick={() => dispatch(close())}>
-          <FaWindowClose size=".9rem" className={styles.closeIcon}/>
+        <button
+          className={styles.closeButton}
+          onClick={() => dispatch(close())}
+        >
+          <FaWindowClose size=".9rem" className={styles.closeIcon} />
         </button>
       </div>
       <div className={styles.navigatorBody}>
-        {Object.values(BookKeys).map((book) => (
+        {Object.values(BookMap).map((book) => (
           <Accordion
-            key={book.key}
+            key={book.id}
             bookKey={book.key as BookKey}
             openBook={openBook}
             onOpenBook={handleOpenBook}
@@ -114,13 +112,13 @@ const BibleNavigator = () => {
                   return (
                     <Link
                       className={
-                        chapterIndex.toString() === chapterNum &&
+                        chapterIndex.toString() === chapterNo &&
                           book.key === urlBookKey
                           ? styles.currentChapter
                           : ""
                       }
                       key={chapterIndex}
-                      href={`/${book.id}/${book.key}/${book.len}/${chapterIndex}`}
+                      href={`/${book.key}/${chapterIndex}/${book.len}`}
                       ref={(el) => {
                         chapterRefs.current.set(chapterIndex, el);
                       }}

@@ -16,13 +16,13 @@ import { showToast } from "@/utils/toast";
 interface Props {
   children: ReactNode;
   bookKey: BookKey;
-  chapterNum: number;
+  chapterNo: number;
   verses: Verse[];
 }
 
 interface highlightState {
   highlighted: number[];
-  toggleHighlight: (verseNum: number) => void;
+  toggleHighlight: (verseNo: number) => void;
   copyHighlighted: () => void;
   clearHighlighted: () => void;
 }
@@ -32,63 +32,62 @@ const HighlightContext = createContext<highlightState | null>(null);
 const ChapterContent: FC<Props> = ({
   children,
   bookKey,
-  chapterNum,
+  chapterNo,
   verses,
-}) => {
+}) => {  
   const { t, i18n } = useTranslation("book");
   const [highlighted, setHighlighted] = useState<number[]>([]);
 
-  function toggleHighlight(verseNum: number) {
+  function toggleHighlight(verseNo: number) {
     setHighlighted((prev) =>
-      prev.includes(verseNum)
-        ? prev.filter((num) => num !== verseNum)
-        : [...prev, verseNum],
+      prev.includes(verseNo)
+        ? prev.filter((num) => num !== verseNo)
+        : [...prev, verseNo],
     );
   }
 
   function copyHighlighted() {
     const highlightedVerses = verses
-      .filter((v) => highlighted.includes(v.num))
-      .sort((a, b) => a.num - b.num);
+      .filter((v) => highlighted.includes(v.verseNo))
+      .sort((a, b) => a.verseNo - b.verseNo);
 
     if (highlightedVerses.length === 0) return; // Prevents errors
 
     // Extract and format numbers safely
-    const formattedChapterNum = formatNumber(chapterNum, i18n.language as Lang);
+    const formattedChapterNo = formatNumber(chapterNo, i18n.language as Lang);
 
     // Build verse text with ".." for non-sequential verses
-    let previousVerseNum: number | null = null;
+    let previousVerseNo: number | null = null;
     const verseString = highlightedVerses
       .map((v) => {
         const verseText = v.text;
         const separator =
-          previousVerseNum !== null && v.num !== previousVerseNum + 1
+          previousVerseNo !== null && v.verseNo !== previousVerseNo + 1
             ? " .. "
             : " ";
-        previousVerseNum = v.num;
+        previousVerseNo = v.verseNo;
         return separator + verseText;
       })
       .join("")
       .trim(); // Trim to remove leading separator if present
 
     // Get formatted verse numbers
-    const firstVerseNum = highlightedVerses[0]?.num;
-    const lastVerseNum = highlightedVerses[highlightedVerses.length - 1]?.num;
-    const formattedFirstVerseNum = formatNumber(
-      firstVerseNum,
+    const firstVerseNo = highlightedVerses[0]?.verseNo;
+    const lastVerseNo = highlightedVerses[highlightedVerses.length - 1]?.verseNo;
+    const formattedFirstVerseNo = formatNumber(
+      firstVerseNo,
       i18n.language as Lang,
     );
-    const formattedLastVerseNum = formatNumber(
-      lastVerseNum,
+    const formattedLastVerseNo = formatNumber(
+      lastVerseNo,
       i18n.language as Lang,
     );
 
     // Construct formatted string
-    const verseRefString = `(${t(bookKey)} ${formattedChapterNum} : ${formattedFirstVerseNum}${
-      formattedFirstVerseNum !== formattedLastVerseNum
-        ? ` - ${formattedLastVerseNum}`
+    const verseRefString = `(${t(bookKey)} ${formattedChapterNo} : ${formattedFirstVerseNo}${formattedFirstVerseNo !== formattedLastVerseNo
+        ? ` - ${formattedLastVerseNo}`
         : ""
-    })`;
+      })`;
     const formattedText = `${verseString} ${verseRefString}`;
 
     // Copy to clipboard

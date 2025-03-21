@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useChangeLangMutation, useGetMeQuery } from "@/store/userApi";
+import { User } from "@amen24/shared";
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation();
@@ -24,14 +25,14 @@ const LanguageSelector = () => {
 
   useEffect(() => {
     if (
-      user?.uilanguage &&
-      user.uilanguage !== i18n.language &&
+      user?.profile?.uiLang &&
+      user?.profile?.uiLang !== i18n.language &&
       !hasSetLanguage.current
     ) {
       hasSetLanguage.current = true; // Prevent multiple calls
-      handleLanguageChange(user.uilanguage, false);
+      handleLanguageChange(user.profile.uiLang, false);
     }
-  }, [user?.uilanguage, i18n.language]);
+  }, [user?.profile.uiLang, i18n.language]);
 
   async function handleLanguageChange(
     newLocale: string,

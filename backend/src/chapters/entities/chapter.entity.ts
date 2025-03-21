@@ -1,24 +1,33 @@
+import { BookKey } from '@amen24/shared';
 import { Book } from '../../books/entities/book.entity';
 import { Verse } from '../../verses/entities/verse.entity';
 import {
-  Column,
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
+  JoinColumn,
 } from 'typeorm';
+import { Bookmark } from '../../users/entities/bookmark.entity';
 
 @Entity()
 export class Chapter {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn({ type: 'text' })
+  bookKey: BookKey;
 
-  @Column()
-  num: number;
+  @PrimaryColumn({ type: 'smallint' })
+  chapterNo: number;
 
-  @ManyToOne(() => Book, (book) => book.chapters)
+  @ManyToOne(() => Book, (book) => book.chapters, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'bookKey' })
   book: Book;
 
   @OneToMany(() => Verse, (verse) => verse.chapter)
   verses: Verse[];
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.chapter)
+  bookmarks: Bookmark[];
 }

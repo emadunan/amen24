@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { ProfilesService } from './profiles.service';
-import { UserProfile } from '@amen24/shared';
+import { AuthProvider } from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 
@@ -26,7 +26,7 @@ export class UsersService {
 
     let user: Partial<User> | undefined;
 
-    if (provider === 'local' && password) {
+    if (provider === AuthProvider.LOCAL && password) {
       const hash = await bcrypt.hash(
         password,
         this.configService.getOrThrow<string>('ROUNDS'),
@@ -46,45 +46,47 @@ export class UsersService {
     return await this.usersRepo.find();
   }
 
-  async findOne(id: string) {
+  async findOneWithPassword(
+    email: string,
+    provider: AuthProvider = AuthProvider.LOCAL,
+  ) {
+    return await this.usersRepo.findOne({
+      where: { email, provider },
+      relations: ['profile'],
+    });
+  }
+
+  async findOneById(id: string) {
     return await this.usersRepo.findOne({
       where: { id },
       relations: ['profile'],
     });
   }
 
-  async findOneByEmail(email: string) {
-    return await this.usersRepo.findOneBy({ email });
+  async findManyByEmail(email: string) {
+    const users = await this.usersRepo.find({
+      where: { email },
+    });
+
+    // TODO: extract password from users before retrieve data
+
+    return users;
   }
 
-  async findLocalProfile(
+  async findOneByEmailProvider(
     email: string,
-  ): Promise<Partial<UserProfile> | undefined> {
-    const userProfile = await this.usersRepo.findOne({
-      where: { email, provider: 'local' },
+    provider: AuthProvider = AuthProvider.LOCAL,
+  ): Promise<Omit<User, 'password'> | null> {
+    const user = await this.usersRepo.findOne({
+      where: { email, provider },
       relations: ['profile'],
     });
 
-    if (!userProfile) return;
+    if (!user) return null;
 
-    const { profile, ...user } = userProfile;
+    const { password, ...result } = user;
 
-    return {
-      ...user,
-      privilege: userProfile?.profile.privilege,
-      createdAt: userProfile?.profile.createdAt,
-      lastLogin: userProfile?.profile.lastLogin,
-      currentBook: userProfile?.profile.currentBook,
-      currentChapter: userProfile?.profile.currentChapter,
-      uilanguage: userProfile?.profile.uilang,
-      fontSize: userProfile?.profile.fontSize,
-      isDiacritized: userProfile?.profile.isDiacritized,
-      themeMode: userProfile?.profile.themeMode,
-    };
-  }
-
-  async findOneByEmailProvider(email: string, provider: string = 'local') {
-    return await this.usersRepo.findOneBy({ email, provider });
+    return result;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

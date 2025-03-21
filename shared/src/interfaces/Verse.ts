@@ -1,19 +1,11 @@
 import { BookKey, Lang } from "../@types";
 
 export interface Verse {
-  id: number;
-  num: number;
-  text: string;
-  textNormalized: string;
-}
-
-export interface VerseResultData {
-  id: number;
-  bookId: number;
   bookKey: BookKey;
-  chapterNumber: number;
-  verseNumber: number;
+  chapterNo: number;
+  verseNo: number;
   text: string;
   textNormalized: string;
+  textDiacritized: string;
   lang: Lang;
 }

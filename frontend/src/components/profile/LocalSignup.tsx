@@ -11,9 +11,10 @@ import { showToast } from "@/utils/toast";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
 import { handleApiError } from "@/utils/handleApiError";
+import { AuthProvider, Lang } from "@amen24/shared";
 
 const LocalSignup = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   // ✅ Use useState instead of useRef to persist input values
@@ -41,10 +42,11 @@ const LocalSignup = () => {
       await signup({
         email,
         password,
-        provider: "local",
+        provider: AuthProvider.LOCAL,
         providerId: finalDisplayName,
         displayName: finalDisplayName,
         isActive: true,
+        uiLang: i18n.language as Lang
       }).unwrap();
 
       router.replace("/");

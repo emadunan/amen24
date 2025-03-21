@@ -10,7 +10,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Profile } from '../entities/profile.entity';
 import { UsersService } from './users.service';
-import { Lang, ThemeMode, UserProfile } from '@amen24/shared';
+import { Lang, ThemeMode } from '@amen24/shared';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class ProfilesService {
@@ -50,7 +51,7 @@ export class ProfilesService {
     return await this.profilesRepo.update(email, { lastLogin: new Date() });
   }
 
-  async toggleTheme(email: string): Promise<Partial<UserProfile> | undefined> {
+  async toggleTheme(email: string): Promise<Omit<User, 'password'> | null> {    
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
@@ -61,22 +62,25 @@ export class ProfilesService {
       profile.themeMode === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK;
     await this.profilesRepo.save(profile);
 
-    return await this.usersService.findLocalProfile(profile.email);
+    return await this.usersService.findOneByEmailProvider(profile.email);
   }
 
   async changeLang(
     email: string,
-    lang: Lang,
-  ): Promise<Partial<UserProfile> | undefined> {
+    uiLang: Lang,
+  ): Promise<Omit<User, 'password'> | null> {    
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
       throw new Error('profileNotFound');
     }
 
-    profile.uilang = lang;
+    console.log(profile);
+    
+
+    profile.uiLang = uiLang;
     await this.profilesRepo.save(profile);
 
-    return await this.usersService.findLocalProfile(profile.email);
+    return await this.usersService.findOneByEmailProvider(profile.email);
   }
 }

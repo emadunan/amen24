@@ -1,4 +1,6 @@
+import { BookKey } from "../@types";
+
 export interface Chapter {
-  id: number;
-  num: number;
+  bookKey: BookKey;
+  chapterNo: number;
 }

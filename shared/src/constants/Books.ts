@@ -1,458 +1,533 @@
 import { BookKey } from "../@types";
 
-export const BookKeys = {
-  GEN: {
+export const bookKeyMap = {
+  GEN: "01_GEN",
+  EXO: "02_EXO",
+  LEV: "03_LEV",
+  NUM: "04_NUM",
+  DEU: "05_DEU",
+  JOS: "06_JOS",
+  JDG: "07_JDG",
+  RUT: "08_RUT",
+  "1SA": "09_1SA",
+  "2SA": "10_2SA",
+  "1KI": "11_1KI",
+  "2KI": "12_2KI",
+  "1CH": "13_1CH",
+  "2CH": "14_2CH",
+  EZR: "15_EZR",
+  NEH: "16_NEH",
+  EST: "17_EST",
+  JOB: "18_JOB",
+  PSA: "19_PSA",
+  PRO: "20_PRO",
+  ECC: "21_ECC",
+  SOL: "22_SOL",
+  ISA: "23_ISA",
+  JER: "24_JER",
+  LAM: "25_LAM",
+  EZE: "26_EZE",
+  DAN: "27_DAN",
+  HOS: "28_HOS",
+  JOE: "29_JOE",
+  AMO: "30_AMO",
+  OBA: "31_OBA",
+  JON: "32_JON",
+  MIC: "33_MIC",
+  NAH: "34_NAH",
+  HAB: "35_HAB",
+  ZEP: "36_ZEP",
+  HAG: "37_HAG",
+  ZEC: "38_ZEC",
+  MAL: "39_MAL",
+  MAT: "40_MAT",
+  MAR: "41_MAR",
+  LUK: "42_LUK",
+  JOH: "43_JOH",
+  ACT: "44_ACT",
+  ROM: "45_ROM",
+  "1CO": "46_1CO",
+  "2CO": "47_2CO",
+  GAL: "48_GAL",
+  EPH: "49_EPH",
+  PHI: "50_PHI",
+  COL: "51_COL",
+  "1TH": "52_1TH",
+  "2TH": "53_2TH",
+  "1TI": "54_1TI",
+  "2TI": "55_2TI",
+  TIT: "56_TIT",
+  PHM: "57_PHM",
+  HEB: "58_HEB",
+  JAM: "59_JAM",
+  "1PE": "60_1PE",
+  "2PE": "61_2PE",
+  "1JO": "62_1JO",
+  "2JO": "63_2JO",
+  "3JO": "64_3JO",
+  JUD: "65_JUD",
+  REV: "66_REV",
+};
+
+export const BookMap = {
+  "01_GEN": {
     id: 1,
-    key: "GEN",
+    key: "01_GEN",
     title: { en: "Genesis", ar: "ٱلتَّكْوِين" },
     writer: "moses",
     len: 50,
   },
-  EXO: {
+  "02_EXO": {
     id: 2,
-    key: "EXO",
+    key: "02_EXO",
     title: { en: "Exodus", ar: "ٱلْخُرُوج" },
     writer: "moses",
     len: 40,
   },
-  LEV: {
+  "03_LEV": {
     id: 3,
-    key: "LEV",
+    key: "03_LEV",
     title: { en: "Leviticus", ar: "ٱللَّاوِيِّين" },
     writer: "moses",
     len: 27,
   },
-  NUM: {
+  "04_NUM": {
     id: 4,
-    key: "NUM",
+    key: "04_NUM",
     title: { en: "Numbers", ar: "ٱلْعَدَد" },
     writer: "moses",
     len: 36,
   },
-  DEU: {
+  "05_DEU": {
     id: 5,
-    key: "DEU",
+    key: "05_DEU",
     title: { en: "Deuteronomy", ar: "ٱلتَّثْنِيَة" },
     writer: "moses",
     len: 34,
   },
-  JOS: {
+  "06_JOS": {
     id: 6,
-    key: "JOS",
+    key: "06_JOS",
     title: { en: "Joshua", ar: "يَشُوع" },
     writer: "joshua",
     len: 24,
   },
-  JDG: {
+  "07_JDG": {
     id: 7,
-    key: "JDG",
+    key: "07_JDG",
     title: { en: "Judges", ar: "ٱلْقُضَاة" },
     writer: "samuel",
     len: 21,
   },
-  RUT: {
+  "08_RUT": {
     id: 8,
-    key: "RUT",
+    key: "08_RUT",
     title: { en: "Ruth", ar: "رَاعُوث" },
     writer: "samuel",
     len: 4,
   },
-  "1SA": {
+  "09_1SA": {
     id: 9,
-    key: "1SA",
+    key: "09_1SA",
     title: { en: "1 Samuel", ar: "صَمُوئِيل ٱلْأَوَّل" },
     writer: "samuel",
     len: 31,
   },
-  "2SA": {
+  "10_2SA": {
     id: 10,
-    key: "2SA",
+    key: "10_2SA",
     title: { en: "2 Samuel", ar: "صَمُوئِيل ٱلثَّانِي" },
     writer: "samuel",
     len: 24,
   },
-  "1KI": {
+  "11_1KI": {
     id: 11,
-    key: "1KI",
+    key: "11_1KI",
     title: { en: "1 Kings", ar: "ٱلْمُلُوك ٱلْأَوَّل" },
     writer: "jeremiah",
     len: 22,
   },
-  "2KI": {
+  "12_2KI": {
     id: 12,
-    key: "2KI",
+    key: "12_2KI",
     title: { en: "2 Kings", ar: "ٱلْمُلُوك ٱلثَّانِي" },
     writer: "jeremiah",
     len: 25,
   },
-  "1CH": {
+  "13_1CH": {
     id: 13,
-    key: "1CH",
+    key: "13_1CH",
     title: { en: "1 Chronicles", ar: "أَخْبَار ٱلْأَيَّام ٱلْأَوَّل" },
     writer: "ezra",
     len: 29,
   },
-  "2CH": {
+  "14_2CH": {
     id: 14,
-    key: "2CH",
+    key: "14_2CH",
     title: { en: "2 Chronicles", ar: "أَخْبَار ٱلْأَيَّام ٱلثَّانِي" },
     writer: "ezra",
     len: 36,
   },
-  EZR: {
+  "15_EZR": {
     id: 15,
-    key: "EZR",
+    key: "15_EZR",
     title: { en: "Ezra", ar: "عَزْرَا" },
     writer: "ezra",
     len: 10,
   },
-  NEH: {
+  "16_NEH": {
     id: 16,
-    key: "NEH",
+    key: "16_NEH",
     title: { en: "Nehemiah", ar: "نَحَمْيَا" },
     writer: "nehemiah",
     len: 13,
   },
-  EST: {
+  "17_EST": {
     id: 17,
-    key: "EST",
+    key: "17_EST",
     title: { en: "Esther", ar: "أَسْتِير" },
     writer: "mordecai",
     len: 10,
   },
-  JOB: {
+  "18_JOB": {
     id: 18,
-    key: "JOB",
+    key: "18_JOB",
     title: { en: "Job", ar: "أَيُّوب" },
     writer: "moses",
     len: 42,
   },
-  PSA: {
+  "19_PSA": {
     id: 19,
-    key: "PSA",
+    key: "19_PSA",
     title: { en: "Psalms", ar: "ٱلْمَزَامِير" },
     writer: "david",
     len: 150,
   },
-  PRO: {
+  "20_PRO": {
     id: 20,
-    key: "PRO",
+    key: "20_PRO",
     title: { en: "Proverbs", ar: "ٱلْأَمْثَال" },
     writer: "solomon",
     len: 31,
   },
-  ECC: {
+  "21_ECC": {
     id: 21,
-    key: "ECC",
+    key: "21_ECC",
     title: { en: "Ecclesiastes", ar: "ٱلْجَامِعَة" },
     writer: "solomon",
     len: 12,
   },
-  SOL: {
+  "22_SOL": {
     id: 22,
-    key: "SOL",
+    key: "22_SOL",
     title: { en: "Song of Songs", ar: "نَشِيد ٱلْأَنَاشِيد" },
     writer: "solomon",
     len: 8,
   },
-  ISA: {
+  "23_ISA": {
     id: 23,
-    key: "ISA",
+    key: "23_ISA",
     title: { en: "Isaiah", ar: "إِشَعْيَاء" },
     writer: "isaiah",
     len: 66,
   },
-  JER: {
+  "24_JER": {
     id: 24,
-    key: "JER",
+    key: "24_JER",
     title: { en: "Jeremiah", ar: "إِرْمِيَا" },
     writer: "jeremiah",
     len: 52,
   },
-  LAM: {
+  "25_LAM": {
     id: 25,
-    key: "LAM",
+    key: "25_LAM",
     title: { en: "Lamentations", ar: "مَرَاثِي إِرْمِيَا" },
     writer: "jeremiah",
     len: 5,
   },
-  EZE: {
+  "26_EZE": {
     id: 26,
-    key: "EZE",
+    key: "26_EZE",
     title: { en: "Ezekiel", ar: "حِزْقِيَال" },
     writer: "ezekiel",
     len: 48,
   },
-  DAN: {
+  "27_DAN": {
     id: 27,
-    key: "DAN",
+    key: "27_DAN",
     title: { en: "Daniel", ar: "دَانِيآل" },
     writer: "daniel",
     len: 12,
   },
-  HOS: {
+  "28_HOS": {
     id: 28,
-    key: "HOS",
+    key: "28_HOS",
     title: { en: "Hosea", ar: "هُوشَع" },
     writer: "hosea",
     len: 14,
   },
-  JOE: {
+  "29_JOE": {
     id: 29,
-    key: "JOE",
+    key: "29_JOE",
     title: { en: "Joel", ar: "يُوئِيل" },
     writer: "joel",
     len: 3,
   },
-  AMO: {
+  "30_AMO": {
     id: 30,
-    key: "AMO",
+    key: "30_AMO",
     title: { en: "Amos", ar: "عَامُوس" },
     writer: "amos",
     len: 9,
   },
-  OBA: {
+  "31_OBA": {
     id: 31,
-    key: "OBA",
+    key: "31_OBA",
     title: { en: "Obadiah", ar: "عُوبَدْيَا" },
     writer: "obadiah",
     len: 1,
   },
-  JON: {
+  "32_JON": {
     id: 32,
-    key: "JON",
+    key: "32_JON",
     title: { en: "Jonah", ar: "يُونَان" },
     writer: "jonah",
     len: 4,
   },
-  MIC: {
+  "33_MIC": {
     id: 33,
-    key: "MIC",
+    key: "33_MIC",
     title: { en: "Micah", ar: "مِيخَا" },
     writer: "micah",
     len: 7,
   },
-  NAH: {
+  "34_NAH": {
     id: 34,
-    key: "NAH",
+    key: "34_NAH",
     title: { en: "Nahum", ar: "نَاحُوم" },
     writer: "nahum",
     len: 3,
   },
-  HAB: {
+  "35_HAB": {
     id: 35,
-    key: "HAB",
+    key: "35_HAB",
     title: { en: "Habakkuk", ar: "حَبَقُّوق" },
     writer: "habakkuk",
     len: 3,
   },
-  ZEP: {
+  "36_ZEP": {
     id: 36,
-    key: "ZEP",
+    key: "36_ZEP",
     title: { en: "Zephaniah", ar: "صَفَنْيَا" },
     writer: "zephaniah",
     len: 3,
   },
-  HAG: {
+  "37_HAG": {
     id: 37,
-    key: "HAG",
+    key: "37_HAG",
     title: { en: "Haggai", ar: "حَجَّاي" },
     writer: "haggai",
     len: 2,
   },
-  ZEC: {
+  "38_ZEC": {
     id: 38,
-    key: "ZEC",
+    key: "38_ZEC",
     title: { en: "Zechariah", ar: "زَكَرِيَّا" },
     writer: "zechariah",
     len: 14,
   },
-  MAL: {
+  "39_MAL": {
     id: 39,
-    key: "MAL",
+    key: "39_MAL",
     title: { en: "Malachi", ar: "مَلاَخِي" },
     writer: "malachi",
     len: 4,
   },
-  MAT: {
+  "40_MAT": {
     id: 40,
-    key: "MAT",
+    key: "40_MAT",
     title: { en: "Matthew", ar: "مَتَّى" },
     writer: "matthew",
     len: 28,
   },
-  MAR: {
+  "41_MAR": {
     id: 41,
-    key: "MAR",
+    key: "41_MAR",
     title: { en: "Mark", ar: "مَرْقُس" },
     writer: "mark",
     len: 16,
   },
-  LUK: {
+  "42_LUK": {
     id: 42,
-    key: "LUK",
+    key: "42_LUK",
     title: { en: "Luke", ar: "لُوقَا" },
     writer: "luke",
     len: 24
   },
-  JOH: {
+  "43_JOH": {
     id: 43,
-    key: "JOH",
+    key: "43_JOH",
     title: { en: "John", ar: "يُوحَنَّا" },
     writer: "john",
     len: 21,
   },
-  ACT: {
+  "44_ACT": {
     id: 44,
-    key: "ACT",
+    key: "44_ACT",
     title: { en: "Acts", ar: "أَعْمَال ٱلرُّسُل" },
     writer: "luke",
     len: 28,
   },
-  ROM: {
+  "45_ROM": {
     id: 45,
-    key: "ROM",
+    key: "45_ROM",
     title: { en: "Romans", ar: "رُومِيَة" },
     writer: "paul",
     len: 16,
   },
-  "1CO": {
+  "46_1CO": {
     id: 46,
-    key: "1CO",
+    key: "46_1CO",
     title: { en: "1Corinthians", ar: "كُورِنْثُوس ٱلْأُولَى" },
     writer: "paul",
     len: 16,
   },
-  "2CO": {
+  "47_2CO": {
     id: 47,
-    key: "2CO",
+    key: "47_2CO",
     title: { en: "2Corinthians", ar: "كُورِنْثُوس ٱلثَّانِيَة" },
     writer: "paul",
     len: 13,
   },
-  GAL: {
+  "48_GAL": {
     id: 48,
-    key: "GAL",
+    key: "48_GAL",
     title: { en: "Galatians", ar: "غَلاَطِيَّة" },
     writer: "paul",
     len: 6,
   },
-  EPH: {
+  "49_EPH": {
     id: 49,
-    key: "EPH",
+    key: "49_EPH",
     title: { en: "Ephesians", ar: "أَفَسُس" },
     writer: "paul",
     len: 6,
   },
-  PHI: {
+  "50_PHI": {
     id: 50,
-    key: "PHI",
+    key: "50_PHI",
     title: { en: "Philippians", ar: "فِيلِبِّي" },
     writer: "paul",
     len: 4,
   },
-  COL: {
+  "51_COL": {
     id: 51,
-    key: "COL",
+    key: "51_COL",
     title: { en: "Colossians", ar: "كُولُوسِّي" },
     writer: "paul",
     len: 4,
   },
-  "1TH": {
+  "52_1TH": {
     id: 52,
-    key: "1TH",
+    key: "52_1TH",
     title: { en: "1Thessalonians", ar: "تَسَالُونِيكِي ٱلْأُولَى" },
     writer: "paul",
     len: 5,
   },
-  "2TH": {
+  "53_2TH": {
     id: 53,
-    key: "2TH",
+    key: "53_2TH",
     title: { en: "2Thessalonians", ar: "تَسَالُونِيكِي ٱلثَّانِيَة" },
     writer: "paul",
     len: 3,
   },
-  "1TI": {
+  "54_1TI": {
     id: 54,
-    key: "1TI",
+    key: "54_1TI",
     title: { en: "1Timothy", ar: "تِيمُوثَاوُس ٱلْأُولَى" },
     writer: "paul",
     len: 6,
   },
-  "2TI": {
+  "55_2TI": {
     id: 55,
-    key: "2TI",
+    key: "55_2TI",
     title: { en: "2Timothy", ar: "تِيمُوثَاوُس ٱلثَّانِيَة" },
     writer: "paul",
     len: 4,
   },
-  TIT: { id: 56, key: "TIT", title: { en: "Titus", ar: "تِيطُس" }, writer: "paul", len: 3 },
-  PHM: {
+  "56_TIT": {
+    id: 56,
+    key: "56_TIT",
+    title: { en: "Titus", ar: "تِيطُس" },
+    writer: "paul",
+    len: 3
+  },
+  "57_PHM": {
     id: 57,
-    key: "PHM",
+    key: "57_PHM",
     title: { en: "Philemon", ar: "فِيلِيمُون" },
     writer: "paul",
     len: 1,
   },
-  HEB: {
+  "58_HEB": {
     id: 58,
-    key: "HEB",
+    key: "58_HEB",
     title: { en: "Hebrews", ar: "ٱلْعِبْرَانِيِّين" },
     writer: "paul",
     len: 13,
   },
-  JAM: {
+  "59_JAM": {
     id: 59,
-    key: "JAM",
+    key: "59_JAM",
     title: { en: "James", ar: "يَعْقُوب" },
     writer: "james",
     len: 5,
   },
-  "1PE": {
+  "60_1PE": {
     id: 60,
-    key: "1PE",
+    key: "60_1PE",
     title: { en: "1Peter", ar: "بُطْرُس ٱلْأُولَى" },
     writer: "peter",
     len: 5,
   },
-  "2PE": {
+  "61_2PE": {
     id: 61,
-    key: "2PE",
+    key: "61_2PE",
     title: { en: "2Peter", ar: "بُطْرُس ٱلثَّانِيَة" },
     writer: "peter",
     len: 3,
   },
-  "1JO": {
+  "62_1JO": {
     id: 62,
-    key: "1JO",
+    key: "62_1JO",
     title: { en: "1John", ar: "يُوحَنَّا ٱلْأُولَى" },
     writer: "john",
     len: 5,
   },
-  "2JO": {
+  "63_2JO": {
     id: 63,
-    key: "2JO",
+    key: "63_2JO",
     title: { en: "2John", ar: "يُوحَنَّا ٱلثَّانِيَة" },
     writer: "john",
     len: 1,
   },
-  "3JO": {
+  "64_3JO": {
     id: 64,
-    key: "3JO",
+    key: "64_3JO",
     title: { en: "3John", ar: "يُوحَنَّا ٱلثَّالِثَة" },
     writer: "john",
     len: 1,
   },
-  JUD: {
+  "65_JUD": {
     id: 65,
-    key: "JUD",
+    key: "65_JUD",
     title: { en: "Jude", ar: "يَهُوذَا" },
     writer: "jude",
     len: 1,
   },
-  REV: {
+  "66_REV": {
     id: 66,
-    key: "REV",
+    key: "66_REV",
     title: { en: "Revelation", ar: "ٱلرُّؤْيَا" },
     writer: "john",
     len: 22,

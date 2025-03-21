@@ -6,11 +6,11 @@ import { FiFilter } from "react-icons/fi";
 import { FaCheckSquare, FaRegSquare, FaSync } from "react-icons/fa";
 import {
   BookKey,
-  BookKeys,
+  BookMap,
   books,
   formatNumber,
   Lang,
-  VerseResultData,
+  Verse,
 } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import VerseResult from "./VerseResult";
@@ -206,14 +206,13 @@ export default function BibleSearch() {
                 </button>
               </div>
             )}
-            {results.map((verse: VerseResultData) => (
+            {results.map((verse: Verse) => (
               <VerseResult
-                totalChapters={BookKeys[verse.bookKey].len}
-                bookId={verse.bookId}
-                key={verse.id}
+                key={verse.verseNo}
+                totalChapters={BookMap[verse.bookKey].len}
                 bookKey={verse.bookKey}
-                chapterNumber={verse.chapterNumber}
-                verseNumber={verse.verseNumber}
+                chapterNo={verse.chapterNo}
+                verseNo={verse.verseNo}
                 text={verse.text}
                 lang={verse.lang}
               />

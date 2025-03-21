@@ -23,7 +23,7 @@ const ThemeSwitcher = () => {
 
     if (user) {
       // If logged in, use backend preference and remove local storage
-      theme = user.themeMode === ThemeMode.DARK;
+      theme = user.profile.themeMode === ThemeMode.DARK;
       localStorage.removeItem(LOCAL_STORAGE_KEY);
     } else {
       // If not logged in, load from localStorage

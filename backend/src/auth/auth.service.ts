@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/services/users.service';
-import { UserProfile } from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -13,8 +13,8 @@ export class AuthService {
   async validateUser(
     email: string,
     pass: string,
-  ): Promise<Partial<Omit<UserProfile, 'password'>>> {
-    const user = await this.usersService.findOneByEmailProvider(email);
+  ): Promise<Partial<Omit<User, 'password'>>> {
+    const user = await this.usersService.findOneWithPassword(email);
     if (!user) throw new UnauthorizedException('emailNotFound');
 
     if (user.lockUntil && user.lockUntil > new Date()) {
@@ -45,17 +45,12 @@ export class AuthService {
 
     await this.usersService.update(user.id, user);
 
-    const fullUserProfile = await this.usersService.findLocalProfile(
-      user.email,
-    );
-
-    if (!fullUserProfile) throw new UnauthorizedException();
-
-    const { password, ...userProfile } = fullUserProfile;
-    return userProfile;
+    const { password, ...result } = user;
+    
+    return result;
   }
 
-  async generateAccessToken(user: Partial<UserProfile>) {
+  async generateAccessToken(user: Partial<User>) {
     const { password, ...userProfile } = user;
 
     return {

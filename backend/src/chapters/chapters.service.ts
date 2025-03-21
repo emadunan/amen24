@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateChapterDto } from './dto/create-chapter.dto';
-import { UpdateChapterDto } from './dto/update-chapter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Chapter } from './entities/chapter.entity';
 import { Repository } from 'typeorm';
 import { InsertChapterDto } from './dto/insert-chapter.dto';
+import { BookKey } from '@amen24/shared';
 
 @Injectable()
 export class ChaptersService {
@@ -16,29 +15,9 @@ export class ChaptersService {
     await this.chaptersRepo.insert(insertChapterDto);
   }
 
-  create(createChapterDto: CreateChapterDto) {
-    return 'This action adds a new chapter';
-  }
-
-  findAll() {
-    return `This action returns all chapters`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} chapter`;
-  }
-
-  async findOneByBookId(bookId: number, num: number) {
+  async findOne(bookKey: BookKey, chapterNo: number) {
     return await this.chaptersRepo.findOne({
-      where: { book: { id: bookId }, num },
+      where: { bookKey, chapterNo },
     });
-  }
-
-  update(id: number, updateChapterDto: UpdateChapterDto) {
-    return `This action updates a #${id} chapter`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} chapter`;
   }
 }

@@ -12,18 +12,19 @@ import {
   HttpCode,
   Res,
   ConflictException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ProfilesService } from './services/profiles.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { User } from '../auth/decorators/user.decorator';
+import { User as UserParam } from '../auth/decorators/user.decorator';
 import { LocalAuthGuard } from '../auth/guards/local-auth.guard';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth/auth.service';
-import { UserProfile } from '@amen24/shared';
+import { User } from './entities/user.entity';
 
 @Controller('users')
 export class UsersController {
@@ -32,11 +33,11 @@ export class UsersController {
     private readonly profilesService: ProfilesService,
     private readonly configService: ConfigService,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  findMe(@User() user: UserProfile) {
+  findMe(@UserParam() user: User) {
     return user;
   }
 
@@ -72,7 +73,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Patch('me/theme')
-  async toggleTheme(@User() user: UserProfile, @Res() res: Response) {
+  async toggleTheme(@UserParam() user: User, @Res() res: Response) {
     const userProfile = await this.profilesService.toggleTheme(user.email);
 
     const { access_token } = await this.authService.generateAccessToken(
@@ -92,17 +93,16 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Patch('me/lang')
   async changeLang(
-    @User() user: UserProfile,
+    @UserParam() user: User,
     @Body() body: any,
     @Res() res: Response,
   ) {
-    const userProfile = await this.profilesService.changeLang(
-      user.email,
-      body.lang,
-    );
+    if (!user) throw new UnauthorizedException();
+
+    const updatedUser = await this.profilesService.changeLang(user.email, body.uiLang);
 
     const { access_token } = await this.authService.generateAccessToken(
-      userProfile!,
+      updatedUser!,
     );
 
     res.cookie('access_token', access_token, {
@@ -117,6 +117,8 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+    console.log(createUserDto);
+
     const existUser = await this.usersService.findOneByEmailProvider(
       createUserDto.email,
       createUserDto.provider,
@@ -126,6 +128,7 @@ export class UsersController {
 
     const profile = await this.profilesService.create({
       email: createUserDto.email,
+      uiLang: createUserDto.uiLang,
     });
 
     await this.profilesService.updateLastLogin(profile.email);
@@ -145,7 +148,7 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+    return this.usersService.findOneById(id);
   }
 
   @Patch(':id')
@@ -155,7 +158,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('/profile')
-  async removePermanently(@User() user: UserProfile, @Res() res: Response) {
+  async removePermanently(@UserParam() user: User, @Res() res: Response) {
     await this.profilesService.remove(user.email);
 
     return this.logout(res);

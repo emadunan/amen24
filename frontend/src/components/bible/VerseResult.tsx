@@ -1,29 +1,27 @@
 import React from "react";
 import styles from "./VerseResult.module.css";
-import { BookKey, BookKeys, formatNumber, Lang } from "@amen24/shared";
+import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
 import Link from "next/link";
 
 interface VerseResultProps {
-  bookId: number;
   bookKey: BookKey;
-  chapterNumber: number;
+  chapterNo: number;
   totalChapters: number;
-  verseNumber: number;
+  verseNo: number;
   text: string;
   lang: Lang;
 }
 
 const VerseResult: React.FC<VerseResultProps> = ({
-  bookId,
   bookKey,
-  chapterNumber,
+  chapterNo,
   totalChapters,
-  verseNumber,
+  verseNo,
   text,
   lang,
 }) => {
-  const formattedChapterNumber = formatNumber(chapterNumber, lang);
-  const formattedVerseNumber = formatNumber(verseNumber, lang);
+  const formattedChapterNo = formatNumber(chapterNo, lang);
+  const formattedVerseNo = formatNumber(verseNo, lang);
 
   return (
     <div
@@ -33,10 +31,10 @@ const VerseResult: React.FC<VerseResultProps> = ({
       <p className={styles.text}>{text}</p>
       <Link
         className={styles.reference}
-        href={`/${bookId}/${bookKey}/${totalChapters}/${chapterNumber}?v=${verseNumber}`}
+        href={`/${bookKey}/${chapterNo}/${totalChapters}?v=${verseNo}`}
       >
-        &mdash; {BookKeys[bookKey].title[lang as Lang.ARABIC | Lang.ENGLISH]}{" "}
-        {formattedChapterNumber} : {formattedVerseNumber}
+        &mdash; {BookMap[bookKey].title[lang as Lang.ARABIC | Lang.ENGLISH]}{" "}
+        {formattedChapterNo} : {formattedVerseNo}
       </Link>
     </div>
   );

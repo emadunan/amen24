@@ -1,4 +1,10 @@
-import { useState, useCallback, useRef, useEffect, useLayoutEffect } from "react";
+import {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 
 function remToPx(rem: number) {
   return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -9,7 +15,7 @@ export function useDraggable<T extends HTMLElement>(
   initialY = 10, // in rem
   fromRight = false,
   elementWidthRem = 0, // Width in rem
-  handleRef?: React.RefObject<T | null>
+  handleRef?: React.RefObject<T | null>,
 ) {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const [position, setPosition] = useState<{ x: number; y: number }>(() => ({
@@ -69,7 +75,11 @@ export function useDraggable<T extends HTMLElement>(
 
   const handleMouseDown = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
-    if (!elementRef.current || (handleRef?.current && !handleRef.current.contains(event.target as Node))) return;
+    if (
+      !elementRef.current ||
+      (handleRef?.current && !handleRef.current.contains(event.target as Node))
+    )
+      return;
 
     const rect = elementRef.current.getBoundingClientRect();
     dragState.current = {

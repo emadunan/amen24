@@ -1,6 +1,6 @@
-import { Book } from 'src/books/entities/book.entity';
+import { BookKey } from '@amen24/shared';
 
 export class InsertChapterDto {
-  num: number;
-  book: Partial<Book>;
+  bookKey: BookKey;
+  chapterNo: number;
 }

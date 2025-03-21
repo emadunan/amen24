@@ -6,37 +6,40 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserCategory, Lang, ThemeMode } from '@amen24/shared';
+import { UserCategory, Lang, ThemeMode, DateCalendar } from '@amen24/shared';
 import { User } from './user.entity';
 import { Bookmark } from './bookmark.entity';
 
 @Entity()
 export class Profile {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'text' })
   email: string;
 
   @OneToMany(() => User, (user) => user.profile)
   users: User[];
 
-  @Column({ default: UserCategory.MEMBER })
+  @Column({ type: 'text', default: UserCategory.MEMBER })
   privilege: UserCategory;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
-
-  @UpdateDateColumn()
+  
+  @UpdateDateColumn({ type: 'timestamptz', nullable: true })
   lastLogin: Date;
 
-  @Column({ nullable: true })
-  uilang: Lang;
+  @Column({ type: 'text' })
+  uiLang: Lang;
 
-  @Column({ default: 1 })
+  @Column({ type: 'smallint', default: 1 })
   fontSize: number;
 
-  @Column({ type: 'enum', enum: ThemeMode, default: ThemeMode.LIGHT })
+  @Column({ type: 'text', default: ThemeMode.LIGHT })
   themeMode: ThemeMode;
 
-  @Column({ default: true })
+  @Column({ type: 'text', default: DateCalendar.GREGORIAN })
+  dateCalendar: DateCalendar;
+
+  @Column({ type: 'boolean', default: true })
   isDiacritized: boolean;
 
   @OneToMany(() => Bookmark, (bookmark) => bookmark.profile, {

@@ -7,10 +7,10 @@ import React, { FC, ReactNode, useEffect, useRef } from "react";
 
 interface Props {
   children: ReactNode;
-  verseNum: number;
+  verseNo: number;
 }
 
-const VerseHighlight: FC<Props> = ({ children, verseNum }) => {
+const VerseHighlight: FC<Props> = ({ children, verseNo }) => {
   const { highlighted, toggleHighlight } = useHighlightContext();
   const searchParams = useSearchParams();
 
@@ -19,24 +19,24 @@ const VerseHighlight: FC<Props> = ({ children, verseNum }) => {
 
   useEffect(() => {
     if (isFirstLoad.current) {
-      const highlightedNum = searchParams.get("v");
+      const highlightedNo = searchParams.get("v");
 
       if (
-        highlightedNum &&
-        +highlightedNum === verseNum &&
-        !highlighted.includes(verseNum)
+        highlightedNo &&
+        +highlightedNo === verseNo &&
+        !highlighted.includes(verseNo)
       ) {
-        toggleHighlight(verseNum);
+        toggleHighlight(verseNo);
       }
 
-      isFirstLoad.current = false; // Prevents future updates
+      isFirstLoad.current = false;
     }
-  }, []); // Runs only once on mount
+  }, []);
 
   return (
     <div
-      onClick={() => toggleHighlight(verseNum)}
-      className={`${styles.verseContainer} ${highlighted.includes(verseNum) ? styles.highlight : ""}`}
+      onClick={() => toggleHighlight(verseNo)}
+      className={`${styles.verseContainer} ${highlighted.includes(verseNo) ? styles.highlight : ""}`}
     >
       {children}
     </div>
