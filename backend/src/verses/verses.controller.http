@@ -10,6 +10,6 @@ POST http://localhost:5000/verses/query
 Content-Type: application/json
 
 {
-  "query": "david said",
-  "selectedBooks": ["GEN"]
+  "query": "الرب",
+  "selectedBooks": ["01_GEN", "02_EXO"]
 }

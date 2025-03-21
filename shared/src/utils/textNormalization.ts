@@ -1,7 +1,7 @@
-const DIACRITICS_REGEX = /[\u064B-\u065F\u0670]/g;
+const DIACRITICS_REGEX = /[\u064B-\u065F\u0670]/g; // Arabic diacritics
 
 export function removeArDiacritics(text: string): string {
-  return String(text).replace(DIACRITICS_REGEX, ""); // Ensure input is string & remove diacritics
+  return text.replace(DIACRITICS_REGEX, ""); // Remove diacritics
 }
 
 export function normalizeArText(text: string): string {

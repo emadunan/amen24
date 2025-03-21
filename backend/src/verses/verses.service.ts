@@ -11,6 +11,7 @@ import {
   Lang,
   normalizeArText,
   removeArDiacritics,
+  detectLanguage
 } from '@amen24/shared';
 
 @Injectable()
@@ -47,8 +48,30 @@ export class VersesService {
   }
 
   async findManyByQuery(query: string, scope: BookKey[]) {
-    
+    if (!query.trim()) {
+      throw new BadRequestException('Search query cannot be empty.');
+    }
+
+    // Normalize Arabic text
+    const cleanedQuery = removeArDiacritics(normalizeArText(query));
+    const keywords = cleanedQuery.split(' ');
+    const tsQuery = keywords.map((word) => `${word}:*`).join(' & '); // Create full-text search query
+
+    const results = await this.versesRepo.query(
+      `SELECT v."bookKey", v."chapterNo", v."verseNo", v."text", v."lang",
+              ts_rank(to_tsvector('arabic', v."text"), to_tsquery('arabic', $1)) AS rank
+       FROM "verse" v
+       WHERE v."lang" = 'ar'
+         AND v."bookKey" = ANY($2)
+         AND to_tsvector('arabic', v."textNormalized") @@ to_tsquery('arabic', $1)
+       ORDER BY rank DESC, v."bookKey", v."chapterNo", v."verseNo"`,
+      [tsQuery, scope]
+    );
+
+    return results;
   }
+
+
 
   async seed() {
     await this.seedBible(Lang.ENGLISH);
@@ -60,7 +83,7 @@ export class VersesService {
       format: `${lang.toUpperCase()} [{bar}] {percentage}% | {value}/{total} verses`,
       hideCursor: true,
     }, Presets.shades_classic);
-  
+
     try {
       let filename: string;
       switch (lang) {
@@ -73,50 +96,52 @@ export class VersesService {
         default:
           throw new BadRequestException('Language misconfiguration!');
       }
-  
+
       const contentFilePath = resolve(__dirname, '..', '..', '..', '_content', filename);
       const fileContent = readFileSync(contentFilePath, 'utf-8');
       const lines = fileContent.split('\n');
-  
+
       progressBar.start(lines.length, 0); // Start progress bar
-  
+
       let processedCount = 0;
-  
+
       for (const line of lines) {
         const result = line.match(/^(\S+)\s(\d+):(\d+)\s(.*)$/);
-  
+
         if (result) {
           const bookKeySegment = result.at(1)?.toUpperCase();
           if (!bookKeySegment) throw new Error("Failed to extract book key");
-  
+
           const bookKey = bookKeyMap[bookKeySegment];
           const chapterNo = +(result.at(2) as string);
           const verseNo = +(result.at(3) as string);
           let text = result.at(4) as string;
   
+          const text = result.at(4) as string;
+
           let textNormalized = text;
           let textDiacritized = text;
-  
+
           if (lang === Lang.ARABIC) {
             const textCleaned = removeArDiacritics(text);
 
             text = textCleaned
             textNormalized = normalizeArText(textCleaned);
           }
-  
+
           const pgLang = this.getTsLang(lang);
-  
+
           await this.versesRepo.query(
             `INSERT INTO "verse" ("bookKey", "chapterNo", "verseNo", "text", "textNormalized", "textDiacritized", "lang", "textSearch")
              VALUES ($1, $2, $3, $4, $5, $6, $7, to_tsvector($8, $5))`,
             [bookKey, chapterNo, verseNo, text, textNormalized, textDiacritized, lang, pgLang]
           );
-  
+
           processedCount++;
           progressBar.update(processedCount);
         }
       }
-  
+
       progressBar.stop(); // Finish the progress bar
     } catch (error) {
       progressBar.stop();

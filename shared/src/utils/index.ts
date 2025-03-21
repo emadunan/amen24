@@ -21,16 +21,5 @@ export function convertToSuperscript(num: number): string {
     .join("");
 }
 
-export function detectLanguage(text: string): Lang {
-  // Trim spaces and get the first meaningful character
-  const firstChar = text.trim().replace(/^[^a-zA-Z\u0600-\u06FF]+/, "")[0];
-
-  if (!firstChar) return Lang.ENGLISH; // Default fallback
-
-  return firstChar.charCodeAt(0) >= 0x0600 && firstChar.charCodeAt(0) <= 0x06ff
-    ? Lang.ARABIC
-    : Lang.ENGLISH;
-}
-
 export * from "./formatNumber";
 export * from "./textNormalization"
