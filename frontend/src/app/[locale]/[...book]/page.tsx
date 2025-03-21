@@ -27,7 +27,7 @@ const BookPage: FC<Props> = async ({ params }) => {
   if (!response.ok) throw new Error("failedToFetch");
   const verses: Verse[] = await response.json();
 
-  const formattedChapterNo = formatNumber(+chapterNo, locale as Lang)
+  const formattedChapterNo = formatNumber(+chapterNo, locale as Lang);
 
   return (
     <div className={styles.pageContainer}>

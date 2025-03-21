@@ -46,7 +46,7 @@ const LocalSignup = () => {
         providerId: finalDisplayName,
         displayName: finalDisplayName,
         isActive: true,
-        uiLang: i18n.language as Lang
+        uiLang: i18n.language as Lang,
       }).unwrap();
 
       router.replace("/");

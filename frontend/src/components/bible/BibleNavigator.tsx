@@ -32,8 +32,10 @@ const BibleNavigator = () => {
     12,
     headerRef,
   );
-  
-  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d{2}_[A-Z]+\/\d+\/\d+$/.test(pathname);
+
+  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d{2}_[A-Z]+\/\d+\/\d+$/.test(
+    pathname,
+  );
 
   const [openBook, setOpenBook] = useState<BookKey | null>(null);
 
@@ -113,7 +115,7 @@ const BibleNavigator = () => {
                     <Link
                       className={
                         chapterIndex.toString() === chapterNo &&
-                          book.key === urlBookKey
+                        book.key === urlBookKey
                           ? styles.currentChapter
                           : ""
                       }

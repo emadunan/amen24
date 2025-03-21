@@ -206,17 +206,20 @@ export default function BibleSearch() {
                 </button>
               </div>
             )}
-            {results.map((verse: Verse) => (
-              <VerseResult
-                key={verse.verseNo}
-                totalChapters={BookMap[verse.bookKey].len}
-                bookKey={verse.bookKey}
-                chapterNo={verse.chapterNo}
-                verseNo={verse.verseNo}
-                text={verse.text}
-                lang={verse.lang}
-              />
-            ))}
+            {results.map((verse: Verse) => {
+              const id = `${verse.bookKey}-${verse.chapterNo}-${verse.verseNo}-${verse.lang}`;
+              return (
+                <VerseResult
+                  key={id}
+                  totalChapters={BookMap[verse.bookKey].len}
+                  bookKey={verse.bookKey}
+                  chapterNo={verse.chapterNo}
+                  verseNo={verse.verseNo}
+                  text={verse.text}
+                  lang={verse.lang}
+                />
+              );
+            })}
           </>
         )}
       </div>

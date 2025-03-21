@@ -34,7 +34,7 @@ const ChapterContent: FC<Props> = ({
   bookKey,
   chapterNo,
   verses,
-}) => {  
+}) => {
   const { t, i18n } = useTranslation("book");
   const [highlighted, setHighlighted] = useState<number[]>([]);
 
@@ -73,7 +73,8 @@ const ChapterContent: FC<Props> = ({
 
     // Get formatted verse numbers
     const firstVerseNo = highlightedVerses[0]?.verseNo;
-    const lastVerseNo = highlightedVerses[highlightedVerses.length - 1]?.verseNo;
+    const lastVerseNo =
+      highlightedVerses[highlightedVerses.length - 1]?.verseNo;
     const formattedFirstVerseNo = formatNumber(
       firstVerseNo,
       i18n.language as Lang,
@@ -84,10 +85,11 @@ const ChapterContent: FC<Props> = ({
     );
 
     // Construct formatted string
-    const verseRefString = `(${t(bookKey)} ${formattedChapterNo} : ${formattedFirstVerseNo}${formattedFirstVerseNo !== formattedLastVerseNo
+    const verseRefString = `(${t(bookKey)} ${formattedChapterNo} : ${formattedFirstVerseNo}${
+      formattedFirstVerseNo !== formattedLastVerseNo
         ? ` - ${formattedLastVerseNo}`
         : ""
-      })`;
+    })`;
     const formattedText = `${verseString} ${verseRefString}`;
 
     // Copy to clipboard
