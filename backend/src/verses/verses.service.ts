@@ -51,27 +51,37 @@ export class VersesService {
     if (!query.trim()) {
       throw new BadRequestException('Search query cannot be empty.');
     }
-
-    // Normalize Arabic text
-    const cleanedQuery = removeArDiacritics(normalizeArText(query));
-    const keywords = cleanedQuery.split(' ');
-    const tsQuery = keywords.map((word) => `${word}:*`).join(' & '); // Create full-text search query
-
+  
+    // Detect language using Unicode ranges
+    const detectedLang = detectLanguage(query);
+  
+    // Normalize text if needed
+    let processedQuery = query;
+    if (detectedLang === Lang.ARABIC) {
+      processedQuery = removeArDiacritics(normalizeArText(query));
+    }
+  
+    const pgLang = this.getTsLang(detectedLang); // PostgreSQL full-text search language
+  
+    // Convert to tsquery format for full-text search
+    const tsQuery = processedQuery
+      .split(' ')
+      .map((word) => `${word}:*`) // Partial match for better results
+      .join(' & '); // Use AND logic
+  
     const results = await this.versesRepo.query(
-      `SELECT v."bookKey", v."chapterNo", v."verseNo", v."text", v."lang",
-              ts_rank(to_tsvector('arabic', v."text"), to_tsquery('arabic', $1)) AS rank
-       FROM "verse" v
-       WHERE v."lang" = 'ar'
-         AND v."bookKey" = ANY($2)
-         AND to_tsvector('arabic', v."textNormalized") @@ to_tsquery('arabic', $1)
-       ORDER BY rank DESC, v."bookKey", v."chapterNo", v."verseNo"`,
-      [tsQuery, scope]
+      `SELECT "bookKey", "chapterNo", "verseNo", "text", "lang"
+       FROM "verse"
+       WHERE "lang" = $1
+       AND "bookKey" = ANY($2)
+       AND "textSearch" @@ to_tsquery($3, $4)
+       ORDER BY "bookKey", "chapterNo", "verseNo"`,
+      [detectedLang, scope, pgLang, tsQuery]
     );
-
+  
     return results;
   }
-
-
+  
 
   async seed() {
     await this.seedBible(Lang.ENGLISH);
@@ -117,8 +127,6 @@ export class VersesService {
           const verseNo = +(result.at(3) as string);
           let text = result.at(4) as string;
   
-          const text = result.at(4) as string;
-
           let textNormalized = text;
           let textDiacritized = text;
 
