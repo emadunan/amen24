@@ -51,24 +51,24 @@ export class VersesService {
     if (!query.trim()) {
       throw new BadRequestException('Search query cannot be empty.');
     }
-  
+
     // Detect language using Unicode ranges
     const detectedLang = detectLanguage(query);
-  
+
     // Normalize text if needed
     let processedQuery = query;
     if (detectedLang === Lang.ARABIC) {
       processedQuery = removeArDiacritics(normalizeArText(query));
     }
-  
+
     const pgLang = this.getTsLang(detectedLang); // PostgreSQL full-text search language
-  
+
     // Convert to tsquery format for full-text search
     const tsQuery = processedQuery
-      .split(' ')
-      .map((word) => `${word}:*`) // Partial match for better results
+      .split(/\s+/) // Ensure it handles multiple spaces properly
+      .map(word => `${word}:*`) // Add wildcard for partial matching
       .join(' & '); // Use AND logic
-  
+
     const results = await this.versesRepo.query(
       `SELECT "bookKey", "chapterNo", "verseNo", "text", "lang"
        FROM "verse"
@@ -78,10 +78,10 @@ export class VersesService {
        ORDER BY "bookKey", "chapterNo", "verseNo"`,
       [detectedLang, scope, pgLang, tsQuery]
     );
-  
+
     return results;
   }
-  
+
 
   async seed() {
     await this.seedBible(Lang.ENGLISH);
@@ -126,15 +126,13 @@ export class VersesService {
           const chapterNo = +(result.at(2) as string);
           const verseNo = +(result.at(3) as string);
           let text = result.at(4) as string;
-  
+
           let textNormalized = text;
           let textDiacritized = text;
 
           if (lang === Lang.ARABIC) {
-            const textCleaned = removeArDiacritics(text);
-
-            text = textCleaned
-            textNormalized = normalizeArText(textCleaned);
+            text = removeArDiacritics(text);
+            textNormalized = normalizeArText(text);
           }
 
           const pgLang = this.getTsLang(lang);
@@ -157,14 +155,10 @@ export class VersesService {
     }
   }
 
-  private getTsLang(lang: string) {
-    switch (lang) {
-      case Lang.ENGLISH:
-        return 'english';
-      case Lang.ARABIC:
-        return 'arabic';
-      default:
-        return 'simple'; // Fallback option
-    }
+  private getTsLang(lang: Lang) {
+    return {
+      [Lang.ENGLISH]: 'english',
+      [Lang.ARABIC]: 'arabic',
+    }[lang] || 'simple'; // Fallback to 'simple'
   }
 }
