@@ -47,7 +47,7 @@ export class VersesService {
   }
 
   async findManyByQuery(query: string, scope: BookKey[]) {
-
+    
   }
 
   async seed() {
@@ -92,15 +92,16 @@ export class VersesService {
           const bookKey = bookKeyMap[bookKeySegment];
           const chapterNo = +(result.at(2) as string);
           const verseNo = +(result.at(3) as string);
-          const text = result.at(4) as string;
+          let text = result.at(4) as string;
   
           let textNormalized = text;
           let textDiacritized = text;
   
           if (lang === Lang.ARABIC) {
-            textNormalized = normalizeArText(text);
-            textDiacritized = text;
-            textNormalized = removeArDiacritics(text);
+            const textCleaned = removeArDiacritics(text);
+
+            text = textCleaned
+            textNormalized = normalizeArText(textCleaned);
           }
   
           const pgLang = this.getTsLang(lang);
