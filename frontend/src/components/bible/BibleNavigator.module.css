@@ -51,8 +51,13 @@
   align-items: center;
   position: absolute;
   top: 0.05rem;
-  left: 0.05rem;
+  right: 0.05rem;
   background-color: var(--secondary);
+}
+
+[dir="rtl"] .closeButton {
+  right: auto;
+  left: 0.05rem;
 }
 
 .closeButton {

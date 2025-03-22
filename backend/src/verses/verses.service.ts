@@ -90,7 +90,7 @@ export class VersesService {
 
   private async seedBible(lang: Lang) {
     const progressBar = new SingleBar({
-      format: `${lang.toUpperCase()} [{bar}] {percentage}% | {value}/{total} verses`,
+      format: `${lang.toUpperCase()} {bar} {percentage}% | {value}/{total} verses`,
       hideCursor: true,
     }, Presets.shades_classic);
 
@@ -148,7 +148,8 @@ export class VersesService {
         }
       }
 
-      progressBar.stop(); // Finish the progress bar
+      progressBar.stop();
+      console.log('');
     } catch (error) {
       progressBar.stop();
       console.error(`Seeding ${lang} failed: ${error.message}`);

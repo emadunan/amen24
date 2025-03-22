@@ -33,8 +33,8 @@ const BibleNavigator = () => {
     headerRef,
   );
 
-  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d{2}_[A-Z]+\/\d+\/\d+$/.test(
-    pathname,
+  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d{2}_[A-Z0-9]+\/\d+\/\d+$/.test(
+    pathname
   );
 
   const [openBook, setOpenBook] = useState<BookKey | null>(null);
