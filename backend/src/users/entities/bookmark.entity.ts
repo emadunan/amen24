@@ -1,18 +1,17 @@
 import {
   Column,
   Entity,
-  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   JoinColumn,
+  Unique,
 } from 'typeorm';
 import { Profile } from './profile.entity';
 import { BookKey } from '@amen24/shared';
-import { Chapter } from '../../chapters/entities/chapter.entity';
 
 @Entity()
-@Index(['profileEmail', 'bookKey', 'chapterNo'], { unique: true }) // Ensures a user can't bookmark the same chapter twice
+@Unique(['profileEmail', 'bookKey', 'chapterNo', 'verseNo', 'title'])
 export class Bookmark {
   @PrimaryGeneratedColumn()
   id: number;
@@ -21,7 +20,7 @@ export class Bookmark {
   title: string;
 
   @Column({ type: 'text' })
-  profileEmail: string; // Store email directly for better indexing
+  profileEmail: string;
 
   @ManyToOne(() => Profile, (profile) => profile.bookmarks, {
     onDelete: 'CASCADE',
@@ -31,20 +30,13 @@ export class Bookmark {
   profile: Profile;
 
   @Column({ type: 'text' })
-  bookKey: BookKey; // Composite FK part 1
+  bookKey: BookKey;
 
   @Column({ type: 'smallint' })
-  chapterNo: number; // Composite FK part 2
+  chapterNo: number;
 
-  @ManyToOne(() => Chapter, (chapter) => chapter.bookmarks, {
-    onDelete: 'CASCADE',
-    nullable: false,
-  })
-  @JoinColumn([
-    { name: 'bookKey', referencedColumnName: 'bookKey' },
-    { name: 'chapterNo', referencedColumnName: 'chapterNo' },
-  ])
-  chapter: Chapter;
+  @Column({ type: 'smallint' })
+  verseNo: number;
 
   @UpdateDateColumn()
   updatedAt: Date;

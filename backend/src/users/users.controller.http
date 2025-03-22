@@ -8,7 +8,24 @@ Content-Type: application/json
   "provider": "local",
   "providerId": "emadunan",
   "displayName": "Emad Younan",
-  "uiLang": "en"
+  "uiLang": "ar",
+  "bookmark": {
+    "last_read": "آخر قراءة",
+    "old_testament": "علامة العهد القديم",
+    "new_testament": "علامة العهد الجديد"
+  }
+}
+
+### Update bookmark
+PATCH http://localhost:5000/users/bookmark
+Content-Type: application/json
+
+{
+  "id": "13",
+  "bookKey": "02_EXO",
+  "chapterNo": "2",
+  "verseNo": "1",
+  "profileEmail": "emadunan@gmail.com"
 }
 
 ### Login
@@ -19,6 +36,9 @@ Content-Type: application/json
   "email": "emadunan@gmail.com",
   "password": "emadunan"
 }
+
+### Get all bookmark for user
+GET http://localhost:5000/users/bookmark
 
 ### Toggle user theme
 PATCH http://localhost:5000/users/me/theme HTTP/1.1

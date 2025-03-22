@@ -8,7 +8,6 @@ import {
   PrimaryColumn,
   JoinColumn,
 } from 'typeorm';
-import { Bookmark } from '../../users/entities/bookmark.entity';
 
 @Entity()
 export class Chapter {
@@ -27,7 +26,4 @@ export class Chapter {
 
   @OneToMany(() => Verse, (verse) => verse.chapter)
   verses: Verse[];
-
-  @OneToMany(() => Bookmark, (bookmark) => bookmark.chapter)
-  bookmarks: Bookmark[];
 }

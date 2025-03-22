@@ -25,14 +25,18 @@ import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
+import { BookmarksService } from './services/bookmarks.service';
+import { BookKey } from '@amen24/shared';
+import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly usersService: UsersService,
-    private readonly profilesService: ProfilesService,
     private readonly configService: ConfigService,
     private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+    private readonly profilesService: ProfilesService,
+    private readonly bookmarksService: BookmarksService,
   ) { }
 
   @UseGuards(JwtAuthGuard)
@@ -119,26 +123,53 @@ export class UsersController {
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     console.log(createUserDto);
 
-    const existUser = await this.usersService.findOneByEmailProvider(
-      createUserDto.email,
-      createUserDto.provider,
-    );
+    const { email, provider, uiLang, bookmark } = createUserDto;
 
+    // Check if the user already exists
+    const existUser = await this.usersService.findOneByEmailProvider(email, provider);
     if (existUser) throw new ConflictException('userDuplication');
 
-    const profile = await this.profilesService.create({
-      email: createUserDto.email,
-      uiLang: createUserDto.uiLang,
-    });
-
-    await this.profilesService.updateLastLogin(profile.email);
-
+    // Create profile
+    const profile = await this.profilesService.create({ email, uiLang });
     if (!profile) throw new NotFoundException('profileNotFound');
 
+    await this.profilesService.updateLastLogin(email);
+
+    // Create user
     await this.usersService.create(createUserDto);
+
+    // Default bookmarks
+    const bookmarks = [
+      { title: bookmark.last_read, bookKey: "01_GEN" as BookKey, chapterNo: 1, verseNo: 1 },
+      { title: bookmark.old_testament, bookKey: "01_GEN" as BookKey, chapterNo: 1, verseNo: 1 },
+      { title: bookmark.new_testament, bookKey: "40_MAT" as BookKey, chapterNo: 1, verseNo: 1 },
+    ];
+
+    await Promise.all(
+      bookmarks.map((bm) =>
+        this.bookmarksService.create({ profileEmail: email, ...bm })
+      )
+    );
 
     return res.redirect(307, '/users/local-login');
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get("bookmark")
+  async getUserBookmarks(@UserParam() user: User) {
+    return this.bookmarksService.getAll(user.email);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch("bookmark")
+  async updateBookmark(@UserParam() user: User, @Body() body: Omit<UpdateBookmarkDto, "title"> & { id: number }) {
+    const { id, profileEmail, ...rest } = body;
+
+    if (user.email !== profileEmail) throw new UnauthorizedException("unauthorizedAccess");
+
+    return await this.bookmarksService.update(+id, { ...rest });
+  }
+
 
   @UseGuards(JwtAuthGuard)
   @Get()

@@ -7,6 +7,7 @@ import { User } from './entities/user.entity';
 import { Profile } from './entities/profile.entity';
 import { AuthModule } from '../auth/auth.module';
 import { Bookmark } from './entities/bookmark.entity';
+import { BookmarksService } from './services/bookmarks.service';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { Bookmark } from './entities/bookmark.entity';
     forwardRef(() => AuthModule),
   ],
   controllers: [UsersController],
-  providers: [UsersService, ProfilesService],
+  providers: [UsersService, ProfilesService, BookmarksService],
   exports: [UsersService, ProfilesService],
 })
 export class UsersModule {}

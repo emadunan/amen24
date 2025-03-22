@@ -34,7 +34,7 @@ const BibleNavigator = () => {
   );
 
   const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d{2}_[A-Z0-9]+\/\d+\/\d+$/.test(
-    pathname
+    pathname,
   );
 
   const [openBook, setOpenBook] = useState<BookKey | null>(null);

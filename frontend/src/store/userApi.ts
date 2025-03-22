@@ -5,6 +5,15 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 type UserLogin = Pick<User, "email" | "password">;
 
+type UserSignup = Partial<User> & {
+  uiLang: Lang;
+  bookmark: {
+    last_read: string;
+    old_testament: string;
+    new_testament: string;
+  };
+};
+
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
@@ -17,7 +26,7 @@ export const userApi = createApi({
       query: () => "/me",
       providesTags: ["User"],
     }),
-    signup: builder.mutation<void, Partial<User> & { uiLang: Lang }>({
+    signup: builder.mutation<void, UserSignup>({
       query: (user) => ({
         url: "/",
         method: "POST",

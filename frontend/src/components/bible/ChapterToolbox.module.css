@@ -52,3 +52,11 @@
 .toolboxContainer button:hover {
   background-color: var(--background-hover);
 }
+
+.bookmarks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.4rem;
+  background-color: var(--background-hover);
+}

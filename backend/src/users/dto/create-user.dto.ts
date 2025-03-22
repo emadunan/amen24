@@ -2,6 +2,7 @@ import { AuthProvider, Lang } from '@amen24/shared';
 import {
   IsBoolean,
   IsEmail,
+  IsObject,
   IsOptional,
   IsString,
   MinLength,
@@ -34,4 +35,11 @@ export class CreateUserDto {
   @IsOptional()
   photoUri?: string;
 
+
+  @IsObject()
+  bookmark: {
+    last_read: string,
+    old_testament: string,
+    new_testament: string,
+  }
 }

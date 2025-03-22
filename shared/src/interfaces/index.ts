@@ -3,3 +3,4 @@ export * from "./Chapter";
 export * from "./Verse";
 export * from "./Profile";
 export * from "./User";
+export * from "./Bookmark";

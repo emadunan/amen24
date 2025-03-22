@@ -26,6 +26,11 @@
     "signup": "Sign-up",
     "signup-invite": "Don't have an account? Sign up now and get started!"
   },
+  "bookmark": {
+    "last_read": "Last Read",
+    "old_testament": "Old Testament Marker",
+    "new_testament": "New Testament Marker"
+  },
   "userMenu": {
     "favorite": "Favorite",
     "settings": "Settings",
@@ -65,6 +70,7 @@
     "userNotFound": "User not found.",
     "profileNotFound": "Profile not found.",
     "invalidPassword": "The password you entered is incorrect. Please try again or reset your password if you've forgotten it.",
-    "passwordMismatch": "Password and confirm password do not match."
+    "passwordMismatch": "Password and confirm password do not match.",
+    "unauthorizedAccess": "You are not authorized to access this resource. Please log in with the correct credentials."
   }
 }

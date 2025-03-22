@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { userApi } from "./userApi";
 import searchReducer from "./searchSlice";
 import navigatorReducer from "./navigatorSlice";
+import { bookmarkApi } from "./bookmarkApi";
 
 export const MakeStore = () => {
   const store = configureStore({
@@ -9,9 +10,12 @@ export const MakeStore = () => {
       navigator: navigatorReducer,
       search: searchReducer,
       [userApi.reducerPath]: userApi.reducer,
+      [bookmarkApi.reducerPath]: bookmarkApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(userApi.middleware),
+      getDefaultMiddleware()
+        .concat(userApi.middleware)
+        .concat(bookmarkApi.middleware),
   });
 
   return store;

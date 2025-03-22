@@ -47,6 +47,11 @@ const LocalSignup = () => {
         displayName: finalDisplayName,
         isActive: true,
         uiLang: i18n.language as Lang,
+        bookmark: {
+          last_read: t("bookmark.last_read"),
+          new_testament: t("bookmark.new_testament"),
+          old_testament: t("bookmark.old_testament"),
+        },
       }).unwrap();
 
       router.replace("/");
