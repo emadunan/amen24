@@ -25,13 +25,17 @@ export const bookmarkApi = createApi({
     }),
     updateBookmark: builder.mutation<
       void,
-      Omit<Bookmark, "title" | "profile" | "profileEmail">
+      Omit<Bookmark, "title" | "profile" | "updatedAt">
     >({
-      query: (bookmark) => ({
-        url: "",
-        method: "PATCH",
-        body: bookmark,
-      }),
+      query: (bookmark) => {
+        console.log(bookmark);
+
+        return {
+          url: "/",
+          method: "PATCH",
+          body: bookmark,
+        };
+      },
       invalidatesTags: ["Bookmark"],
     }),
     deleteBookmark: builder.mutation<void, void>({

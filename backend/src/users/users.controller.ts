@@ -13,6 +13,7 @@ import {
   Res,
   ConflictException,
   UnauthorizedException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -141,8 +142,6 @@ export class UsersController {
     // Default bookmarks
     const bookmarks = [
       { title: bookmark.last_read, bookKey: "01_GEN" as BookKey, chapterNo: 1, verseNo: 1 },
-      { title: bookmark.old_testament, bookKey: "01_GEN" as BookKey, chapterNo: 1, verseNo: 1 },
-      { title: bookmark.new_testament, bookKey: "40_MAT" as BookKey, chapterNo: 1, verseNo: 1 },
     ];
 
     await Promise.all(
@@ -168,6 +167,12 @@ export class UsersController {
     if (user.email !== profileEmail) throw new UnauthorizedException("unauthorizedAccess");
 
     return await this.bookmarksService.update(+id, { ...rest });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('bookmark/:id')
+  removeBookmark(@UserParam() user: User, @Param('id', ParseIntPipe) id: number) {
+    return this.bookmarksService.delete(id, user.email);
   }
 
 

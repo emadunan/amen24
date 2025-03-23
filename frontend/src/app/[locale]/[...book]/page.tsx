@@ -7,6 +7,7 @@ import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import HighlightVerse from "@/components/bible/VerseHighlight";
 import ChapterContent from "@/components/bible/ChapterContent";
 import ChapterTitleAction from "@/components/bible/ChapterTitleAction";
+import { MdPushPin } from "react-icons/md";
 
 const apiUrl = process.env.API_URL;
 
@@ -83,7 +84,11 @@ const BookPage: FC<Props> = async ({ params }) => {
             return (
               <Fragment key={v.verseNo}>
                 {" "}
-                <HighlightVerse verseNo={v.verseNo}>
+                <HighlightVerse
+                  verseNo={v.verseNo}
+                  chapterNo={+chapterNo}
+                  bookKey={bookKey as BookKey}
+                >
                   <p className={styles.verse}>
                     <span className={styles.verseNumber}>
                       {formattedVerseNo}

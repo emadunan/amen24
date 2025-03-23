@@ -18,7 +18,7 @@ export class BookmarksService {
 
     const bookmarkCount = await this.bookmarksRepo.count({ where: { profileEmail } });
 
-    if (bookmarkCount >= 3) throw new BadRequestException('bookmarkExceedLimit');
+    if (bookmarkCount >= 1) throw new BadRequestException('bookmarkExceedLimit');
 
     const bookmark = this.bookmarksRepo.create(bookmarkDto);
 
@@ -33,5 +33,13 @@ export class BookmarksService {
     Object.assign(bookmark, bookmarkDto);
 
     return await this.bookmarksRepo.save(bookmark);
+  }
+
+  async delete(id: number, profileEmail: string) {
+    const bookmark = await this.bookmarksRepo.findOneBy({ id, profileEmail });
+
+    if (!bookmark) throw new NotFoundException("bookmarkNotFound");
+
+    await this.bookmarksRepo.delete(id);
   }
 }

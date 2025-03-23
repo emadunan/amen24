@@ -9,8 +9,8 @@ type UserSignup = Partial<User> & {
   uiLang: Lang;
   bookmark: {
     last_read: string;
-    old_testament: string;
-    new_testament: string;
+    old_testament?: string;
+    new_testament?: string;
   };
 };
 

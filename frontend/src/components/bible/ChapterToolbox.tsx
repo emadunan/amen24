@@ -1,18 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./ChapterToolbox.module.css";
-import { FaCopy, FaEraser, FaStar, FaBookmark } from "react-icons/fa";
+import {
+  FaCopy,
+  FaEraser,
+  FaStar,
+  FaBookmark,
+  FaTrash,
+  FaPen,
+} from "react-icons/fa";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
 import { useDraggable } from "@/hooks/useDraggable";
-import { Bookmark } from "@amen24/shared";
-import { useGetUserBookmarksQuery } from "@/store/bookmarkApi";
+import { BookKey, formatNumber, Lang } from "@amen24/shared";
+import {
+  useGetUserBookmarksQuery,
+  useUpdateBookmarkMutation,
+} from "@/store/bookmarkApi";
+import { useGetMeQuery } from "@/store/userApi";
+import { showToast } from "@/utils/toast";
+import { useParams } from "next/navigation";
 
 const ChapterToolbox = () => {
-  const { clearHighlighted, copyHighlighted } = useHighlightContext();
-  const { t, i18n } = useTranslation();
+  const { clearHighlighted, copyHighlighted, highlighted } =
+    useHighlightContext();
+  const { t, i18n } = useTranslation(["book"]);
   const headerRef = useRef<HTMLDivElement | null>(null);
+  const [updateBookmark, { isSuccess }] = useUpdateBookmarkMutation();
+  const params = useParams<{ book: [BookKey, string, string] }>();
+  const [bookKey, chapterNo] = params.book;
 
   const { position, handleMouseDown, elementRef } = useDraggable(
     5,
@@ -24,10 +41,25 @@ const ChapterToolbox = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const { data: user } = useGetMeQuery();
   const { data: bookmarks } = useGetUserBookmarksQuery();
 
   function toggleBook() {
     setIsOpen((prev) => !prev);
+  }
+
+  function handleUpdateBookmark(bookmarkId: number, profileEmail: string) {
+    if (highlighted.length > 1) {
+      showToast(t("error.highlightSingleVerseOnly"), "error");
+    }
+
+    updateBookmark({
+      id: bookmarkId,
+      profileEmail,
+      bookKey,
+      chapterNo: +chapterNo,
+      verseNo: highlighted[0],
+    });
   }
 
   const toolboxComponent = (
@@ -52,15 +84,52 @@ const ChapterToolbox = () => {
         <button>
           <FaStar /> {t("toolbox.addToFavorites")}
         </button>
-        <button onClick={toggleBook}>
-          <FaBookmark />
-          وضع علامة كتاب
-        </button>
+        {user && (
+          <button onClick={toggleBook}>
+            <FaBookmark /> {t("toolbox.bookmark")}
+          </button>
+        )}
+
         {isOpen && (
           <div className={styles.bookmarks}>
-            {bookmarks?.map((bookmark) => (
-              <button key={bookmark.id}>{bookmark.title}</button>
-            ))}
+            {bookmarks
+              ?.slice() // Avoid mutating the original array
+              .sort(
+                (a, b) =>
+                  new Date(b.updatedAt).getTime() -
+                  new Date(a.updatedAt).getTime(),
+              )
+              .map((bookmark) => {
+                const formattedChapterNo = formatNumber(
+                  bookmark.chapterNo,
+                  i18n.language as Lang,
+                );
+                const formattedVerseNo = formatNumber(
+                  bookmark.verseNo,
+                  i18n.language as Lang,
+                );
+                return (
+                  <button
+                    key={bookmark.id}
+                    className={styles.bookmarkButton}
+                    onClick={handleUpdateBookmark.bind(
+                      this,
+                      bookmark.id,
+                      bookmark.profileEmail,
+                    )}
+                  >
+                    <div className={styles.bookmarkContent}>
+                      <span className={styles.bookmarkTitle}>
+                        {bookmark.title}
+                      </span>
+                      <span className={styles.bookmarkRef}>
+                        {t(bookmark.bookKey)} {formattedChapterNo} :{" "}
+                        {formattedVerseNo}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
             {bookmarks?.length! <= 2 && <button>إنشاء علامة جديدة</button>}
           </div>
         )}

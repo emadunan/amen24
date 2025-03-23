@@ -20,7 +20,7 @@ const AppLogo = () => {
   useEffect(() => {
     if (user) {
       // If user is logged in, use backend preference
-      setIsDarkMode(user.themeMode === ThemeMode.DARK);
+      setIsDarkMode(user.profile.themeMode === ThemeMode.DARK);
       localStorage.removeItem(LOCAL_STORAGE_KEY); // Remove stored theme to avoid conflicts
     } else {
       // If user is not logged in, use localStorage preference

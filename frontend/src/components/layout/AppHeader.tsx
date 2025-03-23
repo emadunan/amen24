@@ -10,10 +10,11 @@ import LanguageChanger from "../ui/LanguageSelector";
 import LoginButton from "../profile/LoginLink";
 import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
-import { BookKey, UserProfile } from "@amen24/shared";
+import { BookKey, User } from "@amen24/shared";
 import UserMenu from "../profile/UserMenu";
 import { useGetMeQuery } from "@/store/userApi";
 import Spinner from "../ui/Spinner";
+import { FaRegBookmark } from "react-icons/fa6";
 
 const AppLogo = dynamic(() => import("./AppLogo"), {
   ssr: false,
@@ -25,7 +26,7 @@ const AppLogo = dynamic(() => import("./AppLogo"), {
 });
 
 interface Props {
-  user?: UserProfile;
+  user?: User;
 }
 
 const AppHeader: FC<Props> = () => {
@@ -92,6 +93,7 @@ const AppHeader: FC<Props> = () => {
           {showLogin && <LoginButton />}
           {showUserMenu && <UserMenu user={user} />}
         </div>
+        <div className={styles.today}>{new Date().toDateString()}</div>
       </nav>
     </header>
   );
