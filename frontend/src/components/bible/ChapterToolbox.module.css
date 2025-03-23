@@ -36,7 +36,7 @@
   background: var(--background);
   color: var(--text);
   border: none;
-  padding: 8px 12px;
+  padding: .4rem .6rem;
   border-radius: 2px;
   cursor: pointer;
   font-family: "amiri";
@@ -53,29 +53,29 @@
   background-color: var(--background-hover);
 }
 
-.bookmarks {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  padding: 0.4rem;
-  background-color: var(--background-hover);
-}
-
-.bookmarkButton {
-  padding: 0rem 0.5rem !important;
-  border: 1px solid var(--gray) !important;
+.bookmark {
+  padding: .2rem .5rem !important;
 }
 
 .bookmarkContent {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  align-items: flex-start;
 }
 
 .bookmarkTitle {
-  border-bottom: 1px solid var(--gray);
+  border-bottom: 1px solid var(--primary);
+  line-height: 1.2rem;
+  width: 100%;
+  text-align: start;
+  white-space: none;
 }
 
 .bookmarkRef {
-  text-align: center;
+  font-size: 0.7rem;
+  line-height: 1rem;
+  color: var(--text-secondary); /* Use a lighter text color */
+  opacity: 0.8; /* Reduce emphasis */
+  margin-top: 0.2rem;
+  white-space: none;
 }
