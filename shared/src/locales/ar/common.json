@@ -53,7 +53,8 @@
     "addToFavorites": "إضافة إلى المفضلة",
     "bookmark": "حفظ كاخر قرائة",
     "clearHighlighting": "إزالة التظليل",
-    "copiedToClipboard": "تم النسخ إلى الحافظة"
+    "copiedToClipboard": "تم النسخ إلى الحافظة",
+    "lastReadSaved": "تم حفظ الآية كآخر قراءة بنجاح! 📖✅"
   },
   "footer": {
     "copyright": "Amen24. جميعُ الحقوقِ محفوظةٌ.",

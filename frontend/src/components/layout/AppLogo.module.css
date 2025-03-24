@@ -1,3 +1,4 @@
 .logo {
   position: absolute;
+  z-index: 33;
 }

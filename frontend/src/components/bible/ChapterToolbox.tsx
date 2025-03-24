@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./ChapterToolbox.module.css";
 import { FaCopy, FaEraser, FaStar } from "react-icons/fa";
 import { MdPushPin } from "react-icons/md";
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
 import { useDraggable } from "@/hooks/useDraggable";
-import { BookKey, formatNumber, Lang } from "@amen24/shared";
+import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
 import {
   useGetUserLastReadBookmarkQuery,
   useUpdateBookmarkMutation,
@@ -36,7 +36,16 @@ const ChapterToolbox = () => {
   const { data: user } = useGetMeQuery();
   const { data: bookmark } = useGetUserLastReadBookmarkQuery();
 
-  function handleUpdateBookmark(bookmarkId?: number, profileEmail?: string) {
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  async function handleUpdateBookmark(
+    bookmarkId?: number,
+    profileEmail?: string,
+  ) {
     const lastHighlighted = highlighted.at(-1);
 
     if (!lastHighlighted) {
@@ -50,13 +59,18 @@ const ChapterToolbox = () => {
     }
 
     try {
-      updateBookmark({
+      await updateBookmark({
         id: bookmarkId,
         profileEmail,
         bookKey,
         chapterNo: Number(chapterNo),
         verseNo: lastHighlighted,
       });
+
+      showToast(
+        `(${t(bookKey)} ${formatNumber(+chapterNo, i18n.language as Lang)} : ${formatNumber(lastHighlighted, i18n.language as Lang)}) ${t("toolbox.lastReadSaved")}`,
+        "success",
+      );
     } catch (error) {
       if (error instanceof Error && error.message === "unauthorizedAccess") {
         showToast("unauthorizedAccess", "error");
@@ -94,13 +108,13 @@ const ChapterToolbox = () => {
             className={styles.bookmark}
             onClick={handleUpdateBookmark.bind(this, bookmark?.id, user?.email)}
           >
-            <MdPushPin size="1.2rem" />
+            {isClient && <MdPushPin size="1.2rem" />}
             <div className={styles.bookmarkContent}>
               <p className={styles.bookmarkTitle}>{t("toolbox.bookmark")}</p>
               {bookmark && (
                 <small className={styles.bookmarkRef}>
-                  {t(bookmark.bookKey)}{" "}
-                  ({formatNumber(bookmark.chapterNo, i18n.language as Lang)} :{" "}
+                  {t(bookmark.bookKey)} (
+                  {formatNumber(bookmark.chapterNo, i18n.language as Lang)} :{" "}
                   {formatNumber(bookmark.verseNo, i18n.language as Lang)})
                 </small>
               )}

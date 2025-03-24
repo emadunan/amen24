@@ -53,7 +53,8 @@
     "addToFavorites": "Add to Favorites",
     "bookmark": "Save As Last Read",
     "clearHighlighting": "Clear Highlighting",
-    "copiedToClipboard": "Copied to clipboard"
+    "copiedToClipboard": "Copied to clipboard",
+    "lastReadSaved": "bookmarked as last read successfully! 📖✅"
   },
   "footer": {
     "copyright": "Amen24. All rights reserved.",

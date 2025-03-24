@@ -16,7 +16,7 @@ import { useGetMeQuery } from "@/store/userApi";
 import Spinner from "../ui/Spinner";
 import { FaRegBookmark } from "react-icons/fa6";
 import Bookmark from "../ui/Bookmark";
-import DateDisplay from '../ui/DateDisplay'
+import DateDisplay from "../ui/DateDisplay";
 
 const AppLogo = dynamic(() => import("./AppLogo"), {
   ssr: false,

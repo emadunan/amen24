@@ -36,7 +36,7 @@
   background: var(--background);
   color: var(--text);
   border: none;
-  padding: .4rem .6rem;
+  padding: 0.4rem 0.6rem;
   border-radius: 2px;
   cursor: pointer;
   font-family: "amiri";
@@ -54,7 +54,7 @@
 }
 
 .bookmark {
-  padding: .2rem .5rem !important;
+  padding: 0.2rem 0.5rem !important;
 }
 
 .bookmarkContent {
