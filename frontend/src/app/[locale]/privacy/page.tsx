@@ -73,14 +73,8 @@ export default function PrivacyPolicy() {
         <h2 className={styles.sectionTitle}>{t("contact.title")}</h2>
         <p className={styles.text}>
           Email:{" "}
-          <a href="mailto:emadunan@gmail.com" className={styles.link}>
-            emadunan@gmail.com
-          </a>
-        </p>
-        <p className={styles.text}>
-          Phone:{" "}
-          <a href="tel:+201003379933" className={styles.link}>
-            +201003379933
+          <a href="mailto:support@amen24.org" className={styles.link}>
+            support@amen24.org
           </a>
         </p>
       </section>
