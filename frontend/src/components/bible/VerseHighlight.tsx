@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useHighlightContext } from "./ChapterContent";
 import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { MdPushPin } from "react-icons/md";
-import { useGetUserBookmarksQuery } from "@/store/bookmarkApi";
+import { useGetUserLastReadBookmarkQuery } from "@/store/bookmarkApi";
 import { BookKey } from "@amen24/shared";
 
 interface Props {
@@ -27,7 +27,7 @@ const VerseHighlight: FC<Props> = ({
   // Ensure it only runs once
   const isFirstLoad = useRef(true);
 
-  const { data: bookmarks } = useGetUserBookmarksQuery();
+  const { data: bookmark } = useGetUserLastReadBookmarkQuery();
 
   useEffect(() => {
     if (isFirstLoad.current) {
@@ -45,12 +45,10 @@ const VerseHighlight: FC<Props> = ({
     }
   }, []);
 
-  const isBookmarked = bookmarks?.some(
-    (bookmark) =>
-      bookmark.bookKey === bookKey &&
-      bookmark.chapterNo === chapterNo &&
-      bookmark.verseNo === verseNo,
-  );
+  const isBookmarked =
+    bookmark?.bookKey === bookKey &&
+    bookmark?.chapterNo === chapterNo &&
+    bookmark?.verseNo === verseNo;
 
   return (
     <div

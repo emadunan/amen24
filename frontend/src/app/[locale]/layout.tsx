@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "Amen24 is a free non-profitable project to introduce bible content for all",
 };
 
-const i18nNamespaces = ["common", "book", "lang", "ui", "privacy", "terms"];
+const i18nNamespaces = ["common", "book", "lang", "ui", "privacy", "terms", "month"];
 
 export function generateStaticParams() {
   return i18nConfig.locales.map((locale) => ({ locale }));

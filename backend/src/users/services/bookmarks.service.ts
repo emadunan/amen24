@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Bookmark } from '../entities/bookmark.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateBookmarkDto } from '../dto/create-bookmark.dto';
 import { UpdateBookmarkDto } from '../dto/update-bookmark.dto';
 
@@ -11,6 +11,11 @@ export class BookmarksService {
 
   async getAll(profileEmail: string) {
     return await this.bookmarksRepo.findBy({ profileEmail });
+  }
+
+  async getOne(profileEmail: string) {
+    const lastRead = ["Last Read", "آخر قراءة"]
+    return await this.bookmarksRepo.findOneBy({ profileEmail, title: In(lastRead) });
   }
 
   async create(bookmarkDto: CreateBookmarkDto) {

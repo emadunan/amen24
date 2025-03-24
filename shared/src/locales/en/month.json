@@ -1,0 +1,46 @@
+{
+  "gregorian": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  },
+  "coptic": {
+    "1": "Thout",
+    "2": "Paopi",
+    "3": "Hathor",
+    "4": "Koiak",
+    "5": "Tobi",
+    "6": "Meshir",
+    "7": "Paremhotep",
+    "8": "Parmoute",
+    "9": "Pashons",
+    "10": "Paoni",
+    "11": "Epip",
+    "12": "Mesori",
+    "13": "Pi Kogi Enavot"
+  },
+  "hebrew": {
+    "1": "Nisan",
+    "2": "Iyar",
+    "3": "Sivan",
+    "4": "Tammuz",
+    "5": "Av",
+    "6": "Elul",
+    "7": "Tishrei",
+    "8": "Cheshvan",
+    "9": "Kislev",
+    "10": "Tevet",
+    "11": "Shevat",
+    "12": "Adar",
+    "13": "Adar II"
+  }
+}

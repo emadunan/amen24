@@ -74,13 +74,3 @@
 .active {
   color: var(--text);
 }
-
-.today {
-  position: absolute;
-  top: 4rem;
-  left: 2rem;
-  background-color: var(--background);
-  padding: 0rem 1rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-}

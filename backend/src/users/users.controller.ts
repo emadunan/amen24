@@ -155,8 +155,8 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get("bookmark")
-  async getUserBookmarks(@UserParam() user: User) {
-    return this.bookmarksService.getAll(user.email);
+  async getUserLastReadBookmark(@UserParam() user: User) {
+    return this.bookmarksService.getOne(user.email);
   }
 
   @UseGuards(JwtAuthGuard)

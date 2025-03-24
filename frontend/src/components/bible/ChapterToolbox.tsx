@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import styles from "./ChapterToolbox.module.css";
 import { FaCopy, FaEraser, FaStar } from "react-icons/fa";
 import { MdPushPin } from "react-icons/md";
@@ -9,7 +9,7 @@ import { createPortal } from "react-dom";
 import { useDraggable } from "@/hooks/useDraggable";
 import { BookKey, formatNumber, Lang } from "@amen24/shared";
 import {
-  useGetUserBookmarksQuery,
+  useGetUserLastReadBookmarkQuery,
   useUpdateBookmarkMutation,
 } from "@/store/bookmarkApi";
 import { useGetMeQuery } from "@/store/userApi";
@@ -34,20 +34,36 @@ const ChapterToolbox = () => {
   );
 
   const { data: user } = useGetMeQuery();
-  const { data: bookmarks } = useGetUserBookmarksQuery();
+  const { data: bookmark } = useGetUserLastReadBookmarkQuery();
 
-  function handleUpdateBookmark(bookmarkId: number, profileEmail: string) {
-    const lastHighlighted = highlighted.at(highlighted.length - 1);
+  function handleUpdateBookmark(bookmarkId?: number, profileEmail?: string) {
+    const lastHighlighted = highlighted.at(-1);
 
-    if (!lastHighlighted) return;
+    if (!lastHighlighted) {
+      showToast("highlightVerse", "error");
+      return;
+    }
 
-    updateBookmark({
-      id: bookmarkId,
-      profileEmail,
-      bookKey,
-      chapterNo: +chapterNo,
-      verseNo: lastHighlighted,
-    });
+    if (!bookmarkId || !profileEmail) {
+      showToast("unauthorizedAccess", "error");
+      return;
+    }
+
+    try {
+      updateBookmark({
+        id: bookmarkId,
+        profileEmail,
+        bookKey,
+        chapterNo: Number(chapterNo),
+        verseNo: lastHighlighted,
+      });
+    } catch (error) {
+      if (error instanceof Error && error.message === "unauthorizedAccess") {
+        showToast("unauthorizedAccess", "error");
+      } else {
+        showToast("unknownError", "error");
+      }
+    }
   }
 
   const toolboxComponent = (
@@ -70,31 +86,27 @@ const ChapterToolbox = () => {
           <FaCopy /> {t("toolbox.copy")}
         </button>
 
-        <button>
+        {/* <button>
           <FaStar /> {t("toolbox.addToFavorites")}
-        </button>
-        <button
-          className={styles.bookmark}
-          onClick={() => {
-            const firstBookmark = bookmarks?.at(0);
-            if (firstBookmark && user) {
-              handleUpdateBookmark(firstBookmark.id, user.email);
-            } else {
-              showToast(t("error.noBookmarksAvailable"), "error");
-            }
-          }}
-        >
-          <MdPushPin size="1.2rem"/>
-          <div className={styles.bookmarkContent}>
-            <p className={styles.bookmarkTitle}>{t("toolbox.bookmark")}</p>
-            <small className={styles.bookmarkRef}>
-              {t(bookmarks!.at(0)!.bookKey)}{" "}
-              ({formatNumber(bookmarks!.at(0)!.chapterNo, i18n.language as Lang)} :{" "}
-              {formatNumber(bookmarks!.at(0)!.verseNo, i18n.language as Lang)})
-            </small>
-          </div>
-        </button>
-
+        </button> */}
+        {user && (
+          <button
+            className={styles.bookmark}
+            onClick={handleUpdateBookmark.bind(this, bookmark?.id, user?.email)}
+          >
+            <MdPushPin size="1.2rem" />
+            <div className={styles.bookmarkContent}>
+              <p className={styles.bookmarkTitle}>{t("toolbox.bookmark")}</p>
+              {bookmark && (
+                <small className={styles.bookmarkRef}>
+                  {t(bookmark.bookKey)}{" "}
+                  ({formatNumber(bookmark.chapterNo, i18n.language as Lang)} :{" "}
+                  {formatNumber(bookmark.verseNo, i18n.language as Lang)})
+                </small>
+              )}
+            </div>
+          </button>
+        )}
         <button onClick={clearHighlighted}>
           <FaEraser /> {t("toolbox.clearHighlighting")}
         </button>

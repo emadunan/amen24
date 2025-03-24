@@ -15,7 +15,8 @@ import UserMenu from "../profile/UserMenu";
 import { useGetMeQuery } from "@/store/userApi";
 import Spinner from "../ui/Spinner";
 import { FaRegBookmark } from "react-icons/fa6";
-import Bookmark from "../bible/Bookmark";
+import Bookmark from "../ui/Bookmark";
+import DateDisplay from '../ui/DateDisplay'
 
 const AppLogo = dynamic(() => import("./AppLogo"), {
   ssr: false,
@@ -94,7 +95,7 @@ const AppHeader: FC<Props> = () => {
           {showLogin && <LoginButton />}
           {showUserMenu && <UserMenu user={user} />}
         </div>
-        <div className={styles.today}>{new Date().toDateString()}</div>
+        <DateDisplay />
         <Bookmark />
       </nav>
     </header>

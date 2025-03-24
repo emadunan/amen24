@@ -11,7 +11,7 @@ export const bookmarkApi = createApi({
   }),
   tagTypes: ["Bookmark"],
   endpoints: (builder) => ({
-    getUserBookmarks: builder.query<Bookmark[], void>({
+    getUserLastReadBookmark: builder.query<Bookmark, void>({
       query: () => "",
       providesTags: ["Bookmark"],
     }),
@@ -49,5 +49,5 @@ export const bookmarkApi = createApi({
   }),
 });
 
-export const { useGetUserBookmarksQuery, useUpdateBookmarkMutation } =
+export const { useGetUserLastReadBookmarkQuery, useUpdateBookmarkMutation } =
   bookmarkApi;

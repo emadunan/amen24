@@ -73,6 +73,7 @@
     "invalidPassword": "The password you entered is incorrect. Please try again or reset your password if you've forgotten it.",
     "passwordMismatch": "Password and confirm password do not match.",
     "unauthorizedAccess": "You are not authorized to access this resource. Please log in with the correct credentials.",
+    "highlightVerse": "You must highlight verse to update your last reading bookmark.",
     "highlightSingleVerseOnly": "You can only update a bookmark with a single verse. Please highlight only one verse before updating your bookmark."
   }
 }
