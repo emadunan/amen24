@@ -3,6 +3,27 @@ Amen24 is a free non-profitable project to introduce bible content for all.
 
 ## Setup development environment
 
+#### Show the git branch with colours in Bash prompt
+``` bash
+# Replace:
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+
+# With:
+# Add git branch if its present to PS1
+parse_git_branch() {
+ git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+if [ "$color_prompt" = yes ]; then
+ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]$(parse_git_branch)\[\033[00m\]\$ '
+else
+ PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '
+fi
+```
+
 ####  Install database engine locally and configure it
 ``` bash
 sudo apt update     # Update apt repository
@@ -75,15 +96,3 @@ git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d
 ``` bash
 pnpm config set node-linker=hoisted --location project
 ```
-
-## Amen24 project structure
-/backend # NestJS backend (API)
-/mobile # React Native mobile app
-/README.md # Project overview and documentation
-
-/frontend # Next.js frontend (website)
-/shared # Shared code (types, utilities, etc.)
-/scripts # Scripts for deployment, build, etc.
-/docker # Docker configuration files (if using Docker)
-/package.json # Root-level package file (for shared tools or workspaces)
-/tsconfig.json # Root-level TypeScript configuration (if using workspaces)
