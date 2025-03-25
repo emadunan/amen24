@@ -58,7 +58,7 @@ export class UsersController {
       httpOnly: true,
       secure:
         this.configService.getOrThrow<string>('NODE_ENV') === 'production',
-      maxAge: 60 * 60 * 1000,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
     res.json({ message: 'Logged in sucessfully' });
@@ -89,7 +89,7 @@ export class UsersController {
       httpOnly: true,
       secure:
         this.configService.getOrThrow<string>('NODE_ENV') === 'production',
-      maxAge: 60 * 60 * 1000,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
     res.json({ message: 'User profile has been successfully updated' });
@@ -114,7 +114,7 @@ export class UsersController {
       httpOnly: true,
       secure:
         this.configService.getOrThrow<string>('NODE_ENV') === 'production',
-      maxAge: 60 * 60 * 1000,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
     res.json({ message: 'User profile has been successfully updated' });
