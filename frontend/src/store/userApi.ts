@@ -49,6 +49,14 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+    resetPassword: builder.mutation<{ message: string }, { oldPassword: string, newPassword: string }>({
+      query: (body) => ({
+        url: "/me/password",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["User"],
+    }),
     toggleTheme: builder.mutation<void, void>({
       query: () => ({
         url: "/me/theme",
@@ -82,4 +90,5 @@ export const {
   useToggleThemeMutation,
   useChangeLangMutation,
   useDeleteAccountMutation,
+  useResetPasswordMutation,
 } = userApi;

@@ -15,6 +15,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url)); // Redirect to home page
   }
 
+  if (!isLoggedIn && pathname.endsWith("/reset-password")) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   return i18nRouter(request, i18nConfig);
 }
 

@@ -23,7 +23,7 @@ export class Profile {
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
-  
+
   @UpdateDateColumn({ type: 'timestamptz', nullable: true })
   lastLogin: Date;
 

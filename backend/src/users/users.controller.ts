@@ -38,7 +38,7 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
-  ) { }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
@@ -77,6 +77,33 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Patch('me/password')
+  async resetPassword(
+    @UserParam() reqUser: User,
+    @Body() body: { oldPassword: string; newPassword: string },
+    @Res() res: Response,
+  ) {
+    const { oldPassword, newPassword } = body;
+
+    const user = await this.usersService.resetPassword(
+      reqUser.id,
+      oldPassword,
+      newPassword,
+    );
+
+    const { access_token } = await this.authService.generateAccessToken(user);
+
+    res.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure:
+        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    res.json({ message: 'passwordUpdated' });
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Patch('me/theme')
   async toggleTheme(@UserParam() user: User, @Res() res: Response) {
     const userProfile = await this.profilesService.toggleTheme(user.email);
@@ -104,7 +131,10 @@ export class UsersController {
   ) {
     if (!user) throw new UnauthorizedException();
 
-    const updatedUser = await this.profilesService.changeLang(user.email, body.uiLang);
+    const updatedUser = await this.profilesService.changeLang(
+      user.email,
+      body.uiLang,
+    );
 
     const { access_token } = await this.authService.generateAccessToken(
       updatedUser!,
@@ -127,7 +157,10 @@ export class UsersController {
     const { email, provider, uiLang, bookmark } = createUserDto;
 
     // Check if the user already exists
-    const existUser = await this.usersService.findOneByEmailProvider(email, provider);
+    const existUser = await this.usersService.findOneByEmailProvider(
+      email,
+      provider,
+    );
     if (existUser) throw new ConflictException('userDuplication');
 
     // Create profile
@@ -141,40 +174,51 @@ export class UsersController {
 
     // Default bookmarks
     const bookmarks = [
-      { title: bookmark.last_read, bookKey: "01_GEN" as BookKey, chapterNo: 1, verseNo: 1 },
+      {
+        title: bookmark.last_read,
+        bookKey: '01_GEN' as BookKey,
+        chapterNo: 1,
+        verseNo: 1,
+      },
     ];
 
     await Promise.all(
       bookmarks.map((bm) =>
-        this.bookmarksService.create({ profileEmail: email, ...bm })
-      )
+        this.bookmarksService.create({ profileEmail: email, ...bm }),
+      ),
     );
 
     return res.redirect(307, '/users/local-login');
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get("bookmark")
+  @Get('bookmark')
   async getUserLastReadBookmark(@UserParam() user: User) {
     return this.bookmarksService.getOne(user.email);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch("bookmark")
-  async updateBookmark(@UserParam() user: User, @Body() body: Omit<UpdateBookmarkDto, "title"> & { id: number }) {
+  @Patch('bookmark')
+  async updateBookmark(
+    @UserParam() user: User,
+    @Body() body: Omit<UpdateBookmarkDto, 'title'> & { id: number },
+  ) {
     const { id, profileEmail, ...rest } = body;
 
-    if (user.email !== profileEmail) throw new UnauthorizedException("unauthorizedAccess");
+    if (user.email !== profileEmail)
+      throw new UnauthorizedException('unauthorizedAccess');
 
     return await this.bookmarksService.update(+id, { ...rest });
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('bookmark/:id')
-  removeBookmark(@UserParam() user: User, @Param('id', ParseIntPipe) id: number) {
+  removeBookmark(
+    @UserParam() user: User,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
     return this.bookmarksService.delete(id, user.email);
   }
-
 
   @UseGuards(JwtAuthGuard)
   @Get()

@@ -11,12 +11,12 @@ import {
   Lang,
   normalizeArText,
   removeArDiacritics,
-  detectLanguage
+  detectLanguage,
 } from '@amen24/shared';
 
 @Injectable()
 export class VersesService {
-  constructor(@InjectRepository(Verse) private versesRepo: Repository<Verse>) { }
+  constructor(@InjectRepository(Verse) private versesRepo: Repository<Verse>) {}
 
   async findChapter(bookKey: BookKey, chapterNo: number, lang: Lang) {
     return await this.versesRepo.find({
@@ -66,7 +66,7 @@ export class VersesService {
     // Convert to tsquery format for full-text search
     const tsQuery = processedQuery
       .split(/\s+/) // Ensure it handles multiple spaces properly
-      .map(word => `${word}:*`) // Add wildcard for partial matching
+      .map((word) => `${word}:*`) // Add wildcard for partial matching
       .join(' & '); // Use AND logic
 
     const results = await this.versesRepo.query(
@@ -76,12 +76,11 @@ export class VersesService {
        AND "bookKey" = ANY($2)
        AND "textSearch" @@ to_tsquery($3, $4)
        ORDER BY "bookKey", "chapterNo", "verseNo"`,
-      [detectedLang, scope, pgLang, tsQuery]
+      [detectedLang, scope, pgLang, tsQuery],
     );
 
     return results;
   }
-
 
   async seed() {
     await this.seedBible(Lang.ENGLISH);
@@ -89,10 +88,13 @@ export class VersesService {
   }
 
   private async seedBible(lang: Lang) {
-    const progressBar = new SingleBar({
-      format: `${lang.toUpperCase()} {bar} {percentage}% | {value}/{total} verses`,
-      hideCursor: true,
-    }, Presets.shades_classic);
+    const progressBar = new SingleBar(
+      {
+        format: `${lang.toUpperCase()} {bar} {percentage}% | {value}/{total} verses`,
+        hideCursor: true,
+      },
+      Presets.shades_classic,
+    );
 
     try {
       let filename: string;
@@ -107,7 +109,14 @@ export class VersesService {
           throw new BadRequestException('Language misconfiguration!');
       }
 
-      const contentFilePath = resolve(__dirname, '..', '..', '..', '_content', filename);
+      const contentFilePath = resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        '_content',
+        filename,
+      );
       const fileContent = readFileSync(contentFilePath, 'utf-8');
       const lines = fileContent.split('\n');
 
@@ -120,7 +129,7 @@ export class VersesService {
 
         if (result) {
           const bookKeySegment = result.at(1)?.toUpperCase();
-          if (!bookKeySegment) throw new Error("Failed to extract book key");
+          if (!bookKeySegment) throw new Error('Failed to extract book key');
 
           const bookKey = bookKeyMap[bookKeySegment];
           const chapterNo = +(result.at(2) as string);
@@ -140,7 +149,16 @@ export class VersesService {
           await this.versesRepo.query(
             `INSERT INTO "verse" ("bookKey", "chapterNo", "verseNo", "text", "textNormalized", "textDiacritized", "lang", "textSearch")
              VALUES ($1, $2, $3, $4, $5, $6, $7, to_tsvector($8, $5))`,
-            [bookKey, chapterNo, verseNo, text, textNormalized, textDiacritized, lang, pgLang]
+            [
+              bookKey,
+              chapterNo,
+              verseNo,
+              text,
+              textNormalized,
+              textDiacritized,
+              lang,
+              pgLang,
+            ],
           );
 
           processedCount++;
@@ -157,9 +175,11 @@ export class VersesService {
   }
 
   private getTsLang(lang: Lang) {
-    return {
-      [Lang.ENGLISH]: 'english',
-      [Lang.ARABIC]: 'arabic',
-    }[lang] || 'simple'; // Fallback to 'simple'
+    return (
+      {
+        [Lang.ENGLISH]: 'english',
+        [Lang.ARABIC]: 'arabic',
+      }[lang] || 'simple'
+    ); // Fallback to 'simple'
   }
 }

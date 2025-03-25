@@ -51,7 +51,7 @@ export class ProfilesService {
     return await this.profilesRepo.update(email, { lastLogin: new Date() });
   }
 
-  async toggleTheme(email: string): Promise<Omit<User, 'password'> | null> {    
+  async toggleTheme(email: string): Promise<Omit<User, 'password'> | null> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
@@ -68,7 +68,7 @@ export class ProfilesService {
   async changeLang(
     email: string,
     uiLang: Lang,
-  ): Promise<Omit<User, 'password'> | null> {    
+  ): Promise<Omit<User, 'password'> | null> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
@@ -76,7 +76,6 @@ export class ProfilesService {
     }
 
     console.log(profile);
-    
 
     profile.uiLang = uiLang;
     await this.profilesRepo.save(profile);

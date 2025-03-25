@@ -2,8 +2,9 @@
 
 import { FC, useCallback, useRef, useState } from "react";
 import styles from "./UserMenu.module.css";
-import { UserProfile } from "@amen24/shared";
+import { User } from "@amen24/shared";
 import { RiLogoutBoxLine, RiSettings3Line, RiStarLine } from "react-icons/ri";
+import { MdLockReset } from "react-icons/md";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -13,7 +14,7 @@ import { useDispatch } from "react-redux";
 import Link from "next/link";
 
 interface UserMenuProps {
-  user?: UserProfile;
+  user?: User;
 }
 
 const UserMenu: FC<UserMenuProps> = ({ user }) => {
@@ -60,6 +61,14 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
             <RiStarLine />
             <span className={styles.listItemText}>{t("userMenu.favorite")}</span>
           </li> */}
+          <li tabIndex={0}>
+            <Link href="/reset-password" className={styles.listItem}>
+              <MdLockReset />
+              <span className={styles.listItemText}>
+                {t("signin.password")}
+              </span>
+            </Link>
+          </li>
           <li tabIndex={0}>
             <Link href="/settings" className={styles.listItem}>
               <RiSettings3Line />

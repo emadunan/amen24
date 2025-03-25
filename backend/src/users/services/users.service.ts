@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
@@ -38,6 +39,36 @@ export class UsersService {
     }
 
     if (!user) throw new BadRequestException('userNotCreated');
+
+    return await this.usersRepo.save(user);
+  }
+
+  async resetPassword(
+    id: string,
+    oldPassword: string,
+    newPassword: string,
+  ): Promise<User> {
+    const user = await this.usersRepo.findOne({
+      where: { id },
+      relations: ['profile'],
+    });
+
+    if (!user || !user.password)
+      throw new BadRequestException(
+        'No old password has been found, contact system admin to resolve your login via support@amen24.org',
+      );
+
+    const match = await bcrypt.compare(oldPassword, user.password);
+
+    if (!match) throw new UnauthorizedException('unauthorizedAccess');
+
+    const rounds = parseInt(this.configService.getOrThrow<string>('ROUNDS'));
+
+    if (!newPassword || newPassword.length < 6) {
+      throw new BadRequestException('passwordTooShort');
+    }
+
+    user.password = await bcrypt.hash(newPassword, rounds);
 
     return await this.usersRepo.save(user);
   }

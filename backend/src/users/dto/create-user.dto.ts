@@ -27,7 +27,7 @@ export class CreateUserDto {
 
   @IsString()
   displayName: string;
-  
+
   @IsString()
   uiLang: Lang;
 
@@ -35,11 +35,10 @@ export class CreateUserDto {
   @IsOptional()
   photoUri?: string;
 
-
   @IsObject()
   bookmark: {
-    last_read: string,
-    old_testament?: string,
-    new_testament?: string,
-  }
+    last_read: string;
+    old_testament?: string;
+    new_testament?: string;
+  };
 }

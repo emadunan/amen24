@@ -1,6 +1,13 @@
 import { Lang, BookKey } from '@amen24/shared';
 import { Chapter } from '../../chapters/entities/chapter.entity';
-import { Column, Entity, ManyToOne, PrimaryColumn, JoinColumn, Index } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryColumn,
+  JoinColumn,
+  Index,
+} from 'typeorm';
 
 @Entity()
 export class Verse {

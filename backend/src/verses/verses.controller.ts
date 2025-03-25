@@ -14,7 +14,7 @@ import { BookKey, Lang } from '@amen24/shared';
 
 @Controller('verses')
 export class VersesController {
-  constructor(private readonly versesService: VersesService) { }
+  constructor(private readonly versesService: VersesService) {}
 
   @Post('query')
   async findVerses(@Body() body: { query: string; selectedBooks: BookKey[] }) {

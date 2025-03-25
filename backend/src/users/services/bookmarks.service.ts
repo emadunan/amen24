@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Bookmark } from '../entities/bookmark.entity';
 import { In, Repository } from 'typeorm';
@@ -7,23 +11,31 @@ import { UpdateBookmarkDto } from '../dto/update-bookmark.dto';
 
 @Injectable()
 export class BookmarksService {
-  constructor(@InjectRepository(Bookmark) private bookmarksRepo: Repository<Bookmark>) { }
+  constructor(
+    @InjectRepository(Bookmark) private bookmarksRepo: Repository<Bookmark>,
+  ) {}
 
   async getAll(profileEmail: string) {
     return await this.bookmarksRepo.findBy({ profileEmail });
   }
 
   async getOne(profileEmail: string) {
-    const lastRead = ["Last Read", "آخر قراءة"]
-    return await this.bookmarksRepo.findOneBy({ profileEmail, title: In(lastRead) });
+    const lastRead = ['Last Read', 'آخر قراءة'];
+    return await this.bookmarksRepo.findOneBy({
+      profileEmail,
+      title: In(lastRead),
+    });
   }
 
   async create(bookmarkDto: CreateBookmarkDto) {
     const { profileEmail } = bookmarkDto;
 
-    const bookmarkCount = await this.bookmarksRepo.count({ where: { profileEmail } });
+    const bookmarkCount = await this.bookmarksRepo.count({
+      where: { profileEmail },
+    });
 
-    if (bookmarkCount >= 1) throw new BadRequestException('bookmarkExceedLimit');
+    if (bookmarkCount >= 1)
+      throw new BadRequestException('bookmarkExceedLimit');
 
     const bookmark = this.bookmarksRepo.create(bookmarkDto);
 
@@ -43,7 +55,7 @@ export class BookmarksService {
   async delete(id: number, profileEmail: string) {
     const bookmark = await this.bookmarksRepo.findOneBy({ id, profileEmail });
 
-    if (!bookmark) throw new NotFoundException("bookmarkNotFound");
+    if (!bookmark) throw new NotFoundException('bookmarkNotFound');
 
     await this.bookmarksRepo.delete(id);
   }

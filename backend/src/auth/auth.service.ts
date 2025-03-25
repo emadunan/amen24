@@ -46,7 +46,7 @@ export class AuthService {
     await this.usersService.update(user.id, user);
 
     const { password, ...result } = user;
-    
+
     return result;
   }
 

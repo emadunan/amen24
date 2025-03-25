@@ -3,7 +3,7 @@
 }
 
 .menuButton {
-  width: 6.1rem;
+  width: 6.6rem;
   padding: 0.1rem 0.5rem;
   border-radius: 2px;
   background-color: var(--accent);
@@ -37,6 +37,7 @@
   flex-direction: column;
   border-radius: 2px;
   z-index: 40;
+  width: 6.6rem;
 }
 
 .listItem {
