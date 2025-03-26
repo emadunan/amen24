@@ -49,9 +49,9 @@ export class User {
   @Column({ type: 'timestamptz', nullable: true })
   lockUntil: Date | null;
 
-  @Column({ nullable: true })
-  resetPasswordToken?: string;
+  @Column({ type: 'text', nullable: true })
+  resetPasswordToken?: string | null;
 
   @Column({ type: 'timestamptz', nullable: true })
-  resetPasswordExpires?: Date;
+  resetPasswordExpires?: Date | null;
 }

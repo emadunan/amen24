@@ -6,12 +6,12 @@ import {
   Patch,
   Param,
   Delete,
-  NotFoundException,
   UseGuards,
   Req,
   HttpCode,
   Res,
   ConflictException,
+  NotFoundException,
   UnauthorizedException,
   ParseIntPipe,
 } from '@nestjs/common';
@@ -38,7 +38,7 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
-  ) {}
+  ) { }
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
@@ -77,7 +77,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('me/password')
+  @Patch('me/password-reset')
   async resetPassword(
     @UserParam() reqUser: User,
     @Body() body: { oldPassword: string; newPassword: string },
@@ -101,6 +101,22 @@ export class UsersController {
     });
 
     res.json({ message: 'passwordUpdated' });
+  }
+
+  @Post('password-request')
+  async requestRestorePassword(@Body() body: { email: string }) {
+    const { email } = body;
+
+    return this.authService.requestPasswordRestore(email);
+  }
+
+  @Patch('me/restore-password')
+  async restorePassword(@Body() body: { newPassword: string, token: string }) {
+    console.log(body);
+    
+    const { newPassword, token } = body;
+
+    return this.usersService.restorePassword(newPassword, token);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -22,14 +22,17 @@ import { MailerModule } from '@nestjs-modules/mailer';
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
     MailerModule.forRoot({
       transport: {
-        host: "smtp.zoho.com",
+        host: 'smtp.zoho.com',
         port: 465,
         secure: true,
         auth: {
-          user: "support@amen24.org",
-          pass: "emadunan"
-        }
-      }
+          user: 'marinaessam@amen24.org',
+          pass: 'marinaEssam24!',
+        },
+      },
+      defaults: {
+        from: '"Support Team" <support@amen24.org>',
+      },
     }),
     AuthModule,
     UsersModule,

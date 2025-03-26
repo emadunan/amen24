@@ -36,11 +36,11 @@ const ChapterToolbox = () => {
   const { data: user } = useGetMeQuery();
   const { data: bookmark } = useGetUserLastReadBookmarkQuery();
 
-  const [isClient, setIsClient] = useState(false)
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true)
-  }, [])
+    setIsClient(true);
+  }, []);
 
   async function handleUpdateBookmark(
     bookmarkId?: number,

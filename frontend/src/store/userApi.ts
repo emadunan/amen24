@@ -49,9 +49,31 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    resetPassword: builder.mutation<{ message: string }, { oldPassword: string, newPassword: string }>({
+    resetPassword: builder.mutation<
+      { message: string },
+      { oldPassword: string; newPassword: string }
+    >({
       query: (body) => ({
-        url: "/me/password",
+        url: "/me/password-reset",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    requestPassword: builder.mutation<{ message: string }, { email: string }>({
+      query: (body) => ({
+        url: "/password-request",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    restorePassword: builder.mutation<
+      { message: string },
+      { newPassword: string, token: string }
+    >({
+      query: (body) => ({
+        url: "/me/restore-password",
         method: "PATCH",
         body,
       }),
@@ -91,4 +113,6 @@ export const {
   useChangeLangMutation,
   useDeleteAccountMutation,
   useResetPasswordMutation,
+  useRequestPasswordMutation,
+  useRestorePasswordMutation,
 } = userApi;

@@ -79,7 +79,8 @@
     "unauthorizedAccess": "You are not authorized to access this resource. Please log in with the correct credentials.",
     "highlightVerse": "You must highlight verse to update your last reading bookmark.",
     "highlightSingleVerseOnly": "You can only update a bookmark with a single verse. Please highlight only one verse before updating your bookmark.",
-    "passwordTooShort": "New password must be at least 6 characters long."
+    "passwordTooShort": "New password must be at least 6 characters long.",
+    "invalidOrExpiredToken": "The password reset link is invalid or has expired. Please request a new one."
   },
   "message": {
     "passwordUpdated": "User password has been successfully updated"

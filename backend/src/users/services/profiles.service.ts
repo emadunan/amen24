@@ -19,7 +19,7 @@ export class ProfilesService {
     @InjectRepository(Profile) private profilesRepo: Repository<Profile>,
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
-  ) { }
+  ) {}
 
   async create(createProfileDto: Partial<CreateProfileDto>) {
     const profile = this.profilesRepo.create(createProfileDto);
@@ -69,7 +69,10 @@ export class ProfilesService {
     return result;
   }
 
-  async changeLang(email: string, uiLang: Lang): Promise<Omit<User, 'password'>> {
+  async changeLang(
+    email: string,
+    uiLang: Lang,
+  ): Promise<Omit<User, 'password'>> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {

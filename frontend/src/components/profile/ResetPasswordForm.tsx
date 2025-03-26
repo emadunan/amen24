@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react'
-import InputItem from '../ui/InputItem';
-import styles from './ResetPasswordForm.module.css';
-import { useTranslation } from 'react-i18next';
-import BackButton from '../ui/BackButton';
-import SubmitButton from '../ui/SubmitButton';
-import Spinner from '../ui/Spinner';
-import { useResetPasswordMutation } from '@/store/userApi';
-import { handleApiError } from '@/utils/handleApiError';
-import { useRouter } from 'next/navigation';
-import { showToast } from '@/utils/toast';
+import React, { useState } from "react";
+import InputItem from "../ui/InputItem";
+import styles from "./ResetPasswordForm.module.css";
+import { useTranslation } from "react-i18next";
+import BackButton from "../ui/BackButton";
+import SubmitButton from "../ui/SubmitButton";
+import Spinner from "../ui/Spinner";
+import { useResetPasswordMutation } from "@/store/userApi";
+import { handleApiError } from "@/utils/handleApiError";
+import { useRouter } from "next/navigation";
+import { showToast } from "@/utils/toast";
 
 const ResetPasswordForm = () => {
   const { t } = useTranslation();
@@ -28,7 +28,10 @@ const ResetPasswordForm = () => {
     setLocalLoading(true);
 
     try {
-      const { message } = await resetPassword({ oldPassword, newPassword }).unwrap();
+      const { message } = await resetPassword({
+        oldPassword,
+        newPassword,
+      }).unwrap();
       router.replace("/");
       showToast(t(`message.${message}`), "success");
     } catch (err) {
@@ -73,7 +76,7 @@ const ResetPasswordForm = () => {
         />
       </div>
     </form>
-  )
-}
+  );
+};
 
 export default ResetPasswordForm;

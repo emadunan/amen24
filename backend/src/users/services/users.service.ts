@@ -73,6 +73,21 @@ export class UsersService {
     return await this.usersRepo.save(user);
   }
 
+  async restorePassword(newPassword: string, token: string) {
+    const user = await this.usersRepo.findOne({ where: { resetPasswordToken: token } });
+
+    if (!user || !user.resetPasswordExpires || new Date() > user.resetPasswordExpires) {
+      throw new BadRequestException('invalidOrExpiredToken');
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+    await this.usersRepo.save(user);
+
+    return { message: 'Password has been successfully reset' };
+  }
+
   async findAll() {
     return await this.usersRepo.find();
   }
@@ -104,10 +119,16 @@ export class UsersService {
     return users;
   }
 
-  async findOneByEmailProvider(email: string, provider: AuthProvider = AuthProvider.LOCAL): Promise<User> {
-    const user = await this.usersRepo.findOne({ where: { email, provider }, relations: ['profile'] });
+  async findOneByEmailProvider(
+    email: string,
+    provider: AuthProvider = AuthProvider.LOCAL,
+  ): Promise<User> {
+    const user = await this.usersRepo.findOne({
+      where: { email, provider },
+      relations: ['profile'],
+    });
 
-    if (!user) throw new NotFoundException("userNotFound");
+    if (!user) throw new NotFoundException('userNotFound');
 
     return user;
   }

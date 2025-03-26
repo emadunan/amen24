@@ -69,6 +69,9 @@ const LocalLogin = () => {
       <Link className={styles.signupLink} href={"/signup"}>
         {t("signin.signup-invite", { ns: "common" })}
       </Link>
+      <Link className={styles.signupLink} href={"/request-password"}>
+        {t("signin.password-invite", { ns: "common" })}
+      </Link>
     </form>
   );
 };
