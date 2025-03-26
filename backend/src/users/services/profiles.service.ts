@@ -19,7 +19,7 @@ export class ProfilesService {
     @InjectRepository(Profile) private profilesRepo: Repository<Profile>,
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
-  ) {}
+  ) { }
 
   async create(createProfileDto: Partial<CreateProfileDto>) {
     const profile = this.profilesRepo.create(createProfileDto);
@@ -51,7 +51,7 @@ export class ProfilesService {
     return await this.profilesRepo.update(email, { lastLogin: new Date() });
   }
 
-  async toggleTheme(email: string): Promise<Omit<User, 'password'> | null> {
+  async toggleTheme(email: string): Promise<Omit<User, 'password'>> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
@@ -62,24 +62,29 @@ export class ProfilesService {
       profile.themeMode === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK;
     await this.profilesRepo.save(profile);
 
-    return await this.usersService.findOneByEmailProvider(profile.email);
+    const user = await this.usersService.findOneByEmailProvider(profile.email);
+
+    const { password, ...result } = user;
+
+    return result;
   }
 
-  async changeLang(
-    email: string,
-    uiLang: Lang,
-  ): Promise<Omit<User, 'password'> | null> {
+  async changeLang(email: string, uiLang: Lang): Promise<Omit<User, 'password'>> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
       throw new Error('profileNotFound');
     }
 
-    console.log(profile);
-
     profile.uiLang = uiLang;
     await this.profilesRepo.save(profile);
 
-    return await this.usersService.findOneByEmailProvider(profile.email);
+    // return await this.usersService.findOneByEmailProvider(profile.email);
+
+    const user = await this.usersService.findOneByEmailProvider(profile.email);
+
+    const { password, ...result } = user;
+
+    return result;
   }
 }

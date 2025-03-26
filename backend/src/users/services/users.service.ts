@@ -20,7 +20,7 @@ export class UsersService {
     @InjectRepository(User) private usersRepo: Repository<User>,
     private readonly configService: ConfigService,
     private profilesService: ProfilesService,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     const { password, provider } = createUserDto;
@@ -104,20 +104,12 @@ export class UsersService {
     return users;
   }
 
-  async findOneByEmailProvider(
-    email: string,
-    provider: AuthProvider = AuthProvider.LOCAL,
-  ): Promise<Omit<User, 'password'> | null> {
-    const user = await this.usersRepo.findOne({
-      where: { email, provider },
-      relations: ['profile'],
-    });
+  async findOneByEmailProvider(email: string, provider: AuthProvider = AuthProvider.LOCAL): Promise<User> {
+    const user = await this.usersRepo.findOne({ where: { email, provider }, relations: ['profile'] });
 
-    if (!user) return null;
+    if (!user) throw new NotFoundException("userNotFound");
 
-    const { password, ...result } = user;
-
-    return result;
+    return user;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

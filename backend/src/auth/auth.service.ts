@@ -1,15 +1,19 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/services/users.service';
 import * as bcrypt from 'bcrypt';
 import { User } from '../users/entities/user.entity';
+import { randomBytes } from 'crypto';
+import { MailerService } from '@nestjs-modules/mailer';
+import { AuthProvider } from '@amen24/shared';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+    private mailerService: MailerService,
+  ) { }
   async validateUser(
     email: string,
     pass: string,
@@ -56,5 +60,28 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(userProfile),
     };
+  }
+
+  async requestPasswordReset(email: string) {
+    const user = await this.usersService.findOneByEmailProvider(email, AuthProvider.LOCAL)
+    if (!user) throw new NotFoundException('User not found');
+
+    // Generate reset token and expiration time
+    const resetToken = randomBytes(32).toString('hex');
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour expiry
+    await this.usersService.update(user.id, user);
+
+    // Send reset email
+    const resetLink = `https://yourdomain.com/reset-password?token=${resetToken}`;
+    await this.mailerService.sendMail({
+      to: user.email,
+      from: 'support@amen24.org',
+      subject: 'Password Reset Request',
+      text: `Click the following link to reset your password: ${resetLink}`,
+      html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
+    });
+
+    return { message: 'Password reset email sent' };
   }
 }
