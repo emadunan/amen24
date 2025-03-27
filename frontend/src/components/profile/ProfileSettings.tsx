@@ -6,13 +6,13 @@ import { useTranslation } from "react-i18next";
 import { useDeleteAccountMutation, useGetMeQuery } from "@/store/userApi";
 import { useRouter } from "next/navigation";
 
-const FONT_SIZES = ["Small", "Medium", "Large"];
+// const FONT_SIZES = ["Small", "Medium", "Large"];
 
 const ProfileSettings = () => {
-  const [selectedFontSize, setSelectedFontSize] = useState("Medium");
-  const [isDiacritized, setIsDiacritized] = useState(false);
+  // const [selectedFontSize, setSelectedFontSize] = useState("Medium");
+  // const [isDiacritized, setIsDiacritized] = useState(false);
 
-  const [deleteAccount, { isLoading }] = useDeleteAccountMutation();
+  const [deleteAccount] = useDeleteAccountMutation();
 
   const router = useRouter();
 

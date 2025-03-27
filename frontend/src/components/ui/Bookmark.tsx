@@ -6,7 +6,6 @@ import { useGetUserLastReadBookmarkQuery } from "@/store/bookmarkApi";
 import { useTranslation } from "react-i18next";
 import { BookMap, formatNumber, Lang } from "@amen24/shared";
 import { useGetMeQuery } from "@/store/userApi";
-import { MdPushPin } from "react-icons/md";
 
 const Bookmark = () => {
   const { data: bookmark } = useGetUserLastReadBookmarkQuery();

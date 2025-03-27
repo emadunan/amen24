@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./ChapterToolbox.module.css";
-import { FaCopy, FaEraser, FaStar } from "react-icons/fa";
+import { FaCopy, FaEraser } from "react-icons/fa";
 import { MdPushPin } from "react-icons/md";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
 import { useDraggable } from "@/hooks/useDraggable";
-import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
+import { BookKey, formatNumber, Lang } from "@amen24/shared";
 import {
   useGetUserLastReadBookmarkQuery,
   useUpdateBookmarkMutation,
@@ -21,7 +21,7 @@ const ChapterToolbox = () => {
     useHighlightContext();
   const { t, i18n } = useTranslation(["book"]);
   const headerRef = useRef<HTMLDivElement | null>(null);
-  const [updateBookmark, { isSuccess }] = useUpdateBookmarkMutation();
+  const [updateBookmark] = useUpdateBookmarkMutation();
   const params = useParams<{ book: [BookKey, string, string] }>();
   const [bookKey, chapterNo] = params.book;
 

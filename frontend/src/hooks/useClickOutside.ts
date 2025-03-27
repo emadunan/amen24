@@ -1,4 +1,4 @@
-import React, { Dispatch, RefObject, SetStateAction, useEffect } from "react";
+import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
 
 const useClickOutside = (
   elRef: RefObject<HTMLDivElement | null>,

@@ -7,7 +7,6 @@ import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import HighlightVerse from "@/components/bible/VerseHighlight";
 import ChapterContent from "@/components/bible/ChapterContent";
 import ChapterTitleAction from "@/components/bible/ChapterTitleAction";
-import { MdPushPin } from "react-icons/md";
 
 const apiUrl = process.env.API_URL;
 

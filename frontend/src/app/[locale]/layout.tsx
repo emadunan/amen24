@@ -9,12 +9,9 @@ import initTranslations from "../i18n";
 import TranslationsProvider from "@/providers/TranslationsProvider";
 import AppMain from "@/components/layout/AppMain";
 import StoreProvider from "../../providers/StoreProvider";
-import { cookies } from "next/headers";
 import { ToastContainer } from "react-toastify";
 import BibleNavigation from "@/components/bible/BibleNavigator";
 import { amiri } from "@/config/fonts.config";
-
-const apiUrl = process.env.API_URL;
 
 export const metadata: Metadata = {
   title: "amen24",
@@ -41,23 +38,6 @@ interface Props {
   params: { locale: string };
 }
 
-async function getUser() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("access_token")?.value;
-
-  if (!token) return null;
-
-  const res = await fetch(`${apiUrl}/users/me`, {
-    headers: { Cookie: `access_token=${token}` },
-    credentials: "include",
-    cache: "no-store", // Ensure fresh auth state
-  });
-
-  if (!res.ok) return null;
-
-  return res.json();
-}
-
 const RootLayout: FC<Props> = async ({ children, params }) => {
   const { locale } = await params;
 
@@ -65,7 +45,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
     notFound();
   }
 
-  const { t, resources } = await initTranslations(locale, i18nNamespaces);
+  const { resources } = await initTranslations(locale, i18nNamespaces);
 
   const dir = locale === "ar" ? "rtl" : "ltr";
 

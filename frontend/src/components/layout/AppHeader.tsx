@@ -14,7 +14,6 @@ import { BookKey, User } from "@amen24/shared";
 import UserMenu from "../profile/UserMenu";
 import { useGetMeQuery } from "@/store/userApi";
 import Spinner from "../ui/Spinner";
-import { FaRegBookmark } from "react-icons/fa6";
 import Bookmark from "../ui/Bookmark";
 import DateDisplay from "../ui/DateDisplay";
 

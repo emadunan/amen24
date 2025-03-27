@@ -8,7 +8,6 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useChangeLangMutation, useGetMeQuery } from "@/store/userApi";
-import { User } from "@amen24/shared";
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation();

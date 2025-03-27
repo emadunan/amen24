@@ -3,7 +3,7 @@
 import { FC, useCallback, useRef, useState } from "react";
 import styles from "./UserMenu.module.css";
 import { User } from "@amen24/shared";
-import { RiLogoutBoxLine, RiSettings3Line, RiStarLine } from "react-icons/ri";
+import { RiLogoutBoxLine, RiSettings3Line } from "react-icons/ri";
 import { MdLockReset } from "react-icons/md";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
