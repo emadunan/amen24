@@ -75,7 +75,11 @@ export default function BibleSearch() {
 
     if (Object.values(BookKey).includes(book as BookKey)) {
       // Toggle single book selection
-      selectedSet.has(book) ? selectedSet.delete(book) : selectedSet.add(book);
+      if (selectedSet.has(book)) {
+        selectedSet.delete(book);
+      } else {
+        selectedSet.add(book);
+      }
     } else if (categoryList[book]) {
       // Toggle category selection
       const allBooksInCategory = new Set(categoryList[book]);

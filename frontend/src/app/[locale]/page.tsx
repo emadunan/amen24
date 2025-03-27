@@ -6,7 +6,7 @@ import { FC } from "react";
 const apiUrl = process.env.API_URL;
 
 interface Props {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 const HomePage: FC<Props> = async ({ params }) => {

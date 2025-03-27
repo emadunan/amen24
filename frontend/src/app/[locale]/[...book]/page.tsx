@@ -11,7 +11,7 @@ import ChapterTitleAction from "@/components/bible/ChapterTitleAction";
 const apiUrl = process.env.API_URL;
 
 interface Props {
-  params: { book: string[]; locale: string };
+  params: Promise<{ book: string[]; locale: string }>;
 }
 
 const BookPage: FC<Props> = async ({ params }) => {

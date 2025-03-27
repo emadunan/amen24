@@ -36,7 +36,6 @@ const AppHeader: FC<Props> = () => {
 
   const {
     data: user,
-    isLoading,
     error,
   } = useGetMeQuery(undefined, { skip: typeof window === "undefined" });
 
