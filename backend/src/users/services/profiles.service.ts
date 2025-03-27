@@ -64,6 +64,8 @@ export class ProfilesService {
 
     const user = await this.usersService.findOneByEmailProvider(profile.email);
 
+    if(!user) throw new NotFoundException("userNotFound");
+
     const { password, ...result } = user;
 
     return result;
@@ -82,9 +84,9 @@ export class ProfilesService {
     profile.uiLang = uiLang;
     await this.profilesRepo.save(profile);
 
-    // return await this.usersService.findOneByEmailProvider(profile.email);
-
     const user = await this.usersService.findOneByEmailProvider(profile.email);
+
+    if(!user) throw new NotFoundException("userNotFound");
 
     const { password, ...result } = user;
 

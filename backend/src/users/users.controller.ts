@@ -168,8 +168,6 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    console.log(createUserDto);
-
     const { email, provider, uiLang, bookmark } = createUserDto;
 
     // Check if the user already exists
@@ -177,6 +175,7 @@ export class UsersController {
       email,
       provider,
     );
+    
     if (existUser) throw new ConflictException('userDuplication');
 
     // Create profile

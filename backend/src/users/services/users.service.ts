@@ -122,13 +122,13 @@ export class UsersService {
   async findOneByEmailProvider(
     email: string,
     provider: AuthProvider = AuthProvider.LOCAL,
-  ): Promise<User> {
+  ): Promise<User | null> {
     const user = await this.usersRepo.findOne({
       where: { email, provider },
       relations: ['profile'],
     });
 
-    if (!user) throw new NotFoundException('userNotFound');
+    if (!user) return null;
 
     return user;
   }
