@@ -110,7 +110,7 @@ export class UsersController {
     return this.authService.requestPasswordRestore(email);
   }
 
-  @Patch('me/restore-password')
+  @Patch('me/password-restore')
   async restorePassword(@Body() body: { newPassword: string, token: string }) {
     console.log(body);
     
@@ -175,7 +175,7 @@ export class UsersController {
       email,
       provider,
     );
-    
+
     if (existUser) throw new ConflictException('userDuplication');
 
     // Create profile

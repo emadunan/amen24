@@ -62,7 +62,7 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
             <span className={styles.listItemText}>{t("userMenu.favorite")}</span>
           </li> */}
           <li tabIndex={0}>
-            <Link href="/reset-password" className={styles.listItem}>
+            <Link href="/password-reset" className={styles.listItem}>
               <MdLockReset />
               <span className={styles.listItemText}>
                 {t("signin.password")}

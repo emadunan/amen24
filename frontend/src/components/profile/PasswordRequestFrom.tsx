@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./RequestPasswordForm.module.css";
+import styles from "./PasswordRequestForm.module.css";
 import React, { useState } from "react";
 import BackButton from "../ui/BackButton";
 import SubmitButton from "../ui/SubmitButton";
@@ -8,9 +8,10 @@ import InputItem from "../ui/InputItem";
 import { handleApiError } from "@/utils/handleApiError";
 import { useTranslation } from "react-i18next";
 import { useRequestPasswordMutation } from "@/store/userApi";
+import { RiMailSendFill } from "react-icons/ri";
 import Spinner from "../ui/Spinner";
 
-const RequestPasswordFrom = () => {
+const PasswordRequestFrom = () => {
   const { t } = useTranslation();
 
   const [email, setEmail] = useState("");
@@ -53,11 +54,12 @@ const RequestPasswordFrom = () => {
         <BackButton />
         <SubmitButton
           isLoading={isLoading || localLoading}
-          text={t("signin.requestPassword", { ns: "common" })}
+          text={t("signin.sendResetLink", { ns: "common" })}
+          Icon={RiMailSendFill}
         />
       </div>
     </form>
   );
 };
 
-export default RequestPasswordFrom;
+export default PasswordRequestFrom;

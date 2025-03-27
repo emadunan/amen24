@@ -7,10 +7,12 @@ import InputItem from "../ui/InputItem";
 import BackButton from "../ui/BackButton";
 import SubmitButton from "../ui/SubmitButton";
 import { useTranslation } from "react-i18next";
-import styles from './RestorePasswordForm.module.css';
+import styles from "./PasswordRestoreForm.module.css";
 import { useRestorePasswordMutation } from "@/store/userApi";
+import { handleApiError } from "@/utils/handleApiError";
+import { MdOutlineLockReset } from "react-icons/md";
 
-const RestorePasswordFrom = () => {
+const PasswordRestoreFrom = () => {
   const { t } = useTranslation();
 
   const searchParams = useSearchParams();
@@ -27,26 +29,32 @@ const RestorePasswordFrom = () => {
       showToast("invalidOrExpiredToken", "error");
       return;
     }
-    console.log(newPassword, token);
-    
 
-    await restorePassword({ newPassword, token }).unwrap();
+    try {
+      setLocalLoading(true);
+      await restorePassword({ newPassword, token }).unwrap();
+    } catch (error: unknown) {
+      handleApiError(error, t);
+    } finally {
+      setLocalLoading(false);
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={styles.form}>
       <InputItem
         type="password"
         value={newPassword}
         onSetValue={setNewPassword}
-        placeholder={t("signin.password")}
+        placeholder={t("signin.newPassword")}
         required
       />
+
       <InputItem
         type="password"
         value={confirmPassword}
         onSetValue={setConfirmPassword}
-        placeholder={t("signin.password")}
+        placeholder={t("signin.confirmPassword")}
         required
       />
 
@@ -54,11 +62,12 @@ const RestorePasswordFrom = () => {
         <BackButton />
         <SubmitButton
           isLoading={isLoading || localLoading}
-          text={t("signin.login", { ns: "common" })}
+          text={t("signin.resetPassword", { ns: "common" })}
+          Icon={MdOutlineLockReset}
         />
       </div>
     </form>
   );
 };
 
-export default RestorePasswordFrom;
+export default PasswordRestoreFrom;

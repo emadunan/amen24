@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import InputItem from "../ui/InputItem";
-import styles from "./ResetPasswordForm.module.css";
+import styles from "./PasswordResetForm.module.css";
 import { useTranslation } from "react-i18next";
 import BackButton from "../ui/BackButton";
 import SubmitButton from "../ui/SubmitButton";
@@ -11,8 +11,9 @@ import { useResetPasswordMutation } from "@/store/userApi";
 import { handleApiError } from "@/utils/handleApiError";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/utils/toast";
+import { MdOutlineLockReset } from "react-icons/md";
 
-const ResetPasswordForm = () => {
+const PasswordResetForm = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -26,6 +27,11 @@ const ResetPasswordForm = () => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLocalLoading(true);
+
+    if (newPassword !== confirmPassword) {
+      showToast(t("error.passwordMismatch"), "error");
+      return;
+    }
 
     try {
       const { message } = await resetPassword({
@@ -73,10 +79,11 @@ const ResetPasswordForm = () => {
         <SubmitButton
           isLoading={isLoading || localLoading}
           text={t("signin.resetPassword", { ns: "common" })}
+          Icon={MdOutlineLockReset}
         />
       </div>
     </form>
   );
 };
 
-export default ResetPasswordForm;
+export default PasswordResetForm;

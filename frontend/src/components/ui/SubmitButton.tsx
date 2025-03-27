@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { FC } from "react";
 import Spinner from "./Spinner";
 import { RiLoginBoxLine } from "react-icons/ri";
 import styles from "./SubmitButton.module.css";
@@ -6,19 +6,23 @@ import styles from "./SubmitButton.module.css";
 interface Props {
   text?: string;
   isLoading?: boolean;
+  Icon?: React.ElementType;
 }
 
-const SubmitButton: FC<Props> = ({ isLoading, text = "Submit" }) => {
+const SubmitButton: FC<Props> = ({
+  isLoading,
+  text = "Submit",
+  Icon = RiLoginBoxLine,
+}) => {
   return (
     <button className={styles.btn} type="submit" disabled={isLoading}>
       {isLoading ? (
         <Spinner size="1rem" borderColor="background" />
       ) : (
-        <Fragment>
-          {" "}
-          <RiLoginBoxLine size={22} className="flip-icon" />
+        <>
+          <Icon size={22} className="flip-icon" />
           {text}
-        </Fragment>
+        </>
       )}
     </button>
   );

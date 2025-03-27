@@ -27,7 +27,9 @@
     "confirmPassword": "Confirm Password",
     "oldPassword": "Old Password",
     "newPassword": "New Password",
-    "resetPassword": "Reset Password"
+    "resetPassword": "Reset Password",
+    "sendResetLink": "Send Reset Link",
+    "password-invite": "Forgot your password? Click here to reset it."
   },
   "bookmark": {
     "last_read": "Last Read",

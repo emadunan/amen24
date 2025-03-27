@@ -1,4 +1,4 @@
-import ResetPasswordFrom from "@/components/profile/ResetPasswordForm";
+import ResetPasswordFrom from "@/components/profile/PasswordResetForm";
 import PageContainer from "@/components/ui/PageContainer";
 import React from "react";
 

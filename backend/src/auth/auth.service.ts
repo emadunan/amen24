@@ -80,7 +80,7 @@ export class AuthService {
     await this.usersService.update(user.id, user);
 
     // Send reset email
-    const resetLink = `http://localhost:3000/restore-password?token=${resetToken}`;
+    const resetLink = `http://localhost:3000/password-restore?token=${resetToken}`;
     await this.mailerService.sendMail({
       to: user.email,
       from: 'support@amen24.org',

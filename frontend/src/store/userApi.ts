@@ -70,10 +70,10 @@ export const userApi = createApi({
     }),
     restorePassword: builder.mutation<
       { message: string },
-      { newPassword: string, token: string }
+      { newPassword: string; token: string }
     >({
       query: (body) => ({
-        url: "/me/restore-password",
+        url: "/me/password-restore",
         method: "PATCH",
         body,
       }),

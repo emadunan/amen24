@@ -1,4 +1,4 @@
-import RequestPasswordFrom from "@/components/profile/RequestPasswordFrom";
+import RequestPasswordFrom from "@/components/profile/PasswordRequestFrom";
 import PageContainer from "@/components/ui/PageContainer";
 import React from "react";
 
