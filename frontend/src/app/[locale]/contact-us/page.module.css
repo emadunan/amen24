@@ -1,0 +1,50 @@
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+.description {
+  margin-top: 12px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.contactBox {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: #007bff;
+}
+
+.email {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.email:hover {
+  text-decoration: underline;
+}

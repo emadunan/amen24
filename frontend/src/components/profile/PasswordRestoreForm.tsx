@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { showToast } from "@/utils/toast";
 import InputItem from "../ui/InputItem";
 import BackButton from "../ui/BackButton";
@@ -15,6 +15,7 @@ import { MdOutlineLockReset } from "react-icons/md";
 const PasswordRestoreFrom = () => {
   const { t } = useTranslation();
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -33,6 +34,7 @@ const PasswordRestoreFrom = () => {
     try {
       setLocalLoading(true);
       await restorePassword({ newPassword, token }).unwrap();
+      router.replace("/");
     } catch (error: unknown) {
       handleApiError(error, t);
     } finally {

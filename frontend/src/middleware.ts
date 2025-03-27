@@ -10,13 +10,13 @@ export function middleware(request: NextRequest) {
   // Redirect logged-in users away from any "/login" or "/signup" page
   if (
     isLoggedIn &&
-    (pathname.endsWith("/login") ||
-      pathname.endsWith("/signup") ||
-      pathname.endsWith("password-request") ||
-      pathname.endsWith("/password-restore"))
+    (pathname.includes("/login") ||
+      pathname.includes("/signup") ||
+      pathname.includes("password-request") ||
+      pathname.includes("/password-restore"))
   ) {
     return NextResponse.redirect(new URL("/", request.url)); // Redirect to home page
-  }
+  }  
 
   if (!isLoggedIn && pathname.endsWith("/password-reset")) {
     return NextResponse.redirect(new URL("/", request.url));

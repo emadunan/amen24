@@ -30,6 +30,7 @@ const PasswordResetForm = () => {
 
     if (newPassword !== confirmPassword) {
       showToast(t("error.passwordMismatch"), "error");
+      setLocalLoading(false);
       return;
     }
 
@@ -42,6 +43,7 @@ const PasswordResetForm = () => {
       showToast(t(`message.${message}`), "success");
     } catch (err) {
       handleApiError(err, t);
+    } finally {
       setLocalLoading(false);
     }
   }

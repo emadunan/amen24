@@ -10,6 +10,8 @@
   "no-result": "No results",
   "search-welcome": "Start searching for Bible verses by entering keywords above.",
   "locale": "Language",
+  "contactUsTitle": "Contact Us",
+  "contactUsDescription": "We are a dedicated team committed to providing the best service and user experience. If you need assistance or have any suggestions, we’d love to hear from you!",
   "searchEngine": {
     "inviteMessage": "Search in the bible",
     "searchButtonText": "Search",
@@ -85,6 +87,7 @@
     "invalidOrExpiredToken": "The password reset link is invalid or has expired. Please request a new one."
   },
   "message": {
-    "passwordUpdated": "User password has been successfully updated"
+    "passwordUpdated": "User password has been successfully updated",
+    "passwordResetEmailSent": "A password reset link has been sent to your email. Please check your inbox and spam folder, then click the link to access the password reset form."
   }
 }

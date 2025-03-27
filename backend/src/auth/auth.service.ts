@@ -17,7 +17,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private mailerService: MailerService,
-  ) {}
+  ) { }
   async validateUser(
     email: string,
     pass: string,
@@ -90,9 +90,7 @@ export class AuthService {
     });
 
     return {
-      message: `Rest password link has been sent to your email, please check your
-      inbox and spam folder and click the sent link which will redirect you
-      to form to reset your password`,
+      message: "passwordResetEmailSent",
     };
   }
 }

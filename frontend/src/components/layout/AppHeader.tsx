@@ -85,6 +85,14 @@ const AppHeader: FC<Props> = () => {
               <h3>{t("search", { ns: "common" })}</h3>
             </Link>
           </li>
+          <li className={styles.navItem}>
+            <Link
+              className={`link ${normalizedPath === "/contact-us" ? `${styles.active}` : ""}`}
+              href={"/contact-us"}
+            >
+              <h3>{t("contactUsTitle", { ns: "common" })}</h3>
+            </Link>
+          </li>
         </ul>
 
         <div className={styles.navActions}>
