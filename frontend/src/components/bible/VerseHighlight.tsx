@@ -3,7 +3,7 @@
 import styles from "./VerseHighlight.module.css";
 import { useSearchParams } from "next/navigation";
 import { useHighlightContext } from "./ChapterContent";
-import React, { FC, ReactNode, useEffect, useRef } from "react";
+import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { MdPushPin } from "react-icons/md";
 import { useGetUserLastReadBookmarkQuery } from "@/store/bookmarkApi";
 import { BookKey } from "@amen24/shared";
@@ -26,8 +26,13 @@ const VerseHighlight: FC<Props> = ({
 
   // Ensure it only runs once
   const isFirstLoad = useRef(true);
+  const [isClient, setIsClient] = useState(false);
 
   const { data: bookmark } = useGetUserLastReadBookmarkQuery();
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   useEffect(() => {
     if (isFirstLoad.current) {
@@ -55,7 +60,7 @@ const VerseHighlight: FC<Props> = ({
       onClick={() => toggleHighlight(verseNo)}
       className={`${styles.verseContainer} ${highlighted.includes(verseNo) ? styles.highlight : ""}`}
     >
-      {isBookmarked && <MdPushPin size="1.4rem" />}
+      {isBookmarked && isClient && <MdPushPin size="1.4rem" />}
       {children}
     </div>
   );
