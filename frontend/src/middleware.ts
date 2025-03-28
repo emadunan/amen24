@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
   const isLoggedIn = request.cookies.has("access_token"); // Check for access_token presence
   const { pathname } = request.nextUrl;
-
+  
   // Redirect logged-in users away from any "/login" or "/signup" page
   if (
     isLoggedIn &&
@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url)); // Redirect to home page
   }  
 
-  if (!isLoggedIn && pathname.endsWith("/password-reset")) {
+  if (!isLoggedIn && pathname.includes("/password-reset")) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
