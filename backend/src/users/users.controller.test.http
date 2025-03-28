@@ -1,0 +1,78 @@
+### Create new user, Register
+POST http://localhost:5105/users
+Content-Type: application/json
+
+{
+  "email": "emadunan@gmail.com",
+  "password": "emadunan",
+  "provider": "local",
+  "providerId": "emadunan",
+  "displayName": "Emad Younan",
+  "uiLang": "ar",
+  "bookmark": {
+    "last_read": "آخر قراءة",
+    "old_testament": "علامة العهد القديم",
+    "new_testament": "علامة العهد الجديد"
+  }
+}
+
+### Login
+POST http://localhost:5105/users/local-login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "emadunan@gmail.com",
+  "password": "emadunan"
+}
+
+### reset password
+PATCH http://localhost:5105/users/me/password
+Content-Type: application/json
+
+{
+  "oldPassword": "emademad",
+  "newPassword": "emadunan"
+}
+
+### Update bookmark
+PATCH http://localhost:5105/users/bookmark
+Content-Type: application/json
+
+{
+  "id": "13",
+  "bookKey": "02_EXO",
+  "chapterNo": "2",
+  "verseNo": "1",
+  "profileEmail": "emadunan@gmail.com"
+}
+
+### Toggle user theme
+PATCH http://localhost:5105/users/me/theme HTTP/1.1
+
+### Change user ui language
+PATCH http://localhost:5105/users/me/lang HTTP/1.1
+Content-Type: application/json
+
+{
+  "uiLang": "ar"
+}
+
+### Change user bookmarks
+PATCH http://localhost:5105/users/bookmark HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "id": 16,
+  "bookKey": "04_NUM",
+  "chapterNo": 1,
+  "verseNo": 2 
+}
+
+### Get logged in user (decode user)
+GET http://localhost:5105/users/me
+
+### Get all bookmark for user
+GET http://localhost:5105/users/bookmark
+
+### Delete Account Permanently
+DELETE http://localhost:5105/users/profile

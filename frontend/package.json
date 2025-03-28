@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:test": "dotenv -e .env.test -- next build",
     "start": "next start",
+    "start:test": "dotenv -e .env.test -- next start",
     "lint": "next lint",
     "format": "prettier . --write"
   },
   "dependencies": {
     "@amen24/shared": "file:../shared",
     "@reduxjs/toolkit": "^2.5.1",
+    "dotenv-cli": "^8.0.0",
     "i18next": "^24.2.2",
     "i18next-resources-to-backend": "^1.2.1",
     "next": "15.2.1",

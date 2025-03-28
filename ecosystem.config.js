@@ -3,22 +3,31 @@ module.exports = {
     {
       name: "backend",
       script: "./dist/main.js",
-      cwd: "./backend", // Ensures PM2 runs commands in the backend directory
-      instances: "max", // Uses all available CPU cores
-      exec_mode: "cluster", // Enables load balancing
+      cwd: "./backend",
+      instances: "max",
+      exec_mode: "cluster",
       env: {
         NODE_ENV: "production",
+        PORT: 5005,
+      },
+      env_test: {
+        NODE_ENV: "test",
+        PORT: 5105,
       },
     },
     {
       name: "frontend",
-      script: "npm",
-      args: "start",
-      cwd: "./frontend", // Ensures PM2 runs commands in the frontend directory
+      script: "sh",
+      args: "-c '[[ $NODE_ENV == \"test\" ]] && npm run start:test || npm run start'",
+      cwd: "./frontend",
       env: {
         NODE_ENV: "production",
-        PORT: 3000,
+        PORT: 3007,
       },
-    }
-  ]
+      env_test: {
+        NODE_ENV: "test",
+        PORT: 3105,
+      },
+    },
+  ],
 };
