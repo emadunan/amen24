@@ -1,12 +1,12 @@
 ### Get all books
-GET http://localhost:5000/books
+GET http://localhost:5000/api/books
 
 ### Get verses of one chapter
-GET http://localhost:5000/verses/01_GEN/1/en
+GET http://localhost:5000/api/verses/01_GEN/1/en
 
 ### Find a verse contains search keywords
 # TO DO
-POST http://localhost:5000/verses/query
+POST http://localhost:5000/api/verses/query
 Content-Type: application/json
 
 {

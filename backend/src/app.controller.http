@@ -1,23 +1,2 @@
 ### Test app controller root
-GET http://localhost:5000
-
-
-### Register new user
-POST http://localhost:5000/users HTTP/1.1
-Content-Type: application/json
-
-{
-  "email": "emadunan@gmail.com",
-  "password": "emadunan",
-  "provider": "facebook",
-  "providerId": "emadunan",
-  "displayName": "Emad Younan",
-  "isActive": true
-}
-
-### Delete user
-DELETE http://localhost:5000/users/c423e3ae-eb95-410b-80b0-0f04e2e726b4 HTTP/1.1
-
-### Get app users -- protected resource
-GET http://localhost:5000/users HTTP/1.1
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWR1bmFuQGdtYWlsLmNvbSIsInN1YiI6ImZjODlhNzhjLTgwMTktNGVhMS1hZWI5LTk3OTNlZmY1ZTMzOSIsImlhdCI6MTczOTcyOTkyMSwiZXhwIjoxNzM5NzMzNTIxfQ.3hCuSRVSBbHIEQNWacUAaZNgI5ZDvJY4CpXP8ELyfF0
+GET http://localhost:5000/api
