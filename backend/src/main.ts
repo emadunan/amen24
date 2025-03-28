@@ -8,16 +8,20 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
+  const origin = process.env.FRONTEND_ORIGINS
+    ? process.env.FRONTEND_ORIGINS.trim().split(',').filter(Boolean)
+    : [];
+
   app.enableCors({
-    origin: process.env.FRONTEND_ORIGIN, // Allow frontend origin
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed HTTP methods
-    allowedHeaders: 'Content-Type,Authorization', // Allowed headers
-    credentials: true, // Allow cookies if needed
+    origin,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true,
   });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.setGlobalPrefix('api');
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(Number(process.env.PORT) ?? 3000);
 }
 bootstrap();
