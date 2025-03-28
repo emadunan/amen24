@@ -20,5 +20,3 @@ rm -Rf .next
 npm run build:test
 cd ..
 pm2 start ecosystem.config.js --only frontend --env test
-
-# 
