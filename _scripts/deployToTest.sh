@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Delete current deploy
 pwd
 
