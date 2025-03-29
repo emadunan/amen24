@@ -19,4 +19,4 @@ jobs:
           chmod 600 private_key
   
       - name: SSH into Server
-        run: ssh -i private_key -o StrictHostKeyChecking=no emad@164.92.231.145 "cd /home/emad/projects/amen24/ && git pull origin test && ./_scripts/deployToTest.sh"
+        run: ssh -i private_key -o StrictHostKeyChecking=no emad@164.92.231.145 "cd /home/emad/projects/amen24/ && git pull origin test && cd ./_scripts && ./deployToTest.sh"
