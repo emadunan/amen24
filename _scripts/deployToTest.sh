@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Explicitly source profile files
+source ~/.bashrc || source ~/.profile
+
 # Debugging output
 echo "Current PATH: $PATH"
 which pm2
