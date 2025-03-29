@@ -2,7 +2,7 @@
   max-width: 600px;
   margin: 40px auto;
   padding: 2rem;
-  background: white;
+  background: var(--background);
   border-radius: 2px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -11,13 +11,13 @@
 .title {
   font-size: 28px;
   font-weight: bold;
-  color: #333;
+  color: var(--text);
 }
 
 .description {
   margin-top: 12px;
   font-size: 16px;
-  color: #555;
+  color: var(--text);
   line-height: 1.5;
 }
 
@@ -27,21 +27,21 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: #f4f4f4;
+  background: var(--secondary);
   padding: 10px;
   border-radius: 2px;
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
-  color: #007bff;
+  width: 1.2rem;
+  height: 1.2rem;
+  color: var(--text);
 }
 
 .email {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #007bff;
+  color: var(--text);
   text-decoration: none;
 }
 

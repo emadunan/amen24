@@ -15,7 +15,7 @@ const ContactUsPage = () => {
       </p>
 
       <div className={styles.contactBox}>
-        <RiMailUnreadLine />
+        <RiMailUnreadLine className={styles.icon}/>
         <a href="mailto:support@amen24.org" className={styles.email}>
           support@amen24.org
         </a>
