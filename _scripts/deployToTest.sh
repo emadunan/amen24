@@ -1,8 +1,12 @@
 #!/bin/bash
 
-# Delete current deploy
+# Debugging output
+echo "Current PATH: $PATH"
+which pm2
+which npm
 pwd
 
+# Delete current deploy
 cd ../
 pm2 del ecosystem.config.js 
 
