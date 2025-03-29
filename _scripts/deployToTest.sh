@@ -44,6 +44,10 @@ npm run build:test
 cd ..
 pm2 start ecosystem.config.js --only frontend --env test
 
+# Rename the processes manually
+pm2 restart backend --name backend-test
+pm2 restart frontend --name frontend-test
+
 # Restart necessary services
 sudo systemctl restart postgresql.service
 sudo systemctl restart nginx.service
