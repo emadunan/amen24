@@ -3,6 +3,9 @@
 # Explicitly source profile files
 source ~/.bashrc || source ~/.profile
 
+# Ensure Node.js tools are in the PATH
+export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PAT
+
 # Debugging output
 echo "Current PATH: $PATH"
 which pm2
