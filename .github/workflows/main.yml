@@ -1,0 +1,28 @@
+name: Deploy to Test Environment
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
+          
+          ssh -i private_key $SERVER_USER@$SERVER_HOST << 'EOF'
+            cd /home/emad/projects/amen24/
+            git pull origin test
+            ./_scripts/deployToTest.sh
+          EOF
