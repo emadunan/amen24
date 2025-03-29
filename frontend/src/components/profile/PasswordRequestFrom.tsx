@@ -38,7 +38,7 @@ const PasswordRequestFrom = () => {
     return <Spinner />;
   }
 
-  if (message) return <p>{message}</p>;
+  if (message) return <p>{t(`message.${message}`)}</p>;
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
