@@ -1,9 +1,9 @@
-name: Deploy to Test Environment
+name: Deploy to Production Environment
 
 on:
   push:
     branches:
-      - test
+      - main
 
 jobs:
   deploy:
@@ -21,6 +21,6 @@ jobs:
       - name: SSH into Server and Deploy
         run: |
           ssh -i private_key -o StrictHostKeyChecking=no ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }} "
-          cd /home/${{ vars.SERVER_USER }}/projects/amen24test &&
-          git pull origin test &&
-          cd ./_scripts && ./deployToTest.sh"
+          cd /home/${{ vars.SERVER_USER }}/projects/amen24prod &&
+          git pull origin main &&
+          cd ./_scripts && ./deployToProd.sh"

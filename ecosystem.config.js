@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "backend",
+      name: process.env.NODE_ENV === "test" ? "backend-test" : "backend",
       script: "./dist/main.js",
       cwd: "./backend",
       instances: "max",
@@ -16,7 +16,7 @@ module.exports = {
       },
     },
     {
-      name: "frontend",
+      name: process.env.NODE_ENV === "test" ? "frontend-test" : "frontend",
       script: "sh",
       args: "-c '[[ $NODE_ENV == \"test\" ]] && npm run start:test || npm run start'",
       cwd: "./frontend",
