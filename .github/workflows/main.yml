@@ -23,6 +23,7 @@ jobs:
           
           ssh -i private_key $SERVER_USER@$SERVER_HOST << 'EOF'
             cd /home/emad/projects/amen24/
-            git pull origin test
+            git checkout test
+            git pull
             ./_scripts/deployToTest.sh
           EOF
