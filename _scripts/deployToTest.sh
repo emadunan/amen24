@@ -1,8 +1,11 @@
 # Delete current deploy
+pwd
+
+cd ../
 pm2 del ecosystem.config.js 
 
 # Install shared dependencies and build
-cd ../shared
+cd ./shared
 npm i
 npm run build
 
