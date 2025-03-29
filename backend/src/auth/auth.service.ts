@@ -10,10 +10,13 @@ import { User } from '../users/entities/user.entity';
 import { randomBytes } from 'crypto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { AuthProvider } from '@amen24/shared';
+import { Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private configService: ConfigService,
     private usersService: UsersService,
     private jwtService: JwtService,
     private mailerService: MailerService,
@@ -66,6 +69,27 @@ export class AuthService {
     };
   }
 
+  loadAccessToken(user: User, response: Response): void {
+    const { password, ...data } = user;
+
+    const access_token = this.jwtService.sign(data);
+
+    response.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure:
+        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+  }
+
+  clearAccessToken(response: Response): void {
+    response.clearCookie('access_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+    });
+  }
+
   async requestPasswordRestore(email: string) {
     const user = await this.usersService.findOneByEmailProvider(
       email,
@@ -90,7 +114,7 @@ export class AuthService {
     });
 
     return {
-      message: "passwordResetEmailSent",
+      message: 'passwordResetEmailSent',
     };
   }
 }

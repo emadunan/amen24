@@ -25,7 +25,9 @@ const PasswordRestoreFrom = () => {
 
   const [restorePassword, { isLoading }] = useRestorePasswordMutation();
 
-  async function handleSubmit() {
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+
     if (!token) {
       showToast("invalidOrExpiredToken", "error");
       return;
@@ -34,7 +36,8 @@ const PasswordRestoreFrom = () => {
     try {
       setLocalLoading(true);
       await restorePassword({ newPassword, token }).unwrap();
-      router.replace("/");
+
+      router.replace("/login");
     } catch (error: unknown) {
       handleApiError(error, t);
     } finally {

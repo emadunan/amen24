@@ -39,7 +39,7 @@ const PasswordResetForm = () => {
         oldPassword,
         newPassword,
       }).unwrap();
-      router.replace("/");
+      router.replace("/login");
       showToast(t(`message.${message}`), "success");
     } catch (err) {
       handleApiError(err, t);

@@ -39,6 +39,9 @@ const AppHeader: FC<Props> = () => {
     error,
   } = useGetMeQuery(undefined, { skip: typeof window === "undefined" });
 
+  console.log(user);
+  
+
   // Extract locale from the pathname
   const localePrefixes = i18nConfig.locales.map((locale) => `/${locale}`);
   let normalizedPath = pathname;

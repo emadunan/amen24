@@ -35,11 +35,8 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
       dispatch(userApi.util.resetApiState());
       setIsOpen(false); // Close menu after logout
 
-      setTimeout(() => {
-        router.refresh(); // Refresh user state
-        router.replace("/login"); // ✅ Redirect to login after logout
-      }, 10);
-
+      router.refresh(); // Refresh user state
+      router.replace("/login"); // ✅ Redirect to login after logout
     } catch (error) {
       console.error("Logout failed:", error);
     }

@@ -20,7 +20,7 @@ export class UsersService {
     @InjectRepository(User) private usersRepo: Repository<User>,
     private readonly configService: ConfigService,
     private profilesService: ProfilesService,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const { password, provider } = createUserDto;
@@ -74,9 +74,15 @@ export class UsersService {
   }
 
   async restorePassword(newPassword: string, token: string) {
-    const user = await this.usersRepo.findOne({ where: { resetPasswordToken: token } });
+    const user = await this.usersRepo.findOne({
+      where: { resetPasswordToken: token },
+    });
 
-    if (!user || !user.resetPasswordExpires || new Date() > user.resetPasswordExpires) {
+    if (
+      !user ||
+      !user.resetPasswordExpires ||
+      new Date() > user.resetPasswordExpires
+    ) {
       throw new BadRequestException('invalidOrExpiredToken');
     }
 
@@ -113,8 +119,6 @@ export class UsersService {
     const users = await this.usersRepo.find({
       where: { email },
     });
-
-    // TODO: extract password from users before retrieve data
 
     return users;
   }

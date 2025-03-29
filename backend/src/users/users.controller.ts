@@ -23,7 +23,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User as UserParam } from '../auth/decorators/user.decorator';
 import { LocalAuthGuard } from '../auth/guards/local-auth.guard';
 import { Response } from 'express';
-import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
 import { BookmarksService } from './services/bookmarks.service';
@@ -33,7 +32,6 @@ import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly configService: ConfigService,
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
@@ -43,6 +41,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   findMe(@UserParam() user: User) {
+    console.log("REQ: ", user);
+
     return user;
   }
 
@@ -50,28 +50,15 @@ export class UsersController {
   @Post('local-login')
   @HttpCode(200)
   async login(@Req() req, @Res() res: Response) {
-    const { access_token } = await this.authService.generateAccessToken(
-      req.user,
-    );
-
-    res.cookie('access_token', access_token, {
-      httpOnly: true,
-      secure:
-        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    });
-
+    // Set token produced based on user to the http response
+    this.authService.loadAccessToken(req.user, res);
     res.json({ message: 'Logged in sucessfully' });
   }
 
   @Post('logout')
   @HttpCode(200)
   async logout(@Res() res: Response) {
-    res.clearCookie('access_token', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Ensure secure cookie in production
-      path: '/', // Must match cookie path when set
-    });
+    this.authService.clearAccessToken(res);
 
     return res.json({ message: 'Logged out successfully' });
   }
@@ -85,21 +72,13 @@ export class UsersController {
   ) {
     const { oldPassword, newPassword } = body;
 
-    const user = await this.usersService.resetPassword(
+    await this.usersService.resetPassword(
       reqUser.id,
       oldPassword,
       newPassword,
     );
 
-    const { access_token } = await this.authService.generateAccessToken(user);
-
-    res.cookie('access_token', access_token, {
-      httpOnly: true,
-      secure:
-        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    });
-
+    this.authService.clearAccessToken(res);
     res.json({ message: 'passwordUpdated' });
   }
 
@@ -111,9 +90,7 @@ export class UsersController {
   }
 
   @Patch('me/password-restore')
-  async restorePassword(@Body() body: { newPassword: string, token: string }) {
-    console.log(body);
-    
+  async restorePassword(@Body() body: { newPassword: string; token: string }) {
     const { newPassword, token } = body;
 
     return this.usersService.restorePassword(newPassword, token);
@@ -121,53 +98,31 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Patch('me/theme')
-  async toggleTheme(@UserParam() user: User, @Res() res: Response) {
-    const userProfile = await this.profilesService.toggleTheme(user.email);
+  async toggleTheme(@UserParam() u: User, @Res() res: Response) {
+    const user = await this.profilesService.toggleTheme(u.email);
 
-    const { access_token } = await this.authService.generateAccessToken(
-      userProfile!,
-    );
-
-    res.cookie('access_token', access_token, {
-      httpOnly: true,
-      secure:
-        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    });
-
+    this.authService.loadAccessToken(user, res);
     res.json({ message: 'User profile has been successfully updated' });
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch('me/lang')
   async changeLang(
-    @UserParam() user: User,
+    @UserParam() u: User,
     @Body() body: any,
     @Res() res: Response,
   ) {
-    if (!user) throw new UnauthorizedException();
+    if (!u) throw new UnauthorizedException();
 
-    const updatedUser = await this.profilesService.changeLang(
-      user.email,
-      body.uiLang,
-    );
+    const user = await this.profilesService.changeLang(u.email, body.uiLang);
 
-    const { access_token } = await this.authService.generateAccessToken(
-      updatedUser!,
-    );
-
-    res.cookie('access_token', access_token, {
-      httpOnly: true,
-      secure:
-        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    });
-
+    this.authService.loadAccessToken(user, res);
     res.json({ message: 'User profile has been successfully updated' });
   }
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+  @HttpCode(201)
+  async create(@Body() createUserDto: CreateUserDto) {
     const { email, provider, uiLang, bookmark } = createUserDto;
 
     // Check if the user already exists
@@ -203,7 +158,9 @@ export class UsersController {
       ),
     );
 
-    return res.redirect(307, '/users/local-login');
+    return {
+      message: 'User created successfully. Please log in.',
+    };
   }
 
   @UseGuards(JwtAuthGuard)

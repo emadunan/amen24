@@ -52,7 +52,7 @@ const LocalSignup = () => {
         },
       }).unwrap();
 
-      router.replace("/");
+      router.replace("/login");
     } catch (err: unknown) {
       handleApiError(err, t);
       setLocalLoading(false);

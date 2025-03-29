@@ -51,7 +51,7 @@ export class ProfilesService {
     return await this.profilesRepo.update(email, { lastLogin: new Date() });
   }
 
-  async toggleTheme(email: string): Promise<Omit<User, 'password'>> {
+  async toggleTheme(email: string): Promise<User> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
@@ -64,17 +64,12 @@ export class ProfilesService {
 
     const user = await this.usersService.findOneByEmailProvider(profile.email);
 
-    if(!user) throw new NotFoundException("userNotFound");
+    if (!user) throw new NotFoundException('userNotFound');
 
-    const { password, ...result } = user;
-
-    return result;
+    return user;
   }
 
-  async changeLang(
-    email: string,
-    uiLang: Lang,
-  ): Promise<Omit<User, 'password'>> {
+  async changeLang(email: string, uiLang: Lang): Promise<User> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
@@ -86,10 +81,8 @@ export class ProfilesService {
 
     const user = await this.usersService.findOneByEmailProvider(profile.email);
 
-    if(!user) throw new NotFoundException("userNotFound");
+    if (!user) throw new NotFoundException('userNotFound');
 
-    const { password, ...result } = user;
-
-    return result;
+    return user;
   }
 }
