@@ -17,9 +17,6 @@ command -v pm2 >/dev/null 2>&1 || { echo >&2 "PM2 is not installed. Aborting."; 
 # Navigate to the project directory
 cd /home/emad/projects/amen24test || { echo "Project directory not found"; exit 1; }
 
-# Pull latest changes from the test branch
-git pull origin test
-
 # Stop current PM2 services
 pm2 del ecosystem.config.js || echo "No existing PM2 processes found"
 
