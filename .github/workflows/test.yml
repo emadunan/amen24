@@ -17,6 +17,11 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
-  
-      - name: SSH into Server
-        run: ssh -i private_key -o StrictHostKeyChecking=no emad@164.92.231.145 "cd /home/emad/projects/amen24/ && git pull origin test && cd ./_scripts && ./deployToTest.sh"
+
+      - name: SSH into Server and Deploy
+        run: |
+          ssh -i private_key -o StrictHostKeyChecking=no ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }} "
+          cd /home/${{ vars.SERVER_USER }}/projects/amen24 &&
+          git pull origin test &&
+          cd ./_scripts &&
+          ./deployToTest.sh"
