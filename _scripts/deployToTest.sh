@@ -4,7 +4,7 @@
 source ~/.bashrc || source ~/.profile
 
 # Ensure Node.js tools are in the PATH
-export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PAT
+export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PATH
 
 # Debugging output
 echo "Current PATH: $PATH"
