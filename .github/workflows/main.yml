@@ -13,17 +13,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Deploy via SSH
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+      - name: Setup SSH Key
         run: |
-          echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
-          
-          ssh -i private_key $SERVER_USER@$SERVER_HOST << 'EOF'
-            cd /home/emad/projects/amen24/
-            git checkout test
-            git pull
-            ./_scripts/deployToTest.sh
-          EOF
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+  
+      - name: SSH into Server
+        run: ssh -i private_key -o StrictHostKeyChecking=no emad@164.92.231.145 "cd /home/emad/projects/amen24/ && git checkout test && git pull && ./_scripts/deployToTest.sh"
