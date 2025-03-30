@@ -12,6 +12,20 @@ import StoreProvider from "../../providers/StoreProvider";
 import { ToastContainer } from "react-toastify";
 import BibleNavigation from "@/components/bible/BibleNavigator";
 import { amiri } from "@/config/fonts.config";
+import Script from "next/script";
+import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
+
+// <!-- Google tag (gtag.js) -->
+// <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXKQBYMME6"></script>
+// <script>
+//   window.dataLayer = window.dataLayer || [];
+//   function gtag(){dataLayer.push(arguments);}
+//   gtag('js', new Date());
+
+//   gtag('config', 'G-EXKQBYMME6');
+// </script>
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata: Metadata = {
   title: "amen24",
@@ -51,6 +65,18 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
 
   return (
     <html lang={locale} dir={dir}>
+      <head>
+        <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+        <Script strategy="afterInteractive" id="google-analytics" dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '${GA_ID}');
+          `
+        }} />
+      </head>
       <body className={amiri.className}>
         <StoreProvider>
           <TranslationsProvider
@@ -60,7 +86,10 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
           >
             <AppHeader />
             <BibleNavigation />
-            <AppMain>{children}</AppMain>
+            <AppMain>
+              {children}
+              <GoogleAnalytics />
+            </AppMain>
             <AppFooter />
           </TranslationsProvider>
         </StoreProvider>
