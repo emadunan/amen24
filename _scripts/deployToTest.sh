@@ -18,7 +18,7 @@ command -v pm2 >/dev/null 2>&1 || { echo >&2 "PM2 is not installed. Aborting."; 
 cd /home/emad/projects/amen24test || { echo "Project directory not found"; exit 1; }
 
 # Stop current PM2 services
-pm2 del ecosystem.config.js || echo "No existing PM2 processes found"
+pm2 del backend-test frontend-test || echo "No existing PM2 processes found"
 
 # Install shared dependencies
 cd shared
