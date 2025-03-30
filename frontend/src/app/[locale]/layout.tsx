@@ -49,7 +49,7 @@ export function generateStaticParams() {
 
 interface Props {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 const RootLayout: FC<Props> = async ({ children, params }) => {
