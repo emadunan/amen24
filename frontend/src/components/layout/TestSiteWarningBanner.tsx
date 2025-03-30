@@ -2,8 +2,21 @@
 
 import Link from "next/link";
 import styles from "./TestSiteWarningBanner.module.css";
+import { useEffect, useState } from "react";
 
 const TestSiteWarningBanner = () => {
+  const [isTestEnv, setIsTestEnv] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      const isTest = /^(\w+\.)?test\.amen24\.org$/.test(hostname);
+      setIsTestEnv(isTest);
+    }
+  }, []);
+
+  if (!isTestEnv) return null;
+
   return (
     <div className={styles.overlay}>
       <div className={styles.content}>

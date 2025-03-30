@@ -1,22 +1,21 @@
 .overlay {
-  position: fixed;
-  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(139, 0, 0, 0.9); /* Dark Red */
-  color: white;
   text-align: center;
-  padding: 20px;
-  z-index: 9999;
+  height: calc(100vh - var(--header-height)) ;
+  margin-top: -4rem;
+  margin-bottom: 4rem;
+  border-bottom: solid 2px var(--primary);
 }
 
 .content {
   max-width: 500px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--text);
   padding: 20px;
   border-radius: 8px;
   backdrop-filter: blur(8px);
+  color: var(--background);
 }
 
 .title {
@@ -31,14 +30,15 @@
 
 .button {
   display: inline-block;
-  background: yellow;
-  color: black;
+  background: var(--accent);
+  color: var(--background);
   font-weight: bold;
-  padding: 10px 16px;
-  border-radius: 6px;
+  padding: .6rem 1rem;
+  border-radius: 2px;
+  margin-top: 1rem;
   text-decoration: none;
 }
 
 .button:hover {
-  background: gold;
+  background: var(--accent-hover);
 }
