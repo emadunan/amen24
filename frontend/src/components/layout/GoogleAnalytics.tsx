@@ -10,7 +10,7 @@ const GoogleAnalytics = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("config", GA_ID, { page_path: pathname });
+      window.gtag("config", GA_ID!, { page_path: pathname });
     }
   }, [pathname]);
 
