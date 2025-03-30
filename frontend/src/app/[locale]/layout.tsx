@@ -14,6 +14,7 @@ import BibleNavigation from "@/components/bible/BibleNavigator";
 import { amiri } from "@/config/fonts.config";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
+import TestSiteWarningBanner from "@/components/layout/TestSiteWarningBanner";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -77,6 +78,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
             <AppHeader />
             <BibleNavigation />
             <AppMain>
+              <TestSiteWarningBanner />
               {children}
               <GoogleAnalytics />
             </AppMain>
