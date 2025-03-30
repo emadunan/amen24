@@ -96,3 +96,17 @@ git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d
 ``` bash
 pnpm config set node-linker=hoisted --location project
 ```
+
+## Setup Production
+
+#### Secure with an SSL Certificate (Let's Encrypt)
+``` bash
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d amen24.org -d www.amen24.org
+```
+
+- Certbot automatically installs a renewal cron job, but you can test it manually:
+``` bash
+sudo certbot renew --dry-run
+sudo systemctl reload nginx
+```
