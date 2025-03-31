@@ -67,7 +67,7 @@ const LocalLogin = () => {
       </div>
 
       <div className={styles.linkGroup}>
-        <Link className={styles.signupLink} href={"/password-request"}>
+        <Link className={styles.signupLink} href={"/contact-us"}>
           {t("signin.password-invite", { ns: "common" })}
         </Link>
 

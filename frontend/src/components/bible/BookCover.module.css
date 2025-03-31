@@ -7,6 +7,7 @@
   position: relative;
 }
 
+
 .bookCover:hover {
   transform: scale(1.1);
 }
@@ -17,12 +18,10 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-image: linear-gradient(
-    rgba(var(--background-rgb), 0.9) 5%,
-    rgba(var(--text-rgb), 0.2) 30%,
-    rgba(var(--text-rgb), 0.1) 70%,
-    rgba(var(--background-rgb), 0) 100%
-  );
+  background-image: linear-gradient(rgba(var(--background-rgb), 0.9) 5%,
+      rgba(var(--text-rgb), 0.2) 30%,
+      rgba(var(--text-rgb), 0.1) 70%,
+      rgba(var(--background-rgb), 0) 100%);
   z-index: 1;
 }
 
@@ -40,4 +39,43 @@
   font-size: 1.2rem;
   text-shadow: 1px 1px 3px rgba(var(--background-rgb), 0.6);
   /* Adds contrast for readability */
+}
+/* Small tablets (768px) */
+@media (max-width: 48em) { 
+  .bookCover {
+    height: 14rem;
+    width: 9.33rem; /* 3:2 ratio */
+  }
+}
+
+/* Large phones (600px) */
+@media (max-width: 37.5em) {
+  .bookCover {
+    height: 13.5rem;
+    width: 9rem; /* 3:2 ratio */
+  }
+
+  .bookTitle {
+    font-size: 1.15rem;
+  }
+}
+
+/* Regular smartphones (480px) */
+@media (max-width: 30em) {
+  .bookCover {
+    height: 13rem;
+    width: 8.67rem; /* 3:2 ratio */
+  }
+
+  .bookTitle {
+    font-size: 1.1rem;
+  }
+}
+
+/* Small phones (360px) */
+@media (max-width: 22.5em) {
+  .bookCover {
+    height: 12.5rem;
+    width: 8.33rem; /* 3:2 ratio */
+  }
 }

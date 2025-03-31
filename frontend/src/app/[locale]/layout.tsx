@@ -14,7 +14,7 @@ import BibleNavigation from "@/components/bible/BibleNavigator";
 import { amiri } from "@/config/fonts.config";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
-import TestSiteWarningBanner from "@/components/layout/TestSiteWarningBanner";
+import TestSiteWarning from "@/components/layout/TestSiteWarning";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -57,16 +57,23 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
   return (
     <html lang={locale} dir={dir}>
       <head>
-        <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
-        <Script strategy="afterInteractive" id="google-analytics" dangerouslySetInnerHTML={{
-          __html: `
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+        />
+        <Script
+          strategy="afterInteractive"
+          id="google-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
             gtag('config', '${GA_ID}');
-          `
-        }} />
+          `,
+          }}
+        />
       </head>
       <body className={amiri.className}>
         <StoreProvider>
@@ -78,7 +85,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
             <AppHeader />
             <BibleNavigation />
             <AppMain>
-              <TestSiteWarningBanner />
+              <TestSiteWarning />
               {children}
               <GoogleAnalytics />
             </AppMain>

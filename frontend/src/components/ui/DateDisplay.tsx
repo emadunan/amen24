@@ -81,7 +81,6 @@ const DateDisplay: React.FC = () => {
     return `${formattedDay} ${monthName} ${formattedYear}`;
   };
 
-
   return (
     <div onClick={switchCalendar} className={styles.calendar}>
       {getFormattedDate(calendars[calendarIndex])}

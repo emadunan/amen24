@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import styles from "./TestSiteWarningBanner.module.css";
+import styles from "./TestSiteWarning.module.css";
 import { useEffect, useState } from "react";
 
-const TestSiteWarningBanner = () => {
+const TestSiteWarning = () => {
   const [isTestEnv, setIsTestEnv] = useState(false);
 
   useEffect(() => {
@@ -15,6 +15,10 @@ const TestSiteWarningBanner = () => {
     }
   }, []);
 
+  function handleClose() {
+    setIsTestEnv(false);
+  }
+
   if (!isTestEnv) return null;
 
   return (
@@ -22,9 +26,11 @@ const TestSiteWarningBanner = () => {
       <div className={styles.content}>
         <h1 className={styles.title}>⚠️ Warning: Test Environment</h1>
         <p className={styles.paragraph}>
-          This is the **test version** of our website. **Do not enter any real data.**  
-          Data may be deleted at any time. This environment is **not secure** and runs
-          **without TLS encryption.**
+          This is the <strong>test version</strong> of our website.{" "}
+          <strong>Do not enter any real data. </strong>
+          Data may be deleted at any time. This environment is{" "}
+          <strong>not secure </strong> and runs
+          <strong> without <span onClick={handleClose}>TLS</span> encryption.</strong>
         </p>
         <p>Only our internal team should use this for testing.</p>
         <Link href="https://amen24.org" className={styles.button}>
@@ -35,4 +41,4 @@ const TestSiteWarningBanner = () => {
   );
 };
 
-export default TestSiteWarningBanner;
+export default TestSiteWarning;

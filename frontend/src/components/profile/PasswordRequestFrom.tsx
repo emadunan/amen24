@@ -28,6 +28,9 @@ const PasswordRequestFrom = () => {
       const { message } = await requestPassword({ email }).unwrap();
       setMessage(message);
     } catch (err) {
+      console.log(err);
+      console.error(err);
+      
       handleApiError(err, t);
     } finally {
       setLocalLoading(false);
