@@ -23,8 +23,8 @@ import { MailerModule } from '@nestjs-modules/mailer';
     MailerModule.forRoot({
       transport: {
         host: 'smtp.zoho.com',
-        port: 465,
-        secure: true,
+        port: 587,
+        secure: false,
         auth: {
           user: 'marinaessam@amen24.org',
           pass: 'marinaEssam24!',
