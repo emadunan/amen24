@@ -12,6 +12,7 @@ import { userApi, useLogoutMutation } from "@/store/userApi";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { showToast } from "@/utils/toast";
 
 interface UserMenuProps {
   user?: User;
@@ -33,12 +34,13 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
       await mutate().unwrap();
 
       dispatch(userApi.util.resetApiState());
-      setIsOpen(false); // Close menu after logout
+      setIsOpen(false);
 
-      router.refresh(); // Refresh user state
-      router.replace("/login"); // ✅ Redirect to login after logout
+      document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Force clear client-side
+      router.replace("/login");
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.error("Logout failed", error);
+      showToast("Logout failed", "error");
     }
   }, [mutate, router]);
 

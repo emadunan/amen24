@@ -41,8 +41,6 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   findMe(@UserParam() user: User) {
-    console.log("REQ: ", user);
-
     return user;
   }
 

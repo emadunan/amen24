@@ -28,8 +28,6 @@ export const bookmarkApi = createApi({
       Omit<Bookmark, "title" | "profile" | "updatedAt">
     >({
       query: (bookmark) => {
-        console.log(bookmark);
-
         return {
           url: "/",
           method: "PATCH",

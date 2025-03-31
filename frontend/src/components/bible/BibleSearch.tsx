@@ -113,7 +113,7 @@ export default function BibleSearch() {
       const searchResult = await response.json();
       dispatch(setResults(searchResult));
     } catch (error) {
-      console.log(error);
+      console.error(error);
       showToast("unknownError", "error");
     } finally {
       dispatch(setIsLoading(false));

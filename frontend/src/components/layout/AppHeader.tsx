@@ -37,10 +37,7 @@ const AppHeader: FC<Props> = () => {
   const {
     data: user,
     error,
-  } = useGetMeQuery(undefined, { skip: typeof window === "undefined" });
-
-  console.log(user);
-  
+  } = useGetMeQuery(undefined, { skip: typeof window === "undefined" });  
 
   // Extract locale from the pathname
   const localePrefixes = i18nConfig.locales.map((locale) => `/${locale}`);
