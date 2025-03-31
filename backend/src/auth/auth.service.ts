@@ -72,7 +72,9 @@ export class AuthService {
   loadAccessToken(user: User, response: Response): void {
     const { password, ...data } = user;
 
-    const access_token = this.jwtService.sign(data);
+    const access_token = this.jwtService.sign(data, {
+      expiresIn: '30d',
+    });
 
     response.cookie('access_token', access_token, {
       httpOnly: true,
@@ -103,7 +105,7 @@ export class AuthService {
     user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour expiry
     await this.usersService.update(user.id, user);
 
-    
+
     // Send reset email
     const frontendUrl = this.configService.getOrThrow<string>("FRONTEND_URL");
     const resetLink = `${frontendUrl}/password-restore?token=${resetToken}`;
