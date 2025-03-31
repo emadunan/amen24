@@ -103,8 +103,10 @@ export class AuthService {
     user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour expiry
     await this.usersService.update(user.id, user);
 
+    
     // Send reset email
-    const resetLink = `http://localhost:3000/password-restore?token=${resetToken}`;
+    const frontendUrl = this.configService.getOrThrow<string>("FRONTEND_URL");
+    const resetLink = `${frontendUrl}/password-restore?token=${resetToken}`;
     await this.mailerService.sendMail({
       to: user.email,
       from: 'support@amen24.org',
