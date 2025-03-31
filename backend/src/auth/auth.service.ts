@@ -115,7 +115,9 @@ export class AuthService {
       subject: 'Password Reset Request',
       text: `Click the following link to restore your password: ${resetLink}`,
       html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
-    });
+    })
+      .catch(err => console.error(err)
+      );
 
     return {
       message: 'passwordResetEmailSent',
