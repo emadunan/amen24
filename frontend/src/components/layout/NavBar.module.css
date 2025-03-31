@@ -1,0 +1,38 @@
+.navList {
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.navItem {
+  position: relative;
+  color: var(--gray);
+  font-size: 0.95rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.navItem::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  /* Adjust spacing */
+  width: 100%;
+  height: 2px;
+  /* Thickness of the underline */
+  background-color: var(--text);
+  /* Underline color */
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navItem:hover::after {
+  transform: scaleX(1);
+  transform-origin: center;
+}
+
+.active {
+  color: var(--text);
+}

@@ -40,6 +40,7 @@
   text-shadow: 1px 1px 3px rgba(var(--background-rgb), 0.6);
   /* Adds contrast for readability */
 }
+
 /* Small tablets (768px) */
 @media (max-width: 48em) { 
   .bookCover {

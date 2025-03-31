@@ -3,9 +3,7 @@
 import dynamic from "next/dynamic";
 import React, { FC } from "react";
 import styles from "./AppHeader.module.css";
-import Link from "next/link";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
-import { useTranslation } from "react-i18next";
 import LanguageChanger from "../ui/LanguageSelector";
 import LoginButton from "../profile/LoginLink";
 import { usePathname } from "next/navigation";
@@ -16,6 +14,9 @@ import { useGetMeQuery } from "@/store/userApi";
 import Spinner from "../ui/Spinner";
 import Bookmark from "../ui/Bookmark";
 import DateDisplay from "../ui/DateDisplay";
+import NavBar from "./NavBar";
+import NavMenu from "./NavMenu";
+import useIsMobile from "@/hooks/useIsMobile";
 
 const AppLogo = dynamic(() => import("./AppLogo"), {
   ssr: false,
@@ -32,11 +33,12 @@ interface Props {
 
 const AppHeader: FC<Props> = () => {
   const pathname = usePathname();
-  const { t } = useTranslation();
 
   const { data: user, error } = useGetMeQuery(undefined, {
     skip: typeof window === "undefined",
   });
+
+  const isMobile = useIsMobile();
 
   // Extract locale from the pathname
   const localePrefixes = i18nConfig.locales.map((locale) => `/${locale}`);
@@ -66,33 +68,11 @@ const AppHeader: FC<Props> = () => {
       <AppLogo />
 
       <nav className={styles.nav}>
-        <ul className={styles.navList}>
-          <li className={styles.navItem}>
-            <Link
-              className={`link ${normalizedPath === "/" || isBookPath ? `${styles.active}` : ""}`}
-              href={"/"}
-            >
-              {" "}
-              <h3>{t("bible", { ns: "common" })}</h3>
-            </Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link
-              className={`link ${normalizedPath === "/search" ? `${styles.active}` : ""}`}
-              href={"/search"}
-            >
-              <h3>{t("search", { ns: "common" })}</h3>
-            </Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link
-              className={`link ${normalizedPath === "/contact-us" ? `${styles.active}` : ""}`}
-              href={"/contact-us"}
-            >
-              <h3>{t("contactUsTitle", { ns: "common" })}</h3>
-            </Link>
-          </li>
-        </ul>
+        {isMobile ? (
+          <NavMenu normalizedPath={normalizedPath} isBookPath={isBookPath} />
+        ) : (
+          <NavBar normalizedPath={normalizedPath} isBookPath={isBookPath} />
+        )}
 
         <div className={styles.navActions}>
           <LanguageChanger />
