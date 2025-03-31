@@ -42,7 +42,6 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
     }
   }, [mutate, router]);
 
-
   return (
     <div className={styles.container} ref={dropdownRef}>
       <button

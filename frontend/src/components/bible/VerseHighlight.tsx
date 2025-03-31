@@ -31,8 +31,8 @@ const VerseHighlight: FC<Props> = ({
   const { data: bookmark } = useGetUserLastReadBookmarkQuery();
 
   useEffect(() => {
-    setIsClient(true)
-  }, [])
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     if (isFirstLoad.current) {

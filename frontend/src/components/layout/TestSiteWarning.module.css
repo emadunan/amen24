@@ -37,6 +37,7 @@
   padding: 10px 16px;
   border-radius: 6px;
   text-decoration: none;
+  margin-top: 1rem;
 }
 
 .button:hover {
