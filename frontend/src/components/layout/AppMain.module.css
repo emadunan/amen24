@@ -7,5 +7,40 @@
 .appMain {
   width: 92rem;
   position: relative;
-  padding: calc(var(--header-height) + 4rem) 2rem 2rem 2rem;
+  padding-top: calc(var(--header-height) + 4rem);
+  padding-bottom: 2rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+/* Small tablets (768px) */
+@media (max-width: 48em) { 
+  .appMain {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+}
+
+/* Large phones (600px) */
+@media (max-width: 37.5em) {
+  .appMain {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+}
+
+/* Regular smartphones (480px) */
+@media (max-width: 30em) {
+  .appMain {
+    padding-right: .75rem;
+    padding-left: .75rem;
+  }
+}
+
+/* Small phones (360px) */
+@media (max-width: 22.5em) {
+  .appMain {
+    padding-right: .5rem;
+    padding-left: .5rem;
+  }
 }
