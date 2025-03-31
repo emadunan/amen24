@@ -19,21 +19,21 @@ const getLocaleForCalendar = (calendar: CalendarType) => {
   }
 };
 
-const HebrewMonthMap: Record<string, number> = {
-  Nisan: 1,
-  Iyyar: 2,
-  Sivan: 3,
-  Tammuz: 4,
-  Av: 5,
-  Elul: 6,
-  Tishrei: 7,
-  Cheshvan: 8,
-  Kislev: 9,
-  Tevet: 10,
-  Shevat: 11,
-  Adar: 12,
-  "Adar II": 13, // Only in leap years
-};
+// const HebrewMonthMap: Record<string, number> = {
+//   Nisan: 1,
+//   Iyyar: 2,
+//   Sivan: 3,
+//   Tammuz: 4,
+//   Av: 5,
+//   Elul: 6,
+//   Tishrei: 7,
+//   Cheshvan: 8,
+//   Kislev: 9,
+//   Tevet: 10,
+//   Shevat: 11,
+//   Adar: 12,
+//   "Adar II": 13, // Only in leap years
+// };
 
 const DateDisplay: React.FC = () => {
   const { t, i18n } = useTranslation("month");
