@@ -6,11 +6,17 @@ import { useGetUserLastReadBookmarkQuery } from "@/store/bookmarkApi";
 import { useTranslation } from "react-i18next";
 import { BookMap, formatNumber, Lang } from "@amen24/shared";
 import { useGetMeQuery } from "@/store/userApi";
+import { useEffect } from "react";
 
 const Bookmark = () => {
-  const { data: bookmark } = useGetUserLastReadBookmarkQuery();
-  const { data: user } = useGetMeQuery();
   const { t, i18n } = useTranslation("book");
+  
+  const { data: user } = useGetMeQuery();
+  const { data: bookmark, refetch } = useGetUserLastReadBookmarkQuery(undefined, { skip: !user });
+
+  useEffect(() => {
+    if (user) refetch();
+  }, [user, refetch]);
 
   if (!user || !bookmark) return null;
 

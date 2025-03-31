@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./DateDisplay.module.css";
 import { formatNumber, Lang } from "@amen24/shared";
 
-const calendars = ["gregorian", "coptic", "hebrew"] as const;
+const calendars = ["gregorian", "coptic"] as const;
 type CalendarType = (typeof calendars)[number];
 
 const getLocaleForCalendar = (calendar: CalendarType) => {
@@ -12,8 +12,8 @@ const getLocaleForCalendar = (calendar: CalendarType) => {
       return "en"; // Default to avoid errors
     case "coptic":
       return "en-u-ca-coptic";
-    case "hebrew":
-      return "en-u-ca-hebrew";
+    // case "hebrew":
+    //   return "en-u-ca-hebrew";
     default:
       return "en"; // Fallback
   }
@@ -61,16 +61,16 @@ const DateDisplay: React.FC = () => {
 
     if (!day || !monthIndex || !year) return "Error fetching date";
 
-    if (locale === "en-u-ca-hebrew") {
-      // Hebrew months are returned as names, not numbers
-      const mappedMonth = HebrewMonthMap[monthIndex]; // Convert name to number
-      if (mappedMonth) {
-        monthIndex = mappedMonth.toString();
-      } else {
-        console.warn(`Unexpected Hebrew month: ${monthIndex}`); // Debugging help
-        return "Invalid Hebrew date"; // Avoid crashing if mapping fails
-      }
-    }
+    // if (locale === "en-u-ca-hebrew") {
+    //   // Hebrew months are returned as names, not numbers
+    //   const mappedMonth = HebrewMonthMap[monthIndex]; // Convert name to number
+    //   if (mappedMonth) {
+    //     monthIndex = mappedMonth.toString();
+    //   } else {
+    //     console.warn(`Unexpected Hebrew month: ${monthIndex}`); // Debugging help
+    //     return "Invalid Hebrew date"; // Avoid crashing if mapping fails
+    //   }
+    // }
 
     // Get translated month name
     const monthName = t(`${calendar}.${monthIndex}`, { ns: "month" });
