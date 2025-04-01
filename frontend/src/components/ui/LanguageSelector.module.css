@@ -62,3 +62,13 @@
   opacity: 0.5;
   background: var(--background); /* Keep background unchanged */
 }
+
+@media (max-width: 48em) { 
+  .button {
+    width: 2rem;
+  }
+
+  .option {
+    width: 2rem;
+  }
+}

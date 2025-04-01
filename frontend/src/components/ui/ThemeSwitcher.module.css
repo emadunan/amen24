@@ -1,3 +1,20 @@
+.toggleButton {
+  width: 2rem;
+  background-color: transparent;
+  border: 1px solid var(--primary);
+  border-radius: 2px;
+
+  transition:
+    background 0.3s ease-in-out,
+    border 0.3s ease-in-out;
+}
+
+.toggleButton:focus,
+.toggleButton:hover {
+  border-color: var(--accent);
+  background-color: var(--background);
+}
+
 .toggleWrapper {
   position: relative;
   display: inline-block;
