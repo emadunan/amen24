@@ -17,3 +17,52 @@
 .calendar:hover {
   cursor: pointer;
 }
+
+
+/* Small tablets (768px) */
+@media (max-width: 48em) { 
+  .calendar {
+    right: 1.5rem;
+  }
+
+  [dir="rtl"] .calendar {
+    right: auto;
+    left: 1.5rem;
+  }
+}
+
+/* Large phones (600px) */
+@media (max-width: 37.5em) {
+  .calendar {
+    right: 1rem;
+  }
+
+  [dir="rtl"] .calendar {
+    right: auto;
+    left: 1rem;
+  }
+}
+
+/* Regular smartphones (480px) */
+@media (max-width: 30em) {
+  .calendar {
+    right: .75rem;
+  }
+
+  [dir="rtl"] .calendar {
+    right: auto;
+    left: .75rem;
+  }
+}
+
+/* Small phones (360px) */
+@media (max-width: 22.5em) {
+  .calendar {
+    right: .5rem;
+  }
+
+  [dir="rtl"] .calendar {
+    right: auto;
+    left: .5rem;
+  }
+}

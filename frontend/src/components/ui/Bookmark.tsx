@@ -7,10 +7,12 @@ import { useTranslation } from "react-i18next";
 import { BookMap, formatNumber, Lang } from "@amen24/shared";
 import { useGetMeQuery } from "@/store/userApi";
 import { useEffect } from "react";
+import useBreakpoint from "@/hooks/useBreakpoint";
 
 const Bookmark = () => {
   const { t, i18n } = useTranslation("book");
-  
+  const { isLargePhone } = useBreakpoint();
+
   const { data: user } = useGetMeQuery();
   const { data: bookmark, refetch } = useGetUserLastReadBookmarkQuery(undefined, { skip: !user });
 
@@ -30,7 +32,8 @@ const Bookmark = () => {
     >
       {/* This MdPushPin cause hydration error, so I need to finds a solution first then add it */}
       {/* <MdPushPin /> */}
-      {t("bookmark.last_read")} | {t(bookmark.bookKey)} {chapterNo} : {verseNo}
+      <span>{t("bookmark.last_read")}</span>
+      {!isLargePhone && <span> | {t(bookmark.bookKey)} {chapterNo} : {verseNo}</span>}
     </Link>
   );
 };

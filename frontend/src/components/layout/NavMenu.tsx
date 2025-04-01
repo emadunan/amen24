@@ -1,3 +1,5 @@
+"use client"
+
 import React, { FC, useState } from "react";
 import MenuButton from "./MenuButton";
 import styles from "./NavMenu.module.css";

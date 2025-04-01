@@ -30,20 +30,12 @@
   position: relative;
 }
 
-.navActions {
+.navSide {
   display: flex;
   gap: 0.5rem;
   align-items: stretch;
-  width: calc(50% - 3rem);
+  width: calc(50% - 4rem);
   justify-content: flex-end;
-  height: 2rem;
-}
-
-.navLinks {
-  display: flex;
-  gap: 0.5rem;
-  align-items: stretch;
-  width: calc(50% - 3rem);
   height: 2rem;
 }
 

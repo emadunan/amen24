@@ -4,6 +4,12 @@
   align-items: baseline;
   gap: 1rem;
   margin: auto 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .navList {
+  margin-right: 0;
+  margin-left: auto;
 }
 
 .navItem {

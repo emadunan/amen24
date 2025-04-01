@@ -68,7 +68,7 @@ const AppHeader: FC<Props> = () => {
       <AppLogo />
 
       <nav className={styles.nav}>
-        <div className={styles.navLinks}>
+        <div className={styles.navSide}>
           {isTablet ? (
             <NavMenu normalizedPath={normalizedPath} isBookPath={isBookPath} />
           ) : (
@@ -80,7 +80,7 @@ const AppHeader: FC<Props> = () => {
           </>}
         </div>
 
-        <div className={styles.navActions}>
+        <div className={styles.navSide}>
           {!isLargePhone && <>
             <LanguageChanger />
             <ThemeSwitcher />
