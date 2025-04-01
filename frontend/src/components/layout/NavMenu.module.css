@@ -1,5 +1,6 @@
 .navMenu {
   position: relative;
+  margin: auto 0;
 }
 
 /* Overlay (darkens background when menu is open) */

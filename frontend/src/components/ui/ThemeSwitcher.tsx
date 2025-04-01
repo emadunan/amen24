@@ -4,7 +4,7 @@ import { useState, useCallback, useLayoutEffect } from "react";
 import styles from "./ThemeSwitcher.module.css";
 import { useGetMeQuery, useToggleThemeMutation } from "@/store/userApi";
 import { ThemeMode } from "@amen24/shared";
-import useIsMobile from "@/hooks/useIsMobile";
+import useBreakpoint from "@/hooks/useBreakpoint";
 
 const LOCAL_STORAGE_KEY = "theme";
 
@@ -16,7 +16,7 @@ const ThemeSwitcher = () => {
   const [toggleTheme, { isLoading: isMutating }] = useToggleThemeMutation();
 
   // Local state for non-logged-in users
-  const isMobile = useIsMobile();
+  const { isTablet } = useBreakpoint();
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
 
   // Effect: Initialize theme state
@@ -65,7 +65,7 @@ const ThemeSwitcher = () => {
 
   if (isDarkMode === null) return null; // Avoid rendering before theme is determined
 
-  if (isMobile) return (<button className={styles.toggleButton} onClick={handleToggle}><span >{isDarkMode ? "🌙" : "🌞"}</span></button>)
+  if (isTablet) return (<button className={styles.toggleButton} onClick={handleToggle}><span >{isDarkMode ? "🌙" : "🌞"}</span></button>)
 
   return (
     <label className={styles.toggleWrapper}>

@@ -9,6 +9,10 @@
     border 0.3s ease-in-out;
 }
 
+.toggleButton:hover {
+  cursor: pointer;
+}
+
 .toggleButton:focus,
 .toggleButton:hover {
   border-color: var(--accent);

@@ -34,5 +34,43 @@
   display: flex;
   gap: 0.5rem;
   align-items: stretch;
+  width: calc(50% - 3rem);
+  justify-content: flex-end;
+  height: 2rem;
 }
 
+.navLinks {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+  width: calc(50% - 3rem);
+  height: 2rem;
+}
+
+/* Small tablets (768px) */
+@media (max-width: 48em) { 
+  .nav {
+    padding: 0.5rem 1.5rem;
+  }
+}
+
+/* Large phones (600px) */
+@media (max-width: 37.5em) {
+  .nav {
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Regular smartphones (480px) */
+@media (max-width: 30em) {
+  .nav {
+    padding: 0.5rem .75rem;
+  }
+}
+
+/* Small phones (360px) */
+@media (max-width: 22.5em) {
+  .nav {
+    padding: 0.5rem .5rem;
+  }
+}

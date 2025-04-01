@@ -16,7 +16,7 @@ import Bookmark from "../ui/Bookmark";
 import DateDisplay from "../ui/DateDisplay";
 import NavBar from "./NavBar";
 import NavMenu from "./NavMenu";
-import useIsMobile from "@/hooks/useIsMobile";
+import useBreakpoint from "@/hooks/useBreakpoint";
 
 const AppLogo = dynamic(() => import("./AppLogo"), {
   ssr: false,
@@ -38,7 +38,7 @@ const AppHeader: FC<Props> = () => {
     skip: typeof window === "undefined",
   });
 
-  const isMobile = useIsMobile();
+  const { isTablet, isLargePhone } = useBreakpoint();
 
   // Extract locale from the pathname
   const localePrefixes = i18nConfig.locales.map((locale) => `/${locale}`);
@@ -68,15 +68,24 @@ const AppHeader: FC<Props> = () => {
       <AppLogo />
 
       <nav className={styles.nav}>
-        {isMobile ? (
-          <NavMenu normalizedPath={normalizedPath} isBookPath={isBookPath} />
-        ) : (
-          <NavBar normalizedPath={normalizedPath} isBookPath={isBookPath} />
-        )}
+        <div className={styles.navLinks}>
+          {isTablet ? (
+            <NavMenu normalizedPath={normalizedPath} isBookPath={isBookPath} />
+          ) : (
+            <NavBar normalizedPath={normalizedPath} isBookPath={isBookPath} />
+          )}
+          {isLargePhone && <>
+            <LanguageChanger />
+            <ThemeSwitcher />
+          </>}
+        </div>
 
         <div className={styles.navActions}>
-          <LanguageChanger />
-          <ThemeSwitcher />
+          {!isLargePhone && <>
+            <LanguageChanger />
+            <ThemeSwitcher />
+          </>}
+
           {showLogin && <LoginButton />}
           {showUserMenu && <UserMenu user={user} />}
         </div>

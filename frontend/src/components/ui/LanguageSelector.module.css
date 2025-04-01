@@ -4,13 +4,14 @@
 }
 
 .button {
+  height: 100%;
   width: 5.2rem;
   font-family: var(--font-amiri);
   font-weight: 700;
   background: var(--secondary);
   color: var(--text);
   border: 1px solid var(--primary);
-  padding: 0.4rem;
+  padding: 0rem 0.4rem;
   border-radius: 2px;
   cursor: pointer;
   transition:

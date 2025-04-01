@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useChangeLangMutation, useGetMeQuery } from "@/store/userApi";
-import useIsMobile from "@/hooks/useIsMobile";
+import useBreakpoint from "@/hooks/useBreakpoint";
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation();
@@ -22,7 +22,7 @@ const LanguageSelector = () => {
   useClickOutside(dropdownRef, isOpen, setIsOpen);
   const { data: user } = useGetMeQuery();
   const [changeLang] = useChangeLangMutation();
-  const isMobile = useIsMobile();
+  const { isTablet } = useBreakpoint();
 
   useEffect(() => {
     if (
@@ -75,8 +75,8 @@ const LanguageSelector = () => {
   return (
     <div className={styles.languageChanger} ref={dropdownRef}>
       <button className={styles.button} onClick={() => setIsOpen(!isOpen)}>
-        {!isMobile && (currentLocale === "ar" ? "🇪🇬" : "🇺🇸")}{" "}
-        {isMobile ? currentLocale.toUpperCase() : t(currentLocale, { ns: "lang" })}
+        {!isTablet && (currentLocale === "ar" ? "🇪🇬" : "🇺🇸")}{" "}
+        {isTablet ? currentLocale.toUpperCase() : t(currentLocale, { ns: "lang" })}
       </button>
 
       {isOpen && (
@@ -86,16 +86,16 @@ const LanguageSelector = () => {
             disabled={currentLocale === "en"}
             onClick={() => handleLanguageChange("en")}
           >
-            {!isMobile && "🇺🇸"} 
-            {isMobile ? "EN" : t("en", { ns: "lang" })}
+            {!isTablet && "🇺🇸"}
+            {isTablet ? "EN" : t("en", { ns: "lang" })}
           </button>
           <button
             className={styles.option}
             disabled={currentLocale === "ar"}
             onClick={() => handleLanguageChange("ar")}
           >
-            {!isMobile && "🇪🇬"}
-            {isMobile ? "AR" : t("ar", { ns: "lang" })}
+            {!isTablet && "🇪🇬"}
+            {isTablet ? "AR" : t("ar", { ns: "lang" })}
           </button>
         </div>
       )}
