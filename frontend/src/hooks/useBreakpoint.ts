@@ -9,6 +9,17 @@ const breakpoints = {
 
 const useBreakpoint = () => {
   const getWidths = () => {
+    if (typeof window === "undefined") {
+      // Return default values during SSR (assume desktop as safe fallback)
+      return {
+        isSmallPhone: false,
+        isRegularPhone: false,
+        isLargePhone: false,
+        isTablet: false,
+        isDesktop: true,
+      };
+    }
+
     const width = window.innerWidth;
     return {
       isSmallPhone: width < breakpoints.smallPhone, // e.g., < 360
