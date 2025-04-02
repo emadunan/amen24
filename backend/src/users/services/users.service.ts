@@ -48,8 +48,10 @@ export class UsersService {
     const userToCreate = this.usersRepo.create(userData);
     const user = await this.usersRepo.save(userToCreate);
 
-    // Default bookmarks (Ensure bookmark exists)
-    if (bookmark?.last_read) {
+    // Default bookmark
+    const bookmarkExist = this.bookmarksService.getOne(email);
+
+    if (bookmark?.last_read && !bookmarkExist) {
       const defaultBookmarks = [
         {
           title: bookmark.last_read,
