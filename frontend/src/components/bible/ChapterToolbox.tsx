@@ -25,7 +25,7 @@ const ChapterToolbox = () => {
   const params = useParams<{ book: [BookKey, string, string] }>();
   const [bookKey, chapterNo] = params.book;
 
-  const { position, handleMouseDown, elementRef } = useDraggable(
+  const { position, handleMouseDown, elementRef, handleTouchStart } = useDraggable(
     5,
     7,
     i18n.language === "ar" ? false : true,
@@ -85,6 +85,7 @@ const ChapterToolbox = () => {
       className={styles.toolbox}
       ref={elementRef}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
       style={{
         left: position.x,
         top: position.y,

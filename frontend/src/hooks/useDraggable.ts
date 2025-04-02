@@ -73,6 +73,44 @@ export function useDraggable<T extends HTMLElement>(
     return () => window.removeEventListener("resize", updatePositionOnResize);
   }, [updatePositionOnResize]);
 
+  const startDrag = (x: number, y: number) => {
+    if (!elementRef.current) return;
+
+    const rect = elementRef.current.getBoundingClientRect();
+    dragState.current = {
+      startX: x,
+      startY: y,
+      initX: rect.left,
+      initY: rect.top,
+    };
+  };
+
+  const handleMouseMove = useCallback((moveEvent: MouseEvent) => {
+    if (!dragState.current || !elementRef.current) return;
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const elementRect = elementRef.current.getBoundingClientRect();
+
+    let newX =
+      dragState.current.initX + (moveEvent.clientX - dragState.current.startX);
+    let newY =
+      dragState.current.initY + (moveEvent.clientY - dragState.current.startY);
+
+    newX = Math.max(0, Math.min(viewportWidth - elementRect.width, newX));
+    newY = Math.max(0, Math.min(viewportHeight - elementRect.height, newY));
+
+    requestAnimationFrame(() => {
+      setPosition({ x: newX, y: newY });
+    });
+  }, []);
+
+  const handleMouseUp = useCallback(() => {
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+    dragState.current = null;
+  }, [handleMouseMove]);
+
   const handleMouseDown = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
     if (
@@ -81,27 +119,44 @@ export function useDraggable<T extends HTMLElement>(
     )
       return;
 
+    startDrag(event.clientX, event.clientY);
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  }, [handleMouseMove, handleMouseUp]);
+
+  // Touch event handlers
+  const handleTouchStart = useCallback((event: React.TouchEvent) => {
+    if (
+      !elementRef.current ||
+      (handleRef?.current && !handleRef.current.contains(event.target as Node))
+    )
+      return;
+
     const rect = elementRef.current.getBoundingClientRect();
+    const touch = event.touches[0];
+
     dragState.current = {
-      startX: event.clientX,
-      startY: event.clientY,
+      startX: touch.clientX,
+      startY: touch.clientY,
       initX: rect.left,
       initY: rect.top,
     };
 
-    const handleMouseMove = (moveEvent: MouseEvent) => {
+    const handleTouchMove = (moveEvent: TouchEvent) => {
       if (!dragState.current || !elementRef.current) return;
+
+      moveEvent.preventDefault(); // Prevents scrolling
 
       const elementRect = elementRef.current.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
+      const touch = moveEvent.touches[0];
 
       let newX =
-        dragState.current.initX +
-        (moveEvent.clientX - dragState.current.startX);
+        dragState.current.initX + (touch.clientX - dragState.current.startX);
       let newY =
-        dragState.current.initY +
-        (moveEvent.clientY - dragState.current.startY);
+        dragState.current.initY + (touch.clientY - dragState.current.startY);
 
       newX = Math.max(0, Math.min(viewportWidth - elementRect.width, newX));
       newY = Math.max(0, Math.min(viewportHeight - elementRect.height, newY));
@@ -111,15 +166,16 @@ export function useDraggable<T extends HTMLElement>(
       });
     };
 
-    const handleMouseUp = () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+    const handleTouchEnd = () => {
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
       dragState.current = null;
     };
 
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("touchmove", handleTouchMove, { passive: false }); // Override passive behavior
+    document.addEventListener("touchend", handleTouchEnd);
   }, []);
 
-  return { position, handleMouseDown, elementRef };
+
+  return { position, handleMouseDown, handleTouchStart, elementRef };
 }

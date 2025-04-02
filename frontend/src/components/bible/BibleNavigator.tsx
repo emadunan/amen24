@@ -25,7 +25,7 @@ const BibleNavigator = () => {
   const bookParams = params.book ?? []; // Ensure it's an array
   const [urlBookKey, chapterNo] = bookParams as [BookKey?, string?, string?];
 
-  const { position, handleMouseDown, elementRef } = useDraggable(
+  const { position, handleMouseDown, handleTouchStart, elementRef } = useDraggable(
     5,
     5,
     i18n.language === "ar" ? true : false,
@@ -80,6 +80,7 @@ const BibleNavigator = () => {
       className={styles.navigator}
       ref={elementRef}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
       style={{
         left: position.x,
         top: position.y,
