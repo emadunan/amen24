@@ -47,23 +47,23 @@
 /* Regular smartphones (480px) */
 @media (max-width: 30em) {
   .bookmark {
-    left: .75rem;
-  }
-
-  [dir="rtl"] .bookmark {
-    left: auto;
-    right: .75rem;
-  }
-}
-
-/* Small phones (360px) */
-@media (max-width: 22.5em) {
-  .bookmark {
     left: .5rem;
   }
 
   [dir="rtl"] .bookmark {
     left: auto;
     right: .5rem;
+  }
+}
+
+/* Small phones (360px) */
+@media (max-width: 22.5em) {
+  .bookmark {
+    left: 0rem;
+  }
+
+  [dir="rtl"] .bookmark {
+    left: auto;
+    right: 0rem;
   }
 }

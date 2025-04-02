@@ -46,23 +46,23 @@
 /* Regular smartphones (480px) */
 @media (max-width: 30em) {
   .calendar {
-    right: .75rem;
-  }
-
-  [dir="rtl"] .calendar {
-    right: auto;
-    left: .75rem;
-  }
-}
-
-/* Small phones (360px) */
-@media (max-width: 22.5em) {
-  .calendar {
     right: .5rem;
   }
 
   [dir="rtl"] .calendar {
     right: auto;
     left: .5rem;
+  }
+}
+
+/* Small phones (360px) */
+@media (max-width: 22.5em) {
+  .calendar {
+    right: 0rem;
+  }
+
+  [dir="rtl"] .calendar {
+    right: auto;
+    left: 0rem;
   }
 }
