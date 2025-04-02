@@ -19,3 +19,5 @@ GEN 32:32 -> GEN 32:31
 Masoretic (EXO 8:1 !== EXO 7:26)
 
 SVD Merge Last part of 1SA 25:1 with 1SA 25:2 to comply with ESV
+
+Hebrew NEH 7:68 NOT FOUND AND LEFT EMPTY
