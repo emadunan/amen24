@@ -61,7 +61,7 @@
 }
 
 /* Dark mode - moves the toggle to the right */
-.toggleInput:checked + .toggleSlider {
+.toggleInput:checked+.toggleSlider {
   justify-content: flex-end;
 }
 
@@ -70,4 +70,16 @@
 .toggleWrapper:focus-within {
   border-color: var(--accent);
   background-color: var(--background);
+}
+
+@media (max-width: 22.5em) {
+  .toggleButton {
+    border: none;
+  }
+
+  .toggleButton:focus,
+  .toggleButton:hover {
+    border-color: var(--secondary);
+    background-color: var(--secondary);
+  }
 }

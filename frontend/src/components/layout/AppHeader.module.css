@@ -33,10 +33,14 @@
 .navSide {
   display: flex;
   gap: 0.5rem;
-  align-items: stretch;
   width: calc(50% - 4rem);
   justify-content: flex-end;
   height: 2rem;
+}
+
+.preferences {
+  display: flex;
+  gap: .4rem;
 }
 
 /* Small tablets (768px) */
@@ -64,5 +68,12 @@
 @media (max-width: 22.5em) {
   .nav {
     padding: 0.5rem .5rem;
+  }
+
+  .preferences {
+    flex-direction: column-reverse;
+    gap: .1rem;
+    position: relative;
+    top: .7rem;
   }
 }

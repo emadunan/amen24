@@ -73,3 +73,10 @@
     width: 2rem;
   }
 }
+
+@media (max-width: 22.5em) {
+  .button {
+    height: auto;
+    border: none;
+  }
+}

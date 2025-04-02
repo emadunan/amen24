@@ -40,6 +40,11 @@
   width: 6.6rem;
 }
 
+[dir="rtl"] .dropdown {
+  right: auto;
+  left: 0;
+}
+
 .listItem {
   display: flex;
   align-items: center;
@@ -76,4 +81,10 @@
   background-color: var(--accent);
   opacity: 0.4;
   margin: 0.1rem auto;
+}
+
+@media (max-width: 22.5em) {
+  .menuButton {
+    width: 4.6rem;
+  }
 }

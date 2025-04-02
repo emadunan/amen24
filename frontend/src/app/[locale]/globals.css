@@ -18,6 +18,11 @@
 
   --header-height: 4rem;
   --footer-height: 12rem;
+
+  --tabletWidth: 48em;
+  --largePhoneWidth: 37.5em;
+  --regularPhoneWidth: 30em;
+  --smallPhoneWidth: 22.5em;
 }
 
 [data-theme="dark"] {
