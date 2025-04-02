@@ -73,6 +73,20 @@ export function useDraggable<T extends HTMLElement>(
     return () => window.removeEventListener("resize", updatePositionOnResize);
   }, [updatePositionOnResize]);
 
+  useEffect(() => {
+    const preventPullToRefresh = (event: TouchEvent) => {
+      if (event.touches.length > 1) {
+        event.preventDefault(); // Prevent multi-touch issues
+      }
+    };
+
+    document.addEventListener("touchstart", preventPullToRefresh, { passive: false });
+
+    return () => {
+      document.removeEventListener("touchstart", preventPullToRefresh);
+    };
+  }, []);
+
   const startDrag = (x: number, y: number) => {
     if (!elementRef.current) return;
 
@@ -147,6 +161,7 @@ export function useDraggable<T extends HTMLElement>(
       if (!dragState.current || !elementRef.current) return;
 
       moveEvent.preventDefault(); // Prevents scrolling
+      moveEvent.stopPropagation(); // Stop event bubbling
 
       const elementRect = elementRef.current.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
