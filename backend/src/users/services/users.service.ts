@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -10,9 +11,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { ProfilesService } from './profiles.service';
-import { AuthProvider } from '@amen24/shared';
+import { AuthProvider, BookKey } from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
+import { BookmarksService } from './bookmarks.service';
 
 @Injectable()
 export class UsersService {
@@ -20,27 +22,56 @@ export class UsersService {
     @InjectRepository(User) private usersRepo: Repository<User>,
     private readonly configService: ConfigService,
     private profilesService: ProfilesService,
-  ) {}
+    private bookmarksService: BookmarksService,
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
-    const { password, provider } = createUserDto;
+    const { email, password, provider, uiLang, bookmark } = createUserDto;
 
-    let user: Partial<User> | undefined;
+    // Check if the user already exists
+    const existUser = await this.findOneByEmailProvider(email, provider);
+    if (existUser) throw new ConflictException('userDuplication');
 
-    if (provider === AuthProvider.LOCAL && password) {
-      const hash = await bcrypt.hash(
-        password,
-        this.configService.getOrThrow<string>('ROUNDS'),
-      );
+    // Create profile
+    const profile = await this.profilesService.create({ email, uiLang });
+    if (!profile) throw new NotFoundException('profileNotFound');
 
-      user = { ...createUserDto, password: hash };
+    // Hash password if local authentication
+    const userData: Partial<User> = {
+      ...createUserDto,
+      ...(provider === AuthProvider.LOCAL && password
+        ? { password: await this.hashPassword(password) }
+        : {}),
+    };
 
-      this.usersRepo.create(user);
+    // Save user
+    const userToCreate = this.usersRepo.create(userData);
+    const user = await this.usersRepo.save(userToCreate);
+
+    // Default bookmarks (Ensure bookmark exists)
+    if (bookmark?.last_read) {
+      const defaultBookmarks = [
+        {
+          title: bookmark.last_read,
+          bookKey: '01_GEN' as BookKey,
+          chapterNo: 1,
+          verseNo: 1,
+        },
+      ];
+
+      for (const bm of defaultBookmarks) {
+        await this.bookmarksService.create({ profileEmail: email, ...bm });
+      }
     }
 
-    if (!user) throw new BadRequestException('userNotCreated');
+    delete user.password;
 
-    return await this.usersRepo.save(user);
+    return user;
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    const rounds = this.configService.getOrThrow<string>('ROUNDS');
+    return bcrypt.hash(password, rounds);
   }
 
   async resetPassword(

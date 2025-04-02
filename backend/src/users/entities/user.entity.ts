@@ -19,7 +19,7 @@ export class User {
   email: string;
 
   @Column({ type: 'text', nullable: true })
-  password: string;
+  password?: string;
 
   @Column()
   displayName: string;

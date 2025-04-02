@@ -10,10 +10,9 @@ import {
   Req,
   HttpCode,
   Res,
-  ConflictException,
-  NotFoundException,
   UnauthorizedException,
   ParseIntPipe,
+  NotImplementedException,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -121,44 +120,15 @@ export class UsersController {
   @Post()
   @HttpCode(201)
   async create(@Body() createUserDto: CreateUserDto) {
-    const { email, provider, uiLang, bookmark } = createUserDto;
+    try {
+      const user = await this.usersService.create(createUserDto);
 
-    // Check if the user already exists
-    const existUser = await this.usersService.findOneByEmailProvider(
-      email,
-      provider,
-    );
+      if (user) return { message: "userCreated" };
 
-    if (existUser) throw new ConflictException('userDuplication');
-
-    // Create profile
-    const profile = await this.profilesService.create({ email, uiLang });
-    if (!profile) throw new NotFoundException('profileNotFound');
-
-    await this.profilesService.updateLastLogin(email);
-
-    // Create user
-    await this.usersService.create(createUserDto);
-
-    // Default bookmarks
-    const bookmarks = [
-      {
-        title: bookmark.last_read,
-        bookKey: '01_GEN' as BookKey,
-        chapterNo: 1,
-        verseNo: 1,
-      },
-    ];
-
-    await Promise.all(
-      bookmarks.map((bm) =>
-        this.bookmarksService.create({ profileEmail: email, ...bm }),
-      ),
-    );
-
-    return {
-      message: 'User created successfully. Please log in.',
-    };
+      return { message: "userCreateFailed" };
+    } catch (error) {
+      throw new NotImplementedException("userCreateFailed");
+    }
   }
 
   @UseGuards(JwtAuthGuard)

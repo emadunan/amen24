@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -9,9 +10,11 @@ import * as bcrypt from 'bcrypt';
 import { User } from '../users/entities/user.entity';
 import { randomBytes } from 'crypto';
 import { MailerService } from '@nestjs-modules/mailer';
-import { AuthProvider } from '@amen24/shared';
+import { AuthProvider, Lang } from '@amen24/shared';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { GoogleProfile } from 'src/interfaces/GoogleProfile';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +24,7 @@ export class AuthService {
     private jwtService: JwtService,
     private mailerService: MailerService,
   ) { }
-  async validateUser(
+  async validateLocalUser(
     email: string,
     pass: string,
   ): Promise<Partial<Omit<User, 'password'>>> {
@@ -59,6 +62,31 @@ export class AuthService {
     const { password, ...result } = user;
 
     return result;
+  }
+
+  async validateGoogleUser(googleProfile: GoogleProfile) {
+    const { id, emails, displayName, provider } = googleProfile;
+    const email = emails?.at(0)?.value;
+    if (!email) throw new BadRequestException();
+
+    const user = await this.usersService.findOneByEmailProvider(email, provider as AuthProvider);
+
+    if (user) return user;
+
+    const createUserDto: CreateUserDto = {
+      email,
+      displayName,
+      providerId: id,
+      provider: provider as AuthProvider,
+      uiLang: Lang.ENGLISH,
+      bookmark: {
+        last_read: "Last Read",
+        old_testament: "",
+        new_testament: "",
+      }
+    }
+
+    return this.usersService.create(createUserDto);
   }
 
   async generateAccessToken(user: Partial<User>) {

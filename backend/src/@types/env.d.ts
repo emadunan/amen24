@@ -1,4 +1,4 @@
-export {};
+export { };
 
 declare namespace NodeJS {
   interface ProcessEnv {
@@ -13,5 +13,8 @@ declare namespace NodeJS {
     DB_PORT: string;
     DB_USERNAME: string;
     DB_PASSWORD: string;
+    GOOGLE_CLIENT_ID: string;
+    GOOGLE_CLIENT_SECRET: string;
+    GOOGLE_CALLBACK_URL: string;
   }
 }
