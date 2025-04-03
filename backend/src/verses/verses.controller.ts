@@ -3,13 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
   ParseIntPipe,
 } from '@nestjs/common';
 import { VersesService } from './verses.service';
-import { UpdateVerseDto } from './dto/update-verse.dto';
 import { BookKey, Lang } from '@amen24/shared';
 
 @Controller('verses')

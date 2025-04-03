@@ -52,6 +52,11 @@ export class VersesService {
       throw new BadRequestException('Search query cannot be empty.');
     }
 
+    // Validate that at least one book is selected
+    if (!scope.length) {
+      throw new BadRequestException('At least one book must be selected.');
+    }
+
     // Detect language using Unicode ranges
     const detectedLang = detectLanguage(query);
 

@@ -25,6 +25,7 @@ import {
   toggleDropdown,
 } from "@/store/searchSlice";
 import { showToast } from "@/utils/toast";
+import { handleApiError } from "@/utils/handleApiError";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -97,6 +98,17 @@ export default function BibleSearch() {
 
   async function handleSearch() {
     if (showDropdown) dispatch(toggleDropdown());
+
+    if (query.trim().length < 3) {
+      showToast("Please enter a search term.", "warning");
+      return;
+    }
+
+    if (selectedBooks.length === 0) {
+      showToast("Please select at least one book.", "warning");
+      return;
+    }
+
     dispatch(setIsLoading(true));
 
     try {
@@ -111,10 +123,10 @@ export default function BibleSearch() {
       if (!response.ok) throw new Error("failedToFetch");
 
       const searchResult = await response.json();
-      dispatch(setResults(searchResult));
+      dispatch(setResults(Array.isArray(searchResult) ? searchResult : []));
     } catch (error) {
       console.error(error);
-      showToast("unknownError", "error");
+      handleApiError(error, t);
     } finally {
       dispatch(setIsLoading(false));
     }
@@ -211,11 +223,17 @@ export default function BibleSearch() {
               </div>
             )}
             {results.map((verse: Verse) => {
+              const bookData = BookMap[verse.bookKey];
+              if (!bookData) {
+                console.warn(`Book key not found in BookMap: ${verse.bookKey}`);
+                return null;
+              }
+
               const id = `${verse.bookKey}-${verse.chapterNo}-${verse.verseNo}-${verse.lang}`;
               return (
                 <VerseResult
                   key={id}
-                  totalChapters={BookMap[verse.bookKey].len}
+                  totalChapters={bookData.len}
                   bookKey={verse.bookKey}
                   chapterNo={verse.chapterNo}
                   verseNo={verse.verseNo}
