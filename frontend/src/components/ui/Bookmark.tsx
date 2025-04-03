@@ -14,7 +14,10 @@ const Bookmark = () => {
   const { isLargePhone } = useBreakpoint();
 
   const { data: user } = useGetMeQuery();
-  const { data: bookmark, refetch } = useGetUserLastReadBookmarkQuery(undefined, { skip: !user });
+  const { data: bookmark, refetch } = useGetUserLastReadBookmarkQuery(
+    undefined,
+    { skip: !user },
+  );
 
   useEffect(() => {
     if (user) refetch();
@@ -33,7 +36,12 @@ const Bookmark = () => {
       {/* This MdPushPin cause hydration error, so I need to finds a solution first then add it */}
       {/* <MdPushPin /> */}
       <span>{t("bookmark.last_read")}</span>
-      {!isLargePhone && <span> | {t(bookmark.bookKey)} {chapterNo} : {verseNo}</span>}
+      {!isLargePhone && (
+        <span>
+          {" "}
+          | {t(bookmark.bookKey)} {chapterNo} : {verseNo}
+        </span>
+      )}
     </Link>
   );
 };

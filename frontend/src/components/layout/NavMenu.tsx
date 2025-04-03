@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { FC, useState } from "react";
 import MenuButton from "./MenuButton";
@@ -18,10 +18,15 @@ const NavMenu: FC<Props> = ({ normalizedPath, isBookPath }) => {
   return (
     <div className={styles.navMenu}>
       {/* Menu Button */}
-      <MenuButton isOpen={menuOpen} onClick={() => setMenuOpen((prev) => !prev)} />
+      <MenuButton
+        isOpen={menuOpen}
+        onClick={() => setMenuOpen((prev) => !prev)}
+      />
 
       {/* Overlay when menu is open */}
-      {menuOpen && <div className={styles.overlay} onClick={() => setMenuOpen(false)} />}
+      {menuOpen && (
+        <div className={styles.overlay} onClick={() => setMenuOpen(false)} />
+      )}
 
       {/* Slide-in Menu */}
       <nav className={`${styles.menu} ${menuOpen ? styles.open : ""}`}>

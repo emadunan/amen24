@@ -30,7 +30,7 @@ const PasswordRequestFrom = () => {
     } catch (err) {
       console.log(err);
       console.error(err);
-      
+
       handleApiError(err, t);
     } finally {
       setLocalLoading(false);

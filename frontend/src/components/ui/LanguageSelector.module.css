@@ -64,7 +64,7 @@
   background: var(--background); /* Keep background unchanged */
 }
 
-@media (max-width: 48em) { 
+@media (max-width: 48em) {
   .button {
     width: 2rem;
   }

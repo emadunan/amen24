@@ -25,7 +25,6 @@ import { Response } from 'express';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
 import { BookmarksService } from './services/bookmarks.service';
-import { BookKey } from '@amen24/shared';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 
 @Controller('users')

@@ -56,8 +56,12 @@ export default function PrivacyPolicy() {
       </section>
 
       <section className={styles.section} id="data-deletion-instructions">
-        <h2 className={styles.sectionTitle}>{t("dataDeletionInstructions.title")}</h2>
-        <p className={styles.listItem}>{t("dataDeletionInstructions.description")}</p>
+        <h2 className={styles.sectionTitle}>
+          {t("dataDeletionInstructions.title")}
+        </h2>
+        <p className={styles.listItem}>
+          {t("dataDeletionInstructions.description")}
+        </p>
       </section>
 
       <section className={styles.section}>

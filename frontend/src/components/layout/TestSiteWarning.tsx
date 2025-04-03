@@ -30,7 +30,10 @@ const TestSiteWarning = () => {
           <strong>Do not enter any real data. </strong>
           Data may be deleted at any time. This environment is{" "}
           <strong>not secure </strong> and runs
-          <strong> without <span onClick={handleClose}>TLS</span> encryption.</strong>
+          <strong>
+            {" "}
+            without <span onClick={handleClose}>TLS</span> encryption.
+          </strong>
         </p>
         <p>Only our internal team should use this for testing.</p>
         <Link href="https://amen24.org" className={styles.button}>

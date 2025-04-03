@@ -14,7 +14,7 @@
 }
 
 /* Small tablets (768px) */
-@media (max-width: 48em) { 
+@media (max-width: 48em) {
   .appMain {
     padding-right: 1.5rem;
     padding-left: 1.5rem;
@@ -32,15 +32,15 @@
 /* Regular smartphones (480px) */
 @media (max-width: 30em) {
   .appMain {
-    padding-right: .75rem;
-    padding-left: .75rem;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
   }
 }
 
 /* Small phones (360px) */
 @media (max-width: 22.5em) {
   .appMain {
-    padding-right: .5rem;
-    padding-left: .5rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
   }
 }

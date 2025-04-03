@@ -18,9 +18,8 @@
   cursor: pointer;
 }
 
-
 /* Small tablets (768px) */
-@media (max-width: 48em) { 
+@media (max-width: 48em) {
   .calendar {
     right: 1.5rem;
   }
@@ -46,12 +45,12 @@
 /* Regular smartphones (480px) */
 @media (max-width: 30em) {
   .calendar {
-    right: .5rem;
+    right: 0.5rem;
   }
 
   [dir="rtl"] .calendar {
     right: auto;
-    left: .5rem;
+    left: 0.5rem;
   }
 }
 

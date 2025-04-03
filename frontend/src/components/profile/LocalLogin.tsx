@@ -11,6 +11,8 @@ import BackButton from "../ui/BackButton";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
 import { handleApiError } from "@/utils/handleApiError";
+import { RiMailUnreadLine } from "react-icons/ri";
+import Image from "next/image";
 
 const LocalLogin = () => {
   const { t } = useTranslation();
@@ -20,6 +22,7 @@ const LocalLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
+  const [showFrom, setShowForm] = useState(false);
 
   // ✅ Use RTK Query mutation hook (No `localLoading`)
   const [login, { isLoading }] = useLoginMutation();
@@ -39,6 +42,18 @@ const LocalLogin = () => {
 
   if (isLoading || localLoading) {
     return <Spinner />;
+  }
+
+  if (!showFrom) {
+    return (
+      <button
+        className={styles.showForm}
+        onClick={() => setShowForm((prev) => !prev)}
+      >
+        <Image src="/emailLogin.svg" alt="email" width={20} height={20} />
+        {t("signin.emailLogin")}
+      </button>
+    );
   }
 
   return (

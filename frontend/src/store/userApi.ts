@@ -26,7 +26,7 @@ export const userApi = createApi({
       query: () => "/me",
       providesTags: ["User"],
     }),
-    signup: builder.mutation<void, UserSignup>({
+    signup: builder.mutation<{ message: string }, UserSignup>({
       query: (user) => ({
         url: "/",
         method: "POST",

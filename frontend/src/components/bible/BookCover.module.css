@@ -7,7 +7,6 @@
   position: relative;
 }
 
-
 .bookCover:hover {
   transform: scale(1.1);
 }
@@ -18,10 +17,12 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-image: linear-gradient(rgba(var(--background-rgb), 0.9) 5%,
-      rgba(var(--text-rgb), 0.2) 30%,
-      rgba(var(--text-rgb), 0.1) 70%,
-      rgba(var(--background-rgb), 0) 100%);
+  background-image: linear-gradient(
+    rgba(var(--background-rgb), 0.9) 5%,
+    rgba(var(--text-rgb), 0.2) 30%,
+    rgba(var(--text-rgb), 0.1) 70%,
+    rgba(var(--background-rgb), 0) 100%
+  );
   z-index: 1;
 }
 
@@ -42,7 +43,7 @@
 }
 
 /* Small tablets (768px) */
-@media (max-width: 48em) { 
+@media (max-width: 48em) {
   .bookCover {
     height: 14rem;
     width: 9.33rem; /* 3:2 ratio */

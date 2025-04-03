@@ -74,17 +74,21 @@ const AppHeader: FC<Props> = () => {
           ) : (
             <NavBar normalizedPath={normalizedPath} isBookPath={isBookPath} />
           )}
-          {isLargePhone && <div className={styles.preferences}>
-            <LanguageChanger />
-            <ThemeSwitcher />
-          </div>}
+          {isLargePhone && (
+            <div className={styles.preferences}>
+              <LanguageChanger />
+              <ThemeSwitcher />
+            </div>
+          )}
         </div>
 
         <div className={styles.navSide}>
-          {!isLargePhone && <>
-            <LanguageChanger />
-            <ThemeSwitcher />
-          </>}
+          {!isLargePhone && (
+            <>
+              <LanguageChanger />
+              <ThemeSwitcher />
+            </>
+          )}
 
           {showLogin && <LoginButton />}
           {showUserMenu && <UserMenu user={user} />}

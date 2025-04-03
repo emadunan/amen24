@@ -25,13 +25,14 @@ const ChapterToolbox = () => {
   const params = useParams<{ book: [BookKey, string, string] }>();
   const [bookKey, chapterNo] = params.book;
 
-  const { position, handleMouseDown, elementRef, handleTouchStart } = useDraggable(
-    5,
-    7,
-    i18n.language === "ar" ? false : true,
-    i18n.language === "ar" ? 11 : 13,
-    headerRef,
-  );
+  const { position, handleMouseDown, elementRef, handleTouchStart } =
+    useDraggable(
+      5,
+      7,
+      i18n.language === "ar" ? false : true,
+      i18n.language === "ar" ? 11 : 13,
+      headerRef,
+    );
 
   const { data: user } = useGetMeQuery();
   const { data: bookmark } = useGetUserLastReadBookmarkQuery();

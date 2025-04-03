@@ -61,7 +61,7 @@
 }
 
 /* Dark mode - moves the toggle to the right */
-.toggleInput:checked+.toggleSlider {
+.toggleInput:checked + .toggleSlider {
   justify-content: flex-end;
 }
 

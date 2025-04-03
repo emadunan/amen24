@@ -21,7 +21,7 @@
 }
 
 /* Small tablets (768px) */
-@media (max-width: 48em) { 
+@media (max-width: 48em) {
   .bookmark {
     left: 1.5rem;
   }
@@ -47,12 +47,12 @@
 /* Regular smartphones (480px) */
 @media (max-width: 30em) {
   .bookmark {
-    left: .5rem;
+    left: 0.5rem;
   }
 
   [dir="rtl"] .bookmark {
     left: auto;
-    right: .5rem;
+    right: 0.5rem;
   }
 }
 

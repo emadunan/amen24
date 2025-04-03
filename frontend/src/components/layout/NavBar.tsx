@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import React, { FC } from 'react'
-import { useTranslation } from 'react-i18next';
-import styles from './NavBar.module.css';
+import Link from "next/link";
+import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
+import styles from "./NavBar.module.css";
 
 interface Props {
   normalizedPath: string;
@@ -38,7 +38,7 @@ const NavBar: FC<Props> = ({ normalizedPath, isBookPath }) => {
         </Link>
       </li>
     </ul>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

@@ -80,7 +80,9 @@ export function useDraggable<T extends HTMLElement>(
       }
     };
 
-    document.addEventListener("touchstart", preventPullToRefresh, { passive: false });
+    document.addEventListener("touchstart", preventPullToRefresh, {
+      passive: false,
+    });
 
     return () => {
       document.removeEventListener("touchstart", preventPullToRefresh);
@@ -125,19 +127,23 @@ export function useDraggable<T extends HTMLElement>(
     dragState.current = null;
   }, [handleMouseMove]);
 
-  const handleMouseDown = useCallback((event: React.MouseEvent) => {
-    event.preventDefault();
-    if (
-      !elementRef.current ||
-      (handleRef?.current && !handleRef.current.contains(event.target as Node))
-    )
-      return;
+  const handleMouseDown = useCallback(
+    (event: React.MouseEvent) => {
+      event.preventDefault();
+      if (
+        !elementRef.current ||
+        (handleRef?.current &&
+          !handleRef.current.contains(event.target as Node))
+      )
+        return;
 
-    startDrag(event.clientX, event.clientY);
+      startDrag(event.clientX, event.clientY);
 
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  }, [handleMouseMove, handleMouseUp]);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    },
+    [handleMouseMove, handleMouseUp],
+  );
 
   // Touch event handlers
   const handleTouchStart = useCallback((event: React.TouchEvent) => {
@@ -190,7 +196,6 @@ export function useDraggable<T extends HTMLElement>(
     document.addEventListener("touchmove", handleTouchMove, { passive: false }); // Override passive behavior
     document.addEventListener("touchend", handleTouchEnd);
   }, []);
-
 
   return { position, handleMouseDown, handleTouchStart, elementRef };
 }

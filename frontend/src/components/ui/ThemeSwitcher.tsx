@@ -65,7 +65,12 @@ const ThemeSwitcher = () => {
 
   if (isDarkMode === null) return null; // Avoid rendering before theme is determined
 
-  if (isTablet) return (<button className={styles.toggleButton} onClick={handleToggle}><span >{isDarkMode ? "🌙" : "🌞"}</span></button>)
+  if (isTablet)
+    return (
+      <button className={styles.toggleButton} onClick={handleToggle}>
+        <span>{isDarkMode ? "🌙" : "🌞"}</span>
+      </button>
+    );
 
   return (
     <label className={styles.toggleWrapper}>

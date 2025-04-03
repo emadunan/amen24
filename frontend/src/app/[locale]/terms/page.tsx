@@ -41,7 +41,9 @@ export default function TermsOfService() {
       </section>
 
       <section>
-        <h2 className={styles.sectionTitle}>{t("contentRights.translations.title")}</h2>
+        <h2 className={styles.sectionTitle}>
+          {t("contentRights.translations.title")}
+        </h2>
         <li className={styles.listItem}>
           {t("contentRights.translations.SVD.owner")}:{" "}
           {t("contentRights.translations.SVD.details")}

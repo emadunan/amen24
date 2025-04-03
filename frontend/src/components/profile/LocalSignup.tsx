@@ -39,7 +39,7 @@ const LocalSignup = () => {
     setLocalLoading(true);
 
     try {
-      await signup({
+      const { message } = await signup({
         email,
         password,
         provider: AuthProvider.LOCAL,
@@ -52,6 +52,7 @@ const LocalSignup = () => {
         },
       }).unwrap();
 
+      showToast(t(`message.${message}`), "success");
       router.replace("/login");
     } catch (err: unknown) {
       handleApiError(err, t);
