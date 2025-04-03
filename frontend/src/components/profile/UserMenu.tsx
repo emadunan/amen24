@@ -26,21 +26,24 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
 
   useClickOutside(dropdownRef, isOpen, setIsOpen);
 
-  const [mutate] = useLogoutMutation();
+  const [logout] = useLogoutMutation();
 
   const handleLogout = useCallback(async () => {
     try {
-      await mutate().unwrap();
+      await logout().unwrap();
 
       dispatch(userApi.util.resetApiState());
       setIsOpen(false); // Close menu after logout
 
       router.refresh(); // Refresh user state
-      router.replace("/login"); // ✅ Redirect to login after logout
+
+      setTimeout(() => {
+        router.replace("/login");
+      });
     } catch (error) {
       console.error("Logout failed:", error);
     }
-  }, [mutate, router]);
+  }, [logout, router]);
 
   return (
     <div className={styles.container} ref={dropdownRef}>
