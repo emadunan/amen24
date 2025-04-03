@@ -11,7 +11,6 @@ import BackButton from "../ui/BackButton";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
 import { handleApiError } from "@/utils/handleApiError";
-import { RiMailUnreadLine } from "react-icons/ri";
 import Image from "next/image";
 
 const LocalLogin = () => {
