@@ -36,10 +36,7 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
       setIsOpen(false); // Close menu after logout
 
       router.refresh(); // Refresh user state
-
-      setTimeout(() => {
-        router.replace("/login");
-      });
+      window.location.href = "/login";
     } catch (error) {
       console.error("Logout failed:", error);
     }
