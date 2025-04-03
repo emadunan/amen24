@@ -30,6 +30,10 @@
     "deleteAccount": "Request full account deletion.",
     "optOutEmails": "Opt-out of marketing emails."
   },
+  "dataDeletionInstructions": {
+    "title": "Data Deletion Instructions",
+    "description": "You can delete your account and all associated data by visiting https://amen24.org/settings and clicking 'Delete Account Permanently'. Alternatively, you can request account deletion by contacting us at support@amen24.org. All data associated with your account will be deleted within 7 working days."
+  },
   "security": {
     "title": "Data Protection Measures",
     "encryption": "User passwords are securely encrypted.",

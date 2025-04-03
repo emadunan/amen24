@@ -55,6 +55,11 @@ export default function PrivacyPolicy() {
         </ul>
       </section>
 
+      <section className={styles.section} id="data-deletion-instructions">
+        <h2 className={styles.sectionTitle}>{t("dataDeletionInstructions.title")}</h2>
+        <p className={styles.listItem}>{t("dataDeletionInstructions.description")}</p>
+      </section>
+
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>{t("security.title")}</h2>
         <ul className={styles.list}>
@@ -64,10 +69,10 @@ export default function PrivacyPolicy() {
         </ul>
       </section>
 
-      <section className={styles.section}>
+      {/* <section className={styles.section}>
         <h2 className={styles.sectionTitle}>{t("compliance.title")}</h2>
         <p className={styles.text}>{t("compliance.description")}</p>
-      </section>
+      </section> */}
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>{t("contact.title")}</h2>

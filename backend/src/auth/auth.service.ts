@@ -13,8 +13,8 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { AuthProvider, Lang } from '@amen24/shared';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
-import { GoogleProfile } from 'src/interfaces/GoogleProfile';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { Profile } from 'passport';
 
 @Injectable()
 export class AuthService {
@@ -65,8 +65,8 @@ export class AuthService {
     return result;
   }
 
-  async validateGoogleUser(googleProfile: GoogleProfile) {
-    const { id, emails, displayName, provider } = googleProfile;
+  async validateOAuthUser(oAuthProfile: Profile) {
+    const { id, emails, displayName, provider } = oAuthProfile;
     const email = emails?.at(0)?.value;
     if (!email) throw new BadRequestException();
 

@@ -46,7 +46,7 @@ export class UsersService {
 
     // Save user
     const userToCreate = this.usersRepo.create(userData);
-    const user = await this.usersRepo.save(userToCreate);
+    let user = await this.usersRepo.save(userToCreate);
 
     // Default bookmark
     const bookmarkExist = this.bookmarksService.getOne(email);
@@ -67,6 +67,9 @@ export class UsersService {
     }
 
     delete user.password;
+
+    // Include profile in the returned user
+    user = { ...user, profile };
 
     return user;
   }

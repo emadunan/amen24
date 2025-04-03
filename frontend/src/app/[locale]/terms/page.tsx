@@ -38,25 +38,18 @@ export default function TermsOfService() {
           <li className={styles.listItem}>{t("contentRights.ownership")}</li>
           <li className={styles.listItem}>{t("contentRights.license")}</li>
         </ul>
-        <h3 className={styles.subSectionTitle}>
-          {t("contentRights.translations.title")}
-        </h3>
-        <ul className={styles.list}>
-          <li className={styles.listItem}>
-            {t("contentRights.translations.ESV.owner")}:{" "}
-            {t("contentRights.translations.ESV.details")}
-          </li>
-          <li className={styles.listItem}>
-            {t("contentRights.translations.ESV.license")}
-          </li>
-          <li className={styles.listItem}>
-            {t("contentRights.translations.SVD.owner")}:{" "}
-            {t("contentRights.translations.SVD.details")}
-          </li>
-          <li className={styles.listItem}>
-            {t("contentRights.translations.SVD.license")}
-          </li>
-        </ul>
+      </section>
+
+      <section>
+        <h2 className={styles.sectionTitle}>{t("contentRights.translations.title")}</h2>
+        <li className={styles.listItem}>
+          {t("contentRights.translations.SVD.owner")}:{" "}
+          {t("contentRights.translations.SVD.details")}
+        </li>
+        <li className={styles.listItem}>
+          {t("contentRights.translations.ESV.owner")}:{" "}
+          {t("contentRights.translations.ESV.details")}
+        </li>
       </section>
 
       <section className={styles.section}>
