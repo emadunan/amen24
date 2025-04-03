@@ -10,7 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Profile } from '../entities/profile.entity';
 import { UsersService } from './users.service';
-import { Lang, ThemeMode } from '@amen24/shared';
+import { AuthProvider, Lang, ThemeMode } from '@amen24/shared';
 import { User } from '../entities/user.entity';
 
 @Injectable()
@@ -51,7 +51,7 @@ export class ProfilesService {
     return await this.profilesRepo.update(email, { lastLogin: new Date() });
   }
 
-  async toggleTheme(email: string): Promise<User> {
+  async toggleTheme(email: string, provider: AuthProvider): Promise<User> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
@@ -62,14 +62,14 @@ export class ProfilesService {
       profile.themeMode === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK;
     await this.profilesRepo.save(profile);
 
-    const user = await this.usersService.findOneByEmailProvider(profile.email);
+    const user = await this.usersService.findOneByEmailProvider(profile.email, provider);
 
     if (!user) throw new NotFoundException('userNotFound');
 
     return user;
   }
 
-  async changeLang(email: string, uiLang: Lang): Promise<User> {
+  async changeLang(email: string, provider: AuthProvider, uiLang: Lang): Promise<User> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
@@ -79,7 +79,7 @@ export class ProfilesService {
     profile.uiLang = uiLang;
     await this.profilesRepo.save(profile);
 
-    const user = await this.usersService.findOneByEmailProvider(profile.email);
+    const user = await this.usersService.findOneByEmailProvider(profile.email, provider);
 
     if (!user) throw new NotFoundException('userNotFound');
 

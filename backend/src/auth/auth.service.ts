@@ -24,7 +24,7 @@ export class AuthService {
     private jwtService: JwtService,
     private mailerService: MailerService,
   ) { }
-  
+
   async validateLocalUser(
     email: string,
     pass: string,

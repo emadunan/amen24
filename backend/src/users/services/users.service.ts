@@ -46,10 +46,10 @@ export class UsersService {
 
     // Save user
     const userToCreate = this.usersRepo.create(userData);
-    let user = await this.usersRepo.save(userToCreate);
+    await this.usersRepo.save(userToCreate);
 
     // Default bookmark
-    const bookmarkExist = this.bookmarksService.getOne(email);
+    const bookmarkExist = await this.bookmarksService.getOne(email);
 
     if (bookmark?.last_read && !bookmarkExist) {
       const defaultBookmarks = [
@@ -66,10 +66,8 @@ export class UsersService {
       }
     }
 
-    delete user.password;
-
     // Include profile in the returned user
-    user = { ...user, profile };
+    const user = await this.findOneByEmailProvider(email, provider);
 
     return user;
   }
@@ -163,15 +161,18 @@ export class UsersService {
     email: string,
     provider: AuthProvider = AuthProvider.LOCAL,
   ): Promise<User | null> {
+    console.log(email, provider);
+    
     const user = await this.usersRepo.findOne({
       where: { email, provider },
-      relations: ['profile'],
+      relations: ['profile', 'profile.bookmarks'],
     });
 
     if (!user) return null;
 
     return user;
   }
+
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.usersRepo.findOneBy({ id });

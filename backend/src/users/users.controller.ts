@@ -96,7 +96,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Patch('me/theme')
   async toggleTheme(@UserParam() u: User, @Res() res: Response) {
-    const user = await this.profilesService.toggleTheme(u.email);
+    const user = await this.profilesService.toggleTheme(u.email, u.provider);
 
     this.authService.loadAccessToken(user, res);
     res.json({ message: 'User profile has been successfully updated' });
@@ -111,7 +111,7 @@ export class UsersController {
   ) {
     if (!u) throw new UnauthorizedException();
 
-    const user = await this.profilesService.changeLang(u.email, body.uiLang);
+    const user = await this.profilesService.changeLang(u.email, u.provider, body.uiLang);
 
     this.authService.loadAccessToken(user, res);
     res.json({ message: 'User profile has been successfully updated' });
