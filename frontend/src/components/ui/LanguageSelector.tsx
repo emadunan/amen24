@@ -51,7 +51,7 @@ const LanguageSelector = () => {
     // Only update backend if the user is logged in
     if (user?.id && shouldUpdateBackend) {
       try {
-        // http://localhost:5000/api/users/me/lang NOTFOUND        
+        // http://localhost:5000/api/users/me/lang NOTFOUND
         await changeLang(newLocale).unwrap();
       } catch (error) {
         console.error("Failed to update language:", error);

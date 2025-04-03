@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const FacebookLoginButton = () => {
   const handleFacebookLogin = () => {
-    window.location.href = "http://localhost:5000/api/auth/facebook";
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/facebook`;
   };
 
   return (
