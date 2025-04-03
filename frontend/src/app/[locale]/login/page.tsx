@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import LocalLogin from "@/components/profile/LocalLogin";
 import PageContainer from "@/components/ui/PageContainer";
 import GoogleLoginButton from "@/components/profile/GoogleLoginBtn";
