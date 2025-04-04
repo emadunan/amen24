@@ -87,7 +87,7 @@ export class VersesService {
         WHERE "lang" = $1
           AND "bookKey" = ANY($2)
           AND ${ilikeClauses.join(' AND ')}
-        ORDER BY "bookKey", "chapterNo", "verseNo" LIMIT 1000`,
+        ORDER BY "bookKey", "chapterNo", "verseNo" LIMIT 9999`,
       values,
     );
 
