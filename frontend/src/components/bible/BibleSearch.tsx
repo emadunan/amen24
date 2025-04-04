@@ -100,12 +100,12 @@ export default function BibleSearch() {
     if (showDropdown) dispatch(toggleDropdown());
 
     if (query.trim().length < 3) {
-      showToast("Please enter a search term.", "warning");
+      showToast(t("searchEngine.queryTooShort"), "warning");
       return;
     }
 
     if (selectedBooks.length === 0) {
-      showToast("Please select at least one book.", "warning");
+      showToast(t("searchEngine.noBooksSelected"), "warning");
       return;
     }
 

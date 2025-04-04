@@ -17,7 +17,9 @@
     "searchButtonText": "Search",
     "filterButtonText": "Filter books",
     "resultsCount": "Results Count",
-    "resetSearch": "Reset Search"
+    "resetSearch": "Reset Search",
+    "qureyTooShort": "Please enter a search term with at least 3 characters.",
+    "noBooksSelected": "Please select at least one book."
   },
   "signin": {
     "email": "Email",
