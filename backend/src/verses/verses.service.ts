@@ -16,7 +16,7 @@ import {
 
 @Injectable()
 export class VersesService {
-  constructor(@InjectRepository(Verse) private versesRepo: Repository<Verse>) {}
+  constructor(@InjectRepository(Verse) private versesRepo: Repository<Verse>) { }
 
   async findChapter(bookKey: BookKey, chapterNo: number, lang: Lang) {
     return await this.versesRepo.find({
@@ -66,22 +66,29 @@ export class VersesService {
       processedQuery = removeArDiacritics(normalizeArText(query));
     }
 
-    const pgLang = this.getTsLang(detectedLang); // PostgreSQL full-text search language
+    // const pgLang = this.getTsLang(detectedLang); // PostgreSQL full-text search language
 
-    // Convert to tsquery format for full-text search
-    const tsQuery = processedQuery
-      .split(/\s+/) // Ensure it handles multiple spaces properly
-      .map((word) => `${word}:*`) // Add wildcard for partial matching
-      .join(' & '); // Use AND logic
+    const words = processedQuery
+      .trim()
+      .split(/\s+/)
+      .filter((w) => w.length > 0);
+
+    if (!words.length) {
+      throw new BadRequestException('Search query must contain at least one word.');
+    }
+
+    // Build WHERE conditions
+    const ilikeClauses = words.map((_, idx) => `"textNormalized" ILIKE $${idx + 3}`);
+    const values = [detectedLang, scope, ...words.map((w) => `%${w}%`)];
 
     const results = await this.versesRepo.query(
       `SELECT "bookKey", "chapterNo", "verseNo", "text", "lang"
-       FROM "verse"
-       WHERE "lang" = $1
-       AND "bookKey" = ANY($2)
-       AND "textSearch" @@ to_tsquery($3, $4)
-       ORDER BY "bookKey", "chapterNo", "verseNo"`,
-      [detectedLang, scope, pgLang, tsQuery],
+        FROM "verse"
+        WHERE "lang" = $1
+          AND "bookKey" = ANY($2)
+          AND ${ilikeClauses.join(' AND ')}
+        ORDER BY "bookKey", "chapterNo", "verseNo" LIMIT 1000`,
+      values,
     );
 
     return results;
