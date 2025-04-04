@@ -9,6 +9,7 @@ import {
 import { UserCategory, Lang, ThemeMode, DateCalendar } from '@amen24/shared';
 import { User } from './user.entity';
 import { Bookmark } from './bookmark.entity';
+import { Favorite } from './favorite.entity';
 
 @Entity()
 export class Profile {
@@ -47,4 +48,7 @@ export class Profile {
     eager: true,
   })
   bookmarks: Bookmark[];
+
+  @OneToMany(() => Favorite, (favorite) => favorite.profile)
+  favorites: Favorite[];
 }

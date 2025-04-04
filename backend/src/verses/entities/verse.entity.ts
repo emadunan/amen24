@@ -1,48 +1,26 @@
-import { Lang, BookKey } from '@amen24/shared';
 import { Chapter } from '../../chapters/entities/chapter.entity';
 import {
   Column,
   Entity,
   ManyToOne,
-  PrimaryColumn,
-  JoinColumn,
-  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
+import { VerseGroup } from './verse-group.entity';
 
+@Unique(['verseNum', 'chapter'])
 @Entity()
 export class Verse {
-  @PrimaryColumn({ type: 'text' })
-  bookKey: BookKey;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @PrimaryColumn({ type: 'smallint' })
-  chapterNo: number;
+  @Column({ type: 'smallint' })
+  verseNum: number;
 
-  @PrimaryColumn({ type: 'smallint' })
-  verseNo: number;
-
-  @PrimaryColumn({ type: 'text' })
-  lang: Lang;
-
-  @Column({ type: 'text' })
-  text: string;
-
-  @Column({ type: 'text' })
-  textNormalized: string;
-
-  @Column({ type: 'text', nullable: true })
-  textDiacritized?: string;
-
-  @Column({ type: 'tsvector', nullable: true })
-  @Index({ fulltext: true })
-  textSearch: string;
-
-  @ManyToOne(() => Chapter, (chapter) => chapter.verses, {
-    onDelete: 'CASCADE',
-    nullable: false,
-  })
-  @JoinColumn([
-    { name: 'bookKey', referencedColumnName: 'bookKey' },
-    { name: 'chapterNo', referencedColumnName: 'chapterNo' },
-  ])
+  @ManyToOne(() => Chapter, (chapter) => chapter.verses, { nullable: false, onDelete: "CASCADE" })
   chapter: Chapter;
+
+  @OneToMany(() => VerseGroup, verseGroup => verseGroup.verses)
+  verseGroup: VerseGroup;
 }

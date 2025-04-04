@@ -1,10 +1,19 @@
 import { Chapter } from '../../chapters/entities/chapter.entity';
-import { Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { BookKey } from '@amen24/shared';
 
 @Entity()
 export class Book {
-  @PrimaryColumn({ type: 'text' })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ unique: true })
   bookKey: BookKey;
 
   @OneToMany(() => Chapter, (chapter) => chapter.book)
