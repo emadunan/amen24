@@ -14,7 +14,7 @@ import { handleApiError } from "@/utils/handleApiError";
 import Image from "next/image";
 
 const LocalLogin = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["error"]);
   const router = useRouter();
 
   // ✅ Controlled Inputs
@@ -76,17 +76,17 @@ const LocalLogin = () => {
         <BackButton />
         <SubmitButton
           isLoading={isLoading || localLoading}
-          text={t("signin.login", { ns: "common" })}
+          text={t("signin.login")}
         />
       </div>
 
       <div className={styles.linkGroup}>
         <Link className={styles.signupLink} href={"/contact-us"}>
-          {t("signin.password-invite", { ns: "common" })}
+          {t("signin.password-invite")}
         </Link>
 
         <Link className={styles.signupLink} href={"/signup"}>
-          {t("signin.signup-invite", { ns: "common" })}
+          {t("signin.signup-invite")}
         </Link>
       </div>
     </form>

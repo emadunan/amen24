@@ -12,7 +12,7 @@ interface Props {
 }
 
 const NavMenu: FC<Props> = ({ normalizedPath, isBookPath }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

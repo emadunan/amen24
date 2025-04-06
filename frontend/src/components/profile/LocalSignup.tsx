@@ -14,7 +14,7 @@ import { handleApiError } from "@/utils/handleApiError";
 import { AuthProvider, Lang } from "@amen24/shared";
 
 const LocalSignup = () => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation(["error"]);
   const router = useRouter();
 
   // ✅ Use useState instead of useRef to persist input values
@@ -30,7 +30,7 @@ const LocalSignup = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      showToast(t("error.passwordMismatch"), "error");
+      showToast(t("error:passwordMismatch"), "error");
       return;
     }
 
@@ -52,7 +52,7 @@ const LocalSignup = () => {
         },
       }).unwrap();
 
-      showToast(t(`message.${message}`), "success");
+      showToast(t(`message:${message}`), "success");
       router.replace("/login");
     } catch (err: unknown) {
       handleApiError(err, t);

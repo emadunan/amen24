@@ -14,11 +14,12 @@ import {
 } from "@/store/bookmarkApi";
 import { useGetMeQuery } from "@/store/userApi";
 import { showToast } from "@/utils/toast";
+import { handleApiError } from "@/utils/handleApiError";
 
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
     useHighlightContext();
-  const { t, i18n } = useTranslation(["book"]);
+  const { t, i18n } = useTranslation(["book", "error"]);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [updateBookmark] = useUpdateBookmarkMutation();
   const { position, handleMouseDown, elementRef, handleTouchStart } =
@@ -46,12 +47,12 @@ const ChapterToolbox = () => {
     const lastHighlighted = highlighted.at(-1);
 
     if (!lastHighlighted) {
-      showToast("highlightVerse", "error");
+      showToast(t("error:highlightVerse"), "error");
       return;
     }
 
     if (!bookmarkId || !profileEmail) {
-      showToast("unauthorizedAccess", "error");
+      showToast(t("error:unauthorizedAccess"), "error");
       return;
     }
 
@@ -67,7 +68,7 @@ const ChapterToolbox = () => {
       const verseNum = bookmark.data?.verse.num;
 
       if (!bookKey || !chapterNum || !verseNum) {
-        showToast("Error", "error");
+        showToast(t("error:unknownError"), "error");
         return
       }
 
@@ -76,11 +77,8 @@ const ChapterToolbox = () => {
         "success",
       );
     } catch (error) {
-      if (error instanceof Error && error.message === "unauthorizedAccess") {
-        showToast("unauthorizedAccess", "error");
-      } else {
-        showToast("unknownError", "error");
-      }
+      console.error(error);
+      handleApiError(error, t);
     }
   }
 

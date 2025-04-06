@@ -36,7 +36,7 @@ const HebrewMonthMap: Record<string, number> = {
 };
 
 const DateDisplay: React.FC = () => {
-  const { t, i18n } = useTranslation("month");
+  const { t, i18n } = useTranslation(["month"]);
   const [calendarIndex, setCalendarIndex] = useState(0);
 
   const switchCalendar = () => {
@@ -73,7 +73,7 @@ const DateDisplay: React.FC = () => {
     }
 
     // Get translated month name
-    const monthName = t(`${calendar}.${monthIndex}`, { ns: "month" });
+    const monthName = t(`month:${calendar}.${monthIndex}`);
 
     const formattedDay = formatNumber(Number(day), i18n.language as Lang);
     const formattedYear = formatNumber(Number(year), i18n.language as Lang);

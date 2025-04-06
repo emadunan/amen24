@@ -14,7 +14,7 @@ import { showToast } from "@/utils/toast";
 import { MdOutlineLockReset } from "react-icons/md";
 
 const PasswordResetForm = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["error", "message"]);
   const router = useRouter();
 
   const [oldPassword, setOldPassword] = useState("");
@@ -40,7 +40,7 @@ const PasswordResetForm = () => {
         newPassword,
       }).unwrap();
       router.replace("/login");
-      showToast(t(`message.${message}`), "success");
+      showToast(t(`message:${message}`), "success");
     } catch (err) {
       handleApiError(err, t);
     } finally {
@@ -80,7 +80,7 @@ const PasswordResetForm = () => {
         <BackButton />
         <SubmitButton
           isLoading={isLoading || localLoading}
-          text={t("signin.resetPassword", { ns: "common" })}
+          text={t("signin.resetPassword")}
           Icon={MdOutlineLockReset}
         />
       </div>

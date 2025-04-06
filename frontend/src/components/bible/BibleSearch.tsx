@@ -51,7 +51,7 @@ const categoryList: Record<string, string[]> = {
 };
 
 const BibleSearch = () => {
-  const { t, i18n } = useTranslation("book");
+  const { t, i18n } = useTranslation(["book", "error"]);
   const dispatch = useDispatch();
   const { query, selectedBooks, showDropdown, results, isLoading } =
     useSelector((state: RootState) => state.search);
@@ -236,6 +236,7 @@ const BibleSearch = () => {
                   bookKey={verse.bookKey}
                   chapterNum={verse.chapterNum}
                   verseNum={verse.verseNum}
+                  verseId={verse.id}
                   text={verse.text}
                   lang={verse.lang}
                 />

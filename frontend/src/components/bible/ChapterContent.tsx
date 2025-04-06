@@ -35,7 +35,7 @@ const ChapterContent: FC<Props> = ({
   chapterNum,
   verses,
 }) => {
-  const { t, i18n } = useTranslation("book");
+  const { t, i18n } = useTranslation(["book"]);
   const [highlighted, setHighlighted] = useState<number[]>([]);
 
   function toggleHighlight(verseNum: number) {

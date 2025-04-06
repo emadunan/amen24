@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import useBreakpoint from "@/hooks/useBreakpoint";
 
 const Bookmark = () => {
-  const { t, i18n } = useTranslation("book");
+  const { t, i18n } = useTranslation(["book"]);
   const { isLargePhone } = useBreakpoint();
 
   const { data: user } = useGetMeQuery();
@@ -43,7 +43,7 @@ const Bookmark = () => {
       {!isLargePhone && (
         <span>
           {" "}
-          | {t(bookKey)} {chapterNumFormatted} : {verseNumFormatted}
+          | {t(`book:${bookKey}`)} {chapterNumFormatted} : {verseNumFormatted}
         </span>
       )}
     </Link>

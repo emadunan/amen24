@@ -16,7 +16,7 @@ const Accordion: React.FC<AccordionProps> = ({
   openBook,
   onOpenBook,
 }) => {
-  const { t } = useTranslation("book");
+  const { t } = useTranslation(["book"]);
   const isOpen = openBook === bookKey;
   return (
     <div className={styles.accordion}>

@@ -71,28 +71,5 @@
     "copyright": "Amen24. All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
-  },
-  "error": {
-    "unknownError": "An unexpected error occurred. Please try again later.",
-    "failedToFetch": "Failed to fetch data",
-    "accountLocked": "Account locked. Try again later or contact the system administrator at support@example.com.",
-    "loginFailed": "The email or password you entered is incorrect. Please check your credentials and try again.",
-    "userDuplication": "A user with this email already exists. Please use a different email.",
-    "userNotCreated": "The user account could not be created due to an unexpected error. Please try again later.",
-    "emailNotFound": "No account is associated with this email address. Please check your email or sign up for a new account.",
-    "userNotFound": "User not found.",
-    "profileNotFound": "Profile not found.",
-    "invalidPassword": "The password you entered is incorrect. Please try again or reset your password if you've forgotten it.",
-    "passwordMismatch": "Password and confirm password do not match.",
-    "unauthorizedAccess": "You are not authorized to access this resource. Please log in with the correct credentials.",
-    "highlightVerse": "You must highlight verse to update your last reading bookmark.",
-    "highlightSingleVerseOnly": "You can only update a bookmark with a single verse. Please highlight only one verse before updating your bookmark.",
-    "passwordTooShort": "New password must be at least 6 characters long.",
-    "invalidOrExpiredToken": "The password reset link is invalid or has expired. Please request a new one."
-  },
-  "message": {
-    "userCreated": "User has been successfully created.",
-    "passwordUpdated": "User password has been successfully updated",
-    "passwordResetEmailSent": "A password reset link has been sent to your email. Please check your inbox and spam folder, then click the link to access the password reset form."
   }
 }

@@ -12,6 +12,7 @@ import { userApi, useLogoutMutation } from "@/store/userApi";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { showToast } from "@/utils/toast";
 
 interface UserMenuProps {
   user?: User;
@@ -38,7 +39,8 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
       router.refresh(); // Refresh user state
       window.location.href = "/login";
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.error(error);
+      showToast("error:logoutFailed", "error");
     }
   }, [logout, router]);
 

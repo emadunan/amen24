@@ -28,10 +28,11 @@ const i18nNamespaces = [
   "common",
   "book",
   "lang",
-  "ui",
   "privacy",
   "terms",
   "month",
+  "error",
+  "message",
 ];
 
 export function generateStaticParams() {

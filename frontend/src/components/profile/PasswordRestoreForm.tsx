@@ -13,7 +13,7 @@ import { handleApiError } from "@/utils/handleApiError";
 import { MdOutlineLockReset } from "react-icons/md";
 
 const PasswordRestoreFrom = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["error"]);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,7 +29,7 @@ const PasswordRestoreFrom = () => {
     event.preventDefault();
 
     if (!token) {
-      showToast("invalidOrExpiredToken", "error");
+      showToast("error:invalidOrExpiredToken", "error");
       return;
     }
 
@@ -67,7 +67,7 @@ const PasswordRestoreFrom = () => {
         <BackButton />
         <SubmitButton
           isLoading={isLoading || localLoading}
-          text={t("signin.resetPassword", { ns: "common" })}
+          text={t("signin.resetPassword")}
           Icon={MdOutlineLockReset}
         />
       </div>

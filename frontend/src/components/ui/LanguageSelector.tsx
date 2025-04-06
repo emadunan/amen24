@@ -9,9 +9,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useChangeLangMutation, useGetMeQuery } from "@/store/userApi";
 import useBreakpoint from "@/hooks/useBreakpoint";
+import { showToast } from "@/utils/toast";
 
 const LanguageSelector = () => {
-  const { i18n, t } = useTranslation();
+  const { i18n, t } = useTranslation(["lang", "error"]);
   const currentLocale = i18n.language;
   const router = useRouter();
   const currentPathname = usePathname();
@@ -54,7 +55,7 @@ const LanguageSelector = () => {
         // http://localhost:5000/api/users/me/lang NOTFOUND
         await changeLang(newLocale).unwrap();
       } catch (error) {
-        console.error("Failed to update language:", error);
+        showToast(t("error:failedToChangeLanguage"), "error");
       }
     }
 
@@ -79,7 +80,7 @@ const LanguageSelector = () => {
         {!isTablet && (currentLocale === "ar" ? "🇪🇬" : "🇺🇸")}{" "}
         {isTablet
           ? currentLocale.toUpperCase()
-          : t(currentLocale, { ns: "lang" })}
+          : t(`lang:${currentLocale}`)}
       </button>
 
       {isOpen && (
@@ -90,7 +91,7 @@ const LanguageSelector = () => {
             onClick={() => handleLanguageChange("en")}
           >
             {!isTablet && "🇺🇸"}
-            {isTablet ? "EN" : t("en", { ns: "lang" })}
+            {isTablet ? "EN" : t("lang:en")}
           </button>
           <button
             className={styles.option}
@@ -98,7 +99,7 @@ const LanguageSelector = () => {
             onClick={() => handleLanguageChange("ar")}
           >
             {!isTablet && "🇪🇬"}
-            {isTablet ? "AR" : t("ar", { ns: "lang" })}
+            {isTablet ? "AR" : t("lang:ar")}
           </button>
         </div>
       )}

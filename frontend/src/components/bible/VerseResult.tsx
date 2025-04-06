@@ -8,6 +8,7 @@ interface VerseResultProps {
   chapterNum: number;
   totalChapters: number;
   verseNum: number;
+  verseId: number;
   text: string;
   lang: Lang;
 }
@@ -17,6 +18,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
   chapterNum,
   totalChapters,
   verseNum,
+  verseId,
   text,
   lang,
 }) => {
@@ -31,7 +33,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
       <p className={styles.text}>{text}</p>
       <Link
         className={styles.reference}
-        href={`/${bookKey}/${chapterNum}/${totalChapters}?v=${verseNum}`}
+        href={`/${bookKey}/${chapterNum}/${totalChapters}?v=${verseId}`}
       >
         &mdash; {BookMap[bookKey].title[lang as Lang.ARABIC | Lang.ENGLISH]}{" "}
         {formattedChapterNum} : {formattedVerseNum}

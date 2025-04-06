@@ -18,8 +18,7 @@ const BibleNavigator = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
   const params = useParams<{ book: [BookKey, string, string] }>();
-  const { i18n } = useTranslation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const headerRef = useRef<HTMLDivElement | null>(null);
 
   const bookParams = params.book ?? []; // Ensure it's an array

@@ -12,7 +12,7 @@ import { RiMailSendFill } from "react-icons/ri";
 import Spinner from "../ui/Spinner";
 
 const PasswordRequestFrom = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["error", "message"]);
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -41,7 +41,7 @@ const PasswordRequestFrom = () => {
     return <Spinner />;
   }
 
-  if (message) return <p>{t(`message.${message}`)}</p>;
+  if (message) return <p>{t(`message:${message}`)}</p>;
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
@@ -57,7 +57,7 @@ const PasswordRequestFrom = () => {
         <BackButton />
         <SubmitButton
           isLoading={isLoading || localLoading}
-          text={t("signin.sendResetLink", { ns: "common" })}
+          text={t("signin.sendResetLink")}
           Icon={RiMailSendFill}
         />
       </div>
