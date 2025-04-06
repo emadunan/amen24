@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { BookKey, Verse, VerseResult } from "@amen24/shared";
+import { BookKey, VerseResult } from "@amen24/shared";
 
 // Define a type for the slice state
 interface SearchState {

@@ -1,4 +1,4 @@
-import { BookKey, Bookmark } from "@amen24/shared";
+import { Bookmark } from "@amen24/shared";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
