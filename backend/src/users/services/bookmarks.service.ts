@@ -34,10 +34,6 @@ export class BookmarksService {
       relations: ['verse', 'verse.chapter', 'verse.chapter.book'],
     });
 
-    if (!bookmark) {
-      throw new NotFoundException('No last read bookmark found.');
-    }
-
     return bookmark;
   }
 
@@ -69,9 +65,14 @@ export class BookmarksService {
 
     if (!bookmark) throw new NotFoundException('bookmarkNotFound');
 
-    Object.assign(bookmark, bookmarkDto);
+    Object.assign(bookmark, { verse: { id: bookmarkDto.verseId } });
 
-    return await this.bookmarksRepo.save(bookmark);
+    await this.bookmarksRepo.save(bookmark);
+
+    return await this.bookmarksRepo.findOne({
+      where: { id },
+      relations: ['verse', 'verse.chapter', 'verse.chapter.book']
+    });
   }
 
   async delete(id: number, profileEmail: string) {

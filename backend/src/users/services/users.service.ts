@@ -76,12 +76,12 @@ export class UsersService {
   }
 
   async resetPassword(
-    id: string,
+    email: string,
     oldPassword: string,
     newPassword: string,
   ): Promise<User> {
     const user = await this.usersRepo.findOne({
-      where: { id },
+      where: { email, provider: AuthProvider.LOCAL },
       relations: ['profile'],
     });
 

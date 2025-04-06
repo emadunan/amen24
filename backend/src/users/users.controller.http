@@ -39,8 +39,8 @@ PATCH http://localhost:5000/api/users/bookmark
 Content-Type: application/json
 
 {
-  "id": 13,
-  "verseId": 1,
+  "id": 1,
+  "verseId": 170,
   "profileEmail": "emadunan@gmail.com"
 }
 

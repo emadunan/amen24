@@ -26,15 +26,12 @@ import { Response } from 'express';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
 import { BookmarksService } from './services/bookmarks.service';
-import { BookKey } from '@amen24/shared';
-import { VersesService } from 'src/verses/verses.service';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
-    private readonly versesService: VersesService,
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
   ) { }
@@ -71,7 +68,7 @@ export class UsersController {
   ) {
     const { oldPassword, newPassword } = body;
 
-    await this.usersService.resetPassword(reqUser.id, oldPassword, newPassword);
+    await this.usersService.resetPassword(reqUser.email, oldPassword, newPassword);
 
     this.authService.clearAccessToken(res);
     res.json({ message: 'passwordUpdated' });
@@ -144,23 +141,16 @@ export class UsersController {
   async updateBookmark(
     @UserParam() user: User,
     @Body() body: {
-      id: number,
-      profileEmail: string,
-      bookKey: BookKey,
-      chapterNum: number,
-      verseNum: number,
-    },
-  ) {
-    const { id, profileEmail, bookKey, chapterNum, verseNum } = body;
-
-    const verse = await this.versesService.getVerse(bookKey, +chapterNum, +verseNum)
+      id: number, profileEmail: string, verseId: number
+    }) {
+    const { id, profileEmail, verseId } = body;
 
     if (user.email !== profileEmail)
       throw new UnauthorizedException('unauthorizedAccess');
 
-    if (!verse) throw new NotFoundException();
+    if (!verseId) throw new NotFoundException();
 
-    return await this.bookmarksService.update(+id, { verseId: verse.id });
+    return await this.bookmarksService.update(+id, { verseId });
   }
 
   @UseGuards(JwtAuthGuard)

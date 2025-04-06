@@ -48,8 +48,8 @@ const ChapterContent: FC<Props> = ({
 
   function copyHighlighted() {
     const highlightedVerses = verses
-      .filter((v) => highlighted.includes(v.num))
-      .sort((a, b) => a.num - b.num);
+      .filter((v) => highlighted.includes(v.id))
+      .sort((a, b) => a.id - b.id);
 
     if (highlightedVerses.length === 0) return; // Prevents errors
 

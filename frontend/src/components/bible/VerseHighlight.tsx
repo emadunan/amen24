@@ -3,23 +3,18 @@
 import styles from "./VerseHighlight.module.css";
 import { useSearchParams } from "next/navigation";
 import { useHighlightContext } from "./ChapterContent";
-import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { MdPushPin } from "react-icons/md";
 import { useGetUserLastReadBookmarkQuery } from "@/store/bookmarkApi";
-import { BookKey } from "@amen24/shared";
+import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 
 interface Props {
   children: ReactNode;
-  bookKey: BookKey;
-  chapterNum: number;
-  verseNum: number;
+  verseId: number;
 }
 
 const VerseHighlight: FC<Props> = ({
   children,
-  bookKey,
-  chapterNum,
-  verseNum,
+  verseId
 }) => {
   const { highlighted, toggleHighlight } = useHighlightContext();
   const searchParams = useSearchParams();
@@ -36,29 +31,26 @@ const VerseHighlight: FC<Props> = ({
 
   useEffect(() => {
     if (isFirstLoad.current) {
-      const highlightedNo = searchParams.get("v");
+      const highlightedId = searchParams.get("v");
 
       if (
-        highlightedNo &&
-        +highlightedNo === verseNum &&
-        !highlighted.includes(verseNum)
+        highlightedId &&
+        +highlightedId === verseId &&
+        !highlighted.includes(verseId)
       ) {
-        toggleHighlight(verseNum);
+        toggleHighlight(verseId);
       }
 
       isFirstLoad.current = false;
     }
   }, []);
 
-  const isBookmarked =
-    bookmark?.verse.chapter.book.bookKey === bookKey &&
-    bookmark?.verse.chapter.num === chapterNum &&
-    bookmark?.verse.num === verseNum;
+  const isBookmarked = bookmark?.verse.id === verseId;
 
   return (
     <div
-      onClick={() => toggleHighlight(verseNum)}
-      className={`${styles.verseContainer} ${highlighted.includes(verseNum) ? styles.highlight : ""}`}
+      onClick={() => toggleHighlight(verseId)}
+      className={`${styles.verseContainer} ${highlighted.includes(verseId) ? styles.highlight : ""}`}
     >
       {isBookmarked && isClient && <MdPushPin size="1.4rem" />}
       {children}

@@ -7,14 +7,13 @@ import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
 import { useDraggable } from "@/hooks/useDraggable";
-import { BookKey, formatNumber, Lang } from "@amen24/shared";
+import { formatNumber, Lang } from "@amen24/shared";
 import {
   useGetUserLastReadBookmarkQuery,
   useUpdateBookmarkMutation,
 } from "@/store/bookmarkApi";
 import { useGetMeQuery } from "@/store/userApi";
 import { showToast } from "@/utils/toast";
-import { useParams } from "next/navigation";
 
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
@@ -22,9 +21,6 @@ const ChapterToolbox = () => {
   const { t, i18n } = useTranslation(["book"]);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [updateBookmark] = useUpdateBookmarkMutation();
-  const params = useParams<{ book: [BookKey, string, string] }>();
-  const [bookKey, chapterNo] = params.book;
-
   const { position, handleMouseDown, elementRef, handleTouchStart } =
     useDraggable(
       5,
@@ -60,16 +56,23 @@ const ChapterToolbox = () => {
     }
 
     try {
-      await updateBookmark({
+      const bookmark = await updateBookmark({
         id: bookmarkId,
         profileEmail,
-        bookKey,
-        chapterNum: Number(chapterNo),
-        verseNum: lastHighlighted,
+        verseId: lastHighlighted,
       });
 
+      const bookKey = bookmark.data?.verse.chapter.book.bookKey;
+      const chapterNum = bookmark.data?.verse.chapter.num;
+      const verseNum = bookmark.data?.verse.num;
+
+      if (!bookKey || !chapterNum || !verseNum) {
+        showToast("Error", "error");
+        return
+      }
+
       showToast(
-        `(${t(bookKey)} ${formatNumber(+chapterNo, i18n.language as Lang)} : ${formatNumber(lastHighlighted, i18n.language as Lang)}) ${t("toolbox.lastReadSaved")}`,
+        `(${t(bookKey)} ${formatNumber(chapterNum, i18n.language as Lang)} : ${formatNumber(verseNum, i18n.language as Lang)}) ${t("toolbox.lastReadSaved")}`,
         "success",
       );
     } catch (error) {

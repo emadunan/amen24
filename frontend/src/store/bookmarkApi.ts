@@ -24,14 +24,8 @@ export const bookmarkApi = createApi({
       invalidatesTags: ["Bookmark"],
     }),
     updateBookmark: builder.mutation<
-      void,
-      {
-        id: number,
-        profileEmail: string,
-        bookKey: BookKey,
-        chapterNum: number,
-        verseNum: number,
-      }
+      Bookmark,
+      { id: number, profileEmail: string, verseId: number }
     >({
       query: (bookmark) => {
         return {
