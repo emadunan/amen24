@@ -55,6 +55,7 @@ const LanguageSelector = () => {
         // http://localhost:5000/api/users/me/lang NOTFOUND
         await changeLang(newLocale).unwrap();
       } catch (error) {
+        console.error(error);
         showToast(t("error:failedToChangeLanguage"), "error");
       }
     }
