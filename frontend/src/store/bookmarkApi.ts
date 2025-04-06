@@ -1,4 +1,4 @@
-import { Bookmark } from "@amen24/shared";
+import { BookKey, Bookmark } from "@amen24/shared";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -25,7 +25,13 @@ export const bookmarkApi = createApi({
     }),
     updateBookmark: builder.mutation<
       void,
-      Omit<Bookmark, "title" | "profile" | "updatedAt">
+      {
+        id: number,
+        profileEmail: string,
+        bookKey: BookKey,
+        chapterNum: number,
+        verseNum: number,
+      }
     >({
       query: (bookmark) => {
         return {

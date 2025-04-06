@@ -1,8 +1,14 @@
 import { Lang } from '@amen24/shared';
-import { Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Verse } from './verse.entity';
 
-@Index("IDX_lang", ["lang"])
+@Index('IDX_lang', ['lang'])
 @Entity()
 export class VerseTranslation {
   @PrimaryGeneratedColumn()
@@ -20,6 +26,9 @@ export class VerseTranslation {
   @Column({ type: 'text', nullable: true })
   textDiacritized?: string;
 
-  @ManyToOne(() => Verse, (verse) => verse)
+  @ManyToOne(() => Verse, (verse) => verse.verseTranslations, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
   verse: Verse;
 }

@@ -1,11 +1,5 @@
 import { Chapter } from '../../chapters/entities/chapter.entity';
-import {
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BookKey } from '@amen24/shared';
 
 @Entity()

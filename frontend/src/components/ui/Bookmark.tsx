@@ -25,13 +25,17 @@ const Bookmark = () => {
 
   if (!user || !bookmark) return null;
 
-  const chapterNo = formatNumber(bookmark.chapterNo, i18n.language as Lang);
-  const verseNo = formatNumber(bookmark.verseNo, i18n.language as Lang);
+  const bookKey = bookmark.verse.chapter.book.bookKey;
+  const chapterNum = bookmark.verse.chapter.num;
+  const verseNum = bookmark.verse.num;
+
+  const chapterNumFormatted = formatNumber(chapterNum, i18n.language as Lang);
+  const verseNumFormatted = formatNumber(verseNum, i18n.language as Lang);
 
   return (
     <Link
       className={styles.bookmark}
-      href={`/${bookmark.bookKey}/${bookmark.chapterNo}/${BookMap[bookmark.bookKey].len}`}
+      href={`/${bookKey}/${chapterNum}/${BookMap[bookKey].len}`}
     >
       {/* This MdPushPin cause hydration error, so I need to finds a solution first then add it */}
       {/* <MdPushPin /> */}
@@ -39,7 +43,7 @@ const Bookmark = () => {
       {!isLargePhone && (
         <span>
           {" "}
-          | {t(bookmark.bookKey)} {chapterNo} : {verseNo}
+          | {t(bookKey)} {chapterNumFormatted} : {verseNumFormatted}
         </span>
       )}
     </Link>

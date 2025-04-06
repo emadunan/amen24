@@ -62,14 +62,21 @@ export class ProfilesService {
       profile.themeMode === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK;
     await this.profilesRepo.save(profile);
 
-    const user = await this.usersService.findOneByEmailProvider(profile.email, provider);
+    const user = await this.usersService.findOneByEmailProvider(
+      profile.email,
+      provider,
+    );
 
     if (!user) throw new NotFoundException('userNotFound');
 
     return user;
   }
 
-  async changeLang(email: string, provider: AuthProvider, uiLang: Lang): Promise<User> {
+  async changeLang(
+    email: string,
+    provider: AuthProvider,
+    uiLang: Lang,
+  ): Promise<User> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
 
     if (!profile) {
@@ -79,7 +86,10 @@ export class ProfilesService {
     profile.uiLang = uiLang;
     await this.profilesRepo.save(profile);
 
-    const user = await this.usersService.findOneByEmailProvider(profile.email, provider);
+    const user = await this.usersService.findOneByEmailProvider(
+      profile.email,
+      provider,
+    );
 
     if (!user) throw new NotFoundException('userNotFound');
 

@@ -1,5 +1,6 @@
 import {
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
@@ -13,7 +14,11 @@ export class Favorite {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Profile, (profile) => profile.favorites)
+  @ManyToOne(() => Profile, (profile) => profile.favorites, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'profileEmail', referencedColumnName: 'email' })
   profile: Profile;
 
   @ManyToOne(() => VerseGroup, (verseGroup) => verseGroup.favorites)

@@ -11,7 +11,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { ProfilesService } from './profiles.service';
-import { AuthProvider, BookKey } from '@amen24/shared';
+import { AuthProvider } from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { BookmarksService } from './bookmarks.service';
@@ -55,9 +55,7 @@ export class UsersService {
       const defaultBookmarks = [
         {
           title: bookmark.last_read,
-          bookKey: '01_GEN' as BookKey,
-          chapterNo: 1,
-          verseNo: 1,
+          verseId: 1
         },
       ];
 
@@ -162,7 +160,7 @@ export class UsersService {
     provider: AuthProvider = AuthProvider.LOCAL,
   ): Promise<User | null> {
     console.log(email, provider);
-    
+
     const user = await this.usersRepo.findOne({
       where: { email, provider },
       relations: ['profile', 'profile.bookmarks'],
@@ -172,7 +170,6 @@ export class UsersService {
 
     return user;
   }
-
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.usersRepo.findOneBy({ id });

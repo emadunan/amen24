@@ -1,11 +1,11 @@
-import { BookKey, Lang } from "../@types";
+import { Chapter } from "./Chapter";
+import { VerseGroup } from "./VerseGroup";
+import { VerseTranslation } from "./VerseTranslation";
 
 export interface Verse {
-  bookKey: BookKey;
-  chapterNo: number;
-  verseNo: number;
-  text: string;
-  textNormalized: string;
-  textDiacritized: string;
-  lang: Lang;
+  id: number;
+  num: number;
+  chapter: Chapter;
+  verseGroups: VerseGroup[];
+  verseTranslations: VerseTranslation[];
 }

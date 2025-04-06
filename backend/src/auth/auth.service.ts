@@ -23,7 +23,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private mailerService: MailerService,
-  ) { }
+  ) {}
 
   async validateLocalUser(
     email: string,
@@ -70,7 +70,10 @@ export class AuthService {
     const email = emails?.at(0)?.value;
     if (!email) throw new BadRequestException();
 
-    const user = await this.usersService.findOneByEmailProvider(email, provider as AuthProvider);
+    const user = await this.usersService.findOneByEmailProvider(
+      email,
+      provider as AuthProvider,
+    );
 
     if (user) return user;
 
@@ -81,11 +84,11 @@ export class AuthService {
       provider: provider as AuthProvider,
       uiLang: Lang.ENGLISH,
       bookmark: {
-        last_read: "Last Read",
-        old_testament: "",
-        new_testament: "",
-      }
-    }
+        last_read: 'Last Read',
+        old_testament: '',
+        new_testament: '',
+      },
+    };
 
     return this.usersService.create(createUserDto);
   }
@@ -134,19 +137,18 @@ export class AuthService {
     user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour expiry
     await this.usersService.update(user.id, user);
 
-
     // Send reset email
-    const frontendUrl = this.configService.getOrThrow<string>("FRONTEND_URL");
+    const frontendUrl = this.configService.getOrThrow<string>('FRONTEND_URL');
     const resetLink = `${frontendUrl}/password-restore?token=${resetToken}`;
-    await this.mailerService.sendMail({
-      to: user.email,
-      from: 'support@amen24.org',
-      subject: 'Password Reset Request',
-      text: `Click the following link to restore your password: ${resetLink}`,
-      html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
-    })
-      .catch(err => console.error(err)
-      );
+    await this.mailerService
+      .sendMail({
+        to: user.email,
+        from: 'support@amen24.org',
+        subject: 'Password Reset Request',
+        text: `Click the following link to restore your password: ${resetLink}`,
+        html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
+      })
+      .catch((err) => console.error(err));
 
     return {
       message: 'passwordResetEmailSent',

@@ -13,36 +13,60 @@ import {
   removeArDiacritics,
   detectLanguage,
 } from '@amen24/shared';
+import { ChaptersService } from '../chapters/chapters.service';
+import { VerseTranslation } from './entities/verse-translation.entity';
 
 @Injectable()
 export class VersesService {
-  constructor(@InjectRepository(Verse) private versesRepo: Repository<Verse>) { }
+  constructor(
+    @InjectRepository(Verse) private versesRepo: Repository<Verse>,
+    @InjectRepository(VerseTranslation)
+    private verseTranslationsRepo: Repository<VerseTranslation>,
+    private chaptersService: ChaptersService,
+  ) { }
 
-  async findChapter(bookKey: BookKey, chapterNo: number, lang: Lang) {
+  async findChapter(bookKey: BookKey, chapterNum: number, lang: Lang) {
     return await this.versesRepo.find({
       where: {
-        bookKey,
-        chapterNo,
-        lang,
+        chapter: {
+          num: chapterNum,
+          book: {
+            bookKey,
+          },
+        },
+        verseTranslations: {
+          lang,
+        },
       },
       order: {
-        verseNo: 'ASC',
+        num: 'ASC',
       },
+      relations: ['verseTranslations', 'chapter', 'chapter.book'],
     });
+  }
+
+  async getVerse(bookKey: BookKey, chapterNum: number, verseNum: number) {
+    return this.versesRepo.findOneBy({ num: verseNum, chapter: { num: chapterNum, book: { bookKey } } });
   }
 
   async findOne(
     bookKey: BookKey,
-    chapterNo: number,
-    verseNo: number,
+    chapterNum: number,
+    verseNum: number,
     lang: Lang,
   ) {
     return await this.versesRepo.findOne({
       where: {
-        bookKey,
-        chapterNo,
-        verseNo,
-        lang,
+        num: verseNum,
+        verseTranslations: {
+          lang,
+        },
+        chapter: {
+          num: chapterNum,
+          book: {
+            bookKey,
+          },
+        },
       },
     });
   }
@@ -66,35 +90,81 @@ export class VersesService {
       processedQuery = removeArDiacritics(normalizeArText(query));
     }
 
-    // const pgLang = this.getTsLang(detectedLang); // PostgreSQL full-text search language
-
     const words = processedQuery
       .trim()
       .split(/\s+/)
       .filter((w) => w.length > 0);
 
     if (!words.length) {
-      throw new BadRequestException('Search query must contain at least one word.');
+      throw new BadRequestException(
+        'Search query must contain at least one word.',
+      );
     }
 
     // Build WHERE conditions
-    const ilikeClauses = words.map((_, idx) => `"textNormalized" ILIKE $${idx + 3}`);
+    const ilikeClauses = words.map(
+      (_, idx) => `"textNormalized" ILIKE $${idx + 3}`,
+    );
     const values = [detectedLang, scope, ...words.map((w) => `%${w}%`)];
 
     const results = await this.versesRepo.query(
-      `SELECT "bookKey", "chapterNo", "verseNo", "text", "lang"
-        FROM "verse"
-        WHERE "lang" = $1
-          AND "bookKey" = ANY($2)
+      `SELECT
+          v.id,
+          b."bookKey",
+          c."num" AS "chapterNum",
+          v."num" AS "verseNum",
+          vt."text",
+          vt."lang"
+        FROM "verse_translation" vt
+        INNER JOIN "verse" v ON vt."verseId" = v."id"
+        INNER JOIN "chapter" c ON v."chapterId" = c."id"
+        INNER JOIN "book" b ON c."bookId" = b."id"
+        WHERE vt."lang" = $1
+          AND b."bookKey" = ANY($2)
           AND ${ilikeClauses.join(' AND ')}
-        ORDER BY "bookKey", "chapterNo", "verseNo" LIMIT 9999`,
+        ORDER BY v.id
+        LIMIT 9999`,
       values,
     );
 
     return results;
   }
 
+  async structure() {
+    const contentFilePath = resolve(
+      __dirname,
+      '..',
+      '..',
+      '..',
+      '_content',
+      'Bible_En_ESV_2001.VPL.txt',
+    );
+
+    const fileContent = readFileSync(contentFilePath, 'utf-8');
+    const lines = fileContent.split('\n');
+
+    for (const line of lines) {
+      const result = line.match(/^(\S+)\s(\d+):(\d+)\s(.*)$/);
+
+      if (result) {
+        const bookKeySegment = result.at(1)?.toUpperCase();
+        if (!bookKeySegment) throw new Error('Failed to extract book key');
+
+        const bookKey = bookKeyMap[bookKeySegment];
+        const chapterNum = +(result.at(2) as string);
+        const verseNum = +(result.at(3) as string);
+
+        // Retrieve or create the chapter
+        const chapter = await this.chaptersService.findOne(bookKey, chapterNum);
+        if (!chapter) throw new Error('Error: Chapter has not been found!');
+
+        await this.versesRepo.insert({ num: verseNum, chapter });
+      }
+    }
+  }
+
   async seed() {
+    await this.structure();
     await this.seedBible(Lang.ENGLISH);
     await this.seedBible(Lang.ARABIC);
   }
@@ -144,8 +214,8 @@ export class VersesService {
           if (!bookKeySegment) throw new Error('Failed to extract book key');
 
           const bookKey = bookKeyMap[bookKeySegment];
-          const chapterNo = +(result.at(2) as string);
-          const verseNo = +(result.at(3) as string);
+          const chapterNum = +(result.at(2) as string);
+          const verseNum = +(result.at(3) as string);
           let text = result.at(4) as string;
 
           let textNormalized = text;
@@ -156,22 +226,10 @@ export class VersesService {
             textNormalized = normalizeArText(text);
           }
 
-          const pgLang = this.getTsLang(lang);
+          const verse = await this.versesRepo.findOneBy({ num: verseNum, chapter: { num: chapterNum, book: { bookKey } } });
+          if (!verse) throw new Error("Error: Verse has not been found");
 
-          await this.versesRepo.query(
-            `INSERT INTO "verse" ("bookKey", "chapterNo", "verseNo", "text", "textNormalized", "textDiacritized", "lang", "textSearch")
-             VALUES ($1, $2, $3, $4, $5, $6, $7, to_tsvector($8, $5))`,
-            [
-              bookKey,
-              chapterNo,
-              verseNo,
-              text,
-              textNormalized,
-              textDiacritized,
-              lang,
-              pgLang,
-            ],
-          );
+          await this.verseTranslationsRepo.insert({ text, textDiacritized, textNormalized, lang, verse: verse });
 
           processedCount++;
           progressBar.update(processedCount);
@@ -184,14 +242,5 @@ export class VersesService {
       progressBar.stop();
       console.error(`Seeding ${lang} failed: ${error.message}`);
     }
-  }
-
-  private getTsLang(lang: Lang) {
-    return (
-      {
-        [Lang.ENGLISH]: 'english',
-        [Lang.ARABIC]: 'arabic',
-      }[lang] || 'simple'
-    ); // Fallback to 'simple'
   }
 }

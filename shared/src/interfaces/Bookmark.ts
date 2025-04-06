@@ -1,13 +1,10 @@
-import { BookKey } from "../@types";
 import { Profile } from "./Profile";
+import { Verse } from "./Verse";
 
 export interface Bookmark {
   id: number;
   title: string;
-  profileEmail: string;
   profile: Profile;
-  bookKey: BookKey;
-  chapterNo: number;
-  verseNo: number;
+  verse: Verse;
   updatedAt: Date;
 }

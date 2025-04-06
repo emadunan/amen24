@@ -8,19 +8,16 @@ import {
   Unique,
 } from 'typeorm';
 import { Profile } from './profile.entity';
-import { BookKey } from '@amen24/shared';
+import { Verse } from '../../verses/entities/verse.entity';
 
 @Entity()
-@Unique(['profileEmail', 'bookKey', 'chapterNo', 'verseNo', 'title'])
+@Unique(['profile', 'verse', 'title'])
 export class Bookmark {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'text' })
   title: string;
-
-  @Column({ type: 'text' })
-  profileEmail: string;
 
   @ManyToOne(() => Profile, (profile) => profile.bookmarks, {
     onDelete: 'CASCADE',
@@ -29,14 +26,8 @@ export class Bookmark {
   @JoinColumn({ name: 'profileEmail', referencedColumnName: 'email' })
   profile: Profile;
 
-  @Column({ type: 'text' })
-  bookKey: BookKey;
-
-  @Column({ type: 'smallint' })
-  chapterNo: number;
-
-  @Column({ type: 'smallint' })
-  verseNo: number;
+  @ManyToOne(() => Verse, { onDelete: 'CASCADE' })
+  verse: Verse;
 
   @UpdateDateColumn()
   updatedAt: Date;

@@ -6,8 +6,11 @@ import { ConfigService } from '@nestjs/config';
 @Controller('auth')
 export class AuthController {
   private appUrl: string;
-  constructor(private authService: AuthService, configService: ConfigService) {
-    this.appUrl = configService.getOrThrow<string>("FRONTEND_URL")
+  constructor(
+    private authService: AuthService,
+    configService: ConfigService,
+  ) {
+    this.appUrl = configService.getOrThrow<string>('FRONTEND_URL');
   }
 
   @Get('google')
@@ -34,7 +37,7 @@ export class AuthController {
 
   @Get('facebook')
   @UseGuards(AuthGuard('facebook'))
-  async facebookLogin(): Promise<void> { }
+  async facebookLogin(): Promise<void> {}
 
   @Get('facebook/callback')
   @UseGuards(AuthGuard('facebook'))

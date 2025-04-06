@@ -9,14 +9,14 @@ import {
   Unique,
 } from 'typeorm';
 
-@Unique(['book', 'chapterNum'])
+@Unique(['book', 'num'])
 @Entity()
 export class Chapter {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  chapterNum: number;
+  num: number;
 
   @ManyToOne(() => Book, (book) => book.chapters, {
     onDelete: 'CASCADE',

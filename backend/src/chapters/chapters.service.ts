@@ -12,12 +12,17 @@ export class ChaptersService {
   ) {}
 
   async insert(insertChapterDto: InsertChapterDto) {
-    await this.chaptersRepo.insert(insertChapterDto);
+    return await this.chaptersRepo.insert(insertChapterDto);
   }
 
-  async findOne(bookKey: BookKey, chapterNo: number) {
+  async findOne(bookKey: BookKey, chapterNum: number) {
     return await this.chaptersRepo.findOne({
-      where: { bookKey, chapterNo },
+      where: {
+        num: chapterNum,
+        book: {
+          bookKey,
+        },
+      },
     });
   }
 }

@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { BookKey, Verse } from "@amen24/shared";
+import { BookKey, Verse, VerseResult } from "@amen24/shared";
 
 // Define a type for the slice state
 interface SearchState {
   query: string;
   selectedBooks: string[];
   showDropdown: boolean;
-  results: Verse[];
+  results: VerseResult[];
   isLoading: boolean;
 }
 
@@ -34,7 +34,7 @@ export const searchSlice = createSlice({
     toggleDropdown: (state) => {
       state.showDropdown = !state.showDropdown;
     },
-    setResults: (state, action: PayloadAction<Verse[]>) => {
+    setResults: (state, action: PayloadAction<VerseResult[]>) => {
       state.results = action.payload;
     },
     setIsLoading: (state, action: PayloadAction<boolean>) => {

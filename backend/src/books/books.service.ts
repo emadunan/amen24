@@ -19,17 +19,18 @@ export class BooksService {
   async seed() {
     for (const key in BookMap) {
       if (Object.prototype.hasOwnProperty.call(BookMap, key)) {
-        await this.booksRepo.insert({ bookKey: key as BookKey });
+        const result = await this.booksRepo.insert({ bookKey: key as BookKey });
+        const bookId = result.identifiers[0].id;
 
-        const chapterNos = Array.from(
+        const chapterNums = Array.from(
           { length: BookMap[key].len },
           (_v, k) => k + 1,
         );
 
-        for (const chapterNo of chapterNos) {
+        for (const chapterNum of chapterNums) {
           await this.chaptersService.insert({
-            bookKey: key as BookKey,
-            chapterNo,
+            num: chapterNum,
+            book: { id: bookId },
           });
         }
       }

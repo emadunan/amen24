@@ -13,31 +13,53 @@ import { UpdateBookmarkDto } from '../dto/update-bookmark.dto';
 export class BookmarksService {
   constructor(
     @InjectRepository(Bookmark) private bookmarksRepo: Repository<Bookmark>,
-  ) {}
+  ) { }
 
   async getAll(profileEmail: string) {
-    return await this.bookmarksRepo.findBy({ profileEmail });
+    return await this.bookmarksRepo.findBy({
+      profile: { email: profileEmail },
+    });
   }
 
   async getOne(profileEmail: string) {
     const lastRead = ['Last Read', 'آخر قراءة'];
-    return await this.bookmarksRepo.findOneBy({
-      profileEmail,
-      title: In(lastRead),
+
+    const bookmark = await this.bookmarksRepo.findOne({
+      where: {
+        profile: {
+          email: profileEmail,
+        },
+        title: In(lastRead),
+      },
+      relations: ['verse', 'verse.chapter', 'verse.chapter.book'],
     });
+
+    if (!bookmark) {
+      throw new NotFoundException('No last read bookmark found.');
+    }
+
+    return bookmark;
   }
 
   async create(bookmarkDto: CreateBookmarkDto) {
-    const { profileEmail } = bookmarkDto;
+    const { title, profileEmail, verseId } = bookmarkDto;
 
     const bookmarkCount = await this.bookmarksRepo.count({
-      where: { profileEmail },
+      where: {
+        profile: {
+          email: profileEmail,
+        },
+      },
     });
 
     if (bookmarkCount >= 1)
       throw new BadRequestException('bookmarkExceedLimit');
 
-    const bookmark = this.bookmarksRepo.create(bookmarkDto);
+    const bookmark = this.bookmarksRepo.create({
+      title,
+      verse: { id: verseId },
+      profile: { email: profileEmail },
+    });
 
     return await this.bookmarksRepo.save(bookmark);
   }
@@ -53,7 +75,10 @@ export class BookmarksService {
   }
 
   async delete(id: number, profileEmail: string) {
-    const bookmark = await this.bookmarksRepo.findOneBy({ id, profileEmail });
+    const bookmark = await this.bookmarksRepo.findOneBy({
+      id,
+      profile: { email: profileEmail },
+    });
 
     if (!bookmark) throw new NotFoundException('bookmarkNotFound');
 

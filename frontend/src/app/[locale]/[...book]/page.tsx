@@ -18,24 +18,24 @@ const BookPage: FC<Props> = async ({ params }) => {
   const { book, locale } = await params;
   const { t } = await initTranslations(locale, ["common", "book"]);
 
-  const [bookKey, chapterNo, bookLen] = book;
+  const [bookKey, chapterNum, bookLen] = book;
 
   const response = await fetch(
-    `${apiUrl}/verses/${bookKey}/${chapterNo}/${locale}`,
+    `${apiUrl}/verses/${bookKey}/${chapterNum}/${locale}`,
   );
 
   if (!response.ok) throw new Error("failedToFetch");
   const verses: Verse[] = await response.json();
 
-  const formattedChapterNo = formatNumber(+chapterNo, locale as Lang);
+  const formattedchapterNum = formatNumber(+chapterNum, locale as Lang);
 
   return (
     <div className={styles.pageContainer}>
       <div className={styles.chapterContainer}>
         <div className={styles.chapterNav}>
-          {+chapterNo > 1 ? (
+          {+chapterNum > 1 ? (
             <Link
-              href={`/${bookKey}/${+chapterNo - 1}/${bookLen}`}
+              href={`/${bookKey}/${+chapterNum - 1}/${bookLen}`}
               className={styles.chapterLink}
             >
               <GrLinkPrevious className="flip-icon" />
@@ -52,12 +52,12 @@ const BookPage: FC<Props> = async ({ params }) => {
           )}
           <ChapterTitleAction>
             <h3 className={styles.chapterTitle}>
-              {t(bookKey, { ns: "book" })} {formattedChapterNo}
+              {t(bookKey, { ns: "book" })} {formattedchapterNum}
             </h3>
           </ChapterTitleAction>
-          {+chapterNo < +bookLen ? (
+          {+chapterNum < +bookLen ? (
             <Link
-              href={`/${bookKey}/${+chapterNo + 1}/${bookLen}`}
+              href={`/${bookKey}/${+chapterNum + 1}/${bookLen}`}
               className={styles.chapterLink}
             >
               {t("next")}
@@ -75,24 +75,24 @@ const BookPage: FC<Props> = async ({ params }) => {
         </div>
         <ChapterContent
           bookKey={bookKey as BookKey}
-          chapterNo={+chapterNo}
+          chapterNum={+chapterNum}
           verses={verses}
         >
           {verses.map((v: Verse) => {
-            const formattedVerseNo = formatNumber(v.verseNo, locale as Lang);
+            const formattedVerseNum = formatNumber(v.num, locale as Lang);
             return (
-              <Fragment key={v.verseNo}>
+              <Fragment key={v.num}>
                 {" "}
                 <HighlightVerse
-                  verseNo={v.verseNo}
-                  chapterNo={+chapterNo}
+                  verseNum={v.num}
+                  chapterNum={+chapterNum}
                   bookKey={bookKey as BookKey}
                 >
                   <p className={styles.verse}>
                     <span className={styles.verseNumber}>
-                      {formattedVerseNo}
+                      {formattedVerseNum}
                     </span>
-                    {v.textDiacritized}
+                    {v.verseTranslations[0].textDiacritized}
                   </p>
                 </HighlightVerse>
               </Fragment>

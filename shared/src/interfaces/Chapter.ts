@@ -1,6 +1,10 @@
 import { BookKey } from "../@types";
+import { Book } from "./Book";
+import { Verse } from "./Verse";
 
 export interface Chapter {
-  bookKey: BookKey;
-  chapterNo: number;
+  id: number;
+  num: number;
+  verses: Verse[];
+  book: Book;
 }

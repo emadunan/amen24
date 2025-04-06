@@ -11,15 +11,15 @@ import { BookKey } from "@amen24/shared";
 interface Props {
   children: ReactNode;
   bookKey: BookKey;
-  chapterNo: number;
-  verseNo: number;
+  chapterNum: number;
+  verseNum: number;
 }
 
 const VerseHighlight: FC<Props> = ({
   children,
   bookKey,
-  chapterNo,
-  verseNo,
+  chapterNum,
+  verseNum,
 }) => {
   const { highlighted, toggleHighlight } = useHighlightContext();
   const searchParams = useSearchParams();
@@ -40,10 +40,10 @@ const VerseHighlight: FC<Props> = ({
 
       if (
         highlightedNo &&
-        +highlightedNo === verseNo &&
-        !highlighted.includes(verseNo)
+        +highlightedNo === verseNum &&
+        !highlighted.includes(verseNum)
       ) {
-        toggleHighlight(verseNo);
+        toggleHighlight(verseNum);
       }
 
       isFirstLoad.current = false;
@@ -51,14 +51,14 @@ const VerseHighlight: FC<Props> = ({
   }, []);
 
   const isBookmarked =
-    bookmark?.bookKey === bookKey &&
-    bookmark?.chapterNo === chapterNo &&
-    bookmark?.verseNo === verseNo;
+    bookmark?.verse.chapter.book.bookKey === bookKey &&
+    bookmark?.verse.chapter.num === chapterNum &&
+    bookmark?.verse.num === verseNum;
 
   return (
     <div
-      onClick={() => toggleHighlight(verseNo)}
-      className={`${styles.verseContainer} ${highlighted.includes(verseNo) ? styles.highlight : ""}`}
+      onClick={() => toggleHighlight(verseNum)}
+      className={`${styles.verseContainer} ${highlighted.includes(verseNum) ? styles.highlight : ""}`}
     >
       {isBookmarked && isClient && <MdPushPin size="1.4rem" />}
       {children}

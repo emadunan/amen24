@@ -64,8 +64,8 @@ const ChapterToolbox = () => {
         id: bookmarkId,
         profileEmail,
         bookKey,
-        chapterNo: Number(chapterNo),
-        verseNo: lastHighlighted,
+        chapterNum: Number(chapterNo),
+        verseNum: lastHighlighted,
       });
 
       showToast(
@@ -115,9 +115,9 @@ const ChapterToolbox = () => {
               <p className={styles.bookmarkTitle}>{t("toolbox.bookmark")}</p>
               {bookmark && (
                 <small className={styles.bookmarkRef}>
-                  {t(bookmark.bookKey)} (
-                  {formatNumber(bookmark.chapterNo, i18n.language as Lang)} :{" "}
-                  {formatNumber(bookmark.verseNo, i18n.language as Lang)})
+                  {t(bookmark.verse.chapter.book.bookKey)} (
+                  {formatNumber(bookmark.verse.chapter.num, i18n.language as Lang)} :{" "}
+                  {formatNumber(bookmark.verse.num, i18n.language as Lang)})
                 </small>
               )}
             </div>

@@ -19,22 +19,22 @@ export class VersesController {
     return await this.versesService.findManyByQuery(query, selectedBooks);
   }
 
-  @Get(':bookKey/:chapterNo/:lang')
+  @Get(':bookKey/:chapterNum/:lang')
   findChapter(
     @Param('bookKey') bookKey: BookKey,
-    @Param('chapterNo', ParseIntPipe) chapterNo: number,
+    @Param('chapterNum', ParseIntPipe) chapterNum: number,
     @Param('lang') lang: Lang,
   ) {
-    return this.versesService.findChapter(bookKey, chapterNo, lang);
+    return this.versesService.findChapter(bookKey, chapterNum, lang);
   }
 
-  @Get(':bookKey/:chapterNo/:verseNo/:lang')
+  @Get(':bookKey/:chapterNum/:verseNum/:lang')
   findOne(
     @Param('bookKey') bookKey: BookKey,
-    @Param('chapterNo', ParseIntPipe) chapterNo: number,
-    @Param('verseNo', ParseIntPipe) verseNo: number,
+    @Param('chapterNum', ParseIntPipe) chapterNum: number,
+    @Param('verseNum', ParseIntPipe) verseNum: number,
     @Param('lang') lang: Lang,
   ) {
-    return this.versesService.findOne(bookKey, chapterNo, verseNo, lang);
+    return this.versesService.findOne(bookKey, chapterNum, verseNum, lang);
   }
 }

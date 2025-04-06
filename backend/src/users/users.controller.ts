@@ -13,6 +13,7 @@ import {
   UnauthorizedException,
   ParseIntPipe,
   NotImplementedException,
+  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -25,13 +26,15 @@ import { Response } from 'express';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
 import { BookmarksService } from './services/bookmarks.service';
-import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
+import { BookKey } from '@amen24/shared';
+import { VersesService } from 'src/verses/verses.service';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
+    private readonly versesService: VersesService,
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
   ) { }
@@ -68,11 +71,7 @@ export class UsersController {
   ) {
     const { oldPassword, newPassword } = body;
 
-    await this.usersService.resetPassword(
-      reqUser.id,
-      oldPassword,
-      newPassword,
-    );
+    await this.usersService.resetPassword(reqUser.id, oldPassword, newPassword);
 
     this.authService.clearAccessToken(res);
     res.json({ message: 'passwordUpdated' });
@@ -110,7 +109,11 @@ export class UsersController {
   ) {
     if (!u) throw new UnauthorizedException();
 
-    const user = await this.profilesService.changeLang(u.email, u.provider, body.uiLang);
+    const user = await this.profilesService.changeLang(
+      u.email,
+      u.provider,
+      body.uiLang,
+    );
 
     this.authService.loadAccessToken(user, res);
     res.json({ message: 'User profile has been successfully updated' });
@@ -122,11 +125,11 @@ export class UsersController {
     try {
       const user = await this.usersService.create(createUserDto);
 
-      if (user) return { message: "userCreated" };
+      if (user) return { message: 'userCreated' };
 
-      return { message: "userCreateFailed" };
+      return { message: 'userCreateFailed' };
     } catch (error) {
-      throw new NotImplementedException("userCreateFailed");
+      throw new NotImplementedException('userCreateFailed');
     }
   }
 
@@ -140,14 +143,24 @@ export class UsersController {
   @Patch('bookmark')
   async updateBookmark(
     @UserParam() user: User,
-    @Body() body: Omit<UpdateBookmarkDto, 'title'> & { id: number },
+    @Body() body: {
+      id: number,
+      profileEmail: string,
+      bookKey: BookKey,
+      chapterNum: number,
+      verseNum: number,
+    },
   ) {
-    const { id, profileEmail, ...rest } = body;
+    const { id, profileEmail, bookKey, chapterNum, verseNum } = body;
+
+    const verse = await this.versesService.getVerse(bookKey, +chapterNum, +verseNum)
 
     if (user.email !== profileEmail)
       throw new UnauthorizedException('unauthorizedAccess');
 
-    return await this.bookmarksService.update(+id, { ...rest });
+    if (!verse) throw new NotFoundException();
+
+    return await this.bookmarksService.update(+id, { verseId: verse.id });
   }
 
   @UseGuards(JwtAuthGuard)

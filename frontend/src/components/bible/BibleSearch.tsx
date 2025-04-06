@@ -10,7 +10,6 @@ import {
   books,
   formatNumber,
   Lang,
-  Verse,
 } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import VerseResult from "./VerseResult";
@@ -26,6 +25,7 @@ import {
 } from "@/store/searchSlice";
 import { showToast } from "@/utils/toast";
 import { handleApiError } from "@/utils/handleApiError";
+import { VerseResult as VerseResultInterface } from "@amen24/shared";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -50,7 +50,7 @@ const categoryList: Record<string, string[]> = {
   Epistles: actsEpistlesBooks,
 };
 
-export default function BibleSearch() {
+const BibleSearch = () => {
   const { t, i18n } = useTranslation("book");
   const dispatch = useDispatch();
   const { query, selectedBooks, showDropdown, results, isLoading } =
@@ -222,21 +222,20 @@ export default function BibleSearch() {
                 </button>
               </div>
             )}
-            {results.map((verse: Verse) => {
+            {results.map((verse: VerseResultInterface) => {
               const bookData = BookMap[verse.bookKey];
               if (!bookData) {
                 console.warn(`Book key not found in BookMap: ${verse.bookKey}`);
                 return null;
               }
 
-              const id = `${verse.bookKey}-${verse.chapterNo}-${verse.verseNo}-${verse.lang}`;
               return (
                 <VerseResult
-                  key={id}
+                  key={verse.id}
                   totalChapters={bookData.len}
                   bookKey={verse.bookKey}
-                  chapterNo={verse.chapterNo}
-                  verseNo={verse.verseNo}
+                  chapterNum={verse.chapterNum}
+                  verseNum={verse.verseNum}
                   text={verse.text}
                   lang={verse.lang}
                 />
@@ -248,3 +247,5 @@ export default function BibleSearch() {
     </div>
   );
 }
+
+export default BibleSearch;

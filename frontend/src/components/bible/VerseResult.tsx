@@ -5,23 +5,23 @@ import Link from "next/link";
 
 interface VerseResultProps {
   bookKey: BookKey;
-  chapterNo: number;
+  chapterNum: number;
   totalChapters: number;
-  verseNo: number;
+  verseNum: number;
   text: string;
   lang: Lang;
 }
 
 const VerseResult: React.FC<VerseResultProps> = ({
   bookKey,
-  chapterNo,
+  chapterNum,
   totalChapters,
-  verseNo,
+  verseNum,
   text,
   lang,
 }) => {
-  const formattedChapterNo = formatNumber(chapterNo, lang);
-  const formattedVerseNo = formatNumber(verseNo, lang);
+  const formattedChapterNum = formatNumber(chapterNum, lang);
+  const formattedVerseNum = formatNumber(verseNum, lang);
 
   return (
     <div
@@ -31,10 +31,10 @@ const VerseResult: React.FC<VerseResultProps> = ({
       <p className={styles.text}>{text}</p>
       <Link
         className={styles.reference}
-        href={`/${bookKey}/${chapterNo}/${totalChapters}?v=${verseNo}`}
+        href={`/${bookKey}/${chapterNum}/${totalChapters}?v=${verseNum}`}
       >
         &mdash; {BookMap[bookKey].title[lang as Lang.ARABIC | Lang.ENGLISH]}{" "}
-        {formattedChapterNo} : {formattedVerseNo}
+        {formattedChapterNum} : {formattedVerseNum}
       </Link>
     </div>
   );

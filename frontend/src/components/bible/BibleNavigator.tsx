@@ -23,7 +23,7 @@ const BibleNavigator = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
 
   const bookParams = params.book ?? []; // Ensure it's an array
-  const [urlBookKey, chapterNo] = bookParams as [BookKey?, string?, string?];
+  const [urlBookKey, chapterNum] = bookParams as [BookKey?, string?, string?];
 
   const { position, handleMouseDown, handleTouchStart, elementRef } =
     useDraggable(5, 5, i18n.language === "ar" ? true : false, 12, headerRef);
@@ -55,8 +55,8 @@ const BibleNavigator = () => {
 
   // Scroll to the current chapter
   useEffect(() => {
-    if (chapterNo) {
-      const chapterIndex = parseInt(chapterNo, 10);
+    if (chapterNum) {
+      const chapterIndex = parseInt(chapterNum, 10);
       const chapterElement = chapterRefs.current.get(chapterIndex);
 
       if (chapterElement) {
@@ -66,7 +66,7 @@ const BibleNavigator = () => {
         });
       }
     }
-  }, [chapterNo, openBook, isOpen]);
+  }, [chapterNum, openBook, isOpen]);
 
   if (!isOpen || !isBookChapterPage) return null;
 
@@ -110,7 +110,7 @@ const BibleNavigator = () => {
                   return (
                     <Link
                       className={
-                        chapterIndex.toString() === chapterNo &&
+                        chapterIndex.toString() === chapterNum &&
                         book.key === urlBookKey
                           ? styles.currentChapter
                           : ""
