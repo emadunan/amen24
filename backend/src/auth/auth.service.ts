@@ -4,17 +4,17 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { AuthProvider, ERROR_KEYS, Lang, MESSAGE_KEYS } from '@amen24/shared';
 import { UsersService } from '../users/services/users.service';
-import * as bcrypt from 'bcrypt';
-import { User } from '../users/entities/user.entity';
-import { randomBytes } from 'crypto';
-import { MailerService } from '@nestjs-modules/mailer';
-import { AuthProvider, ERROR_KEYS, Lang } from '@amen24/shared';
-import { Response } from 'express';
-import { ConfigService } from '@nestjs/config';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { MailerService } from '@nestjs-modules/mailer';
+import { User } from '../users/entities/user.entity';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { randomBytes } from 'crypto';
+import { Response } from 'express';
 import { Profile } from 'passport';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -59,7 +59,6 @@ export class AuthService {
     await this.usersService.update(user.id, user);
 
     const { password, ...result } = user;
-
     return result;
   }
 
@@ -141,7 +140,7 @@ export class AuthService {
       .catch((err) => console.error(err));
 
     return {
-      message: 'passwordResetEmailSent',
+      message: MESSAGE_KEYS.PASSWORD_RESET_EMAIL_SENT,
     };
   }
 }

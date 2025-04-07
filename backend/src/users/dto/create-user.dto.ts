@@ -1,6 +1,5 @@
 import { AuthProvider, Lang } from '@amen24/shared';
 import {
-  IsBoolean,
   IsEmail,
   IsObject,
   IsOptional,
@@ -20,9 +19,10 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
-  @ValidateIf((auth) => auth.provider === AuthProvider.LOCAL)
   @IsString()
-  @MinLength(6, { message: 'Password must be at least 6 characters long' })
+  @ValidateIf((auth) => auth.provider === AuthProvider.LOCAL)
+  @MinLength(4, { message: 'Password must be at least 4 characters long' })
+  @IsOptional()
   password?: string;
 
   @IsString()

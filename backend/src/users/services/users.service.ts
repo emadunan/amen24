@@ -11,7 +11,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { ProfilesService } from './profiles.service';
-import { AuthProvider } from '@amen24/shared';
+import { AuthProvider, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { BookmarksService } from './bookmarks.service';
@@ -23,18 +23,20 @@ export class UsersService {
     private readonly configService: ConfigService,
     private profilesService: ProfilesService,
     private bookmarksService: BookmarksService,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     const { email, password, provider, uiLang, bookmark } = createUserDto;
 
+    if (password && password.length < 4) throw new BadRequestException(ERROR_KEYS.PASSWORD_TOO_SHORT);
+
     // Check if the user already exists
     const existUser = await this.findOneByEmailProvider(email, provider);
-    if (existUser) throw new ConflictException('userDuplication');
+    if (existUser) throw new ConflictException(ERROR_KEYS.USER_DUPLICATION);
 
     // Create profile
     const profile = await this.profilesService.create({ email, uiLang });
-    if (!profile) throw new NotFoundException('profileNotFound');
+    if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
 
     // Hash password if local authentication
     const userData: Partial<User> = {
@@ -86,18 +88,16 @@ export class UsersService {
     });
 
     if (!user || !user.password)
-      throw new BadRequestException(
-        'No old password has been found, contact system admin to resolve your login via support@amen24.org',
-      );
+      throw new BadRequestException(ERROR_KEYS.NO_OLD_PASSWORD_FOUND);
 
     const match = await bcrypt.compare(oldPassword, user.password);
 
-    if (!match) throw new UnauthorizedException('unauthorizedAccess');
+    if (!match) throw new UnauthorizedException(ERROR_KEYS.UNAUTHORIZED_ACCESS);
 
     const rounds = parseInt(this.configService.getOrThrow<string>('ROUNDS'));
 
-    if (!newPassword || newPassword.length < 6) {
-      throw new BadRequestException('passwordTooShort');
+    if (!newPassword || newPassword.length < 4) {
+      throw new BadRequestException(ERROR_KEYS.PASSWORD_TOO_SHORT);
     }
 
     user.password = await bcrypt.hash(newPassword, rounds);
@@ -115,7 +115,7 @@ export class UsersService {
       !user.resetPasswordExpires ||
       new Date() > user.resetPasswordExpires
     ) {
-      throw new BadRequestException('invalidOrExpiredToken');
+      throw new BadRequestException(ERROR_KEYS.INVALID_OR_EXPIRED_TOKEN);
     }
 
     user.password = await bcrypt.hash(newPassword, 10);
@@ -123,7 +123,7 @@ export class UsersService {
     user.resetPasswordExpires = null;
     await this.usersRepo.save(user);
 
-    return { message: 'Password has been successfully reset' };
+    return { message: MESSAGE_KEYS.PASSWORD_UPDATED };
   }
 
   async findAll() {
@@ -171,7 +171,7 @@ export class UsersService {
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.usersRepo.findOneBy({ id });
 
-    if (!user) throw new NotFoundException('userNotFound');
+    if (!user) throw new NotFoundException(ERROR_KEYS.USER_NOT_FOUND);
 
     Object.assign(user, updateUserDto);
 
@@ -181,7 +181,7 @@ export class UsersService {
   async remove(id: string) {
     const user = await this.usersRepo.findOneBy({ id });
 
-    if (!user) throw new NotFoundException('userNotFound');
+    if (!user) throw new NotFoundException(ERROR_KEYS.USER_NOT_FOUND);
 
     return await this.profilesService.remove(user.email);
   }

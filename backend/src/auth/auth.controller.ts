@@ -41,7 +41,7 @@ export class AuthController {
 
   @Get('facebook/callback')
   @UseGuards(AuthGuard('facebook'))
-  async facebookLoginCallback(@Req() req, @Res() res): Promise<any> {
+  async facebookLoginCallback(@Req() req, @Res() res) {
     const user = req.user;
 
     if (!user) {

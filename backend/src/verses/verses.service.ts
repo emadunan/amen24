@@ -23,7 +23,8 @@ export class VersesService {
     @InjectRepository(VerseTranslation)
     private verseTranslationsRepo: Repository<VerseTranslation>,
     private chaptersService: ChaptersService,
-  ) {}
+  ) { }
+  // TODO: Create constants and key: value pairs to handle errors and messages
 
   async findChapter(bookKey: BookKey, chapterNum: number, lang: Lang) {
     return await this.versesRepo.find({
@@ -151,7 +152,7 @@ export class VersesService {
 
       if (result) {
         const bookKeySegment = result.at(1)?.toUpperCase();
-        if (!bookKeySegment) throw new Error('Failed to extract book key');
+        if (!bookKeySegment) throw new BadRequestException('Failed to extract book key');
 
         const bookKey = bookKeyMap[bookKeySegment];
         const chapterNum = +(result.at(2) as string);
@@ -159,7 +160,7 @@ export class VersesService {
 
         // Retrieve or create the chapter
         const chapter = await this.chaptersService.findOne(bookKey, chapterNum);
-        if (!chapter) throw new Error('Error: Chapter has not been found!');
+        if (!chapter) throw new BadRequestException('Chapter has not been found!');
 
         await this.versesRepo.insert({ num: verseNum, chapter });
       }
@@ -214,7 +215,7 @@ export class VersesService {
 
         if (result) {
           const bookKeySegment = result.at(1)?.toUpperCase();
-          if (!bookKeySegment) throw new Error('Failed to extract book key');
+          if (!bookKeySegment) throw new BadRequestException('Failed to extract book key');
 
           const bookKey = bookKeyMap[bookKeySegment];
           const chapterNum = +(result.at(2) as string);
@@ -233,7 +234,7 @@ export class VersesService {
             num: verseNum,
             chapter: { num: chapterNum, book: { bookKey } },
           });
-          if (!verse) throw new Error('Error: Verse has not been found');
+          if (!verse) throw new BadRequestException('Verse has not been found');
 
           await this.verseTranslationsRepo.insert({
             text,

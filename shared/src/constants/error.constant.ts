@@ -18,4 +18,7 @@ export const ERROR_KEYS = {
   FAILED_TO_CHANGE_LANGUAGE: "failedToChangeLanguage",
   HIGHLIGHT_VERSE: "highlightVerse",
   HIGHLIGHT_SINGLE_VERSE_ONLY: "highlightSingleVerseOnly",
+  NO_OLD_PASSWORD_FOUND: "noOldPasswordFound",
+  BOOKMARK_NOT_FOUND: "bookmarkNotFound",
+  BOOKMARK_EXCEED_LIMIT: "bookmarkExceedLimit"
 } as const;

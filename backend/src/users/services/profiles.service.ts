@@ -5,12 +5,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateProfileDto } from '../dto/create-profile.dto';
-import { UpdateProfileDto } from '../dto/update-profile.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Profile } from '../entities/profile.entity';
 import { UsersService } from './users.service';
-import { AuthProvider, Lang, ThemeMode } from '@amen24/shared';
+import { AuthProvider, ERROR_KEYS, Lang, ThemeMode } from '@amen24/shared';
 import { User } from '../entities/user.entity';
 
 @Injectable()
@@ -35,14 +34,9 @@ export class ProfilesService {
     return await this.profilesRepo.findOneBy({ email });
   }
 
-  update(id: number, updateProfileDto: UpdateProfileDto) {
-    return `This action updates a #${id} user`;
-  }
-
   async remove(email: string) {
     const profile = await this.profilesRepo.findOneBy({ email });
-
-    if (!profile) throw new NotFoundException('profileNotFound');
+    if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
 
     return await this.profilesRepo.remove(profile);
   }
@@ -53,10 +47,7 @@ export class ProfilesService {
 
   async toggleTheme(email: string, provider: AuthProvider): Promise<User> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
-
-    if (!profile) {
-      throw new Error('profileNotFound');
-    }
+    if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
 
     profile.themeMode =
       profile.themeMode === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK;
@@ -67,7 +58,7 @@ export class ProfilesService {
       provider,
     );
 
-    if (!user) throw new NotFoundException('userNotFound');
+    if (!user) throw new NotFoundException(ERROR_KEYS.USER_NOT_FOUND);
 
     return user;
   }
@@ -78,10 +69,7 @@ export class ProfilesService {
     uiLang: Lang,
   ): Promise<User> {
     const profile = await this.profilesRepo.findOne({ where: { email } });
-
-    if (!profile) {
-      throw new Error('profileNotFound');
-    }
+    if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
 
     profile.uiLang = uiLang;
     await this.profilesRepo.save(profile);
@@ -91,7 +79,7 @@ export class ProfilesService {
       provider,
     );
 
-    if (!user) throw new NotFoundException('userNotFound');
+    if (!user) throw new NotFoundException(ERROR_KEYS.USER_NOT_FOUND);
 
     return user;
   }

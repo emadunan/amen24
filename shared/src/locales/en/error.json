@@ -15,7 +15,10 @@
   "unauthorizedAccess": "You are not authorized to access this resource. Please log in with the correct credentials.",
   "highlightVerse": "You must highlight verse to update your last reading bookmark.",
   "highlightSingleVerseOnly": "You can only update a bookmark with a single verse. Please highlight only one verse before updating your bookmark.",
-  "passwordTooShort": "New password must be at least 6 characters long.",
+  "passwordTooShort": "New password must be at least 4 characters long.",
   "invalidOrExpiredToken": "The password reset link is invalid or has expired. Please request a new one.",
-  "sessionExpired": "Session expired, please log in again"
+  "sessionExpired": "Session expired, please log in again",
+  "noOldPasswordFound": "No old password has been found, contact system admin to resolve your login via support@amen24.org",
+  "bookmarkNotFound": "No bookmark data found. Please start reading to create your first bookmark.",
+  "bookmarkExceedLimit": "You have reached the maximum number of bookmarks allowed."
 }

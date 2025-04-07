@@ -8,6 +8,7 @@ import { Bookmark } from '../entities/bookmark.entity';
 import { In, Repository } from 'typeorm';
 import { CreateBookmarkDto } from '../dto/create-bookmark.dto';
 import { UpdateBookmarkDto } from '../dto/update-bookmark.dto';
+import { ERROR_KEYS } from '@amen24/shared';
 
 @Injectable()
 export class BookmarksService {
@@ -49,7 +50,7 @@ export class BookmarksService {
     });
 
     if (bookmarkCount >= 1)
-      throw new BadRequestException('bookmarkExceedLimit');
+      throw new BadRequestException(ERROR_KEYS.BOOKMARK_EXCEED_LIMIT);
 
     const bookmark = this.bookmarksRepo.create({
       title,
@@ -63,7 +64,7 @@ export class BookmarksService {
   async update(id: number, bookmarkDto: UpdateBookmarkDto) {
     const bookmark = await this.bookmarksRepo.findOneBy({ id });
 
-    if (!bookmark) throw new NotFoundException('bookmarkNotFound');
+    if (!bookmark) throw new NotFoundException(ERROR_KEYS.BOOKMARK_NOT_FOUND);
 
     Object.assign(bookmark, { verse: { id: bookmarkDto.verseId } });
 
@@ -81,7 +82,7 @@ export class BookmarksService {
       profile: { email: profileEmail },
     });
 
-    if (!bookmark) throw new NotFoundException('bookmarkNotFound');
+    if (!bookmark) throw new NotFoundException(ERROR_KEYS.BOOKMARK_NOT_FOUND);
 
     await this.bookmarksRepo.delete(id);
   }

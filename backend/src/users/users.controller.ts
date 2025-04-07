@@ -26,6 +26,7 @@ import { Response } from 'express';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
 import { BookmarksService } from './services/bookmarks.service';
+import { ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
 
 @Controller('users')
 export class UsersController {
@@ -34,7 +35,7 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
-  ) {}
+  ) { }
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
@@ -48,7 +49,7 @@ export class UsersController {
   async login(@Req() req, @Res() res: Response) {
     // Set token produced based on user to the http response
     this.authService.loadAccessToken(req.user, res);
-    res.json({ message: 'Logged in sucessfully' });
+    res.json({ message: MESSAGE_KEYS.LOGGED_IN_SUCCESSFULLY });
   }
 
   @Post('logout')
@@ -56,7 +57,7 @@ export class UsersController {
   async logout(@Res() res: Response) {
     this.authService.clearAccessToken(res);
 
-    return res.json({ message: 'Logged out successfully' });
+    return res.json({ message: MESSAGE_KEYS.LOGGED_OUT_SUCCESSFULLY });
   }
 
   @UseGuards(JwtAuthGuard)
@@ -75,7 +76,7 @@ export class UsersController {
     );
 
     this.authService.clearAccessToken(res);
-    res.json({ message: 'passwordUpdated' });
+    res.json({ message: MESSAGE_KEYS.PASSWORD_UPDATED });
   }
 
   @Post('password-request')
@@ -98,7 +99,7 @@ export class UsersController {
     const user = await this.profilesService.toggleTheme(u.email, u.provider);
 
     this.authService.loadAccessToken(user, res);
-    res.json({ message: 'User profile has been successfully updated' });
+    res.json({ message: MESSAGE_KEYS.USER_PROFILE_UPDATED });
   }
 
   @UseGuards(JwtAuthGuard)
@@ -117,7 +118,7 @@ export class UsersController {
     );
 
     this.authService.loadAccessToken(user, res);
-    res.json({ message: 'User profile has been successfully updated' });
+    res.json({ message: MESSAGE_KEYS.USER_PROFILE_UPDATED });
   }
 
   @Post()
@@ -126,11 +127,11 @@ export class UsersController {
     try {
       const user = await this.usersService.create(createUserDto);
 
-      if (user) return { message: 'userCreated' };
+      if (user) return { message: MESSAGE_KEYS.USER_CREATED };
 
-      return { message: 'userCreateFailed' };
+      return { message: ERROR_KEYS.USER_NOT_CREATED };
     } catch (error) {
-      throw new NotImplementedException('userCreateFailed');
+      throw new NotImplementedException(ERROR_KEYS.USER_NOT_CREATED);
     }
   }
 
@@ -154,7 +155,7 @@ export class UsersController {
     const { id, profileEmail, verseId } = body;
 
     if (user.email !== profileEmail)
-      throw new UnauthorizedException('unauthorizedAccess');
+      throw new UnauthorizedException(ERROR_KEYS.UNAUTHORIZED_ACCESS);
 
     if (!verseId) throw new NotFoundException();
 
