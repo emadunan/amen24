@@ -1,5 +1,5 @@
 import { AuthProvider } from "../@types";
-import { Profile } from "./Profile";
+import { Profile } from "./Profile.interface";
 
 export interface User {
   id: string;

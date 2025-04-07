@@ -12,10 +12,7 @@ interface Props {
   verseId: number;
 }
 
-const VerseHighlight: FC<Props> = ({
-  children,
-  verseId
-}) => {
+const VerseHighlight: FC<Props> = ({ children, verseId }) => {
   const { highlighted, toggleHighlight } = useHighlightContext();
   const searchParams = useSearchParams();
 

@@ -8,13 +8,16 @@ import BackButton from "../ui/BackButton";
 import SubmitButton from "../ui/SubmitButton";
 import Spinner from "../ui/Spinner";
 import { useResetPasswordMutation } from "@/store/userApi";
-import { handleApiError } from "@/utils/handleApiError";
 import { useRouter } from "next/navigation";
-import { showToast } from "@/utils/toast";
 import { MdOutlineLockReset } from "react-icons/md";
+import { ERROR_KEYS } from "@amen24/shared";
+import { useShowError } from "@/hooks/useShowError";
+import { useShowMessage } from "@/hooks/useShowMessage";
 
 const PasswordResetForm = () => {
-  const { t } = useTranslation(["error", "message"]);
+  const { showError, showApiError } = useShowError();
+  const { showMessage } = useShowMessage();
+  const { t } = useTranslation();
   const router = useRouter();
 
   const [oldPassword, setOldPassword] = useState("");
@@ -29,7 +32,7 @@ const PasswordResetForm = () => {
     setLocalLoading(true);
 
     if (newPassword !== confirmPassword) {
-      showToast(t("error.passwordMismatch"), "error");
+      showError(ERROR_KEYS.PASSWORD_MISMATCH);
       setLocalLoading(false);
       return;
     }
@@ -40,9 +43,9 @@ const PasswordResetForm = () => {
         newPassword,
       }).unwrap();
       router.replace("/login");
-      showToast(t(`message:${message}`), "success");
+      showMessage(message);
     } catch (err) {
-      handleApiError(err, t);
+      showApiError(err);
     } finally {
       setLocalLoading(false);
     }

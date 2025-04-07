@@ -5,7 +5,7 @@ interface ApiError {
   data?: { message?: string };
 }
 
-export function handleApiError(error: unknown, t: TFunction) {  
+export function handleApiError(error: unknown, t: TFunction) {
   if (typeof error === "object" && error !== null && "data" in error) {
     const errorData = (error as ApiError).data;
 

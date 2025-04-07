@@ -1,5 +1,5 @@
-import { Favorite } from "./Favorite";
-import { Verse } from "./Verse";
+import { Favorite } from "./Favorite.interface";
+import { Verse } from "./Verse.interface";
 
 export interface VerseGroup {
   id: number;

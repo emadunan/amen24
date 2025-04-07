@@ -73,8 +73,7 @@ const ChapterContent: FC<Props> = ({
 
     // Get formatted verse numbers
     const firstVerseNum = highlightedVerses[0]?.num;
-    const lastVerseNum =
-      highlightedVerses[highlightedVerses.length - 1]?.num;
+    const lastVerseNum = highlightedVerses[highlightedVerses.length - 1]?.num;
     const formattedFirstVerseNum = formatNumber(
       firstVerseNum,
       i18n.language as Lang,

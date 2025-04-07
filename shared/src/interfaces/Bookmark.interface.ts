@@ -1,5 +1,5 @@
-import { Profile } from "./Profile";
-import { Verse } from "./Verse";
+import { Profile } from "./Profile.interface";
+import { Verse } from "./Verse.interface";
 
 export interface Bookmark {
   id: number;

@@ -4,13 +4,7 @@ import styles from "./BibleSearch.module.css";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
 import { FaCheckSquare, FaRegSquare, FaSync } from "react-icons/fa";
-import {
-  BookKey,
-  BookMap,
-  books,
-  formatNumber,
-  Lang,
-} from "@amen24/shared";
+import { BookKey, BookMap, books, formatNumber, Lang } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import VerseResult from "./VerseResult";
 import Spinner from "../ui/Spinner";
@@ -247,6 +241,6 @@ const BibleSearch = () => {
       </div>
     </div>
   );
-}
+};
 
 export default BibleSearch;

@@ -1,5 +1,5 @@
 import { Lang } from "../@types";
-import { Verse } from "./Verse";
+import { Verse } from "./Verse.interface";
 
 export interface VerseTranslation {
   id: number;

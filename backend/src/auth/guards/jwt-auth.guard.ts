@@ -1,3 +1,4 @@
+import { ERROR_KEYS } from '@amen24/shared';
 import {
   ExecutionContext,
   Injectable,
@@ -29,7 +30,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         path: '/',
       });
 
-      throw new UnauthorizedException('Session expired, please log in again');
+      throw new UnauthorizedException(ERROR_KEYS.SESSION_EXPIRED);
     }
 
     if (err || !user) {

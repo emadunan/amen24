@@ -1,5 +1,5 @@
 import { DateCalendar, Lang, ThemeMode, UserCategory } from "../@types";
-import { User } from "./User";
+import { User } from "./User.interface";
 
 export interface Profile {
   email: string;

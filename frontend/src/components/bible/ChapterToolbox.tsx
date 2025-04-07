@@ -69,7 +69,7 @@ const ChapterToolbox = () => {
 
       if (!bookKey || !chapterNum || !verseNum) {
         showToast(t("error:unknownError"), "error");
-        return
+        return;
       }
 
       showToast(
@@ -117,8 +117,11 @@ const ChapterToolbox = () => {
               {bookmark && (
                 <small className={styles.bookmarkRef}>
                   {t(bookmark.verse.chapter.book.bookKey)} (
-                  {formatNumber(bookmark.verse.chapter.num, i18n.language as Lang)} :{" "}
-                  {formatNumber(bookmark.verse.num, i18n.language as Lang)})
+                  {formatNumber(
+                    bookmark.verse.chapter.num,
+                    i18n.language as Lang,
+                  )}{" "}
+                  : {formatNumber(bookmark.verse.num, i18n.language as Lang)})
                 </small>
               )}
             </div>
