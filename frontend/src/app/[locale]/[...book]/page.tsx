@@ -1,4 +1,4 @@
-import { BookKey, formatNumber, Lang, Verse } from "@amen24/shared";
+import { BookKey, ERROR_KEYS, formatNumber, Lang, MESSAGE_KEYS, Verse } from "@amen24/shared";
 import React, { FC, Fragment } from "react";
 import styles from "./page.module.css";
 import initTranslations from "@/app/i18n";
@@ -20,12 +20,17 @@ const BookPage: FC<Props> = async ({ params }) => {
 
   const [bookKey, chapterNum, bookLen] = book;
 
-  const response = await fetch(
-    `${apiUrl}/verses/${bookKey}/${chapterNum}/${locale}`,
-  );
+  let verses: Verse[] = [];
+  try {
+    const response = await fetch(
+      `${apiUrl}/verses/${bookKey}/${chapterNum}/${locale}`,
+    );
 
-  if (!response.ok) throw new Error("failedToFetch");
-  const verses: Verse[] = await response.json();
+    if (!response.ok) throw new Error(ERROR_KEYS.FAILED_TO_FETCH);
+    verses = await response.json();
+  } catch (error) {
+    console.error(error);
+  }
 
   const formattedchapterNum = formatNumber(+chapterNum, locale as Lang);
 
