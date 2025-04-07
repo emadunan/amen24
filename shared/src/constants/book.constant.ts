@@ -1,4 +1,4 @@
-import { BookKey } from "../@types";
+import { BookKey } from "../enums";
 
 export const bookKeyMap = {
   GEN: "01_GEN",

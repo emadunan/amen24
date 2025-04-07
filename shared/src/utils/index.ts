@@ -1,4 +1,4 @@
-import { Lang } from "../@types";
+import { Lang } from "../enums";
 
 export function convertToSuperscript(num: number): string {
   const superscripts: Record<string, string> = {

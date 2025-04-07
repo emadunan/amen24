@@ -1,4 +1,4 @@
-import { BookKey } from "../@types";
+import { BookKey } from "../enums";
 import { Book } from "./Book.interface";
 import { Verse } from "./Verse.interface";
 

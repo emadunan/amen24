@@ -1,4 +1,4 @@
-import { BookKey, Lang } from "../@types";
+import { BookKey, Lang } from "../enums";
 
 export interface VerseResult {
   id: number;

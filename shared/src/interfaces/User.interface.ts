@@ -1,4 +1,4 @@
-import { AuthProvider } from "../@types";
+import { AuthProvider } from "../enums";
 import { Profile } from "./Profile.interface";
 
 export interface User {

@@ -1,4 +1,4 @@
-import { DateCalendar, Lang, ThemeMode, UserCategory } from "../@types";
+import { DateCalendar, Lang, ThemeMode, UserCategory } from "../enums";
 import { User } from "./User.interface";
 
 export interface Profile {

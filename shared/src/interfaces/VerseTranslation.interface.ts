@@ -1,4 +1,4 @@
-import { Lang } from "../@types";
+import { Lang } from "../enums";
 import { Verse } from "./Verse.interface";
 
 export interface VerseTranslation {

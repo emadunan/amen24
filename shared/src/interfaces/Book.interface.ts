@@ -1,4 +1,4 @@
-import { BookKey } from "../@types";
+import { BookKey } from "../enums";
 import { Chapter } from "./Chapter.interface";
 
 export interface Book {

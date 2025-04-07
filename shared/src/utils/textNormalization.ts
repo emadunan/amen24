@@ -1,4 +1,4 @@
-import { Lang } from "../@types";
+import { Lang } from "../enums";
 
 const DIACRITICS_REGEX = /[\u064B-\u065F\u0670]/g; // Arabic diacritics range
 

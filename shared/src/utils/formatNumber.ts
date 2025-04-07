@@ -1,4 +1,4 @@
-import { Lang } from "../@types";
+import { Lang } from "../enums";
 
 const LOCALE_MAP: Partial<Record<Lang, string>> = {
   [Lang.ENGLISH]: "en-US",
