@@ -26,6 +26,19 @@ const LanguageSelector = () => {
   const { isTablet } = useBreakpoint();
 
   useEffect(() => {
+    if (!user?.profile) return;
+
+    // If no lang is set, update it with current i18n.language
+    if (!user.profile.uiLang) {
+      changeLang(i18n.language)
+        .unwrap()
+        .catch((err) => {
+          console.error(err);
+          showToast(t("error:failedToChangeLanguage"), "error");
+        });
+      return;
+    }
+    
     if (
       user?.profile?.uiLang &&
       user?.profile?.uiLang !== i18n.language &&
@@ -52,7 +65,6 @@ const LanguageSelector = () => {
     // Only update backend if the user is logged in
     if (user?.id && shouldUpdateBackend) {
       try {
-        // http://localhost:5000/api/users/me/lang NOTFOUND
         await changeLang(newLocale).unwrap();
       } catch (error) {
         console.error(error);

@@ -9,7 +9,7 @@ const FacebookLoginButton = () => {
   const { t, i18n } = useTranslation();
 
   const handleFacebookLogin = () => {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/facebook?lang=${i18n.language}`;
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/facebook`;
   };
 
   return (

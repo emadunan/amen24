@@ -6,5 +6,5 @@ export class CreateProfileDto {
   email: string;
 
   @IsEnum(Lang)
-  uiLang: Lang;
+  uiLang: Lang | null;
 }

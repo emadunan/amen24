@@ -80,7 +80,7 @@ export class AuthService {
       displayName,
       providerId: id,
       provider: provider as AuthProvider,
-      uiLang: lang || Lang.ENGLISH,
+      uiLang: lang || null,
       bookmark: {
         last_read: 'Last Read',
         old_testament: '',

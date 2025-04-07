@@ -28,8 +28,8 @@ export class Profile {
   @UpdateDateColumn({ type: 'timestamptz', nullable: true })
   lastLogin: Date;
 
-  @Column({ type: 'text' })
-  uiLang: Lang;
+  @Column({ type: 'text', nullable: true })
+  uiLang: Lang | null;
 
   @Column({ type: 'smallint', default: 1 })
   fontSize: number;

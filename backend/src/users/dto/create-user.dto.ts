@@ -29,7 +29,7 @@ export class CreateUserDto {
   displayName: string;
 
   @IsString()
-  uiLang: Lang;
+  uiLang: Lang | null;
 
   @IsString()
   @IsOptional()
