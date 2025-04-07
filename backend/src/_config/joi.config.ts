@@ -4,12 +4,22 @@ export default Joi.object({
   NODE_ENV: Joi.string()
     .valid('development', 'production', 'test')
     .default('development'),
+  HOST: Joi.string(),
   PORT: Joi.number().port().default(5000),
   ROUNDS: Joi.number(),
   JWT_SECRET: Joi.string(),
+  FRONTEND_URL: Joi.string().uri(),
+  FRONTEND_ORIGINS: Joi.string(),
+  SMTP_PORT: Joi.number().port().default(587),
   DB_HOST: Joi.string(),
-  DB_PORT: Joi.number(),
+  DB_PORT: Joi.number().port().default(5432),
   DB_NAME: Joi.string(),
   DB_USERNAME: Joi.string(),
   DB_PASSWORD: Joi.string(),
+  GOOGLE_CLIENT_ID: Joi.string(),
+  GOOGLE_CLIENT_SECRET: Joi.string(),
+  GOOGLE_CALLBACK_URL: Joi.string().uri(),
+  FACEBOOK_APP_ID: Joi.string(),
+  FACEBOOK_APP_SECRET: Joi.string(),
+  FACEBOOK_CALLBACK_URL: Joi.string().uri(),
 });
