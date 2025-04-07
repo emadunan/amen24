@@ -2,6 +2,7 @@ import { Chapter } from '../../chapters/entities/chapter.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -24,6 +25,7 @@ export class Verse {
     nullable: false,
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: "chapterId" })
   chapter: Chapter;
 
   @ManyToMany(() => VerseGroup, (verseGroup) => verseGroup.verses)

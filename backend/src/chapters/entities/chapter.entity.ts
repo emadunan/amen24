@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Unique,
+  JoinColumn,
 } from 'typeorm';
 
 @Unique(['book', 'num'])
@@ -22,6 +23,7 @@ export class Chapter {
     onDelete: 'CASCADE',
     nullable: false,
   })
+  @JoinColumn({ name: 'bookId' })
   book: Book;
 
   @OneToMany(() => Verse, (verse) => verse.chapter)

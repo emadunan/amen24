@@ -21,6 +21,7 @@ export class Favorite {
   @JoinColumn({ name: 'profileEmail', referencedColumnName: 'email' })
   profile: Profile;
 
-  @ManyToOne(() => VerseGroup, (verseGroup) => verseGroup.favorites)
+  @ManyToOne(() => VerseGroup, (verseGroup) => verseGroup.favorites, { onDelete: "CASCADE", nullable: false })
+  @JoinColumn({ name: 'verseGroupId' })
   verseGroup: VerseGroup;
 }

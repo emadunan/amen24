@@ -3,6 +3,7 @@ import {
   Column,
   Entity,
   Index,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -30,5 +31,6 @@ export class VerseTranslation {
     onDelete: 'CASCADE',
     nullable: false,
   })
+  @JoinColumn({ name: 'verseId' })
   verse: Verse;
 }

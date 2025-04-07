@@ -27,6 +27,7 @@ export class Bookmark {
   profile: Profile;
 
   @ManyToOne(() => Verse, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'verseId' })
   verse: Verse;
 
   @UpdateDateColumn()
