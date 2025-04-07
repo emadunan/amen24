@@ -13,7 +13,7 @@ import { UpdateBookmarkDto } from '../dto/update-bookmark.dto';
 export class BookmarksService {
   constructor(
     @InjectRepository(Bookmark) private bookmarksRepo: Repository<Bookmark>,
-  ) { }
+  ) {}
 
   async getAll(profileEmail: string) {
     return await this.bookmarksRepo.findBy({
@@ -71,7 +71,7 @@ export class BookmarksService {
 
     return await this.bookmarksRepo.findOne({
       where: { id },
-      relations: ['verse', 'verse.chapter', 'verse.chapter.book']
+      relations: ['verse', 'verse.chapter', 'verse.chapter.book'],
     });
   }
 

@@ -26,6 +26,7 @@
     "displayName": "Display Name",
     "login": "Login",
     "googleLogin": "Sign in with Google",
+    "facebookLogin": "Sign in with Facebook",
     "emailLogin": "Sign in with E-mail",
     "signup": "Sign-up",
     "signup-invite": "Don't have an account? Sign up now and get started!",

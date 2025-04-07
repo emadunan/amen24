@@ -23,7 +23,7 @@ export class UsersService {
     private readonly configService: ConfigService,
     private profilesService: ProfilesService,
     private bookmarksService: BookmarksService,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const { email, password, provider, uiLang, bookmark } = createUserDto;
@@ -55,7 +55,7 @@ export class UsersService {
       const defaultBookmarks = [
         {
           title: bookmark.last_read,
-          verseId: 1
+          verseId: 1,
         },
       ];
 
@@ -130,12 +130,9 @@ export class UsersService {
     return await this.usersRepo.find();
   }
 
-  async findOneWithPassword(
-    email: string,
-    provider: AuthProvider = AuthProvider.LOCAL,
-  ) {
+  async findOneWithPassword(email: string) {
     return await this.usersRepo.findOne({
-      where: { email, provider },
+      where: { email, provider: AuthProvider.LOCAL },
       relations: ['profile'],
     });
   }

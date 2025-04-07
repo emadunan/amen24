@@ -8,7 +8,10 @@ import { VerseTranslation } from './entities/verse-translation.entity';
 import { VerseGroup } from './entities/verse-group.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Verse, VerseGroup, VerseTranslation]), ChaptersModule],
+  imports: [
+    TypeOrmModule.forFeature([Verse, VerseGroup, VerseTranslation]),
+    ChaptersModule,
+  ],
   controllers: [VersesController],
   providers: [VersesService],
   exports: [VersesService],

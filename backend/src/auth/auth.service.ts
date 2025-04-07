@@ -10,7 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from '../users/entities/user.entity';
 import { randomBytes } from 'crypto';
 import { MailerService } from '@nestjs-modules/mailer';
-import { AuthProvider, Lang } from '@amen24/shared';
+import { AuthProvider, ERROR_KEYS, Lang } from '@amen24/shared';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
@@ -23,23 +23,21 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private mailerService: MailerService,
-  ) {}
+  ) { }
 
   async validateLocalUser(
     email: string,
     pass: string,
   ): Promise<Partial<Omit<User, 'password'>>> {
     const user = await this.usersService.findOneWithPassword(email);
-    if (!user) throw new UnauthorizedException('emailNotFound');
 
-    if (user.lockUntil && user.lockUntil > new Date()) {
-      throw new UnauthorizedException('accountLocked');
-    }
+    if (!user) throw new UnauthorizedException(ERROR_KEYS.EMAIL_NOT_FOUND);
+    if (user.lockUntil && user.lockUntil > new Date())
+      throw new UnauthorizedException(ERROR_KEYS.ACCOUNT_LOCKED);
 
     const match = await bcrypt.compare(pass, user.password as string);
 
     if (!match) {
-      if (!user) throw new UnauthorizedException('emailNotFound');
       user.failedAttempts += 1;
 
       if (user.failedAttempts >= 11) {
@@ -52,7 +50,7 @@ export class AuthService {
         setTimeout(resolve, user.failedAttempts * 1000),
       );
 
-      throw new UnauthorizedException('invalidPassword');
+      throw new UnauthorizedException(ERROR_KEYS.PASSWORD_INVALID);
     }
 
     user.failedAttempts = 0;
@@ -65,14 +63,14 @@ export class AuthService {
     return result;
   }
 
-  async validateOAuthUser(oAuthProfile: Profile) {
-    const { id, emails, displayName, provider } = oAuthProfile;
+  async validateOAuthUser(oauthProfile: Profile, lang?: Lang) {
+    const { id, emails, displayName, provider } = oauthProfile;
     const email = emails?.at(0)?.value;
     if (!email) throw new BadRequestException();
 
     const user = await this.usersService.findOneByEmailProvider(
       email,
-      provider as AuthProvider,
+      <AuthProvider>provider,
     );
 
     if (user) return user;
@@ -82,7 +80,7 @@ export class AuthService {
       displayName,
       providerId: id,
       provider: provider as AuthProvider,
-      uiLang: Lang.ENGLISH,
+      uiLang: lang || Lang.ENGLISH,
       bookmark: {
         last_read: 'Last Read',
         old_testament: '',
@@ -91,14 +89,6 @@ export class AuthService {
     };
 
     return this.usersService.create(createUserDto);
-  }
-
-  async generateAccessToken(user: Partial<User>) {
-    const { password, ...userProfile } = user;
-
-    return {
-      access_token: this.jwtService.sign(userProfile),
-    };
   }
 
   loadAccessToken(user: User, response: Response): void {

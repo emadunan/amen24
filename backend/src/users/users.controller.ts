@@ -34,7 +34,7 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
-  ) { }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
@@ -68,7 +68,11 @@ export class UsersController {
   ) {
     const { oldPassword, newPassword } = body;
 
-    await this.usersService.resetPassword(reqUser.email, oldPassword, newPassword);
+    await this.usersService.resetPassword(
+      reqUser.email,
+      oldPassword,
+      newPassword,
+    );
 
     this.authService.clearAccessToken(res);
     res.json({ message: 'passwordUpdated' });
@@ -140,9 +144,13 @@ export class UsersController {
   @Patch('bookmark')
   async updateBookmark(
     @UserParam() user: User,
-    @Body() body: {
-      id: number, profileEmail: string, verseId: number
-    }) {
+    @Body()
+    body: {
+      id: number;
+      profileEmail: string;
+      verseId: number;
+    },
+  ) {
     const { id, profileEmail, verseId } = body;
 
     if (user.email !== profileEmail)

@@ -23,7 +23,7 @@ export class VersesService {
     @InjectRepository(VerseTranslation)
     private verseTranslationsRepo: Repository<VerseTranslation>,
     private chaptersService: ChaptersService,
-  ) { }
+  ) {}
 
   async findChapter(bookKey: BookKey, chapterNum: number, lang: Lang) {
     return await this.versesRepo.find({
@@ -46,7 +46,10 @@ export class VersesService {
   }
 
   async getVerse(bookKey: BookKey, chapterNum: number, verseNum: number) {
-    return this.versesRepo.findOneBy({ num: verseNum, chapter: { num: chapterNum, book: { bookKey } } });
+    return this.versesRepo.findOneBy({
+      num: verseNum,
+      chapter: { num: chapterNum, book: { bookKey } },
+    });
   }
 
   async findOne(
@@ -226,10 +229,19 @@ export class VersesService {
             textNormalized = normalizeArText(text);
           }
 
-          const verse = await this.versesRepo.findOneBy({ num: verseNum, chapter: { num: chapterNum, book: { bookKey } } });
-          if (!verse) throw new Error("Error: Verse has not been found");
+          const verse = await this.versesRepo.findOneBy({
+            num: verseNum,
+            chapter: { num: chapterNum, book: { bookKey } },
+          });
+          if (!verse) throw new Error('Error: Verse has not been found');
 
-          await this.verseTranslationsRepo.insert({ text, textDiacritized, textNormalized, lang, verse: verse });
+          await this.verseTranslationsRepo.insert({
+            text,
+            textDiacritized,
+            textNormalized,
+            lang,
+            verse: verse,
+          });
 
           processedCount++;
           progressBar.update(processedCount);
