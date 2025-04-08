@@ -124,15 +124,7 @@ export class UsersController {
   @Post()
   @HttpCode(201)
   async create(@Body() createUserDto: CreateUserDto) {
-    try {
-      const user = await this.usersService.create(createUserDto);
-
-      if (user) return { message: MESSAGE_KEYS.USER_CREATED };
-
-      return { message: ERROR_KEYS.USER_NOT_CREATED };
-    } catch (error) {
-      throw new NotImplementedException(ERROR_KEYS.USER_NOT_CREATED);
-    }
+    return await this.usersService.create(createUserDto);
   }
 
   @UseGuards(JwtAuthGuard)

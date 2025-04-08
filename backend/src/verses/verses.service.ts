@@ -12,6 +12,7 @@ import {
   normalizeArText,
   removeArDiacritics,
   detectLanguage,
+  replaceWaslaAlef,
 } from '@amen24/shared';
 import { ChaptersService } from '../chapters/chapters.service';
 import { VerseTranslation } from './entities/verse-translation.entity';
@@ -226,6 +227,7 @@ export class VersesService {
           let textDiacritized = text;
 
           if (lang === Lang.ARABIC) {
+            text = replaceWaslaAlef(text);
             text = removeArDiacritics(text);
             textNormalized = normalizeArText(text);
           }

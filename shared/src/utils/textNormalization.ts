@@ -3,7 +3,11 @@ import { Lang } from "../enums";
 const DIACRITICS_REGEX = /[\u064B-\u065F\u0670]/g; // Arabic diacritics range
 
 export function removeArDiacritics(text: string): string {
-  return text.replace(DIACRITICS_REGEX, ""); // Remove harakat
+  return text.replace(DIACRITICS_REGEX, "");
+}
+
+export function replaceWaslaAlef(text: string): string {
+  return text.replace(/ٱ/g, "ا"); // Replace "ٱ" (Wasla) with "ا" (Alef)
 }
 
 export function normalizeArText(text: string): string {
