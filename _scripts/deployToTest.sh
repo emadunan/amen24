@@ -10,7 +10,7 @@ source ~/.bashrc || source ~/.profile
 export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PATH
 
 # Load test environment variables from .env.test
-export $(grep -v '^#' /home/emad/projects/amen24test/backend/.env.test | xargs)
+export $(grep -v '^#' /home/emad/projects/amen24testbackend/.env.test | xargs)
 
 # Verify required tools
 command -v node >/dev/null 2>&1 || { echo >&2 "Node.js is not installed. Aborting."; exit 1; }
@@ -43,15 +43,15 @@ mkdir -p /home/emad/db_backups
 BACKUP_FILE="/home/emad/db_backups/${DB_NAME}_backup_$(date +%F_%H-%M-%S).sql"
 
 # Perform the backup
-echo "Backing up test database to $BACKUP_FILE..."
-PGPASSWORD=$DB_PASSWORD pg_dump -U "$DB_USER" -h 127.0.0.1 -d "$DB_NAME" > "$BACKUP_FILE"
+echo -e "\n📦 Backing up test database to: \n$BACKUP_FILE\n"
+PGPASSWORD=$DB_PASSWORD pg_dump -U "$DB_USER" -h "$DB_HOST" -d "$DB_NAME" > "$BACKUP_FILE"
 
 echo "Backup complete!"
 
 # Drop and recreate test database
 echo "Resetting test database..."
-PGPASSWORD=$DB_PASSWORD psql -U "$DB_USER" -h 127.0.0.1 -c "DROP DATABASE IF EXISTS $DB_NAME;"
-PGPASSWORD=$DB_PASSWORD psql -U "$DB_USER" -h 127.0.0.1 -c "CREATE DATABASE $DB_NAME OWNER $DB_USER;"
+PGPASSWORD=$DB_PASSWORD psql -U "$DB_USER" -h "$DB_HOST" -c "DROP DATABASE IF EXISTS $DB_NAME;"
+PGPASSWORD=$DB_PASSWORD psql -U "$DB_USER" -h "$DB_HOST" -c "CREATE DATABASE $DB_NAME OWNER $DB_USER;"
 
 npm run migrate:up:test
 npm run seed:test
