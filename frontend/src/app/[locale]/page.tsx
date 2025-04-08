@@ -1,6 +1,6 @@
 import BookCover from "@/components/bible/BookCover";
 import styles from "./page.module.css";
-import { Book, BookKey, BookMap } from "@amen24/shared";
+import { Book, BookMap } from "@amen24/shared";
 import { FC } from "react";
 
 const apiUrl = process.env.API_URL;
