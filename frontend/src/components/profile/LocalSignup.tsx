@@ -10,11 +10,12 @@ import BackButton from "../ui/BackButton";
 import { showToast } from "@/utils/toast";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
-import { handleApiError } from "@/utils/handleApiError";
 import { AuthProvider, Lang } from "@amen24/shared";
+import { useShowError } from "@/hooks/useShowError";
 
 const LocalSignup = () => {
   const { t, i18n } = useTranslation(["error"]);
+  const { showApiError } = useShowError();
   const router = useRouter();
 
   // ✅ Use useState instead of useRef to persist input values
@@ -55,7 +56,7 @@ const LocalSignup = () => {
       showToast(t(`message:${message}`), "success");
       router.replace("/login");
     } catch (err: unknown) {
-      handleApiError(err, t);
+      showApiError(err);
       setLocalLoading(false);
     }
   }

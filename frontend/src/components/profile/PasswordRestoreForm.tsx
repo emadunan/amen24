@@ -2,18 +2,19 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { showToast } from "@/utils/toast";
 import InputItem from "../ui/InputItem";
 import BackButton from "../ui/BackButton";
 import SubmitButton from "../ui/SubmitButton";
 import { useTranslation } from "react-i18next";
 import styles from "./PasswordRestoreForm.module.css";
 import { useRestorePasswordMutation } from "@/store/userApi";
-import { handleApiError } from "@/utils/handleApiError";
 import { MdOutlineLockReset } from "react-icons/md";
+import { useShowError } from "@/hooks/useShowError";
+import { ERROR_KEYS } from "@amen24/shared";
 
 const PasswordRestoreFrom = () => {
-  const { t } = useTranslation(["error"]);
+  const { t } = useTranslation();
+  const { showError, showApiError } = useShowError();
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,7 +30,7 @@ const PasswordRestoreFrom = () => {
     event.preventDefault();
 
     if (!token) {
-      showToast("error:invalidOrExpiredToken", "error");
+      showError(ERROR_KEYS.INVALID_OR_EXPIRED_TOKEN);
       return;
     }
 
@@ -39,7 +40,7 @@ const PasswordRestoreFrom = () => {
 
       router.replace("/login");
     } catch (error: unknown) {
-      handleApiError(error, t);
+      showApiError(error);
     } finally {
       setLocalLoading(false);
     }

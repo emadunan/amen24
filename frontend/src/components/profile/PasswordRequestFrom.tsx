@@ -5,14 +5,15 @@ import React, { useState } from "react";
 import BackButton from "../ui/BackButton";
 import SubmitButton from "../ui/SubmitButton";
 import InputItem from "../ui/InputItem";
-import { handleApiError } from "@/utils/handleApiError";
 import { useTranslation } from "react-i18next";
 import { useRequestPasswordMutation } from "@/store/userApi";
 import { RiMailSendFill } from "react-icons/ri";
 import Spinner from "../ui/Spinner";
+import { useShowError } from "@/hooks/useShowError";
 
 const PasswordRequestFrom = () => {
-  const { t } = useTranslation(["error", "message"]);
+  const { t } = useTranslation(["message"]);
+  const { showApiError } = useShowError();
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -31,7 +32,7 @@ const PasswordRequestFrom = () => {
       console.log(err);
       console.error(err);
 
-      handleApiError(err, t);
+      showApiError(err);
     } finally {
       setLocalLoading(false);
     }

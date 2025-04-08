@@ -18,8 +18,8 @@ import {
   toggleDropdown,
 } from "@/store/searchSlice";
 import { showToast } from "@/utils/toast";
-import { handleApiError } from "@/utils/handleApiError";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
+import { useShowError } from "@/hooks/useShowError";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -46,6 +46,7 @@ const categoryList: Record<string, string[]> = {
 
 const BibleSearch = () => {
   const { t, i18n } = useTranslation(["book", "error"]);
+  const { showApiError } = useShowError();
   const dispatch = useDispatch();
   const { query, selectedBooks, showDropdown, results, isLoading } =
     useSelector((state: RootState) => state.search);
@@ -120,7 +121,7 @@ const BibleSearch = () => {
       dispatch(setResults(Array.isArray(searchResult) ? searchResult : []));
     } catch (error) {
       console.error(error);
-      handleApiError(error, t);
+      showApiError(error);
     } finally {
       dispatch(setIsLoading(false));
     }

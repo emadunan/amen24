@@ -7,14 +7,14 @@ import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
 import { useDraggable } from "@/hooks/useDraggable";
-import { formatNumber, Lang } from "@amen24/shared";
+import { ERROR_KEYS, formatNumber, Lang } from "@amen24/shared";
 import {
   useGetUserLastReadBookmarkQuery,
   useUpdateBookmarkMutation,
 } from "@/store/bookmarkApi";
 import { useGetMeQuery } from "@/store/userApi";
-import { showToast } from "@/utils/toast";
-import { handleApiError } from "@/utils/handleApiError";
+import { useShowError } from "@/hooks/useShowError";
+import { useShowMessage } from "@/hooks/useShowMessage";
 
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
@@ -22,6 +22,8 @@ const ChapterToolbox = () => {
   const { t, i18n } = useTranslation(["book", "error"]);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [updateBookmark] = useUpdateBookmarkMutation();
+  const { showApiError, showError } = useShowError();
+  const { showMessage } = useShowMessage();
   const { position, handleMouseDown, elementRef, handleTouchStart } =
     useDraggable(
       5,
@@ -47,12 +49,12 @@ const ChapterToolbox = () => {
     const lastHighlighted = highlighted.at(-1);
 
     if (!lastHighlighted) {
-      showToast(t("error:highlightVerse"), "error");
+      showError(ERROR_KEYS.HIGHLIGHT_VERSE);
       return;
     }
 
     if (!bookmarkId || !profileEmail) {
-      showToast(t("error:unauthorizedAccess"), "error");
+      showError(ERROR_KEYS.UNAUTHORIZED_ACCESS);
       return;
     }
 
@@ -68,17 +70,17 @@ const ChapterToolbox = () => {
       const verseNum = bookmark.data?.verse.num;
 
       if (!bookKey || !chapterNum || !verseNum) {
-        showToast(t("error:unknownError"), "error");
+        showError(ERROR_KEYS.UNKNOWN_ERROR);
         return;
       }
 
-      showToast(
+      showMessage(
         `(${t(bookKey)} ${formatNumber(chapterNum, i18n.language as Lang)} : ${formatNumber(verseNum, i18n.language as Lang)}) ${t("toolbox.lastReadSaved")}`,
         "success",
       );
     } catch (error) {
       console.error(error);
-      handleApiError(error, t);
+      showApiError(error);
     }
   }
 
