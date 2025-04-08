@@ -10,7 +10,7 @@ import BackButton from "../ui/BackButton";
 import { showToast } from "@/utils/toast";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
-import { AuthProvider, Lang } from "@amen24/shared";
+import { AuthProvider, ERROR_KEYS, Lang } from "@amen24/shared";
 import { useShowError } from "@/hooks/useShowError";
 
 const LocalSignup = () => {
@@ -23,6 +23,7 @@ const LocalSignup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const {showError} = useShowError();
 
   const [localLoading, setLocalLoading] = useState(false);
   const [signup, { isLoading }] = useSignupMutation();
@@ -30,8 +31,13 @@ const LocalSignup = () => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    if (password.length < 4 || confirmPassword.length < 4) {
+      showError(ERROR_KEYS.PASSWORD_TOO_SHORT);
+      return
+    }
+
     if (password !== confirmPassword) {
-      showToast(t("error:passwordMismatch"), "error");
+      showError(ERROR_KEYS.PASSWORD_MISMATCH)
       return;
     }
 
