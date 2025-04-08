@@ -9,6 +9,9 @@ source ~/.bashrc || source ~/.profile
 # Ensure Node.js tools are in the PATH
 export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PATH
 
+# Load test environment variables from .env.test
+export $(grep -v '^#' backend/.env.test | xargs)
+
 # Verify required tools
 command -v node >/dev/null 2>&1 || { echo >&2 "Node.js is not installed. Aborting."; exit 1; }
 command -v npm >/dev/null 2>&1 || { echo >&2 "NPM is not installed. Aborting."; exit 1; }
@@ -22,7 +25,7 @@ pm2 del backend-test frontend-test || echo "No existing PM2 processes found"
 
 # Install shared dependencies
 cd shared
-rm -rf node_modules dist  # Clean old dependencies and builds
+rm -rf node_modules dist
 npm install
 npm run build
 cd ..
@@ -32,7 +35,27 @@ cd backend
 rm -rf node_modules dist
 npm install
 npm run build
-npm run migrate:up:test  # Apply migrations for test database
+
+# Create backup folder if it doesn't exist
+mkdir -p /home/emad/db_backups
+
+# Generate timestamped backup file
+BACKUP_FILE="/home/emad/db_backups/${DB_NAME}_backup_$(date +%F_%H-%M-%S).sql"
+
+# Perform the backup
+echo "Backing up test database to $BACKUP_FILE..."
+PGPASSWORD=$DB_PASSWORD pg_dump -U "$DB_USER" -h "$DB_HOST" -d "$DB_NAME" > "$BACKUP_FILE"
+
+echo "Backup complete!"
+
+# Drop and recreate test database
+echo "Resetting test database..."
+PGPASSWORD=$DB_PASSWORD psql -U "$DB_USER" -h "$DB_HOST" -c "DROP DATABASE IF EXISTS $DB_NAME;"
+PGPASSWORD=$DB_PASSWORD psql -U "$DB_USER" -h "$DB_HOST" -c "CREATE DATABASE $DB_NAME OWNER $DB_USER;"
+
+npm run migrate:up:test
+npm run seed:test
+
 cd ..
 pm2 start ecosystem.config.js --only backend --env test
 
