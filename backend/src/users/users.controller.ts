@@ -12,7 +12,6 @@ import {
   Res,
   UnauthorizedException,
   ParseIntPipe,
-  NotImplementedException,
   NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
