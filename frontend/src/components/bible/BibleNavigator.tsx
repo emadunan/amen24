@@ -27,7 +27,7 @@ const BibleNavigator = () => {
   const { position, handleMouseDown, handleTouchStart, elementRef } =
     useDraggable(5, 5, i18n.language === "ar" ? true : false, 12, headerRef);
 
-  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?\d{2}_[A-Z0-9]+\/\d+\/\d+$/.test(
+  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?[A-Z0-9]+\/\d+\/\d+$/.test(
     pathname,
   );
 

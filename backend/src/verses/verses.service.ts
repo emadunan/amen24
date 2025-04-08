@@ -7,7 +7,6 @@ import { readFileSync } from 'fs';
 import { SingleBar, Presets } from 'cli-progress';
 import {
   BookKey,
-  bookKeyMap,
   Lang,
   normalizeArText,
   removeArDiacritics,
@@ -152,10 +151,9 @@ export class VersesService {
       const result = line.match(/^(\S+)\s(\d+):(\d+)\s(.*)$/);
 
       if (result) {
-        const bookKeySegment = result.at(1)?.toUpperCase();
-        if (!bookKeySegment) throw new BadRequestException('Failed to extract book key');
+        const bookKey = result.at(1)?.toUpperCase() as BookKey;
+        if (!bookKey) throw new BadRequestException('Failed to extract book key');
 
-        const bookKey = bookKeyMap[bookKeySegment];
         const chapterNum = +(result.at(2) as string);
         const verseNum = +(result.at(3) as string);
 
@@ -215,10 +213,9 @@ export class VersesService {
         const result = line.match(/^(\S+)\s(\d+):(\d+)\s(.*)$/);
 
         if (result) {
-          const bookKeySegment = result.at(1)?.toUpperCase();
-          if (!bookKeySegment) throw new BadRequestException('Failed to extract book key');
+          const bookKey = result.at(1)?.toUpperCase() as BookKey;
+          if (!bookKey) throw new BadRequestException('Failed to extract book key');
 
-          const bookKey = bookKeyMap[bookKeySegment];
           const chapterNum = +(result.at(2) as string);
           const verseNum = +(result.at(3) as string);
           let text = result.at(4) as string;

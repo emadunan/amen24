@@ -2,7 +2,7 @@
 GET http://localhost:5000/api/books
 
 ### Get verses of one chapter
-GET http://localhost:5000/api/verses/01_GEN/1/en
+GET http://localhost:5000/api/verses/GEN/1/en
 
 ### Find a verse contains search keywords
 # TO DO
@@ -11,5 +11,5 @@ Content-Type: application/json
 
 {
   "query": "Lord Israel",
-  "selectedBooks": ["01_GEN", "02_EXO"]
+  "selectedBooks": ["GEN", "EXO"]
 }

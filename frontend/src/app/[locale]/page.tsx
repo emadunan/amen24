@@ -1,6 +1,6 @@
 import BookCover from "@/components/bible/BookCover";
 import styles from "./page.module.css";
-import { Book, BookMap } from "@amen24/shared";
+import { Book, BookKey, BookMap } from "@amen24/shared";
 import { FC } from "react";
 
 const apiUrl = process.env.API_URL;
@@ -21,7 +21,8 @@ const HomePage: FC<Props> = async ({ params }) => {
     <div className={styles.bibleIndex}>
       {books.map((b: Book) => (
         <BookCover
-          key={b.bookKey}
+          key={b.id}
+          bookId={b.id}
           bookLen={BookMap[b.bookKey].len}
           bookKey={b.bookKey}
           locale={locale}

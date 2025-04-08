@@ -5,12 +5,13 @@ import initTranslations from "@/app/i18n";
 import Link from "next/link";
 
 interface Props {
+  bookId: number;
   bookKey: string;
   bookLen: number;
   locale: string;
 }
 
-const BookCover: FC<Props> = async ({ bookKey, bookLen, locale }) => {
+const BookCover: FC<Props> = async ({ bookId, bookKey, bookLen, locale }) => {
   const { t } = await initTranslations(locale, ["book"]);
 
   return (
@@ -19,7 +20,7 @@ const BookCover: FC<Props> = async ({ bookKey, bookLen, locale }) => {
         <h2 className={styles.bookTitle}>{t(bookKey, { ns: "book" })}</h2>
         <div className={styles.imgOverlay} />
         <Image
-          src={`/img/book-cover/${bookKey}.jpg`}
+          src={`/img/book-cover/${bookId}_${bookKey}.jpg`}
           alt={`${bookKey}`}
           fill
           style={{ objectFit: "cover" }}
