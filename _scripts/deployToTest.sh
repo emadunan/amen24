@@ -10,7 +10,7 @@ source ~/.bashrc || source ~/.profile
 export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PATH
 
 # Load test environment variables from .env.test
-export $(grep -v '^#' /home/emad/projects/amen24testbackend/.env.test | xargs)
+export $(grep -v '^#' /home/emad/projects/amen24test/backend/.env.test | xargs)
 
 # Verify required tools
 command -v node >/dev/null 2>&1 || { echo >&2 "Node.js is not installed. Aborting."; exit 1; }
