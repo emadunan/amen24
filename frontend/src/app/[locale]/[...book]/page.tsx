@@ -1,4 +1,4 @@
-import { BookKey, ERROR_KEYS, formatNumber, Lang, MESSAGE_KEYS, Verse } from "@amen24/shared";
+import { BookKey, ERROR_KEYS, formatNumber, Lang, Verse } from "@amen24/shared";
 import React, { FC, Fragment } from "react";
 import styles from "./page.module.css";
 import initTranslations from "@/app/i18n";

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
 const FacebookLoginButton = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const handleFacebookLogin = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/facebook`;
