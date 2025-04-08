@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maintenance | Amen24</title>
+    <style>
+      :root {
+        --logo: url("/img/logo-light.png");
+        --text: #3b3a34;
+        --background: #f4efe6;
+        --primary: #8a6e4a;
+        --highlight: #ffeb3b;
+      }
+
+      [data-theme="dark"] {
+        --logo: url("/img/logo-dark.png");
+        --text: #f4efe6;
+        --background: #3a332b;
+        --primary: #a68a5e;
+        --highlight: #b88b4a;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      .logo {
+        background-image: var(--logo);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 120px;
+        height: 120px;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+        color: var(--primary);
+      }
+
+      p {
+        max-width: 500px;
+        line-height: 1.6;
+      }
+    </style>
+    <script>
+      const messages = {
+        en: {
+          title: "We're under maintenance",
+          message:
+            "Our website is currently undergoing scheduled maintenance. We’ll be back shortly. Thank you for your patience!",
+        },
+        ar: {
+          title: "نقوم بصيانة الموقع",
+          message:
+            "نقوم حالياً بصيانة مجدولة للموقع. سنعود قريباً. شكرًا لصبرك!",
+        },
+        fr: {
+          title: "Maintenance en cours",
+          message:
+            "Notre site est actuellement en maintenance programmée. Nous serons bientôt de retour. Merci de votre patience !",
+        },
+        es: {
+          title: "Mantenimiento en curso",
+          message:
+            "Nuestro sitio está en mantenimiento programado. Volveremos en breve. ¡Gracias por tu paciencia!",
+        },
+        ru: {
+          title: "Техническое обслуживание",
+          message:
+            "Наш сайт временно недоступен из-за планового обслуживания. Скоро вернемся. Спасибо за терпение!",
+        },
+      };
+
+      const userLang = navigator.language.slice(0, 2);
+      const locale = messages[userLang] ? userLang : "en";
+
+      window.addEventListener("DOMContentLoaded", () => {
+        document.querySelector("html").lang = locale;
+        if (locale === "ar") {
+          document.querySelector("html").dir = "rtl";
+        }
+        document.querySelector("h1").textContent = messages[locale].title;
+        document.querySelector("p").textContent = messages[locale].message;
+
+        // Detect dark mode
+        const dark =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (dark) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="logo"></div>
+    <h1></h1>
+    <p></p>
+  </body>
+</html>
