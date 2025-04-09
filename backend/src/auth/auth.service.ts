@@ -4,7 +4,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthProvider, ERROR_KEYS, Lang, MESSAGE_KEYS } from '@amen24/shared';
+import { AuthProvider, Lang, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
 import { UsersService } from '../users/services/users.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';

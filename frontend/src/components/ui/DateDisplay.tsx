@@ -43,6 +43,9 @@ const DateDisplay: React.FC = () => {
     setCalendarIndex((prevIndex) => (prevIndex + 1) % calendars.length);
   };
 
+  let monthIndex;
+  let mappedMonth;
+
   const getFormattedDate = (calendar: CalendarType) => {
     const locale = getLocaleForCalendar(calendar);
 
@@ -56,16 +59,16 @@ const DateDisplay: React.FC = () => {
     const parts = formatter.formatToParts(new Date());
 
     const day = parts.find((p) => p.type === "day")?.value;
-    let monthIndex = parts.find((p) => p.type === "month")?.value;
+    monthIndex = parts.find((p) => p.type === "month")?.value;
     const year = parts.find((p) => p.type === "year")?.value;
 
     if (!day || !monthIndex || !year) return "Error fetching date";
 
     if (locale === "en-u-ca-hebrew") {
       // Hebrew months are returned as names, not numbers
-      const mappedMonth = HebrewMonthMap[monthIndex]; // Convert name to number
+      mappedMonth = HebrewMonthMap[monthIndex]; // Convert name to number
       if (mappedMonth) {
-        monthIndex = mappedMonth.toString();
+        // monthIndex = mappedMonth.toString();
       } else {
         console.warn(`Unexpected Hebrew month: ${monthIndex}`); // Debugging help
         return "Invalid Hebrew date"; // Avoid crashing if mapping fails
@@ -84,6 +87,7 @@ const DateDisplay: React.FC = () => {
   return (
     <div onClick={switchCalendar} className={styles.calendar}>
       {getFormattedDate(calendars[calendarIndex])}
+      <p>{monthIndex}, {mappedMonth}</p>
     </div>
   );
 };
