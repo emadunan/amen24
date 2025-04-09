@@ -9,16 +9,17 @@ type CalendarType = (typeof calendars)[number];
 const getLocaleForCalendar = (calendar: CalendarType) => {
   switch (calendar) {
     case "gregorian":
-      return "en"; // Default to avoid errors
+      return "en";
     case "coptic":
       return "en-u-ca-coptic";
     case "hebrew":
       return "en-u-ca-hebrew";
     default:
-      return "en"; // Fallback
+      return "en";
   }
 };
 
+// Hebrew month mapping: name -> biblical order (Nisan = 1)
 const HebrewMonthMap: Record<string, number> = {
   Nisan: 1,
   Iyyar: 2,
@@ -32,7 +33,14 @@ const HebrewMonthMap: Record<string, number> = {
   Tevet: 10,
   Shevat: 11,
   Adar: 12,
-  "Adar II": 13, // Only in leap years
+  "Adar II": 13,
+};
+
+// Civil to Biblical month number mapping
+const civilToBiblical = (civilMonth: number): number => {
+  // Civil starts with Tishrei = 1, Biblical starts with Nisan = 1
+  // So Tishrei (7) becomes 1, Cheshvan (8) becomes 2, ..., Adar (6) becomes 12
+  return ((civilMonth + 5 - 1) % 13) + 1;
 };
 
 const DateDisplay: React.FC = () => {
@@ -43,41 +51,46 @@ const DateDisplay: React.FC = () => {
     setCalendarIndex((prevIndex) => (prevIndex + 1) % calendars.length);
   };
 
-  let monthIndex;
-  let mappedMonth;
-
   const getFormattedDate = (calendar: CalendarType) => {
     const locale = getLocaleForCalendar(calendar);
 
     const formatter = new Intl.DateTimeFormat(locale, {
       day: "numeric",
-      month: "numeric", // Keep numeric for Gregorian & Coptic
+      month: "numeric",
       year: "numeric",
-      localeMatcher: "lookup", // Ensures more consistent behavior across browsers
+      localeMatcher: "lookup",
     });
 
     const parts = formatter.formatToParts(new Date());
 
     const day = parts.find((p) => p.type === "day")?.value;
-    monthIndex = parts.find((p) => p.type === "month")?.value;
+    let monthValue = parts.find((p) => p.type === "month")?.value;
     const year = parts.find((p) => p.type === "year")?.value;
 
-    if (!day || !monthIndex || !year) return "Error fetching date";
+    if (!day || !monthValue || !year) return "Error fetching date";
 
+    // Normalize Hebrew months
     if (locale === "en-u-ca-hebrew") {
-      // Hebrew months are returned as names, not numbers
-      mappedMonth = HebrewMonthMap[monthIndex]; // Convert name to number
-      if (mappedMonth) {
-        // monthIndex = mappedMonth.toString();
+      let biblicalMonthNum: number | undefined;
+
+      if (isNaN(Number(monthValue))) {
+        // If it's a name like "Nisan"
+        biblicalMonthNum = HebrewMonthMap[monthValue];
       } else {
-        console.warn(`Unexpected Hebrew month: ${monthIndex}`); // Debugging help
-        return "Invalid Hebrew date"; // Avoid crashing if mapping fails
+        // If it's a civil number like 7 (Tishrei), convert to biblical
+        const civilMonth = Number(monthValue);
+        biblicalMonthNum = civilToBiblical(civilMonth);
       }
+
+      if (!biblicalMonthNum) {
+        console.warn(`Unexpected Hebrew month: ${monthValue}`);
+        return "Invalid Hebrew date";
+      }
+
+      monthValue = biblicalMonthNum.toString();
     }
 
-    // Get translated month name
-    const monthName = t(`month:${calendar}.${monthIndex}`);
-
+    const monthName = t(`month:${calendar}.${monthValue}`);
     const formattedDay = formatNumber(Number(day), i18n.language as Lang);
     const formattedYear = formatNumber(Number(year), i18n.language as Lang);
 
@@ -87,7 +100,6 @@ const DateDisplay: React.FC = () => {
   return (
     <div onClick={switchCalendar} className={styles.calendar}>
       {getFormattedDate(calendars[calendarIndex])}
-      <p>{monthIndex}, {mappedMonth}</p>
     </div>
   );
 };
