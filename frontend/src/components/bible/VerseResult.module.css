@@ -26,12 +26,6 @@
   font-size: 1rem;
 }
 
-.text {
-  font-size: 1.1rem;
-  line-height: 1.5;
-  color: var(--text);
-}
-
 .verseContainer:hover {
   background-color: var(--secondary);
 }

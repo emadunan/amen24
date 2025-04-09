@@ -1,0 +1,16 @@
+.text {
+  direction: inherit;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.highlight {
+  background-color: var(--highlight);
+  display: inline;
+  padding: 0;
+  margin: 0;
+  font-weight: inherit;
+  color: inherit;
+  border-radius: 2px;
+}

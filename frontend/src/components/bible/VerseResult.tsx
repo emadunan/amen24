@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./VerseResult.module.css";
 import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
 import Link from "next/link";
+import VerseResultText from "./VerseResultText";
 
 interface VerseResultProps {
   bookKey: BookKey;
@@ -11,6 +12,7 @@ interface VerseResultProps {
   verseId: number;
   text: string;
   lang: Lang;
+  queryTerms: string[];
 }
 
 const VerseResult: React.FC<VerseResultProps> = ({
@@ -21,6 +23,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
   verseId,
   text,
   lang,
+  queryTerms
 }) => {
   const formattedChapterNum = formatNumber(chapterNum, lang);
   const formattedVerseNum = formatNumber(verseNum, lang);
@@ -30,7 +33,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
       className={styles.verseContainer}
       dir={lang === Lang.ENGLISH ? "ltr" : "rtl"}
     >
-      <p className={styles.text}>{text}</p>
+      <VerseResultText text={text} queryTerms={queryTerms}/>
       <Link
         className={styles.reference}
         href={`/${bookKey}/${chapterNum}/${totalChapters}?v=${verseId}`}

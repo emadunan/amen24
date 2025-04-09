@@ -51,6 +51,8 @@ const BibleSearch = () => {
   const { query, selectedBooks, showDropdown, results, isLoading } =
     useSelector((state: RootState) => state.search);
 
+  const queryTerms = query.trim().split(" ");
+
   const isWholeBibleSelected =
     selectedBooks.length === Object.values(BookKey).length;
 
@@ -234,6 +236,7 @@ const BibleSearch = () => {
                   verseId={verse.id}
                   text={verse.text}
                   lang={verse.lang}
+                  queryTerms={queryTerms}
                 />
               );
             })}
