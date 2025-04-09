@@ -20,6 +20,7 @@ import {
 import { showToast } from "@/utils/toast";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
 import { useShowError } from "@/hooks/useShowError";
+import useBreakpoint from "@/hooks/useBreakpoint";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -46,6 +47,7 @@ const categoryList: Record<string, string[]> = {
 
 const BibleSearch = () => {
   const { t, i18n } = useTranslation(["book", "error"]);
+  const { isRegularPhone } = useBreakpoint();
   const { showApiError } = useShowError();
   const dispatch = useDispatch();
   const { query, selectedBooks, showDropdown, results, isLoading } =
@@ -160,7 +162,7 @@ const BibleSearch = () => {
         )}
         <button className={styles.searchBtn} onClick={handleSearch}>
           <AiOutlineSearch className={styles.searchIcon} />
-          {t("searchEngine.searchButtonText")}
+          {!isRegularPhone && t("searchEngine.searchButtonText")}
         </button>
 
         {showDropdown && (
