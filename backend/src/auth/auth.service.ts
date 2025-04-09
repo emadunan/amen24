@@ -93,9 +93,7 @@ export class AuthService {
   loadAccessToken(user: User, response: Response): void {
     const { password, ...data } = user;
 
-    const access_token = this.jwtService.sign(data, {
-      expiresIn: '30d',
-    });
+    const access_token = this.jwtService.sign(data);
 
     response.cookie('access_token', access_token, {
       httpOnly: true,

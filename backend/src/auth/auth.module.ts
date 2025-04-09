@@ -18,7 +18,7 @@ import { FacebookStratrgy } from './strategies/facebook.strategy';
       useFactory(configService: ConfigService) {
         return {
           secret: configService.getOrThrow<string>('JWT_SECRET'),
-          signOptions: { expiresIn: '1h' },
+          signOptions: { expiresIn: '30d' },
         };
       },
       inject: [ConfigService],
