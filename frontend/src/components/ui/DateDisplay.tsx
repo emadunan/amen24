@@ -38,9 +38,22 @@ const HebrewMonthMap: Record<string, number> = {
 
 // Civil to Biblical month number mapping
 const civilToBiblical = (civilMonth: number): number => {
-  // Civil starts with Tishrei = 1, Biblical starts with Nisan = 1
-  // So Tishrei (7) becomes 1, Cheshvan (8) becomes 2, ..., Adar (6) becomes 12
-  return ((civilMonth + 5 - 1) % 13) + 1;
+  const mapping: Record<number, number> = {
+    1: 7,
+    2: 8,
+    3: 9,
+    4: 10,
+    5: 11,
+    6: 12,
+    7: 1,
+    8: 2,
+    9: 3,
+    10: 4,
+    11: 5,
+    12: 6,
+    13: 13, // Leap year Adar II
+  };
+  return mapping[civilMonth] ?? -1;
 };
 
 const DateDisplay: React.FC = () => {
