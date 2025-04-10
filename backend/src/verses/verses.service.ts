@@ -1,7 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Verse } from './entities/verse.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 import { SingleBar, Presets } from 'cli-progress';
@@ -15,16 +19,70 @@ import {
 } from '@amen24/shared';
 import { ChaptersService } from '../chapters/chapters.service';
 import { VerseTranslation } from './entities/verse-translation.entity';
+import { VerseGroup } from './entities/verse-group.entity';
 
+// TODO: Create constants and key: value pairs to handle errors and messages
 @Injectable()
 export class VersesService {
   constructor(
     @InjectRepository(Verse) private versesRepo: Repository<Verse>,
+    @InjectRepository(VerseGroup)
+    private verseGroupRepo: Repository<VerseGroup>,
     @InjectRepository(VerseTranslation)
     private verseTranslationsRepo: Repository<VerseTranslation>,
     private chaptersService: ChaptersService,
-  ) { }
-  // TODO: Create constants and key: value pairs to handle errors and messages
+  ) {}
+
+  async createVerseGroup(verseIds: number[]): Promise<VerseGroup> {
+    if (!verseIds.length)
+      throw new BadRequestException('verseIds array is empty');
+
+    const verses = await this.versesRepo.findBy({ id: In(verseIds) });
+
+    if (verses.length !== verseIds.length) {
+      throw new NotFoundException('One or more verses not found');
+    }
+
+    const startingVerse = verses.reduce(
+      (min, v) => (v.id < min.id ? v : min),
+      verses[0],
+    );
+
+    const group = this.verseGroupRepo.create({ startingVerse, verses });
+    return this.verseGroupRepo.save(group);
+  }
+
+  async findVerseGroupById(id: number): Promise<VerseGroup> {
+    const group = await this.verseGroupRepo.findOne({
+      where: { id },
+      relations: ['startingVerse', 'verses'],
+    });
+
+    if (!group) {
+      throw new NotFoundException(`VerseGroup with ID ${id} not found`);
+    }
+
+    return group;
+  }
+
+  async findVerseGroupByVerseIds(
+    verseIds: number[],
+  ): Promise<VerseGroup | null> {
+    if (!verseIds.length) return null;
+
+    return await this.verseGroupRepo
+      .createQueryBuilder('group')
+      .innerJoin('group.verses', 'verse')
+      .where('verse.id IN (:...verseIds)', { verseIds })
+      .groupBy('group.id')
+      .having('COUNT(DISTINCT verse.id) = :count', { count: verseIds.length })
+      .andHaving('COUNT(verse.id) = :count', { count: verseIds.length })
+      .getOne();
+  }
+
+  async deleteVerseGroup(id: number) {
+    return await this.verseGroupRepo.delete(id);
+  }
 
   async findChapter(bookKey: BookKey, chapterNum: number, lang: Lang) {
     return await this.versesRepo.find({
@@ -152,14 +210,16 @@ export class VersesService {
 
       if (result) {
         const bookKey = result.at(1)?.toUpperCase() as BookKey;
-        if (!bookKey) throw new BadRequestException('Failed to extract book key');
+        if (!bookKey)
+          throw new BadRequestException('Failed to extract book key');
 
         const chapterNum = +(result.at(2) as string);
         const verseNum = +(result.at(3) as string);
 
         // Retrieve or create the chapter
         const chapter = await this.chaptersService.findOne(bookKey, chapterNum);
-        if (!chapter) throw new BadRequestException('Chapter has not been found!');
+        if (!chapter)
+          throw new BadRequestException('Chapter has not been found!');
 
         await this.versesRepo.insert({ num: verseNum, chapter });
       }
@@ -214,7 +274,8 @@ export class VersesService {
 
         if (result) {
           const bookKey = result.at(1)?.toUpperCase() as BookKey;
-          if (!bookKey) throw new BadRequestException('Failed to extract book key');
+          if (!bookKey)
+            throw new BadRequestException('Failed to extract book key');
 
           const chapterNum = +(result.at(2) as string);
           const verseNum = +(result.at(3) as string);

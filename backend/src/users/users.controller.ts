@@ -13,6 +13,7 @@ import {
   UnauthorizedException,
   ParseIntPipe,
   NotFoundException,
+  NotImplementedException,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -26,6 +27,7 @@ import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
 import { BookmarksService } from './services/bookmarks.service';
 import { ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
+import { FavoritesService } from './services/favorites.service';
 
 @Controller('users')
 export class UsersController {
@@ -34,6 +36,7 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
+    private readonly favoritesService: FavoritesService,
   ) { }
 
   @UseGuards(JwtAuthGuard)
@@ -123,8 +126,12 @@ export class UsersController {
   @Post()
   @HttpCode(201)
   async create(@Body() createUserDto: CreateUserDto) {
-    return await this.usersService.create(createUserDto);
-  }
+    const result = await this.usersService.create(createUserDto);
+    if (result) return { message: MESSAGE_KEYS.USER_CREATED };
+
+    throw new NotImplementedException(ERROR_KEYS.USER_NOT_CREATED);
+  };
+
 
   @UseGuards(JwtAuthGuard)
   @Get('bookmark')
@@ -160,6 +167,29 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
   ) {
     return this.bookmarksService.delete(id, user.email);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('favorite')
+  createFavorite(
+    @UserParam() user: User,
+    @Body() body: { verseIds: number[] },
+  ) {
+    const { verseIds } = body;
+    return this.favoritesService.addFavoriteToProfile(user.email, verseIds);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('favorite/:id')
+  async deleteFavorite(
+    @UserParam() user: User,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    const result = await this.favoritesService.removeFavorite(user.email, id);
+
+    if (result) return { message: 'removedFromFavorites' };
+
+    throw new NotImplementedException();
   }
 
   @UseGuards(JwtAuthGuard)

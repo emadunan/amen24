@@ -23,12 +23,13 @@ export class UsersService {
     private readonly configService: ConfigService,
     private profilesService: ProfilesService,
     private bookmarksService: BookmarksService,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const { email, password, provider, uiLang, bookmark } = createUserDto;
 
-    if (password && password.length < 4) throw new BadRequestException(ERROR_KEYS.PASSWORD_TOO_SHORT);
+    if (password && password.length < 4)
+      throw new BadRequestException(ERROR_KEYS.PASSWORD_TOO_SHORT);
 
     // Check if the user already exists
     const existUser = await this.findOneByEmailProvider(email, provider);

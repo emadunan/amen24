@@ -20,5 +20,6 @@ export const ERROR_KEYS = {
   HIGHLIGHT_SINGLE_VERSE_ONLY: "highlightSingleVerseOnly",
   NO_OLD_PASSWORD_FOUND: "noOldPasswordFound",
   BOOKMARK_NOT_FOUND: "bookmarkNotFound",
-  BOOKMARK_EXCEED_LIMIT: "bookmarkExceedLimit"
+  BOOKMARK_EXCEED_LIMIT: "bookmarkExceedLimit",
+  VERSE_GROUP_FAVORITED :"verseGroupFavorited",
 } as const;

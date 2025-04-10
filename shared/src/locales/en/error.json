@@ -20,5 +20,6 @@
   "sessionExpired": "Session expired, please log in again",
   "noOldPasswordFound": "No old password has been found, contact system admin to resolve your login via support@amen24.org",
   "bookmarkNotFound": "No bookmark data found. Please start reading to create your first bookmark.",
-  "bookmarkExceedLimit": "You have reached the maximum number of bookmarks allowed."
+  "bookmarkExceedLimit": "You have reached the maximum number of bookmarks allowed.",
+  "verseGroupFavorited": "This verse group is already in your favorites."
 }

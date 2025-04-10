@@ -25,7 +25,7 @@ export class Verse {
     nullable: false,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: "chapterId" })
+  @JoinColumn({ name: 'chapterId' })
   chapter: Chapter;
 
   @ManyToMany(() => VerseGroup, (verseGroup) => verseGroup.verses)
