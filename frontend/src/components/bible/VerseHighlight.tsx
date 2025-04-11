@@ -28,11 +28,10 @@ const VerseHighlight: FC<Props> = ({ children, verseId }) => {
 
   useEffect(() => {
     if (isFirstLoad.current) {
-      const highlightedId = searchParams.get("v");
+      const highlightedIds = searchParams.getAll("v").map(Number);
 
       if (
-        highlightedId &&
-        +highlightedId === verseId &&
+        highlightedIds.includes(verseId) &&
         !highlighted.includes(verseId)
       ) {
         toggleHighlight(verseId);

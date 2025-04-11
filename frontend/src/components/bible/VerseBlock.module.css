@@ -26,10 +26,29 @@
   line-height: 2;
 }
 
+.actions {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
 .reference {
   font-weight: bold;
   color: var(--accent);
   font-size: 1rem;
+}
+
+.removeButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: amiri;
+  padding: .3rem .6rem;
+  border: none;
+  background-color: var(--secondary);
+  border-radius: 2px;
+  cursor: pointer;
+  color: var(--text);
 }
 
 .verseContainer:hover {

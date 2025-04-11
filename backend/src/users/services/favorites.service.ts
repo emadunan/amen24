@@ -22,7 +22,7 @@ export class FavoritesService {
   async getFavorites(email: string, lang: Lang | null) {
     if (!lang) lang = Lang.ENGLISH;
 
-    return this.favoritesRepo.find({
+    const favorites = await this.favoritesRepo.find({
       where: {
         profile: {
           email
@@ -31,7 +31,7 @@ export class FavoritesService {
           verses: {
             verseTranslations: {
               lang
-            }
+            },
           }
         }
       },
@@ -42,8 +42,15 @@ export class FavoritesService {
         'verseGroup.startingVerse',
         'verseGroup.startingVerse.chapter',
         'verseGroup.startingVerse.chapter.book'
-      ]
-    })
+      ],
+    });
+
+    // Sort verses inside each group manually
+    for (const fav of favorites) {
+      fav.verseGroup.verses.sort((a, b) => a.id - b.id);
+    }
+
+    return favorites;
   }
 
   async addFavoriteToProfile(
