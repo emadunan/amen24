@@ -49,12 +49,12 @@ PGPASSWORD=$DB_PASSWORD pg_dump -U "$DB_USERNAME" -h "$DB_HOST" -d "$DB_NAME" > 
 echo "Backup complete!"
 
 # Drop and recreate production database
-echo "Resetting production database..."
-PGPASSWORD=$DB_PASSWORD psql -U "$DB_USERNAME" -h "$DB_HOST" -c "DROP DATABASE IF EXISTS $DB_NAME;"
-PGPASSWORD=$DB_PASSWORD psql -U "$DB_USERNAME" -h "$DB_HOST" -c "CREATE DATABASE $DB_NAME OWNER $DB_USERNAME;"
+# echo "Resetting production database..."
+# PGPASSWORD=$DB_PASSWORD psql -U "$DB_USERNAME" -h "$DB_HOST" -c "DROP DATABASE IF EXISTS $DB_NAME;"
+# PGPASSWORD=$DB_PASSWORD psql -U "$DB_USERNAME" -h "$DB_HOST" -c "CREATE DATABASE $DB_NAME OWNER $DB_USERNAME;"
 
 npm run migrate:up:prod
-npm run seed:prod
+# npm run seed:prod
 
 cd ..
 pm2 start ecosystem.config.js --only backend --env production
