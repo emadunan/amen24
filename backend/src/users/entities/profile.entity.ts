@@ -6,7 +6,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserCategory, Lang, ThemeMode, DateCalendar } from '@amen24/shared';
+import { Lang, ThemeMode, DateCalendar, UserPrivilege } from '@amen24/shared';
 import { User } from './user.entity';
 import { Bookmark } from './bookmark.entity';
 import { Favorite } from './favorite.entity';
@@ -19,8 +19,8 @@ export class Profile {
   @OneToMany(() => User, (user) => user.profile)
   users: User[];
 
-  @Column({ type: 'text', default: UserCategory.MEMBER })
-  privilege: UserCategory;
+  @Column({ type: 'text', default: UserPrivilege.MEMBER })
+  privilege: UserPrivilege;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

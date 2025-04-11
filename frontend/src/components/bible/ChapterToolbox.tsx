@@ -3,11 +3,12 @@ import styles from "./ChapterToolbox.module.css";
 import { FaCopy, FaEraser, FaStar } from "react-icons/fa";
 import { MdPushPin } from "react-icons/md";
 import { RxDragHandleDots2 } from "react-icons/rx";
+import { HiSparkles } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
 import { useDraggable } from "@/hooks/useDraggable";
-import { ERROR_KEYS, Lang, MESSAGE_KEYS, formatNumber } from "@amen24/shared";
+import { ERROR_KEYS, Lang, MESSAGE_KEYS, UserPrivilege, formatNumber } from "@amen24/shared";
 import {
   useGetUserLastReadBookmarkQuery,
   useUpdateBookmarkMutation,
@@ -116,6 +117,12 @@ const ChapterToolbox = () => {
           <FaCopy /> {t("toolbox.copy")}
         </button>
 
+        {user && user.profile.privilege === UserPrivilege.MEMBER && (
+          <button onClick={handleAddFavorite}>
+            <HiSparkles /> {t("toolbox.addToFeatured")}
+          </button>
+        )}
+
         {user && (
           <Fragment>
             <button onClick={handleAddFavorite}>
@@ -147,6 +154,7 @@ const ChapterToolbox = () => {
             </button>
           </Fragment>
         )}
+
         <button onClick={clearHighlighted}>
           <FaEraser /> {t("toolbox.clearHighlighting")}
         </button>

@@ -1,10 +1,10 @@
-import { DateCalendar, Lang, ThemeMode, UserCategory } from "../enums";
+import { DateCalendar, Lang, ThemeMode, UserPrivilege } from "../enums";
 import { User } from "./User.interface";
 
 export interface Profile {
   email: string;
   users: User[];
-  privilege: UserCategory;
+  privilege: UserPrivilege;
   createdAt: Date;
   lastLogin: Date;
   uiLang: Lang;
