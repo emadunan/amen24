@@ -6,4 +6,5 @@ export const MESSAGE_KEYS = {
   LOGGED_IN_SUCCESSFULLY: "loggedInSuccessfully",
   LOGGED_OUT_SUCCESSFULLY: "loggedOutSuccessfully",
   USER_PROFILE_UPDATED: "userProfileUpdated",
+  ADDED_TO_FAVORITES: "addedToFavorites",
 } as const;

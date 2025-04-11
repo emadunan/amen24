@@ -21,8 +21,8 @@ POST http://localhost:5000/api/users/local-login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "nancy@gmail.com",
-  "password": "nancy"
+  "email": "emadunan@gmail.com",
+  "password": "emadunan"
 }
 
 ### reset password
@@ -44,12 +44,15 @@ Content-Type: application/json
   "profileEmail": "emadunan@gmail.com"
 }
 
+### Get user favorites
+GET http://localhost:5000/api/users/favorite
+
 ### Add user favorite
 POST http://localhost:5000/api/users/favorite
 Content-Type: application/json
 
 {
-  "verseIds": [1, 2, 3]
+  "verseIds": [111, 112, 113]
 }
 
 ### Remove user favorite

@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProfilesService } from './profiles.service';
 import { VersesService } from 'src/verses/verses.service';
-import { ERROR_KEYS } from '@amen24/shared';
+import { ERROR_KEYS, Lang } from '@amen24/shared';
 
 @Injectable()
 export class FavoritesService {
@@ -17,7 +17,27 @@ export class FavoritesService {
     @InjectRepository(Favorite) private favoritesRepo: Repository<Favorite>,
     private profilesService: ProfilesService,
     private versesService: VersesService,
-  ) {}
+  ) { }
+
+  async getFavorites(email: string, lang: Lang | null) {
+    if (!lang) lang = Lang.ENGLISH;
+
+    return this.favoritesRepo.find({
+      where: {
+        profile: {
+          email
+        },
+        verseGroup: {
+          verses: {
+            verseTranslations: {
+              lang
+            }
+          }
+        }
+      },
+      relations: ['verseGroup', 'verseGroup.verses', 'verseGroup.verses.verseTranslations']
+    })
+  }
 
   async addFavoriteToProfile(
     email: string,

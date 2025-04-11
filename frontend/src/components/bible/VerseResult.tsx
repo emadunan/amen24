@@ -23,7 +23,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
   verseId,
   text,
   lang,
-  queryTerms
+  queryTerms,
 }) => {
   const formattedChapterNum = formatNumber(chapterNum, lang);
   const formattedVerseNum = formatNumber(verseNum, lang);
@@ -33,7 +33,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
       className={styles.verseContainer}
       dir={lang === Lang.ENGLISH ? "ltr" : "rtl"}
     >
-      <VerseResultText text={text} queryTerms={queryTerms}/>
+      <VerseResultText text={text} queryTerms={queryTerms} />
       <Link
         className={styles.reference}
         href={`/${bookKey}/${chapterNum}/${totalChapters}?v=${verseId}`}

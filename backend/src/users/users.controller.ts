@@ -26,7 +26,7 @@ import { Response } from 'express';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
 import { BookmarksService } from './services/bookmarks.service';
-import { ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
+import { ApiMessage, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
 import { FavoritesService } from './services/favorites.service';
 
 @Controller('users')
@@ -170,11 +170,17 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('favorite')
+  async getFavorites(@UserParam() user: User) {
+    return await this.favoritesService.getFavorites(user.email, user.profile.uiLang);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post('favorite')
   createFavorite(
     @UserParam() user: User,
     @Body() body: { verseIds: number[] },
-  ) {
+  ) {    
     const { verseIds } = body;
     return this.favoritesService.addFavoriteToProfile(user.email, verseIds);
   }
@@ -184,7 +190,7 @@ export class UsersController {
   async deleteFavorite(
     @UserParam() user: User,
     @Param('id', ParseIntPipe) id: number,
-  ) {
+  ): Promise<ApiMessage> {
     const result = await this.favoritesService.removeFavorite(user.email, id);
 
     if (result) return { message: 'removedFromFavorites' };

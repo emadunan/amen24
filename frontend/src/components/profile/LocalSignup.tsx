@@ -23,7 +23,7 @@ const LocalSignup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const {showError} = useShowError();
+  const { showError } = useShowError();
 
   const [localLoading, setLocalLoading] = useState(false);
   const [signup, { isLoading }] = useSignupMutation();
@@ -33,11 +33,11 @@ const LocalSignup = () => {
 
     if (password.length < 4 || confirmPassword.length < 4) {
       showError(ERROR_KEYS.PASSWORD_TOO_SHORT);
-      return
+      return;
     }
 
     if (password !== confirmPassword) {
-      showError(ERROR_KEYS.PASSWORD_MISMATCH)
+      showError(ERROR_KEYS.PASSWORD_MISMATCH);
       return;
     }
 

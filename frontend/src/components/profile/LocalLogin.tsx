@@ -16,7 +16,7 @@ import { useShowError } from "@/hooks/useShowError";
 const LocalLogin = () => {
   const { t } = useTranslation(["error"]);
   const router = useRouter();
-  const {showApiError} = useShowError();
+  const { showApiError } = useShowError();
 
   // ✅ Controlled Inputs
   const [email, setEmail] = useState("");
@@ -34,7 +34,7 @@ const LocalLogin = () => {
     try {
       await login({ email, password }).unwrap();
       router.replace("/");
-    } catch (err) {      
+    } catch (err) {
       showApiError(err);
       setLocalLoading(false);
     }

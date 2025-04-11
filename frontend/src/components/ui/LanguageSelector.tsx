@@ -38,7 +38,7 @@ const LanguageSelector = () => {
         });
       return;
     }
-    
+
     if (
       user?.profile?.uiLang &&
       user?.profile?.uiLang !== i18n.language &&

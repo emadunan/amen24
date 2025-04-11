@@ -9,13 +9,26 @@ type Props = {
 // Your Arabic normalization
 const normalizeArText = (text: string): string => {
   const map: Record<string, string> = {
-    "آ": "ا", "أ": "ا", "إ": "ا", "ٱ": "ا",
-    "ة": "ه", "ى": "ي", "ؤ": "و", "ئ": "ي",
-    "٠": "0", "١": "1", "٢": "2", "٣": "3",
-    "٤": "4", "٥": "5", "٦": "6", "٧": "7",
-    "٨": "8", "٩": "9"
+    آ: "ا",
+    أ: "ا",
+    إ: "ا",
+    ٱ: "ا",
+    ة: "ه",
+    ى: "ي",
+    ؤ: "و",
+    ئ: "ي",
+    "٠": "0",
+    "١": "1",
+    "٢": "2",
+    "٣": "3",
+    "٤": "4",
+    "٥": "5",
+    "٦": "6",
+    "٧": "7",
+    "٨": "8",
+    "٩": "9",
   };
-  return text.replace(/[آأإٱةىؤئ٠-٩]/g, char => map[char] || char);
+  return text.replace(/[آأإٱةىؤئ٠-٩]/g, (char) => map[char] || char);
 };
 
 const VerseResultText: FC<Props> = ({ text, queryTerms }) => {
@@ -25,8 +38,8 @@ const VerseResultText: FC<Props> = ({ text, queryTerms }) => {
 
   const escapedTerms = queryTerms
     .filter(Boolean)
-    .map(term =>
-      normalizeArText(term).replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")
+    .map((term) =>
+      normalizeArText(term).replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&"),
     );
 
   const pattern = new RegExp(`(${escapedTerms.join("|")})`, "gi");
