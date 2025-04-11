@@ -5,6 +5,8 @@ import styles from "./ProfileSettings.module.css";
 import { useTranslation } from "react-i18next";
 import { useDeleteAccountMutation, useGetMeQuery } from "@/store/userApi";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { MdLockReset } from "react-icons/md";
 
 // const FONT_SIZES = ["Small", "Medium", "Large"];
 
@@ -78,6 +80,12 @@ const ProfileSettings = () => {
           <span className={styles.sliderRound}></span>
         </label>
       </div> */}
+      <div className={styles.resetSection}>
+        <Link href="/password-reset" className={styles.resetLink}>
+          <MdLockReset className={styles.resetIcon} />
+          {t("signin.resetPassword")}
+        </Link>
+      </div>
 
       {/* Delete Account */}
       <div className={styles.deleteSection}>

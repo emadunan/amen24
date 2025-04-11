@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { showToast } from "@/utils/toast";
+import { FaRegStar } from "react-icons/fa";
 
 interface UserMenuProps {
   user?: User;
@@ -65,10 +66,10 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
             <span className={styles.listItemText}>{t("userMenu.favorite")}</span>
           </li> */}
           <li tabIndex={0}>
-            <Link href="/password-reset" className={styles.listItem}>
-              <MdLockReset />
+            <Link href="/favorites" className={styles.listItem}>
+              <FaRegStar />
               <span className={styles.listItemText}>
-                {t("signin.password")}
+                {t("userMenu.favorite")}
               </span>
             </Link>
           </li>

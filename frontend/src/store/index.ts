@@ -18,7 +18,7 @@ export const MakeStore = () => {
       getDefaultMiddleware()
         .concat(userApi.middleware)
         .concat(bookmarkApi.middleware)
-        .concat(favoriteApi.middleware)
+        .concat(favoriteApi.middleware),
   });
 
   return store;

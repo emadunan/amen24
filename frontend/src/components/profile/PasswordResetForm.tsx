@@ -80,7 +80,7 @@ const PasswordResetForm = () => {
       />
 
       <div className={styles.btnGroup}>
-        <BackButton />
+        <BackButton href="/settings" />
         <SubmitButton
           isLoading={isLoading || localLoading}
           text={t("signin.resetPassword")}

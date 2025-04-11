@@ -35,7 +35,14 @@ export class FavoritesService {
           }
         }
       },
-      relations: ['verseGroup', 'verseGroup.verses', 'verseGroup.verses.verseTranslations']
+      relations: [
+        'verseGroup',
+        'verseGroup.verses',
+        'verseGroup.verses.verseTranslations',
+        'verseGroup.startingVerse',
+        'verseGroup.startingVerse.chapter',
+        'verseGroup.startingVerse.chapter.book'
+      ]
     })
   }
 

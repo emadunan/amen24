@@ -7,6 +7,7 @@
   "chapter": "Chapter",
   "prev": "Prev",
   "next": "Next",
+  "remove": "Remove", 
   "no-result": "No results",
   "search-welcome": "Start searching for Bible verses by entering keywords above.",
   "locale": "Language",
@@ -44,7 +45,7 @@
     "new_testament": "New Testament Marker"
   },
   "userMenu": {
-    "favorite": "Favorite",
+    "favorite": "Favorites",
     "settings": "Settings",
     "logout": "Logout"
   },

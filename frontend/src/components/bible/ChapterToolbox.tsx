@@ -92,7 +92,7 @@ const ChapterToolbox = () => {
       showMessage(MESSAGE_KEYS.ADDED_TO_FAVORITES);
     } catch (error) {
       showApiError(error);
-    }    
+    }
   }
 
   const toolboxComponent = (
