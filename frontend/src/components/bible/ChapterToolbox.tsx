@@ -23,6 +23,7 @@ import { useGetMeQuery } from "@/store/userApi";
 import { useShowError } from "@/hooks/useShowError";
 import { useShowMessage } from "@/hooks/useShowMessage";
 import { useAddFavoriteMutation } from "@/store/favoriteApi";
+import CloseDraggableBtn from "../ui/CloseDraggableBtn";
 
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
@@ -117,6 +118,7 @@ const ChapterToolbox = () => {
       <div className={styles.toolboxHeader} ref={headerRef}>
         <RxDragHandleDots2 />
         <h4>{t("toolbox.title")}</h4>
+        <CloseDraggableBtn onClose={clearHighlighted} />
       </div>
       <div className={styles.toolboxContainer}>
         <button onClick={copyHighlighted}>
@@ -161,7 +163,7 @@ const ChapterToolbox = () => {
           </Fragment>
         )}
 
-        <button onClick={clearHighlighted}>
+        <button onClick={clearHighlighted} className={styles.eraserBtn}>
           <FaEraser /> {t("toolbox.clearHighlighting")}
         </button>
       </div>
