@@ -7,9 +7,11 @@ import {
   JoinTable,
   ManyToOne,
   JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import { Verse } from './verse.entity';
 import { Favorite } from '../../users/entities/favorite.entity';
+import { Featured } from 'src/featured/entities/featured.entity';
 
 @Entity()
 export class VerseGroup {
@@ -29,4 +31,7 @@ export class VerseGroup {
   @ManyToMany(() => Verse, (verse) => verse.verseGroups)
   @JoinTable({ name: 'verse_group_verses' })
   verses: Verse[];
+
+  @OneToOne(() => Featured, featured => featured.verseGroup)
+  featured: Featured;
 }

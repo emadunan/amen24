@@ -11,6 +11,7 @@ import { ChaptersModule } from './chapters/chapters.module';
 import { VersesModule } from './verses/verses.module';
 import joiConfig from './_config/joi.config';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { FeaturedModule } from './featured/featured.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     BooksModule,
     ChaptersModule,
     VersesModule,
+    FeaturedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
