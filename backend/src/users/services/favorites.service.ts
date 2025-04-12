@@ -17,33 +17,28 @@ export class FavoritesService {
     @InjectRepository(Favorite) private favoritesRepo: Repository<Favorite>,
     private profilesService: ProfilesService,
     private versesService: VersesService,
-  ) { }
+  ) {}
 
   async getFavorites(email: string, lang: Lang | null) {
     if (!lang) lang = Lang.ENGLISH;
 
-    const favorites = await this.favoritesRepo.find({
-      where: {
-        profile: {
-          email
-        },
-        verseGroup: {
-          verses: {
-            verseTranslations: {
-              lang
-            },
-          }
-        }
-      },
-      relations: [
-        'verseGroup',
-        'verseGroup.verses',
-        'verseGroup.verses.verseTranslations',
-        'verseGroup.startingVerse',
-        'verseGroup.startingVerse.chapter',
-        'verseGroup.startingVerse.chapter.book'
-      ],
-    });
+    const favorites = await this.favoritesRepo
+      .createQueryBuilder('favorite')
+      .leftJoinAndSelect('favorite.verseGroup', 'verseGroup')
+      .leftJoinAndSelect('verseGroup.verses', 'verse')
+      .leftJoinAndSelect(
+        'verse.verseTranslations',
+        'verseTranslation',
+        'verseTranslation.lang = :lang',
+        { lang },
+      )
+      .leftJoinAndSelect('verseGroup.startingVerse', 'startingVerse')
+      .leftJoinAndSelect('startingVerse.chapter', 'chapter')
+      .leftJoinAndSelect('chapter.book', 'book')
+      .leftJoin('favorite.profile', 'profile')
+      .where('profile.email = :email', { email })
+      .orderBy('startingVerse.id', 'ASC') // 👈 Order by starting verse ID
+      .getMany();
 
     // Sort verses inside each group manually
     for (const fav of favorites) {

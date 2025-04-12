@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FeaturedService } from './featured.service';
 import { CreateFeaturedDto } from './dto/create-featured.dto';
 import { UpdateFeaturedDto } from './dto/update-featured.dto';
@@ -23,7 +31,10 @@ export class FeaturedController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFeaturedDto: UpdateFeaturedDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateFeaturedDto: UpdateFeaturedDto,
+  ) {
     return this.featuredService.update(+id, updateFeaturedDto);
   }
 

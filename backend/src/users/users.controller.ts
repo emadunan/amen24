@@ -37,7 +37,7 @@ export class UsersController {
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
     private readonly favoritesService: FavoritesService,
-  ) { }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
@@ -130,8 +130,7 @@ export class UsersController {
     if (result) return { message: MESSAGE_KEYS.USER_CREATED };
 
     throw new NotImplementedException(ERROR_KEYS.USER_NOT_CREATED);
-  };
-
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get('bookmark')
@@ -172,7 +171,10 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('favorite')
   async getFavorites(@UserParam() user: User) {
-    return await this.favoritesService.getFavorites(user.email, user.profile.uiLang);
+    return await this.favoritesService.getFavorites(
+      user.email,
+      user.profile.uiLang,
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -180,7 +182,7 @@ export class UsersController {
   createFavorite(
     @UserParam() user: User,
     @Body() body: { verseIds: number[] },
-  ) {    
+  ) {
     const { verseIds } = body;
     return this.favoritesService.addFavoriteToProfile(user.email, verseIds);
   }

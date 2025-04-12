@@ -32,6 +32,6 @@ export class VerseGroup {
   @JoinTable({ name: 'verse_group_verses' })
   verses: Verse[];
 
-  @OneToOne(() => Featured, featured => featured.verseGroup)
+  @OneToOne(() => Featured, (featured) => featured.verseGroup)
   featured: Featured;
 }
