@@ -1,8 +1,6 @@
 "use client";
 
-import {
-  useGetUserFavoritesQuery,
-} from "@/store/favoriteApi";
+import { useGetUserFavoritesQuery } from "@/store/favoriteApi";
 import React from "react";
 import styles from "./Favorites.module.css";
 import { formatNumber, Lang } from "@amen24/shared";
@@ -18,7 +16,13 @@ const Favorites = () => {
         <h3>{t("userMenu.favorite")}</h3>
         <p>{formatNumber(favorites?.length || 0, i18n.language as Lang)}</p>
       </div>
-      {favorites?.map(fav => <VerseFavorite key={fav.id} favorite={fav} lang={i18n.language as Lang} />)}
+      {favorites?.map((fav) => (
+        <VerseFavorite
+          key={fav.id}
+          favorite={fav}
+          lang={i18n.language as Lang}
+        />
+      ))}
     </div>
   );
 };

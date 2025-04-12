@@ -8,7 +8,13 @@ import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
 import { useDraggable } from "@/hooks/useDraggable";
-import { ERROR_KEYS, Lang, MESSAGE_KEYS, UserPrivilege, formatNumber } from "@amen24/shared";
+import {
+  ERROR_KEYS,
+  Lang,
+  MESSAGE_KEYS,
+  UserPrivilege,
+  formatNumber,
+} from "@amen24/shared";
 import {
   useGetUserLastReadBookmarkQuery,
   useUpdateBookmarkMutation,

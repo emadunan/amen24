@@ -1,10 +1,10 @@
-import { BookMap, Favorite, Lang } from '@amen24/shared';
-import React, { FC } from 'react';
-import VerseBlock from './VerseBlock';
-import { useRemoveFavoriteMutation } from '@/store/favoriteApi';
+import { BookMap, Favorite, Lang } from "@amen24/shared";
+import React, { FC } from "react";
+import VerseBlock from "./VerseBlock";
+import { useRemoveFavoriteMutation } from "@/store/favoriteApi";
 
 interface Props {
-  favorite: Favorite
+  favorite: Favorite;
   lang: Lang;
 }
 
@@ -22,7 +22,6 @@ const VerseFavorite: FC<Props> = ({ favorite, lang }) => {
     removeFavorite(favorite.id);
   }
 
-
   return (
     <VerseBlock
       bookKey={bookKey}
@@ -33,7 +32,7 @@ const VerseFavorite: FC<Props> = ({ favorite, lang }) => {
       verseNum={verse.num}
       onRemove={handleRemoveFavorite}
     />
-  )
-}
+  );
+};
 
-export default VerseFavorite
+export default VerseFavorite;

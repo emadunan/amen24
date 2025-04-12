@@ -41,8 +41,21 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
       dir={lang === Lang.ENGLISH ? "ltr" : "rtl"}
     >
       <p>
-        {verses.map((v) => v.verseTranslations[0].textDiacritized).join(" ")}
+        {useMemo(() => {
+          return verses
+            .map((verse, idx, arr) => {
+              const currentText = verse.verseTranslations[0].textDiacritized;
+              if (idx === 0) return currentText;
+
+              const prevNum = arr[idx - 1].num;
+              const isSequential = verse.num === prevNum + 1;
+
+              return (isSequential ? " " : " .. ") + currentText;
+            })
+            .join("");
+        }, [verses])}
       </p>
+
       <div className={styles.actions}>
         <Link
           className={styles.reference}
@@ -52,7 +65,12 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
           {formattedChapterNum} : {formattedVerseNum}{" "}
           {blockLength > 1 && ` - ${formattedLastVerseNum}`}
         </Link>
-        {onRemove && <button className={styles.removeButton} onClick={onRemove}><MdDeleteForever size="1.3rem" />{t('remove')}</button>}
+        {onRemove && (
+          <button className={styles.removeButton} onClick={onRemove}>
+            <MdDeleteForever size="1.3rem" />
+            {t("remove")}
+          </button>
+        )}
       </div>
     </div>
   );
