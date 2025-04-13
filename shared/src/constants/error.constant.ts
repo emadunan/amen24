@@ -22,4 +22,5 @@ export const ERROR_KEYS = {
   BOOKMARK_NOT_FOUND: "bookmarkNotFound",
   BOOKMARK_EXCEED_LIMIT: "bookmarkExceedLimit",
   VERSE_GROUP_FAVORITED :"verseGroupFavorited",
+  VERSE_GROUP_FEATURED: "verseGroupFeatured",
 } as const;

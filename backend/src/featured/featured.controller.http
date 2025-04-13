@@ -1,0 +1,7 @@
+### Create new feature
+POST http://localhost:5000/api/featured
+Content-Type: application/json
+
+{
+  "verseIds": [22,23,30]
+}

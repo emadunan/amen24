@@ -1,4 +1,5 @@
 import { Lang } from "../enums";
+import { Verse } from "../interfaces";
 
 const DIACRITICS_REGEX = /[\u064B-\u065F\u0670]/g; // Arabic diacritics range
 
@@ -32,4 +33,23 @@ export function detectLanguage(text: string): Lang {
   if (/[\u0041-\u005A\u0061-\u007A]/.test(text)) return Lang.ENGLISH; // English/French (Latin)
 
   return Lang.ENGLISH; // Default fallback
+}
+
+export function buildJoinedText(verses: Verse[], lang: Lang): string {
+  return verses
+    .map((verse, idx, arr) => {
+      const translation = verse.verseTranslations.find(
+        (t) => t.lang === lang,
+      )?.text;
+
+      if (!translation) return '';
+
+      if (idx === 0) return translation;
+
+      const prevVerseNum = arr[idx - 1].num;
+      const isSequential = verse.num === prevVerseNum + 1;
+
+      return (isSequential ? ' ' : ' .. ') + translation;
+    })
+    .join('');
 }

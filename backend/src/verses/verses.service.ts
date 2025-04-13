@@ -31,7 +31,7 @@ export class VersesService {
     @InjectRepository(VerseTranslation)
     private verseTranslationsRepo: Repository<VerseTranslation>,
     private chaptersService: ChaptersService,
-  ) {}
+  ) { }
 
   async createVerseGroup(verseIds: number[]): Promise<VerseGroup> {
     if (!verseIds.length)
@@ -55,7 +55,8 @@ export class VersesService {
   async findVerseGroupById(id: number): Promise<VerseGroup> {
     const group = await this.verseGroupRepo.findOne({
       where: { id },
-      relations: ['startingVerse', 'verses'],
+      relations: ['startingVerse', 'verses', 'verses.verseTranslations'],
+      order: { verses: { id: "ASC" } }
     });
 
     if (!group) {

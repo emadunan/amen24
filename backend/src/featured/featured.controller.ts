@@ -13,11 +13,11 @@ import { UpdateFeaturedDto } from './dto/update-featured.dto';
 
 @Controller('featured')
 export class FeaturedController {
-  constructor(private readonly featuredService: FeaturedService) {}
+  constructor(private readonly featuredService: FeaturedService) { }
 
   @Post()
-  create(@Body() createFeaturedDto: CreateFeaturedDto) {
-    return this.featuredService.create(createFeaturedDto);
+  create(@Body() body: { verseIds: number[] }) {
+    return this.featuredService.addToFeatured(body.verseIds);
   }
 
   @Get()

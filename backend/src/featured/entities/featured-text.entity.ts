@@ -1,12 +1,6 @@
 import { Lang } from '@amen24/shared';
 import { Featured } from './featured.entity';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class FeaturedText {
@@ -19,6 +13,8 @@ export class FeaturedText {
   @Column({ type: 'text' })
   text: string;
 
-  @ManyToOne(() => Featured, (featured) => featured.featuredText)
+  @ManyToOne(() => Featured, (featured) => featured.featuredText, {
+    onDelete: 'CASCADE',
+  })
   featured: Featured;
 }

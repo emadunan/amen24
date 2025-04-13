@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { Verse } from './verse.entity';
 import { Favorite } from '../../users/entities/favorite.entity';
-import { Featured } from 'src/featured/entities/featured.entity';
+import { Featured } from '../../featured/entities/featured.entity';
 
 @Entity()
 export class VerseGroup {
