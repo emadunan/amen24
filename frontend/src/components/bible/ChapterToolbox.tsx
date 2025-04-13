@@ -24,6 +24,7 @@ import { useShowError } from "@/hooks/useShowError";
 import { useShowMessage } from "@/hooks/useShowMessage";
 import { useAddFavoriteMutation } from "@/store/favoriteApi";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
+import { useAddToFeaturedMutation } from "@/store/featuredApi";
 
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
@@ -45,6 +46,7 @@ const ChapterToolbox = () => {
   const { data: user } = useGetMeQuery();
   const { data: bookmark } = useGetUserLastReadBookmarkQuery();
   const [addFavorite] = useAddFavoriteMutation();
+  const [addFeatured] = useAddToFeaturedMutation();
 
   const [isClient, setIsClient] = useState(false);
 
@@ -103,6 +105,15 @@ const ChapterToolbox = () => {
     }
   }
 
+  async function handleAddFeatured() {
+    try {
+      await addFeatured(highlighted).unwrap();
+      showMessage(MESSAGE_KEYS.ADDED_TO_FAVORITES);
+    } catch (error) {
+      showApiError(error);
+    }
+  }
+
   const toolboxComponent = (
     <div
       className={styles.toolbox}
@@ -125,8 +136,8 @@ const ChapterToolbox = () => {
           <FaCopy /> {t("toolbox.copy")}
         </button>
 
-        {user && user.profile.privilege === UserPrivilege.MEMBER && (
-          <button onClick={handleAddFavorite}>
+        {user && user.profile.privilege === UserPrivilege.ADMIN && (
+          <button onClick={handleAddFeatured}>
             <HiSparkles /> {t("toolbox.addToFeatured")}
           </button>
         )}

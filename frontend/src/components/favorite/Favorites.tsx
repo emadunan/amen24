@@ -5,7 +5,7 @@ import React from "react";
 import styles from "./Favorites.module.css";
 import { formatNumber, Lang } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
-import VerseFavorite from "../bible/VerseFavorite";
+import VerseFavorite from "./VerseFavorite";
 
 const Favorites = () => {
   const { data: favorites } = useGetUserFavoritesQuery();

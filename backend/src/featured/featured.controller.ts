@@ -16,7 +16,7 @@ import { User as UserParam } from '../auth/decorators/user.decorator';
 
 @Controller('featured')
 export class FeaturedController {
-  constructor(private readonly featuredService: FeaturedService) { }
+  constructor(private readonly featuredService: FeaturedService) {}
 
   @Post()
   create(@Body() body: { verseIds: number[] }) {

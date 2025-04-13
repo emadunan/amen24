@@ -17,7 +17,7 @@ export class FavoritesService {
     @InjectRepository(Favorite) private favoritesRepo: Repository<Favorite>,
     private profilesService: ProfilesService,
     private versesService: VersesService,
-  ) {}
+  ) { }
 
   async getFavorites(email: string, lang: Lang | null) {
     if (!lang) lang = Lang.ENGLISH;
@@ -86,7 +86,7 @@ export class FavoritesService {
         id: favoriteId,
         profile: { email },
       },
-      relations: ['verseGroup'], // Ensure verseGroup is loaded to check its relationships
+      relations: ['verseGroup', 'verseGroup.featured'],
     });
 
     if (!favorite) {
@@ -105,8 +105,10 @@ export class FavoritesService {
       },
     });
 
+    const isFeatured = !!favorite.verseGroup.featured;
+
     // If no other profile has this verseGroup, we can delete the verseGroup
-    if (remainingFavorites === 0) {
+    if (remainingFavorites === 0 && !isFeatured) {
       await this.versesService.deleteVerseGroup(favorite.verseGroup.id);
     }
 

@@ -2,7 +2,7 @@
 
 import { FC, useCallback, useRef, useState } from "react";
 import styles from "./UserMenu.module.css";
-import { User } from "@amen24/shared";
+import { User, UserPrivilege } from "@amen24/shared";
 import { RiLogoutBoxLine, RiSettings3Line } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { showToast } from "@/utils/toast";
 import { FaRegStar } from "react-icons/fa";
+import { HiSparkles } from "react-icons/hi2";
 
 interface UserMenuProps {
   user?: User;
@@ -60,11 +61,17 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
 
       {isOpen && (
         <ul className={styles.dropdown}>
-          {/* <li className={styles.listItem} tabIndex={0}>
-            <RiStarLine />
-            <span className={styles.listItemText}>{t("userMenu.favorite")}</span>
-          </li> */}
-          <li tabIndex={0}>
+          {user?.profile.privilege === UserPrivilege.ADMIN && (
+            <li tabIndex={0}>
+              <Link href="/featured" className={styles.listItem}>
+                <HiSparkles />
+                <span className={styles.listItemText}>
+                  {t("userMenu.featured")}
+                </span>
+              </Link>
+            </li>
+          )}
+          <li tabIndex={1}>
             <Link href="/favorites" className={styles.listItem}>
               <FaRegStar />
               <span className={styles.listItemText}>
@@ -72,7 +79,7 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
               </span>
             </Link>
           </li>
-          <li tabIndex={0}>
+          <li tabIndex={2}>
             <Link href="/settings" className={styles.listItem}>
               <RiSettings3Line />
               <span className={styles.listItemText}>

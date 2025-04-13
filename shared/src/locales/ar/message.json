@@ -6,5 +6,6 @@
   "loggedOutSuccessfully": "تم تسجيل الخروج بنجاح",
   "userProfileUpdated": "تم تحديث الملف الشخصي بنجاح",
   "removedFromFavorites": "تمت إزالة الآيات من مفضلاتك.",
-  "addedToFavorites": "تمت إضافة الآيات المحددة إلى المفضلة بنجاح."
+  "addedToFavorites": "تمت إضافة الآيات المحددة إلى المفضلة بنجاح.",
+  "addedToFeatured": "تمت إضافة الآيات المحددة إلى المميز بنجاح."
 }

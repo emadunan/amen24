@@ -16,7 +16,7 @@ export const favoriteApi = createApi({
       providesTags: ["Favorite"],
     }),
     addFavorite: builder.mutation<Favorite, number[]>({
-      query: (verseIds: number[]) => ({
+      query: (verseIds) => ({
         url: "",
         method: "POST",
         body: { verseIds },

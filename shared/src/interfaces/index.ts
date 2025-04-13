@@ -4,6 +4,8 @@ export * from "./Book.interface";
 export * from "./Chapter.interface";
 export * from "./Bookmark.interface";
 export * from "./Favorite.interface";
+export * from "./Featured.interface";
+export * from "./FeaturedText.interface";
 export * from "./Verse.interface";
 export * from "./VerseGroup.interface";
 export * from "./VerseTranslation.interface";

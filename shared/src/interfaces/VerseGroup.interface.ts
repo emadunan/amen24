@@ -1,4 +1,5 @@
 import { Favorite } from "./Favorite.interface";
+import { Featured } from "./Featured.interface";
 import { Verse } from "./Verse.interface";
 
 export interface VerseGroup {
@@ -6,5 +7,6 @@ export interface VerseGroup {
   createdAt: Date;
   startingVerse: Verse;
   favorites: Favorite[];
+  featured: Featured;
   verses: Verse[];
 }

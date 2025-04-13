@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import navigatorReducer from "./navigatorSlice";
 import searchReducer from "./searchSlice";
-import { bookmarkApi } from "./bookmarkApi";
+import { featuredApi } from "./featuredApi";
 import { favoriteApi } from "./favoriteApi";
+import { bookmarkApi } from "./bookmarkApi";
 import { userApi } from "./userApi";
 
 export const MakeStore = () => {
@@ -13,12 +14,14 @@ export const MakeStore = () => {
       [userApi.reducerPath]: userApi.reducer,
       [bookmarkApi.reducerPath]: bookmarkApi.reducer,
       [favoriteApi.reducerPath]: favoriteApi.reducer,
+      [featuredApi.reducerPath]: featuredApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(userApi.middleware)
         .concat(bookmarkApi.middleware)
-        .concat(favoriteApi.middleware),
+        .concat(favoriteApi.middleware)
+        .concat(featuredApi.middleware)
   });
 
   return store;

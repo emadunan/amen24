@@ -74,7 +74,20 @@ export class FeaturedService {
   }
 
   async removeFromFeatured(id: number) {
-    return await this.featuredRepo.delete(id);
+    const featured = await this.featuredRepo.findOne({
+      where: { id },
+      relations: ['verseGroup', 'verseGroup.favorites'],
+    });
+
+    if (!featured) throw new NotFoundException();
+
+    const result = await this.featuredRepo.remove(featured);
+
+    if(featured.verseGroup.favorites.length < 1) {      
+      await this.versesService.deleteVerseGroup(featured.verseGroup.id);
+    }
+
+    return result;
   }
 
   async getAllFeatured(lang: Lang | null) {

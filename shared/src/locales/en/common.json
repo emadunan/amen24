@@ -45,6 +45,7 @@
     "new_testament": "New Testament Marker"
   },
   "userMenu": {
+    "featured": "Featured",
     "favorite": "Favorites",
     "settings": "Settings",
     "logout": "Logout"
