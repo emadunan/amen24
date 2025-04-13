@@ -6,10 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { FeaturedService } from './featured.service';
-import { CreateFeaturedDto } from './dto/create-featured.dto';
 import { UpdateFeaturedDto } from './dto/update-featured.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { User } from '../users/entities/user.entity';
+import { User as UserParam } from '../auth/decorators/user.decorator';
 
 @Controller('featured')
 export class FeaturedController {
@@ -20,16 +23,18 @@ export class FeaturedController {
     return this.featuredService.addToFeatured(body.verseIds);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.featuredService.findAll();
+  async findAll(@UserParam() user: User) {
+    return await this.featuredService.getAllFeatured(user.profile.uiLang);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.featuredService.findOne(+id);
+    return this.featuredService.getFeaturedText(+id);
   }
 
+  // TO DO
   @Patch(':id')
   update(
     @Param('id') id: string,

@@ -3,8 +3,14 @@ POST http://localhost:5000/api/featured
 Content-Type: application/json
 
 {
-  "verseIds": [22,23,30]
+  "verseIds": [1,2,4]
 }
 
 ### Remove from featured
-DELETE http://localhost:5000/api/featured/3
+DELETE http://localhost:5000/api/featured/4
+
+### Get all featured 
+GET http://localhost:5000/api/featured
+
+### Get featured Text
+GET http://localhost:5000/api/featured/6

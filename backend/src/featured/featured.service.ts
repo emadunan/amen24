@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  NotFoundException,
   NotImplementedException,
 } from '@nestjs/common';
 import { CreateFeaturedDto } from './dto/create-featured.dto';
@@ -23,7 +24,8 @@ export class FeaturedService {
 
   async addToFeatured(verseIds: number[]) {
     // 1. Retrieve or create the verse group
-    let verseGroup = await this.versesService.findVerseGroupByVerseIds(verseIds);
+    let verseGroup =
+      await this.versesService.findVerseGroupByVerseIds(verseIds);
 
     if (!verseGroup) {
       verseGroup = await this.versesService.createVerseGroup(verseIds);
@@ -51,7 +53,9 @@ export class FeaturedService {
     const langs = [Lang.ENGLISH, Lang.ARABIC];
 
     // 5. Ensure verses with translations are loaded (in case verseGroup.verses are not populated)
-    const populatedGroup = await this.versesService.findVerseGroupById(verseGroup.id);
+    const populatedGroup = await this.versesService.findVerseGroupById(
+      verseGroup.id,
+    );
 
     // 6. Create FeaturedText records
     const featuredTexts = langs.map((lang) => {
@@ -73,6 +77,50 @@ export class FeaturedService {
     return await this.featuredRepo.delete(id);
   }
 
+  async getAllFeatured(lang: Lang | null) {
+    if (!lang) lang = Lang.ENGLISH;
+
+    const featured = await this.featuredRepo
+      .createQueryBuilder('featured')
+      .leftJoinAndSelect('featured.verseGroup', 'verseGroup')
+      .leftJoinAndSelect('verseGroup.verses', 'verse')
+      .leftJoinAndSelect(
+        'verse.verseTranslations',
+        'verseTranslation',
+        'verseTranslation.lang = :lang',
+        { lang },
+      )
+      .leftJoinAndSelect('verseGroup.startingVerse', 'startingVerse')
+      .leftJoinAndSelect('startingVerse.chapter', 'chapter')
+      .leftJoinAndSelect('chapter.book', 'book')
+      .orderBy('startingVerse.id', 'ASC')
+      .getMany();
+
+    for (const f of featured) {
+      f.verseGroup.verses.sort((a, b) => a.id - b.id);
+    }
+
+    return featured;
+  }
+
+  async getFeaturedText(id: number) {
+    const featuredText = await this.featuredTextRepo.find({
+      where: {
+        featured: { id },
+      },
+      relations: [
+        'featured',
+        'featured.verseGroup',
+        'featured.verseGroup.startingVerse',
+        'featured.verseGroup.startingVerse.chapter',
+        'featured.verseGroup.startingVerse.chapter.book',
+      ],
+    });
+
+    if (!featuredText) throw new NotFoundException();
+
+    return featuredText;
+  }
 
   create(createFeaturedDto: CreateFeaturedDto) {
     return 'This action adds a new featured';
