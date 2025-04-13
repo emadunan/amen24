@@ -6,7 +6,8 @@ declare namespace NodeJS {
     HOST: string;
     PORT: string;
     ROUNDS: string;
-    JWT_SECRET: string;
+    JWT_ACCESS_SECRET: string;
+    JWT_REFRESH_SECRET: string;
     FRONTEND_URL: string;
     FRONTEND_ORIGINS: string;
     SMTP_PORT: string;

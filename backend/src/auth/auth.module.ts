@@ -17,8 +17,8 @@ import { FacebookStratrgy } from './strategies/facebook.strategy';
     JwtModule.registerAsync({
       useFactory(configService: ConfigService) {
         return {
-          secret: configService.getOrThrow<string>('JWT_SECRET'),
-          signOptions: { expiresIn: '30d' },
+          secret: configService.getOrThrow<string>('JWT_ACCESS_SECRET'),
+          signOptions: { expiresIn: '1h' },
         };
       },
       inject: [ConfigService],

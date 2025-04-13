@@ -91,9 +91,16 @@ export class AuthService {
   }
 
   loadAccessToken(user: User, response: Response): void {
-    const { password, ...data } = user;
+    const { password, ...payload } = user;
 
-    const access_token = this.jwtService.sign(data);
+    const access_token = this.jwtService.sign(payload);
+
+    const refreshToken = this.jwtService.sign(payload, {
+      secret: this.configService.getOrThrow('JWT_REFRESH_SECRET'),
+      expiresIn: '30d',
+    });
+
+    
 
     response.cookie('access_token', access_token, {
       httpOnly: true,
