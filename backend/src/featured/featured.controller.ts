@@ -40,6 +40,6 @@ export class FeaturedController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.featuredService.remove(+id);
+    return this.featuredService.removeFromFeatured(+id);
   }
 }
