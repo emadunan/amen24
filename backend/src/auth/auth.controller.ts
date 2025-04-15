@@ -1,7 +1,18 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Req,
+  Res,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
+import { MESSAGE_KEYS } from '@amen24/shared';
+import { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -11,6 +22,18 @@ export class AuthController {
     configService: ConfigService,
   ) {
     this.appUrl = configService.getOrThrow<string>('FRONTEND_URL');
+  }
+
+  @Post('refresh')
+  async refresh(@Req() req: Request, @Res() res: Response) {
+    const refreshToken = req.cookies['refresh_token'];
+
+    if (!refreshToken) {
+      throw new UnauthorizedException('Refresh token not provided');
+    }
+
+    await this.authService.refreshAccessToken(refreshToken, res);
+    return res.sendStatus(204);
   }
 
   @Get('google')
@@ -29,7 +52,7 @@ export class AuthController {
     }
 
     // Store JWT token as an HTTP-only cookie
-    this.authService.loadAccessToken(user, res);
+    this.authService.loadTokens(user, res);
 
     // Redirect to frontend (no token in URL for better security)
     return res.redirect(this.appUrl);
@@ -37,7 +60,7 @@ export class AuthController {
 
   @Get('facebook')
   @UseGuards(AuthGuard('facebook'))
-  async facebookLogin(): Promise<void> {}
+  async facebookLogin(): Promise<void> { }
 
   @Get('facebook/callback')
   @UseGuards(AuthGuard('facebook'))
@@ -48,8 +71,16 @@ export class AuthController {
       return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
-    this.authService.loadAccessToken(user, res);
+    this.authService.loadTokens(user, res);
 
     return res.redirect(this.appUrl);
+  }
+
+  @Post('logout')
+  @HttpCode(200)
+  async logout(@Res() res: Response) {
+    this.authService.clearTokens(res);
+
+    return res.json({ message: MESSAGE_KEYS.LOGGED_OUT_SUCCESSFULLY });
   }
 }

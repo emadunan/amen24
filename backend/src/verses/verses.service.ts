@@ -81,7 +81,7 @@ export class VersesService {
       .getOne();
   }
 
-  async deleteVerseGroup(id: number) {    
+  async deleteVerseGroup(id: number) {
     return await this.verseGroupRepo.delete(id);
   }
 

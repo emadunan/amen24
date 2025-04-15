@@ -1,14 +1,10 @@
 import { ApiMessage, Favorite } from "@amen24/shared";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQueryWithReauth } from "./baseQueryWithReauth";
 
 export const favoriteApi = createApi({
   reducerPath: "favoriteApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${apiUrl}/users/favorite`,
-    credentials: "include",
-  }),
+  baseQuery: createBaseQueryWithReauth("users/favorite"),
   tagTypes: ["Favorite"],
   endpoints: (builder) => ({
     getUserFavorites: builder.query<Favorite[], void>({

@@ -14,6 +14,7 @@ import {
   ParseIntPipe,
   NotFoundException,
   NotImplementedException,
+  Put,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -28,6 +29,7 @@ import { User } from './entities/user.entity';
 import { BookmarksService } from './services/bookmarks.service';
 import { ApiMessage, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
 import { FavoritesService } from './services/favorites.service';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Controller('users')
 export class UsersController {
@@ -37,7 +39,7 @@ export class UsersController {
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
     private readonly favoritesService: FavoritesService,
-  ) {}
+  ) { }
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
@@ -50,16 +52,8 @@ export class UsersController {
   @HttpCode(200)
   async login(@Req() req, @Res() res: Response) {
     // Set token produced based on user to the http response
-    this.authService.loadAccessToken(req.user, res);
+    await this.authService.loadTokens(req.user, res);
     res.json({ message: MESSAGE_KEYS.LOGGED_IN_SUCCESSFULLY });
-  }
-
-  @Post('logout')
-  @HttpCode(200)
-  async logout(@Res() res: Response) {
-    this.authService.clearAccessToken(res);
-
-    return res.json({ message: MESSAGE_KEYS.LOGGED_OUT_SUCCESSFULLY });
   }
 
   @UseGuards(JwtAuthGuard)
@@ -77,7 +71,7 @@ export class UsersController {
       newPassword,
     );
 
-    this.authService.clearAccessToken(res);
+    this.authService.clearTokens(res);
     res.json({ message: MESSAGE_KEYS.PASSWORD_UPDATED });
   }
 
@@ -96,30 +90,18 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('me/theme')
-  async toggleTheme(@UserParam() u: User, @Res() res: Response) {
-    const user = await this.profilesService.toggleTheme(u.email, u.provider);
-
-    this.authService.loadAccessToken(user, res);
-    res.json({ message: MESSAGE_KEYS.USER_PROFILE_UPDATED });
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Patch('me/lang')
-  async changeLang(
+  @Put('me/profile')
+  async updateProfile(
     @UserParam() u: User,
-    @Body() body: any,
+    @Body() body: UpdateProfileDto,
     @Res() res: Response,
   ) {
-    if (!u) throw new UnauthorizedException();
+    // TODO: Use this enpoint for all profile updates -- remove theme and lang endpoints
+    const user = await this.profilesService.update(u.email, u.provider, body);
 
-    const user = await this.profilesService.changeLang(
-      u.email,
-      u.provider,
-      body.uiLang,
-    );
+    if (!user) throw new NotImplementedException();
 
-    this.authService.loadAccessToken(user, res);
+    await this.authService.loadTokens(user, res);
     res.json({ message: MESSAGE_KEYS.USER_PROFILE_UPDATED });
   }
 
@@ -221,7 +203,7 @@ export class UsersController {
   async removePermanently(@UserParam() user: User, @Res() res: Response) {
     await this.profilesService.remove(user.email);
 
-    return this.logout(res);
+    res.redirect('/auth/logout');
   }
 
   @Delete(':id')

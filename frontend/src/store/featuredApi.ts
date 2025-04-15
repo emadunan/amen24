@@ -1,14 +1,10 @@
 import { ApiMessage, Featured, FeaturedText } from "@amen24/shared";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQueryWithReauth } from "./baseQueryWithReauth";
 
 export const featuredApi = createApi({
   reducerPath: "featuredApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${apiUrl}/featured`,
-    credentials: "include",
-  }),
+  baseQuery: createBaseQueryWithReauth("featured"),
   tagTypes: ["Featured"],
   endpoints: (builder) => ({
     getAllFeatured: builder.query<Featured[], void>({

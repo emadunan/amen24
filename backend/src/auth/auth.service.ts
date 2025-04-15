@@ -15,15 +15,21 @@ import { randomBytes } from 'crypto';
 import { Response } from 'express';
 import { Profile } from 'passport';
 import * as bcrypt from 'bcrypt';
+import { ProfilesService } from 'src/users/services/profiles.service';
 
 @Injectable()
 export class AuthService {
+  bcryptRounds: number;
+
   constructor(
     private configService: ConfigService,
     private usersService: UsersService,
+    private profilesService: ProfilesService,
     private jwtService: JwtService,
     private mailerService: MailerService,
-  ) {}
+  ) {
+    this.bcryptRounds = Number(this.configService.getOrThrow('ROUNDS'));
+  }
 
   async validateLocalUser(
     email: string,
@@ -90,7 +96,7 @@ export class AuthService {
     return this.usersService.create(createUserDto);
   }
 
-  loadAccessToken(user: User, response: Response): void {
+  async loadTokens(user: User, response: Response): Promise<void> {
     const { password, ...payload } = user;
 
     const access_token = this.jwtService.sign(payload);
@@ -100,21 +106,104 @@ export class AuthService {
       expiresIn: '30d',
     });
 
-    
+    await this.profilesService.update(user.email, user.provider, {
+      refreshToken: await bcrypt.hash(refreshToken, this.bcryptRounds),
+    });
 
     response.cookie('access_token', access_token, {
       httpOnly: true,
       secure:
         this.configService.getOrThrow<string>('NODE_ENV') === 'production',
+      sameSite: 'lax',
+      maxAge: 1 * 60 * 1000,
+    });
+
+    response.cookie('refresh_token', refreshToken, {
+      httpOnly: true,
+      secure:
+        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
+      sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
   }
 
-  clearAccessToken(response: Response): void {
+  clearTokens(response: Response): void {
     response.clearCookie('access_token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
+    });
+
+    response.clearCookie('refresh_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+    });
+  }
+
+  async refreshAccessToken(
+    refreshToken: string,
+    res: Response,
+  ): Promise<void> {
+    const payload = this.jwtService.decode(refreshToken) as {
+      email?: string;
+      provider?: AuthProvider;
+    };
+
+    if (!payload?.email) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    // Find profile by email
+    const profile = await this.profilesService.findOne(payload.email);
+
+    if (!profile || !profile.refreshToken) {
+      throw new UnauthorizedException('Profile not found or not logged in');
+    }
+
+    const isValid = await bcrypt.compare(refreshToken, profile.refreshToken);
+    if (!isValid) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    // Get user from profile (we assume there's always one preferred or primary user)
+    const user = await this.usersService.findOneByEmailProvider(
+      payload.email,
+      payload.provider,
+    );
+
+    if (!user) throw new UnauthorizedException(ERROR_KEYS.USER_NOT_FOUND);
+
+    const access_token = this.jwtService.sign({ ...user, password: undefined });
+
+    // Optionally: rotate refresh token
+    const { password, ...newPayload } = user;
+    const newRefreshToken = this.jwtService.sign(newPayload,
+      {
+        secret: this.configService.getOrThrow<string>('JWT_REFRESH_SECRET'),
+        expiresIn: '30d',
+      },
+    );
+
+    // Save new hashed token
+    const refreshTokenHash = await bcrypt.hash(newRefreshToken, this.bcryptRounds);
+    await this.profilesService.update(user.email, user.provider, { refreshToken: refreshTokenHash });
+
+    // Send new refresh token as cookie
+    res.cookie('refresh_token', newRefreshToken, {
+      httpOnly: true,
+      secure:
+        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
+      sameSite: 'lax',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    res.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure:
+        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
+      sameSite: 'lax',
+      maxAge: 1 * 60 * 1000,
     });
   }
 

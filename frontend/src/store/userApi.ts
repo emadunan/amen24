@@ -1,7 +1,6 @@
-import { Lang, User } from "@amen24/shared";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { Lang, Profile, User } from "@amen24/shared";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQueryWithReauth } from "./baseQueryWithReauth";
 
 type UserLogin = Pick<User, "email" | "password">;
 
@@ -16,10 +15,7 @@ type UserSignup = Partial<User> & {
 
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${apiUrl}/users`,
-    credentials: "include",
-  }),
+  baseQuery: createBaseQueryWithReauth("users"),
   tagTypes: ["User"], // 👈 Define User tag type
   endpoints: (builder) => ({
     getMe: builder.query<User | null, void>({
@@ -79,11 +75,16 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    toggleTheme: builder.mutation<void, void>({
-      query: () => ({
-        url: "/me/theme",
-        method: "PATCH",
-      }),
+    updateProfile: builder.mutation<void, Partial<Profile>>({
+      query: (body) => {
+        console.log(body);
+        
+        return {
+          url: "/me/profile",
+          method: "PUT",
+          body,
+        }
+      },
       invalidatesTags: ["User"],
     }),
     changeLang: builder.mutation<void, string>({
@@ -109,8 +110,7 @@ export const {
   useSignupMutation,
   useLoginMutation,
   useLogoutMutation,
-  useToggleThemeMutation,
-  useChangeLangMutation,
+  useUpdateProfileMutation,
   useDeleteAccountMutation,
   useResetPasswordMutation,
   useRequestPasswordMutation,

@@ -20,7 +20,7 @@ export class FeaturedService {
     @InjectRepository(FeaturedText)
     private featuredTextRepo: Repository<FeaturedText>,
     private versesService: VersesService,
-  ) { }
+  ) {}
 
   async addToFeatured(verseIds: number[]) {
     // 1. Retrieve or create the verse group
@@ -83,7 +83,7 @@ export class FeaturedService {
 
     const result = await this.featuredRepo.remove(featured);
 
-    if(featured.verseGroup.favorites.length < 1) {      
+    if (featured.verseGroup.favorites.length < 1) {
       await this.versesService.deleteVerseGroup(featured.verseGroup.id);
     }
 

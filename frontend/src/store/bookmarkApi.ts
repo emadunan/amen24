@@ -1,14 +1,10 @@
 import { Bookmark } from "@amen24/shared";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQueryWithReauth } from "./baseQueryWithReauth";
 
 export const bookmarkApi = createApi({
   reducerPath: "bookmarkApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${apiUrl}/users/bookmark`,
-    credentials: "include",
-  }),
+  baseQuery: createBaseQueryWithReauth("users/bookmark"),
   tagTypes: ["Bookmark"],
   endpoints: (builder) => ({
     getUserLastReadBookmark: builder.query<Bookmark, void>({

@@ -16,6 +16,9 @@ export class Profile {
   @PrimaryColumn({ type: 'text' })
   email: string;
 
+  @Column({ type: 'text', nullable: true })
+  refreshToken: string;
+
   @OneToMany(() => User, (user) => user.profile)
   users: User[];
 

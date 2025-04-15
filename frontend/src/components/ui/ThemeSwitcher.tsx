@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useLayoutEffect } from "react";
 import styles from "./ThemeSwitcher.module.css";
-import { useGetMeQuery, useToggleThemeMutation } from "@/store/userApi";
+import { useGetMeQuery, useToggleThemeMutation, useUpdateProfileMutation } from "@/store/userApi";
 import { ThemeMode } from "@amen24/shared";
 import useBreakpoint from "@/hooks/useBreakpoint";
 
@@ -13,7 +13,8 @@ const ThemeSwitcher = () => {
   const { data: user, isLoading: isFetching } = useGetMeQuery();
 
   // Mutation to toggle theme
-  const [toggleTheme, { isLoading: isMutating }] = useToggleThemeMutation();
+  // const [toggleTheme, { isLoading: isMutating }] = useToggleThemeMutation();
+  const [updateProfile, { isLoading: isMutating }] = useUpdateProfileMutation();
 
   // Local state for non-logged-in users
   const { isTablet } = useBreakpoint();
@@ -53,7 +54,7 @@ const ThemeSwitcher = () => {
 
     if (user) {
       try {
-        await toggleTheme(); // Toggle via backend
+        await updateProfile({ themeMode: newTheme ? ThemeMode.DARK : ThemeMode.LIGHT }); // Toggle via backend
       } catch (error) {
         console.error("Failed to toggle theme:", error);
       }
@@ -61,7 +62,7 @@ const ThemeSwitcher = () => {
       // Save preference locally for non-logged-in users
       localStorage.setItem(LOCAL_STORAGE_KEY, newTheme ? "dark" : "light");
     }
-  }, [isDarkMode, user, toggleTheme]);
+  }, [isDarkMode, user, updateProfile]);
 
   if (isDarkMode === null) return null; // Avoid rendering before theme is determined
 

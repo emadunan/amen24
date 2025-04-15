@@ -7,9 +7,10 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useChangeLangMutation, useGetMeQuery } from "@/store/userApi";
+import { useGetMeQuery, useUpdateProfileMutation } from "@/store/userApi";
 import useBreakpoint from "@/hooks/useBreakpoint";
 import { showToast } from "@/utils/toast";
+import { Lang } from "@amen24/shared";
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation(["lang", "error"]);
@@ -22,7 +23,8 @@ const LanguageSelector = () => {
 
   useClickOutside(dropdownRef, isOpen, setIsOpen);
   const { data: user } = useGetMeQuery();
-  const [changeLang] = useChangeLangMutation();
+  // const [changeLang] = useChangeLangMutation();
+  const [updateProfile] = useUpdateProfileMutation();
   const { isTablet } = useBreakpoint();
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const LanguageSelector = () => {
 
     // If no lang is set, update it with current i18n.language
     if (!user.profile.uiLang) {
-      changeLang(i18n.language)
+      updateProfile({ uiLang: i18n.language as Lang })
         .unwrap()
         .catch((err) => {
           console.error(err);
@@ -65,7 +67,7 @@ const LanguageSelector = () => {
     // Only update backend if the user is logged in
     if (user?.id && shouldUpdateBackend) {
       try {
-        await changeLang(newLocale).unwrap();
+        await updateProfile({ uiLang: newLocale as Lang }).unwrap();
       } catch (error) {
         console.error(error);
         showToast(t("error:failedToChangeLanguage"), "error");

@@ -15,6 +15,7 @@
   "dependencies": {
     "@amen24/shared": "file:../shared",
     "@reduxjs/toolkit": "^2.5.1",
+    "async-mutex": "^0.5.0",
     "dotenv-cli": "^8.0.0",
     "i18next": "^24.2.2",
     "i18next-resources-to-backend": "^1.2.1",

@@ -1,2 +1,14 @@
-### Google Login
-GET http://localhost:5000/api/auth/google HTTP/1.1
+### Login
+POST http://localhost:5000/api/users/local-login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "emadunan@gmail.com",
+  "password": "emadunan"
+}
+
+### Refresh token
+POST http://localhost:5000/api/auth/refresh
+
+### Get protected resource
+GET http://localhost:5000/api/users
