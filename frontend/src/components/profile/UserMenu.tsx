@@ -7,9 +7,6 @@ import { RiLogoutBoxLine, RiSettings3Line } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
 import useClickOutside from "@/hooks/useClickOutside";
-import { userApi, useLogoutMutation } from "@/store/userApi";
-import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { showToast } from "@/utils/toast";
 import { FaRegStar } from "react-icons/fa";
@@ -23,27 +20,24 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-  const dispatch = useDispatch();
 
   useClickOutside(dropdownRef, isOpen, setIsOpen);
 
-  const [logout] = useLogoutMutation();
-
   const handleLogout = useCallback(async () => {
     try {
-      await logout().unwrap();
-
-      dispatch(userApi.util.resetApiState());
-      setIsOpen(false); // Close menu after logout
-
-      router.refresh(); // Refresh user state
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+  
+      if (!res.ok) throw new Error("Logout failed");
+  
       window.location.href = "/login";
     } catch (error) {
       console.error(error);
       showToast("error:logoutFailed", "error");
     }
-  }, [logout, router]);
+  }, []);
 
   return (
     <div className={styles.container} ref={dropdownRef}>

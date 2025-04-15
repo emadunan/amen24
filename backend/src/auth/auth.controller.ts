@@ -52,7 +52,7 @@ export class AuthController {
     }
 
     // Store JWT token as an HTTP-only cookie
-    this.authService.loadTokens(user, res);
+    await this.authService.loadTokens(user, res);
 
     // Redirect to frontend (no token in URL for better security)
     return res.redirect(this.appUrl);
@@ -71,14 +71,14 @@ export class AuthController {
       return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
-    this.authService.loadTokens(user, res);
+    await this.authService.loadTokens(user, res);
 
     return res.redirect(this.appUrl);
   }
 
   @Post('logout')
   @HttpCode(200)
-  async logout(@Res() res: Response) {
+  logout(@Res() res: Response) {
     this.authService.clearTokens(res);
 
     return res.json({ message: MESSAGE_KEYS.LOGGED_OUT_SUCCESSFULLY });
