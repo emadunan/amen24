@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useLayoutEffect } from "react";
 import styles from "./ThemeSwitcher.module.css";
-import { useGetMeQuery, useToggleThemeMutation, useUpdateProfileMutation } from "@/store/userApi";
+import { useGetMeQuery, useUpdateProfileMutation } from "@/store/userApi";
 import { ThemeMode } from "@amen24/shared";
 import useBreakpoint from "@/hooks/useBreakpoint";
 

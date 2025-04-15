@@ -1,5 +1,5 @@
 // lib/baseQueryWithReauth.ts
-import { fetchBaseQuery, BaseQueryFn, FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { fetchBaseQuery, BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { Mutex } from "async-mutex";
 
 const mutex = new Mutex();
@@ -9,7 +9,7 @@ const rawBaseQuery = fetchBaseQuery({
   credentials: "include",
 });
 
-export const createBaseQueryWithReauth = (segment: string): BaseQueryFn<any, unknown, FetchBaseQueryError> => {
+export const createBaseQueryWithReauth = (segment: string): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> => {
   return async (args, api, extraOptions) => {
     // Prefix the URL with the segment, unless it's an absolute URL (like refresh)
     if (typeof args === "string") {
