@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
 import { LocalStrategy } from './strategies/local.strategy';
@@ -18,7 +18,7 @@ import { FacebookStratrgy } from './strategies/facebook.strategy';
       useFactory(configService: ConfigService) {
         return {
           secret: configService.getOrThrow<string>('JWT_ACCESS_SECRET'),
-          signOptions: { expiresIn: '1m' },
+          signOptions: { expiresIn: configService.getOrThrow<string>("JWT_ACCESS_EXPIRES_IN") },
         };
       },
       inject: [ConfigService],

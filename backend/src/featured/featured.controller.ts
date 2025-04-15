@@ -18,6 +18,7 @@ import { User as UserParam } from '../auth/decorators/user.decorator';
 export class FeaturedController {
   constructor(private readonly featuredService: FeaturedService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() body: { verseIds: number[] }) {
     return this.featuredService.addToFeatured(body.verseIds);
@@ -29,12 +30,13 @@ export class FeaturedController {
     return await this.featuredService.getAllFeatured(user.profile.uiLang);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.featuredService.getFeaturedText(+id);
   }
 
-  // TO DO
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -43,6 +45,7 @@ export class FeaturedController {
     return this.featuredService.update(+id, updateFeaturedDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.featuredService.removeFromFeatured(+id);

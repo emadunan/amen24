@@ -20,6 +20,8 @@ import { ProfilesService } from 'src/users/services/profiles.service';
 @Injectable()
 export class AuthService {
   bcryptRounds: number;
+  jwtRefreshSecret: string;
+  jwtRefreshExpiresIn: string;
 
   constructor(
     private configService: ConfigService,
@@ -29,6 +31,8 @@ export class AuthService {
     private mailerService: MailerService,
   ) {
     this.bcryptRounds = Number(this.configService.getOrThrow('ROUNDS'));
+    this.jwtRefreshSecret = this.configService.getOrThrow('JWT_REFRESH_SECRET');
+    this.jwtRefreshExpiresIn = this.configService.getOrThrow('JWT_REFRESH_EXPIRES_IN');
   }
 
   async validateLocalUser(
@@ -102,8 +106,8 @@ export class AuthService {
     const access_token = this.jwtService.sign(payload);
 
     const refreshToken = this.jwtService.sign(payload, {
-      secret: this.configService.getOrThrow('JWT_REFRESH_SECRET'),
-      expiresIn: '30d',
+      secret: this.jwtRefreshSecret,
+      expiresIn: this.jwtRefreshExpiresIn,
     });
 
     await this.profilesService.update(user.email, user.provider, {
@@ -180,8 +184,8 @@ export class AuthService {
     const { password, ...newPayload } = user;
     const newRefreshToken = this.jwtService.sign(newPayload,
       {
-        secret: this.configService.getOrThrow<string>('JWT_REFRESH_SECRET'),
-        expiresIn: '30d',
+        secret: this.jwtRefreshSecret,
+        expiresIn: this.jwtRefreshExpiresIn,
       },
     );
 
