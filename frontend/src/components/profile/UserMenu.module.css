@@ -50,6 +50,13 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 0.6rem;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  height: 100%;
+  color: var(--text);
+  font-family: var(--amiri);
+  font-size: 1.1rem;
 }
 
 .listItemText {
@@ -63,16 +70,6 @@
 
 [dir="rtl"] .flipIcon {
   transform: scaleX(-1);
-}
-
-.logoutBtn {
-  background-color: transparent;
-  border: none;
-  width: 100%;
-  height: 100%;
-  color: var(--text);
-  font-family: var(--amiri);
-  font-size: 1.1rem;
 }
 
 .separator {

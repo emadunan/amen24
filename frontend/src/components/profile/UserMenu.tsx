@@ -11,17 +11,24 @@ import Link from "next/link";
 import { showToast } from "@/utils/toast";
 import { FaRegStar } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi2";
+import { useRouter } from "next/navigation";
 
 interface UserMenuProps {
   user?: User;
 }
 
 const UserMenu: FC<UserMenuProps> = ({ user }) => {
+  const router = useRouter();
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(dropdownRef, isOpen, setIsOpen);
+
+  const handleRedirect = (urlSegment: string) => {
+    router.push(urlSegment);
+    setIsOpen(false);
+  };
 
   const handleLogout = useCallback(async () => {
     try {
@@ -60,35 +67,41 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
         <ul className={styles.dropdown}>
           {user?.profile.privilege === UserPrivilege.ADMIN && (
             <li tabIndex={0}>
-              <Link href="/featured" className={styles.listItem}>
+              <button
+                onClick={handleRedirect.bind(this, "/featured")}
+                className={styles.listItem}
+              >
                 <HiSparkles />
                 <span className={styles.listItemText}>
                   {t("userMenu.featured")}
                 </span>
-              </Link>
+              </button>
             </li>
           )}
           <li tabIndex={1}>
-            <Link href="/favorites" className={styles.listItem}>
+            <button
+              onClick={handleRedirect.bind(this, "/favorites")}
+              className={styles.listItem}
+            >
               <FaRegStar />
               <span className={styles.listItemText}>
                 {t("userMenu.favorite")}
               </span>
-            </Link>
+            </button>
           </li>
           <li tabIndex={2}>
-            <Link href="/settings" className={styles.listItem}>
+            <button
+              onClick={handleRedirect.bind(this, "/settings")}
+              className={styles.listItem}
+            >
               <RiSettings3Line />
               <span className={styles.listItemText}>
                 {t("userMenu.settings")}
               </span>
-            </Link>
+            </button>
           </li>
           <div className={styles.separator} />
-          <button
-            className={`${styles.logoutBtn} ${styles.listItem}`}
-            onClick={handleLogout}
-          >
+          <button onClick={handleLogout} className={styles.listItem}>
             <RiLogoutBoxLine className={styles.flipIcon} />
             <span className={styles.listItemText}>{t("userMenu.logout")}</span>
           </button>
