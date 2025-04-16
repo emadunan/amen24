@@ -54,7 +54,9 @@ const ThemeSwitcher = () => {
 
     if (user) {
       try {
-        await updateProfile({ themeMode: newTheme ? ThemeMode.DARK : ThemeMode.LIGHT }); // Toggle via backend
+        await updateProfile({
+          themeMode: newTheme ? ThemeMode.DARK : ThemeMode.LIGHT,
+        }); // Toggle via backend
       } catch (error) {
         console.error("Failed to toggle theme:", error);
       }

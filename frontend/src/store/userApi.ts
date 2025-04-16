@@ -78,12 +78,12 @@ export const userApi = createApi({
     updateProfile: builder.mutation<void, Partial<Profile>>({
       query: (body) => {
         console.log(body);
-        
+
         return {
           url: "/me/profile",
           method: "PUT",
           body,
-        }
+        };
       },
       invalidatesTags: ["User"],
     }),

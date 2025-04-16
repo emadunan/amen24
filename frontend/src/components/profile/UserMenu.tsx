@@ -25,13 +25,16 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
 
   const handleLogout = useCallback(async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
-  
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+
       if (!res.ok) throw new Error("Logout failed");
-  
+
       window.location.href = "/login";
     } catch (error) {
       console.error(error);

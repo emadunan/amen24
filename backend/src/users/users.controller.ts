@@ -39,7 +39,7 @@ export class UsersController {
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
     private readonly favoritesService: FavoritesService,
-  ) { }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('me')

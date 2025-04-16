@@ -32,7 +32,9 @@ export class AuthService {
   ) {
     this.bcryptRounds = Number(this.configService.getOrThrow('ROUNDS'));
     this.jwtRefreshSecret = this.configService.getOrThrow('JWT_REFRESH_SECRET');
-    this.jwtRefreshExpiresIn = this.configService.getOrThrow('JWT_REFRESH_EXPIRES_IN');
+    this.jwtRefreshExpiresIn = this.configService.getOrThrow(
+      'JWT_REFRESH_EXPIRES_IN',
+    );
   }
 
   async validateLocalUser(
@@ -145,10 +147,7 @@ export class AuthService {
     });
   }
 
-  async refreshAccessToken(
-    refreshToken: string,
-    res: Response,
-  ): Promise<void> {
+  async refreshAccessToken(refreshToken: string, res: Response): Promise<void> {
     const payload = this.jwtService.decode(refreshToken) as {
       email?: string;
       provider?: AuthProvider;
@@ -182,16 +181,19 @@ export class AuthService {
 
     // Optionally: rotate refresh token
     const { password, ...newPayload } = user;
-    const newRefreshToken = this.jwtService.sign(newPayload,
-      {
-        secret: this.jwtRefreshSecret,
-        expiresIn: this.jwtRefreshExpiresIn,
-      },
-    );
+    const newRefreshToken = this.jwtService.sign(newPayload, {
+      secret: this.jwtRefreshSecret,
+      expiresIn: this.jwtRefreshExpiresIn,
+    });
 
     // Save new hashed token
-    const refreshTokenHash = await bcrypt.hash(newRefreshToken, this.bcryptRounds);
-    await this.profilesService.update(user.email, user.provider, { refreshToken: refreshTokenHash });
+    const refreshTokenHash = await bcrypt.hash(
+      newRefreshToken,
+      this.bcryptRounds,
+    );
+    await this.profilesService.update(user.email, user.provider, {
+      refreshToken: refreshTokenHash,
+    });
 
     // Send new refresh token as cookie
     res.cookie('refresh_token', newRefreshToken, {

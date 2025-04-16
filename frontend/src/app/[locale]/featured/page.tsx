@@ -1,8 +1,8 @@
-import FeaturedList from '@/components/featured/FeaturedList';
-import React from 'react';
+import FeaturedList from "@/components/featured/FeaturedList";
+import React from "react";
 
 const FeaturedPage = () => {
-  return <FeaturedList />
-}
+  return <FeaturedList />;
+};
 
 export default FeaturedPage;

@@ -1,5 +1,11 @@
 // lib/baseQueryWithReauth.ts
-import { fetchBaseQuery, BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { ERROR_KEYS } from "@amen24/shared";
+import {
+  fetchBaseQuery,
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+} from "@reduxjs/toolkit/query";
 import { Mutex } from "async-mutex";
 
 const mutex = new Mutex();
@@ -9,7 +15,9 @@ const rawBaseQuery = fetchBaseQuery({
   credentials: "include",
 });
 
-export const createBaseQueryWithReauth = (segment: string): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> => {
+export const createBaseQueryWithReauth = (
+  segment: string,
+): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> => {
   return async (args, api, extraOptions) => {
     // Prefix the URL with the segment, unless it's an absolute URL (like refresh)
     if (typeof args === "string") {
@@ -25,7 +33,15 @@ export const createBaseQueryWithReauth = (segment: string): BaseQueryFn<string |
 
     let result = await rawBaseQuery(args, api, extraOptions);
 
-    if (result.error?.status === 401) {
+    if (
+      result.error?.status === 401 &&
+      ((result.error.data as { message?: string })?.message ===
+        ERROR_KEYS.SESSION_NOT_EXIST ||
+        (result.error.data as { message?: string })?.message ===
+          ERROR_KEYS.SESSION_EXPIRED)
+    ) {
+      console.log(result.error);
+
       // Wait until no one else is refreshing
       if (!mutex.isLocked()) {
         const release = await mutex.acquire();
@@ -33,7 +49,7 @@ export const createBaseQueryWithReauth = (segment: string): BaseQueryFn<string |
           const refreshResult = await rawBaseQuery(
             { url: "/auth/refresh", method: "POST" },
             api,
-            extraOptions
+            extraOptions,
           );
           if (!refreshResult.error) {
             // Retry the original request

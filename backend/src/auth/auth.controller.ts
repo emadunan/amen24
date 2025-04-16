@@ -60,7 +60,7 @@ export class AuthController {
 
   @Get('facebook')
   @UseGuards(AuthGuard('facebook'))
-  async facebookLogin(): Promise<void> { }
+  async facebookLogin(): Promise<void> {}
 
   @Get('facebook/callback')
   @UseGuards(AuthGuard('facebook'))

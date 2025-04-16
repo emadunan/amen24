@@ -13,6 +13,7 @@ export const ERROR_KEYS = {
   PASSWORD_TOO_SHORT: "passwordTooShort",
   INVALID_OR_EXPIRED_TOKEN: "invalidOrExpiredToken",
   SESSION_EXPIRED: "sessionExpired",
+  SESSION_NOT_EXIST: "sessionNotExist",
   UNAUTHORIZED_ACCESS: "unauthorizedAccess",
   FAILED_TO_FETCH: "failedToFetch",
   FAILED_TO_CHANGE_LANGUAGE: "failedToChangeLanguage",

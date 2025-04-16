@@ -34,7 +34,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     }
 
     if (err || !user) {
-      throw err || new UnauthorizedException();
+      throw err || new UnauthorizedException(ERROR_KEYS.SESSION_NOT_EXIST);
     }
 
     return user;

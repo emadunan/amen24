@@ -21,7 +21,7 @@ export const MakeStore = () => {
         .concat(userApi.middleware)
         .concat(bookmarkApi.middleware)
         .concat(favoriteApi.middleware)
-        .concat(featuredApi.middleware)
+        .concat(featuredApi.middleware),
   });
 
   return store;
