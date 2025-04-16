@@ -12,6 +12,7 @@ export const ERROR_KEYS = {
   PASSWORD_MISMATCH: "passwordMismatch",
   PASSWORD_TOO_SHORT: "passwordTooShort",
   INVALID_OR_EXPIRED_TOKEN: "invalidOrExpiredToken",
+  INVALID_REFRESH_TOKEN:"invalidRefreshToken",
   SESSION_EXPIRED: "sessionExpired",
   SESSION_NOT_EXIST: "sessionNotExist",
   UNAUTHORIZED_ACCESS: "unauthorizedAccess",

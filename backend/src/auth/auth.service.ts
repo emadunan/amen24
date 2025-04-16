@@ -187,19 +187,19 @@ export class AuthService {
     const payload = this.jwtService.decode(refreshToken);
 
     if (!payload?.email) {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new UnauthorizedException(ERROR_KEYS.INVALID_REFRESH_TOKEN);
     }
 
     // Find profile by email
     const profile = await this.profilesService.findOne(payload.email);
 
     if (!profile || !profile.refreshToken) {
-      throw new UnauthorizedException('Profile not found or not logged in');
+      throw new UnauthorizedException(ERROR_KEYS.PROFILE_NOT_FOUND);
     }
 
     const isValid = await bcrypt.compare(refreshToken, profile.refreshToken);
     if (!isValid) {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new UnauthorizedException(ERROR_KEYS.INVALID_REFRESH_TOKEN);
     }
 
     // Get user from profile (we assume there's always one preferred or primary user)
