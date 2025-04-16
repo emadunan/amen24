@@ -8,6 +8,7 @@ declare namespace NodeJS {
     ROUNDS: string;
     JWT_ACCESS_SECRET: string;
     JWT_ACCESS_EXPIRES_IN: string;
+    JWT_ACCESS_MAX_AGE: string;
     JWT_REFRESH_SECRET: string;
     JWT_REFRESH_EXPIRES_IN: string;
     FRONTEND_URL: string;

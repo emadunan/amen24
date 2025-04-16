@@ -19,7 +19,9 @@ import { ProfilesService } from 'src/users/services/profiles.service';
 
 @Injectable()
 export class AuthService {
+  isSecureResponse: boolean;
   bcryptRounds: number;
+  jwtAccessMaxAge: number;
   jwtRefreshSecret: string;
   jwtRefreshExpiresIn: string;
 
@@ -31,10 +33,15 @@ export class AuthService {
     private mailerService: MailerService,
   ) {
     this.bcryptRounds = Number(this.configService.getOrThrow('ROUNDS'));
+    this.jwtAccessMaxAge = Number(
+      this.configService.getOrThrow('JWT_ACCESS_MAX_AGE'),
+    );
     this.jwtRefreshSecret = this.configService.getOrThrow('JWT_REFRESH_SECRET');
     this.jwtRefreshExpiresIn = this.configService.getOrThrow(
       'JWT_REFRESH_EXPIRES_IN',
     );
+    this.isSecureResponse =
+      this.configService.getOrThrow<string>('NODE_ENV') === 'production';
   }
 
   async validateLocalUser(
@@ -116,38 +123,39 @@ export class AuthService {
       refreshToken: await bcrypt.hash(refreshToken, this.bcryptRounds),
     });
 
-    response.cookie('access_token', access_token, {
-      httpOnly: true,
-      secure:
-        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
-      sameSite: 'lax',
-      maxAge: 1 * 60 * 1000,
-    });
-
     response.cookie('refresh_token', refreshToken, {
       httpOnly: true,
-      secure:
-        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
       sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60 * 1000,
+      secure: this.isSecureResponse,
+    });
+
+    response.cookie('access_token', access_token, {
+      httpOnly: true,
+      sameSite: 'lax',
+      maxAge: this.jwtAccessMaxAge * 60 * 1000,
+      secure: this.isSecureResponse,
     });
   }
 
   clearTokens(response: Response): void {
     response.clearCookie('access_token', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
       path: '/',
+      secure: this.isSecureResponse,
     });
 
     response.clearCookie('refresh_token', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
       path: '/',
+      secure: this.isSecureResponse,
     });
   }
 
-  async refreshAccessToken(refreshToken: string, res: Response): Promise<void> {
+  async refreshAccessToken(
+    refreshToken: string,
+    response: Response,
+  ): Promise<void> {
     const payload = this.jwtService.decode(refreshToken) as {
       email?: string;
       provider?: AuthProvider;
@@ -180,11 +188,14 @@ export class AuthService {
     const access_token = this.jwtService.sign({ ...user, password: undefined });
 
     // Optionally: rotate refresh token
-    const { password, ...newPayload } = user;
-    const newRefreshToken = this.jwtService.sign(newPayload, {
-      secret: this.jwtRefreshSecret,
-      expiresIn: this.jwtRefreshExpiresIn,
-    });
+    const { email, displayName, provider } = user;
+    const newRefreshToken = this.jwtService.sign(
+      { email, displayName, provider },
+      {
+        secret: this.jwtRefreshSecret,
+        expiresIn: this.jwtRefreshExpiresIn,
+      },
+    );
 
     // Save new hashed token
     const refreshTokenHash = await bcrypt.hash(
@@ -195,21 +206,18 @@ export class AuthService {
       refreshToken: refreshTokenHash,
     });
 
-    // Send new refresh token as cookie
-    res.cookie('refresh_token', newRefreshToken, {
+    response.cookie('refresh_token', newRefreshToken, {
       httpOnly: true,
-      secure:
-        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
       sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60 * 1000,
+      secure: this.isSecureResponse,
     });
 
-    res.cookie('access_token', access_token, {
+    response.cookie('access_token', access_token, {
       httpOnly: true,
-      secure:
-        this.configService.getOrThrow<string>('NODE_ENV') === 'production',
       sameSite: 'lax',
-      maxAge: 1 * 60 * 1000,
+      maxAge: this.jwtAccessMaxAge * 60 * 1000,
+      secure: this.isSecureResponse,
     });
   }
 

@@ -9,6 +9,7 @@ export default Joi.object({
   ROUNDS: Joi.number(),
   JWT_ACCESS_SECRET: Joi.string(),
   JWT_ACCESS_EXPIRES_IN: Joi.string(),
+  JWT_ACCESS_MAX_AGE: Joi.number(),
   JWT_REFRESH_SECRET: Joi.string(),
   JWT_REFRESH_EXPIRES_IN: Joi.string(),
   FRONTEND_URL: Joi.string().uri(),
