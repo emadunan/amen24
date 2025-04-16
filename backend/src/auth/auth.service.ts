@@ -110,14 +110,42 @@ export class AuthService {
   }
 
   async loadTokens(user: User, response: Response): Promise<void> {
-    const { password, ...payload } = user;
+    const {
+      resetPasswordExpires,
+      resetPasswordToken,
+      password,
+      lockUntil,
+      failedAttempts,
+      providerId,
+      ...rest
+    } = user;
 
-    const access_token = this.jwtService.sign(payload);
+    const {
+      refreshToken: _refreshToken,
+      bookmarks,
+      favorites,
+      lastLogin,
+      createdAt,
+      users,
+      ...profileRest
+    } = user.profile;
 
-    const refreshToken = this.jwtService.sign(payload, {
-      secret: this.jwtRefreshSecret,
-      expiresIn: this.jwtRefreshExpiresIn,
+    const access_token = this.jwtService.sign({
+      ...rest,
+      profile: profileRest,
     });
+
+    const refreshToken = this.jwtService.sign(
+      {
+        email: user.email,
+        displayName: user.displayName,
+        provider: user.provider,
+      },
+      {
+        secret: this.jwtRefreshSecret,
+        expiresIn: this.jwtRefreshExpiresIn,
+      },
+    );
 
     await this.profilesService.update(user.email, user.provider, {
       refreshToken: await bcrypt.hash(refreshToken, this.bcryptRounds),
@@ -156,10 +184,7 @@ export class AuthService {
     refreshToken: string,
     response: Response,
   ): Promise<void> {
-    const payload = this.jwtService.decode(refreshToken) as {
-      email?: string;
-      provider?: AuthProvider;
-    };
+    const payload = this.jwtService.decode(refreshToken);
 
     if (!payload?.email) {
       throw new UnauthorizedException('Invalid refresh token');
@@ -185,7 +210,27 @@ export class AuthService {
 
     if (!user) throw new UnauthorizedException(ERROR_KEYS.USER_NOT_FOUND);
 
-    const access_token = this.jwtService.sign({ ...user, password: undefined });
+    const {
+      resetPasswordExpires,
+      resetPasswordToken,
+      password,
+      lockUntil,
+      failedAttempts,
+      providerId,
+      ...rest
+    } = user;
+
+    const {
+      refreshToken: _refreshToken,
+      bookmarks,
+      favorites,
+      lastLogin,
+      createdAt,
+      users,
+      ...profileRest
+    } = user.profile;
+
+    const access_token = this.jwtService.sign({ ...rest, profile: profileRest });
 
     // Optionally: rotate refresh token
     const { email, displayName, provider } = user;

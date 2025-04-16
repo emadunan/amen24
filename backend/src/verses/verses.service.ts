@@ -283,7 +283,7 @@ export class VersesService {
           let text = result.at(4) as string;
 
           let textNormalized = text;
-          let textDiacritized = text;
+          const textDiacritized = text;
 
           if (lang === Lang.ARABIC) {
             text = replaceWaslaAlef(text);
