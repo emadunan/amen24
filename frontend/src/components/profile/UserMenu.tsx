@@ -7,7 +7,6 @@ import { RiLogoutBoxLine, RiSettings3Line } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
 import useClickOutside from "@/hooks/useClickOutside";
-import Link from "next/link";
 import { showToast } from "@/utils/toast";
 import { FaRegStar } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi2";

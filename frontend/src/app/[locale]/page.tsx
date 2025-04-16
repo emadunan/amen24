@@ -2,8 +2,11 @@ import BookCover from "@/components/bible/BookCover";
 import styles from "./page.module.css";
 import { Book, BookMap } from "@amen24/shared";
 import { FC } from "react";
+import initTranslations from "../i18n";
 
 const apiUrl = process.env.API_URL;
+
+const i18nNamespaces = ["book"];
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,6 +14,7 @@ interface Props {
 
 const HomePage: FC<Props> = async ({ params }) => {
   const { locale } = await params;
+  const { t } = await initTranslations(locale, i18nNamespaces);
   const response = await fetch(`${apiUrl}/books`);
 
   if (!response.ok) throw new Error("Failed to fetch data");
@@ -18,16 +22,19 @@ const HomePage: FC<Props> = async ({ params }) => {
   const books = await response.json();
 
   return (
-    <div className={styles.bibleIndex}>
-      {books.map((b: Book) => (
-        <BookCover
-          key={b.id}
-          bookId={b.id}
-          bookLen={BookMap[b.bookKey].len}
-          bookKey={b.bookKey}
-          locale={locale}
-        />
-      ))}
+    <div className={styles.bible}>
+      <h1>{t("book:WholeBible")}</h1>
+      <div className={styles.bibleIndex}>
+        {books.map((b: Book) => (
+          <BookCover
+            key={b.id}
+            bookId={b.id}
+            bookLen={BookMap[b.bookKey].len}
+            bookKey={b.bookKey}
+            locale={locale}
+          />
+        ))}
+      </div>
     </div>
   );
 };

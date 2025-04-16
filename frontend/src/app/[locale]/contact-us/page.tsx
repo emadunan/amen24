@@ -9,7 +9,7 @@ const ContactUsPage = () => {
   const { t } = useTranslation();
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>{t("contactUsTitle")}</h1>
+      <h2 className={styles.title}>{t("contactUsTitle")}</h2>
       <p className={styles.description}>{t("contactUsDescription")}</p>
 
       <div className={styles.contactBox}>

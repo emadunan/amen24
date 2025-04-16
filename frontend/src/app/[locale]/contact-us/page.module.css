@@ -9,7 +9,6 @@
 }
 
 .title {
-  font-size: 28px;
   font-weight: bold;
   color: var(--text);
 }
@@ -19,6 +18,10 @@
   font-size: 16px;
   color: var(--text);
   line-height: 1.5;
+}
+
+[dir="rtl"] .description {
+  line-height: 2.2;
 }
 
 .contactBox {

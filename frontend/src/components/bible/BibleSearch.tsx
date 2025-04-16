@@ -141,6 +141,7 @@ const BibleSearch = () => {
 
   return (
     <div className={styles.container}>
+      <h2>{t("searchEngine.title")}</h2>
       <div className={styles.searchBox}>
         <button
           className={styles.filterBtn}

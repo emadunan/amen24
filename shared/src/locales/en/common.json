@@ -14,6 +14,7 @@
   "contactUsTitle": "Contact",
   "contactUsDescription": "We are a dedicated team committed to providing the best service and user experience. If you need assistance or have any suggestions, we’d love to hear from you!",
   "searchEngine": {
+    "title": "Search Engine",
     "inviteMessage": "Search in the bible",
     "searchButtonText": "Search",
     "filterButtonText": "Filter books",
