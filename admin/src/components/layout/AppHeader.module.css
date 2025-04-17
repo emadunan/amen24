@@ -36,6 +36,8 @@
 
 .logoutButton {
   border: none;
+  font-family: amiri;
+  font-size: 1rem;
   background-color: var(--accent);
   color: var(--background);
   padding: .5rem;

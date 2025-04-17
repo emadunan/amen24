@@ -6,8 +6,8 @@ import {
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
 import { Mutex } from "async-mutex";
+import { apiUrl } from "../constants";
 
-const apiUrl = import.meta.env.VITE_API_URL;
 
 const mutex = new Mutex();
 
