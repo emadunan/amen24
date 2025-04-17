@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./DateDisplay.module.css";
-import { formatNumber, Lang } from "@amen24/shared";
+import { DateCalendar, formatNumber, Lang } from "@amen24/shared";
+import { useGetMeQuery, useUpdateProfileMutation } from "@/store/userApi";
 
 const calendars = ["gregorian", "coptic", "hebrew"] as const;
 type CalendarType = (typeof calendars)[number];
@@ -58,10 +59,31 @@ const civilToBiblical = (civilMonth: number): number => {
 
 const DateDisplay: React.FC = () => {
   const { t, i18n } = useTranslation(["month"]);
-  const [calendarIndex, setCalendarIndex] = useState(0);
+  const { data: user } = useGetMeQuery();
+  const [updateProfile] = useUpdateProfileMutation();
+
+  const preferredCalendar = user?.profile?.dateCalendar ?? "gregorian";
+  const defaultIndex = useMemo(
+    () => Math.max(0, calendars.indexOf(preferredCalendar as CalendarType)),
+    [preferredCalendar],
+  );
+  const [calendarIndex, setCalendarIndex] = useState(defaultIndex);
+
+  useEffect(() => {
+    if (user?.profile?.dateCalendar) {
+      const index = calendars.indexOf(user.profile.dateCalendar as CalendarType);
+      if (index !== -1) {
+        setCalendarIndex(index);
+      }
+    }
+  }, [user?.profile?.dateCalendar]);
 
   const switchCalendar = () => {
-    setCalendarIndex((prevIndex) => (prevIndex + 1) % calendars.length);
+    setCalendarIndex((prevIndex) => {
+      const nextIndex = (prevIndex + 1) % calendars.length;
+      updateProfile({ dateCalendar: calendars[nextIndex] as DateCalendar });
+      return nextIndex;
+    });
   };
 
   const getFormattedDate = (calendar: CalendarType) => {

@@ -1,15 +1,20 @@
-import { IsEmail, IsEnum, IsString } from 'class-validator';
-import { Lang, ThemeMode } from '@amen24/shared';
+import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
+import { DateCalendar, Lang, ThemeMode } from '@amen24/shared';
 
 export class CreateProfileDto {
   @IsEmail()
   email: string;
 
+  @IsEnum(ThemeMode)
+  themeMode: ThemeMode;
+
+  @IsOptional()
   @IsEnum(Lang)
   uiLang: Lang | null;
 
-  @IsEnum(ThemeMode)
-  themeMode: ThemeMode;
+  @IsOptional()
+  @IsEnum(DateCalendar)
+  dateCalendar: DateCalendar;
 
   @IsString()
   refreshToken?: string;

@@ -22,7 +22,6 @@ import { showToast } from "@/utils/toast";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
 import { useShowError } from "@/hooks/useShowError";
 import useBreakpoint from "@/hooks/useBreakpoint";
-import { useRef } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -128,7 +127,7 @@ const BibleSearch = () => {
       showApiError(error);
     } finally {
       dispatch(setIsLoading(false));
-      dispatch(setQueryTerms(query.trim().split(" ")))
+      dispatch(setQueryTerms(query.trim().split(" ")));
     }
   }
 
