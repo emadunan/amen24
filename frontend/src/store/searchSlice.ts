@@ -5,6 +5,7 @@ import { BookKey, VerseResult } from "@amen24/shared";
 // Define a type for the slice state
 interface SearchState {
   query: string;
+  queryTerms: string[];
   selectedBooks: string[];
   showDropdown: boolean;
   results: VerseResult[];
@@ -14,6 +15,7 @@ interface SearchState {
 // Define the initial state using that type
 const initialState: SearchState = {
   query: "",
+  queryTerms: [],
   selectedBooks: Object.values(BookKey),
   showDropdown: false,
   results: [],
@@ -27,6 +29,9 @@ export const searchSlice = createSlice({
   reducers: {
     setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
+    },
+    setQueryTerms: (state, action: PayloadAction<string[]>) => {
+      state.queryTerms = action.payload;
     },
     setSelectedBooks: (state, action: PayloadAction<string[]>) => {
       state.selectedBooks = action.payload;
@@ -45,6 +50,7 @@ export const searchSlice = createSlice({
 
 export const {
   setQuery,
+  setQueryTerms,
   setIsLoading,
   setSelectedBooks,
   setResults,

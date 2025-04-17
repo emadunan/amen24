@@ -11,8 +11,9 @@ import Spinner from "../ui/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import {
-  setIsLoading,
   setQuery,
+  setQueryTerms,
+  setIsLoading,
   setResults,
   setSelectedBooks,
   toggleDropdown,
@@ -21,6 +22,7 @@ import { showToast } from "@/utils/toast";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
 import { useShowError } from "@/hooks/useShowError";
 import useBreakpoint from "@/hooks/useBreakpoint";
+import { useRef } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -50,10 +52,8 @@ const BibleSearch = () => {
   const { isRegularPhone } = useBreakpoint();
   const { showApiError } = useShowError();
   const dispatch = useDispatch();
-  const { query, selectedBooks, showDropdown, results, isLoading } =
+  const { query, queryTerms, selectedBooks, showDropdown, results, isLoading } =
     useSelector((state: RootState) => state.search);
-
-  const queryTerms = query.trim().split(" ");
 
   const isWholeBibleSelected =
     selectedBooks.length === Object.values(BookKey).length;
@@ -128,6 +128,7 @@ const BibleSearch = () => {
       showApiError(error);
     } finally {
       dispatch(setIsLoading(false));
+      dispatch(setQueryTerms(query.trim().split(" ")))
     }
   }
 
