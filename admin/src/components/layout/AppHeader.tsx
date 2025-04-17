@@ -9,14 +9,14 @@ const AppHeader = () => {
         <h3>AdminSite</h3>
       </div>
       <nav>
-        <ul className={styles.navbar}>
-          <li><NavLink to={`/`}>Dashboard</NavLink></li>
-          <li><NavLink to={`/members`}>Members</NavLink></li>
-          <li><NavLink to={`/verse-groups`}>Verse Groups</NavLink></li>
-          <li><NavLink to={`/featured`}>Featured</NavLink></li>
-          <li><NavLink to={`/glossary`}>Glossary</NavLink></li>
-          <li><NavLink to={`/`}>Logout</NavLink></li>
-        </ul>
+        {true && (<ul className={styles.navbar}>
+          <li className={styles.listItem} ><NavLink to={`/`}>Dashboard</NavLink></li>
+          <li className={styles.listItem} ><NavLink to={`/members`}>Members</NavLink></li>
+          <li className={styles.listItem} ><NavLink to={`/verse-groups`}>Verse Groups</NavLink></li>
+          <li className={styles.listItem} ><NavLink to={`/featured`}>Featured</NavLink></li>
+          <li className={styles.listItem} ><NavLink to={`/glossary`}>Glossary</NavLink></li>
+          <button className={styles.logoutButton}>Logout</button>
+        </ul>)}
       </nav>
     </header>
   )

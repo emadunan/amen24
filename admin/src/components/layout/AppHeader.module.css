@@ -21,5 +21,28 @@
 .navbar {
   list-style: none;
   display: flex;
+  align-items: center;
   gap: 1rem;
+}
+
+.listItem {
+  color: var(--gray);
+}
+
+.listItem:hover {
+  color: var(--accent);
+  transition: color 0.2s ease-in-out;
+}
+
+.logoutButton {
+  border: none;
+  background-color: var(--accent);
+  color: var(--background);
+  padding: .5rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.logoutButton:hover {
+  background-color: var(--accent-hover);
 }

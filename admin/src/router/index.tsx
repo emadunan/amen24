@@ -5,11 +5,13 @@ import VerseGroups from "../pages/VerseGroups"
 import Featured from "../pages/Featured"
 import Glossary from "../pages/Glossary"
 import AppMain from "../components/layout/AppMain"
+import Login from "../pages/Login"
 
 
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="/login" element={<Login />}/>
       <Route path="/" element={<AppMain />}>
         <Route path='/' element={<Dashboard />} />
         <Route path='/members' element={<Members />} />

@@ -1,5 +1,7 @@
 :root {
   --logo: url("/img/logo-light.png");
+  --max: #000;
+  --min: #fff;
   --text: #3b3a34;
   --text-rgb: 59, 58, 52;
   --background: #f4efe6;
@@ -27,6 +29,8 @@
 
 [data-theme="dark"] {
   --logo: url("/img/logo-dark.png");
+  --max: #fff;
+  --min: #000;
   --text: #f4efe6;
   --text-rgb: 244, 239, 230;
   --background: #3a332b;
@@ -78,4 +82,8 @@ a {
   grid-template-columns: minmax(1rem, 1fr) minmax(0, 100rem) minmax(1rem, 1fr);
   grid-template-rows: var(--header-height) 1fr var(--footer-height);
   min-height: 100vh;
+}
+
+.active {
+  color: var(--max);
 }
