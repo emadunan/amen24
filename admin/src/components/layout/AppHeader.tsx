@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styles from './AppHeader.module.css';
 
 const AppHeader = () => {
@@ -9,12 +10,12 @@ const AppHeader = () => {
       </div>
       <nav>
         <ul className={styles.navbar}>
-          <li>Dashboard</li>
-          <li>Members</li>
-          <li>Verse Groups</li>
-          <li>Featured</li>
-          <li>Terms</li>
-          <li>Logout</li>
+          <li><NavLink to={`/`}>Dashboard</NavLink></li>
+          <li><NavLink to={`/members`}>Members</NavLink></li>
+          <li><NavLink to={`/verse-groups`}>Verse Groups</NavLink></li>
+          <li><NavLink to={`/featured`}>Featured</NavLink></li>
+          <li><NavLink to={`/glossary`}>Glossary</NavLink></li>
+          <li><NavLink to={`/`}>Logout</NavLink></li>
         </ul>
       </nav>
     </header>
