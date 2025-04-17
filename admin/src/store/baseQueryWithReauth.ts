@@ -1,4 +1,3 @@
-// lib/baseQueryWithReauth.ts
 import { ERROR_KEYS } from "@amen24/shared";
 import {
   fetchBaseQuery,
@@ -8,10 +7,12 @@ import {
 } from "@reduxjs/toolkit/query";
 import { Mutex } from "async-mutex";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const mutex = new Mutex();
 
 const rawBaseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL,
+  baseUrl: apiUrl,
   credentials: "include",
 });
 

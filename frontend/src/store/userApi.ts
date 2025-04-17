@@ -31,46 +31,9 @@ export const userApi = createApi({
       invalidatesTags: ["User"],
     }),
     login: builder.mutation<void, UserLogin>({
-      query: (credentials) => ({
+      query: (body) => ({
         url: "/local-login",
         method: "POST",
-        body: credentials,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    logout: builder.mutation<void, void>({
-      query: () => ({
-        url: "/logout",
-        method: "POST",
-      }),
-      invalidatesTags: ["User"],
-    }),
-    resetPassword: builder.mutation<
-      { message: string },
-      { oldPassword: string; newPassword: string }
-    >({
-      query: (body) => ({
-        url: "/me/password-reset",
-        method: "PATCH",
-        body,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    requestPassword: builder.mutation<{ message: string }, { email: string }>({
-      query: (body) => ({
-        url: "/password-request",
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    restorePassword: builder.mutation<
-      { message: string },
-      { newPassword: string; token: string }
-    >({
-      query: (body) => ({
-        url: "/me/password-restore",
-        method: "PATCH",
         body,
       }),
       invalidatesTags: ["User"],
@@ -87,18 +50,40 @@ export const userApi = createApi({
       },
       invalidatesTags: ["User"],
     }),
-    changeLang: builder.mutation<void, string>({
-      query: (uiLang) => ({
-        url: "/me/lang",
-        method: "PATCH",
-        body: { uiLang },
-      }),
-      invalidatesTags: ["User"],
-    }),
     deleteAccount: builder.mutation<void, void>({
       query: () => ({
         url: "profile",
         method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+    }),
+    resetPassword: builder.mutation<
+      { message: string },
+      { oldPassword: string; newPassword: string }
+    >({
+      query: (body) => ({
+        url: "/me/password-reset",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    restorePassword: builder.mutation<
+      { message: string },
+      { newPassword: string; token: string }
+    >({
+      query: (body) => ({
+        url: "/me/password-restore",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    requestPassword: builder.mutation<{ message: string }, { email: string }>({
+      query: (body) => ({
+        url: "/password-request",
+        method: "POST",
+        body,
       }),
       invalidatesTags: ["User"],
     }),
@@ -109,7 +94,6 @@ export const {
   useGetMeQuery,
   useSignupMutation,
   useLoginMutation,
-  useLogoutMutation,
   useUpdateProfileMutation,
   useDeleteAccountMutation,
   useResetPasswordMutation,

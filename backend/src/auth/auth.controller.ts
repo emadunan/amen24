@@ -13,6 +13,10 @@ import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
 import { MESSAGE_KEYS } from '@amen24/shared';
 import { Request, Response } from 'express';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { User } from 'src/users/entities/user.entity';
+import { User as UserParam } from "./decorators/user.decorator";
 
 @Controller('auth')
 export class AuthController {
@@ -22,6 +26,12 @@ export class AuthController {
     configService: ConfigService,
   ) {
     this.appUrl = configService.getOrThrow<string>('FRONTEND_URL');
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  findMe(@UserParam() user: User) {
+    return user;
   }
 
   @Post('refresh')
@@ -36,11 +46,17 @@ export class AuthController {
     return res.sendStatus(204);
   }
 
+  @Post('local')
+  @UseGuards(LocalAuthGuard)
+  async login(@Req() req, @Res() res: Response) {
+    // Set token produced based on user to the http response
+    await this.authService.loadTokens(req.user, res);
+    res.json({ message: MESSAGE_KEYS.LOGGED_IN_SUCCESSFULLY });
+  }
+
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleLogin() {
-    // Redirects to Google for login
-  }
+  async googleLogin(): Promise<void> { }
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
@@ -60,7 +76,7 @@ export class AuthController {
 
   @Get('facebook')
   @UseGuards(AuthGuard('facebook'))
-  async facebookLogin(): Promise<void> {}
+  async facebookLogin(): Promise<void> { }
 
   @Get('facebook/callback')
   @UseGuards(AuthGuard('facebook'))

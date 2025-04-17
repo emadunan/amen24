@@ -1,17 +1,32 @@
 // Need to use the React-specific entry point to import createApi
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { User } from '@amen24/shared';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { createBaseQueryWithReauth } from './baseQueryWithReauth';
 
-// Define a service using a base URL and expected endpoints
-export const pokemonApi = createApi({
-  reducerPath: 'pokemonApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
+type UserLogin = Pick<User, "email" | "password">;
+
+export const authApi = createApi({
+  reducerPath: 'authApi',
+  tagTypes: ["User"],
+  baseQuery: createBaseQueryWithReauth("auth"),
   endpoints: (builder) => ({
-    getPokemonByName: builder.query<Pokemon, string>({
-      query: (name) => `pokemon/${name}`,
+    getMe: builder.query<User | null, void>({
+      query: () => `/me`,
+      providesTags: ["User"],
     }),
+    login: builder.mutation<void, UserLogin>({
+      query(body) {
+        return {
+          url: `/local`,
+          method: "POST",
+          body
+        }
+      },
+      invalidatesTags: ["User"]
+    })
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPokemonByNameQuery } = pokemonApi
+export const { useGetMeQuery, useLoginMutation } = authApi

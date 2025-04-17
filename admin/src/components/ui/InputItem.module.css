@@ -1,0 +1,12 @@
+.input {
+  width: 100%;
+  height: 2.5rem;
+  font-family: var(--amiri);
+  border: var(--primary) 1px solid;
+  outline: none;
+  border-radius: 2px;
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+  text-align: center;
+  direction: ltr;
+}
