@@ -35,7 +35,7 @@ export function detectLanguage(text: string): Lang {
   return Lang.ENGLISH; // Default fallback
 }
 
-export function buildJoinedText(verses: Required<Verse>[], lang: Lang): string {
+export function buildJoinedText(verses: Verse[], lang: Lang): string {
   return verses
     .map((verse, idx, arr) => {
       const translation = verse.verseTranslations.find(

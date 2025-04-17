@@ -1,0 +1,27 @@
+.corner {
+  background-color: var(--secondary);
+}
+
+.topLeft {
+  grid-column: 1;
+  grid-row: 1;
+  border-bottom: var(--primary) solid 2px;
+}
+
+.topRight {
+  grid-column: 3;
+  grid-row: 1;
+  border-bottom: var(--primary) solid 2px;
+}
+
+.bottomLeft {
+  grid-column: 1;
+  grid-row: 3;
+  border-top: var(--primary) solid 2px;
+}
+
+.bottomRight {
+  grid-column: 3;
+  grid-row: 3;
+  border-top: var(--primary) solid 2px;
+}

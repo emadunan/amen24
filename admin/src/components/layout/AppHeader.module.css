@@ -1,0 +1,25 @@
+.header {
+  background-color: var(--secondary);
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: var(--primary) solid 2px;
+}
+
+.appTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.appTitle h2 {
+  margin-bottom: -0.4rem;
+}
+
+.navbar {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
