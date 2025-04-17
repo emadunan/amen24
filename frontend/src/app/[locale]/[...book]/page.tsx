@@ -7,6 +7,7 @@ import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import HighlightVerse from "@/components/bible/VerseHighlight";
 import ChapterContent from "@/components/bible/ChapterContent";
 import ChapterTitleAction from "@/components/bible/ChapterTitleAction";
+import ScrollToVerse from "@/components/bible/ScrollToVerse";
 
 const apiUrl = process.env.API_URL;
 
@@ -36,6 +37,7 @@ const BookPage: FC<Props> = async ({ params }) => {
 
   return (
     <div className={styles.pageContainer}>
+      <ScrollToVerse />
       <div className={styles.chapterContainer}>
         <div className={styles.chapterNav}>
           {+chapterNum > 1 ? (
@@ -89,7 +91,7 @@ const BookPage: FC<Props> = async ({ params }) => {
               <Fragment key={v.num}>
                 {" "}
                 <HighlightVerse verseId={v.id}>
-                  <p className={styles.verse}>
+                  <p id={`v-${v.id}`} className={styles.verse}>
                     <span className={styles.verseNumber}>
                       {formattedVerseNum}
                     </span>
