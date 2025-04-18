@@ -7,10 +7,11 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetMeQuery, useUpdateProfileMutation } from "@/store/userApi";
+import { useUpdateProfileMutation } from "@/store/userApi";
 import useBreakpoint from "@/hooks/useBreakpoint";
 import { showToast } from "@/utils/toast";
 import { Lang } from "@amen24/shared";
+import { useGetMeQuery } from "@/store/authApi";
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation(["lang", "error"]);

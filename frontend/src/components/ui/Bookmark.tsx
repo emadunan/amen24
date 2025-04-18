@@ -5,7 +5,7 @@ import styles from "./Bookmark.module.css";
 import { useGetUserLastReadBookmarkQuery } from "@/store/bookmarkApi";
 import { useTranslation } from "react-i18next";
 import { BookMap, formatNumber, Lang } from "@amen24/shared";
-import { useGetMeQuery } from "@/store/userApi";
+import { useGetMeQuery } from "@/store/authApi";
 import { useEffect } from "react";
 import useBreakpoint from "@/hooks/useBreakpoint";
 

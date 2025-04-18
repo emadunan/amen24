@@ -42,21 +42,6 @@ export class UsersController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('me')
-  findMe(@UserParam() user: User) {
-    return user;
-  }
-
-  @UseGuards(LocalAuthGuard)
-  @Post('local-login')
-  @HttpCode(200)
-  async login(@Req() req, @Res() res: Response) {
-    // Set token produced based on user to the http response
-    await this.authService.loadTokens(req.user, res);
-    res.json({ message: MESSAGE_KEYS.LOGGED_IN_SUCCESSFULLY });
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Patch('me/password-reset')
   async resetPassword(
     @UserParam() reqUser: User,

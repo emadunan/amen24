@@ -5,12 +5,14 @@ import { featuredApi } from "./featuredApi";
 import { favoriteApi } from "./favoriteApi";
 import { bookmarkApi } from "./bookmarkApi";
 import { userApi } from "./userApi";
+import { authApi } from "./authApi";
 
 export const MakeStore = () => {
   const store = configureStore({
     reducer: {
       navigator: navigatorReducer,
       search: searchReducer,
+      [authApi.reducerPath]: authApi.reducer,
       [userApi.reducerPath]: userApi.reducer,
       [bookmarkApi.reducerPath]: bookmarkApi.reducer,
       [favoriteApi.reducerPath]: favoriteApi.reducer,
@@ -18,6 +20,7 @@ export const MakeStore = () => {
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
+        .concat(authApi.middleware)
         .concat(userApi.middleware)
         .concat(bookmarkApi.middleware)
         .concat(favoriteApi.middleware)

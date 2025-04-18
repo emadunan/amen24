@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 import i18nConfig from "@/config/next-i18n-router.config";
 import { BookKey, User } from "@amen24/shared";
 import UserMenu from "../profile/UserMenu";
-import { useGetMeQuery } from "@/store/userApi";
+import { useGetMeQuery } from "@/store/authApi";
 import Spinner from "../ui/Spinner";
 import Bookmark from "../ui/Bookmark";
 import DateDisplay from "../ui/DateDisplay";

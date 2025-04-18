@@ -18,23 +18,11 @@ export const userApi = createApi({
   baseQuery: createBaseQueryWithReauth("users"),
   tagTypes: ["User"], // 👈 Define User tag type
   endpoints: (builder) => ({
-    getMe: builder.query<User | null, void>({
-      query: () => "/me",
-      providesTags: ["User"],
-    }),
     signup: builder.mutation<{ message: string }, UserSignup>({
       query: (user) => ({
         url: "/",
         method: "POST",
         body: user,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    login: builder.mutation<void, UserLogin>({
-      query: (body) => ({
-        url: "/local-login",
-        method: "POST",
-        body,
       }),
       invalidatesTags: ["User"],
     }),
@@ -91,9 +79,7 @@ export const userApi = createApi({
 });
 
 export const {
-  useGetMeQuery,
   useSignupMutation,
-  useLoginMutation,
   useUpdateProfileMutation,
   useDeleteAccountMutation,
   useResetPasswordMutation,

@@ -19,7 +19,7 @@ import {
   useGetUserLastReadBookmarkQuery,
   useUpdateBookmarkMutation,
 } from "@/store/bookmarkApi";
-import { useGetMeQuery } from "@/store/userApi";
+import { useGetMeQuery } from "@/store/authApi";
 import { useShowError } from "@/hooks/useShowError";
 import { useShowMessage } from "@/hooks/useShowMessage";
 import { useAddFavoriteMutation } from "@/store/favoriteApi";

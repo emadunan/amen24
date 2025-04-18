@@ -3,7 +3,8 @@
 import React from "react";
 import styles from "./ProfileSettings.module.css";
 import { useTranslation } from "react-i18next";
-import { useDeleteAccountMutation, useGetMeQuery } from "@/store/userApi";
+import { useGetMeQuery } from "@/store/authApi";
+import { useDeleteAccountMutation } from "@/store/userApi";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { MdLockReset } from "react-icons/md";
