@@ -7,7 +7,7 @@ export interface Profile {
   privilege: UserPrivilege;
   createdAt: Date;
   lastLogin: Date;
-  uiLang: Lang;
+  uiLang: Lang | null;
   fontSize: number;
   themeMode: ThemeMode;
   dateCalendar: DateCalendar;

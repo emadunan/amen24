@@ -6,6 +6,6 @@ export interface VerseTranslation {
   lang: Lang;
   text: string;
   textNormalized: string;
-  textDiacritized: string;
+  textDiacritized?: string;
   verse: Verse;
 }
