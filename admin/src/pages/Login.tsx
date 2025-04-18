@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import InputItem from '../components/ui/InputItem';
 import styles from './Login.module.css';
-import SubmitButton from '../components/ui/SubmitButton';
 import { useLoginMutation } from '../store/authApi';
-import Spinner from '../components/ui/Spinner';
 import { useNavigate } from 'react-router-dom';
+import {  } from "@amen24/ui";
 
 const Login = () => {
   const [email, setEmail] = useState("");
