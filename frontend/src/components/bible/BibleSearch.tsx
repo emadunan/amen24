@@ -20,8 +20,7 @@ import {
 } from "@/store/searchSlice";
 import { showToast } from "@/utils/toast";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
-import { useShowError } from "@/hooks/useShowError";
-import useBreakpoint from "@/hooks/useBreakpoint";
+import { useBreakpoint, useShowError } from "@amen24/ui";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 

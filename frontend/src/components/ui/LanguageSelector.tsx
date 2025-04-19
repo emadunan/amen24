@@ -1,6 +1,5 @@
 "use client";
 
-import useClickOutside from "@/hooks/useClickOutside";
 import styles from "./LanguageSelector.module.css";
 import i18nConfig from "@/config/next-i18n-router.config";
 import { useRouter } from "next/navigation";
@@ -8,7 +7,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUpdateProfileMutation } from "@/store/userApi";
-import useBreakpoint from "@/hooks/useBreakpoint";
+import { useBreakpoint, useClickOutside } from "@amen24/ui";
 import { showToast } from "@/utils/toast";
 import { Lang } from "@amen24/shared";
 import { useGetMeQuery } from "@/store/authApi";

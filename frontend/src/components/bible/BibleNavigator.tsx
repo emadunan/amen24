@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { close, selectNavigator } from "@/store/navigatorSlice";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { useParams, usePathname } from "next/navigation";
-import { useDraggable } from "@/hooks/useDraggable";
+import { useDraggable } from "@amen24/ui";
 import { useTranslation } from "react-i18next";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
 

@@ -7,7 +7,7 @@ import { HiSparkles } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
-import { useDraggable } from "@/hooks/useDraggable";
+import { useDraggable, useShowError, useShowMessage } from "@amen24/ui";
 import {
   ERROR_KEYS,
   Lang,
@@ -20,8 +20,6 @@ import {
   useUpdateBookmarkMutation,
 } from "@/store/bookmarkApi";
 import { useGetMeQuery } from "@/store/authApi";
-import { useShowError } from "@/hooks/useShowError";
-import { useShowMessage } from "@/hooks/useShowMessage";
 import { useAddFavoriteMutation } from "@/store/favoriteApi";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
 import { useAddToFeaturedMutation } from "@/store/featuredApi";

@@ -16,7 +16,7 @@ import Bookmark from "../ui/Bookmark";
 import DateDisplay from "../ui/DateDisplay";
 import NavBar from "./NavBar";
 import NavMenu from "./NavMenu";
-import useBreakpoint from "@/hooks/useBreakpoint";
+import { useBreakpoint } from "@amen24/ui";
 
 const AppLogo = dynamic(() => import("./AppLogo"), {
   ssr: false,
