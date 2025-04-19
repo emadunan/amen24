@@ -1,6 +1,6 @@
 // hooks/useShowError.ts
 import { useTranslation } from "react-i18next";
-import { showToast } from "@/utils/toast";
+import { showToast } from "../utils/toast";
 
 interface ApiError {
   data?: { message?: string };

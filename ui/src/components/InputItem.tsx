@@ -9,7 +9,7 @@ interface Props {
   required?: boolean;
 }
 
-const InputItem: FC<Props> = ({
+export const InputItem: FC<Props> = ({
   value,
   placeholder,
   type = "text",
@@ -27,5 +27,3 @@ const InputItem: FC<Props> = ({
     />
   );
 };
-
-export default InputItem;

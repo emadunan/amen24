@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { showToast } from "@/utils/toast";
+import { showToast } from "../utils/toast";
 
 export function useShowMessage() {
   const { t } = useTranslation("message");

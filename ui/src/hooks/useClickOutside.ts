@@ -1,6 +1,6 @@
 import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
 
-const useClickOutside = (
+export const useClickOutside = (
   elRef: RefObject<HTMLDivElement | null>,
   isOpen: boolean,
   setIsOpen: Dispatch<SetStateAction<boolean>>,
@@ -19,5 +19,3 @@ const useClickOutside = (
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 };
-
-export default useClickOutside;

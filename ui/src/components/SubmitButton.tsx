@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Spinner from "./Spinner";
+import { Spinner } from "./Spinner";
 import { RiLoginBoxLine } from "react-icons/ri";
 import styles from "./SubmitButton.module.css";
 
@@ -9,7 +9,7 @@ interface Props {
   Icon?: React.ElementType;
 }
 
-const SubmitButton: FC<Props> = ({
+export const SubmitButton: FC<Props> = ({
   isLoading,
   text = "Submit",
   Icon = RiLoginBoxLine,
@@ -27,5 +27,3 @@ const SubmitButton: FC<Props> = ({
     </button>
   );
 };
-
-export default SubmitButton;

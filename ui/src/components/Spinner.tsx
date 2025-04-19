@@ -7,7 +7,7 @@ interface SpinnerProps {
   borderTopColor?: "background" | "text" | "primary" | "secondary" | "accent";
 }
 
-const Spinner: React.FC<SpinnerProps> = ({
+export const Spinner: React.FC<SpinnerProps> = ({
   size = "4rem",
   borderColor = "accent",
   borderTopColor = "secondary",
@@ -26,5 +26,3 @@ const Spinner: React.FC<SpinnerProps> = ({
     </div>
   );
 };
-
-export default Spinner;

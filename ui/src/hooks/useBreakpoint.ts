@@ -7,7 +7,7 @@ const breakpoints = {
   tablet: 768,
 } as const;
 
-const useBreakpoint = () => {
+export const useBreakpoint = () => {
   const getWidths = () => {
     if (typeof window === "undefined") {
       // Return default values during SSR (assume desktop as safe fallback)
@@ -41,5 +41,3 @@ const useBreakpoint = () => {
 
   return breakpoint;
 };
-
-export default useBreakpoint;
