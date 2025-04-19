@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@amen24/shared': path.resolve(__dirname, '../shared/dist'), // or use 'shared' if it's a workspace dependency
+      '@amen24/shared': path.resolve(__dirname, '../shared/'),
     },
   },
   optimizeDeps: {

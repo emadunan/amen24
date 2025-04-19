@@ -19,7 +19,7 @@ export function useShowError() {
       const message = apiError.data?.message;
 
       if (message && typeof message === "string") {
-        showToast(t(message), "error"); // assumes message is already namespaced
+        showToast(t(message), "error");
         return;
       }
     }

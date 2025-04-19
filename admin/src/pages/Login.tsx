@@ -2,15 +2,17 @@ import { useState } from 'react';
 import styles from './Login.module.css';
 import { useLoginMutation } from '../store/authApi';
 import { useNavigate } from 'react-router-dom';
-import { InputItem, Spinner, SubmitButton } from "@amen24/ui";
+import { InputItem, Spinner, SubmitButton, useShowError, useShowMessage } from "@amen24/ui";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { showApiError } = useShowError();
+  const { showMessage } = useShowMessage();
+  const [login, { isLoading }] = useLoginMutation();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const [login, { isLoading }] = useLoginMutation();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -19,8 +21,9 @@ const Login = () => {
     try {
       await login({ email, password }).unwrap();
       navigate("/");
+      showMessage("You have logged in successfully");
     } catch (err) {
-      // showApiError(err);
+      showApiError(err);
       setLocalLoading(false);
     }
   }
