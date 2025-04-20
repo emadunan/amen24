@@ -18,9 +18,8 @@ import {
   setSelectedBooks,
   toggleDropdown,
 } from "@/store/searchSlice";
-import { showToast } from "@/utils/toast";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
-import { useBreakpoint, useShowError } from "@amen24/ui";
+import { useBreakpoint, useShowError,showToast } from "@amen24/ui";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 

@@ -11,7 +11,7 @@ import styles from "./ChapterContent.module.css";
 import ChapterToolbox from "./ChapterToolbox";
 import { BookKey, formatNumber, Lang, Verse } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
-import { showToast } from "@/utils/toast";
+import { showToast } from "@amen24/ui";
 
 interface Props {
   children: ReactNode;

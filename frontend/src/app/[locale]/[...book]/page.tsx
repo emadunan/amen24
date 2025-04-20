@@ -27,6 +27,8 @@ const BookPage: FC<Props> = async ({ params }) => {
       `${apiUrl}/verses/${bookKey}/${chapterNum}/${locale}`,
     );
 
+    console.log('Response:', response);
+
     if (!response.ok) throw new Error(ERROR_KEYS.FAILED_TO_FETCH);
     verses = await response.json();
   } catch (error) {

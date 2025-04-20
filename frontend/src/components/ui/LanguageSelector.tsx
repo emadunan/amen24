@@ -7,8 +7,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUpdateProfileMutation } from "@/store/userApi";
-import { useBreakpoint, useClickOutside } from "@amen24/ui";
-import { showToast } from "@/utils/toast";
+import { useBreakpoint, useClickOutside, showToast } from "@amen24/ui";
 import { Lang } from "@amen24/shared";
 import { useGetMeQuery } from "@/store/authApi";
 
@@ -34,7 +33,7 @@ const LanguageSelector = () => {
     if (!user.profile.uiLang) {
       updateProfile({ uiLang: i18n.language as Lang })
         .unwrap()
-        .catch((err) => {
+        .catch((err: unknown) => {
           console.error(err);
           showToast(t("error:failedToChangeLanguage"), "error");
         });

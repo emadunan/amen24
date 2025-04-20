@@ -11,7 +11,7 @@ import BackButton from "../ui/BackButton";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
 import Image from "next/image";
-import { useShowError } from "@/hooks/useShowError";
+import { useShowError } from "@amen24/ui";
 
 const LocalLogin = () => {
   const { t } = useTranslation(["error"]);

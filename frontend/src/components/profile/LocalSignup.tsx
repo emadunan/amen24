@@ -7,11 +7,10 @@ import { useRouter } from "next/navigation";
 import { useSignupMutation } from "@/store/userApi";
 import Spinner from "../ui/Spinner";
 import BackButton from "../ui/BackButton";
-import { showToast } from "@/utils/toast";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
 import { AuthProvider, ERROR_KEYS, Lang } from "@amen24/shared";
-import { useShowError } from "@/hooks/useShowError";
+import { useShowError, showToast } from "@amen24/ui";
 
 const LocalSignup = () => {
   const { t, i18n } = useTranslation(["error"]);

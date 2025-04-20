@@ -27,7 +27,7 @@
     "react-dom": "^19.0.0",
     "react-i18next": "^15.4.1",
     "react-icons": "^5.5.0",
-    "react-toastify": "^11.0.0"
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.3",
@@ -36,16 +36,12 @@
     "@types/node": "^22.14.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/react-toastify": "^4.0.2",
     "autoprefixer": "^10.4.21",
-    "i18next": "^24.2.2",
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.6",
     "prettier": "3.5.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-i18next": "^15.4.1",
     "react-icons": "^5.5.0",
-    "react-toastify": "^11.0.0",
     "rollup": "^4.40.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
