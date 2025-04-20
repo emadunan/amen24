@@ -31,7 +31,7 @@
     "migrate:down:prod": "cross-env NODE_ENV=production typeorm-ts-node-commonjs migration:revert -d dist/_config/dataSource.config.js"
   },
   "dependencies": {
-    "@amen24/shared": "file:../shared",
+    "@amen24/shared": "file:../../packages/shared",
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.0",

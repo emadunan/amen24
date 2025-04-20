@@ -13,8 +13,8 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "@amen24/shared": "file:../shared",
-    "@amen24/ui": "file:../ui",
+    "@amen24/shared": "file:../../packages/shared",
+    "@amen24/ui": "file:../../packages/ui",
     "@reduxjs/toolkit": "^2.5.1",
     "async-mutex": "^0.5.0",
     "dotenv-cli": "^8.0.0",
