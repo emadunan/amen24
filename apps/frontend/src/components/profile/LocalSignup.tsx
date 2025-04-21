@@ -10,7 +10,7 @@ import BackButton from "../ui/BackButton";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
 import { AuthProvider, ERROR_KEYS, Lang } from "@amen24/shared";
-import { useFeedback, showToast } from "@amen24/ui";
+import { useFeedback } from "@amen24/ui";
 
 const LocalSignup = () => {
   const router = useRouter();
