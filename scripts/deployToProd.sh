@@ -10,7 +10,7 @@ source ~/.bashrc || source ~/.profile
 export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PATH
 
 # Load production environment variables from .env.production
-export $(grep -v '^#' /home/emad/projects/amen24prod/backend/.env.production | xargs)
+export $(grep -v '^#' /home/emad/projects/amen24prod/apps/backend/.env.production | xargs)
 
 # Verify required tools
 command -v node >/dev/null 2>&1 || { echo >&2 "Node.js is not installed. Aborting."; exit 1; }
@@ -24,14 +24,21 @@ cd /home/emad/projects/amen24prod || { echo "Project directory not found"; exit 
 pm2 del backend-prod frontend-prod || echo "No existing PM2 processes found"
 
 # Install shared dependencies
-cd shared
+cd packages/shared
 rm -rf node_modules dist
 npm install
 npm run build
 cd ..
 
+# Install ui dependencies
+cd ui
+rm -rf node_modules dist
+npm install
+npm run build
+cd ../..
+
 # Setup backend API
-cd backend
+cd apps/backend
 rm -rf node_modules dist
 npm install
 npm run build
@@ -56,15 +63,15 @@ echo "Backup complete!"
 npm run migrate:up:prod
 # npm run seed:prod
 
-cd ..
+cd ../..
 pm2 start ecosystem.config.js --only backend --env production
 
 # Setup frontend website
-cd frontend
+cd apps/frontend
 rm -rf node_modules .next
 npm install
 npm run build
-cd ..
+cd ../..
 pm2 start ecosystem.config.js --only frontend --env production
 
 # Rename the processes manually
