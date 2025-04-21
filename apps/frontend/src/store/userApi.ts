@@ -1,4 +1,4 @@
-import { Lang, Profile, User } from "@amen24/shared";
+import { ApiMessage, Lang, Profile, User } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "./baseQueryWithReauth";
 
@@ -36,7 +36,7 @@ export const userApi = createApi({
       },
       invalidatesTags: ["User"],
     }),
-    deleteAccount: builder.mutation<void, void>({
+    deleteAccount: builder.mutation<ApiMessage, void>({
       query: () => ({
         url: "profile",
         method: "DELETE",

@@ -1,5 +1,6 @@
 {
   "userCreated": "User has been successfully created.",
+  "userDeleted": "Your account has been permanently deleted along with all associated data. We're sorry to see you go.",
   "passwordUpdated": "User password has been successfully updated",
   "passwordResetEmailSent": "A password reset link has been sent to your email. Please check your inbox and spam folder, then click the link to access the password reset form.",
   "loggedInSuccessfully": "Logged in successfully",

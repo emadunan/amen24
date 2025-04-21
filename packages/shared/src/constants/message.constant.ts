@@ -1,6 +1,7 @@
 export const MESSAGE_KEYS = {
   UNKNOWN_SUCCESS: "message:unknownSuccess",
   USER_CREATED: "message:userCreated",
+  USER_DELETED: "message:userDeleted",
   PASSWORD_UPDATED: "message:passwordUpdated",
   PASSWORD_RESET_EMAIL_SENT: "message:passwordResetEmailSent",
   LOGGED_IN_SUCCESSFULLY: "message:loggedInSuccessfully",

@@ -15,8 +15,8 @@ import { useFeedback, showToast } from "@amen24/ui";
 const LocalSignup = () => {
   const router = useRouter();
   
-  const { t, i18n } = useTranslation(["error"]);
-  const { showApiError, showError } = useFeedback(t);
+  const { t, i18n } = useTranslation();
+  const { showApiError, showError, showMessage } = useFeedback(t);
 
   // ✅ Use useState instead of useRef to persist input values
   const [email, setEmail] = useState("");
@@ -58,7 +58,9 @@ const LocalSignup = () => {
         },
       }).unwrap();
 
-      showToast(message, "success");
+      console.log(message);
+      
+      showMessage(message, "success");
       router.replace("/login");
     } catch (err: unknown) {
       showApiError(err);

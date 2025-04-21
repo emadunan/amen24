@@ -5,27 +5,32 @@ import styles from "./ProfileSettings.module.css";
 import { useTranslation } from "react-i18next";
 import { useGetMeQuery } from "@/store/authApi";
 import { useDeleteAccountMutation } from "@/store/userApi";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { MdLockReset } from "react-icons/md";
+import { useFeedback } from "@amen24/ui";
 
 // const FONT_SIZES = ["Small", "Medium", "Large"];
 
 const ProfileSettings = () => {
   // const [selectedFontSize, setSelectedFontSize] = useState("Medium");
   // const [isDiacritized, setIsDiacritized] = useState(false);
+  const { t } = useTranslation();
 
+  const { showApiError, showMessage } = useFeedback(t);
   const [deleteAccount] = useDeleteAccountMutation();
 
-  const router = useRouter();
-
   async function handleDeleteAccount() {
-    await deleteAccount().unwrap();
+    try {
+      const { message } = await deleteAccount().unwrap();
+      console.log(message);
 
-    router.replace("/");
+      showMessage(message);
+
+      window.location.href = "/login";
+    } catch (error) {
+      showApiError(error)
+    }
   }
-
-  const { t } = useTranslation();
 
   const { data: user } = useGetMeQuery();
 

@@ -22,7 +22,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ProfilesService } from './services/profiles.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User as UserParam } from '../auth/decorators/user.decorator';
-import { LocalAuthGuard } from '../auth/guards/local-auth.guard';
 import { Response } from 'express';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
@@ -39,7 +38,7 @@ export class UsersController {
     private readonly profilesService: ProfilesService,
     private readonly bookmarksService: BookmarksService,
     private readonly favoritesService: FavoritesService,
-  ) {}
+  ) { }
 
   @UseGuards(JwtAuthGuard)
   @Patch('me/password-reset')
@@ -188,7 +187,9 @@ export class UsersController {
   async removePermanently(@UserParam() user: User, @Res() res: Response) {
     await this.profilesService.remove(user.email);
 
-    res.redirect('/auth/logout');
+    this.authService.clearTokens(res);
+
+    res.json({ message: MESSAGE_KEYS.USER_DELETED });
   }
 
   @Delete(':id')
