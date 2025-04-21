@@ -23,4 +23,4 @@ jobs:
           ssh -i private_key -o StrictHostKeyChecking=no ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }} "
           cd /home/${{ vars.SERVER_USER }}/projects/amen24prod &&
           git pull origin deploy &&
-          cd ./_scripts && ./deployToProd.sh"
+          cd ./scripts && ./deployToProd.sh"
