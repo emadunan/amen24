@@ -7,7 +7,7 @@ import { HiSparkles } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
-import { useDraggable, useShowError, useShowMessage } from "@amen24/ui";
+import { useDraggable, useFeedback } from "@amen24/ui";
 import {
   ERROR_KEYS,
   Lang,
@@ -27,11 +27,11 @@ import { useAddToFeaturedMutation } from "@/store/featuredApi";
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
     useHighlightContext();
-  const { t, i18n } = useTranslation(["book", "error"]);
+  const { t, i18n } = useTranslation();
+
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [updateBookmark] = useUpdateBookmarkMutation();
-  const { showApiError, showError } = useShowError();
-  const { showMessage } = useShowMessage();
+  const { showApiError, showError, showMessage } = useFeedback(t);
   const { position, handleMouseDown, elementRef, handleTouchStart } =
     useDraggable(
       5,
@@ -85,7 +85,7 @@ const ChapterToolbox = () => {
       }
 
       showMessage(
-        `(${t(bookKey)} ${formatNumber(chapterNum, i18n.language as Lang)} : ${formatNumber(verseNum, i18n.language as Lang)}) ${t("toolbox.lastReadSaved")}`,
+        `(${t(`book:${bookKey}`)} ${formatNumber(chapterNum, i18n.language as Lang)} : ${formatNumber(verseNum, i18n.language as Lang)}) ${t("toolbox.lastReadSaved")}`,
         "success",
       );
     } catch (error) {
@@ -159,7 +159,7 @@ const ChapterToolbox = () => {
                 <p className={styles.bookmarkTitle}>{t("toolbox.bookmark")}</p>
                 {bookmark && (
                   <small className={styles.bookmarkRef}>
-                    {t(bookmark.verse.chapter.book.bookKey)} (
+                    {t(`book:${bookmark.verse.chapter.book.bookKey}`)} (
                     {formatNumber(
                       bookmark.verse.chapter.num,
                       i18n.language as Lang,

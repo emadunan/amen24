@@ -11,12 +11,12 @@ import BackButton from "../ui/BackButton";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
 import Image from "next/image";
-import { useShowError } from "@amen24/ui";
+import { useFeedback } from "@amen24/ui";
 
 const LocalLogin = () => {
   const { t } = useTranslation(["error"]);
   const router = useRouter();
-  const { showApiError } = useShowError();
+  const { showApiError } = useFeedback(t);
 
   // ✅ Controlled Inputs
   const [email, setEmail] = useState("");

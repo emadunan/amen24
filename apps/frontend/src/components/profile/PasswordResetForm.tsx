@@ -11,14 +11,12 @@ import { useResetPasswordMutation } from "@/store/userApi";
 import { useRouter } from "next/navigation";
 import { MdOutlineLockReset } from "react-icons/md";
 import { ERROR_KEYS } from "@amen24/shared";
-import { useShowError } from "@/hooks/useShowError";
-import { useShowMessage } from "@/hooks/useShowMessage";
+import { useFeedback } from "@amen24/ui";
 
 const PasswordResetForm = () => {
-  const { showError, showApiError } = useShowError();
-  const { showMessage } = useShowMessage();
-  const { t } = useTranslation();
   const router = useRouter();
+  const { t } = useTranslation(["error"]);
+  const { showError, showApiError,showMessage } = useFeedback(t);
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");

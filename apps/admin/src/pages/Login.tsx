@@ -2,12 +2,13 @@ import { useState } from 'react';
 import styles from './Login.module.css';
 import { useLoginMutation } from '../store/authApi';
 import { useNavigate } from 'react-router-dom';
-import { InputItem, Spinner, SubmitButton, useShowError, useShowMessage } from "@amen24/ui";
+import { InputItem, Spinner, SubmitButton, useFeedback } from "@amen24/ui";
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { showApiError } = useShowError();
-  const { showMessage } = useShowMessage();
+  const { t } = useTranslation();
+  const { showApiError, showMessage } = useFeedback(t);
   const [login, { isLoading }] = useLoginMutation();
 
   const [email, setEmail] = useState("");

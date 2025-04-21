@@ -19,7 +19,7 @@ import {
   toggleDropdown,
 } from "@/store/searchSlice";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
-import { useBreakpoint, useShowError,showToast } from "@amen24/ui";
+import { useBreakpoint, useFeedback,showToast } from "@amen24/ui";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -47,7 +47,7 @@ const categoryList: Record<string, string[]> = {
 const BibleSearch = () => {
   const { t, i18n } = useTranslation(["book", "error"]);
   const { isRegularPhone } = useBreakpoint();
-  const { showApiError } = useShowError();
+  const { showApiError } = useFeedback(t);
   const dispatch = useDispatch();
   const { query, queryTerms, selectedBooks, showDropdown, results, isLoading } =
     useSelector((state: RootState) => state.search);

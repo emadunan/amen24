@@ -10,11 +10,11 @@ import BackButton from "../ui/BackButton";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
 import { AuthProvider, ERROR_KEYS, Lang } from "@amen24/shared";
-import { useShowError, showToast } from "@amen24/ui";
+import { useFeedback, showToast } from "@amen24/ui";
 
 const LocalSignup = () => {
   const { t, i18n } = useTranslation(["error"]);
-  const { showApiError } = useShowError();
+  const { showApiError, showError } = useFeedback(t);
   const router = useRouter();
 
   // ✅ Use useState instead of useRef to persist input values
@@ -22,7 +22,6 @@ const LocalSignup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const { showError } = useShowError();
 
   const [localLoading, setLocalLoading] = useState(false);
   const [signup, { isLoading }] = useSignupMutation();

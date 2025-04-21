@@ -2,8 +2,6 @@ import { Lang, Profile, User } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "./baseQueryWithReauth";
 
-type UserLogin = Pick<User, "email" | "password">;
-
 type UserSignup = Partial<User> & {
   uiLang: Lang;
   bookmark: {

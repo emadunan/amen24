@@ -9,11 +9,11 @@ import { useTranslation } from "react-i18next";
 import { useRequestPasswordMutation } from "@/store/userApi";
 import { RiMailSendFill } from "react-icons/ri";
 import Spinner from "../ui/Spinner";
-import { useShowError } from "@/hooks/useShowError";
+import { useFeedback } from "@amen24/ui";
 
 const PasswordRequestFrom = () => {
   const { t } = useTranslation(["message"]);
-  const { showApiError } = useShowError();
+  const { showApiError } = useFeedback(t);
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");

@@ -9,12 +9,12 @@ import { useTranslation } from "react-i18next";
 import styles from "./PasswordRestoreForm.module.css";
 import { useRestorePasswordMutation } from "@/store/userApi";
 import { MdOutlineLockReset } from "react-icons/md";
-import { useShowError } from "@/hooks/useShowError";
+import { useFeedback } from "@amen24/ui";
 import { ERROR_KEYS } from "@amen24/shared";
 
 const PasswordRestoreFrom = () => {
-  const { t } = useTranslation();
-  const { showError, showApiError } = useShowError();
+  const { t } = useTranslation(["error"]);
+  const { showError, showApiError } = useFeedback(t);
 
   const router = useRouter();
   const searchParams = useSearchParams();
