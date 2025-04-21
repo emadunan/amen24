@@ -11,7 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
-import { MESSAGE_KEYS } from '@amen24/shared';
+import { MESSAGE_KEYS, UserPrivilege } from '@amen24/shared';
 import { Request, Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -21,11 +21,14 @@ import { User as UserParam } from "./decorators/user.decorator";
 @Controller('auth')
 export class AuthController {
   private appUrl: string;
+  private adminSiteUrl: string;
+
   constructor(
     private authService: AuthService,
     configService: ConfigService,
   ) {
     this.appUrl = configService.getOrThrow<string>('FRONTEND_URL');
+    this.adminSiteUrl = configService.getOrThrow<string>('ADMINSITE_URL');
   }
 
   @UseGuards(JwtAuthGuard)
@@ -48,8 +51,15 @@ export class AuthController {
 
   @Post('local')
   @UseGuards(LocalAuthGuard)
-  async login(@Req() req, @Res() res: Response) {
-    // Set token produced based on user to the http response
+  async login(@Req() req: Request & { user: User }, @Res() res: Response) {
+    const origin = req.headers.origin;
+
+    if (origin?.includes(this.adminSiteUrl) && ![UserPrivilege.ADMIN || UserPrivilege.MODERATOR].includes(req.user.profile.privilege)) {
+      throw new UnauthorizedException(
+        `Access restricted: Only content managers and administrators are permitted to log in. If you're interested in volunteering, please contact us at support@amen24.org.`
+      );
+    }
+
     await this.authService.loadTokens(req.user, res);
     res.json({ message: MESSAGE_KEYS.LOGGED_IN_SUCCESSFULLY });
   }

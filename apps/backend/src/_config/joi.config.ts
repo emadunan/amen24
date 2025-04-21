@@ -14,6 +14,8 @@ export default Joi.object({
   JWT_REFRESH_EXPIRES_IN: Joi.string(),
   FRONTEND_URL: Joi.string().uri(),
   FRONTEND_ORIGINS: Joi.string(),
+  ADMINSITE_URL: Joi.string(),
+  ADMINSITE_ORIGINS: Joi.string(),
   SMTP_PORT: Joi.number().port().default(587),
   DB_HOST: Joi.string(),
   DB_PORT: Joi.number().port().default(5432),

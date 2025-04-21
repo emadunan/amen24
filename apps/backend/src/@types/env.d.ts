@@ -1,4 +1,4 @@
-export {};
+export { };
 
 declare namespace NodeJS {
   interface ProcessEnv {
@@ -13,6 +13,8 @@ declare namespace NodeJS {
     JWT_REFRESH_EXPIRES_IN: string;
     FRONTEND_URL: string;
     FRONTEND_ORIGINS: string;
+    ADMINSITE_URL: string;
+    ADMINSITE_ORIGINS: string;
     SMTP_PORT: string;
     DB_HOST: string;
     DB_PORT: string;
