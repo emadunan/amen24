@@ -22,8 +22,6 @@ const ProfileSettings = () => {
   async function handleDeleteAccount() {
     try {
       const { message } = await deleteAccount().unwrap();
-
-      console.log(message);
       showMessage(message);
 
       setTimeout(() => {
