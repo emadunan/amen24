@@ -86,7 +86,7 @@ npx expo run:android --variant release
 git push origin +HEAD^:"$name_of_your_branch"
 ```
 
-#### 
+#### To push to remote deploy branch without firing github actions
 ``` bash
 git commit -m "chore: Add commit to push to deploy remote branch without firing github actions [skip ci]"
 ```
