@@ -86,6 +86,11 @@ npx expo run:android --variant release
 git push origin +HEAD^:"$name_of_your_branch"
 ```
 
+#### 
+``` bash
+git commit -m "chore: Add commit to push to deploy remote branch without firing github actions [skip ci]"
+```
+
 #### After merging the feature branch with main in the remote, perform fetch prune localy as clean up
 ``` bash
 git fetch --all --prune
