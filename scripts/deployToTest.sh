@@ -10,7 +10,7 @@ source ~/.bashrc || source ~/.profile
 export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PATH
 
 # Load test environment variables from .env.test
-export $(grep -v '^#' /home/emad/projects/amen24test/backend/.env.test | xargs)
+export $(grep -v '^#' /home/emad/projects/amen24test/apps/backend/.env.test | xargs)
 
 # Verify required tools
 command -v node >/dev/null 2>&1 || { echo >&2 "Node.js is not installed. Aborting."; exit 1; }
@@ -24,14 +24,21 @@ cd /home/emad/projects/amen24test || { echo "Project directory not found"; exit 
 pm2 del backend-test frontend-test || echo "No existing PM2 processes found"
 
 # Install shared dependencies
-cd shared
+cd packages/shared
 rm -rf node_modules dist
 npm install
 npm run build
 cd ..
 
+# Install ui dependencies
+cd ui
+rm -rf node_modules dist
+npm install
+npm run build
+cd ../..
+
 # Setup backend API
-cd backend
+cd apps/backend
 rm -rf node_modules dist
 npm install
 npm run build
@@ -56,15 +63,15 @@ echo "Backup complete!"
 npm run migrate:up:test
 # npm run seed:test
 
-cd ..
+cd ../..
 pm2 start ecosystem.config.js --only backend --env test
 
 # Setup frontend website
-cd frontend
+cd apps/frontend
 rm -rf node_modules .next
 npm install
 npm run build:test
-cd ..
+cd ../..
 pm2 start ecosystem.config.js --only frontend --env test
 
 # Rename the processes manually

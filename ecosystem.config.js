@@ -2,8 +2,8 @@ module.exports = {
   apps: [
     {
       name: "backend",
-      script: "./dist/main.js",
-      cwd: "./backend",
+      script: "./apps/dist/main.js",
+      cwd: "./apps/backend",
       instances: "max",
       exec_mode: "cluster",
       env: {
@@ -19,7 +19,7 @@ module.exports = {
       name: "frontend",
       script: "sh",
       args: "-c '[[ $NODE_ENV == \"test\" ]] && npm run start:test || npm run start'",
-      cwd: "./frontend",
+      cwd: "./apps/frontend",
       env: {
         NODE_ENV: "production",
         PORT: 3007,
