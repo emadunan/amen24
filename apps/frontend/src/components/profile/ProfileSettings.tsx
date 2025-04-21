@@ -22,11 +22,14 @@ const ProfileSettings = () => {
   async function handleDeleteAccount() {
     try {
       const { message } = await deleteAccount().unwrap();
-      console.log(message);
 
+      console.log(message);
       showMessage(message);
 
-      window.location.href = "/login";
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1000);
+
     } catch (error) {
       showApiError(error)
     }

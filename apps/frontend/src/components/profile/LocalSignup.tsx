@@ -57,8 +57,6 @@ const LocalSignup = () => {
           last_read: t("bookmark.last_read"),
         },
       }).unwrap();
-
-      console.log(message);
       
       showMessage(message, "success");
       router.replace("/login");
