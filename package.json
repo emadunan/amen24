@@ -1,0 +1,11 @@
+{
+  "name": "amen24",
+  "version": "1.0.0",
+  "description": "Amen24 is a free non-profitable project to introduce bible content for all.",
+  "main": "ecosystem.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "emadunan",
+  "license": "ISC"
+}
