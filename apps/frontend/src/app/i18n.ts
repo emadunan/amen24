@@ -2,6 +2,7 @@ import { createInstance, i18n, Resource } from "i18next";
 import { initReactI18next } from "react-i18next/initReactI18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import i18nConfig from "@/config/next-i18n-router.config";
+import { locales } from "@amen24/shared";
 
 export default async function initTranslations(
   locale: string,
@@ -13,13 +14,13 @@ export default async function initTranslations(
 
   i18nInstance.use(initReactI18next);
 
+  type Language = keyof typeof locales;
+  type Namespace = keyof typeof locales["en"];
+
   if (!resources) {
     i18nInstance.use(
-      resourcesToBackend(
-        (language: string, namespace: string) =>
-          import(`@amen24/shared/dist/locales/${language}/${namespace}.json`),
-      ),
-    );
+      resourcesToBackend((lang: Language, ns: Namespace) => Promise.resolve(locales[lang][ns]))
+    )
   }
 
   await i18nInstance.init({
