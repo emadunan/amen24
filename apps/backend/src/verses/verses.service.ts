@@ -31,7 +31,7 @@ export class VersesService {
     @InjectRepository(VerseTranslation)
     private verseTranslationsRepo: Repository<VerseTranslation>,
     private chaptersService: ChaptersService,
-  ) {}
+  ) { }
 
   async createVerseGroup(verseIds: number[]): Promise<VerseGroup> {
     if (!verseIds.length)
@@ -231,10 +231,40 @@ export class VersesService {
 
   async seed() {
     await this.structure();
+    
     await this.seedBible(Lang.NATIVE);
+    // await this.missingVerseLogger(Lang.NATIVE);
+
     await this.seedBible(Lang.ENGLISH);
+    // await this.missingVerseLogger(Lang.NATIVE);
+
     await this.seedBible(Lang.ARABIC);
+    // await this.missingVerseLogger(Lang.NATIVE);
   }
+
+  private async missingVerseLogger(lang: Lang) {
+    const allVerses = await this.versesRepo.find({
+      relations: ['chapter', 'chapter.book'],
+    });
+
+    const translated = await this.verseTranslationsRepo.find({
+      where: { lang },
+      relations: ['verse'],
+    });
+
+    const translatedIds = new Set(translated.map((t) => t.verse.id));
+    const missingVerses = allVerses.filter((v) => !translatedIds.has(v.id));
+
+    if (missingVerses.length) {
+      console.warn(`⚠️  Missing ${missingVerses.length} verses for ${lang.toUpperCase()}:`);
+      missingVerses.forEach((v) => {
+        console.warn(`- ${v.chapter.book.bookKey} ${v.chapter.num}:${v.num}`);
+      });
+    } else {
+      console.log(`✅ All verses are present for ${lang.toUpperCase()}`);
+    }
+  }
+
 
   private async seedBible(lang: Lang) {
     const progressBar = new SingleBar(
