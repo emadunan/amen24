@@ -1,0 +1,30 @@
+.verse {
+  display: inline;
+  font-size: 1.3rem;
+  line-height: 2rem;
+}
+
+[dir="rtl"] .verse {
+  line-height: 2.6rem;
+}
+
+.verseNumber {
+  color: var(--danger);
+  font-size: small;
+  vertical-align: top;
+  position: relative;
+  top: -0.6rem;
+  /* Adjust as needed */
+}
+
+[dir="ltr"] .verseNumber {
+  top: -0.2rem;
+  left: -0.1rem;
+}
+
+.loadingContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

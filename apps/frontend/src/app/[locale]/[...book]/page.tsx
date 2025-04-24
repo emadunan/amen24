@@ -4,10 +4,11 @@ import styles from "./page.module.css";
 import initTranslations from "@/app/i18n";
 import Link from "next/link";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
-import HighlightVerse from "@/components/bible/VerseHighlight";
+import VerseHighlight from "@/components/bible/VerseHighlight";
 import ChapterContent from "@/components/bible/ChapterContent";
 import ChapterTitleAction from "@/components/bible/ChapterTitleAction";
 import ScrollToVerse from "@/components/bible/ScrollToVerse";
+import ChapterContentClient from "@/components/bible/ChapterContentClient";
 
 const apiUrl = process.env.API_URL;
 
@@ -85,22 +86,28 @@ const BookPage: FC<Props> = async ({ params }) => {
           chapterNum={+chapterNum}
           verses={verses}
         >
-          {verses.map((v: Verse) => {
-            const formattedVerseNum = formatNumber(v.num, locale as Lang);
-            return (
-              <Fragment key={v.num}>
-                {" "}
-                <HighlightVerse verseId={v.id}>
-                  <p id={`v-${v.id}`} className={styles.verse}>
-                    <span className={styles.verseNumber}>
-                      {formattedVerseNum}
-                    </span>
-                    {v.verseTranslations[0].textDiacritized}
-                  </p>
-                </HighlightVerse>
-              </Fragment>
-            );
-          })}
+          <div style={{display: "flex", gap: '2rem'}}>
+            <div>
+              {verses.map((v: Verse) => {
+                const formattedVerseNum = formatNumber(v.num, locale as Lang);
+                return (
+                  <Fragment key={v.num}>
+                    {" "}
+                    <VerseHighlight verseId={v.id}>
+                      <p id={`v-${v.id}`} className={styles.verse}>
+                        <span className={styles.verseNumber}>
+                          {formattedVerseNum}
+                        </span>
+                        {v.verseTranslations[0].textDiacritized}
+                      </p>
+                    </VerseHighlight>
+                  </Fragment>
+                );
+              })}
+            </div>
+            <ChapterContentClient bookKey={bookKey} chapterNum={chapterNum}/>
+          </div>
+
         </ChapterContent>
       </div>
     </div>
