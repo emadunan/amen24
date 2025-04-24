@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { FeaturedService } from './featured.service';
 import { UpdateFeaturedDto } from './dto/update-featured.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../users/entities/user.entity';
 import { User as UserParam } from '../auth/decorators/user.decorator';
 

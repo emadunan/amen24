@@ -199,7 +199,9 @@ export class VersesService {
       '..',
       '..',
       '..',
-      '_content',
+      '..',
+      'documentation',
+      'content',
       'Bible_En_ESV_2001.VPL.txt',
     );
 
@@ -229,6 +231,7 @@ export class VersesService {
 
   async seed() {
     await this.structure();
+    await this.seedBible(Lang.NATIVE);
     await this.seedBible(Lang.ENGLISH);
     await this.seedBible(Lang.ARABIC);
   }
@@ -245,6 +248,9 @@ export class VersesService {
     try {
       let filename: string;
       switch (lang) {
+        case Lang.NATIVE:
+          filename = 'Bible_Native_MasoreticSBL.VPL.txt';
+          break;
         case Lang.ENGLISH:
           filename = 'Bible_En_ESV_2001.VPL.txt';
           break;
@@ -260,7 +266,9 @@ export class VersesService {
         '..',
         '..',
         '..',
-        '_content',
+        '..',
+        'documentation',
+        'content',
         filename,
       );
       const fileContent = readFileSync(contentFilePath, 'utf-8');

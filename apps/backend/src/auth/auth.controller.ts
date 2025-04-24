@@ -15,7 +15,7 @@ import { MESSAGE_KEYS, UserPrivilege } from '@amen24/shared';
 import { Request, Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import { User as UserParam } from "./decorators/user.decorator";
 
 @Controller('auth')

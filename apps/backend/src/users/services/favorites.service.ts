@@ -8,7 +8,7 @@ import { Favorite } from '../entities/favorite.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProfilesService } from './profiles.service';
-import { VersesService } from 'src/verses/verses.service';
+import { VersesService } from '../../verses/verses.service';
 import { ERROR_KEYS, Lang } from '@amen24/shared';
 
 @Injectable()

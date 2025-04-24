@@ -10,7 +10,7 @@ import { Bookmark } from './entities/bookmark.entity';
 import { BookmarksService } from './services/bookmarks.service';
 import { FavoritesService } from './services/favorites.service';
 import { Favorite } from './entities/favorite.entity';
-import { VersesModule } from 'src/verses/verses.module';
+import { VersesModule } from '../verses/verses.module';
 
 @Module({
   imports: [

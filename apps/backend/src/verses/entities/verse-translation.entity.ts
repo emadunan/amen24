@@ -18,11 +18,11 @@ export class VerseTranslation {
   @Column({ type: 'text' })
   lang: Lang;
 
-  @Column({ type: 'text' })
-  text: string;
+  @Column({ type: 'text', nullable: true })
+  text?: string;
 
-  @Column({ type: 'text' })
-  textNormalized: string;
+  @Column({ type: 'text', nullable: true })
+  textNormalized?: string;
 
   @Column({ type: 'text', nullable: true })
   textDiacritized?: string;

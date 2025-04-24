@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { AuthProvider, Lang, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
 import { UsersService } from '../users/services/users.service';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { User } from '../users/entities/user.entity';
 import { ConfigService } from '@nestjs/config';
@@ -15,7 +15,7 @@ import { randomBytes } from 'crypto';
 import { Response } from 'express';
 import { Profile } from 'passport';
 import * as bcrypt from 'bcrypt';
-import { ProfilesService } from 'src/users/services/profiles.service';
+import { ProfilesService } from '../users/services/profiles.service';
 
 @Injectable()
 export class AuthService {

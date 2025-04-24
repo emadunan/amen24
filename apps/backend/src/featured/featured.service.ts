@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { CreateFeaturedDto } from './dto/create-featured.dto';
 import { UpdateFeaturedDto } from './dto/update-featured.dto';
-import { VersesService } from 'src/verses/verses.service';
+import { VersesService } from '../verses/verses.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Featured } from './entities/featured.entity';
 import { Repository } from 'typeorm';
