@@ -1,14 +1,17 @@
 .closeButton {
   border: none;
-  grid-column: 3;
-  grid-row: 1;
-  justify-items: stretch;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--secondary);
   cursor: pointer;
-  place-self: stretch;
+  
+}
+
+.absolute {
+  position: absolute;
+  top: 0.15rem;
+  inset-inline-end: 0.15rem; /* replaces right in LTR, left in RTL */
 }
 
 .closeIcon {

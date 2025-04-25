@@ -4,12 +4,13 @@ import styles from "./CloseDraggableBtn.module.css";
 
 interface Props {
   onClose: () => void;
+  absolute?: boolean;
 }
 
-const CloseDraggableBtn: FC<Props> = ({ onClose }) => {
+const CloseDraggableBtn: FC<Props> = ({ onClose, absolute }) => {
   return (
-    <button className={styles.closeButton} onClick={onClose}>
-      <FaRegWindowClose size="1.2rem" className={styles.closeIcon} />
+    <button className={`${styles.closeButton} ${absolute ? styles.absolute : ""}`} onClick={onClose}>
+      <FaRegWindowClose size="1rem" className={styles.closeIcon} />
     </button>
   );
 };

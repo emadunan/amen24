@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { TbSquareChevronUp, TbSquareChevronDown } from "react-icons/tb";
+import { IoChevronUpOutline, IoChevronDownOutline } from "react-icons/io5";
 import styles from "./ToggleDraggableBtn.module.css";
 
 interface Props {
@@ -11,9 +11,9 @@ const ToggleDraggableBtn: FC<Props> = ({ onToggle, isExpanded }) => {
   return (
     <button className={styles.toggleButton} onClick={onToggle}>
       {isExpanded ? (
-        <TbSquareChevronUp size="1rem" className={styles.toggleIcon} />
+        <IoChevronUpOutline className={styles.toggleIcon} />
       ) : (
-        <TbSquareChevronDown size="1rem" className={styles.toggleIcon} />
+        <IoChevronDownOutline className={styles.toggleIcon} />
       )}
     </button>
   );

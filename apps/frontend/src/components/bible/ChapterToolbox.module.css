@@ -1,6 +1,5 @@
 .toolbox {
   position: fixed;
-  padding: 0rem;
   background-color: var(--secondary);
   border: 1px solid var(--primary);
   border-radius: 2px;
@@ -17,10 +16,13 @@
   width: 100%;
   cursor: grab;
   align-items: center;
+  padding: 1px;
+  margin-bottom: 1px;
 
   display: grid;
   grid-template-columns: 1rem auto 1rem;
-  grid-template-rows: repeat(2);
+  grid-template-rows: 1rem 1rem;
+  gap: 1px;
 }
 
 .toolboxHeader:active {

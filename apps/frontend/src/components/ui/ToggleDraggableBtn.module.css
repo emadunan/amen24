@@ -2,12 +2,12 @@
   border: none;
   grid-column: 3;
   grid-row: 2;
-  justify-items: stretch;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  place-self: stretch;
+  border: 1px solid var(--primary);
+  border-radius: 2px;
 }
 
 .toggleIcon {

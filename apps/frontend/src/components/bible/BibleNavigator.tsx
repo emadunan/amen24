@@ -83,7 +83,7 @@ const BibleNavigator = () => {
       <div className={styles.navigatorHeader} ref={headerRef}>
         <RxDragHandleDots2 />
         <h4>{t("bibleIndex")}</h4>
-        <CloseDraggableBtn onClose={() => dispatch(close())} />
+        <CloseDraggableBtn onClose={() => dispatch(close())} absolute/>
       </div>
       <div className={styles.navigatorBody}>
         {Object.values(BookMap).map((book) => (
