@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import translationReducer from './translationSlice';
 import navigatorReducer from "./navigatorSlice";
 import searchReducer from "./searchSlice";
 import { featuredApi } from "./featuredApi";
@@ -10,6 +11,7 @@ import { authApi } from "./authApi";
 export const MakeStore = () => {
   const store = configureStore({
     reducer: {
+      translation: translationReducer,
       navigator: navigatorReducer,
       search: searchReducer,
       [authApi.reducerPath]: authApi.reducer,

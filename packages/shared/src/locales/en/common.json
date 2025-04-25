@@ -4,7 +4,6 @@
   "bible": "Bible",
   "bibleIndex": "Bible Index",
   "search": "Search",
-  "chapter": "Chapter",
   "prev": "Prev",
   "next": "Next",
   "remove": "Remove",
@@ -13,6 +12,11 @@
   "locale": "Language",
   "contactUsTitle": "Contact",
   "contactUsDescription": "We are a dedicated team committed to providing the best service and user experience. If you need assistance or have any suggestions, we’d love to hear from you!",
+  "chapter": {
+    "title": "Chapter",
+    "showTranslation": "Show Translation",
+    "hideTranslation": "Hide Translation"
+  },
   "searchEngine": {
     "title": "Search Engine",
     "inviteMessage": "Search in the bible",

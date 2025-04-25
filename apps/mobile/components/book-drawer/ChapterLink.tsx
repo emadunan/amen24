@@ -62,7 +62,7 @@ const ChapterLink: FC<Props> = ({
             selected && selectedChapterTextTheme,
           ]}
         >
-          {`${t("chapter")} ${i18n.language === "ar" ? Number(chapter).toLocaleString("ar-EG") : chapter}`}
+          {`${t("chapter.title")} ${i18n.language === "ar" ? Number(chapter).toLocaleString("ar-EG") : chapter}`}
         </Text>
       </Pressable>
     </ThemedView>

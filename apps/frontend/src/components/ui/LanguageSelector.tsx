@@ -91,7 +91,7 @@ const LanguageSelector = () => {
   return (
     <div className={styles.languageChanger} ref={dropdownRef}>
       <button className={styles.button} onClick={() => setIsOpen(!isOpen)}>
-        {!isTablet && (currentLocale === "ar" ? "🇪🇬" : "🇺🇸")}{" "}
+        {!isTablet && (currentLocale === "ar" ? "🇦🇪" : "🇺🇸")}{" "}
         {isTablet ? currentLocale.toUpperCase() : t(`lang:${currentLocale}`)}
       </button>
 
@@ -110,7 +110,7 @@ const LanguageSelector = () => {
             disabled={currentLocale === "ar"}
             onClick={() => handleLanguageChange("ar")}
           >
-            {!isTablet && "🇪🇬"}
+            {!isTablet && "🇦🇪"}
             {isTablet ? "AR" : t("lang:ar")}
           </button>
         </div>

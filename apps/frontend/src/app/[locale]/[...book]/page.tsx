@@ -9,6 +9,8 @@ import ChapterContent from "@/components/bible/ChapterContent";
 import ChapterTitleAction from "@/components/bible/ChapterTitleAction";
 import ScrollToVerse from "@/components/bible/ScrollToVerse";
 import ChapterContentClient from "@/components/bible/ChapterContentClient";
+import TranslationSelector from "@/components/bible/TranslationSelector";
+import ChapterContainer from "@/components/bible/ChapterContainer";
 
 const apiUrl = process.env.API_URL;
 
@@ -38,78 +40,83 @@ const BookPage: FC<Props> = async ({ params }) => {
 
   return (
     <div className={styles.pageContainer}>
-      <ScrollToVerse />
-      <div className={styles.chapterContainer}>
-        <div className={styles.chapterNav}>
-          {+chapterNum > 1 ? (
-            <Link
-              href={`/${bookKey}/${+chapterNum - 1}/${bookLen}`}
-              className={styles.chapterLink}
-            >
-              <GrLinkPrevious className="flip-icon" />
-              {t("prev")}
-            </Link>
-          ) : (
-            <span
-              className={`${styles.chapterLink} ${styles.disabled}`}
-              aria-disabled="true"
-            >
-              <GrLinkPrevious className="flip-icon" />
-              {t("prev")}
-            </span>
-          )}
-          <ChapterTitleAction>
-            <h3 className={styles.chapterTitle}>
-              {t(bookKey, { ns: "book" })} {formattedchapterNum}
-            </h3>
-          </ChapterTitleAction>
-          {+chapterNum < +bookLen ? (
-            <Link
-              href={`/${bookKey}/${+chapterNum + 1}/${bookLen}`}
-              className={styles.chapterLink}
-            >
-              {t("next")}
-              <GrLinkNext className="flip-icon" />
-            </Link>
-          ) : (
-            <span
-              className={`${styles.chapterLink} ${styles.disabled}`}
-              aria-disabled="true"
-            >
-              {t("next")}
-              <GrLinkNext className="flip-icon" />
-            </span>
-          )}
-        </div>
-        <ChapterContent
-          bookKey={bookKey as BookKey}
-          chapterNum={+chapterNum}
-          verses={verses}
-        >
-          <div style={{display: "flex", gap: '2rem'}}>
-            <div>
-              {verses.map((v: Verse) => {
-                const formattedVerseNum = formatNumber(v.num, locale as Lang);
-                return (
-                  <Fragment key={v.num}>
-                    {" "}
-                    <VerseHighlight verseId={v.id}>
-                      <p id={`v-${v.id}`} className={styles.verse}>
-                        <span className={styles.verseNumber}>
-                          {formattedVerseNum}
-                        </span>
-                        {v.verseTranslations[0].textDiacritized}
-                      </p>
-                    </VerseHighlight>
-                  </Fragment>
-                );
-              })}
+      <ChapterContainer>
+        <ScrollToVerse />
+        <div className={styles.chapterContainer}>
+          <div className={styles.chapterNav}>
+            {+chapterNum > 1 ? (
+              <Link
+                href={`/${bookKey}/${+chapterNum - 1}/${bookLen}`}
+                className={styles.chapterLink}
+              >
+                <GrLinkPrevious className="flip-icon" />
+                {t("prev")}
+              </Link>
+            ) : (
+              <span
+                className={`${styles.chapterLink} ${styles.disabled}`}
+                aria-disabled="true"
+              >
+                <GrLinkPrevious className="flip-icon" />
+                {t("prev")}
+              </span>
+            )}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+              <ChapterTitleAction>
+                <h3 className={styles.chapterTitle}>
+                  {t(bookKey, { ns: "book" })} {formattedchapterNum}
+                </h3>
+              </ChapterTitleAction>
+              <TranslationSelector />
             </div>
-            <ChapterContentClient bookKey={bookKey} chapterNum={chapterNum}/>
+            {+chapterNum < +bookLen ? (
+              <Link
+                href={`/${bookKey}/${+chapterNum + 1}/${bookLen}`}
+                className={styles.chapterLink}
+              >
+                {t("next")}
+                <GrLinkNext className="flip-icon" />
+              </Link>
+            ) : (
+              <span
+                className={`${styles.chapterLink} ${styles.disabled}`}
+                aria-disabled="true"
+              >
+                {t("next")}
+                <GrLinkNext className="flip-icon" />
+              </span>
+            )}
           </div>
+          <ChapterContent
+            bookKey={bookKey as BookKey}
+            chapterNum={+chapterNum}
+            verses={verses}
+          >
+            <div style={{ display: "flex", gap: '2rem' }}>
+              <div>
+                {verses.map((v: Verse) => {
+                  const formattedVerseNum = formatNumber(v.num, locale as Lang);
+                  return (
+                    <Fragment key={v.num}>
+                      {" "}
+                      <VerseHighlight verseId={v.id}>
+                        <p id={`v-${v.id}`} className={styles.verse}>
+                          <span className={styles.verseNumber}>
+                            {formattedVerseNum}
+                          </span>
+                          {v.verseTranslations[0].textDiacritized}
+                        </p>
+                      </VerseHighlight>
+                    </Fragment>
+                  );
+                })}
+              </div>
+              <ChapterContentClient bookKey={bookKey} chapterNum={chapterNum} />
+            </div>
 
-        </ChapterContent>
-      </div>
+          </ChapterContent>
+        </div>
+      </ChapterContainer>
     </div>
   );
 };

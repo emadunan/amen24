@@ -1,4 +1,5 @@
 export enum Lang {
+  VOID = "",
   NATIVE = "na",
   ENGLISH = "en",
   ARABIC = "ar",

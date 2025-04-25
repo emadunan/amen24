@@ -3,11 +3,6 @@
   justify-content: center;
 }
 
-.chapterContainer {
-  padding: 1rem;
-  /* max-width: 44rem; */
-}
-
 .chapterNav {
   display: flex;
   justify-content: space-between;
