@@ -12,6 +12,16 @@ interface Props {
   chapterNum: string;
 }
 
+const isOldTestament = (bookKey: string): boolean => {
+  const oldTestamentBooks = [
+    'GEN', 'EXO', 'LEV', 'NUM', 'DEU', 'JOS', 'JDG', 'RUT', '1SA', '2SA',
+    '1KI', '2KI', '1CH', '2CH', 'EZR', 'NEH', 'EST', 'JOB', 'PSA', 'PRO',
+    'ECC', 'SNG', 'ISA', 'JER', 'LAM', 'EZK', 'DAN', 'HOS', 'JOL', 'AMO',
+    'OBA', 'JON', 'MIC', 'NAM', 'HAB', 'ZEP', 'HAG', 'ZEC', 'MAL',
+  ];
+  return oldTestamentBooks.includes(bookKey);
+};
+
 const ChapterContentClient: FC<Props> = ({ bookKey, chapterNum }) => {
   const lang = useSelector((state: RootState) => state.translation.lang);
   const [verses, setVerses] = useState<Verse[]>([]);
@@ -51,7 +61,15 @@ const ChapterContentClient: FC<Props> = ({ bookKey, chapterNum }) => {
   //   </div>
   // }
 
-  const isRtl = [Lang.ARABIC, Lang.NATIVE].includes(lang);
+  const renderLang: Lang = lang === Lang.NATIVE
+    ? isOldTestament(bookKey)
+      ? Lang.HEBREW
+      : Lang.GREEK
+    : lang;
+
+
+  const isRtl = renderLang === Lang.HEBREW || renderLang === Lang.ARABIC;
+
 
   if (!lang) return null; //
 
@@ -64,7 +82,7 @@ const ChapterContentClient: FC<Props> = ({ bookKey, chapterNum }) => {
             <VerseHighlight verseId={v.id}>
               <p id={`v-${v.id}`} className={styles.verse}>
                 <span className={styles.verseNumber}>
-                  {formatNumber(v.num, lang)}
+                  {formatNumber(v.num, renderLang)}
                 </span>
                 {v.verseTranslations[0].textDiacritized}
               </p>
