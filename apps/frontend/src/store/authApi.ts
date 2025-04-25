@@ -1,12 +1,12 @@
 // Need to use the React-specific entry point to import createApi
-import { User } from '@amen24/shared';
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { createBaseQueryWithReauth } from './baseQueryWithReauth';
+import { User } from "@amen24/shared";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQueryWithReauth } from "./baseQueryWithReauth";
 
 type UserLogin = Pick<User, "email" | "password">;
 
 export const authApi = createApi({
-  reducerPath: 'authApi',
+  reducerPath: "authApi",
   tagTypes: ["User"],
   baseQuery: createBaseQueryWithReauth("auth"),
   endpoints: (builder) => ({
@@ -19,14 +19,14 @@ export const authApi = createApi({
         return {
           url: `/local`,
           method: "POST",
-          body
-        }
+          body,
+        };
       },
-      invalidatesTags: ["User"]
-    })
+      invalidatesTags: ["User"],
+    }),
   }),
-})
+});
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetMeQuery, useLoginMutation } = authApi
+export const { useGetMeQuery, useLoginMutation } = authApi;

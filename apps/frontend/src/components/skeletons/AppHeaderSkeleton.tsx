@@ -26,7 +26,6 @@ const AppHeaderSkeleton = () => {
           <div className={styles.skeletonTab} />
         </div>
       </div>
-
     </header>
   );
 };

@@ -15,12 +15,14 @@ export default async function initTranslations(
   i18nInstance.use(initReactI18next);
 
   type Language = keyof typeof locales;
-  type Namespace = keyof typeof locales["en"];
+  type Namespace = keyof (typeof locales)["en"];
 
   if (!resources) {
     i18nInstance.use(
-      resourcesToBackend((lang: Language, ns: Namespace) => Promise.resolve(locales[lang][ns]))
-    )
+      resourcesToBackend((lang: Language, ns: Namespace) =>
+        Promise.resolve(locales[lang][ns]),
+      ),
+    );
   }
 
   await i18nInstance.init({

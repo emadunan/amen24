@@ -61,7 +61,14 @@ const BookPage: FC<Props> = async ({ params }) => {
                 {t("prev")}
               </span>
             )}
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <ChapterTitleAction>
                 <h3 className={styles.chapterTitle}>
                   {t(bookKey, { ns: "book" })} {formattedchapterNum}
@@ -92,7 +99,7 @@ const BookPage: FC<Props> = async ({ params }) => {
             chapterNum={+chapterNum}
             verses={verses}
           >
-            <div style={{ display: "flex", gap: '2rem' }}>
+            <div style={{ display: "flex", gap: "2rem" }}>
               <div>
                 {verses.map((v: Verse) => {
                   const formattedVerseNum = formatNumber(v.num, locale as Lang);
@@ -113,7 +120,6 @@ const BookPage: FC<Props> = async ({ params }) => {
               </div>
               <ChapterContentClient bookKey={bookKey} chapterNum={chapterNum} />
             </div>
-
           </ChapterContent>
         </div>
       </ChapterContainer>

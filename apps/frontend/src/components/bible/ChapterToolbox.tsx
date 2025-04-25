@@ -23,6 +23,7 @@ import { useGetMeQuery } from "@/store/authApi";
 import { useAddFavoriteMutation } from "@/store/favoriteApi";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
 import { useAddToFeaturedMutation } from "@/store/featuredApi";
+import ToggleDraggableBtn from "../ui/ToggleDraggableBtn";
 
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
@@ -37,7 +38,7 @@ const ChapterToolbox = () => {
       5,
       7,
       i18n.language === "ar" ? false : true,
-      i18n.language === "ar" ? 11 : 13,
+      i18n.language === "ar" ? 9 : 11,
       headerRef,
     );
 
@@ -47,10 +48,15 @@ const ChapterToolbox = () => {
   const [addFeatured] = useAddToFeaturedMutation();
 
   const [isClient, setIsClient] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  function handleIsExpanded() {
+    setIsExpanded(prev => !prev)
+  }
 
   async function handleUpdateBookmark(
     bookmarkId?: number,
@@ -121,61 +127,64 @@ const ChapterToolbox = () => {
       style={{
         left: position.x,
         top: position.y,
-        width: i18n.language === "ar" ? "11rem" : "13rem",
+        width: i18n.language === "ar" ? "9rem" : "11rem",
       }}
     >
       <div className={styles.toolboxHeader} ref={headerRef}>
-        <RxDragHandleDots2 />
+        <RxDragHandleDots2 className={styles.dragIcon}/>
         <h4>{t("toolbox.title")}</h4>
         <CloseDraggableBtn onClose={clearHighlighted} />
+        <ToggleDraggableBtn onToggle={handleIsExpanded} isExpanded={isExpanded} />
       </div>
-      <div className={styles.toolboxContainer}>
-        <button onClick={copyHighlighted}>
-          <FaCopy /> {t("toolbox.copy")}
-        </button>
-
-        {user && user.profile.privilege === UserPrivilege.ADMIN && (
-          <button onClick={handleAddFeatured}>
-            <HiSparkles /> {t("toolbox.addToFeatured")}
+      {isExpanded && (
+        <div className={styles.toolboxContainer}>
+          <button onClick={copyHighlighted}>
+            <FaCopy /> {t("toolbox.copy")}
           </button>
-        )}
 
-        {user && (
-          <Fragment>
-            <button onClick={handleAddFavorite}>
-              <FaStar /> {t("toolbox.addToFavorites")}
+          {user && user.profile.privilege === UserPrivilege.ADMIN && (
+            <button onClick={handleAddFeatured}>
+              <HiSparkles /> {t("toolbox.addToFeatured")}
             </button>
+          )}
 
-            <button
-              className={styles.bookmark}
-              onClick={handleUpdateBookmark.bind(
-                this,
-                bookmark?.id,
-                user?.email,
-              )}
-            >
-              {isClient && <MdPushPin size="1.2rem" />}
-              <div className={styles.bookmarkContent}>
-                <p className={styles.bookmarkTitle}>{t("toolbox.bookmark")}</p>
-                {bookmark && (
-                  <small className={styles.bookmarkRef}>
-                    {t(`book:${bookmark.verse.chapter.book.bookKey}`)} (
-                    {formatNumber(
-                      bookmark.verse.chapter.num,
-                      i18n.language as Lang,
-                    )}{" "}
-                    : {formatNumber(bookmark.verse.num, i18n.language as Lang)})
-                  </small>
+          {user && (
+            <Fragment>
+              <button onClick={handleAddFavorite}>
+                <FaStar /> {t("toolbox.addToFavorites")}
+              </button>
+
+              <button
+                className={styles.bookmark}
+                onClick={handleUpdateBookmark.bind(
+                  this,
+                  bookmark?.id,
+                  user?.email,
                 )}
-              </div>
-            </button>
-          </Fragment>
-        )}
+              >
+                {isClient && <MdPushPin size="1.2rem" />}
+                <div className={styles.bookmarkContent}>
+                  <p className={styles.bookmarkTitle}>{t("toolbox.bookmark")}</p>
+                  {bookmark && (
+                    <small className={styles.bookmarkRef}>
+                      {t(`book:${bookmark.verse.chapter.book.bookKey}`)} (
+                      {formatNumber(
+                        bookmark.verse.chapter.num,
+                        i18n.language as Lang,
+                      )}{" "}
+                      : {formatNumber(bookmark.verse.num, i18n.language as Lang)})
+                    </small>
+                  )}
+                </div>
+              </button>
+            </Fragment>
+          )}
 
-        <button onClick={clearHighlighted} className={styles.eraserBtn}>
-          <FaEraser /> {t("toolbox.clearHighlighting")}
-        </button>
-      </div>
+          <button onClick={clearHighlighted} className={styles.eraserBtn}>
+            <FaEraser /> {t("toolbox.clearHighlighting")}
+          </button>
+        </div>
+      )}
     </div>
   );
 

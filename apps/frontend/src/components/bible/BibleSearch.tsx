@@ -19,7 +19,7 @@ import {
   toggleDropdown,
 } from "@/store/searchSlice";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
-import { useBreakpoint, useFeedback,showToast } from "@amen24/ui";
+import { useBreakpoint, useFeedback, showToast } from "@amen24/ui";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 

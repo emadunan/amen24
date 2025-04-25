@@ -1,16 +1,17 @@
-.closeButton {
+.toggleButton {
   border: none;
   grid-column: 3;
-  grid-row: 1;
+  grid-row: 2;
   justify-items: stretch;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--secondary);
   cursor: pointer;
   place-self: stretch;
 }
 
-.closeIcon {
+.toggleIcon {
+  color: var(--secondary);
+  background-color: var(--secondary);
   color: var(--primary);
 }

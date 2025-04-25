@@ -27,9 +27,8 @@ const ProfileSettings = () => {
       setTimeout(() => {
         window.location.href = "/login";
       }, 1000);
-
     } catch (error) {
-      showApiError(error)
+      showApiError(error);
     }
   }
 

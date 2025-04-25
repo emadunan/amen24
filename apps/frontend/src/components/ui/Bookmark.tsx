@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { BookMap, formatNumber, Lang } from "@amen24/shared";
 import { useGetMeQuery } from "@/store/authApi";
 import { useEffect } from "react";
-import {useBreakpoint} from "@amen24/ui";
+import { useBreakpoint } from "@amen24/ui";
 
 const Bookmark = () => {
   const { t, i18n } = useTranslation(["book"]);

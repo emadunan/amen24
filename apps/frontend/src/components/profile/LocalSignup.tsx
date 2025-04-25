@@ -14,7 +14,7 @@ import { useFeedback } from "@amen24/ui";
 
 const LocalSignup = () => {
   const router = useRouter();
-  
+
   const { t, i18n } = useTranslation();
   const { showApiError, showError, showMessage } = useFeedback(t);
 
@@ -57,7 +57,7 @@ const LocalSignup = () => {
           last_read: t("bookmark.last_read"),
         },
       }).unwrap();
-      
+
       showMessage(message, "success");
       router.replace("/login");
     } catch (err: unknown) {

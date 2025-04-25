@@ -180,8 +180,8 @@ const LanguageSelector = () => {
         {!mounted
           ? ""
           : isTablet
-          ? langMap[currentLocale as LangMapKey]
-          : `${flagMap[currentLocale]} ${t(`lang:${currentLocale}`)}`}
+            ? langMap[currentLocale as LangMapKey]
+            : `${flagMap[currentLocale]} ${t(`lang:${currentLocale}`)}`}
       </button>
 
       {isOpen && (

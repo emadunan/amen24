@@ -7,8 +7,8 @@ interface TranslationState {
 }
 
 const initialState: TranslationState = {
-  lang: Lang.VOID
-}
+  lang: Lang.VOID,
+};
 
 export const translationSlice = createSlice({
   name: "translation",
@@ -16,10 +16,10 @@ export const translationSlice = createSlice({
   reducers: {
     setTranslationLang: (state, action: PayloadAction<Lang>) => {
       console.log("TargetLang: ", action.payload);
-      
+
       state.lang = action.payload;
     },
-  }
+  },
 });
 
 export const { setTranslationLang } = translationSlice.actions;

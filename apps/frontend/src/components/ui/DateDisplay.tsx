@@ -72,7 +72,9 @@ const DateDisplay: React.FC = () => {
 
   useEffect(() => {
     if (user?.profile?.dateCalendar) {
-      const index = calendars.indexOf(user.profile.dateCalendar as CalendarType);
+      const index = calendars.indexOf(
+        user.profile.dateCalendar as CalendarType,
+      );
       if (index !== -1) {
         setCalendarIndex(index);
       }

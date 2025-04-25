@@ -41,11 +41,11 @@ const AppHeader: FC<Props> = () => {
 
   const { isTablet, isLargePhone } = useBreakpoint();
 
-  const [isClient, setIsClient] = useState(false)
- 
+  const [isClient, setIsClient] = useState(false);
+
   useEffect(() => {
-    setIsClient(true)
-  }, [])
+    setIsClient(true);
+  }, []);
 
   // Extract locale from the pathname
   const localePrefixes = i18nConfig.locales.map((locale) => `/${locale}`);

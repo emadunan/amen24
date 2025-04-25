@@ -16,7 +16,7 @@ import { useFeedback } from "@amen24/ui";
 const PasswordResetForm = () => {
   const router = useRouter();
   const { t } = useTranslation(["error"]);
-  const { showError, showApiError,showMessage } = useFeedback(t);
+  const { showError, showApiError, showMessage } = useFeedback(t);
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");

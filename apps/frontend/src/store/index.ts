@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import translationReducer from './translationSlice';
+import translationReducer from "./translationSlice";
 import navigatorReducer from "./navigatorSlice";
 import searchReducer from "./searchSlice";
 import { featuredApi } from "./featuredApi";
