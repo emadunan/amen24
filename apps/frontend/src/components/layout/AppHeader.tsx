@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./AppHeader.module.css";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
 import LanguageChanger from "../ui/LanguageSelector";
@@ -40,6 +40,12 @@ const AppHeader: FC<Props> = () => {
 
   const { isTablet, isLargePhone } = useBreakpoint();
 
+  const [isClient, setIsClient] = useState(false)
+ 
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
   // Extract locale from the pathname
   const localePrefixes = i18nConfig.locales.map((locale) => `/${locale}`);
   let normalizedPath = pathname;
@@ -62,6 +68,8 @@ const AppHeader: FC<Props> = () => {
   const isBookPath = Object.values(BookKey).some((path) =>
     pathname.includes(path),
   );
+
+  if (!isClient) return null;
 
   return (
     <header className={styles.appHeader}>

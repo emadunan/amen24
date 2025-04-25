@@ -74,10 +74,22 @@
 @media (max-width: 48em) {
   .button {
     width: 2rem;
+    text-align: center;
+  }
+
+  [dir="rtl"] .button {
+    width: 2rem;
+    text-align: center;
   }
 
   .option {
     width: 2rem;
+    text-align: center;
+  }
+
+  [dir="rtl"] .option {
+    width: 2rem;
+    text-align: center;
   }
 }
 
