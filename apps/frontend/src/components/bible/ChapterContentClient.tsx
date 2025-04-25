@@ -67,11 +67,9 @@ const ChapterContentClient: FC<Props> = ({ bookKey, chapterNum }) => {
       : Lang.GREEK
     : lang;
 
-
   const isRtl = renderLang === Lang.HEBREW || renderLang === Lang.ARABIC;
 
-
-  if (!lang) return null; //
+  if (!lang) return null;
 
   return (
     <div dir={isRtl ? 'rtl' : 'ltr'} >
@@ -94,4 +92,4 @@ const ChapterContentClient: FC<Props> = ({ bookKey, chapterNum }) => {
   );
 }
 
-export default ChapterContentClient
+export default ChapterContentClient;
