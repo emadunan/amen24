@@ -113,7 +113,7 @@ const ChapterContentClient: FC<Props> = ({ bookKey, chapterNum }) => {
           <Fragment key={v.num}>
             {" "}
             <VerseHighlight verseId={v.id}>
-              <p id={`v-${v.id}`} className={styles.verse}>
+              <p id={`v-${v.id}`} className={`${styles.verse} ${renderLang === Lang.HEBREW ? styles.hebrew : ""}`} >
                 <span className={styles.verseNumber}>
                   {formatNumber(v.num, renderLang)}
                 </span>

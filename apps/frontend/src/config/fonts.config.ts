@@ -25,3 +25,24 @@ export const amiri = localFont({
   ],
   variable: "--font-amiri",
 });
+
+export const cardo = localFont({
+  src: [
+    {
+      path: "../assets/fonts/Cardo/Cardo-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/Cardo/Cardo-Italic.ttf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../assets/fonts/Cardo/Cardo-Bold.ttf",
+      weight: "700",
+      style: "bold",
+    },
+  ],
+  variable: "--font-cardo",
+});

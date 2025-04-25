@@ -11,7 +11,7 @@ import AppMain from "@/components/layout/AppMain";
 import StoreProvider from "../../providers/StoreProvider";
 import { ToastContainer } from "react-toastify";
 import BibleNavigation from "@/components/bible/BibleNavigator";
-import { amiri } from "@/config/fonts.config";
+import { amiri, cardo } from "@/config/fonts.config";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
 import TestSiteWarning from "@/components/layout/TestSiteWarning";
@@ -76,7 +76,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
           }}
         />
       </head>
-      <body className={amiri.className}>
+      <body className={`${amiri.className} ${cardo.variable}`}>
         <StoreProvider>
           <TranslationsProvider
             namespaces={i18nNamespaces}
