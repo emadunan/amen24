@@ -7,11 +7,10 @@
   align-items: center;
   cursor: pointer;
   border: 1px solid var(--primary);
+  background-color: var(--secondary);
   border-radius: 2px;
 }
 
 .toggleIcon {
-  color: var(--secondary);
-  background-color: var(--secondary);
   color: var(--primary);
 }
