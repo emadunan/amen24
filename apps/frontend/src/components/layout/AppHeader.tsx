@@ -17,6 +17,7 @@ import DateDisplay from "../ui/DateDisplay";
 import NavBar from "./NavBar";
 import NavMenu from "./NavMenu";
 import { useBreakpoint } from "@amen24/ui";
+import AppHeaderSkeleton from "../skeletons/AppHeaderSkeleton";
 
 const AppLogo = dynamic(() => import("./AppLogo"), {
   ssr: false,
@@ -69,7 +70,7 @@ const AppHeader: FC<Props> = () => {
     pathname.includes(path),
   );
 
-  if (!isClient) return null;
+  if (!isClient) return <AppHeaderSkeleton />;
 
   return (
     <header className={styles.appHeader}>

@@ -1,0 +1,88 @@
+.appHeader {
+  position: fixed;
+  width: 100%;
+  height: var(--header-height);
+  background-color: var(--secondary);
+  display: flex;
+  justify-content: center;
+  z-index: 11;
+  border-bottom: 2px solid var(--primary);
+}
+
+.nav {
+  width: 92rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  position: relative;
+}
+
+.navSide {
+  display: flex;
+  gap: 0.5rem;
+  width: calc(50% - 4rem);
+  height: 2rem;
+}
+
+.leftSide {
+  justify-content: flex-start;
+}
+
+.rightSide {
+  justify-content: flex-end;
+}
+
+.logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2rem;
+}
+
+.skeletonLogo {
+  width: 5rem;
+  height: 2rem;
+  background-color: var(--background-hover);
+  border-radius: 0.3rem;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeletonButton,
+.skeletonTab {
+  width: 4rem;
+  height: 2rem;
+  background-color: var(--background-hover);
+  border-radius: 0.3rem;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeletonCircle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--background-hover);
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+.skeletonLogo,
+.skeletonButton,
+.skeletonTab,
+.skeletonCircle {
+  background-image: linear-gradient(
+    90deg,
+    var(--background-hover) 0px,
+    var(--background) 40px,
+    var(--background-hover) 80px
+  );
+  background-size: 200% 100%;
+}
