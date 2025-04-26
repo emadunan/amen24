@@ -91,6 +91,13 @@ export class ProfilesService {
       .groupBy('profile.themeMode')
       .getRawMany();
 
+    const dateCalendar = await this.profilesRepo
+      .createQueryBuilder('profile')
+      .select('profile.dateCalendar', 'dateCalendar')
+      .addSelect('COUNT(*)', 'count')
+      .groupBy('profile.dateCalendar')
+      .getRawMany();
+
     const providers = await this.profilesRepo
       .createQueryBuilder('profile')
       .leftJoin('profile.users', 'user')
@@ -111,6 +118,10 @@ export class ProfilesService {
       }, {}),
       theme: themeModes.reduce((acc, cur) => {
         acc[cur.themeMode] = Number(cur.count);
+        return acc;
+      }, {}),
+      calendars: dateCalendar.reduce((acc, cur) => {
+        acc[cur.dateCalendar] = Number(cur.count);
         return acc;
       }, {}),
       providers: providers.reduce((acc, cur) => {

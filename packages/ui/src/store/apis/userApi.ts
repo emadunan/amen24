@@ -1,4 +1,4 @@
-import { ApiMessage, Lang, Profile, User } from "@amen24/shared";
+import { ApiMessage, Lang, Profile, ProfileStatistics, User } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 
@@ -14,7 +14,7 @@ type UserSignup = Partial<User> & {
 export const createUserApi = (baseUrl: string) => createApi({
   reducerPath: "userApi",
   baseQuery: createBaseQueryWithReauth(baseUrl, "users"),
-  tagTypes: ["User"], // 👈 Define User tag type
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     signup: builder.mutation<{ message: string }, UserSignup>({
       query: (user) => ({
@@ -72,6 +72,9 @@ export const createUserApi = (baseUrl: string) => createApi({
         body,
       }),
       invalidatesTags: ["User"],
+    }),
+    getProfileStatistics: builder.query<ProfileStatistics, void>({
+      query: () => "profile/statistics",
     }),
   }),
 });

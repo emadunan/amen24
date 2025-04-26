@@ -11,6 +11,12 @@ export class Dashboard {
   @Column({ type: 'int', default: 0 })
   visits: number;
 
+  @Column({ type: 'int', default: 0 })
+  searchCount: number;
+
+  @Column({ type: 'int', default: 0 })
+  bibleAccessCount: number;
+
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 

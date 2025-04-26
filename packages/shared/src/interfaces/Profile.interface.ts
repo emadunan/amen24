@@ -15,3 +15,29 @@ export interface Profile {
 
   // bookmarks: Bookmark[];
 }
+
+export interface ProfileStatistics {
+  users: {
+    total: number,
+    loggedInToday: number,
+    createdToday: number,
+  },
+  uiLang: {
+    en: number,
+    ar: number,
+  },
+  theme: {
+    light: number,
+    dark: number,
+  },
+  calendars: {
+    gregorian: number,
+    hebrew: number,
+    coptic: number,
+  },
+  providers: {
+    local: number,
+    google: number,
+    facebook: number,
+  }
+}
