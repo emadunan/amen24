@@ -1,0 +1,19 @@
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
+@Entity()
+export class Dashboard {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'date', unique: true })
+  date: string;
+
+  @Column({ type: 'int', default: 0 })
+  visits: number;
+
+  @CreateDateColumn({ type: 'timestamptz' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamptz' })
+  updatedAt: Date;
+}

@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   UseGuards,
-  Req,
   HttpCode,
   Res,
   UnauthorizedException,
@@ -15,6 +14,7 @@ import {
   NotFoundException,
   NotImplementedException,
   Put,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -182,8 +182,20 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(id);
+  }
+
+  // TO DO
   @UseGuards(JwtAuthGuard)
-  @Delete('/profile')
+  @Get('profile')
+  findAllProfiles(@Query() query: any) {
+    return this.profilesService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('profile')
   async removePermanently(@UserParam() user: User, @Res() res: Response) {
     await this.profilesService.remove(user.email);
 
@@ -192,8 +204,10 @@ export class UsersController {
     res.json({ message: MESSAGE_KEYS.USER_DELETED });
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+  @UseGuards(JwtAuthGuard)
+  @Get('profile/statistics')
+  async getProfileStatistics() {
+    return await this.profilesService.getProfileStatistics();
   }
+
 }
