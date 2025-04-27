@@ -209,5 +209,4 @@ export class UsersController {
   async getProfileStatistics() {
     return await this.profilesService.getProfileStatistics();
   }
-
 }
