@@ -15,6 +15,7 @@ import { amiri, cardo } from "@/config/fonts.config";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
 import TestSiteWarning from "@/components/layout/TestSiteWarning";
+import TrackVisit from "@/components/analytics/TrackVisite";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -93,6 +94,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
             <AppFooter />
           </TranslationsProvider>
         </StoreProvider>
+        <TrackVisit />
         <ToastContainer toastStyle={{ fontFamily: "amiri, serif" }} />
       </body>
     </html>

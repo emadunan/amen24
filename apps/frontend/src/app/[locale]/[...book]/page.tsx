@@ -11,8 +11,7 @@ import ScrollToVerse from "@/components/bible/ScrollToVerse";
 import ChapterContentClient from "@/components/bible/ChapterContentClient";
 import TranslationSelector from "@/components/bible/TranslationSelector";
 import ChapterContainer from "@/components/bible/ChapterContainer";
-
-const apiUrl = process.env.API_URL;
+import { apiPrivateUrl } from "@/constants";
 
 interface Props {
   params: Promise<{ book: string[]; locale: string }>;
@@ -25,9 +24,9 @@ const BookPage: FC<Props> = async ({ params }) => {
   const [bookKey, chapterNum, bookLen] = book;
 
   let verses: Verse[] = [];
-  try {
+  try {    
     const response = await fetch(
-      `${apiUrl}/verses/${bookKey}/${chapterNum}/${locale}`,
+      `${apiPrivateUrl}/verses/${bookKey}/${chapterNum}/${locale}`,
     );
 
     if (!response.ok) throw new Error(ERROR_KEYS.FAILED_TO_FETCH);
