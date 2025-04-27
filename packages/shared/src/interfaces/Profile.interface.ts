@@ -1,4 +1,5 @@
 import { DateCalendar, Lang, ThemeMode, UserPrivilege } from "../enums";
+import { Favorite } from "./Favorite.interface";
 import { User } from "./User.interface";
 
 export interface Profile {
@@ -12,6 +13,7 @@ export interface Profile {
   themeMode: ThemeMode;
   dateCalendar: DateCalendar;
   isDiacritized: boolean;
+  favorites: Favorite[]
 
   // bookmarks: Bookmark[];
 }

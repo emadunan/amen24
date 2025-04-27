@@ -78,7 +78,7 @@ GET http://localhost:5000/api/users/bookmark
 ### Delete Account Permanently
 DELETE http://localhost:5000/api/users/profile
 
-### Delete Account Permanently
+### Get all profiles
 GET http://localhost:5000/api/users/profile
 
 

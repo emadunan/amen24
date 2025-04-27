@@ -5,21 +5,53 @@
 }
 
 .title {
-  font-size: 1.8rem;
-  color: var(--text);
-  margin-bottom: 1rem;
-  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
 }
 
-.tableWrapper {
-  overflow-x: auto;
+.filterWrapper {
+  margin-bottom: 1rem;
+}
+
+.filterInput {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--secondary);
   border-radius: 2px;
-  box-shadow: 0 0 8px rgba(var(--text-rgb), 0.1);
-  background: var(--min);
+  background-color: var(--min);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.filterInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(var(--text-rgb), 0.2);
+}
+
+.scrollWrapper {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.scrollArea {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-top: 1rem; /* Give space for scroll to appear visually at top */
+}
+
+.scrollArea::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scrollArea::-webkit-scrollbar-thumb {
+  background: var(--secondary-hover);
+  border-radius: 4px;
 }
 
 .table {
-  width: 100%;
+  min-width: 100%;
   border-collapse: collapse;
   background-color: var(--min);
 }
@@ -48,7 +80,7 @@ tr:hover {
   background-color: var(--accent);
   color: var(--min);
   padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
+  border-radius: 2px;
   font-size: 0.75rem;
   font-weight: 500;
   text-transform: uppercase;

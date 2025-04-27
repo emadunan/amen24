@@ -76,5 +76,8 @@ export const createUserApi = (baseUrl: string) => createApi({
     getProfileStatistics: builder.query<ProfileStatistics, void>({
       query: () => "profile/statistics",
     }),
+    getProfiles: builder.query<Profile[], void>({
+      query: () => "profile"
+    }),
   }),
 });

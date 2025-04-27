@@ -27,7 +27,7 @@ export class ProfilesService {
   }
 
   async findAll() {
-    return await this.profilesRepo.find();
+    return await this.profilesRepo.find({ relations: ['users', 'favorites'], take: 100, order: { lastLogin: 'DESC' } });
   }
 
   async findOne(email: string) {

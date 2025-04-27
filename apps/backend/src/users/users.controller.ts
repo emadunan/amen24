@@ -172,6 +172,12 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  findAllProfiles(@Query() query: any) {
+    return this.profilesService.findAll();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOneById(id);
@@ -188,11 +194,7 @@ export class UsersController {
   }
 
   // TO DO
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  findAllProfiles(@Query() query: any) {
-    return this.profilesService.findAll();
-  }
+  
 
   @UseGuards(JwtAuthGuard)
   @Delete('profile')
