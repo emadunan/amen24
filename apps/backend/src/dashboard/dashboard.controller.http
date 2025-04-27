@@ -4,3 +4,6 @@ POST http://localhost:5000/api/dashboard/increment-visit
 
 ### Track bible access
 POST http://localhost:5000/api/dashboard/increment-bible-access
+
+### Get dashboard data for today
+GET http://localhost:5000/api/dashboard

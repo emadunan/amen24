@@ -21,7 +21,7 @@ export class DashboardService {
     }
   }
 
-  private async getTodayDashboard(): Promise<Dashboard> {
+  async getTodayDashboard(): Promise<Dashboard> {
     const today = new Date().toISOString().split('T')[0];
 
     let dashboard = await this.dashboardRepo.findOne({ where: { date: today } });
