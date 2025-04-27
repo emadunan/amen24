@@ -1,26 +1,54 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDashboardDto } from './dto/create-dashboard.dto';
-import { UpdateDashboardDto } from './dto/update-dashboard.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Dashboard } from './entities/dashboard.entity';
+import { Repository } from 'typeorm';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class DashboardService {
-  create(createDashboardDto: CreateDashboardDto) {
-    return 'This action adds a new dashboard';
+  constructor(@InjectRepository(Dashboard) private dashboardRepo: Repository<Dashboard>) { }
+
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  async handleNewDay() {
+    const today = new Date().toISOString().split('T')[0];
+
+    const exists = await this.dashboardRepo.findOne({ where: { date: today } });
+
+    if (!exists) {
+      const dashboard = this.dashboardRepo.create({ date: today });
+      await this.dashboardRepo.save(dashboard);
+      console.log(`Dashboard record created for ${today}`);
+    }
   }
 
-  findAll() {
-    return `This action returns all dashboard`;
+  private async getTodayDashboard(): Promise<Dashboard> {
+    const today = new Date().toISOString().split('T')[0];
+
+    let dashboard = await this.dashboardRepo.findOne({ where: { date: today } });
+
+    if (!dashboard) {
+      dashboard = this.dashboardRepo.create({ date: today });
+      await this.dashboardRepo.save(dashboard);
+    }
+
+    return dashboard;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dashboard`;
+  async incrementVisits() {
+    const dashboard = await this.getTodayDashboard();
+    dashboard.visits += 1;
+    await this.dashboardRepo.save(dashboard);
   }
 
-  update(id: number, updateDashboardDto: UpdateDashboardDto) {
-    return `This action updates a #${id} dashboard`;
+  async incrementSearchCount() {
+    const dashboard = await this.getTodayDashboard();
+    dashboard.searchCount += 1;
+    await this.dashboardRepo.save(dashboard);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} dashboard`;
+  async incrementBibleAccess() {
+    const dashboard = await this.getTodayDashboard();
+    dashboard.bibleAccessCount += 1;
+    await this.dashboardRepo.save(dashboard);
   }
 }

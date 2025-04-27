@@ -1,0 +1,6 @@
+### Track visite
+POST http://localhost:5000/api/dashboard/increment-visit
+
+
+### Track bible access
+POST http://localhost:5000/api/dashboard/increment-bible-access
