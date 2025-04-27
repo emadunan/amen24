@@ -8,14 +8,16 @@ import {
 } from '@nestjs/common';
 import { VersesService } from './verses.service';
 import { BookKey, Lang } from '@amen24/shared';
+import { DashboardService } from 'src/dashboard/dashboard.service';
 
 @Controller('verses')
 export class VersesController {
-  constructor(private readonly versesService: VersesService) {}
+  constructor(private readonly versesService: VersesService, private dashboardService: DashboardService) { }
 
   @Post('query')
   async findVerses(@Body() body: { query: string; selectedBooks: BookKey[] }) {
     const { query, selectedBooks } = body;
+    this.dashboardService.incrementSearchCount();
     return await this.versesService.findManyByQuery(query, selectedBooks);
   }
 
@@ -25,6 +27,7 @@ export class VersesController {
     @Param('chapterNum', ParseIntPipe) chapterNum: number,
     @Param('lang') lang: Lang,
   ) {
+    this.dashboardService.incrementBibleAccess();
     return this.versesService.findChapter(bookKey, chapterNum, lang);
   }
 
