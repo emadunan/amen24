@@ -11,6 +11,7 @@ import { Profile } from '../entities/profile.entity';
 import { UsersService } from './users.service';
 import { AuthProvider, ERROR_KEYS } from '@amen24/shared';
 import { UpdateProfileDto } from '../dto/update-profile.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class ProfilesService {
@@ -18,10 +19,12 @@ export class ProfilesService {
     @InjectRepository(Profile) private profilesRepo: Repository<Profile>,
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
+    private readonly eventEmitter: EventEmitter2,
   ) { }
 
   async create(createProfileDto: Partial<CreateProfileDto>) {
     const profile = this.profilesRepo.create(createProfileDto);
+    this.eventEmitter.emit('profile.created', profile.email);
 
     return await this.profilesRepo.save(profile);
   }
@@ -46,12 +49,16 @@ export class ProfilesService {
     Object.assign(profile, updateProfileDto);
     await this.profilesRepo.save(profile);
 
+    this.eventEmitter.emit('profile.updated', profile.email);
+
     return await this.usersService.findOneByEmailProvider(email, provider);
   }
 
   async remove(email: string) {
     const profile = await this.profilesRepo.findOneBy({ email });
     if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
+
+    this.eventEmitter.emit('profile.deleted', { email });
 
     return await this.profilesRepo.remove(profile);
   }

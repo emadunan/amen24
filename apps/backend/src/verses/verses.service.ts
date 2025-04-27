@@ -20,6 +20,7 @@ import {
 import { ChaptersService } from '../chapters/chapters.service';
 import { VerseTranslation } from './entities/verse-translation.entity';
 import { VerseGroup } from './entities/verse-group.entity';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 // TODO: Create constants and key: value pairs to handle errors and messages
 @Injectable()
@@ -31,6 +32,7 @@ export class VersesService {
     @InjectRepository(VerseTranslation)
     private verseTranslationsRepo: Repository<VerseTranslation>,
     private chaptersService: ChaptersService,
+    private readonly eventEmitter: EventEmitter2,
   ) { }
 
   async createVerseGroup(verseIds: number[]): Promise<VerseGroup> {
@@ -86,6 +88,7 @@ export class VersesService {
   }
 
   async findChapter(bookKey: BookKey, chapterNum: number, lang: Lang) {
+    this.eventEmitter.emit('bible.open', { email: 'Someone', details: `${bookKey} ${chapterNum} in ${lang}` });
     return await this.versesRepo.find({
       where: {
         chapter: {
@@ -135,6 +138,7 @@ export class VersesService {
   }
 
   async findManyByQuery(query: string, scope: BookKey[]) {
+    this.eventEmitter.emit('bible.search', { email: 'Someone', details: `${query}` });
     if (!query.trim()) {
       throw new BadRequestException('Search query cannot be empty.');
     }
@@ -231,7 +235,7 @@ export class VersesService {
 
   async seed() {
     await this.structure();
-    
+
     await this.seedBible(Lang.NATIVE);
     // await this.missingVerseLogger(Lang.NATIVE);
 

@@ -9,11 +9,10 @@ import { ConfigService } from '@nestjs/config';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { AuthController } from './auth.controller';
 import { FacebookStratrgy } from './strategies/facebook.strategy';
+import { AuditingModule } from 'src/auditing/auditing.module';
 
 @Module({
   imports: [
-    forwardRef(() => UsersModule),
-    PassportModule,
     JwtModule.registerAsync({
       useFactory(configService: ConfigService) {
         return {
@@ -27,6 +26,9 @@ import { FacebookStratrgy } from './strategies/facebook.strategy';
       },
       inject: [ConfigService],
     }),
+    AuditingModule,
+    PassportModule,
+    forwardRef(() => UsersModule),
   ],
   providers: [
     AuthService,

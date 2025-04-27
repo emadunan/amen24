@@ -7,10 +7,13 @@ import { ChaptersModule } from '../chapters/chapters.module';
 import { VerseTranslation } from './entities/verse-translation.entity';
 import { VerseGroup } from './entities/verse-group.entity';
 import { DashboardModule } from 'src/dashboard/dashboard.module';
+import { AuditingModule } from 'src/auditing/auditing.module';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Verse, VerseGroup, VerseTranslation]),
+    AuditingModule,
     ChaptersModule,
     DashboardModule
   ],
@@ -18,4 +21,9 @@ import { DashboardModule } from 'src/dashboard/dashboard.module';
   providers: [VersesService],
   exports: [VersesService],
 })
-export class VersesModule { }
+export class VersesModule {
+  constructor(private readonly eventEmitter: EventEmitter2) { }
+  onModuleInit() {
+    this.eventEmitter.emit('test.event', { test: 'success' });
+  }
+}

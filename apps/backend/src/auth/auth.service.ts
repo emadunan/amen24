@@ -16,6 +16,7 @@ import { Response } from 'express';
 import { Profile } from 'passport';
 import * as bcrypt from 'bcrypt';
 import { ProfilesService } from '../users/services/profiles.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class AuthService {
@@ -31,6 +32,7 @@ export class AuthService {
     private profilesService: ProfilesService,
     private jwtService: JwtService,
     private mailerService: MailerService,
+    private readonly eventEmitter: EventEmitter2,
   ) {
     this.bcryptRounds = Number(this.configService.getOrThrow('ROUNDS'));
     this.jwtAccessMaxAge = Number(
@@ -77,6 +79,9 @@ export class AuthService {
 
     await this.usersService.update(user.id, user);
 
+    // Emit event when user successfully logs in
+    this.eventEmitter.emit('user.login', { email: user.email });
+
     const { password, ...result } = user;
     return result;
   }
@@ -91,7 +96,11 @@ export class AuthService {
       <AuthProvider>provider,
     );
 
-    if (user) return user;
+    if (user) {
+      // Emit event when OAuth user logs in
+      this.eventEmitter.emit('user.login', { email: user.email });
+      return user;
+    }
 
     const createUserDto: CreateUserDto = {
       email,

@@ -14,6 +14,7 @@ import { FeaturedModule } from './featured/featured.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuditingModule } from './auditing/auditing.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import joiConfig from './_config/joi.config';
 
 @Module({
@@ -24,6 +25,7 @@ import joiConfig from './_config/joi.config';
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    EventEmitterModule.forRoot(),
     ScheduleModule.forRoot(),
     MailerModule.forRoot({
       transport: {

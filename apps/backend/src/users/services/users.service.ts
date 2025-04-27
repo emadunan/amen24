@@ -15,6 +15,7 @@ import { AuthProvider, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { BookmarksService } from './bookmarks.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class UsersService {
@@ -23,7 +24,8 @@ export class UsersService {
     private readonly configService: ConfigService,
     private profilesService: ProfilesService,
     private bookmarksService: BookmarksService,
-  ) {}
+    private readonly eventEmitter: EventEmitter2,
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     const { email, password, provider, uiLang, bookmark } = createUserDto;
@@ -102,6 +104,8 @@ export class UsersService {
     }
 
     user.password = await bcrypt.hash(newPassword, rounds);
+
+    this.eventEmitter.emit('user.resetPassword', { email });
 
     return await this.usersRepo.save(user);
   }

@@ -6,13 +6,13 @@ export class Auditing {
   id: number;
 
   @Column({ type: 'text' })
-  action: string; // 'LOGIN', 'DELETE_USER', 'UPDATE_PROFILE', etc
+  action: string;
 
   @Column({ type: 'text' })
-  performedBy: string; // User email or ID
+  performedBy: string;
 
-  @Column({ type: 'jsonb', nullable: true })
-  metadata?: Record<string, any>; // extra info (eg., what was deleted)
+  @Column({ type: 'text', nullable: true })
+  metadata?: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

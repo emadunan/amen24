@@ -1,26 +1,25 @@
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreateAuditingDto } from './dto/create-auditing.dto';
-import { UpdateAuditingDto } from './dto/update-auditing.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Auditing } from './entities/auditing.entity';
 
 @Injectable()
 export class AuditingService {
-  create(createAuditingDto: CreateAuditingDto) {
-    return 'This action adds a new auditing';
+  constructor(@InjectRepository(Auditing) private auditingRepo: Repository<Auditing>) { }
+
+  recordEvent(auditingDto: CreateAuditingDto) {
+    console.log(auditingDto);
+    
+    const auditingRecord = this.auditingRepo.create(auditingDto);
+    this.auditingRepo.save(auditingRecord);
   }
 
   findAll() {
-    return `This action returns all auditing`;
+    return this.auditingRepo.find({ take: 100 });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} auditing`;
-  }
-
-  update(id: number, updateAuditingDto: UpdateAuditingDto) {
-    return `This action updates a #${id} auditing`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auditing`;
+    return this.auditingRepo.findOneBy({ id });
   }
 }
