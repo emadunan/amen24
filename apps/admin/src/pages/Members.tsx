@@ -31,7 +31,7 @@ const Members: React.FC = () => {
                 profiles.map((member) => (
                   <tr key={member.email}>
                     <td >{member.email}</td>
-                    <td>{member.users.map((user) => <p>{user.provider} &ndash; {user.displayName}</p>)}</td>
+                    <td>{member.users.map((user) => <p key={user.id}>{user.provider} &ndash; {user.displayName}</p>)}</td>
                     <td>
                       <span className={styles.badge}>{member.privilege}</span>
                     </td>

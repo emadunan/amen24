@@ -8,13 +8,13 @@ import { Auditing } from './entities/auditing.entity';
 export class AuditingService {
   constructor(@InjectRepository(Auditing) private auditingRepo: Repository<Auditing>) { }
 
-  recordEvent(auditingDto: CreateAuditingDto) {    
+  recordEvent(auditingDto: CreateAuditingDto) {
     const auditingRecord = this.auditingRepo.create(auditingDto);
     this.auditingRepo.save(auditingRecord);
   }
 
   findAll() {
-    return this.auditingRepo.find({ take: 100 });
+    return this.auditingRepo.find({ take: 100, order: { createdAt: "DESC" } });
   }
 
   findOne(id: number) {
