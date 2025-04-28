@@ -8,7 +8,6 @@ import { VerseTranslation } from './entities/verse-translation.entity';
 import { VerseGroup } from './entities/verse-group.entity';
 import { DashboardModule } from 'src/dashboard/dashboard.module';
 import { AuditingModule } from 'src/auditing/auditing.module';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -21,9 +20,4 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
   providers: [VersesService],
   exports: [VersesService],
 })
-export class VersesModule {
-  constructor(private readonly eventEmitter: EventEmitter2) { }
-  onModuleInit() {
-    this.eventEmitter.emit('test.event', { test: 'success' });
-  }
-}
+export class VersesModule { }

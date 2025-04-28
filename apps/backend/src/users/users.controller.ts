@@ -21,7 +21,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ProfilesService } from './services/profiles.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { User as UserParam } from '../auth/decorators/user.decorator';
+import { CurrentUser } from '../auth/decorators/user.decorator';
 import { Response } from 'express';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
@@ -43,7 +43,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Patch('me/password-reset')
   async resetPassword(
-    @UserParam() reqUser: User,
+    @CurrentUser() reqUser: User,
     @Body() body: { oldPassword: string; newPassword: string },
     @Res() res: Response,
   ) {
@@ -76,7 +76,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Put('me/profile')
   async updateProfile(
-    @UserParam() u: User,
+    @CurrentUser() u: User,
     @Body() body: UpdateProfileDto,
     @Res() res: Response,
   ) {
@@ -100,14 +100,14 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('bookmark')
-  async getUserLastReadBookmark(@UserParam() user: User) {
+  async getUserLastReadBookmark(@CurrentUser() user: User) {
     return this.bookmarksService.getOne(user.email);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch('bookmark')
   async updateBookmark(
-    @UserParam() user: User,
+    @CurrentUser() user: User,
     @Body()
     body: {
       id: number;
@@ -128,7 +128,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Delete('bookmark/:id')
   removeBookmark(
-    @UserParam() user: User,
+    @CurrentUser() user: User,
     @Param('id', ParseIntPipe) id: number,
   ) {
     return this.bookmarksService.delete(id, user.email);
@@ -136,7 +136,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('favorite')
-  async getFavorites(@UserParam() user: User) {
+  async getFavorites(@CurrentUser() user: User) {
     return await this.favoritesService.getFavorites(
       user.email,
       user.profile.uiLang,
@@ -146,7 +146,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Post('favorite')
   createFavorite(
-    @UserParam() user: User,
+    @CurrentUser() user: User,
     @Body() body: { verseIds: number[] },
   ) {
     const { verseIds } = body;
@@ -156,7 +156,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Delete('favorite/:id')
   async deleteFavorite(
-    @UserParam() user: User,
+    @CurrentUser() user: User,
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ApiMessage> {
     const result = await this.favoritesService.removeFavorite(user.email, id);
@@ -188,22 +188,19 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
-  }
-
-  // TO DO
-  
-
   @UseGuards(JwtAuthGuard)
   @Delete('profile')
-  async removePermanently(@UserParam() user: User, @Res() res: Response) {
+  async removePermanently(@CurrentUser() user: User, @Res() res: Response) {
     await this.profilesService.remove(user.email);
 
     this.authService.clearTokens(res);
 
     res.json({ message: MESSAGE_KEYS.USER_DELETED });
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(id);
   }
 
   @UseGuards(JwtAuthGuard)

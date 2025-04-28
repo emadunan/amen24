@@ -16,7 +16,7 @@ import { Request, Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { User } from '../users/entities/user.entity';
-import { User as UserParam } from "./decorators/user.decorator";
+import { CurrentUser } from "./decorators/user.decorator";
 
 @Controller('auth')
 export class AuthController {
@@ -33,7 +33,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  findMe(@UserParam() user: User) {
+  findMe(@CurrentUser() user: User) {
     return user;
   }
 

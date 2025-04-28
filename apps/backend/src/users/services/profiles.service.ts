@@ -24,7 +24,7 @@ export class ProfilesService {
 
   async create(createProfileDto: Partial<CreateProfileDto>) {
     const profile = this.profilesRepo.create(createProfileDto);
-    this.eventEmitter.emit('profile.created', profile.email);
+    this.eventEmitter.emit('profile.created', { email: profile.email });
 
     return await this.profilesRepo.save(profile);
   }
@@ -49,7 +49,7 @@ export class ProfilesService {
     Object.assign(profile, updateProfileDto);
     await this.profilesRepo.save(profile);
 
-    this.eventEmitter.emit('profile.updated', profile.email);
+    this.eventEmitter.emit('profile.updated', { email });
 
     return await this.usersService.findOneByEmailProvider(email, provider);
   }

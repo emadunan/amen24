@@ -9,11 +9,6 @@ export class AuditListener {
     private readonly auditingService: AuditingService,
   ) { }
 
-  @OnEvent('test.event')
-  handleTestEvent(payload: { test: string }) {
-    console.log('Test event received:', payload);
-  }
-
   @OnEvent('user.login')
   handleUserLoginEvent(payload: { email: string }) {
     this.auditingService.recordEvent({
@@ -41,7 +36,7 @@ export class AuditListener {
   @OnEvent('profile.updated')
   handleProfileUpdatedEvent(payload: { email: string }) {
     this.auditingService.recordEvent({
-      performedBy: payload.email || 'Unknown',
+      performedBy: payload.email,
       action: AuditingAction.UPDATE_PROFILE,
     });
   }

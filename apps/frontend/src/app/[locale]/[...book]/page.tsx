@@ -12,6 +12,7 @@ import ChapterContentClient from "@/components/bible/ChapterContentClient";
 import TranslationSelector from "@/components/bible/TranslationSelector";
 import ChapterContainer from "@/components/bible/ChapterContainer";
 import { apiPrivateUrl } from "@/constants";
+import { cookies } from "next/headers";
 
 interface Props {
   params: Promise<{ book: string[]; locale: string }>;
@@ -24,9 +25,18 @@ const BookPage: FC<Props> = async ({ params }) => {
   const [bookKey, chapterNum, bookLen] = book;
 
   let verses: Verse[] = [];
-  try {    
+  try {
+    const cookieStore = cookies();
+    const cookieHeader = cookieStore.toString()
+
     const response = await fetch(
       `${apiPrivateUrl}/verses/${bookKey}/${chapterNum}/${locale}`,
+      {
+        credentials: "include",
+        headers: {
+          Cookie: cookieHeader
+        },
+      }
     );
 
     if (!response.ok) throw new Error(ERROR_KEYS.FAILED_TO_FETCH);

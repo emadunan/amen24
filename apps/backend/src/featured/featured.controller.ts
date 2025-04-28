@@ -12,7 +12,7 @@ import { FeaturedService } from './featured.service';
 import { UpdateFeaturedDto } from './dto/update-featured.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../users/entities/user.entity';
-import { User as UserParam } from '../auth/decorators/user.decorator';
+import { CurrentUser } from '../auth/decorators/user.decorator';
 
 @Controller('featured')
 export class FeaturedController {
@@ -26,7 +26,7 @@ export class FeaturedController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(@UserParam() user: User) {
+  async findAll(@CurrentUser() user: User) {
     return await this.featuredService.getAllFeatured(user.profile.uiLang);
   }
 

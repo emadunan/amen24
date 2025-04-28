@@ -8,7 +8,7 @@ export class Auditing {
   @Column({ type: 'text' })
   action: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', default: 'visitor' })
   performedBy: string;
 
   @Column({ type: 'text', nullable: true })

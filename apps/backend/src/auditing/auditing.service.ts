@@ -8,9 +8,7 @@ import { Auditing } from './entities/auditing.entity';
 export class AuditingService {
   constructor(@InjectRepository(Auditing) private auditingRepo: Repository<Auditing>) { }
 
-  recordEvent(auditingDto: CreateAuditingDto) {
-    console.log(auditingDto);
-    
+  recordEvent(auditingDto: CreateAuditingDto) {    
     const auditingRecord = this.auditingRepo.create(auditingDto);
     this.auditingRepo.save(auditingRecord);
   }

@@ -110,10 +110,9 @@ const BibleSearch = () => {
     try {
       const response = await fetch(`${apiUrl}/verses/query`, {
         method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query, selectedBooks }),
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
       if (!response.ok) throw new Error("failedToFetch");

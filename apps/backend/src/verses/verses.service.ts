@@ -22,7 +22,6 @@ import { VerseTranslation } from './entities/verse-translation.entity';
 import { VerseGroup } from './entities/verse-group.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
-// TODO: Create constants and key: value pairs to handle errors and messages
 @Injectable()
 export class VersesService {
   constructor(
@@ -87,8 +86,8 @@ export class VersesService {
     return await this.verseGroupRepo.delete(id);
   }
 
-  async findChapter(bookKey: BookKey, chapterNum: number, lang: Lang) {
-    this.eventEmitter.emit('bible.open', { email: 'Someone', details: `${bookKey} ${chapterNum} in ${lang}` });
+  async findChapter(bookKey: BookKey, chapterNum: number, lang: Lang, email?: string) {
+    this.eventEmitter.emit('bible.open', { email, details: `${bookKey} ${chapterNum} in ${lang}` });
     return await this.versesRepo.find({
       where: {
         chapter: {
@@ -137,8 +136,8 @@ export class VersesService {
     });
   }
 
-  async findManyByQuery(query: string, scope: BookKey[]) {
-    this.eventEmitter.emit('bible.search', { email: 'Someone', details: `${query}` });
+  async findManyByQuery(query: string, scope: BookKey[], email?: string) {
+    this.eventEmitter.emit('bible.search', { email, details: `${query}` });
     if (!query.trim()) {
       throw new BadRequestException('Search query cannot be empty.');
     }

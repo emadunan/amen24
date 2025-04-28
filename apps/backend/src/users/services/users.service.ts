@@ -161,8 +161,6 @@ export class UsersService {
     email: string,
     provider: AuthProvider = AuthProvider.LOCAL,
   ): Promise<User | null> {
-    console.log(email, provider);
-
     const user = await this.usersRepo.findOne({
       where: { email, provider },
       relations: ['profile', 'profile.bookmarks'],
