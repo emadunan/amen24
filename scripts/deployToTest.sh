@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e  # Exit immediately if any command fails
+set -e
 
 echo "🚀 Starting Test Deployment..."
 
@@ -9,64 +9,49 @@ source ~/.bashrc || source ~/.profile
 # Ensure Node.js tools are in the PATH
 export PATH=$HOME/.nvm/versions/node/v22.14.0/bin:$PATH
 
-# Navigate to the project directory
-cd /home/emad/projects/amen24test || { echo "Project directory not found"; exit 1; }
+cd /home/emad/projects/amen24test || { echo "❌ Project directory not found"; exit 1; }
 
 # Load backend test environment variables
 export $(grep -v '^#' ./apps/backend/.env.test | xargs)
 
-# Verify required tools
+# Check required tools
 for tool in node npm pm2; do
-  command -v $tool >/dev/null 2>&1 || { echo >&2 "$tool is not installed. Aborting."; exit 1; }
+  if ! command -v $tool >/dev/null 2>&1; then
+    echo "❌ $tool is not installed. Aborting."
+    exit 1
+  fi
 done
 
-# Stop PM2 services
-pm2 del backend-test frontend-test || echo "No existing PM2 processes found"
+# Stop existing PM2 services (ignore errors)
+pm2 delete backend-test frontend-test || true
 
-# Clean old builds
+# Clean old builds and dependencies
 npm run clean
 
-# Install all dependencies and build backend, frontend, and admin site
-# Install all
+# Install dependencies
 npm run install:all
 
-# Clean old PM2 processes
-pm2 del backend-test frontend-test || echo "No existing PM2 processes found"
-
-# Clean old builds
-npm run clean
-
-# Build packages
+# Build shared packages
 npm run build:packages
 
-# Build backend
+# Build and start backend
 npm run build:backend
+pm2 start ecosystem.config.js --only backend --env test --name backend-test
 
-# Start backend (so frontend can fetch from it)
-pm2 start ecosystem.config.js --only backend --env test
-pm2 restart backend --name backend-test
-
-# Wait a bit to make sure backend is up (important)
+# Give backend a few seconds to start
 sleep 5
 
-# Build frontend
+# Build frontend and admin for test
 npm run build:frontend:test
 
-# Build admin
-npm run build:admin:test
-
 # Start frontend
-pm2 start ecosystem.config.js --only frontend --env test
-pm2 restart frontend --name frontend-test
+pm2 start ecosystem.config.js --only frontend --env test --name frontend-test
 
-# Redeploy Adminsite
-sudo rm -Rf /var/www/html/assets/ /var/www/html/index.html /var/www/html/vite.svg
+# Deploy admin site to /var/www/html
+sudo rm -rf /var/www/html/*
 sudo cp -ru /home/emad/projects/amen24test/apps/admin/dist/* /var/www/html/
 
-# Restart services (nginx etc.)
+# Restart nginx
 sudo systemctl restart nginx.service
-
-# (Skip postgresql restart unless you really need it)
-# sudo systemctl restart postgresql.service
 
 echo "✅ Test Deployment Completed Successfully!"
