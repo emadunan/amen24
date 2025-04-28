@@ -10,11 +10,7 @@ interface AuditingRecord {
   createdAt: string; // ISO string
 }
 
-interface Props {
-  records: AuditingRecord[];
-}
-
-const Auditing: React.FC<Props> = () => {
+const Auditing: React.FC = () => {
   const [records, setRecords] = useState<AuditingRecord[]>([]);
 
   useEffect(() => {
