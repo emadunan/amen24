@@ -9,8 +9,12 @@
     "install:children": "npm run install:apps && npm run install:packages",
     "install:apps": "npm --prefix apps/admin install && npm --prefix apps/frontend install && npm --prefix apps/backend install",
     "install:packages": "npm --prefix packages/shared install && npm --prefix packages/ui install",
-    "build:test": "npm --prefix packages/shared run build && npm --prefix packages/ui run build && npm --prefix apps/backend run build && npm --prefix apps/admin run build:test && npm --prefix apps/frontend run build:test",
-    "build": "npm --prefix packages/shared run build && npm --prefix packages/ui run build && npm --prefix apps/backend run build && npm --prefix apps/admin run build && npm --prefix apps/frontend run build",
+
+    "build:packages": "npm --prefix packages/shared run build && npm --prefix packages/ui run build",
+    "build:backend": "npm --prefix apps/backend run build",
+    "build:frontend:test": "npm --prefix apps/frontend run build:test",
+    "build:admin:test": "npm --prefix apps/admin run build:test",
+    
     "dev": "concurrently -n backend,frontend,admin -c blue,green,yellow \"npm --prefix apps/backend run start:dev\" \"npm --prefix apps/frontend run dev\" \"npm --prefix apps/admin run dev\""
   },
   "author": "emadunan",
