@@ -4,12 +4,16 @@
   "description": "Amen24 is a free non-profitable project to introduce bible content for all.",
   "main": "ecosystem.config.js",
   "scripts": {
-    "clean": "rm -rf node_modules apps/**/node_modules packages/**/node_modules",
+    "clean": "rm -rf node_modules apps/**/node_modules packages/**/node_modules apps/**/dist apps/**/.next packages/**/dist",
     "install:all": "npm install && npm run install:children",
     "install:children": "npm run install:apps && npm run install:packages",
     "install:apps": "npm --prefix apps/admin install && npm --prefix apps/frontend install && npm --prefix apps/backend install",
     "install:packages": "npm --prefix packages/shared install && npm --prefix packages/ui install",
-    "build": "npm --prefix packages/shared run build && npm --prefix packages/ui run build",
+    "build:packages": "npm --prefix packages/shared run build && npm --prefix packages/ui run build",
+    "build:apps": "npm --prefix apps/backend run build && npm --prefix apps/admin run build && npm --prefix apps/frontend run build",
+    "build:apps:test": "npm --prefix apps/backend run build && npm --prefix apps/admin run build:test && npm --prefix apps/frontend run build",
+    "build": "npm run build:packages && npm run build:apps",
+    "build:test": "npm run build:packages && npm run build:apps:test",
     "dev": "concurrently -n backend,frontend,admin -c blue,green,yellow \"npm --prefix apps/backend run start:dev\" \"npm --prefix apps/frontend run dev\" \"npm --prefix apps/admin run dev\""
   },
   "author": "emadunan",
