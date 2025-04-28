@@ -54,7 +54,7 @@ sudo rm -Rf /var/www/html/assets/ /var/www/html/index.html /var/www/html/vite.sv
 sudo cp -ru /home/emad/projects/amen24test/apps/admin/dist/* /var/www/html/
 
 # Restart PostgreSQL and Nginx
-systemctl restart postgresql.service
-systemctl restart nginx.service
+sudo systemctl restart postgresql.service
+sudo systemctl restart nginx.service
 
 echo "✅ Test Deployment Completed Successfully!"
