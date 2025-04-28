@@ -26,23 +26,17 @@ pm2 del backend-test frontend-test || echo "No existing PM2 processes found"
 # Clean old builds
 npm run clean
 
-# Install and build all packages and api
+# Install all dependencies and build backend, frontend, and admin site
 npm run install:all
-npm run build:packages
-npm run build:api
+npm run build:test
 
 # Migrate database
 cd apps/backend
 npm run migrate:up:test
 cd ../..
 
-# Start backend with PM2
-pm2 start ecosystem.config.js --only backend --env test
-
-# Install and build all packages and api
-npm run build:websites:test
-
 # Start backend and frontend with PM2
+pm2 start ecosystem.config.js --only backend --env test
 pm2 start ecosystem.config.js --only frontend --env test
 
 # Rename processes
