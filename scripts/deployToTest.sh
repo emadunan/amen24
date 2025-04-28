@@ -50,11 +50,11 @@ pm2 restart backend --name backend-test
 pm2 restart frontend --name frontend-test
 
 # Redeploy Adminsite
-sudo rm -Rf /var/www/html/assets/ /var/www/html/index.html /var/www/html/vite.svg
-sudo cp -ru /home/emad/projects/amen24test/apps/admin/dist/* /var/www/html/
+rm -Rf /var/www/html/assets/ /var/www/html/index.html /var/www/html/vite.svg
+cp -ru /home/emad/projects/amen24test/apps/admin/dist/* /var/www/html/
 
 # Restart PostgreSQL and Nginx
-sudo systemctl restart postgresql.service
-sudo systemctl restart nginx.service
+systemctl restart postgresql.service
+systemctl restart nginx.service
 
 echo "✅ Test Deployment Completed Successfully!"
