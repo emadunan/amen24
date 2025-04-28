@@ -40,7 +40,7 @@ cd ../..
 pm2 start ecosystem.config.js --only backend --env test
 
 # Install and build all packages and api
-npm run build:websites
+npm run build:websites:test
 
 # Start backend and frontend with PM2
 pm2 start ecosystem.config.js --only frontend --env test
