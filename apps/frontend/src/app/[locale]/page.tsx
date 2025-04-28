@@ -3,8 +3,7 @@ import styles from "./page.module.css";
 import { Book, BookMap } from "@amen24/shared";
 import { FC } from "react";
 import initTranslations from "../i18n";
-
-const apiUrl = process.env.API_URL;
+import { apiPrivateUrl } from "@/constants";
 
 const i18nNamespaces = ["book"];
 
@@ -15,7 +14,7 @@ interface Props {
 const HomePage: FC<Props> = async ({ params }) => {
   const { locale } = await params;
   const { t } = await initTranslations(locale, i18nNamespaces);
-  const response = await fetch(`${apiUrl}/books`);
+  const response = await fetch(`${apiPrivateUrl}/books`);
 
   if (!response.ok) throw new Error("Failed to fetch data");
 

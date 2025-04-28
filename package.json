@@ -11,7 +11,7 @@
     "install:packages": "npm --prefix packages/shared install && npm --prefix packages/ui install",
     "build:packages": "npm --prefix packages/shared run build && npm --prefix packages/ui run build",
     "build:apps": "npm --prefix apps/backend run build && npm --prefix apps/admin run build && npm --prefix apps/frontend run build",
-    "build:apps:test": "npm --prefix apps/backend run build && npm --prefix apps/admin run build:test && npm --prefix apps/frontend run build",
+    "build:apps:test": "npm --prefix apps/backend run build && npm --prefix apps/admin run build:test && npm --prefix apps/frontend run build:test",
     "build": "npm run build:packages && npm run build:apps",
     "build:test": "npm run build:packages && npm run build:apps:test",
     "dev": "concurrently -n backend,frontend,admin -c blue,green,yellow \"npm --prefix apps/backend run start:dev\" \"npm --prefix apps/frontend run dev\" \"npm --prefix apps/admin run dev\""
