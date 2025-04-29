@@ -34,6 +34,16 @@ export const createUserApi = (baseUrl: string) => createApi({
       },
       invalidatesTags: ["User"],
     }),
+    updateUserProfile: builder.mutation<void, Partial<Profile>>({
+      query: (body) => {
+        return {
+          url: "/profile",
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["User"],
+    }),
     deleteAccount: builder.mutation<ApiMessage, void>({
       query: () => ({
         url: "profile",
@@ -75,7 +85,8 @@ export const createUserApi = (baseUrl: string) => createApi({
       query: () => "profile/statistics",
     }),
     getProfiles: builder.query<Profile[], void>({
-      query: () => "profile"
+      query: () => "profile",
+      providesTags: ["User"]
     }),
   }),
 });

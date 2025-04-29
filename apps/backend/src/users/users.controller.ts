@@ -15,6 +15,7 @@ import {
   NotImplementedException,
   Put,
   Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -196,6 +197,20 @@ export class UsersController {
     this.authService.clearTokens(res);
 
     res.json({ message: MESSAGE_KEYS.USER_DELETED });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('profile')
+  async updateUserProfile(
+    @Body() body: UpdateProfileDto,
+    @Res() res: Response,
+  ) {
+    if (!body.email) throw new BadRequestException();
+
+    const user = await this.profilesService.updateUserProfile(body.email, body);
+    if (!user) throw new NotImplementedException();
+
+    res.json({ message: MESSAGE_KEYS.USER_PROFILE_UPDATED });
   }
 
   @Delete(':id')

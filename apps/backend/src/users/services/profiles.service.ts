@@ -54,6 +54,20 @@ export class ProfilesService {
     return await this.usersService.findOneByEmailProvider(email, provider);
   }
 
+  async updateUserProfile(
+    email: string,
+    updateProfileDto: UpdateProfileDto,
+  ) {
+    const profile = await this.profilesRepo.findOneBy({ email });
+
+    if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
+
+    this.eventEmitter.emit('profile.updated', { email });
+    
+    Object.assign(profile, updateProfileDto);
+    return await this.profilesRepo.save(profile);
+  }
+
   async remove(email: string) {
     const profile = await this.profilesRepo.findOneBy({ email });
     if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);

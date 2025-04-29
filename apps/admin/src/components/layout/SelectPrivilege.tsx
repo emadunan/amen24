@@ -1,7 +1,7 @@
 import { Profile, UserPrivilege } from '@amen24/shared'
 import { FC } from 'react';
 import styles from './SelectPrivilege.module.css'
-import { useUpdateProfileMutation } from '../../store/userApi';
+import { useUpdateUserProfileMutation } from '../../store/userApi';
 
 interface Props {
   member: Profile,
@@ -10,9 +10,11 @@ interface Props {
 const privilegeOptions = Object.values(UserPrivilege);
 
 const SelectPrivilege: FC<Props> = ({ member }) => {
-  const [updateProfile] = useUpdateProfileMutation();
+  const [updateProfile] = useUpdateUserProfileMutation();
 
   const handleChangePrivilege = async (email: string, privilege: UserPrivilege) => {
+    console.log(email, privilege);
+    
     updateProfile({ email, privilege })
   };
 
