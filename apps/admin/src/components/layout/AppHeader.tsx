@@ -1,12 +1,15 @@
-import { NavLink } from 'react-router-dom';
 import styles from './AppHeader.module.css';
 import { useGetMeQuery } from '../../store/authApi';
 import { UserPrivilege } from '@amen24/shared';
 import { useCallback } from 'react';
 import { apiUrl } from '../../constants';
+import NavBar from './NavBar';
+import NavMenu from './NavMenu';
+import { useBreakpoint } from '@amen24/ui';
 
 const AppHeader = () => {
   const { data: user } = useGetMeQuery();
+  const { isTablet } = useBreakpoint();
 
   const handleLogout = useCallback(async () => {
     try {
@@ -33,17 +36,11 @@ const AppHeader = () => {
         <h3>AdminSite</h3>
       </div>
       <nav>
-        {user?.profile.privilege === UserPrivilege.ADMIN && (<ul className={styles.navbar}>
-          <li className={styles.listItem} ><NavLink to={`/`}>Dashboard</NavLink></li>
-          <li className={styles.listItem} ><NavLink to={`/members`}>Members</NavLink></li>
-          <li className={styles.listItem} ><NavLink to={`/auditing`}>Auditing</NavLink></li>
-          <li className={styles.listItem} ><NavLink to={`/verse-groups`}>Verse Groups</NavLink></li>
-          <li className={styles.listItem} ><NavLink to={`/featured`}>Featured</NavLink></li>
-          <li className={styles.listItem} ><NavLink to={`/glossary`}>Glossary</NavLink></li>
-          <li className={styles.listItem} ><NavLink to={`/blogs`}>Blogs</NavLink></li>
-          <li className={styles.listItem} ><NavLink to={`/library`}>Library</NavLink></li>
-          <button className={styles.logoutButton} onClick={handleLogout}>Logout</button>
-        </ul>)}
+        {user?.profile?.privilege === UserPrivilege.ADMIN ? (
+          isTablet
+            ? <NavMenu handleLogout={handleLogout} />
+            : <NavBar handleLogout={handleLogout} />
+        ) : null}
       </nav>
     </header>
   )

@@ -1,0 +1,67 @@
+.navMenu {
+  position: relative;
+  margin: auto 0;
+  margin-left: auto;
+}
+
+/* Overlay (darkens background when menu is open) */
+.overlay {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  width: 100%;
+  height: calc(100vh - var(--header-height));
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+
+.menu {
+  position: fixed;
+  top: var(--header-height);
+  width: 10rem;
+  height: calc(100vh - var(--header-height));
+  background: var(--background);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  z-index: 10;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  /* Ensures padding is included in width */
+
+  /* Default: Hidden */
+  transform: translateX(100%);
+  right: 0;
+  /* Ensures it's aligned to the left edge */
+}
+
+/* Fix for slight shifting */
+.menu.open {
+  transform: translateX(0);
+}
+
+/* Nav List */
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  margin-bottom: 1rem;
+}
+
+/* Links */
+.link {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 1.2rem;
+  transition: color 0.2s ease-in-out;
+}
+
+.link:hover,
+.link.active {
+  color: var(--primary);
+  font-weight: bold;
+}

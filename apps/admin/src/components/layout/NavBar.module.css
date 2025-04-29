@@ -1,0 +1,24 @@
+.navList {
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin: auto 0;
+  margin-right: auto;
+}
+
+.navbar {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.listItem {
+  color: var(--gray);
+}
+
+.listItem:hover {
+  color: var(--accent);
+  transition: color 0.2s ease-in-out;
+}
