@@ -23,7 +23,7 @@ for tool in node npm pm2; do
 done
 
 # Stop existing PM2 services (ignore errors)
-pm2 delete backend-test frontend-test || true
+pm2 delete backend frontend || true
 
 # Clean old builds and dependencies
 npm run clean
@@ -36,7 +36,7 @@ npm run build:packages
 
 # Build and start backend
 npm run build:backend
-pm2 start ecosystem.config.js --only backend --env test --name backend-test
+pm2 start ecosystem.config.js --only backend --env test
 
 # Give backend a few seconds to start
 sleep 5
@@ -45,7 +45,12 @@ sleep 5
 npm run build:frontend:test
 
 # Start frontend
-pm2 start ecosystem.config.js --only frontend --env test --name frontend-test
+pm2 start ecosystem.config.js --only frontend --env test
+
+
+# Rename the processes manually
+pm2 restart backend --name backend-test
+pm2 restart frontend --name frontend-test
 
 # Deploy admin site to /var/www/html
 sudo rm -rf /var/www/html/adminsiteTest/*
