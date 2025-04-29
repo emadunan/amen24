@@ -24,7 +24,7 @@ const getLocaleForCalendar = (calendar: CalendarType) => {
 // Hebrew month mapping: name -> biblical order (Nisan = 1)
 const HebrewMonthMap: Record<string, number> = {
   Nisan: 1,
-  Iyyar: 2,
+  Iyar: 2,
   Sivan: 3,
   Tammuz: 4,
   Av: 5,
