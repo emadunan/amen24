@@ -48,8 +48,8 @@ npm run build:frontend:test
 pm2 start ecosystem.config.js --only frontend --env test --name frontend-test
 
 # Deploy admin site to /var/www/html
-sudo rm -rf /var/www/html/*
-sudo cp -ru /home/emad/projects/amen24test/apps/admin/dist/* /var/www/html/
+sudo rm -rf /var/www/html/adminsiteTest
+sudo cp -ru /home/emad/projects/amen24test/apps/admin/dist/* /var/www/html/adminsiteTest
 
 # Restart nginx
 sudo systemctl restart nginx.service
