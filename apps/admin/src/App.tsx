@@ -1,7 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import AppFooter from './components/layout/AppFooter'
 import AppHeader from './components/layout/AppHeader'
-import AppMain from './components/layout/AppMain'
 import LayoutCorners from './components/layout/LayoutCorners'
 import AppRoutes from './router'
 import StoreProvider from './providers/StoreProvider'
@@ -13,9 +12,8 @@ function App() {
     <StoreProvider>
       <BrowserRouter>
         <LayoutCorners />
-        <AppRoutes />
         <AppHeader />
-        <AppMain />
+        <AppRoutes />
         <AppFooter />
         <ToastContainer toastStyle={{ fontFamily: "amiri, serif" }} />
       </BrowserRouter>
@@ -23,4 +21,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

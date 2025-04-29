@@ -1,54 +1,40 @@
 import React from "react";
 import styles from "./Members.module.css";
 import { useGetProfilesQuery } from "../store/userApi";
+import SelectPrivilege from "../components/layout/SelectPrivilege";
 
 const Members: React.FC = () => {
   const { data: profiles } = useGetProfilesQuery();
 
   return (
-    <div className={styles.container}>
+    <div className={styles.membersContainer}>
       <h3 className={styles.title}>Members</h3>
+      {profiles?.map((member) => (
+        <div className={styles.card} key={member.email}>
+          <div className={styles.header}>
+            <div>
+              <strong>{member.email}</strong>
+              <div className={`${styles.badge} ${styles[member.privilege.toLowerCase()]}`}>
+                {member.privilege}
+              </div>
+            </div>
+            <div>
+              <SelectPrivilege member={member} />
+            </div>
+          </div>
 
-      <div className={styles.scrollWrapper}>
-        <div className={styles.scrollArea}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th >Email</th>
-                <th>Providers</th>
-                <th>Privilege</th>
-                <th>Created</th>
-                <th>Last Login</th>
-                <th>Lang</th>
-                <th>Font</th>
-                <th>Theme</th>
-                <th>Calendar</th>
-                <th>Fav</th>
-              </tr>
-            </thead>
-            <tbody>
-              {profiles && (
-                profiles.map((member) => (
-                  <tr key={member.email}>
-                    <td >{member.email}</td>
-                    <td>{member.users.map((user) => <p key={user.id}>{user.provider} &ndash; {user.displayName}</p>)}</td>
-                    <td>
-                      <span className={styles.badge}>{member.privilege}</span>
-                    </td>
-                    <td>{new Date(member.createdAt).toLocaleDateString()}</td>
-                    <td>{member.lastLogin ? new Date(member.lastLogin).toLocaleDateString() : "—"}</td>
-                    <td>{member.uiLang?.toUpperCase() ?? "—"}</td>
-                    <td>{member.fontSize}</td>
-                    <td>{member.themeMode}</td>
-                    <td>{member.dateCalendar}</td>
-                    <td>{member.favorites.length}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+          <div className={styles.infoGrid}>
+            <div><strong>Providers:</strong><br />{member.users.map((u) => `${u.provider} (${u.displayName})`).join(", ")}</div>
+            <div><strong>Created:</strong><br />{new Date(member.createdAt).toLocaleDateString()}</div>
+            <div><strong>Last Login:</strong><br />{member.lastLogin ? new Date(member.lastLogin).toLocaleDateString() : "—"}</div>
+            <div><strong>Language:</strong><br />{member.uiLang?.toUpperCase() ?? "—"}</div>
+            <div><strong>Font Size:</strong><br />{member.fontSize}</div>
+            <div><strong>Theme:</strong><br />{member.themeMode}</div>
+            <div><strong>Calendar:</strong><br />{member.dateCalendar}</div>
+            <div><strong>Favorites:</strong><br />{member.favorites.length}</div>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };
