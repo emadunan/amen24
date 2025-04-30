@@ -72,7 +72,7 @@ const NavMenu: FC<Props> = ({ handleLogout }) => {
               Featured
             </NavLink>
           </li>
-          <li className={styles.navItem}>
+          {/* <li className={styles.navItem}>
             <NavLink
               className={styles.link}
               to="/glossary"
@@ -98,7 +98,7 @@ const NavMenu: FC<Props> = ({ handleLogout }) => {
             >
               Library
             </NavLink>
-          </li>
+          </li> */}
           <LogoutBtn onLogout={handleLogout} />
         </ul>
       </nav>
