@@ -36,6 +36,10 @@ npm run build:packages
 
 # Build and start backend
 npm run build:backend
+
+# Run database migrations
+
+# Start backend
 pm2 start ecosystem.config.js --only backend --env test
 
 # Give backend a few seconds to start
