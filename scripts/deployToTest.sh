@@ -23,7 +23,7 @@ for tool in node npm pm2; do
 done
 
 # Stop existing PM2 services (ignore errors)
-pm2 delete backend frontend || true
+pm2 delete backend-test frontend-test || true
 
 # Clean old builds and dependencies
 npm run clean
