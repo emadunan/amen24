@@ -60,7 +60,7 @@ const NavMenu: FC<Props> = ({ handleLogout }) => {
               to="/verse-groups"
               onClick={() => setMenuOpen(false)}
             >
-              Verse Groups
+              Groups
             </NavLink>
           </li>
           <li className={styles.navItem}>

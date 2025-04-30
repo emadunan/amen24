@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { AuditingService } from './auditing.service';
 import { CreateAuditingDto } from './dto/create-auditing.dto';
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 
 @Controller('auditing')
 export class AuditingController {
-  constructor(private readonly auditingService: AuditingService) {}
+  constructor(private readonly auditingService: AuditingService) { }
 
   @Post()
   recordEvent(@Body() createAuditingDto: CreateAuditingDto) {
@@ -12,6 +13,7 @@ export class AuditingController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.auditingService.findAll();
   }

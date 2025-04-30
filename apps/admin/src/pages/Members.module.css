@@ -6,9 +6,10 @@
 }
 
 .title {
-  font-size: 1.5rem;
-  color: var(--text);
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+  text-align: center;
 }
 
 .card {

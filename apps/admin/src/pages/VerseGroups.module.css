@@ -1,0 +1,61 @@
+.title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+  text-align: center;
+}
+
+.verseGroupCard {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  background-color: #fafafa;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.groupId {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.createdAt {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.verseList ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.startingVerse {
+  margin-top: 10px;
+  font-style: italic;
+  color: #444;
+}
+
+.metaInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.favoriteCount {
+  font-weight: 500;
+  color: #c00;
+}
+
+.featuredTag {
+  background-color: #fffae6;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #b67d00;
+}

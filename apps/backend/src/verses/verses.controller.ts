@@ -11,8 +11,8 @@ import { VersesService } from './verses.service';
 import { BookKey, Lang } from '@amen24/shared';
 import { DashboardService } from 'src/dashboard/dashboard.service';
 import { CurrentUser } from 'src/auth/decorators/user.decorator';
-import { User } from 'src/users/entities/user.entity';
 import { OptionalJwtAuthGuard } from 'src/auth/guards/optional-jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('verses')
 export class VersesController {
@@ -24,6 +24,12 @@ export class VersesController {
     const { query, selectedBooks } = body;
     this.dashboardService.incrementSearchCount();
     return await this.versesService.findManyByQuery(query, selectedBooks, email);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('groups')
+  async findVerseGroups() {
+    return await this.versesService.findVerseGroups();
   }
 
   @Get(':bookKey/:chapterNum/:lang')

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Auditing.module.css'; // <--- css module file
 import { apiUrl } from '../constants';
+import { fetchWithReauth } from '@amen24/ui';
 
 interface AuditingRecord {
   id: number;
@@ -16,9 +17,7 @@ const Auditing: React.FC = () => {
   useEffect(() => {
     async function fetchAuditingRecords() {
       try {
-        const response = await fetch(`${apiUrl}/auditing`, {
-          credentials: "include"
-        });
+        const response = await fetchWithReauth(`${apiUrl}/auditing`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch auditing records");
@@ -36,7 +35,7 @@ const Auditing: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Auditing Logs</h2>
+      <h3 className={styles.title}>Auditing Logs</h3>
       <div className={styles.list}>
         {records.map((record) => (
           <div key={record.id} className={styles.item}>

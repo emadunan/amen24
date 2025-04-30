@@ -9,6 +9,7 @@
   font-size: 2rem;
   margin-bottom: 1.5rem;
   color: var(--primary);
+  text-align: center;
 }
 
 .grid {

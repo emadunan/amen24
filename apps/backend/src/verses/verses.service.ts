@@ -53,6 +53,10 @@ export class VersesService {
     return this.verseGroupRepo.save(group);
   }
 
+  async findVerseGroups() {
+    return await this.verseGroupRepo.find({ relations: ['startingVerse', 'verses', 'featured', 'favorites'] });
+  }
+
   async findVerseGroupById(id: number): Promise<VerseGroup> {
     const group = await this.verseGroupRepo.findOne({
       where: { id },
@@ -67,20 +71,32 @@ export class VersesService {
     return group;
   }
 
-  async findVerseGroupByVerseIds(
-    verseIds: number[],
-  ): Promise<VerseGroup | null> {
+  async findVerseGroupByVerseIds(verseIds: number[]): Promise<VerseGroup | null> {
     if (!verseIds.length) return null;
 
-    return await this.verseGroupRepo
+    // Sort IDs to normalize
+    const sortedVerseIds = [...verseIds].sort((a, b) => a - b);
+
+    const matchingGroup = await this.verseGroupRepo
       .createQueryBuilder('group')
-      .innerJoin('group.verses', 'verse')
-      .where('verse.id IN (:...verseIds)', { verseIds })
-      .groupBy('group.id')
-      .having('COUNT(DISTINCT verse.id) = :count', { count: verseIds.length })
-      .andHaving('COUNT(verse.id) = :count', { count: verseIds.length })
+      .leftJoinAndSelect('group.verses', 'verse')
+      .where(qb => {
+        const subQuery = qb.subQuery()
+          .select('vg.id')
+          .from('verse_group', 'vg')
+          .innerJoin('verse_group_verses', 'vgv', 'vgv."verseGroupId" = vg.id')
+          .groupBy('vg.id')
+          .having('array_agg(DISTINCT vgv."verseId" ORDER BY vgv."verseId") = :verseIds')
+          .getQuery();
+
+        return 'group.id IN ' + subQuery;
+      })
+      .setParameter('verseIds', sortedVerseIds)
       .getOne();
+
+    return matchingGroup || null;
   }
+
 
   async deleteVerseGroup(id: number) {
     return await this.verseGroupRepo.delete(id);
