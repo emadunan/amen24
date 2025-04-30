@@ -21,47 +21,27 @@ const getLocaleForCalendar = (calendar: CalendarType) => {
   }
 };
 
-// Hebrew month mapping: name -> biblical order (Nisan = 1)
 const HebrewMonthMap: Record<string, number> = {
-  Nisan: 1,
-  Iyar: 2,
-  Sivan: 3,
-  Tammuz: 4,
-  Av: 5,
-  Elul: 6,
-  Tishrei: 7,
-  Cheshvan: 8,
-  Kislev: 9,
-  Tevet: 10,
-  Shevat: 11,
-  Adar: 12,
-  "Adar II": 13,
-};
-
-// Civil to Biblical month number mapping
-const civilToBiblical = (civilMonth: number): number => {
-  const mapping: Record<number, number> = {
-    1: 7,
-    2: 8,
-    3: 9,
-    4: 10,
-    5: 11,
-    6: 12,
-    7: 1,
-    8: 2,
-    9: 3,
-    10: 4,
-    11: 5,
-    12: 6,
-    13: 13, // Leap year Adar II
-  };
-  return mapping[civilMonth] ?? -1;
+  tishrei: 1,
+  cheshvan: 2,
+  kislev: 3,
+  tevet: 4,
+  shevat: 5,
+  adar: 6,
+  "adar ii": 7,
+  nisan: 8,
+  iyar: 9,
+  sivan: 10,
+  tammuz: 11,
+  av: 12,
+  elul: 13,
 };
 
 const DateDisplay: React.FC = () => {
   const { t, i18n } = useTranslation(["month"]);
   const { data: user } = useGetMeQuery();
   const [updateProfile] = useUpdateProfileMutation();
+  const today = useMemo(() => new Date(), []);
 
   const preferredCalendar = user?.profile?.dateCalendar ?? "gregorian";
   const defaultIndex = useMemo(
@@ -99,7 +79,7 @@ const DateDisplay: React.FC = () => {
       localeMatcher: "lookup",
     });
 
-    const parts = formatter.formatToParts(new Date());
+    const parts = formatter.formatToParts(today);
 
     const day = parts.find((p) => p.type === "day")?.value;
     let monthValue = parts.find((p) => p.type === "month")?.value;
@@ -109,23 +89,21 @@ const DateDisplay: React.FC = () => {
 
     // Normalize Hebrew months
     if (locale === "en-u-ca-hebrew") {
-      let biblicalMonthNum: number | undefined;
+      let civilMonthNum: number | undefined;
 
       if (isNaN(Number(monthValue))) {
-        // If it's a name like "Nisan"
-        biblicalMonthNum = HebrewMonthMap[monthValue];
+        const normalized = monthValue.trim().toLowerCase();
+        civilMonthNum = HebrewMonthMap[normalized];
       } else {
-        // If it's a civil number like 7 (Tishrei), convert to biblical
-        const civilMonth = Number(monthValue);
-        biblicalMonthNum = civilToBiblical(civilMonth);
+        civilMonthNum = Number(monthValue);
       }
 
-      if (!biblicalMonthNum) {
+      if (civilMonthNum === undefined) {
         console.warn(`Unexpected Hebrew month: ${monthValue}`);
         return "Invalid Hebrew date";
       }
 
-      monthValue = biblicalMonthNum.toString();
+      monthValue = civilMonthNum.toString();
     }
 
     const monthName = t(`month:${calendar}.${monthValue}`);

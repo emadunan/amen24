@@ -29,18 +29,18 @@
     "13": "Pi Kogi Enavot"
   },
   "hebrew": {
-    "1": "Nisan",
-    "2": "Iyar",
-    "3": "Sivan",
-    "4": "Tammuz",
-    "5": "Av",
-    "6": "Elul",
-    "7": "Tishrei",
-    "8": "Cheshvan",
-    "9": "Kislev",
-    "10": "Tevet",
-    "11": "Shevat",
-    "12": "Adar",
-    "13": "Adar II"
+    "1": "Tishrei",
+    "2": "Cheshvan",
+    "3": "Kislev",
+    "4": "Tevet",
+    "5": "Shevat",
+    "6": "Adar",
+    "7": "Adar II",
+    "8": "Nisan",
+    "9": "Iyar",
+    "10": "Sivan",
+    "11": "Tammuz",
+    "12": "Av",
+    "13": "Elul"
   }
 }
