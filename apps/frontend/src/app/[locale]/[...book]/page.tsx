@@ -26,7 +26,7 @@ const BookPage: FC<Props> = async ({ params }) => {
 
   let verses: Verse[] = [];
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const cookieHeader = cookieStore.toString()
 
     const response = await fetch(
