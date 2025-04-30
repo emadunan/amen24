@@ -38,6 +38,13 @@ npm run build:packages
 npm run build:backend
 
 # Run database migrations
+# Drop and recreate test database
+# echo "Resetting test database..."
+# PGPASSWORD=$DB_PASSWORD psql -U "$DB_USERNAME" -h "$DB_HOST" -c "DROP DATABASE IF EXISTS $DB_NAME;"
+# PGPASSWORD=$DB_PASSWORD psql -U "$DB_USERNAME" -h "$DB_HOST" -c "CREATE DATABASE $DB_NAME OWNER $DB_USERNAME;"
+
+npm --prefix apps/backend run migrate:up:test
+# npm --prefix apps/backend run seed:test
 
 # Start backend
 pm2 start ecosystem.config.js --only backend --env test

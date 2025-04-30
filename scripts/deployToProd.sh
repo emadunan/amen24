@@ -38,6 +38,13 @@ npm run build:packages
 npm run build:backend
 
 # Run database migrations
+# Drop and recreate production database
+# echo "Resetting production database..."
+# PGPASSWORD=$DB_PASSWORD psql -U "$DB_USERNAME" -h "$DB_HOST" -c "DROP DATABASE IF EXISTS $DB_NAME;"
+# PGPASSWORD=$DB_PASSWORD psql -U "$DB_USERNAME" -h "$DB_HOST" -c "CREATE DATABASE $DB_NAME OWNER $DB_USERNAME;"
+
+npm --prefix apps/backend run migrate:up:prod
+# npm --prefix apps/backend run seed:prod
 
 # Start backend
 pm2 start ecosystem.config.js --only backend --env production
