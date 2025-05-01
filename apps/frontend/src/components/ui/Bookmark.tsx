@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import styles from "./Bookmark.module.css";
-import { useGetUserLastReadBookmarkQuery } from "@/store/bookmarkApi";
+import { useGetUserLastReadBookmarkQuery } from "@/store/apis/bookmarkApi";
 import { useTranslation } from "react-i18next";
 import { BookMap, formatNumber, Lang } from "@amen24/shared";
-import { useGetMeQuery } from "@/store/authApi";
+import { useGetMeQuery } from "@/store/apis/authApi";
 import { useEffect } from "react";
 import { useBreakpoint } from "@amen24/ui";
 

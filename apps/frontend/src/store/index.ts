@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import translationReducer from "./translationSlice";
-import navigatorReducer from "./navigatorSlice";
-import searchReducer from "./searchSlice";
-import { featuredApi } from "./featuredApi";
-import { favoriteApi } from "./favoriteApi";
-import { bookmarkApi } from "./bookmarkApi";
-import { userApi } from "./userApi";
-import { authApi } from "./authApi";
+import translationReducer from "./slices/translationSlice";
+import navigatorReducer from "./slices/navigatorSlice";
+import searchReducer from "./slices/searchSlice";
+import { userApi } from "./apis/userApi";
+import { authApi } from "./apis/authApi";
+import { bookmarkApi } from "./apis/bookmarkApi";
+import { favoriteApi } from "./apis/favoriteApi";
+import { featuredApi } from "./apis/featuredApi";
 
 export const MakeStore = () => {
   const store = configureStore({

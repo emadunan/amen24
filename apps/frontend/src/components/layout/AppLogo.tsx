@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./AppLogo.module.css";
-import { useGetMeQuery } from "@/store/authApi";
+import { useGetMeQuery } from "@/store/apis/authApi";
 import { ThemeMode } from "@amen24/shared";
 import Link from "next/link";
 

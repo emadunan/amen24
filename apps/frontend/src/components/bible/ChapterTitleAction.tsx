@@ -1,6 +1,6 @@
 "use client";
 
-import { toggle } from "@/store/navigatorSlice";
+import { toggle } from "@/store/slices/navigatorSlice";
 import React, { FC, ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./ChapterTitleAction.module.css";

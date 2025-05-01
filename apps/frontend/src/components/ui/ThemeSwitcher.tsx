@@ -2,10 +2,10 @@
 
 import { useState, useCallback, useLayoutEffect } from "react";
 import styles from "./ThemeSwitcher.module.css";
-import { useUpdateProfileMutation } from "@/store/userApi";
+import { useUpdateProfileMutation } from "@/store/apis/userApi";
 import { ThemeMode } from "@amen24/shared";
 import { useBreakpoint } from "@amen24/ui";
-import { useGetMeQuery } from "@/store/authApi";
+import { useGetMeQuery } from "@/store/apis/authApi";
 
 const LOCAL_STORAGE_KEY = "theme";
 

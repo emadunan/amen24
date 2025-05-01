@@ -5,10 +5,10 @@ import i18nConfig from "@/config/next-i18n-router.config";
 import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useUpdateProfileMutation } from "@/store/userApi";
+import { useUpdateProfileMutation } from "@/store/apis/userApi";
 import { useBreakpoint, useClickOutside, showToast } from "@amen24/ui";
 import { Lang } from "@amen24/shared";
-import { useGetMeQuery } from "@/store/authApi";
+import { useGetMeQuery } from "@/store/apis/authApi";
 
 const langMap = {
   en: "EN",

@@ -6,7 +6,7 @@ import BackButton from "../ui/BackButton";
 import SubmitButton from "../ui/SubmitButton";
 import InputItem from "../ui/InputItem";
 import { useTranslation } from "react-i18next";
-import { useRequestPasswordMutation } from "@/store/userApi";
+import { useRequestPasswordMutation } from "@/store/apis/userApi";
 import { RiMailSendFill } from "react-icons/ri";
 import Spinner from "../ui/Spinner";
 import { useFeedback } from "@amen24/ui";

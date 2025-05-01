@@ -17,7 +17,7 @@ import {
   setResults,
   setSelectedBooks,
   toggleDropdown,
-} from "@/store/searchSlice";
+} from "@/store/slices/searchSlice";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
 import { useBreakpoint, useFeedback, showToast } from "@amen24/ui";
 

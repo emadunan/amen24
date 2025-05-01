@@ -6,7 +6,7 @@ import styles from "./BibleNavigator.module.css";
 import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { close, selectNavigator } from "@/store/navigatorSlice";
+import { close, selectNavigator } from "@/store/slices/navigatorSlice";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { useParams, usePathname } from "next/navigation";
 import { useDraggable } from "@amen24/ui";
@@ -83,7 +83,7 @@ const BibleNavigator = () => {
       <div className={styles.navigatorHeader} ref={headerRef}>
         <RxDragHandleDots2 />
         <h4>{t("bibleIndex")}</h4>
-        <CloseDraggableBtn onClose={() => dispatch(close())} absolute/>
+        <CloseDraggableBtn onClose={() => dispatch(close())} absolute />
       </div>
       <div className={styles.navigatorBody}>
         {Object.values(BookMap).map((book) => (
@@ -105,7 +105,7 @@ const BibleNavigator = () => {
                     <Link
                       className={
                         chapterIndex.toString() === chapterNum &&
-                        book.key === urlBookKey
+                          book.key === urlBookKey
                           ? styles.currentChapter
                           : ""
                       }

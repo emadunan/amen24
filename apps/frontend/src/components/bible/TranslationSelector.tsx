@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./TranslationSelector.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setTranslationLang } from "@/store/translationSlice";
+import { setTranslationLang } from "@/store/slices/translationSlice";
 
 const TranslationSelector = () => {
   const { i18n, t } = useTranslation();

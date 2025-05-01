@@ -4,7 +4,7 @@ import styles from "./VerseHighlight.module.css";
 import { useSearchParams } from "next/navigation";
 import { useHighlightContext } from "./ChapterContent";
 import { MdPushPin } from "react-icons/md";
-import { useGetUserLastReadBookmarkQuery } from "@/store/bookmarkApi";
+import { useGetUserLastReadBookmarkQuery } from "@/store/apis/bookmarkApi";
 import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 
 interface Props {

@@ -9,16 +9,25 @@ const VerseGroups = () => {
 
   useEffect(() => {
     async function fetchVerseGroups() {
-      const response = await fetchWithReauth(`${apiUrl}/verses/groups`);
+      try {
+        const response = await fetchWithReauth(`${apiUrl}/verses/groups`);
 
-      if (!response.ok) throw new Error(`Failed to fetch verse groups`);
+        // ✅ Now safe to check
+        if (!response.ok) {
+          console.error("Failed after reauth:", await response.text());
+          throw new Error("Failed to fetch verse groups");
+        }
 
-      const data = await response.json();
-      setVerseGroups(data);
+        const data = await response.json();
+        setVerseGroups(data);
+      } catch (error) {
+        console.error("Error loading verse groups:", error);
+      }
     }
 
     fetchVerseGroups();
   }, []);
+
 
   return (
     <div>

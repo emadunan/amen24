@@ -1,7 +1,7 @@
 import { BookMap, Favorite, Lang } from "@amen24/shared";
 import React, { FC } from "react";
 import VerseBlock from "../bible/VerseBlock";
-import { useRemoveFavoriteMutation } from "@/store/favoriteApi";
+import { useRemoveFavoriteMutation } from "@/store/apis/favoriteApi";
 
 interface Props {
   favorite: Favorite;

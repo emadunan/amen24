@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./DateDisplay.module.css";
 import { DateCalendar, formatNumber, Lang } from "@amen24/shared";
-import { useUpdateProfileMutation } from "@/store/userApi";
-import { useGetMeQuery } from "@/store/authApi";
+import { useUpdateProfileMutation } from "@/store/apis/userApi";
+import { useGetMeQuery } from "@/store/apis/authApi";
 
 const calendars = ["gregorian", "coptic", "hebrew"] as const;
 type CalendarType = (typeof calendars)[number];

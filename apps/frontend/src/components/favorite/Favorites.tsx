@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetUserFavoritesQuery } from "@/store/favoriteApi";
+import { useGetUserFavoritesQuery } from "@/store/apis/favoriteApi";
 import React from "react";
 import styles from "./Favorites.module.css";
 import { formatNumber, Lang } from "@amen24/shared";

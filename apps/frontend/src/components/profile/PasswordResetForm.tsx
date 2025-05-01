@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import BackButton from "../ui/BackButton";
 import SubmitButton from "../ui/SubmitButton";
 import Spinner from "../ui/Spinner";
-import { useResetPasswordMutation } from "@/store/userApi";
+import { useResetPasswordMutation } from "@/store/apis/userApi";
 import { useRouter } from "next/navigation";
 import { MdOutlineLockReset } from "react-icons/md";
 import { ERROR_KEYS } from "@amen24/shared";

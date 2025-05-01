@@ -18,11 +18,11 @@ import {
 import {
   useGetUserLastReadBookmarkQuery,
   useUpdateBookmarkMutation,
-} from "@/store/bookmarkApi";
-import { useGetMeQuery } from "@/store/authApi";
-import { useAddFavoriteMutation } from "@/store/favoriteApi";
+} from "@/store/apis/bookmarkApi";
+import { useGetMeQuery } from "@/store/apis/authApi";
+import { useAddFavoriteMutation } from "@/store/apis/favoriteApi";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
-import { useAddToFeaturedMutation } from "@/store/featuredApi";
+import { useAddToFeaturedMutation } from "@/store/apis/featuredApi";
 import ToggleDraggableBtn from "../ui/ToggleDraggableBtn";
 
 const ChapterToolbox = () => {
@@ -131,7 +131,7 @@ const ChapterToolbox = () => {
       }}
     >
       <div className={styles.toolboxHeader} ref={headerRef}>
-        <RxDragHandleDots2 className={styles.dragIcon}/>
+        <RxDragHandleDots2 className={styles.dragIcon} />
         <h4>{t("toolbox.title")}</h4>
         <CloseDraggableBtn onClose={clearHighlighted} />
         <ToggleDraggableBtn onToggle={handleIsExpanded} isExpanded={isExpanded} />

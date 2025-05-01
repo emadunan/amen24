@@ -7,7 +7,7 @@ import BackButton from "../ui/BackButton";
 import SubmitButton from "../ui/SubmitButton";
 import { useTranslation } from "react-i18next";
 import styles from "./PasswordRestoreForm.module.css";
-import { useRestorePasswordMutation } from "@/store/userApi";
+import { useRestorePasswordMutation } from "@/store/apis/userApi";
 import { MdOutlineLockReset } from "react-icons/md";
 import { useFeedback } from "@amen24/ui";
 import { ERROR_KEYS } from "@amen24/shared";

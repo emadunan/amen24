@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./FeaturedList.module.css";
 import { formatNumber, Lang } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
-import { useGetAllFeaturedQuery } from "@/store/featuredApi";
+import { useGetAllFeaturedQuery } from "@/store/apis/featuredApi";
 import VerseFeatured from "./VerseFeatured";
 
 const FeaturedList = () => {

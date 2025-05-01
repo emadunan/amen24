@@ -1,7 +1,7 @@
 import { BookMap, Featured, Lang } from "@amen24/shared";
 import React, { FC } from "react";
 import VerseBlock from "../bible/VerseBlock";
-import { useRemoveFromFeaturedMutation } from "@/store/featuredApi";
+import { useRemoveFromFeaturedMutation } from "@/store/apis/featuredApi";
 
 interface Props {
   featured: Featured;
