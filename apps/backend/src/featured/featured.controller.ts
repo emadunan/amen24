@@ -16,7 +16,7 @@ import { CurrentUser } from '../auth/decorators/user.decorator';
 
 @Controller('featured')
 export class FeaturedController {
-  constructor(private readonly featuredService: FeaturedService) {}
+  constructor(private readonly featuredService: FeaturedService) { }
 
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -28,6 +28,13 @@ export class FeaturedController {
   @Get()
   async findAll(@CurrentUser() user: User) {
     return await this.featuredService.getAllFeatured(user.profile.uiLang);
+  }
+
+  @Patch('text')
+  @UseGuards(JwtAuthGuard)
+  async updateFeatuedText(@Body() body: { id: number, text: string }) {
+    const { id, text } = body;
+    return await this.featuredService.updateFeaturedText(id, text);
   }
 
   @UseGuards(JwtAuthGuard)

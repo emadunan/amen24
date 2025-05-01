@@ -1,0 +1,84 @@
+.wrapper {
+  background-color: var(--background);
+  border: 1px solid var(--secondary);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+  box-shadow: 0 2px 4px rgba(var(--text-rgb), 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.lang {
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.discardBtn {
+  background-color: var(--danger);
+  color: var(--min);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.3s;
+}
+
+.discardBtn:hover {
+  background-color: var(--danger-hover);
+}
+
+
+.editBtn,
+.saveBtn {
+  background-color: var(--secondary);
+  color: var(--text);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.3s;
+}
+
+.editBtn:hover {
+  background-color: var(--secondary-hover);
+}
+
+.saveBtn {
+  background-color: var(--accent);
+  color: var(--background);
+}
+
+.saveBtn:hover {
+  background-color: var(--accent-hover);
+}
+
+.text {
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 100px;
+  font-size: 1rem;
+  padding: 0.6rem;
+  border: 1px solid var(--secondary);
+  border-radius: 0.5rem;
+  background-color: var(--min);
+  color: var(--text);
+  resize: vertical;
+}

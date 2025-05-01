@@ -20,7 +20,7 @@ export class FeaturedService {
     @InjectRepository(FeaturedText)
     private featuredTextRepo: Repository<FeaturedText>,
     private versesService: VersesService,
-  ) {}
+  ) { }
 
   async addToFeatured(verseIds: number[]) {
     // 1. Retrieve or create the verse group
@@ -95,6 +95,7 @@ export class FeaturedService {
 
     const featured = await this.featuredRepo
       .createQueryBuilder('featured')
+      .leftJoinAndSelect('featured.featuredText', 'featuredText', 'featuredText.lang = :lang', { lang })
       .leftJoinAndSelect('featured.verseGroup', 'verseGroup')
       .leftJoinAndSelect('verseGroup.verses', 'verse')
       .leftJoinAndSelect(
@@ -124,15 +125,31 @@ export class FeaturedService {
       relations: [
         'featured',
         'featured.verseGroup',
+        'featured.verseGroup.verses',
         'featured.verseGroup.startingVerse',
         'featured.verseGroup.startingVerse.chapter',
         'featured.verseGroup.startingVerse.chapter.book',
       ],
+      order: {
+        lang: "ASC"
+      }
     });
 
     if (!featuredText) throw new NotFoundException();
 
+    // Only sort first translation since we just need it to extract portion reference for Title
+    featuredText[0].featured.verseGroup.verses.sort((a, b) => a.id - b.id);
+
     return featuredText;
+  }
+
+  async updateFeaturedText(id: number, text: string) {
+    const featuredText = await this.featuredTextRepo.findOneBy({ id });
+
+    if (!featuredText) throw new NotFoundException();
+    Object.assign(featuredText, { text });
+
+    return await this.featuredTextRepo.save(featuredText);
   }
 
   create(createFeaturedDto: CreateFeaturedDto) {
@@ -147,7 +164,7 @@ export class FeaturedService {
     return `This action returns a #${id} featured`;
   }
 
-  update(id: number, updateFeaturedDto: UpdateFeaturedDto) {
+  update(id: number, featuredDto: UpdateFeaturedDto) {
     return `This action updates a #${id} featured`;
   }
 

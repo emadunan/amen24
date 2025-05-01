@@ -40,7 +40,7 @@ export function buildJoinedText(verses: Verse[], lang: Lang): string {
     .map((verse, idx, arr) => {
       const translation = verse.verseTranslations.find(
         (t) => t.lang === lang,
-      )?.text;
+      )?.textDiacritized;
 
       if (!translation) return '';
 

@@ -11,9 +11,17 @@ export const createFeaturedApi = (baseUrl: string) => createApi({
       query: () => "",
       providesTags: ["Featured"],
     }),
-    getFeaturedText: builder.query<FeaturedText[], void>({
-      query: () => "",
+    getFeaturedText: builder.query<FeaturedText[], string>({
+      query: (featuredId) => `${featuredId}`,
       providesTags: () => ["Featured"],
+    }),
+    updateFeaturedText: builder.mutation<void, { id: number, text: string }>({
+      query: (body) => ({
+        url: "text",
+        method: "PATCH",
+        body
+      }),
+      invalidatesTags: ["Featured"]
     }),
     addToFeatured: builder.mutation<Featured, number[]>({
       query: (verseIds) => ({

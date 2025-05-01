@@ -1,9 +1,19 @@
+import { FC } from "react";
+import { useGetAllFeaturedQuery } from "../store/featuredApi";
+import FeaturedListItem from "../components/featured/FeaturedListItem";
+import styles from "./Featured.module.css";
 
-const Featured = () => {
+const Featured: FC = () => {
+  const { data: featured } = useGetAllFeaturedQuery();
+
+  console.log(featured);
+
   return (
-    <div>
-      <h3>Featured</h3>
-      <div></div>
+    <div className={styles.featured}>
+      <h3 className={styles.title}>Featured</h3>
+      <div className={styles.featuredContainer}>
+        {featured?.map(f => <FeaturedListItem key={f.id} featuredItem={f} />)}
+      </div>
     </div>
   )
 }

@@ -10,6 +10,7 @@ import ProtectedRoute from "../components/layout/ProtectedRoute"
 import Auditing from "../pages/Auditing"
 import Blogs from "../pages/Blogs"
 import Library from "../pages/Library"
+import FeaturedItem from "../pages/FeaturedItem"
 
 
 const AppRoutes = () => {
@@ -23,6 +24,7 @@ const AppRoutes = () => {
           <Route path='/auditing' element={<Auditing />} />
           <Route path='/verse-groups' element={<VerseGroups />} />
           <Route path='/featured' element={<Featured />} />
+          <Route path='/featured/:id' element={<FeaturedItem />} />
           <Route path='/glossary' element={<Glossary />} />
           <Route path='/blogs' element={<Blogs />} />
           <Route path='/library' element={<Library />} />
