@@ -9,7 +9,7 @@ const Members: React.FC = () => {
   return (
     <div className={styles.membersContainer}>
       <h3 className={styles.title}>Members</h3>
-      <div>
+      <div className={styles.members}>
         {profiles?.map((member) => (
           <div className={styles.card} key={member.email}>
             <div className={styles.header}>
