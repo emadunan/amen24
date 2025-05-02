@@ -1,4 +1,4 @@
-import { BookKey, ERROR_KEYS, formatNumber, Lang, Verse } from "@amen24/shared";
+import { BookKey, BookMap, ERROR_KEYS, formatNumber, Lang, Verse } from "@amen24/shared";
 import React, { FC, Fragment } from "react";
 import styles from "./page.module.css";
 import initTranslations from "@/app/i18n";
@@ -13,9 +13,28 @@ import TranslationSelector from "@/components/bible/TranslationSelector";
 import ChapterContainer from "@/components/bible/ChapterContainer";
 import { apiPrivateUrl } from "@/constants";
 import { cookies } from "next/headers";
+import { Metadata, ResolvingMetadata } from "next";
 
 interface Props {
   params: Promise<{ book: string[]; locale: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const book = (await params).book;
+  let lang = (await params).locale as Lang;
+
+  if (lang !== Lang.ENGLISH && lang !== Lang.ARABIC) {
+    lang = Lang.ENGLISH;
+  }
+ 
+  return {
+    title: `${BookMap[book[0] as BookKey].title[lang]} [${book[1]}]` ,
+    description: '',
+  }
 }
 
 const BookPage: FC<Props> = async ({ params }) => {
