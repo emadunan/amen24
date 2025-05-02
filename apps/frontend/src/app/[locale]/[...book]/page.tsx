@@ -32,7 +32,7 @@ export async function generateMetadata(
  
   return {
     title: `${BookMap[book[0] as BookKey].title[lang]} [${book[1]}]` ,
-    description: '',
+    description: `${BookMap[book[0] as BookKey].description[lang]}`,
   }
 }
 
