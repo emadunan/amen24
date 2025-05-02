@@ -10,3 +10,4 @@ export * from "./Verse.interface";
 export * from "./VerseGroup.interface";
 export * from "./VerseTranslation.interface";
 export * from "./VerseResult.interface";
+export * from "./AuditingRecord.interface"

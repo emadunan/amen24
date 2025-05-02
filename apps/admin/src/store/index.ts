@@ -2,6 +2,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import { authApi } from './authApi'
 import { userApi } from './userApi';
 import { featuredApi } from "./featuredApi";
+import { verseApi } from './verseApi';
+import { auditingApi } from './auditingApi';
 
 export const MakeStore = () => {
   const store = configureStore({
@@ -9,12 +11,16 @@ export const MakeStore = () => {
       [authApi.reducerPath]: authApi.reducer,
       [userApi.reducerPath]: userApi.reducer,
       [featuredApi.reducerPath]: featuredApi.reducer,
+      [verseApi.reducerPath]: verseApi.reducer,
+      [auditingApi.reducerPath]: auditingApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(authApi.middleware)
         .concat(userApi.middleware)
         .concat(featuredApi.middleware)
+        .concat(verseApi.middleware)
+        .concat(auditingApi.middleware)
   });
 
   return store;

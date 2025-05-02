@@ -1,33 +1,10 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './VerseGroups.module.css'
-import { apiUrl } from '../constants';
-import { VerseGroup } from '@amen24/shared';
-import { fetchWithReauth } from '@amen24/ui';
 
-const VerseGroups = () => {
-  const [verseGroups, setVerseGroups] = useState<VerseGroup[]>();
+import { useGetVerseGroupsQuery } from '../store/verseApi';
 
-  useEffect(() => {
-    async function fetchVerseGroups() {
-      try {
-        const response = await fetchWithReauth(`${apiUrl}/verses/groups`);
-
-        // ✅ Now safe to check
-        if (!response.ok) {
-          console.error("Failed after reauth:", await response.text());
-          throw new Error("Failed to fetch verse groups");
-        }
-
-        const data = await response.json();
-        setVerseGroups(data);
-      } catch (error) {
-        console.error("Error loading verse groups:", error);
-      }
-    }
-
-    fetchVerseGroups();
-  }, []);
-
+const VerseGroups: React.FC = () => {
+  const { data: verseGroups } = useGetVerseGroupsQuery();
 
   return (
     <div>
