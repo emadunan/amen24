@@ -20,12 +20,12 @@
 
 .verse {
   display: inline;
-  font-size: 1.3rem;
-  line-height: 2rem;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
 }
 
 [dir="rtl"] .verse {
-  line-height: 2.6rem;
+  font-size: 1.3rem;
 }
 
 .verseNumber {

@@ -13,7 +13,7 @@ import TranslationSelector from "@/components/bible/TranslationSelector";
 import ChapterContainer from "@/components/bible/ChapterContainer";
 import { apiPrivateUrl } from "@/constants";
 import { cookies } from "next/headers";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 interface Props {
   params: Promise<{ book: string[]; locale: string }>;
@@ -21,8 +21,7 @@ interface Props {
 }
 
 export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata
+  { params }: Props
 ): Promise<Metadata> {
   const book = (await params).book;
   let lang = (await params).locale as Lang;
