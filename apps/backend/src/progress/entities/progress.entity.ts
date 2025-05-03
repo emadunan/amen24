@@ -1,3 +1,4 @@
+import { Verse } from '../../verses/entities/verse.entity';
 import {
   Column,
   Entity,
@@ -7,19 +8,18 @@ import {
   JoinColumn,
   Unique,
 } from 'typeorm';
-import { Profile } from './profile.entity';
-import { Verse } from '../../verses/entities/verse.entity';
+import { Profile } from '../../profiles/entities/profile.entity';
 
 @Entity()
 @Unique(['profile', 'verse', 'title'])
-export class Bookmark {
+export class Progress {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'text' })
   title: string;
 
-  @ManyToOne(() => Profile, (profile) => profile.bookmarks, {
+  @ManyToOne(() => Profile, (profile) => profile.progresses, {
     onDelete: 'CASCADE',
     nullable: false,
   })

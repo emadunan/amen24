@@ -14,8 +14,6 @@ export interface Profile {
   dateCalendar: DateCalendar;
   isDiacritized: boolean;
   favorites: Favorite[]
-
-  // bookmarks: Bookmark[];
 }
 
 export interface ProfileStatistics {

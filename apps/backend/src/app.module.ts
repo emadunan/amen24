@@ -15,6 +15,10 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AuditingModule } from './auditing/auditing.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ProfilesModule } from './profiles/profiles.module';
+import { FavoritesModule } from './favorites/favorites.module';
+import { ProgressModule } from './progress/progress.module';
+import { BookmarksModule } from './bookmarks/bookmarks.module';
 import joiConfig from './_config/joi.config';
 
 @Module({
@@ -49,6 +53,10 @@ import joiConfig from './_config/joi.config';
     FeaturedModule,
     DashboardModule,
     AuditingModule,
+    ProfilesModule,
+    FavoritesModule,
+    ProgressModule,
+    BookmarksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

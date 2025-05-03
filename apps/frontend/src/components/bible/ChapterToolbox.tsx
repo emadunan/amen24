@@ -16,9 +16,9 @@ import {
   formatNumber,
 } from "@amen24/shared";
 import {
-  useGetUserLastReadBookmarkQuery,
-  useUpdateBookmarkMutation,
-} from "@/store/apis/bookmarkApi";
+  useGetUserLastReadProgressQuery,
+  useUpdateProgressMutation,
+} from "@/store/apis/progressApi";
 import { useGetMeQuery } from "@/store/apis/authApi";
 import { useAddFavoriteMutation } from "@/store/apis/favoriteApi";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
@@ -31,7 +31,7 @@ const ChapterToolbox = () => {
   const { t, i18n } = useTranslation();
 
   const headerRef = useRef<HTMLDivElement | null>(null);
-  const [updateBookmark] = useUpdateBookmarkMutation();
+  const [updateProgress] = useUpdateProgressMutation();
   const { showApiError, showError, showMessage } = useFeedback(t);
   const { position, handleMouseDown, elementRef, handleTouchStart } =
     useDraggable(
@@ -43,7 +43,7 @@ const ChapterToolbox = () => {
     );
 
   const { data: user } = useGetMeQuery();
-  const { data: bookmark } = useGetUserLastReadBookmarkQuery();
+  const { data: progress } = useGetUserLastReadProgressQuery();
   const [addFavorite] = useAddFavoriteMutation();
   const [addFeatured] = useAddToFeaturedMutation();
 
@@ -58,8 +58,8 @@ const ChapterToolbox = () => {
     setIsExpanded(prev => !prev)
   }
 
-  async function handleUpdateBookmark(
-    bookmarkId?: number,
+  async function handleUpdateProgress(
+    progressId?: number,
     profileEmail?: string,
   ) {
     const lastHighlighted = highlighted.at(-1);
@@ -69,21 +69,21 @@ const ChapterToolbox = () => {
       return;
     }
 
-    if (!bookmarkId || !profileEmail) {
+    if (!progressId || !profileEmail) {
       showError(ERROR_KEYS.UNAUTHORIZED_ACCESS);
       return;
     }
 
     try {
-      const bookmark = await updateBookmark({
-        id: bookmarkId,
+      const progress = await updateProgress({
+        id: progressId,
         profileEmail,
         verseId: lastHighlighted,
       });
 
-      const bookKey = bookmark.data?.verse.chapter.book.bookKey;
-      const chapterNum = bookmark.data?.verse.chapter.num;
-      const verseNum = bookmark.data?.verse.num;
+      const bookKey = progress.data?.verse.chapter.book.bookKey;
+      const chapterNum = progress.data?.verse.chapter.num;
+      const verseNum = progress.data?.verse.num;
 
       if (!bookKey || !chapterNum || !verseNum) {
         showError(ERROR_KEYS.UNKNOWN_ERROR);
@@ -155,24 +155,24 @@ const ChapterToolbox = () => {
               </button>
 
               <button
-                className={styles.bookmark}
-                onClick={handleUpdateBookmark.bind(
+                className={styles.progress}
+                onClick={handleUpdateProgress.bind(
                   this,
-                  bookmark?.id,
+                  progress?.id,
                   user?.email,
                 )}
               >
                 {isClient && <MdPushPin size="1.2rem" />}
-                <div className={styles.bookmarkContent}>
-                  <p className={styles.bookmarkTitle}>{t("toolbox.bookmark")}</p>
-                  {bookmark && (
-                    <small className={styles.bookmarkRef}>
-                      {t(`book:${bookmark.verse.chapter.book.bookKey}`)} (
+                <div className={styles.progressContent}>
+                  <p className={styles.progressTitle}>{t("toolbox.progress")}</p>
+                  {progress && (
+                    <small className={styles.progressRef}>
+                      {t(`book:${progress.verse.chapter.book.bookKey}`)} (
                       {formatNumber(
-                        bookmark.verse.chapter.num,
+                        progress.verse.chapter.num,
                         i18n.language as Lang,
                       )}{" "}
-                      : {formatNumber(bookmark.verse.num, i18n.language as Lang)})
+                      : {formatNumber(progress.verse.num, i18n.language as Lang)})
                     </small>
                   )}
                 </div>

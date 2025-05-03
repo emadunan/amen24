@@ -44,7 +44,7 @@
     "sendResetLink": "Send Reset Link",
     "password-invite": "Forgot your password? Contact us to reset it."
   },
-  "bookmark": {
+  "progress": {
     "last_read": "Last Read",
     "old_testament": "Old Testament Marker",
     "new_testament": "New Testament Marker"
@@ -71,10 +71,10 @@
     "copy": "Copy Highlighted",
     "addToFavorites": "Add to Favorites",
     "addToFeatured": "Add to Featured",
-    "bookmark": "Save As Last Read",
+    "progress": "Save As Last Read",
     "clearHighlighting": "Clear Highlighting",
     "copiedToClipboard": "Copied to clipboard",
-    "lastReadSaved": "bookmarked as last read successfully! 📖✅"
+    "lastReadSaved": "Saved as last read successfully! 📖✅"
   },
   "footer": {
     "copyright": "Amen24. All rights reserved.",

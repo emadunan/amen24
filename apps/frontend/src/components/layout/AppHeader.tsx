@@ -12,7 +12,7 @@ import { BookKey, User } from "@amen24/shared";
 import UserMenu from "../profile/UserMenu";
 import { useGetMeQuery } from "@/store/apis/authApi";
 import Spinner from "../ui/Spinner";
-import Bookmark from "../ui/Bookmark";
+import ReadingProgress from "../ui/ReadingProgress";
 import DateDisplay from "../ui/DateDisplay";
 import NavBar from "./NavBar";
 import NavMenu from "./NavMenu";
@@ -103,7 +103,7 @@ const AppHeader: FC<Props> = () => {
           {showUserMenu && <UserMenu user={user} />}
         </div>
         <DateDisplay />
-        <Bookmark />
+        <ReadingProgress />
       </nav>
     </header>
   );

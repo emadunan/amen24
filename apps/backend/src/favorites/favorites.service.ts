@@ -4,11 +4,11 @@ import {
   NotImplementedException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Favorite } from '../entities/favorite.entity';
+import { Favorite } from './entities/favorite.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ProfilesService } from './profiles.service';
-import { VersesService } from '../../verses/verses.service';
+import { ProfilesService } from '../profiles/profiles.service';
+import { VersesService } from '../verses/verses.service';
 import { ERROR_KEYS, Lang } from '@amen24/shared';
 
 @Injectable()

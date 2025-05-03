@@ -36,7 +36,7 @@ export class CreateUserDto {
   photoUri?: string;
 
   @IsObject()
-  bookmark: {
+  progress: {
     last_read: string;
     old_testament?: string;
     new_testament?: string;

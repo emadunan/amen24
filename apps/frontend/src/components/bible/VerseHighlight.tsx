@@ -4,7 +4,7 @@ import styles from "./VerseHighlight.module.css";
 import { useSearchParams } from "next/navigation";
 import { useHighlightContext } from "./ChapterContent";
 import { MdPushPin } from "react-icons/md";
-import { useGetUserLastReadBookmarkQuery } from "@/store/apis/bookmarkApi";
+import { useGetUserLastReadProgressQuery } from "@/store/apis/progressApi";
 import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 
 interface Props {
@@ -20,7 +20,7 @@ const VerseHighlight: FC<Props> = ({ children, verseId }) => {
   const isFirstLoad = useRef(true);
   const [isClient, setIsClient] = useState(false);
 
-  const { data: bookmark } = useGetUserLastReadBookmarkQuery();
+  const { data: progress } = useGetUserLastReadProgressQuery();
 
   useEffect(() => {
     setIsClient(true);
@@ -38,14 +38,14 @@ const VerseHighlight: FC<Props> = ({ children, verseId }) => {
     }
   }, []);
 
-  const isBookmarked = bookmark?.verse.id === verseId;
+  const isProgressed = progress?.verse.id === verseId;
 
   return (
     <div
       onClick={() => toggleHighlight(verseId)}
       className={`${styles.verseContainer} ${highlighted.includes(verseId) ? styles.highlight : ""}`}
     >
-      {isBookmarked && isClient && <MdPushPin size="1.4rem" />}
+      {isProgressed && isClient && <MdPushPin size="1.4rem" />}
       {children}
     </div>
   );

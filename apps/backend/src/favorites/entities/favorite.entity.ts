@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { Profile } from './profile.entity';
+import { Profile } from '../../profiles/entities/profile.entity';
 import { VerseGroup } from '../../verses/entities/verse-group.entity';
 
 @Unique(['profile', 'verseGroup'])

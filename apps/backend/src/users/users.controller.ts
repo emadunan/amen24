@@ -17,19 +17,19 @@ import {
   Query,
   BadRequestException,
 } from '@nestjs/common';
-import { UsersService } from './services/users.service';
+import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ProfilesService } from './services/profiles.service';
+import { ProfilesService } from '../profiles/profiles.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/user.decorator';
 import { Response } from 'express';
 import { AuthService } from '../auth/auth.service';
 import { User } from './entities/user.entity';
-import { BookmarksService } from './services/bookmarks.service';
+import { ProgressService } from '../progress/progress.service';
 import { ApiMessage, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
-import { FavoritesService } from './services/favorites.service';
-import { UpdateProfileDto } from './dto/update-profile.dto';
+import { FavoritesService } from '../favorites/favorites.service';
+import { UpdateProfileDto } from '../profiles/dto/update-profile.dto';
 
 @Controller('users')
 export class UsersController {
@@ -37,7 +37,7 @@ export class UsersController {
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
     private readonly profilesService: ProfilesService,
-    private readonly bookmarksService: BookmarksService,
+    private readonly progressService: ProgressService,
     private readonly favoritesService: FavoritesService,
   ) { }
 
@@ -100,14 +100,14 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('bookmark')
-  async getUserLastReadBookmark(@CurrentUser() user: User) {
-    return this.bookmarksService.getOne(user.email);
+  @Get('progress')
+  async getUserLastReadProgress(@CurrentUser() user: User) {
+    return this.progressService.getOne(user.email);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('bookmark')
-  async updateBookmark(
+  @Patch('progress')
+  async updateProgress(
     @CurrentUser() user: User,
     @Body()
     body: {
@@ -123,16 +123,16 @@ export class UsersController {
 
     if (!verseId) throw new NotFoundException();
 
-    return await this.bookmarksService.update(+id, { verseId });
+    return await this.progressService.update(+id, { verseId });
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('bookmark/:id')
-  removeBookmark(
+  @Delete('progress/:id')
+  removeProgress(
     @CurrentUser() user: User,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    return this.bookmarksService.delete(id, user.email);
+    return this.progressService.delete(id, user.email);
   }
 
   @UseGuards(JwtAuthGuard)

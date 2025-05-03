@@ -2,7 +2,7 @@ export * from "./User.interface";
 export * from "./Profile.interface";
 export * from "./Book.interface";
 export * from "./Chapter.interface";
-export * from "./Bookmark.interface";
+export * from "./Progress.interface";
 export * from "./Favorite.interface";
 export * from "./Featured.interface";
 export * from "./FeaturedText.interface";

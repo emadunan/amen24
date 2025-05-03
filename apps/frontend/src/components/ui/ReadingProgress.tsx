@@ -1,20 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import styles from "./Bookmark.module.css";
-import { useGetUserLastReadBookmarkQuery } from "@/store/apis/bookmarkApi";
+import styles from "./ReadingProgress.module.css";
+import { useGetUserLastReadProgressQuery } from "@/store/apis/progressApi";
 import { useTranslation } from "react-i18next";
 import { BookMap, formatNumber, Lang } from "@amen24/shared";
 import { useGetMeQuery } from "@/store/apis/authApi";
 import { useEffect } from "react";
 import { useBreakpoint } from "@amen24/ui";
 
-const Bookmark = () => {
+const ReadingProgress = () => {
   const { t, i18n } = useTranslation(["book"]);
   const { isLargePhone } = useBreakpoint();
 
   const { data: user } = useGetMeQuery();
-  const { data: bookmark, refetch } = useGetUserLastReadBookmarkQuery(
+  const { data: progress, refetch } = useGetUserLastReadProgressQuery(
     undefined,
     { skip: !user },
   );
@@ -23,23 +23,23 @@ const Bookmark = () => {
     if (user) refetch();
   }, [user, refetch]);
 
-  if (!user || !bookmark) return null;
+  if (!user || !progress) return null;
 
-  const bookKey = bookmark.verse.chapter.book.bookKey;
-  const chapterNum = bookmark.verse.chapter.num;
-  const verseNum = bookmark.verse.num;
+  const bookKey = progress.verse.chapter.book.bookKey;
+  const chapterNum = progress.verse.chapter.num;
+  const verseNum = progress.verse.num;
 
   const chapterNumFormatted = formatNumber(chapterNum, i18n.language as Lang);
   const verseNumFormatted = formatNumber(verseNum, i18n.language as Lang);
 
   return (
     <Link
-      className={styles.bookmark}
+      className={styles.progress}
       href={`/${bookKey}/${chapterNum}/${BookMap[bookKey].len}`}
     >
       {/* This MdPushPin cause hydration error, so I need to finds a solution first then add it */}
       {/* <MdPushPin /> */}
-      <span>{t("bookmark.last_read")}</span>
+      <span>{t("progress.last_read")}</span>
       {!isLargePhone && (
         <span>
           {" "}
@@ -50,4 +50,4 @@ const Bookmark = () => {
   );
 };
 
-export default Bookmark;
+export default ReadingProgress;

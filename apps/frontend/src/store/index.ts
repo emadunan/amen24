@@ -4,7 +4,7 @@ import navigatorReducer from "./slices/navigatorSlice";
 import searchReducer from "./slices/searchSlice";
 import { userApi } from "./apis/userApi";
 import { authApi } from "./apis/authApi";
-import { bookmarkApi } from "./apis/bookmarkApi";
+import { progressApi } from "./apis/progressApi";
 import { favoriteApi } from "./apis/favoriteApi";
 import { featuredApi } from "./apis/featuredApi";
 
@@ -16,7 +16,7 @@ export const MakeStore = () => {
       search: searchReducer,
       [authApi.reducerPath]: authApi.reducer,
       [userApi.reducerPath]: userApi.reducer,
-      [bookmarkApi.reducerPath]: bookmarkApi.reducer,
+      [progressApi.reducerPath]: progressApi.reducer,
       [favoriteApi.reducerPath]: favoriteApi.reducer,
       [featuredApi.reducerPath]: featuredApi.reducer,
     },
@@ -24,7 +24,7 @@ export const MakeStore = () => {
       getDefaultMiddleware()
         .concat(authApi.middleware)
         .concat(userApi.middleware)
-        .concat(bookmarkApi.middleware)
+        .concat(progressApi.middleware)
         .concat(favoriteApi.middleware)
         .concat(featuredApi.middleware),
   });

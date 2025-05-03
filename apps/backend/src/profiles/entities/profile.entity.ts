@@ -7,9 +7,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Lang, ThemeMode, DateCalendar, UserPrivilege } from '@amen24/shared';
-import { User } from './user.entity';
-import { Bookmark } from './bookmark.entity';
-import { Favorite } from './favorite.entity';
+import { User } from '../../users/entities/user.entity';
+import { Favorite } from '../../favorites/entities/favorite.entity';
+import { Progress } from '../../progress/entities/progress.entity';
 
 @Entity()
 export class Profile {
@@ -46,11 +46,11 @@ export class Profile {
   @Column({ type: 'boolean', default: true })
   isDiacritized: boolean;
 
-  @OneToMany(() => Bookmark, (bookmark) => bookmark.profile, {
+  @OneToMany(() => Progress, (progress) => progress.profile, {
     cascade: true,
     eager: true,
   })
-  bookmarks: Bookmark[];
+  progresses: Progress[];
 
   @OneToMany(() => Favorite, (favorite) => favorite.profile)
   favorites: Favorite[];

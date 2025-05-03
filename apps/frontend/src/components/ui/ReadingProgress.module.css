@@ -1,4 +1,4 @@
-.bookmark {
+.progress {
   position: absolute;
   top: 4rem;
   left: 2rem;
@@ -9,7 +9,7 @@
   border-radius: 0rem 0rem 1rem 1rem;
 }
 
-[dir="rtl"] .bookmark {
+[dir="rtl"] .progress {
   left: auto;
   right: 2rem;
 }
@@ -22,11 +22,11 @@
 
 /* Small tablets (768px) */
 @media (max-width: 48em) {
-  .bookmark {
+  .progress {
     left: 1.5rem;
   }
 
-  [dir="rtl"] .bookmark {
+  [dir="rtl"] .progress {
     left: auto;
     right: 1.5rem;
   }
@@ -34,11 +34,11 @@
 
 /* Large phones (600px) */
 @media (max-width: 37.5em) {
-  .bookmark {
+  .progress {
     left: 1rem;
   }
 
-  [dir="rtl"] .bookmark {
+  [dir="rtl"] .progress {
     left: auto;
     right: 1rem;
   }
@@ -46,11 +46,11 @@
 
 /* Regular smartphones (480px) */
 @media (max-width: 30em) {
-  .bookmark {
+  .progress {
     left: 0.5rem;
   }
 
-  [dir="rtl"] .bookmark {
+  [dir="rtl"] .progress {
     left: auto;
     right: 0.5rem;
   }
@@ -58,11 +58,11 @@
 
 /* Small phones (360px) */
 @media (max-width: 22.5em) {
-  .bookmark {
+  .progress {
     left: 0rem;
   }
 
-  [dir="rtl"] .bookmark {
+  [dir="rtl"] .progress {
     left: auto;
     right: 0rem;
   }

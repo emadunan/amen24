@@ -1,6 +1,6 @@
 import { IsEmail, IsNumber, IsString } from 'class-validator';
 
-export class CreateBookmarkDto {
+export class CreateProgressDto {
   @IsString()
   title: string;
 

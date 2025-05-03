@@ -4,7 +4,7 @@ import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 
 type UserSignup = Partial<User> & {
   uiLang: Lang;
-  bookmark: {
+  progress: {
     last_read: string;
     old_testament?: string;
     new_testament?: string;

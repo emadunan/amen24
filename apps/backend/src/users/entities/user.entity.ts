@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { Profile } from './profile.entity';
+import { Profile } from '../../profiles/entities/profile.entity';
 import { AuthProvider } from '@amen24/shared';
 
 @Entity()

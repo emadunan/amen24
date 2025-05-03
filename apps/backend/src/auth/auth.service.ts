@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthProvider, Lang, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
-import { UsersService } from '../users/services/users.service';
+import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { User } from '../users/entities/user.entity';
@@ -15,7 +15,7 @@ import { randomBytes } from 'crypto';
 import { Response } from 'express';
 import { Profile } from 'passport';
 import * as bcrypt from 'bcrypt';
-import { ProfilesService } from '../users/services/profiles.service';
+import { ProfilesService } from '../profiles/profiles.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
@@ -108,7 +108,7 @@ export class AuthService {
       providerId: id,
       provider: provider as AuthProvider,
       uiLang: lang || null,
-      bookmark: {
+      progress: {
         last_read: 'Last Read',
         old_testament: '',
         new_testament: '',
@@ -131,7 +131,7 @@ export class AuthService {
 
     const {
       refreshToken: _refreshToken,
-      bookmarks,
+      progresses,
       favorites,
       lastLogin,
       createdAt,
@@ -231,7 +231,7 @@ export class AuthService {
 
     const {
       refreshToken: _refreshToken,
-      bookmarks,
+      progresses,
       favorites,
       lastLogin,
       createdAt,

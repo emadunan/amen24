@@ -9,7 +9,7 @@ Content-Type: application/json
   "providerId": "emadunan",
   "displayName": "Emad Younan",
   "uiLang": "ar",
-  "bookmark": {
+  "progress": {
     "last_read": "آخر قراءة",
     "old_testament": "علامة العهد القديم",
     "new_testament": "علامة العهد الجديد"
@@ -34,8 +34,8 @@ Content-Type: application/json
   "newPassword": "emadunan"
 }
 
-### Update bookmark
-PATCH http://localhost:5000/api/users/bookmark
+### Update progress
+PATCH http://localhost:5000/api/users/progress
 Content-Type: application/json
 
 {
@@ -72,8 +72,8 @@ Content-Type: application/json
 ### Get logged in user (decode user)
 GET http://localhost:5000/api/users/me
 
-### Get all bookmark for user
-GET http://localhost:5000/api/users/bookmark
+### Get all progresses for user
+GET http://localhost:5000/api/users/progress
 
 ### Delete Account Permanently
 DELETE http://localhost:5000/api/users/profile
@@ -82,5 +82,5 @@ DELETE http://localhost:5000/api/users/profile
 GET http://localhost:5000/api/users/profile
 
 
-### Get all bookmark for user
+### Get profile statistics
 GET http://localhost:5000/api/users/profile/statistics

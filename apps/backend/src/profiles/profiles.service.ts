@@ -4,21 +4,20 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateProfileDto } from '../dto/create-profile.dto';
+import { CreateProfileDto } from './dto/create-profile.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
-import { Profile } from '../entities/profile.entity';
-import { UsersService } from './users.service';
+import { Profile } from './entities/profile.entity';
 import { AuthProvider, ERROR_KEYS } from '@amen24/shared';
-import { UpdateProfileDto } from '../dto/update-profile.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class ProfilesService {
   constructor(
     @InjectRepository(Profile) private profilesRepo: Repository<Profile>,
-    @Inject(forwardRef(() => UsersService))
-    private readonly usersService: UsersService,
+    @Inject(forwardRef(() => UsersService)) private readonly usersService: UsersService,
     private readonly eventEmitter: EventEmitter2,
   ) { }
 
@@ -63,7 +62,7 @@ export class ProfilesService {
     if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
 
     this.eventEmitter.emit('profile.updated', { email });
-    
+
     Object.assign(profile, updateProfileDto);
     return await this.profilesRepo.save(profile);
   }

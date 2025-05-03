@@ -1,6 +1,6 @@
 export * from "./apis/authApi";
 export * from "./apis/userApi";
-export * from "./apis/bookmarkApi";
+export * from "./apis/progressApi";
 export * from "./apis/favoriteApi";
 export * from "./apis/featuredApi";
 export * from "./apis/versesApi";

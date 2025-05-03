@@ -5,16 +5,16 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
-import { ProfilesService } from './profiles.service';
+import { User } from './entities/user.entity';
+import { ProfilesService } from '../profiles/profiles.service';
 import { AuthProvider, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
-import { BookmarksService } from './bookmarks.service';
+import { ProgressService } from '../progress/progress.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
@@ -23,12 +23,12 @@ export class UsersService {
     @InjectRepository(User) private usersRepo: Repository<User>,
     private readonly configService: ConfigService,
     private profilesService: ProfilesService,
-    private bookmarksService: BookmarksService,
+    private progressService: ProgressService,
     private readonly eventEmitter: EventEmitter2,
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    const { email, password, provider, uiLang, bookmark } = createUserDto;
+    const { email, password, provider, uiLang, progress } = createUserDto;
 
     if (password && password.length < 4)
       throw new BadRequestException(ERROR_KEYS.PASSWORD_TOO_SHORT);
@@ -53,19 +53,19 @@ export class UsersService {
     const userToCreate = this.usersRepo.create(userData);
     await this.usersRepo.save(userToCreate);
 
-    // Default bookmark
-    const bookmarkExist = await this.bookmarksService.getOne(email);
+    // Default progress
+    const progressExist = await this.progressService.getOne(email);
 
-    if (bookmark?.last_read && !bookmarkExist) {
-      const defaultBookmarks = [
+    if (progress?.last_read && !progressExist) {
+      const defaultProgress = [
         {
-          title: bookmark.last_read,
+          title: progress.last_read,
           verseId: 1,
         },
       ];
 
-      for (const bm of defaultBookmarks) {
-        await this.bookmarksService.create({ profileEmail: email, ...bm });
+      for (const bm of defaultProgress) {
+        await this.progressService.create({ profileEmail: email, ...bm });
       }
     }
 
@@ -163,7 +163,7 @@ export class UsersService {
   ): Promise<User | null> {
     const user = await this.usersRepo.findOne({
       where: { email, provider },
-      relations: ['profile', 'profile.bookmarks'],
+      relations: ['profile', 'profile.progresses'],
     });
 
     if (!user) return null;

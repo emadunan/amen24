@@ -44,7 +44,7 @@
     "sendResetLink": "إِرْسَالُ رَابِطِ ٱلتَّعْيِينِ",
     "password-invite": "هَلْ نَسِيتَ كَلِمَةَ ٱلمُرُورِ؟ ٱتَّصِلْ بِنَا لِٱسْتِعَادَتِهَا."
   },
-  "bookmark": {
+  "progress": {
     "last_read": "آخر قراءة",
     "old_testament": "علامة العهد القديم",
     "new_testament": "علامة العهد الجديد"
@@ -71,7 +71,7 @@
     "copy": "نسخ التظليل",
     "addToFavorites": "إضافة إلى المفضلة",
     "addToFeatured": "أضف إلى المميّز",
-    "bookmark": "حفظ كاخر قرائة",
+    "progress": "حفظ كاخر قرائة",
     "clearHighlighting": "إزالة التظليل",
     "copiedToClipboard": "تم النسخ إلى الحافظة",
     "lastReadSaved": "تم حفظ الآية كآخر قراءة بنجاح! 📖✅"

@@ -53,8 +53,8 @@ const LocalSignup = () => {
         displayName: finalDisplayName,
         isActive: true,
         uiLang: i18n.language as Lang,
-        bookmark: {
-          last_read: t("bookmark.last_read"),
+        progress: {
+          last_read: t("progress.last_read"),
         },
       }).unwrap();
 

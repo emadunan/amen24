@@ -72,17 +72,17 @@
   background-color: var(--background-hover);
 }
 
-.bookmark {
+.progress {
   padding: 0.1rem 0.1rem !important;
 }
 
-.bookmarkContent {
+.progressContent {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.bookmarkTitle {
+.progressTitle {
   border-bottom: 1px solid var(--primary);
   line-height: 1.2rem;
   width: 100%;
@@ -90,7 +90,7 @@
   white-space: none;
 }
 
-.bookmarkRef {
+.progressRef {
   font-size: 0.7rem;
   line-height: 1rem;
   color: var(--text-secondary); /* Use a lighter text color */
