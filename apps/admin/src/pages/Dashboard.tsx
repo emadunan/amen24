@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Dashboard.module.css";
-import { useGetProfileStatisticsQuery } from "../store/userApi";
+import { useGetProfileStatisticsQuery } from "../store/profileApi";
 import { apiUrl } from "../constants";
 
 interface DashboardData {

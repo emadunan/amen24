@@ -4,11 +4,11 @@ import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 
 export const createProgressApi = (baseUrl: string) => createApi({
   reducerPath: "progressApi",
-  baseQuery: createBaseQueryWithReauth(baseUrl, "users/progress"),
+  baseQuery: createBaseQueryWithReauth(baseUrl, "progress"),
   tagTypes: ["Progress"],
   endpoints: (builder) => ({
     getUserLastReadProgress: builder.query<Progress, void>({
-      query: () => "",
+      query: () => "last-read",
       providesTags: ["Progress"],
     }),
     createProgress: builder.mutation<void, void>({
@@ -25,19 +25,11 @@ export const createProgressApi = (baseUrl: string) => createApi({
     >({
       query: (progress) => {
         return {
-          url: "/",
+          url: "",
           method: "PATCH",
           body: progress,
         };
       },
-      invalidatesTags: ["Progress"],
-    }),
-    deleteProgress: builder.mutation<void, void>({
-      query: () => ({
-        url: "",
-        method: "DELETE",
-        body: {},
-      }),
       invalidatesTags: ["Progress"],
     }),
   }),

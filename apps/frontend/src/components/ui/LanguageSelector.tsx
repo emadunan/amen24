@@ -5,7 +5,7 @@ import i18nConfig from "@/config/next-i18n-router.config";
 import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useUpdateProfileMutation } from "@/store/apis/userApi";
+import { useUpdateProfileMutation } from "@/store/apis/profileApi";
 import { useBreakpoint, useClickOutside, showToast } from "@amen24/ui";
 import { Lang } from "@amen24/shared";
 import { useGetMeQuery } from "@/store/apis/authApi";

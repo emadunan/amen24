@@ -1,23 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { authApi } from './authApi'
-import { userApi } from './userApi';
-import { featuredApi } from "./featuredApi";
 import { verseApi } from './verseApi';
+import { profileApi } from './profileApi';
+import { featuredApi } from "./featuredApi";
 import { auditingApi } from './auditingApi';
 
 export const MakeStore = () => {
   const store = configureStore({
     reducer: {
       [authApi.reducerPath]: authApi.reducer,
-      [userApi.reducerPath]: userApi.reducer,
-      [featuredApi.reducerPath]: featuredApi.reducer,
       [verseApi.reducerPath]: verseApi.reducer,
+      [profileApi.reducerPath]: profileApi.reducer,
+      [featuredApi.reducerPath]: featuredApi.reducer,
       [auditingApi.reducerPath]: auditingApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(authApi.middleware)
-        .concat(userApi.middleware)
+        .concat(profileApi.middleware)
         .concat(featuredApi.middleware)
         .concat(verseApi.middleware)
         .concat(auditingApi.middleware)

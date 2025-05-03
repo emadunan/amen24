@@ -24,33 +24,33 @@ export const createUserApi = (baseUrl: string) => createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    updateProfile: builder.mutation<void, Partial<Profile>>({
-      query: (body) => {
-        return {
-          url: "/me/profile",
-          method: "PUT",
-          body,
-        };
-      },
-      invalidatesTags: ["User"],
-    }),
-    updateUserProfile: builder.mutation<void, Partial<Profile>>({
-      query: (body) => {
-        return {
-          url: "/profile",
-          method: "PUT",
-          body,
-        };
-      },
-      invalidatesTags: ["User"],
-    }),
-    deleteAccount: builder.mutation<ApiMessage, void>({
-      query: () => ({
-        url: "profile",
-        method: "DELETE",
-      }),
-      invalidatesTags: ["User"],
-    }),
+    // updateProfile: builder.mutation<void, Partial<Profile>>({
+    //   query: (body) => {
+    //     return {
+    //       url: "/me/profile",
+    //       method: "PUT",
+    //       body,
+    //     };
+    //   },
+    //   invalidatesTags: ["User"],
+    // }),
+    // updateUserProfile: builder.mutation<void, Partial<Profile>>({
+    //   query: (body) => {
+    //     return {
+    //       url: "/profile",
+    //       method: "PUT",
+    //       body,
+    //     };
+    //   },
+    //   invalidatesTags: ["User"],
+    // }),
+    // deleteAccount: builder.mutation<ApiMessage, void>({
+    //   query: () => ({
+    //     url: "profile",
+    //     method: "DELETE",
+    //   }),
+    //   invalidatesTags: ["User"],
+    // }),
     resetPassword: builder.mutation<
       { message: string },
       { oldPassword: string; newPassword: string }
@@ -81,12 +81,12 @@ export const createUserApi = (baseUrl: string) => createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    getProfileStatistics: builder.query<ProfileStatistics, void>({
-      query: () => "profile/statistics",
-    }),
-    getProfiles: builder.query<Profile[], void>({
-      query: () => "profile",
-      providesTags: ["User"]
-    }),
+    // getProfileStatistics: builder.query<ProfileStatistics, void>({
+    //   query: () => "profile/statistics",
+    // }),
+    // getProfiles: builder.query<Profile[], void>({
+    //   query: () => "profile",
+    //   providesTags: ["User"]
+    // }),
   }),
 });

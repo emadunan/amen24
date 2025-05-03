@@ -7,8 +7,6 @@ export const userApi = createUserApi(apiPublicUrl);
 
 export const {
   useSignupMutation,
-  useUpdateProfileMutation,
-  useDeleteAccountMutation,
   useResetPasswordMutation,
   useRequestPasswordMutation,
   useRestorePasswordMutation,

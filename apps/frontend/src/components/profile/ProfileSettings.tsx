@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./ProfileSettings.module.css";
 import { useTranslation } from "react-i18next";
 import { useGetMeQuery } from "@/store/apis/authApi";
-import { useDeleteAccountMutation } from "@/store/apis/userApi";
+import { useDeleteAccountMutation } from "@/store/apis/profileApi";
 import Link from "next/link";
 import { MdLockReset } from "react-icons/md";
 import { useFeedback } from "@amen24/ui";

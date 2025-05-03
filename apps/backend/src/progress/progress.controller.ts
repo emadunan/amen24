@@ -1,34 +1,45 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UnauthorizedException, NotFoundException, ParseIntPipe } from '@nestjs/common';
 import { ProgressService } from './progress.service';
 import { CreateProgressDto } from './dto/create-progress.dto';
 import { UpdateProgressDto } from './dto/update-progress.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CurrentUser } from 'src/auth/decorators/user.decorator';
+import { User } from 'src/users/entities/user.entity';
+import { ERROR_KEYS } from '@amen24/shared';
 
 @Controller('progress')
 export class ProgressController {
-  constructor(private readonly progressService: ProgressService) {}
+  constructor(private readonly progressService: ProgressService) { }
 
   @Post()
   create(@Body() createProgressDto: CreateProgressDto) {
     return this.progressService.create(createProgressDto);
   }
 
-  @Get()
-  findAll() {
-    // return this.progressService.findAll();
+  @UseGuards(JwtAuthGuard)
+  @Patch()
+  async update(
+    @CurrentUser() user: User,
+    @Body()
+    body: {
+      id: number;
+      profileEmail: string;
+      verseId: number;
+    },
+  ) {
+    const { id, profileEmail, verseId } = body;
+
+    if (user.email !== profileEmail)
+      throw new UnauthorizedException(ERROR_KEYS.UNAUTHORIZED_ACCESS);
+
+    if (!verseId) throw new NotFoundException();
+
+    return await this.progressService.update(+id, { verseId });
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    // return this.progressService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProgressDto: UpdateProgressDto) {
-    return this.progressService.update(+id, updateProgressDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    // return this.progressService.remove(+id);
+  @UseGuards(JwtAuthGuard)
+  @Get('last-read')
+  async getUserLastReadProgress(@CurrentUser() user: User) {
+    return this.progressService.getOne(user.email);
   }
 }

@@ -10,6 +10,7 @@ import { Lang, ThemeMode, DateCalendar, UserPrivilege } from '@amen24/shared';
 import { User } from '../../users/entities/user.entity';
 import { Favorite } from '../../favorites/entities/favorite.entity';
 import { Progress } from '../../progress/entities/progress.entity';
+import { Bookmark } from 'src/bookmarks/entities/bookmark.entity';
 
 @Entity()
 export class Profile {
@@ -46,12 +47,15 @@ export class Profile {
   @Column({ type: 'boolean', default: true })
   isDiacritized: boolean;
 
+  @OneToMany(() => Favorite, (favorite) => favorite.profile)
+  favorites: Favorite[];
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.profile)
+  bookmarks: Bookmark[];
+
   @OneToMany(() => Progress, (progress) => progress.profile, {
     cascade: true,
     eager: true,
   })
   progresses: Progress[];
-
-  @OneToMany(() => Favorite, (favorite) => favorite.profile)
-  favorites: Favorite[];
 }

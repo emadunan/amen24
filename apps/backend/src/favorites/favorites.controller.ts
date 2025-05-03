@@ -1,34 +1,43 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, ParseIntPipe, NotImplementedException } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
-import { CreateFavoriteDto } from './dto/create-favorite.dto';
-import { UpdateFavoriteDto } from './dto/update-favorite.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CurrentUser } from 'src/auth/decorators/user.decorator';
+import { User } from 'src/users/entities/user.entity';
+import { ApiMessage } from '@amen24/shared';
 
 @Controller('favorites')
 export class FavoritesController {
-  constructor(private readonly favoritesService: FavoritesService) {}
+  constructor(private readonly favoritesService: FavoritesService) { }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createFavoriteDto: CreateFavoriteDto) {
-    // return this.favoritesService.create(createFavoriteDto);
+  create(
+    @CurrentUser() user: User,
+    @Body() body: { verseIds: number[] },
+  ) {
+    const { verseIds } = body;
+    return this.favoritesService.addFavoriteToProfile(user.email, verseIds);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    // return this.favoritesService.findAll();
+  async getFavorites(@CurrentUser() user: User) {
+    return await this.favoritesService.getFavorites(
+      user.email,
+      user.profile.uiLang,
+    );
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    // return this.favoritesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFavoriteDto: UpdateFavoriteDto) {
-    // return this.favoritesService.update(+id, updateFavoriteDto);
-  }
-
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    // return this.favoritesService.remove(+id);
+  async remove(
+    @CurrentUser() user: User,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ApiMessage> {
+    const result = await this.favoritesService.removeFavorite(user.email, id);
+
+    if (result) return { message: 'removedFromFavorites' };
+
+    throw new NotImplementedException();
   }
 }

@@ -1,0 +1,20 @@
+### Login
+POST http://localhost:5000/api/auth/local HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "emadunan@gmail.com",
+  "password": "emadunan"
+}
+
+### Get all profiles
+GET http://localhost:5000/api/profiles
+
+### Get one profile
+GET http://localhost:5000/api/profiles/mira@gmail.com
+
+### Get profile statistics
+GET http://localhost:5000/api/profiles/statistics
+
+### Delete Account Permanently
+DELETE http://localhost:5000/api/profiles

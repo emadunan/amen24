@@ -29,8 +29,8 @@ import { ProfilesModule } from 'src/profiles/profiles.module';
     }),
     AuditingModule,
     PassportModule,
-    ProfilesModule,
     forwardRef(() => UsersModule),
+    forwardRef(() => ProfilesModule),
   ],
   providers: [
     AuthService,

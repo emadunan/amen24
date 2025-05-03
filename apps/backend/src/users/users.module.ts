@@ -7,7 +7,6 @@ import { AuthModule } from '../auth/auth.module';
 import { VersesModule } from '../verses/verses.module';
 import { ProfilesModule } from '../profiles/profiles.module';
 import { ProgressModule } from 'src/progress/progress.module';
-import { FavoritesModule } from 'src/favorites/favorites.module';
 
 @Module({
   imports: [
@@ -16,7 +15,6 @@ import { FavoritesModule } from 'src/favorites/favorites.module';
     forwardRef(() => ProfilesModule),
     VersesModule,
     ProgressModule,
-    FavoritesModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],

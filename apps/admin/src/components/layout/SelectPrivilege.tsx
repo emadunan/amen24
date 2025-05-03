@@ -1,7 +1,7 @@
 import { Profile, UserPrivilege } from '@amen24/shared'
 import { FC } from 'react';
 import styles from './SelectPrivilege.module.css'
-import { useUpdateUserProfileMutation } from '../../store/userApi';
+import { useUpdateUserProfileMutation } from '../../store/profileApi';
 
 interface Props {
   member: Profile,

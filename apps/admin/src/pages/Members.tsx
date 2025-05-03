@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Members.module.css";
-import { useGetProfilesQuery } from "../store/userApi";
+import { useGetProfilesQuery } from "../store/profileApi";
 import SelectPrivilege from "../components/layout/SelectPrivilege";
 
 const Members: React.FC = () => {

@@ -4,7 +4,7 @@ import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 
 export const createFavoriteApi = (baseUrl: string) => createApi({
   reducerPath: "favoriteApi",
-  baseQuery: createBaseQueryWithReauth(baseUrl, "users/favorite"),
+  baseQuery: createBaseQueryWithReauth(baseUrl, "favorites"),
   tagTypes: ["Favorite"],
   endpoints: (builder) => ({
     getUserFavorites: builder.query<Favorite[], void>({
