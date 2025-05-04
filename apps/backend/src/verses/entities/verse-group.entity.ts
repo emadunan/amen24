@@ -12,7 +12,7 @@ import {
 import { Verse } from './verse.entity';
 import { Favorite } from '../../favorites/entities/favorite.entity';
 import { Featured } from '../../featured/entities/featured.entity';
-import { Bookmark } from 'src/bookmarks/entities/bookmark.entity';
+import { Bookmark } from '../../bookmarks/entities/bookmark.entity';
 
 @Entity()
 export class VerseGroup {
@@ -35,7 +35,4 @@ export class VerseGroup {
 
   @OneToMany(() => Favorite, (favorite) => favorite.verseGroup)
   favorites: Favorite[];
-
-  @OneToMany(() => Bookmark, (bookmark) => bookmark.verseGroup)
-  bookmarks: Bookmark[];
 }

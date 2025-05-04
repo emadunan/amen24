@@ -10,7 +10,7 @@ import { Lang, ThemeMode, DateCalendar, UserPrivilege } from '@amen24/shared';
 import { User } from '../../users/entities/user.entity';
 import { Favorite } from '../../favorites/entities/favorite.entity';
 import { Progress } from '../../progress/entities/progress.entity';
-import { Bookmark } from 'src/bookmarks/entities/bookmark.entity';
+import { Bookmark } from '../../bookmarks/entities/bookmark.entity';
 
 @Entity()
 export class Profile {

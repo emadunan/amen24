@@ -34,6 +34,25 @@ export class VersesService {
     private readonly eventEmitter: EventEmitter2,
   ) { }
 
+  async findVersesByIds(verseIds: number[]) {
+    if (!verseIds.length) {
+      throw new BadRequestException('verseIds array is empty');
+    }
+  
+    const verses = await this.versesRepo.find({
+      where: { id: In(verseIds) },
+      order: { id: 'ASC' },
+    });
+  
+    if (verses.length !== verseIds.length) {
+      const foundIds = new Set(verses.map((v) => v.id));
+      const missingIds = verseIds.filter((id) => !foundIds.has(id));
+      throw new NotFoundException(`Verses not found for IDs: ${missingIds.join(', ')}`);
+    }
+  
+    return verses;
+  }
+
   async createVerseGroup(verseIds: number[]): Promise<VerseGroup> {
     if (!verseIds.length)
       throw new BadRequestException('verseIds array is empty');

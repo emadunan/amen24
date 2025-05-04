@@ -7,6 +7,7 @@ import { authApi } from "./apis/authApi";
 import { progressApi } from "./apis/progressApi";
 import { favoriteApi } from "./apis/favoriteApi";
 import { featuredApi } from "./apis/featuredApi";
+import { profileApi } from "./apis/profileApi";
 
 export const MakeStore = () => {
   const store = configureStore({
@@ -16,6 +17,7 @@ export const MakeStore = () => {
       search: searchReducer,
       [authApi.reducerPath]: authApi.reducer,
       [userApi.reducerPath]: userApi.reducer,
+      [profileApi.reducerPath]: profileApi.reducer,
       [progressApi.reducerPath]: progressApi.reducer,
       [favoriteApi.reducerPath]: favoriteApi.reducer,
       [featuredApi.reducerPath]: featuredApi.reducer,
