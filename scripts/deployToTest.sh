@@ -37,6 +37,16 @@ npm run build:packages
 # Build and start backend
 npm run build:backend
 
+# Create backup folder if it doesn't exist
+mkdir -p /home/emad/db_backups_test
+
+# Generate timestamped backup file
+BACKUP_FILE="/home/emad/db_backups_test/${DB_NAME}_backup_$(date +%F_%H-%M-%S).sql"
+
+# Perform the backup
+echo -e "\n📦 Backing up test database to: \n$BACKUP_FILE\n"
+PGPASSWORD=$DB_PASSWORD pg_dump -U "$DB_USERNAME" -h "$DB_HOST" -d "$DB_NAME" > "$BACKUP_FILE"
+
 # Run database migrations
 # Drop and recreate test database
 # echo "Resetting test database..."
