@@ -5,5 +5,4 @@ if (!apiPublicUrl) throw new Error("Api url must be defined!");
 
 export const profileApi = createProfileApi(apiPublicUrl);
 
-export const { useUpdateProfileMutation,
-  useDeleteAccountMutation, } = profileApi;
+export const { useUpdateProfileMutation, useDeleteAccountMutation } = profileApi;

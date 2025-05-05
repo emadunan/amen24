@@ -68,7 +68,7 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
         {onRemove && (
           <button className={styles.removeButton} onClick={onRemove}>
             <MdDeleteForever size="1.3rem" />
-            {t("remove")}
+            {t("main.remove")}
           </button>
         )}
       </div>

@@ -39,7 +39,7 @@ const ReadingProgress = () => {
     >
       {/* This MdPushPin cause hydration error, so I need to finds a solution first then add it */}
       {/* <MdPushPin /> */}
-      <span>{t("progress.last_read")}</span>
+      <span>{t("progress.lastRead")}</span>
       {!isLargePhone && (
         <span>
           {" "}

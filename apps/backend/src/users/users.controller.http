@@ -10,9 +10,9 @@ Content-Type: application/json
   "displayName": "Emad Younan",
   "uiLang": "ar",
   "progress": {
-    "last_read": "آخر قراءة",
-    "old_testament": "علامة العهد القديم",
-    "new_testament": "علامة العهد الجديد"
+    "lastRead": "آخر قراءة",
+    "oldTestament": "علامة العهد القديم",
+    "newTestament": "علامة العهد الجديد"
   }
 }
 

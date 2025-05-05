@@ -1,17 +1,19 @@
 {
-  "home": "Home",
-  "back": "Back",
-  "bible": "Bible",
-  "bibleIndex": "Bible Index",
-  "search": "Search",
-  "prev": "Prev",
-  "next": "Next",
-  "remove": "Remove",
-  "no-result": "No results",
-  "search-welcome": "Start searching for Bible verses by entering keywords above.",
-  "locale": "Language",
-  "contactUsTitle": "Contact",
-  "contactUsDescription": "We are a dedicated team committed to providing the best service and user experience. If you need assistance or have any suggestions, we’d love to hear from you!",
+  "main": {
+    "home": "Home",
+    "back": "Back",
+    "bible": "Bible",
+    "bibleIndex": "Bible Index",
+    "search": "Search",
+    "prev": "Prev",
+    "next": "Next",
+    "remove": "Remove",
+    "noResult": "No results",
+    "searchWelcome": "Start searching for Bible verses by entering keywords above.",
+    "locale": "Language",
+    "contactUsTitle": "Contact",
+    "contactUsDescription": "We are a dedicated team committed to providing the best service and user experience. If you need assistance or have any suggestions, we’d love to hear from you!"
+  },
   "chapter": {
     "title": "Chapter",
     "showTranslation": "Show Translation",
@@ -35,19 +37,19 @@
     "facebookLogin": "Sign in with Facebook",
     "emailLogin": "Sign in with E-mail",
     "signup": "Sign-up",
-    "signup-invite": "Don't have an account? Sign up now and get started!",
+    "signupInvite": "Don't have an account? Sign up now and get started!",
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "oldPassword": "Old Password",
     "newPassword": "New Password",
     "resetPassword": "Reset Password",
     "sendResetLink": "Send Reset Link",
-    "password-invite": "Forgot your password? Contact us to reset it."
+    "passwordInvite": "Forgot your password? Contact us to reset it."
   },
   "progress": {
-    "last_read": "Last Read",
-    "old_testament": "Old Testament Marker",
-    "new_testament": "New Testament Marker"
+    "lastRead": "Last Read",
+    "oldTestament": "Old Testament Marker",
+    "newTestament": "New Testament Marker"
   },
   "userMenu": {
     "featured": "Featured",

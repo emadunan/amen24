@@ -130,12 +130,12 @@ export default function SearchScreen() {
           />
         ) : (
           <ThemedText style={styles.feedbackText}>
-            {t("no-result", { ns: "common" })}
+            {t("noResult", { ns: "common" })}
           </ThemedText>
         )
       ) : (
         <ThemedText style={styles.feedbackText}>
-          {t("search-welcome", { ns: "common" })}
+          {t("searchWelcome", { ns: "common" })}
         </ThemedText>
       )}
     </ThemedView>

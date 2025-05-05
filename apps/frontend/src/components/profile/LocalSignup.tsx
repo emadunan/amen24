@@ -54,7 +54,7 @@ const LocalSignup = () => {
         isActive: true,
         uiLang: i18n.language as Lang,
         progress: {
-          last_read: t("progress.last_read"),
+          lastRead: t("progress.lastRead"),
         },
       }).unwrap();
 

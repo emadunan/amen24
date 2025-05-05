@@ -109,9 +109,9 @@ export class AuthService {
       provider: provider as AuthProvider,
       uiLang: lang || null,
       progress: {
-        last_read: 'Last Read',
-        old_testament: '',
-        new_testament: '',
+        lastRead: 'Last Read',
+        oldTestament: '',
+        newTestament: '',
       },
     };
 

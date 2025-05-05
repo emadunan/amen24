@@ -3,7 +3,7 @@
   "bible": "Bible",
   "search": "Search",
   "chapter": "Chapter",
-  "no-result": "No results",
-  "search-welcome": "Start searching for Bible verses by entering keywords above.",
+  "noResult": "No results",
+  "searchWelcome": "Start searching for Bible verses by entering keywords above.",
   "locale": "Language"
 }

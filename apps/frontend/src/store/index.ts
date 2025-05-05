@@ -26,6 +26,7 @@ export const MakeStore = () => {
       getDefaultMiddleware()
         .concat(authApi.middleware)
         .concat(userApi.middleware)
+        .concat(profileApi.middleware)
         .concat(progressApi.middleware)
         .concat(favoriteApi.middleware)
         .concat(featuredApi.middleware),

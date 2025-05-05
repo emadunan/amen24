@@ -56,10 +56,10 @@ export class UsersService {
     // Default progress
     const progressExist = await this.progressService.getOne(email);
 
-    if (progress?.last_read && !progressExist) {
+    if (progress?.lastRead && !progressExist) {
       const defaultProgress = [
         {
-          title: progress.last_read,
+          title: progress.lastRead,
           verseId: 1,
         },
       ];

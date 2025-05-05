@@ -9,8 +9,8 @@ const ContactUsPage = () => {
   const { t } = useTranslation();
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>{t("contactUsTitle")}</h2>
-      <p className={styles.description}>{t("contactUsDescription")}</p>
+      <h2 className={styles.title}>{t("main.contactUsTitle")}</h2>
+      <p className={styles.description}>{t("main.contactUsDescription")}</p>
 
       <div className={styles.contactBox}>
         <RiMailUnreadLine className={styles.icon} />

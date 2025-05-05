@@ -77,7 +77,7 @@ const BookPage: FC<Props> = async ({ params }) => {
                 className={styles.chapterLink}
               >
                 <GrLinkPrevious className="flip-icon" />
-                {t("prev")}
+                {t("main.prev")}
               </Link>
             ) : (
               <span
@@ -85,7 +85,7 @@ const BookPage: FC<Props> = async ({ params }) => {
                 aria-disabled="true"
               >
                 <GrLinkPrevious className="flip-icon" />
-                {t("prev")}
+                {t("main.prev")}
               </span>
             )}
             <div
@@ -108,7 +108,7 @@ const BookPage: FC<Props> = async ({ params }) => {
                 href={`/${bookKey}/${+chapterNum + 1}/${bookLen}`}
                 className={styles.chapterLink}
               >
-                {t("next")}
+                {t("main.next")}
                 <GrLinkNext className="flip-icon" />
               </Link>
             ) : (
@@ -116,7 +116,7 @@ const BookPage: FC<Props> = async ({ params }) => {
                 className={`${styles.chapterLink} ${styles.disabled}`}
                 aria-disabled="true"
               >
-                {t("next")}
+                {t("main.next")}
                 <GrLinkNext className="flip-icon" />
               </span>
             )}

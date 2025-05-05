@@ -1,6 +1,8 @@
 # Amen24
 Amen24 is a free non-profitable project to introduce bible content for all.
 
+🛠️ See [maintenance-commands.md](./documentation/maintenance-commands.md) for DB backups and Nginx configuration during maintenance.
+
 ## Setup development environment
 
 #### Show the git branch with colours in Bash prompt

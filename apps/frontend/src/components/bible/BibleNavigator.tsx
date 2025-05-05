@@ -82,7 +82,7 @@ const BibleNavigator = () => {
     >
       <div className={styles.navigatorHeader} ref={headerRef}>
         <RxDragHandleDots2 />
-        <h4>{t("bibleIndex")}</h4>
+        <h4>{t("main.bibleIndex")}</h4>
         <CloseDraggableBtn onClose={() => dispatch(close())} absolute />
       </div>
       <div className={styles.navigatorBody}>

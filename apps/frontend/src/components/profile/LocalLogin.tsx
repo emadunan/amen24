@@ -83,11 +83,11 @@ const LocalLogin = () => {
 
       <div className={styles.linkGroup}>
         <Link className={styles.signupLink} href={"/contact-us"}>
-          {t("signin.password-invite")}
+          {t("signin.passwordInvite")}
         </Link>
 
         <Link className={styles.signupLink} href={"/signup"}>
-          {t("signin.signup-invite")}
+          {t("signin.signupInvite")}
         </Link>
       </div>
     </form>

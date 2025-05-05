@@ -14,7 +14,7 @@ const BackButton: FC<Props> = ({ href }) => {
   return (
     <Link href={href ?? "/"} className={styles.btn}>
       <TiArrowBack size={22} className="flip-icon" />
-      {t("back")}
+      {t("main.back")}
     </Link>
   );
 };

@@ -37,8 +37,8 @@ export class CreateUserDto {
 
   @IsObject()
   progress: {
-    last_read: string;
-    old_testament?: string;
-    new_testament?: string;
+    lastRead: string;
+    oldTestament?: string;
+    newTestament?: string;
   };
 }

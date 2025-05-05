@@ -37,7 +37,7 @@ const NavMenu: FC<Props> = ({ normalizedPath, isBookPath }) => {
               href="/"
               onClick={() => setMenuOpen(false)}
             >
-              {t("bible")}
+              {t("main.bible")}
             </Link>
           </li>
           <li className={styles.navItem}>
@@ -46,7 +46,7 @@ const NavMenu: FC<Props> = ({ normalizedPath, isBookPath }) => {
               href="/search"
               onClick={() => setMenuOpen(false)}
             >
-              {t("search")}
+              {t("main.search")}
             </Link>
           </li>
           <li className={styles.navItem}>
@@ -55,7 +55,7 @@ const NavMenu: FC<Props> = ({ normalizedPath, isBookPath }) => {
               href="/contact-us"
               onClick={() => setMenuOpen(false)}
             >
-              {t("contactUsTitle")}
+              {t("main.contactUsTitle")}
             </Link>
           </li>
         </ul>
