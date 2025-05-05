@@ -5,7 +5,7 @@ import { FC } from "react";
 import initTranslations from "../i18n";
 import { apiPrivateUrl } from "@/constants";
 
-const i18nNamespaces = ["book"];
+const i18nNamespaces = ["common", "book"];
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -22,7 +22,7 @@ const HomePage: FC<Props> = async ({ params }) => {
 
   return (
     <div className={styles.bible}>
-      <h1>{t("book:WholeBible")}</h1>
+      <h1>{t("main.bible")}</h1>
       <div className={styles.bibleIndex}>
         {books.map((b: Book) => (
           <BookCover
