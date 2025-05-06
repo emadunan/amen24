@@ -12,8 +12,10 @@ import {
   ERROR_KEYS,
   Lang,
   MESSAGE_KEYS,
-  UserPrivilege,
+  Permission,
+  UserRole,
   formatNumber,
+  hasPermission,
 } from "@amen24/shared";
 import {
   useGetUserLastReadProgressQuery,
@@ -142,7 +144,7 @@ const ChapterToolbox = () => {
             <FaCopy /> {t("toolbox.copy")}
           </button>
 
-          {user && user.profile.privilege === UserPrivilege.ADMIN && (
+          {user && hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
             <button onClick={handleAddFeatured}>
               <HiSparkles /> {t("toolbox.addToFeatured")}
             </button>

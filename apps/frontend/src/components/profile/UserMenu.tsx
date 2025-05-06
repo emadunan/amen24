@@ -3,7 +3,7 @@
 import { FC, useCallback, useRef, useState } from "react";
 import styles from "./UserMenu.module.css";
 import { useClickOutside, showToast } from "@amen24/ui";
-import { User, UserPrivilege } from "@amen24/shared";
+import { hasPermission, Permission, User, UserRole } from "@amen24/shared";
 import { RiLogoutBoxLine, RiSettings3Line } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
@@ -12,7 +12,7 @@ import { HiSparkles } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 
 interface UserMenuProps {
-  user?: User;
+  user: User;
 }
 
 const UserMenu: FC<UserMenuProps> = ({ user }) => {
@@ -63,7 +63,7 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
 
       {isOpen && (
         <ul className={styles.dropdown}>
-          {user?.profile.privilege === UserPrivilege.ADMIN && (
+          {hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
             <li tabIndex={0}>
               <button
                 onClick={handleRedirect.bind(this, "/featured")}

@@ -1,35 +1,42 @@
-import { Profile, UserPrivilege } from '@amen24/shared'
 import { FC } from 'react';
-import styles from './SelectPrivilege.module.css'
+import styles from './SelectPrivilege.module.css';
+import { Profile, UserRole } from '@amen24/shared';
 import { useUpdateUserProfileMutation } from '../../store/profileApi';
 
 interface Props {
-  member: Profile,
+  member: Profile;
 }
 
-const privilegeOptions = Object.values(UserPrivilege);
+const roleOptions = Object.values(UserRole);
 
-const SelectPrivilege: FC<Props> = ({ member }) => {
+const SelectRoles: FC<Props> = ({ member }) => {
   const [updateProfile] = useUpdateUserProfileMutation();
 
-  const handleChangePrivilege = async (email: string, privilege: UserPrivilege) => {
-    console.log(email, privilege);
-    
-    updateProfile({ email, privilege })
+  const handleRoleToggle = async (role: UserRole) => {
+    const currentRoles = member.roles || [];
+    const hasRole = currentRoles.includes(role);
+
+    const updatedRoles = hasRole
+      ? currentRoles.filter((r) => r !== role)
+      : [...currentRoles, role];
+
+    updateProfile({ email: member.email, roles: updatedRoles });
   };
 
   return (
-    <select
-      id={`privilege-${member.email}`}
-      className={styles.select}
-      value={member.privilege}
-      onChange={(e) => handleChangePrivilege(member.email, e.target.value as UserPrivilege)}
-    >
-      {privilegeOptions.map((p) => (
-        <option key={p} value={p}>{p.toUpperCase()}</option>
+    <div className={styles.rolesContainer}>
+      {roleOptions.map((role) => (
+        <label key={role} className={styles.checkboxLabel}>
+          <input
+            type="checkbox"
+            checked={member.roles?.includes(role)}
+            onChange={() => handleRoleToggle(role)}
+          />
+          {role.toUpperCase()}
+        </label>
       ))}
-    </select>
-  )
-}
+    </div>
+  );
+};
 
-export default SelectPrivilege
+export default SelectRoles;

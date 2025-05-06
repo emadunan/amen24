@@ -1,28 +1,32 @@
-.select {
+.rolesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--background);
+  border-radius: 0.5rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   background-color: var(--secondary);
   color: var(--text);
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--gray);
-  border-radius: 2px;
-  font-family: inherit;
-  font-size: 1rem;
-  transition: background-color 0.2s, border-color 0.2s;
-  appearance: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border: 1px solid transparent;
 }
 
-.select:hover {
+.checkboxLabel:hover {
   background-color: var(--secondary-hover);
-  border-color: var(--gray-hover);
-}
-
-.select:focus {
-  outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(var(--accent-hover), 0.3);
 }
 
-.select option {
-  background-color: var(--background);
-  color: var(--text);
+.checkboxLabel input[type='checkbox'] {
+  accent-color: var(--accent);
+  cursor: pointer;
 }

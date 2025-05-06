@@ -1,6 +1,6 @@
 import styles from './AppHeader.module.css';
 import { useGetMeQuery } from '../../store/authApi';
-import { UserPrivilege } from '@amen24/shared';
+import { hasPermission, Permission } from '@amen24/shared';
 import { useCallback } from 'react';
 import { apiUrl } from '../../constants';
 import NavBar from './NavBar';
@@ -35,13 +35,18 @@ const AppHeader = () => {
         <h2>Amen24</h2>
         <h3>AdminSite</h3>
       </div>
-      <nav>
-        {user?.profile?.privilege === UserPrivilege.ADMIN ? (
-          isTablet
-            ? <NavMenu handleLogout={handleLogout} />
-            : <NavBar handleLogout={handleLogout} />
-        ) : null}
-      </nav>
+      {
+        user?.profile?.roles.length ? (
+          <nav>
+            {hasPermission(user.profile.roles, Permission.LOGIN_ADMINSITE) ? (
+              isTablet
+                ? <NavMenu handleLogout={handleLogout} user={user}/>
+                : <NavBar handleLogout={handleLogout} user={user}/>
+            ) : null}
+          </nav>
+        ) : "loading ..."
+      }
+
     </header>
   )
 }

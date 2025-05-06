@@ -28,7 +28,7 @@ export class UsersService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    const { email, password, provider, uiLang, progress } = createUserDto;
+    const { email, password, provider, uiLang, progress, roles } = createUserDto;
 
     if (password && password.length < 4)
       throw new BadRequestException(ERROR_KEYS.PASSWORD_TOO_SHORT);
@@ -38,7 +38,7 @@ export class UsersService {
     if (existUser) throw new ConflictException(ERROR_KEYS.USER_DUPLICATION);
 
     // Create profile
-    const profile = await this.profilesService.create({ email, uiLang });
+    const profile = await this.profilesService.create({ email, uiLang, roles });
     if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
 
     // Hash password if local authentication

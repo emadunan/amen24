@@ -4,7 +4,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthProvider, Lang, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
+import { AuthProvider, Lang, ERROR_KEYS, MESSAGE_KEYS, UserRole } from '@amen24/shared';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
@@ -113,6 +113,7 @@ export class AuthService {
         oldTestament: '',
         newTestament: '',
       },
+      roles: [UserRole.MEMBER]
     };
 
     return this.usersService.create(createUserDto);

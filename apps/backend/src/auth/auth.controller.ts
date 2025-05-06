@@ -11,7 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
-import { MESSAGE_KEYS, UserPrivilege } from '@amen24/shared';
+import { hasPermission, MESSAGE_KEYS, Permission } from '@amen24/shared';
 import { Request, Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -54,7 +54,7 @@ export class AuthController {
   async login(@Req() req: Request & { user: User }, @Res() res: Response) {
     const origin = req.headers.origin;
 
-    if (origin?.includes(this.adminSiteUrl) && ![UserPrivilege.ADMIN || UserPrivilege.MODERATOR].includes(req.user.profile.privilege)) {
+    if (origin?.includes(this.adminSiteUrl) && !hasPermission(req.user.profile.roles, Permission.LOGIN_ADMINSITE)) {
       throw new UnauthorizedException(
         `Access restricted: Only content managers and administrators are permitted to log in. If you're interested in volunteering, please contact us at support@amen24.org.`
       );

@@ -1,9 +1,10 @@
-import { ApiMessage, Lang, Profile, ProfileStatistics, User } from "@amen24/shared";
+import { ApiMessage, Lang, Profile, ProfileStatistics, User, UserRole } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 
 type UserSignup = Partial<User> & {
   uiLang: Lang;
+  roles: UserRole[],
   progress: {
     lastRead: string;
     oldTestament?: string;

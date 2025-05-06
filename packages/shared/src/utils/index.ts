@@ -1,5 +1,3 @@
-import { Lang } from "../enums";
-
 export function convertToSuperscript(num: number): string {
   const superscripts: Record<string, string> = {
     "0": "⁰",
@@ -22,4 +20,5 @@ export function convertToSuperscript(num: number): string {
 }
 
 export * from "./formatNumber";
-export * from "./textNormalization"
+export * from "./hasPermission";
+export * from "./textNormalization";

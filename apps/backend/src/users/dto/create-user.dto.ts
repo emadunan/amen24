@@ -1,5 +1,6 @@
-import { AuthProvider, Lang } from '@amen24/shared';
+import { AuthProvider, Lang, UserRole } from '@amen24/shared';
 import {
+  IsArray,
   IsEmail,
   IsObject,
   IsOptional,
@@ -41,4 +42,7 @@ export class CreateUserDto {
     oldTestament?: string;
     newTestament?: string;
   };
+
+  @IsArray()
+  roles: UserRole[]
 }

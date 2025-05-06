@@ -1,5 +1,6 @@
 export * from "./BookKey.enum";
-export * from "./UserPrivilege.enum";
+export * from "./UserRole.enum";
+export * from "./Permission.enum";
 export * from "./Lang.enum";
 export * from "./ThemeMode.enum";
 export * from "./DateCalendar.enum";

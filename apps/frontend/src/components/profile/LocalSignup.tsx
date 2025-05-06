@@ -9,7 +9,7 @@ import Spinner from "../ui/Spinner";
 import BackButton from "../ui/BackButton";
 import InputItem from "../ui/InputItem";
 import SubmitButton from "../ui/SubmitButton";
-import { AuthProvider, ERROR_KEYS, Lang } from "@amen24/shared";
+import { AuthProvider, ERROR_KEYS, Lang, UserRole } from "@amen24/shared";
 import { useFeedback } from "@amen24/ui";
 
 const LocalSignup = () => {
@@ -53,9 +53,11 @@ const LocalSignup = () => {
         displayName: finalDisplayName,
         isActive: true,
         uiLang: i18n.language as Lang,
+        roles: [UserRole.MEMBER],
         progress: {
           lastRead: t("progress.lastRead"),
         },
+
       }).unwrap();
 
       showMessage(message, "success");

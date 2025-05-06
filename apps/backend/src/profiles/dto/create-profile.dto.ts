@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
-import { AuthProvider, DateCalendar, Lang, ThemeMode, UserPrivilege } from '@amen24/shared';
+import { AuthProvider, DateCalendar, Lang, ThemeMode, UserRole } from '@amen24/shared';
 
 export class CreateProfileDto {
   @IsEmail()
@@ -9,7 +9,7 @@ export class CreateProfileDto {
   provider: AuthProvider;
 
   @IsOptional()
-  privilege: UserPrivilege;
+  roles: UserRole[];
 
   @IsEnum(ThemeMode)
   themeMode: ThemeMode;
