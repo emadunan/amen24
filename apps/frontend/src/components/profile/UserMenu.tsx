@@ -3,7 +3,7 @@
 import { FC, useCallback, useRef, useState } from "react";
 import styles from "./UserMenu.module.css";
 import { useClickOutside, showToast } from "@amen24/ui";
-import { hasPermission, Permission, User, UserRole } from "@amen24/shared";
+import { hasPermission, Permission, User } from "@amen24/shared";
 import { RiLogoutBoxLine, RiSettings3Line } from "react-icons/ri";
 import { PiUserListFill } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
