@@ -13,7 +13,6 @@ import {
   Lang,
   MESSAGE_KEYS,
   Permission,
-  UserRole,
   formatNumber,
   hasPermission,
 } from "@amen24/shared";
