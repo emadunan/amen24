@@ -13,8 +13,8 @@ import { UpdateFeaturedDto } from './dto/update-featured.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../users/entities/user.entity';
 import { CurrentUser } from '../auth/decorators/user.decorator';
-import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
-import { RequirePermissions } from 'src/auth/decorators/permissions.decorator';
+import { PermissionsGuard } from '../auth/guards/permissions.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 import { Permission } from '@amen24/shared';
 
 @Controller('featured')

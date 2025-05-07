@@ -2,8 +2,8 @@ import { Controller, Post, HttpCode, HttpStatus, Get, UseGuards } from '@nestjs/
 import { DashboardService } from './dashboard.service';
 import { PermissionsGuard } from '../auth/guards/permissions.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Permission } from '@amen24/shared';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('dashboard')
 @UseGuards(JwtAuthGuard, PermissionsGuard)
