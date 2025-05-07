@@ -8,6 +8,7 @@ import { User } from 'src/users/entities/user.entity';
 import { ERROR_KEYS } from '@amen24/shared';
 
 @Controller('progress')
+@UseGuards(JwtAuthGuard)
 export class ProgressController {
   constructor(private readonly progressService: ProgressService) { }
 
@@ -16,7 +17,6 @@ export class ProgressController {
     return this.progressService.create(createProgressDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Patch()
   async update(
     @CurrentUser() user: User,
@@ -37,7 +37,6 @@ export class ProgressController {
     return await this.progressService.update(+id, { verseId });
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('last-read')
   async getUserLastReadProgress(@CurrentUser() user: User) {
     return this.progressService.getOne(user.email);
