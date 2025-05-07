@@ -10,6 +10,7 @@ import { User } from '../users/entities/user.entity';
 import { AuthService } from '../auth/auth.service';
 
 @Controller('profiles')
+@UseGuards(JwtAuthGuard)
 export class ProfilesController {
   constructor(
     private readonly profilesService: ProfilesService,
@@ -34,6 +35,7 @@ export class ProfilesController {
   }
 
   @Get(':email')
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('email') email: string) {
     return this.profilesService.findOne(email);
   }
@@ -53,8 +55,8 @@ export class ProfilesController {
   }
 
 
-  @UseGuards(JwtAuthGuard)
   @Put('me')
+  @UseGuards(JwtAuthGuard)
   async updateProfile(
     @CurrentUser() u: User,
     @Body() body: UpdateProfileDto,
