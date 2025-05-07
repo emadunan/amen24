@@ -13,37 +13,37 @@ import { UpdateFeaturedDto } from './dto/update-featured.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../users/entities/user.entity';
 import { CurrentUser } from '../auth/decorators/user.decorator';
+import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
+import { RequirePermissions } from 'src/auth/decorators/permissions.decorator';
+import { Permission } from '@amen24/shared';
 
 @Controller('featured')
+@UseGuards(JwtAuthGuard, PermissionsGuard)
+@RequirePermissions(Permission.MANAGE_FEATURED)
 export class FeaturedController {
   constructor(private readonly featuredService: FeaturedService) { }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() body: { verseIds: number[] }) {
     return this.featuredService.addToFeatured(body.verseIds);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@CurrentUser() user: User) {
     return await this.featuredService.getAllFeatured(user.profile.uiLang);
   }
 
   @Patch('text')
-  @UseGuards(JwtAuthGuard)
   async updateFeatuedText(@Body() body: { id: number, text: string }) {
     const { id, text } = body;
     return await this.featuredService.updateFeaturedText(id, text);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.featuredService.getFeaturedText(+id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -52,7 +52,6 @@ export class FeaturedController {
     return this.featuredService.update(+id, updateFeaturedDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.featuredService.removeFromFeatured(+id);
