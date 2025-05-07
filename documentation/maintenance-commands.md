@@ -33,3 +33,11 @@ sed 's/\bbookmark\b/progress/g' bookmark_data.sql > progress_data.sql
 ``` bash
 psql -U postgres -d amen24test -f progress_data.sql
 ```
+
+## Alter table change column datatype
+Just add new attribute without delete the old
+Then Update the value of the first from the latter
+
+``` sql
+
+```
