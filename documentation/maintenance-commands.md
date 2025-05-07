@@ -39,5 +39,5 @@ Just add new attribute without delete the old
 Then Update the value of the first from the latter
 
 ``` sql
-
+UPDATE profile p SET roles = ARRAY[privilege]::text[];
 ```
