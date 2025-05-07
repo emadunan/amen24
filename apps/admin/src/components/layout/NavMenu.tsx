@@ -1,9 +1,9 @@
+import { hasPermission, Permission, User } from "@amen24/shared";
 import styles from "./NavMenu.module.css";
 import { FC, useState } from "react";
 import { MenuButton } from "@amen24/ui";
 import { NavLink } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
-import { hasPermission, Permission, User } from "@amen24/shared";
 
 interface Props {
   user: User;
