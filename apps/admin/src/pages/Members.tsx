@@ -15,9 +15,6 @@ const Members: React.FC = () => {
             <div className={styles.header}>
               <div>
                 <strong>{member.email}</strong>
-                <div className={`${styles.badge} ${styles[member.privilege.toLowerCase()]}`}>
-                  {member.privilege}
-                </div>
               </div>
               <div>
                 <SelectPrivilege member={member} />
