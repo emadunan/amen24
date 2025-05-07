@@ -6,12 +6,12 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Permission } from '@amen24/shared';
 
 @Controller('dashboard')
-@UseGuards(JwtAuthGuard, PermissionsGuard)
-@RequirePermissions(Permission.READ_DASHBOARD)
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) { }
 
   @Get()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.READ_DASHBOARD)
   async getOneDashboard() {
     return await this.dashboardService.getTodayDashboard();
   }
