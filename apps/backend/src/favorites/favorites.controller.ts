@@ -6,10 +6,10 @@ import { User } from 'src/users/entities/user.entity';
 import { ApiMessage } from '@amen24/shared';
 
 @Controller('favorites')
+@UseGuards(JwtAuthGuard)
 export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) { }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   create(
     @CurrentUser() user: User,
@@ -19,7 +19,6 @@ export class FavoritesController {
     return this.favoritesService.addFavoriteToProfile(user.email, verseIds);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   async getFavorites(@CurrentUser() user: User) {
     return await this.favoritesService.getFavorites(
@@ -28,7 +27,6 @@ export class FavoritesController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(
     @CurrentUser() user: User,
