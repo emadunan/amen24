@@ -1,109 +1,113 @@
 const fs = require('fs');
 const path = require('path');
 const textToSpeech = require('@google-cloud/text-to-speech');
+const { execSync } = require('child_process');
 
-// Creates a client
+// Google TTS client
 const client = new textToSpeech.TextToSpeechClient({
-  keyFilename: path.resolve(__dirname, "../../.secrets", 'amen24-69e9f5cade0d.json')
+  keyFilename: path.resolve(__dirname, '../../.secrets', 'amen24-69e9f5cade0d.json')
 });
 
-const outputDir = './output_chapters';
-const tempDir = './temp_chapters';
+// Create output folders if not exists
+if (!fs.existsSync('output')) fs.mkdirSync('output');
+if (!fs.existsSync('temp')) fs.mkdirSync('temp');
 
-if (!fs.existsSync(outputDir)) {
-  fs.mkdirSync(outputDir);
+// Read and parse the input
+const inputText = fs.readFileSync('output.txt', 'utf8');
+
+// Match format: "GEN:1\nChapter content..."
+const chapterRegex = /([A-Z]+:\d+)\n([\s\S]*?)(?=\n[A-Z]+:\d+|\n*$)/g;
+const matches = [...inputText.matchAll(chapterRegex)];
+
+const CHUNK_BYTE_LIMIT = 4500;
+const SILENCE_MARK = '[[SILENCE]]';
+
+function sanitizeFilename(name) {
+  return name.replace(/[^a-zA-Z0-9_]/g, '_');
 }
-if (!fs.existsSync(tempDir)) {
-  fs.mkdirSync(tempDir);
+
+async function synthesizeTextToFile(text, filename) {
+  const request = {
+    input: { text },
+    voice: { languageCode: 'ar-XA', ssmlGender: 'MALE' },
+    audioConfig: { audioEncoding: 'MP3' },
+  };
+
+  const [response] = await client.synthesizeSpeech(request);
+  fs.writeFileSync(filename, response.audioContent, 'binary');
+  console.log(`Generated audio: ${filename}`);
 }
-
-const filePath = './output.txt';
-const content = fs.readFileSync(filePath, 'utf-8');
-
-const chapters = content.split('سِفْرُ')
-  .filter(chapter => chapter.trim() !== '')
-  .map(chapter => 'سِفْرُ' + chapter.trim());
 
 function splitTextIntoChunks(text, maxBytes) {
-  const lines = text.split('\n');
-  let chunks = [];
-  let chunk = '';
-  let size = 0;
+  const sentences = text.split(/(?<=\n|[.!؟])\s+/);
+  const chunks = [];
 
-  for (const line of lines) {
-    const lineSize = Buffer.byteLength(line, 'utf8');
-    if (size + lineSize > maxBytes) {
-      chunks.push(chunk);
-      chunk = line;
-      size = lineSize;
+  let currentChunk = '';
+  let currentBytes = 0;
+
+  for (const sentence of sentences) {
+    const sentenceBytes = Buffer.byteLength(sentence, 'utf8');
+
+    if (currentBytes + sentenceBytes > maxBytes) {
+      if (currentChunk.trim()) chunks.push(currentChunk.trim());
+      currentChunk = sentence;
+      currentBytes = sentenceBytes;
     } else {
-      chunk += (chunk ? '\n' : '') + line;
-      size += lineSize;
+      currentChunk += sentence + ' ';
+      currentBytes += sentenceBytes;
     }
   }
-  if (chunk) chunks.push(chunk);
+
+  if (currentChunk.trim()) chunks.push(currentChunk.trim());
+
   return chunks;
 }
 
-async function generateMP3ForChapter(chapterText, chapterNumber) {
-  const lines = chapterText.split('\n');
-  const firstLine = lines[0];
-  const restText = lines.slice(1).join('\n');
+async function synthesizeChapter(title, text) {
+  const safeTitle = sanitizeFilename(title);
+  const segmentFiles = [];
+  let partIndex = 0;
 
-  const chunks = splitTextIntoChunks(restText, 5000);
-  const chunkFiles = [];
+  // Replace [1s] with placeholder for splitting
+  const segments = text.replace(/\[1s\]/g, SILENCE_MARK).split(SILENCE_MARK);
 
-  for (let i = 0; i < chunks.length; i++) {
-    let chunkSSML = '';
+  for (const segment of segments) {
+    const chunks = splitTextIntoChunks(segment, CHUNK_BYTE_LIMIT);
 
-    if (i === 0) {
-      // First chunk includes the chapter title and 500ms break
-      chunkSSML = `
-        <speak>
-          ${firstLine}
-          <break time="500ms"/>
-          ${chunks[i]}
-        </speak>
-      `;
-    } else {
-      // Other chunks are just normal SSML
-      chunkSSML = `
-        <speak>
-          ${chunks[i]}
-        </speak>
-      `;
+    for (const chunk of chunks) {
+      const partPath = path.join('temp', `${safeTitle}_part${partIndex++}.mp3`);
+      await synthesizeTextToFile(chunk, partPath);
+      segmentFiles.push(partPath);
     }
 
-    const request = {
-      input: { ssml: chunkSSML },
-      voice: { languageCode: 'ar-XA', name: 'ar-XA-Wavenet-D', ssmlGender: 'FEMALE' },
-      audioConfig: { audioEncoding: 'MP3' },
-    };
-    
-
-    try {
-      const [response] = await client.synthesizeSpeech(request);
-      const chunkPath = path.join(tempDir, `chapter_${chapterNumber}_chunk_${i + 1}.mp3`);
-      fs.writeFileSync(chunkPath, response.audioContent, 'binary');
-      console.log(`Chunk ${i + 1} for chapter ${chapterNumber} saved.`);
-      chunkFiles.push(fs.readFileSync(chunkPath));
-    } catch (err) {
-      console.error(`Error generating chunk ${i + 1} for chapter ${chapterNumber}:`, err);
-    }
+    // Insert silence after segment
+    segmentFiles.push('silence.mp3');
   }
 
-  // Merge all chunks
-  const finalBuffer = Buffer.concat(chunkFiles);
-  const finalPath = path.join(outputDir, `chapter_${chapterNumber}_final.mp3`);
-  fs.writeFileSync(finalPath, finalBuffer);
-  console.log(`Final MP3 for chapter ${chapterNumber} saved.`);
-}
-
-
-async function generateMP3Files() {
-  for (let i = 0; i < chapters.length; i++) {
-    await generateMP3ForChapter(chapters[i], i + 1);
+  // Remove trailing silence if exists
+  if (segmentFiles[segmentFiles.length - 1] === 'silence.mp3') {
+    segmentFiles.pop();
   }
+
+  // Write ffmpeg concat list
+  const listPath = path.join('temp', `${safeTitle}_list.txt`);
+  const outputPath = path.join('output', `${safeTitle}.mp3`);
+
+  const concatList = segmentFiles.map(f => `file '${path.resolve(f).replace(/'/g, "'\\''")}'`).join('\n');
+  fs.writeFileSync(listPath, concatList);
+
+  // Re-encode and concatenate to avoid DTS errors
+  const ffmpegCmd = `ffmpeg -y -f concat -safe 0 -i "${listPath}" -ar 24000 -ac 1 -b:a 64k "${outputPath}"`;
+  execSync(ffmpegCmd, { stdio: 'inherit' });
+
+  console.log(`✅ Saved final audio: ${outputPath}`);
 }
 
-generateMP3Files();
+(async () => {
+  for (const match of matches) {
+    const title = match[1];       // e.g., GEN:1
+    const chapterText = match[2]; // Chapter content
+    console.log(`\n🔊 Processing chapter: ${title}`);
+    await synthesizeChapter(title, chapterText.trim());
+  }
+})();
