@@ -7,82 +7,103 @@ const client = new textToSpeech.TextToSpeechClient({
   keyFilename: path.resolve(__dirname, "../../.secrets", 'amen24-69e9f5cade0d.json')
 });
 
-// Path to save the MP3 files
 const outputDir = './output_chapters';
+const tempDir = './temp_chapters';
 
-// Make sure the output directory exists
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir);
 }
+if (!fs.existsSync(tempDir)) {
+  fs.mkdirSync(tempDir);
+}
 
-// Read the content from the output.txt file
 const filePath = './output.txt';
 const content = fs.readFileSync(filePath, 'utf-8');
 
-// Split the text into chapters based on "سِفْرُ"
-const chapters = content.split('سِفْرُ').filter(ch => ch.trim()).map(ch => 'سِفْرُ' + ch.trim());
+const chapters = content.split('سِفْرُ')
+  .filter(chapter => chapter.trim() !== '')
+  .map(chapter => 'سِفْرُ' + chapter.trim());
 
-// Helper: split text into parts under 5000 bytes
-function splitTextByByteLimit(text, limit = 4900) {
-  const parts = [];
-  let current = '';
+function splitTextIntoChunks(text, maxBytes) {
+  const lines = text.split('\n');
+  let chunks = [];
+  let chunk = '';
+  let size = 0;
 
-  for (const paragraph of text.split('\n')) {
-    const testChunk = current + paragraph + '\n';
-    const byteLength = Buffer.byteLength(testChunk, 'utf-8');
-
-    if (byteLength > limit) {
-      if (current.trim()) {
-        parts.push(current.trim());
-      }
-      current = paragraph + '\n';
+  for (const line of lines) {
+    const lineSize = Buffer.byteLength(line, 'utf8');
+    if (size + lineSize > maxBytes) {
+      chunks.push(chunk);
+      chunk = line;
+      size = lineSize;
     } else {
-      current = testChunk;
+      chunk += (chunk ? '\n' : '') + line;
+      size += lineSize;
     }
   }
-
-  if (current.trim()) {
-    parts.push(current.trim());
-  }
-
-  return parts;
+  if (chunk) chunks.push(chunk);
+  return chunks;
 }
 
-
 async function generateMP3ForChapter(chapterText, chapterNumber) {
-  const chunks = splitTextByByteLimit(chapterText);
+  const lines = chapterText.split('\n');
+  const firstLine = lines[0];
+  const restText = lines.slice(1).join('\n');
 
-  const buffers = [];
+  const chunks = splitTextIntoChunks(restText, 5000);
+  const chunkFiles = [];
 
   for (let i = 0; i < chunks.length; i++) {
+    let chunkSSML = '';
+
+    if (i === 0) {
+      // First chunk includes the chapter title and 500ms break
+      chunkSSML = `
+        <speak>
+          ${firstLine}
+          <break time="500ms"/>
+          ${chunks[i]}
+        </speak>
+      `;
+    } else {
+      // Other chunks are just normal SSML
+      chunkSSML = `
+        <speak>
+          ${chunks[i]}
+        </speak>
+      `;
+    }
+
     const request = {
-      input: { text: chunks[i] },
-      voice: { languageCode: 'ar-XA', ssmlGender: 'NEUTRAL' },
+      input: { ssml: chunkSSML },
+      voice: { languageCode: 'ar-XA', name: 'ar-XA-Wavenet-D', ssmlGender: 'FEMALE' },
       audioConfig: { audioEncoding: 'MP3' },
     };
+    
 
     try {
       const [response] = await client.synthesizeSpeech(request);
-      buffers.push(Buffer.from(response.audioContent, 'binary'));
-      console.log(`Chunk ${i + 1}/${chunks.length} for Chapter ${chapterNumber} generated.`);
-    } catch (error) {
-      console.error(`Error generating chunk ${i + 1} for Chapter ${chapterNumber}:`, error);
+      const chunkPath = path.join(tempDir, `chapter_${chapterNumber}_chunk_${i + 1}.mp3`);
+      fs.writeFileSync(chunkPath, response.audioContent, 'binary');
+      console.log(`Chunk ${i + 1} for chapter ${chapterNumber} saved.`);
+      chunkFiles.push(fs.readFileSync(chunkPath));
+    } catch (err) {
+      console.error(`Error generating chunk ${i + 1} for chapter ${chapterNumber}:`, err);
     }
   }
 
-  // Concatenate all chunks into one MP3 file
-  const finalBuffer = Buffer.concat(buffers);
-  const outputPath = path.join(outputDir, `chapter_${chapterNumber}.mp3`);
-  fs.writeFileSync(outputPath, finalBuffer);
-  console.log(`✅ MP3 file for Chapter ${chapterNumber} saved.`);
+  // Merge all chunks
+  const finalBuffer = Buffer.concat(chunkFiles);
+  const finalPath = path.join(outputDir, `chapter_${chapterNumber}_final.mp3`);
+  fs.writeFileSync(finalPath, finalBuffer);
+  console.log(`Final MP3 for chapter ${chapterNumber} saved.`);
 }
 
-// Loop through each chapter and generate the MP3 files
+
 async function generateMP3Files() {
   for (let i = 0; i < chapters.length; i++) {
     await generateMP3ForChapter(chapters[i], i + 1);
   }
 }
 
-// Start the process
 generateMP3Files();
