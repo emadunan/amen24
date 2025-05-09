@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import translationReducer from "./slices/translationSlice";
+import audioPlayerReducer from "./slices/audioPlayerSlice";
 import navigatorReducer from "./slices/navigatorSlice";
 import searchReducer from "./slices/searchSlice";
 import { userApi } from "./apis/userApi";
@@ -13,6 +14,7 @@ export const MakeStore = () => {
   const store = configureStore({
     reducer: {
       translation: translationReducer,
+      audioPlayer: audioPlayerReducer,
       navigator: navigatorReducer,
       search: searchReducer,
       [authApi.reducerPath]: authApi.reducer,

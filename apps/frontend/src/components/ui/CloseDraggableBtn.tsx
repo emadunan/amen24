@@ -9,7 +9,10 @@ interface Props {
 
 const CloseDraggableBtn: FC<Props> = ({ onClose, absolute }) => {
   return (
-    <button className={`${styles.closeButton} ${absolute ? styles.absolute : ""}`} onClick={onClose}>
+    <button
+      className={`${styles.closeButton} ${absolute ? styles.absolute : ""}`}
+      onClick={onClose}
+    >
       <FaRegWindowClose size="1rem" className={styles.closeIcon} />
     </button>
   );

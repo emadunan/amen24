@@ -5,4 +5,5 @@ if (!apiPublicUrl) throw new Error("Api url must be defined!");
 
 export const progressApi = createProgressApi(apiPublicUrl);
 
-export const { useGetUserLastReadProgressQuery, useUpdateProgressMutation } = progressApi;
+export const { useGetUserLastReadProgressQuery, useUpdateProgressMutation } =
+  progressApi;

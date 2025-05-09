@@ -1,0 +1,87 @@
+.player {
+  position: fixed;
+  z-index: 12;
+  background-color: var(--background);
+  border: 1px solid var(--secondary);
+  border-radius: 2px;
+  padding: 0.3rem 1rem 1rem 1rem;
+  color: var(--text);
+  height: 6.7rem;
+  width: 12rem;
+  box-shadow: 0 0 8px rgba(var(--text-rgb), 0.1);
+  font-family: inherit;
+}
+
+.header {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-bottom: 1px solid var(--primary);
+  cursor: grab;
+}
+
+.header:active {
+  cursor: grabbing;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+  flex-direction: row;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--accent);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.controls button:hover {
+  color: var(--accent-hover);
+}
+
+.controls button.play {
+  font-size: 1.5rem;
+}
+
+.iconRtl {
+  transform: scaleX(-1);
+}
+
+.progressBar {
+  height: 0.5rem;
+  background-color: var(--secondary);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress {
+  height: 100%;
+  background-color: var(--primary);
+  transition: width 0.2s linear;
+  position: absolute;
+  top: 0;
+}
+
+.player[dir="ltr"] .progress {
+  left: 0;
+  right: auto;
+  transform-origin: left;
+}
+
+.player[dir="rtl"] .progress {
+  right: 0;
+  left: auto;
+  transform-origin: right;
+}

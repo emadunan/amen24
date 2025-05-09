@@ -43,7 +43,7 @@
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
 }
 
 .toolboxContainer button {
@@ -65,7 +65,7 @@
 
 .toolboxContainer button:last-child {
   margin-top: 0.3rem;
-  margin-bottom: .7rem;
+  margin-bottom: 0.7rem;
 }
 
 .toolboxContainer button:hover {

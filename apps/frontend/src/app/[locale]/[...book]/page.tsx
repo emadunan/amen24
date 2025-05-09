@@ -1,4 +1,11 @@
-import { BookKey, BookMap, ERROR_KEYS, formatNumber, Lang, Verse } from "@amen24/shared";
+import {
+  BookKey,
+  BookMap,
+  ERROR_KEYS,
+  formatNumber,
+  Lang,
+  Verse,
+} from "@amen24/shared";
 import React, { FC, Fragment } from "react";
 import styles from "./page.module.css";
 import initTranslations from "@/app/i18n";
@@ -14,26 +21,25 @@ import ChapterContainer from "@/components/bible/ChapterContainer";
 import { apiPrivateUrl } from "@/constants";
 import { cookies } from "next/headers";
 import { Metadata } from "next";
+import AudioPlayerToggleBtn from "@/components/ui/AudioPlayerToggleBtn";
 
 interface Props {
   params: Promise<{ book: string[]; locale: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export async function generateMetadata(
-  { params }: Props
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = (await params).book;
   let lang = (await params).locale as Lang;
 
   if (lang !== Lang.ENGLISH && lang !== Lang.ARABIC) {
     lang = Lang.ENGLISH;
   }
- 
+
   return {
-    title: `${BookMap[book[0] as BookKey].title[lang]} [${book[1]}]` ,
+    title: `${BookMap[book[0] as BookKey].title[lang]} [${book[1]}]`,
     description: `${BookMap[book[0] as BookKey].description[lang]}`,
-  }
+  };
 }
 
 const BookPage: FC<Props> = async ({ params }) => {
@@ -45,16 +51,16 @@ const BookPage: FC<Props> = async ({ params }) => {
   let verses: Verse[] = [];
   try {
     const cookieStore = await cookies();
-    const cookieHeader = cookieStore.toString()
+    const cookieHeader = cookieStore.toString();
 
     const response = await fetch(
       `${apiPrivateUrl}/verses/${bookKey}/${chapterNum}/${locale}`,
       {
         credentials: "include",
         headers: {
-          Cookie: cookieHeader
+          Cookie: cookieHeader,
         },
-      }
+      },
     );
 
     if (!response.ok) throw new Error(ERROR_KEYS.FAILED_TO_FETCH);
@@ -101,6 +107,7 @@ const BookPage: FC<Props> = async ({ params }) => {
                   {t(bookKey, { ns: "book" })} {formattedchapterNum}
                 </h3>
               </ChapterTitleAction>
+              <AudioPlayerToggleBtn />
               <TranslationSelector />
             </div>
             {+chapterNum < +bookLen ? (

@@ -105,7 +105,7 @@ const BibleNavigator = () => {
                     <Link
                       className={
                         chapterIndex.toString() === chapterNum &&
-                          book.key === urlBookKey
+                        book.key === urlBookKey
                           ? styles.currentChapter
                           : ""
                       }

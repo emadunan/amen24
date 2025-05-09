@@ -56,7 +56,7 @@ const ChapterToolbox = () => {
   }, []);
 
   function handleIsExpanded() {
-    setIsExpanded(prev => !prev)
+    setIsExpanded((prev) => !prev);
   }
 
   async function handleUpdateProgress(
@@ -135,7 +135,10 @@ const ChapterToolbox = () => {
         <RxDragHandleDots2 className={styles.dragIcon} />
         <h4>{t("toolbox.title")}</h4>
         <CloseDraggableBtn onClose={clearHighlighted} />
-        <ToggleDraggableBtn onToggle={handleIsExpanded} isExpanded={isExpanded} />
+        <ToggleDraggableBtn
+          onToggle={handleIsExpanded}
+          isExpanded={isExpanded}
+        />
       </div>
       {isExpanded && (
         <div className={styles.toolboxContainer}>
@@ -143,11 +146,12 @@ const ChapterToolbox = () => {
             <FaCopy /> {t("toolbox.copy")}
           </button>
 
-          {user && hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-            <button onClick={handleAddFeatured}>
-              <HiSparkles /> {t("toolbox.addToFeatured")}
-            </button>
-          )}
+          {user &&
+            hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
+              <button onClick={handleAddFeatured}>
+                <HiSparkles /> {t("toolbox.addToFeatured")}
+              </button>
+            )}
 
           {user && (
             <Fragment>
@@ -165,7 +169,9 @@ const ChapterToolbox = () => {
               >
                 {isClient && <MdPushPin size="1.2rem" />}
                 <div className={styles.progressContent}>
-                  <p className={styles.progressTitle}>{t("toolbox.progress")}</p>
+                  <p className={styles.progressTitle}>
+                    {t("toolbox.progress")}
+                  </p>
                   {progress && (
                     <small className={styles.progressRef}>
                       {t(`book:${progress.verse.chapter.book.bookKey}`)} (
@@ -173,7 +179,8 @@ const ChapterToolbox = () => {
                         progress.verse.chapter.num,
                         i18n.language as Lang,
                       )}{" "}
-                      : {formatNumber(progress.verse.num, i18n.language as Lang)})
+                      :{" "}
+                      {formatNumber(progress.verse.num, i18n.language as Lang)})
                     </small>
                   )}
                 </div>

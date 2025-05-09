@@ -57,7 +57,6 @@ const LocalSignup = () => {
         progress: {
           lastRead: t("progress.lastRead"),
         },
-
       }).unwrap();
 
       showMessage(message, "success");
