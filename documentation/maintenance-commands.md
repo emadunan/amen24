@@ -41,3 +41,11 @@ Then Update the value of the first from the latter
 ``` sql
 UPDATE profile p SET roles = ARRAY[privilege]::text[];
 ```
+
+## 
+
+### Create silence of 0.8 second
+
+``` bash
+ffmpeg -f lavfi -i anullsrc=r=24000:cl=mono -t 0.8 -q:a 9 -acodec libmp3lame silence.mp3
+```

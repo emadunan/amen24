@@ -9,11 +9,13 @@ const client = new textToSpeech.TextToSpeechClient({
 });
 
 // Create output folders if not exists
-if (!fs.existsSync('output')) fs.mkdirSync('output');
+if (!fs.existsSync('mp3')) fs.mkdirSync('mp3');
 if (!fs.existsSync('temp')) fs.mkdirSync('temp');
 
 // Read and parse the input
-const inputText = fs.readFileSync('output.txt', 'utf8');
+const inputFile = process.argv[2] || 'text/64_3JO.txt';
+const inputBaseName = path.basename(inputFile, path.extname(inputFile));
+const inputText = fs.readFileSync(inputFile, 'utf8');
 
 // Match format: "GEN:1\nChapter content..."
 const chapterRegex = /([A-Z]+:\d+)\n([\s\S]*?)(?=\n[A-Z]+:\d+|\n*$)/g;
@@ -29,7 +31,11 @@ function sanitizeFilename(name) {
 async function synthesizeTextToFile(text, filename) {
   const request = {
     input: { text },
-    voice: { languageCode: 'ar-XA', ssmlGender: 'MALE' },
+    voice: {
+      languageCode: 'ar-XA',
+      name: "ar-XA-Chirp3-HD-Enceladus",
+      ssmlGender: 'MALE'
+    },
     audioConfig: { audioEncoding: 'MP3' },
   };
 
@@ -63,13 +69,13 @@ function splitTextIntoChunks(text, maxBytes) {
   return chunks;
 }
 
-async function synthesizeChapter(title, text) {
+async function synthesizeChapter(title, text, index) {
   const safeTitle = sanitizeFilename(title);
   const segmentFiles = [];
   let partIndex = 0;
 
-  // Replace [1s] with placeholder for splitting
-  const segments = text.replace(/\[1s\]/g, SILENCE_MARK).split(SILENCE_MARK);
+  // Replace [SilenceAfterChapterTitle] with placeholder for splitting
+  const segments = text.replace(/\[SilenceAfterChapterTitle\]/g, SILENCE_MARK).split(SILENCE_MARK);
 
   for (const segment of segments) {
     const chunks = splitTextIntoChunks(segment, CHUNK_BYTE_LIMIT);
@@ -81,17 +87,19 @@ async function synthesizeChapter(title, text) {
     }
 
     // Insert silence after segment
-    segmentFiles.push('silence.mp3');
+    segmentFiles.push('silence_0.5s.mp3');
   }
 
   // Remove trailing silence if exists
-  if (segmentFiles[segmentFiles.length - 1] === 'silence.mp3') {
+  if (segmentFiles[segmentFiles.length - 1] === 'silence_0.5s.mp3') {
     segmentFiles.pop();
   }
 
   // Write ffmpeg concat list
   const listPath = path.join('temp', `${safeTitle}_list.txt`);
-  const outputPath = path.join('output', `${safeTitle}.mp3`);
+
+  const chapterNumber = String(index + 1).padStart(3, '0'); // "001", "002", etc.
+  const outputPath = path.join('mp3', `${inputBaseName}__${chapterNumber}.mp3`);
 
   const concatList = segmentFiles.map(f => `file '${path.resolve(f).replace(/'/g, "'\\''")}'`).join('\n');
   fs.writeFileSync(listPath, concatList);
@@ -104,10 +112,10 @@ async function synthesizeChapter(title, text) {
 }
 
 (async () => {
-  for (const match of matches) {
-    const title = match[1];       // e.g., GEN:1
-    const chapterText = match[2]; // Chapter content
-    console.log(`\n🔊 Processing chapter: ${title}`);
-    await synthesizeChapter(title, chapterText.trim());
-  }
+  for (const [index, match] of matches.entries()) {
+  const title = match[1];
+  const chapterText = match[2];
+  console.log(`\n🔊 Processing chapter: ${title}`);
+  await synthesizeChapter(title, chapterText.trim(), index);
+}
 })();
