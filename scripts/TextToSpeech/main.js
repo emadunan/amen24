@@ -18,7 +18,7 @@ const inputBaseName = path.basename(inputFile, path.extname(inputFile));
 const inputText = fs.readFileSync(inputFile, 'utf8');
 
 // Match format: "GEN:1\nChapter content..."
-const chapterRegex = /([A-Z]+:\d+)\n([\s\S]*?)(?=\n[A-Z]+:\d+|\n*$)/g;
+const chapterRegex = /([0-9A-Z]+:\d+)\n([\s\S]*?)(?=\n[0-9A-Z]+:\d+|\n*$)/g;
 const matches = [...inputText.matchAll(chapterRegex)];
 
 const CHUNK_BYTE_LIMIT = 4500;
