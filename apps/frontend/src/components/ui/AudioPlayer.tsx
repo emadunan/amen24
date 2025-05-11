@@ -16,7 +16,8 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useParams, usePathname } from "next/navigation";
-import { BookKey, formatNumber, Lang } from "@amen24/shared";
+import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
+import { ttsBooks } from "@/constants/ttsBooks";
 
 const AudioPlayer: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -45,38 +46,36 @@ const AudioPlayer: React.FC = () => {
     const audio = audioRef.current;
     if (!audio || !isOpen) return;
 
-    const updateProgress = () => {
+    const onTimeUpdate = () => {
       if (audio.duration) {
         setProgress((audio.currentTime / audio.duration) * 100);
       }
     };
 
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-
-    const handleEnded = () => {
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onEnded = () => {
       setIsPlaying(false);
       setProgress(0);
       audio.currentTime = 0;
     };
 
-    audio.addEventListener("timeupdate", updateProgress);
-    audio.addEventListener("play", handlePlay);
-    audio.addEventListener("pause", handlePause);
-    audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("timeupdate", onTimeUpdate);
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+    audio.addEventListener("ended", onEnded);
 
     return () => {
       audio.pause();
-      audio.removeEventListener("timeupdate", updateProgress);
-      audio.removeEventListener("play", handlePlay);
-      audio.removeEventListener("pause", handlePause);
-      audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("timeupdate", onTimeUpdate);
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("ended", onEnded);
       setIsPlaying(false);
       setIsMuted(false);
       setProgress(0);
     };
-  }, [isOpen]);
-
+  }, [isOpen, bookKey, chapterNum]);
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -117,7 +116,11 @@ const AudioPlayer: React.FC = () => {
     setProgress((newTime / audio.duration) * 100);
   };
 
-  if (!isOpen || !isBookChapterPage) return null;
+  if (!isOpen || !isBookChapterPage || !ttsBooks.includes(bookKey)) return null;
+
+  const audioFileName = `${String(BookMap[bookKey].id).padStart(2, '0')}_${bookKey}__${String(chapterNum).padStart(3, '0')}`;
+  const src = `/sound/chapters/${audioFileName}.mp3`;
+
 
   return (
     <div
@@ -133,7 +136,7 @@ const AudioPlayer: React.FC = () => {
         {`${t(`book:${bookKey}`)} ${formatNumber(+chapterNum, i18n.language as Lang)}` || "Audio"}
       </div>
 
-      <audio key={"64_3JO__001"} ref={audioRef} src={"/sound/chapters/64_3JO__001.mp3"} preload="metadata" />
+      <audio key={audioFileName} ref={audioRef} src={src} preload="metadata" />
 
       <div className={styles.controls}>
         <button onClick={() => skip(-10)}>

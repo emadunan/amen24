@@ -5,7 +5,7 @@ const { execSync } = require('child_process');
 
 // Google TTS client
 const client = new textToSpeech.TextToSpeechClient({
-  keyFilename: path.resolve(__dirname, '../../.secrets', 'amen24-69e9f5cade0d.json')
+  keyFilename: path.resolve(__dirname, '../../.secrets', 'amen24sa-key.json')
 });
 
 // Create output folders if not exists
