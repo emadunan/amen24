@@ -1,7 +1,8 @@
-import { Featured, Lang } from '@amen24/shared';
+import { Featured } from '@amen24/shared';
 import { FC } from 'react';
 import styles from './FeaturedListItem.module.css';
 import { NavLink } from 'react-router-dom';
+import { getDirection } from '@amen24/ui';
 
 interface Props {
   featuredItem: Featured;
@@ -17,7 +18,6 @@ const FeaturedListItem: FC<Props> = ({ featuredItem }) => {
   const chapterNum = chapter.num;
 
   const text = featuredItem.featuredText[0];
-  const isArabic = text.lang === Lang.ARABIC;
 
   return (
     <div className={styles.container}>
@@ -36,7 +36,7 @@ const FeaturedListItem: FC<Props> = ({ featuredItem }) => {
       </div>
       <p
         className={styles.text}
-        dir={isArabic ? 'rtl' : 'ltr'}
+        dir={getDirection(text.lang)}
         lang={text.lang}
       >
         {text.text}

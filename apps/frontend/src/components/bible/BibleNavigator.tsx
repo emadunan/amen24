@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { close, selectNavigator } from "@/store/slices/navigatorSlice";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { useParams, usePathname } from "next/navigation";
-import { useDraggable } from "@amen24/ui";
+import { isRtl, useDraggable } from "@amen24/ui";
 import { useTranslation } from "react-i18next";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
 
@@ -20,12 +20,13 @@ const BibleNavigator = () => {
   const params = useParams<{ book: [BookKey, string, string] }>();
   const { t, i18n } = useTranslation();
   const headerRef = useRef<HTMLDivElement | null>(null);
+  const isRTL = isRtl(i18n.language as Lang);
 
   const bookParams = params.book ?? []; // Ensure it's an array
   const [urlBookKey, chapterNum] = bookParams as [BookKey?, string?, string?];
 
   const { position, handleMouseDown, handleTouchStart, elementRef } =
-    useDraggable(5, 5, i18n.language === "ar" ? true : false, 12, headerRef);
+    useDraggable(5, 5,  isRTL, 12, headerRef);
 
   const isBookChapterPage = /^\/(?:[a-z]{2}\/)?[A-Z0-9]+\/\d+\/\d+$/.test(
     pathname,

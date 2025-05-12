@@ -12,6 +12,8 @@ import {
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useDraggable } from "@amen24/ui";
+import { isRtl, getDirection } from "@amen24/ui/utils";
+
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
@@ -30,8 +32,7 @@ const AudioPlayer: React.FC = () => {
   const [bookKey, chapterNum] = params.book ?? [];
   const dispatch = useDispatch();
 
-  const isRTL = i18n.language === "ar";
-
+  const isRTL = isRtl(i18n.language as Lang);
   const isBookChapterPage = /^\/(?:[a-z]{2}\/)?[A-Z0-9]+\/\d+\/\d+$/.test(
     pathname,
   );
@@ -39,7 +40,7 @@ const AudioPlayer: React.FC = () => {
   const { isOpen } = useSelector((state: RootState) => state.audioPlayer);
 
   const { position, handleMouseDown, handleTouchStart, elementRef } =
-    useDraggable(5, 5, i18n.language === "ar", 10, headerRef);
+    useDraggable(5, 5, isRTL, 10, headerRef);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -117,7 +118,7 @@ const AudioPlayer: React.FC = () => {
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const ratio =
-      i18n.language === "ar" ? 1 - clickX / rect.width : clickX / rect.width;
+      isRTL ? 1 - clickX / rect.width : clickX / rect.width;
     const newTime = ratio * audio.duration;
 
     audio.currentTime = newTime;
@@ -138,7 +139,7 @@ const AudioPlayer: React.FC = () => {
   return (
     <div
       className={styles.player}
-      dir={i18n.language === "ar" ? "rtl" : "ltr"}
+      dir={getDirection(i18n.language as Lang)}
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
       ref={elementRef}

@@ -7,7 +7,7 @@ import { HiSparkles } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "./ChapterContent";
 import { createPortal } from "react-dom";
-import { useDraggable, useFeedback } from "@amen24/ui";
+import { isRtl, useDraggable, useFeedback } from "@amen24/ui";
 import {
   ERROR_KEYS,
   Lang,
@@ -30,6 +30,7 @@ const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
     useHighlightContext();
   const { t, i18n } = useTranslation();
+  const isRTL = isRtl(i18n.language as Lang);
 
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [updateProgress] = useUpdateProgressMutation();
@@ -38,7 +39,7 @@ const ChapterToolbox = () => {
     useDraggable(
       5,
       7,
-      i18n.language === "ar" ? false : true,
+      isRTL,
       i18n.language === "ar" ? 9 : 11,
       headerRef,
     );

@@ -17,6 +17,8 @@ import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
 import TestSiteWarning from "@/components/layout/TestSiteWarning";
 import TrackVisit from "@/components/analytics/TrackVisite";
 import AudioPlayer from "@/components/ui/AudioPlayer";
+import { getDirection } from "@amen24/ui/utils";
+import { Lang } from "@amen24/shared";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -55,7 +57,7 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
 
   const { resources } = await initTranslations(locale, i18nNamespaces);
 
-  const dir = locale === "ar" ? "rtl" : "ltr";
+  const dir = getDirection(locale as Lang);
 
   return (
     <html lang={locale} dir={dir}>

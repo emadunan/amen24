@@ -3,6 +3,7 @@ import styles from "./VerseResult.module.css";
 import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
 import Link from "next/link";
 import VerseResultText from "./VerseResultText";
+import { getDirection } from "@amen24/ui";
 
 interface VerseResultProps {
   bookKey: BookKey;
@@ -31,7 +32,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
   return (
     <div
       className={styles.verseContainer}
-      dir={lang === Lang.ENGLISH ? "ltr" : "rtl"}
+      dir={getDirection(lang)}
     >
       <VerseResultText text={text} queryTerms={queryTerms} />
       <Link

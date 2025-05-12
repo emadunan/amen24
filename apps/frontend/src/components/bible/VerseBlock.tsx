@@ -4,6 +4,7 @@ import styles from "./VerseBlock.module.css";
 import Link from "next/link";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { getDirection } from "@amen24/ui/utils";
 
 interface VerseBlockProps {
   bookKey: BookKey;
@@ -38,7 +39,7 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
   return (
     <div
       className={styles.verseContainer}
-      dir={lang === Lang.ENGLISH ? "ltr" : "rtl"}
+      dir={getDirection(lang)}
     >
       <p>
         {useMemo(() => {

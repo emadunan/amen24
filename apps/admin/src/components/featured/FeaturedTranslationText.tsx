@@ -1,7 +1,8 @@
-import { FeaturedText, Lang } from '@amen24/shared';
+import { FeaturedText } from '@amen24/shared';
 import { FC, useEffect, useState } from 'react';
 import styles from './FeaturedTranslationText.module.css';
 import { useUpdateFeaturedTextMutation } from '../../store/featuredApi';
+import { getDirection } from '@amen24/ui';
 
 interface Props {
   featuredTextItem: FeaturedText;
@@ -51,7 +52,7 @@ const FeaturedTranslationText: FC<Props> = ({ featuredTextItem }) => {
       {!isEditing ? (
         <p
           className={styles.text}
-          dir={featuredTextItem.lang === Lang.ARABIC ? 'rtl' : 'ltr'}
+          dir={getDirection(featuredTextItem.lang)}
         >
           {text}
         </p>
@@ -60,7 +61,7 @@ const FeaturedTranslationText: FC<Props> = ({ featuredTextItem }) => {
           className={styles.textarea}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          dir={featuredTextItem.lang === Lang.ARABIC ? 'rtl' : 'ltr'}
+          dir={getDirection(featuredTextItem.lang)}
         />
       )}
     </div>

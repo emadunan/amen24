@@ -6,6 +6,7 @@ import VerseHighlight from "./VerseHighlight";
 import styles from "./ChapterContentClient.module.css";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
+import { getDirection } from "@amen24/ui/utils";
 
 interface Props {
   bookKey: string;
@@ -104,12 +105,10 @@ const ChapterContentClient: FC<Props> = ({ bookKey, chapterNum }) => {
         : Lang.GREEK
       : lang;
 
-  const isRtl = renderLang === Lang.HEBREW || renderLang === Lang.ARABIC;
-
   if (!lang) return null;
 
   return (
-    <div dir={isRtl ? "rtl" : "ltr"}>
+    <div dir={getDirection(renderLang)}>
       {verses.map((v: Verse) => {
         return (
           <Fragment key={v.num}>

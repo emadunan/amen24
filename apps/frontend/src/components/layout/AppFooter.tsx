@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { Lang } from "@amen24/shared";
 import styles from "./AppFooter.module.css";
 import { useTranslation } from "react-i18next";
+import { getDirection } from "@amen24/ui/utils";
 
 const AppFooter = () => {
   const { t, i18n } = useTranslation();
@@ -10,7 +12,7 @@ const AppFooter = () => {
     <footer className={styles.footer}>
       <p
         className={styles.copyright}
-        dir={i18n.language === "ar" ? "rtl" : "ltr"}
+        dir={getDirection(i18n.language as Lang)}
       >
         &copy; {new Date().getFullYear()}&mdash;{t("footer.copyright")}
       </p>
