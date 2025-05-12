@@ -69,6 +69,57 @@ function splitTextIntoChunks(text, maxBytes) {
   return chunks;
 }
 
+function splitTextIntoChunks2(text, maxBytes) {
+  const sentences = text.split(/(?<=\n|[.!؟])\s+/);
+  const chunks = [];
+
+  let currentChunk = '';
+  let currentBytes = 0;
+
+  for (let sentence of sentences) {
+    const sentenceBytes = Buffer.byteLength(sentence, 'utf8');
+
+    // Fallback: sentence too large to fit in one chunk, split by words
+    if (sentenceBytes > maxBytes) {
+      const words = sentence.split(/(?<=[،؛,;])\s+| +/); // Arabic/Latin punctuation or space
+      let partial = '';
+      let partialBytes = 0;
+
+      for (let word of words) {
+        const wordWithSpace = word + ' ';
+        const wordBytes = Buffer.byteLength(wordWithSpace, 'utf8');
+
+        if (partialBytes + wordBytes > maxBytes) {
+          if (partial.trim()) chunks.push(partial.trim());
+          partial = wordWithSpace;
+          partialBytes = wordBytes;
+        } else {
+          partial += wordWithSpace;
+          partialBytes += wordBytes;
+        }
+      }
+
+      if (partial.trim()) chunks.push(partial.trim());
+      continue; // Skip normal handling
+    }
+
+    // Normal sentence fits in current chunk
+    if (currentBytes + sentenceBytes > maxBytes) {
+      if (currentChunk.trim()) chunks.push(currentChunk.trim());
+      currentChunk = sentence + ' ';
+      currentBytes = sentenceBytes;
+    } else {
+      currentChunk += sentence + ' ';
+      currentBytes += sentenceBytes;
+    }
+  }
+
+  if (currentChunk.trim()) chunks.push(currentChunk.trim());
+
+  return chunks;
+}
+
+
 async function synthesizeChapter(title, text, index) {
   const safeTitle = sanitizeFilename(title);
   const segmentFiles = [];
@@ -78,7 +129,7 @@ async function synthesizeChapter(title, text, index) {
   const segments = text.replace(/\[SilenceAfterChapterTitle\]/g, SILENCE_MARK).split(SILENCE_MARK);
 
   for (const segment of segments) {
-    const chunks = splitTextIntoChunks(segment, CHUNK_BYTE_LIMIT);
+    const chunks = splitTextIntoChunks2(segment, CHUNK_BYTE_LIMIT);
 
     for (const chunk of chunks) {
       const partPath = path.join('temp', `${safeTitle}_part${partIndex++}.mp3`);

@@ -65,23 +65,25 @@ const ChapterContentClient: FC<Props> = ({ bookKey, chapterNum }) => {
 
   useEffect(() => {
     const fetchVerses = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/verses/${bookKey}/${chapterNum}/${lang}`,
-        );
+      if (bookKey && chapterNum && lang) {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/verses/${bookKey}/${chapterNum}/${lang}`,
+          );
 
-        const data: Verse[] = await response.json();
+          const data: Verse[] = await response.json();
 
-        if (Array.isArray(data)) {
-          setVerses(data);
-        } else {
+          if (Array.isArray(data)) {
+            setVerses(data);
+          } else {
+            setVerses([]);
+          }
+        } catch (err) {
+          console.error("Error fetching verses", err);
           setVerses([]);
+        } finally {
+          // setLoading(false);
         }
-      } catch (err) {
-        console.error("Error fetching verses", err);
-        setVerses([]);
-      } finally {
-        // setLoading(false);
       }
     };
 
