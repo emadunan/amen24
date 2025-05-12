@@ -1,11 +1,10 @@
 .player {
   position: fixed;
   z-index: 12;
-  background-color: var(--background);
-  border: 1px solid var(--secondary);
+  background-color: var(--secondary);
+  border: 1px solid var(--primary);
   border-radius: 2px;
   padding: 0.3rem 1rem 1rem 1rem;
-  color: var(--text);
   height: 6.7rem;
   width: 12rem;
   box-shadow: 0 0 8px rgba(var(--text-rgb), 0.1);
@@ -15,7 +14,7 @@
 .header {
   font-weight: bold;
   margin-bottom: 1rem;
-  color: var(--primary);
+  color: var(--text);
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -59,8 +58,9 @@
 
 .progressBar {
   height: 0.5rem;
-  background-color: var(--secondary);
-  border-radius: 0.25rem;
+  border-radius: 2px;
+  background-color: var(--background);
+  border: 1px solid var(--primary);
   cursor: pointer;
   overflow: hidden;
   position: relative;

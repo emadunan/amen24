@@ -20,6 +20,7 @@ import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
 import { ttsBooks } from "@/constants/ttsBooks";
 import CloseDraggableBtn from "./CloseDraggableBtn";
 import { close } from "../../store/slices/audioPlayerSlice";
+import { ttsLangs } from "@/constants/ttsLangs";
 
 const AudioPlayer: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -101,7 +102,10 @@ const AudioPlayer: React.FC = () => {
   const skip = (seconds: number) => {
     const audio = audioRef.current;
     if (audio && audio.duration) {
-      const newTime = Math.min(Math.max(0, audio.currentTime + seconds), audio.duration);
+      const newTime = Math.min(
+        Math.max(0, audio.currentTime + seconds),
+        audio.duration,
+      );
       audio.currentTime = newTime;
     }
   };
@@ -112,18 +116,24 @@ const AudioPlayer: React.FC = () => {
 
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
-    const ratio = i18n.language === "ar" ? 1 - clickX / rect.width : clickX / rect.width;
+    const ratio =
+      i18n.language === "ar" ? 1 - clickX / rect.width : clickX / rect.width;
     const newTime = ratio * audio.duration;
 
     audio.currentTime = newTime;
     setProgress((newTime / audio.duration) * 100);
   };
 
-  if (!isOpen || !isBookChapterPage || !ttsBooks.includes(bookKey)) return null;
+  if (
+    !isOpen ||
+    !isBookChapterPage ||
+    !ttsBooks.includes(bookKey) ||
+    !ttsLangs.includes(i18n.language as Lang)
+  )
+    return null;
 
-  const audioFileName = `${String(BookMap[bookKey].id).padStart(2, '0')}_${bookKey}__${String(chapterNum).padStart(3, '0')}`;
+  const audioFileName = `${String(BookMap[bookKey].id).padStart(2, "0")}_${bookKey}__${String(chapterNum).padStart(3, "0")}`;
   const src = `/sound/chapters/${audioFileName}.mp3`;
-
 
   return (
     <div
@@ -136,7 +146,8 @@ const AudioPlayer: React.FC = () => {
     >
       <div className={styles.header} ref={headerRef}>
         <RxDragHandleDots2 className={styles.dragIcon} />
-        {`${t(`book:${bookKey}`)} ${formatNumber(+chapterNum, i18n.language as Lang)}` || "Audio"}
+        {`${t(`book:${bookKey}`)} ${formatNumber(+chapterNum, i18n.language as Lang)}` ||
+          "Audio"}
         <CloseDraggableBtn absolute onClose={() => dispatch(close())} />
       </div>
 
@@ -164,7 +175,6 @@ const AudioPlayer: React.FC = () => {
           )}
         </button>
       </div>
-
 
       <div className={styles.progressBar} onClick={handleProgressClick}>
         <div className={styles.progress} style={{ width: `${progress}%` }} />

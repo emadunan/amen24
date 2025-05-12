@@ -119,7 +119,6 @@ function splitTextIntoChunks2(text, maxBytes) {
   return chunks;
 }
 
-
 async function synthesizeChapter(title, text, index) {
   const safeTitle = sanitizeFilename(title);
   const segmentFiles = [];
@@ -129,7 +128,7 @@ async function synthesizeChapter(title, text, index) {
   const segments = text.replace(/\[SilenceAfterChapterTitle\]/g, SILENCE_MARK).split(SILENCE_MARK);
 
   for (const segment of segments) {
-    const chunks = splitTextIntoChunks(segment, CHUNK_BYTE_LIMIT);
+    const chunks = splitTextIntoChunks2(segment, CHUNK_BYTE_LIMIT);
 
     for (const chunk of chunks) {
       const partPath = path.join('temp', `${safeTitle}_part${partIndex++}.mp3`);
