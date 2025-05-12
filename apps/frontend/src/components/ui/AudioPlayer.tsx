@@ -40,7 +40,7 @@ const AudioPlayer: React.FC = () => {
   const { isOpen } = useSelector((state: RootState) => state.audioPlayer);
 
   const { position, handleMouseDown, handleTouchStart, elementRef } =
-    useDraggable(5, 2, isRTL, 10, headerRef);
+    useDraggable(3, 0, isRTL, 10, headerRef);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);

@@ -1,6 +1,6 @@
 .navigator {
   position: fixed;
-  z-index: 12;
+  z-index: 13;
   /* Ensure it's above other elements */
   top: var(--header-height);
   width: 12rem;
