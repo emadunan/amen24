@@ -13,11 +13,13 @@ import {
 import { useTranslation } from "react-i18next";
 import { useDraggable } from "@amen24/ui";
 import { RxDragHandleDots2 } from "react-icons/rx";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { useParams, usePathname } from "next/navigation";
 import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
 import { ttsBooks } from "@/constants/ttsBooks";
+import CloseDraggableBtn from "./CloseDraggableBtn";
+import { close } from "../../store/slices/audioPlayerSlice";
 
 const AudioPlayer: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -25,6 +27,7 @@ const AudioPlayer: React.FC = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const params = useParams<{ book: [BookKey, string, string] }>();
   const [bookKey, chapterNum] = params.book ?? [];
+  const dispatch = useDispatch();
 
   const isRTL = i18n.language === "ar";
 
@@ -134,6 +137,7 @@ const AudioPlayer: React.FC = () => {
       <div className={styles.header} ref={headerRef}>
         <RxDragHandleDots2 className={styles.dragIcon} />
         {`${t(`book:${bookKey}`)} ${formatNumber(+chapterNum, i18n.language as Lang)}` || "Audio"}
+        <CloseDraggableBtn absolute onClose={() => dispatch(close())} />
       </div>
 
       <audio key={audioFileName} ref={audioRef} src={src} preload="metadata" />

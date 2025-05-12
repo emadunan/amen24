@@ -107,7 +107,7 @@ const BookPage: FC<Props> = async ({ params }) => {
                   {t(bookKey, { ns: "book" })} {formattedchapterNum}
                 </h3>
               </ChapterTitleAction>
-              <AudioPlayerToggleBtn bookKey={bookKey} />
+              <AudioPlayerToggleBtn bookKey={bookKey as BookKey} />
               <TranslationSelector />
             </div>
             {+chapterNum < +bookLen ? (
