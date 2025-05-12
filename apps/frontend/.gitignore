@@ -43,4 +43,4 @@ yarn-error.log*
 next-env.d.ts
 
 # ...rest
-public/sound/chapters
+public/sound/
