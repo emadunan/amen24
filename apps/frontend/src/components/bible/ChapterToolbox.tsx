@@ -39,7 +39,7 @@ const ChapterToolbox = () => {
     useDraggable(
       5,
       7,
-      isRTL,
+      !isRTL,
       i18n.language === "ar" ? 9 : 11,
       headerRef,
     );
