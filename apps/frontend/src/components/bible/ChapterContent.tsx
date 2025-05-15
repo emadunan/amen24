@@ -35,7 +35,7 @@ const ChapterContent: FC<Props> = ({
   chapterNum,
   verses,
 }) => {
-  const { t, i18n } = useTranslation(["book"]);
+  const { t, i18n } = useTranslation(["common", "book"]);
   const [highlighted, setHighlighted] = useState<number[]>([]);
 
   function toggleHighlight(verseNum: number) {
@@ -84,7 +84,7 @@ const ChapterContent: FC<Props> = ({
     );
 
     // Construct formatted string
-    const verseRefString = `(${t(bookKey)} ${formattedChapterNum} : ${formattedFirstVerseNum}${formattedFirstVerseNum !== formattedLastVerseNum
+    const verseRefString = `(${t(`book:${bookKey}`)} ${formattedChapterNum} : ${formattedFirstVerseNum}${formattedFirstVerseNum !== formattedLastVerseNum
       ? ` - ${formattedLastVerseNum}`
       : ""
       })`;
@@ -92,7 +92,7 @@ const ChapterContent: FC<Props> = ({
     const baseUrl = `https://amen24.org/${i18n.language}`;
     const passageUrl = `${baseUrl}/${bookKey}/${chapterNum}/${BookMap[bookKey].len}`;
 
-    const formattedText = `${verseString} ${verseRefString}\n\nRead more: ${passageUrl}`;
+    const formattedText = `${verseString} ${verseRefString}\n\n${t("main.readMore")}: ${passageUrl}`;
 
     // Copy to clipboard
     navigator.clipboard.writeText(formattedText).then(

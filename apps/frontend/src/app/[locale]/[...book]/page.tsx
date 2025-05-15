@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = `${bookObj.description[lang]}`;
 
   const url = `https://amen24.org/${lang}/${bookKey}/${chapterNum}`;
-  const imageUrl = `https://amen24.org/img/og-defualt.jpg`;
+  const imageUrl = `https://amen24.org/img/og-default.jpg`;
 
   return {
     title,
