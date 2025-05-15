@@ -170,7 +170,8 @@ const LanguageSelector = () => {
         ? "/" + newLocale + currentPathname
         : currentPathname.replace(`/${currentLocale}`, `/${newLocale}`);
 
-    router.push(targetPath);
+    const search = typeof window !== "undefined" ? window.location.search : "";
+    router.push(`${targetPath}${search}`);
     router.refresh();
   }
 
