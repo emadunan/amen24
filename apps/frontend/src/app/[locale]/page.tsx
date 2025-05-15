@@ -11,6 +11,41 @@ interface Props {
   params: Promise<{ locale: string }>;
 }
 
+export async function generateMetadata({ params }: Props) {
+  const { t } = await initTranslations((await params).locale, i18nNamespaces);
+
+  const title = "Amen24";
+  const description = t("homepage.description");
+  const url = `https://amen24.org/`;
+  const imageUrl = "https://amen24.org/img/og-default.jpg"
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Amen24",
+      type: "article",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    },
+  };
+};
+
 const HomePage: FC<Props> = async ({ params }) => {
   const { locale } = await params;
   const { t } = await initTranslations(locale, i18nNamespaces);
