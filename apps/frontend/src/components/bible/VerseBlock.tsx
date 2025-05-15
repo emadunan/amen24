@@ -33,7 +33,8 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
   const formattedLastVerseNum = formatNumber(lastVerseNum || -1, lang);
 
   const verseIdsQuery = useMemo(() => {
-    return verses.map((v) => `v=${v.id}`).join("&");
+    const ids = verses.map((v) => v.id).join(",");
+    return `v=${ids}`;
   }, [verses]);
 
   return (

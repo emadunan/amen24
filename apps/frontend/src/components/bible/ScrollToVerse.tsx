@@ -5,15 +5,17 @@ import { useSearchParams } from "next/navigation";
 
 const ScrollToVerse = () => {
   const searchParams = useSearchParams();
-  const verseId = searchParams.get("v");
+  const verseParam = searchParams.get("v");
 
   useEffect(() => {
-    if (!verseId) return;
-    const target = document.getElementById(`v-${verseId}`);
+    if (!verseParam) return;
+
+    const firstVerseId = verseParam.split(",")[0];
+    const target = document.getElementById(`v-${firstVerseId}`);
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-  }, [verseId]);
+  }, [verseParam]);
 
   return null;
 };

@@ -71,6 +71,8 @@ const ChapterContent: FC<Props> = ({
       .join("")
       .trim(); // Trim to remove leading separator if present
 
+      const queryParameters = `v=${highlighted.sort((a, b) => a - b).join(",")}`;
+
     // Get formatted verse numbers
     const firstVerseNum = highlightedVerses[0]?.num;
     const lastVerseNum = highlightedVerses[highlightedVerses.length - 1]?.num;
@@ -90,7 +92,7 @@ const ChapterContent: FC<Props> = ({
       })`;
 
     const baseUrl = `https://amen24.org/${i18n.language}`;
-    const passageUrl = `${baseUrl}/${bookKey}/${chapterNum}/${BookMap[bookKey].len}`;
+    const passageUrl = `${baseUrl}/${bookKey}/${chapterNum}/${BookMap[bookKey].len}?${queryParameters}`;
 
     const formattedText = `${verseString} ${verseRefString}\n\n${t("main.readMore")}: ${passageUrl}`;
 

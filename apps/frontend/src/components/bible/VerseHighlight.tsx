@@ -28,10 +28,19 @@ const VerseHighlight: FC<Props> = ({ children, verseId }) => {
 
   useEffect(() => {
     if (isFirstLoad.current) {
-      const highlightedIds = searchParams.getAll("v").map(Number);
+      // const highlightedIds = searchParams.getAll("v").map(Number);
+      const verseParam = searchParams.get("v");
 
-      if (highlightedIds.includes(verseId) && !highlighted.includes(verseId)) {
-        toggleHighlight(verseId);
+      if (verseParam) {
+        const highlightedIds = verseParam
+          .split(",")
+          .map((id) => parseInt(id, 10))
+          .filter((n) => !isNaN(n));
+
+
+        if (highlightedIds.includes(verseId) && !highlighted.includes(verseId)) {
+          toggleHighlight(verseId);
+        }
       }
 
       isFirstLoad.current = false;
