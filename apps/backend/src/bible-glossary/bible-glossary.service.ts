@@ -7,6 +7,7 @@ import { Verse } from 'src/verses/entities/verse.entity';
 import { BibleGlossary } from './entities/bible-glossary.entity';
 import { BibleGlossaryTranslation } from './entities/bible-glossary-translation.entity';
 import { ERROR_KEYS, Lang } from '@amen24/shared';
+import { VersesService } from 'src/verses/verses.service';
 
 @Injectable()
 export class BibleGlossaryService {
@@ -17,8 +18,7 @@ export class BibleGlossaryService {
     @InjectRepository(BibleGlossaryTranslation)
     private glossaryTranslationRepo: Repository<BibleGlossaryTranslation>,
 
-    @InjectRepository(Verse)
-    private verseRepo: Repository<Verse>,
+    private versesService: VersesService,
   ) { }
 
   async create(dto: CreateBibleGlossaryDto) {
@@ -36,7 +36,7 @@ export class BibleGlossaryService {
     });
 
     if (dto.verseIds?.length) {
-      const verses = await this.verseRepo.findBy({ id: In(dto.verseIds) });
+      const verses = await this.versesService.findVersesByIds(dto.verseIds);
       glossary.verses = verses;
     }
 
@@ -64,7 +64,7 @@ export class BibleGlossaryService {
     Object.assign(glossary, dto);
 
     if (dto.verseIds) {
-      const verses = await this.verseRepo.findBy({ id: In(dto.verseIds) });
+      const verses = await this.versesService.findVersesByIds(dto.verseIds);
       glossary.verses = verses;
     }
 

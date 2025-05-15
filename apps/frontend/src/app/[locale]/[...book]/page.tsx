@@ -36,11 +36,42 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     lang = Lang.ENGLISH;
   }
 
+  const bookKey = book[0];
+  const chapterNum = book[1];
+  const bookObj = BookMap[bookKey as BookKey];
+
+  const title = `${bookObj.title[lang]} [${chapterNum}]`;
+  const description = `${bookObj.description[lang]}`;
+
+  const url = `https://amen24.org/${lang}/${bookKey}/${chapterNum}`;
+  const imageUrl = `https://amen24.org/img/og-defualt.jpg`;
+
   return {
-    title: `${BookMap[book[0] as BookKey].title[lang]} [${book[1]}]`,
-    description: `${BookMap[book[0] as BookKey].description[lang]}`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Amen24",
+      type: "article",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    },
   };
-}
+};
 
 const BookPage: FC<Props> = async ({ params }) => {
   const { book, locale } = await params;

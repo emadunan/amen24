@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import styles from "./ChapterContent.module.css";
 import ChapterToolbox from "./ChapterToolbox";
-import { BookKey, formatNumber, Lang, Verse } from "@amen24/shared";
+import { BookKey, BookMap, formatNumber, Lang, Verse } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import { showToast } from "@amen24/ui";
 
@@ -84,12 +84,15 @@ const ChapterContent: FC<Props> = ({
     );
 
     // Construct formatted string
-    const verseRefString = `(${t(bookKey)} ${formattedChapterNum} : ${formattedFirstVerseNum}${
-      formattedFirstVerseNum !== formattedLastVerseNum
-        ? ` - ${formattedLastVerseNum}`
-        : ""
-    })`;
-    const formattedText = `${verseString} ${verseRefString}`;
+    const verseRefString = `(${t(bookKey)} ${formattedChapterNum} : ${formattedFirstVerseNum}${formattedFirstVerseNum !== formattedLastVerseNum
+      ? ` - ${formattedLastVerseNum}`
+      : ""
+      })`;
+
+    const baseUrl = `https://amen24.org/${i18n.language}`;
+    const passageUrl = `${baseUrl}/${bookKey}/${chapterNum}/${BookMap[bookKey].len}`;
+
+    const formattedText = `${verseString} ${verseRefString}\n\nRead more: ${passageUrl}`;
 
     // Copy to clipboard
     navigator.clipboard.writeText(formattedText).then(
