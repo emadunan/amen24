@@ -11,11 +11,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { ProfilesService } from '../profiles/profiles.service';
-import { AuthProvider, ERROR_KEYS, MESSAGE_KEYS } from '@amen24/shared';
+import { AuthProvider, ERROR_KEYS, MESSAGE_KEYS, SysLogLevel } from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { ProgressService } from '../progress/progress.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { logError } from 'src/utils/log.util';
 
 @Injectable()
 export class UsersService {
@@ -38,8 +39,17 @@ export class UsersService {
     if (existUser) throw new ConflictException(ERROR_KEYS.USER_DUPLICATION);
 
     // Create profile
-    const profile = await this.profilesService.create({ email, uiLang, roles });
-    if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
+    try {
+      const profile = await this.profilesService.create({ email, uiLang, roles });
+      if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
+    } catch (error) {
+      logError(this.eventEmitter, error, {
+        context: 'UsersService.create',
+        metadata: { email, provider },
+      });
+
+      throw error;
+    }
 
     // Hash password if local authentication
     const userData: Partial<User> = {

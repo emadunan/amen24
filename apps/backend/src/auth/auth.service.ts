@@ -4,7 +4,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthProvider, Lang, ERROR_KEYS, MESSAGE_KEYS, UserRole } from '@amen24/shared';
+import { AuthProvider, Lang, ERROR_KEYS, MESSAGE_KEYS, UserRole, SysLogLevel } from '@amen24/shared';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
@@ -17,6 +17,7 @@ import { Profile } from 'passport';
 import * as bcrypt from 'bcrypt';
 import { ProfilesService } from '../profiles/profiles.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { logError } from 'src/utils/log.util';
 
 @Injectable()
 export class AuthService {
@@ -102,21 +103,30 @@ export class AuthService {
       return user;
     }
 
-    const createUserDto: CreateUserDto = {
-      email,
-      displayName,
-      providerId: id,
-      provider: provider as AuthProvider,
-      uiLang: lang || null,
-      progress: {
-        lastRead: 'Last Read',
-        oldTestament: '',
-        newTestament: '',
-      },
-      roles: [UserRole.MEMBER]
-    };
+    try {
+      const createUserDto: CreateUserDto = {
+        email,
+        displayName,
+        providerId: id,
+        provider: provider as AuthProvider,
+        uiLang: lang || null,
+        progress: {
+          lastRead: 'Last Read',
+          oldTestament: '',
+          newTestament: '',
+        },
+        roles: [UserRole.MEMBER]
+      };
 
-    return this.usersService.create(createUserDto);
+      return this.usersService.create(createUserDto);
+    } catch (error) {
+      logError(this.eventEmitter, error, {
+        context: 'AuthService.validateOAuthUser',
+        metadata: { email, provider, profileId: id },
+      })
+
+      throw error;
+    }
   }
 
   async loadTokens(user: User, response: Response): Promise<void> {

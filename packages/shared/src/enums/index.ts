@@ -6,3 +6,4 @@ export * from "./ThemeMode.enum";
 export * from "./DateCalendar.enum";
 export * from "./AuthProvider.enum";
 export * from "./AuditingAction.enum";
+export * from "./SysLogLevel.enum";

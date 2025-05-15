@@ -19,6 +19,7 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { ProgressModule } from './progress/progress.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
+import { SysLogsModule } from './sys-logs/sys-logs.module';
 import joiConfig from './_config/joi.config';
 
 @Module({
@@ -57,6 +58,7 @@ import joiConfig from './_config/joi.config';
     FavoritesModule,
     ProgressModule,
     BookmarksModule,
+    SysLogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
