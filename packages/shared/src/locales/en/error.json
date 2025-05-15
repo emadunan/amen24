@@ -23,5 +23,6 @@
   "progressNotFound": "No progress data found. Please start reading to create your first progress.",
   "progressExceedLimit": "You have reached the maximum number of progresses allowed.",
   "verseGroupFavorited": "This verse group is already in your favorites.",
-  "verseGroupFeatured": "This verse group is already featured."
+  "verseGroupFeatured": "This verse group is already featured.",
+  "glossaryNotFound": "The requested glossary term was not found."
 }

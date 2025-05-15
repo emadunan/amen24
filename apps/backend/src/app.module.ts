@@ -20,6 +20,7 @@ import { FavoritesModule } from './favorites/favorites.module';
 import { ProgressModule } from './progress/progress.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { SysLogsModule } from './sys-logs/sys-logs.module';
+import { BibleGlossaryModule } from './bible-glossary/bible-glossary.module';
 import joiConfig from './_config/joi.config';
 
 @Module({
@@ -59,6 +60,7 @@ import joiConfig from './_config/joi.config';
     ProgressModule,
     BookmarksModule,
     SysLogsModule,
+    BibleGlossaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

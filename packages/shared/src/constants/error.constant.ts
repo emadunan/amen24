@@ -25,4 +25,5 @@ export const ERROR_KEYS = {
   PROGRESS_EXCEED_LIMIT: "error:progressExceedLimit",
   VERSE_GROUP_FAVORITED: "error:verseGroupFavorited",
   VERSE_GROUP_FEATURED: "error:verseGroupFeatured",
+  GLOSSARY_NOT_FOUND: "error:glossaryNotFound",
 } as const;

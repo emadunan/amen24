@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { VerseGroup } from './verse-group.entity';
 import { VerseTranslation } from './verse-translation.entity';
+import { BibleGlossary } from '../../bible-glossary/entities/bible-glossary.entity';
 
 @Unique(['chapter', 'num'])
 @Entity()
@@ -36,4 +37,9 @@ export class Verse {
     (verseTranslation) => verseTranslation.verse,
   )
   verseTranslations: VerseTranslation[];
+
+
+  @ManyToMany(() => BibleGlossary, (glossary) => glossary.verses)
+  glossaryTerms: BibleGlossary[];
+
 }
