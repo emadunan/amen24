@@ -23,12 +23,16 @@ import { cookies } from "next/headers";
 import { Metadata } from "next";
 import AudioPlayerToggleBtn from "@/components/ui/AudioPlayerToggleBtn";
 
+const i18nNamespaces = ["common"];
+
 interface Props {
   params: Promise<{ book: string[]; locale: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { t } = await initTranslations((await params).locale, i18nNamespaces);
+
   const book = (await params).book;
   let lang = (await params).locale as Lang;
 
@@ -40,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const chapterNum = book[1];
   const bookObj = BookMap[bookKey as BookKey];
 
-  const title = `${bookObj.titleFull[lang]} | ${"chapter.chapter"} ${chapterNum} | Amen24`;
+  const title = `${bookObj.titleFull[lang]} | ${t("chapter.chapter")} ${formatNumber(+chapterNum, lang)} | Amen24`;
   const description = `${bookObj.description[lang]}`;
 
   const url = `https://amen24.org/${lang}/${bookKey}/${chapterNum}`;
