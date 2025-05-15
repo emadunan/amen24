@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const chapterNum = book[1];
   const bookObj = BookMap[bookKey as BookKey];
 
-  const title = `${bookObj.title[lang]} [${chapterNum}]`;
+  const title = `${bookObj.titleFull[lang]} | ${"chapter.chapter"} ${chapterNum} | Amen24`;
   const description = `${bookObj.description[lang]}`;
 
   const url = `https://amen24.org/${lang}/${bookKey}/${chapterNum}`;

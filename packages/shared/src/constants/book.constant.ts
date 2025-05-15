@@ -6,6 +6,7 @@ export const BookMap = {
     key: "GEN",
     title: { en: "Genesis", ar: "التكوين" },
     titleDiacrited: { en: "Genesis", ar: "ٱلتَّكْوِين" },
+    titleFull: { en: "Genesis", ar: "سِفْرُ ٱلتَّكْوِين" },
     writer: "moses",
     len: 50,
     description: {
@@ -18,6 +19,7 @@ export const BookMap = {
     key: "EXO",
     title: { en: "Exodus", ar: "الخروج" },
     titleDiacrited: { en: "Exodus", ar: "ٱلْخُرُوج" },
+    titleFull: { en: "Exodus", ar: "سِفْرُ ٱلْخُرُوج" },
     writer: "moses",
     len: 40,
     description: {
@@ -30,6 +32,7 @@ export const BookMap = {
     key: "LEV",
     title: { en: "Leviticus", ar: "اللاويين" },
     titleDiacrited: { en: "Leviticus", ar: "ٱللَّاوِيِّين" },
+    titleFull: { en: "Leviticus", ar: "سِفْرُ ٱللَّاوِيِّين" },
     writer: "moses",
     len: 27,
     description: {
@@ -42,6 +45,7 @@ export const BookMap = {
     key: "NUM",
     title: { en: "Numbers", ar: "العدد" },
     titleDiacrited: { en: "Numbers", ar: "ٱلْعَدَد" },
+    titleFull: { en: "Numbers", ar: "سِفْرُ ٱلْعَدَّد" },
     writer: "moses",
     len: 36,
     description: {
@@ -54,6 +58,7 @@ export const BookMap = {
     key: "DEU",
     title: { en: "Deuteronomy", ar: "التثنية" },
     titleDiacrited: { en: "Deuteronomy", ar: "ٱلتَّثْنِيَة" },
+    titleFull: { en: "Deuteronomy", ar: "سِفْرُ ٱلتَّثْنِيَة" },
     writer: "moses",
     len: 34,
     description: {
@@ -66,6 +71,7 @@ export const BookMap = {
     key: "JOS",
     title: { en: "Joshua", ar: "يشوع" },
     titleDiacrited: { en: "Joshua", ar: "يَشُوع" },
+    titleFull: { en: "Joshua", ar: "سِفْرُ يَشُوع" },
     writer: "joshua",
     len: 24,
     description: {
@@ -78,6 +84,7 @@ export const BookMap = {
     key: "JDG",
     title: { en: "Judges", ar: "القضاة" },
     titleDiacrited: { en: "Judges", ar: "ٱلْقُضَاة" },
+    titleFull: { en: "Judges", ar: "سِفْرُ ٱلْقُضَاة" },
     writer: "samuel",
     len: 21,
     description: {
@@ -90,6 +97,7 @@ export const BookMap = {
     key: "RUT",
     title: { en: "Ruth", ar: "راعوث" },
     titleDiacrited: { en: "Ruth", ar: "رَاعُوث" },
+    titleFull: { en: "Ruth", ar: "سِفْرُ رَاعُوث" },
     writer: "samuel",
     len: 4,
     description: {
@@ -102,6 +110,7 @@ export const BookMap = {
     key: "1SA",
     title: { en: "1 Samuel", ar: "صموئيل الأول" },
     titleDiacrited: { en: "1 Samuel", ar: "صَمُوئِيل ٱلْأَوَّل" },
+    titleFull: { en: "1 Samuel", ar: "سِفْرُ صَمُوئِيل ٱلْأَوَّل" },
     writer: "samuel",
     len: 31,
     description: {
@@ -114,6 +123,7 @@ export const BookMap = {
     key: "2SA",
     title: { en: "2 Samuel", ar: "صموئيل الثاني" },
     titleDiacrited: { en: "2 Samuel", ar: "صَمُوئِيل ٱلثَّانِي" },
+    titleFull: { en: "2 Samuel", ar: "سِفْرُ صَمُوئِيل ٱلثَّانِي" },
     writer: "samuel",
     len: 24,
     description: {
@@ -126,6 +136,7 @@ export const BookMap = {
     key: "1KI",
     title: { en: "1 Kings", ar: "الملوك الأول" },
     titleDiacrited: { en: "1 Kings", ar: "ٱلْمُلُوك ٱلْأَوَّل" },
+    titleFull: { en: "1 Kings", ar: "سِفْرُ ٱلْمُلُوك ٱلْأَوَّل" },
     writer: "jeremiah",
     len: 22,
     description: {
@@ -138,6 +149,7 @@ export const BookMap = {
     key: "2KI",
     title: { en: "2 Kings", ar: "الملوك الثاني" },
     titleDiacrited: { en: "2 Kings", ar: "ٱلْمُلُوك ٱلثَّانِي" },
+    titleFull: { en: "2 Kings", ar: "سِفْرُ ٱلْمُلُوك ٱلثَّانِي" },
     writer: "jeremiah",
     len: 25,
     description: {
@@ -150,6 +162,7 @@ export const BookMap = {
     key: "1CH",
     title: { en: "1 Chronicles", ar: "أخبار الأيام الأول" },
     titleDiacrited: { en: "1 Chronicles", ar: "أَخْبَار ٱلْأَيَّام ٱلْأَوَّل" },
+    titleFull: { en: "1 Chronicles", ar: "سِفْرُ أَخْبَارِ ٱلْأَيَّام ٱلْأَوَّل" },
     writer: "ezra",
     len: 29,
     description: {
@@ -162,6 +175,7 @@ export const BookMap = {
     key: "2CH",
     title: { en: "2 Chronicles", ar: "أخبار الأيام الثاني" },
     titleDiacrited: { en: "2 Chronicles", ar: "أَخْبَار ٱلْأَيَّام ٱلثَّانِي" },
+    titleFull: { en: "2 Chronicles", ar: "سِفْرُ أَخْبَارِ ٱلْأَيَّام ٱلثَّانِي" },
     writer: "ezra",
     len: 36,
     description: {
@@ -174,6 +188,7 @@ export const BookMap = {
     key: "EZR",
     title: { en: "Ezra", ar: "عزرا" },
     titleDiacrited: { en: "Ezra", ar: "عَزْرَا" },
+    titleFull: { en: "Ezra", ar: "سِفْرُ عَزْرَا" },
     writer: "ezra",
     len: 10,
     description: {
@@ -186,6 +201,7 @@ export const BookMap = {
     key: "NEH",
     title: { en: "Nehemiah", ar: "نحميا" },
     titleDiacrited: { en: "Nehemiah", ar: "نَحَمْيَا" },
+    titleFull: { en: "Nehemiah", ar: "سِفْرُ نَحَمْيَا" },
     writer: "nehemiah",
     len: 13,
     description: {
@@ -198,6 +214,7 @@ export const BookMap = {
     key: "EST",
     title: { en: "Esther", ar: "أستير" },
     titleDiacrited: { en: "Esther", ar: "أَسْتِير" },
+    titleFull: { en: "Esther", ar: "سِفْرُ أَسْتِير" },
     writer: "mordecai",
     len: 10,
     description: {
@@ -210,6 +227,7 @@ export const BookMap = {
     key: "JOB",
     title: { en: "Job", ar: "أيوب" },
     titleDiacrited: { en: "Job", ar: "أَيُّوب" },
+    titleFull: { en: "Job", ar: "سِفْرُ أَيُّوب" },
     writer: "moses",
     len: 42,
     description: {
@@ -222,6 +240,7 @@ export const BookMap = {
     key: "PSA",
     title: { en: "Psalms", ar: "المزامير" },
     titleDiacrited: { en: "Psalms", ar: "ٱلْمَزَامِير" },
+    titleFull: { en: "Psalms", ar: "سِفْرُ ٱلْمَزَامِير" },
     writer: "david",
     len: 150,
     description: {
@@ -234,6 +253,7 @@ export const BookMap = {
     key: "PRO",
     title: { en: "Proverbs", ar: "الأمثال" },
     titleDiacrited: { en: "Proverbs", ar: "ٱلْأَمْثَال" },
+    titleFull: { en: "Proverbs", ar: "سِفْرُ ٱلْأَمْثَال" },
     writer: "solomon",
     len: 31,
     description: {
@@ -246,6 +266,7 @@ export const BookMap = {
     key: "ECC",
     title: { en: "Ecclesiastes", ar: "الجامعة" },
     titleDiacrited: { en: "Ecclesiastes", ar: "ٱلْجَامِعَة" },
+    titleFull: { en: "Ecclesiastes", ar: "سِفْرُ ٱلْجَامِعَة" },
     writer: "solomon",
     len: 12,
     description: {
@@ -258,6 +279,7 @@ export const BookMap = {
     key: "SOL",
     title: { en: "Song of Songs", ar: "نشيد الأناشيد" },
     titleDiacrited: { en: "Song of Songs", ar: "نَشِيد ٱلْأَنَاشِيد" },
+    titleFull: { en: "Song of Songs", ar: "سِفْرُ نَشِيدِ ٱلْأَنْشَادِ" },
     writer: "solomon",
     len: 8,
     description: {
@@ -270,6 +292,7 @@ export const BookMap = {
     key: "ISA",
     title: { en: "Isaiah", ar: "إشعياء" },
     titleDiacrited: { en: "Isaiah", ar: "إِشَعْيَاء" },
+    titleFull: { en: "Isaiah", ar: "سِفْرُ إِشَعْيَاء" },
     writer: "isaiah",
     len: 66,
     description: {
@@ -282,6 +305,7 @@ export const BookMap = {
     key: "JER",
     title: { en: "Jeremiah", ar: "إرميا" },
     titleDiacrited: { en: "Jeremiah", ar: "إِرْمِيَا" },
+    titleFull: { en: "Jeremiah", ar: "سِفْرُ إِرْمِيَا" },
     writer: "jeremiah",
     len: 52,
     description: {
@@ -294,6 +318,7 @@ export const BookMap = {
     key: "LAM",
     title: { en: "Lamentations", ar: "مراثي إرميا" },
     titleDiacrited: { en: "Lamentations", ar: "مَرَاثِي إِرْمِيَا" },
+    titleFull: { en: "Lamentations", ar: "سِفْرُ ٱلْمَرَاثِي" },
     writer: "jeremiah",
     len: 5,
     description: {
@@ -306,6 +331,7 @@ export const BookMap = {
     key: "EZE",
     title: { en: "Ezekiel", ar: "حزقيال" },
     titleDiacrited: { en: "Ezekiel", ar: "حِزْقِيَال" },
+    titleFull: { en: "Ezekiel", ar: "سِفْرُ حِزْقِيَال" },
     writer: "ezekiel",
     len: 48,
     description: {
@@ -318,6 +344,7 @@ export const BookMap = {
     key: "DAN",
     title: { en: "Daniel", ar: "دانيآل" },
     titleDiacrited: { en: "Daniel", ar: "دَانِيآل" },
+    titleFull: { en: "Daniel", ar: "سِفْرُ دَانِيَال" },
     writer: "daniel",
     len: 12,
     description: {
@@ -330,6 +357,7 @@ export const BookMap = {
     key: "HOS",
     title: { en: "Hosea", ar: "هوشع" },
     titleDiacrited: { en: "Hosea", ar: "هُوشَع" },
+    titleFull: { en: "Hosea", ar: "سِفْرُ هُوشَع" },
     writer: "hosea",
     len: 14,
     description: {
@@ -342,6 +370,7 @@ export const BookMap = {
     key: "JOE",
     title: { en: "Joel", ar: "يوئيل" },
     titleDiacrited: { en: "Joel", ar: "يُوئِيل" },
+    titleFull: { en: "Joel", ar: "سِفْرُ يُوئِيل" },
     writer: "joel",
     len: 3,
     description: {
@@ -354,6 +383,7 @@ export const BookMap = {
     key: "AMO",
     title: { en: "Amos", ar: "عاموس" },
     titleDiacrited: { en: "Amos", ar: "عَامُوس" },
+    titleFull: { en: "Amos", ar: "سِفْرُ عَامُوس" },
     writer: "amos",
     len: 9,
     description: {
@@ -366,6 +396,7 @@ export const BookMap = {
     key: "OBA",
     title: { en: "Obadiah", ar: "عوبديا" },
     titleDiacrited: { en: "Obadiah", ar: "عُوبَدْيَا" },
+    titleFull: { en: "Obadiah", ar: "سِفْرُ عُوبَدْيَا" },
     writer: "obadiah",
     len: 1,
     description: {
@@ -378,6 +409,7 @@ export const BookMap = {
     key: "JON",
     title: { en: "Jonah", ar: "يونان" },
     titleDiacrited: { en: "Jonah", ar: "يُونَان" },
+    titleFull: { en: "Jonah", ar: "سِفْرُ يُونَان" },
     writer: "jonah",
     len: 4,
     description: {
@@ -390,6 +422,7 @@ export const BookMap = {
     key: "MIC",
     title: { en: "Micah", ar: "ميخا" },
     titleDiacrited: { en: "Micah", ar: "مِيخَا" },
+    titleFull: { en: "Micah", ar: "سِفْرُ مِيخَا" },
     writer: "micah",
     len: 7,
     description: {
@@ -402,6 +435,7 @@ export const BookMap = {
     key: "NAH",
     title: { en: "Nahum", ar: "ناحوم" },
     titleDiacrited: { en: "Nahum", ar: "نَاحُوم" },
+    titleFull: { en: "Nahum", ar: "سِفْرُ نَاحُوم" },
     writer: "nahum",
     len: 3,
     description: {
@@ -414,6 +448,7 @@ export const BookMap = {
     key: "HAB",
     title: { en: "Habakkuk", ar: "حبقوق" },
     titleDiacrited: { en: "Habakkuk", ar: "حَبَقُّوق" },
+    titleFull: { en: "Habakkuk", ar: "سِفْرُ حَبَقُّوق" },
     writer: "habakkuk",
     len: 3,
     description: {
@@ -426,6 +461,7 @@ export const BookMap = {
     key: "ZEP",
     title: { en: "Zephaniah", ar: "صفنيا" },
     titleDiacrited: { en: "Zephaniah", ar: "صَفَنْيَا" },
+    titleFull: { en: "Zephaniah", ar: "سِفْرُ صَفَنْيَا" },
     writer: "zephaniah",
     len: 3,
     description: {
@@ -438,6 +474,7 @@ export const BookMap = {
     key: "HAG",
     title: { en: "Haggai", ar: "حجاي" },
     titleDiacrited: { en: "Haggai", ar: "حَجَّاي" },
+    titleFull: { en: "Haggai", ar: "سِفْرُ حَجَّي" },
     writer: "haggai",
     len: 2,
     description: {
@@ -450,6 +487,7 @@ export const BookMap = {
     key: "ZEC",
     title: { en: "Zechariah", ar: "زكريا" },
     titleDiacrited: { en: "Zechariah", ar: "زَكَرِيَّا" },
+    titleFull: { en: "Zechariah", ar: "سِفْرُ زَكَرِيَّا" },
     writer: "zechariah",
     len: 14,
     description: {
@@ -462,6 +500,7 @@ export const BookMap = {
     key: "MAL",
     title: { en: "Malachi", ar: "ملاخي" },
     titleDiacrited: { en: "Malachi", ar: "مَلاَخِي" },
+    titleFull: { en: "Malachi", ar: "سِفْرُ مَلَاخِي" },
     writer: "malachi",
     len: 4,
     description: {
@@ -474,6 +513,7 @@ export const BookMap = {
     key: "MAT",
     title: { en: "Matthew", ar: "متى" },
     titleDiacrited: { en: "Matthew", ar: "مَتَّى" },
+    titleFull: { en: "Matthew", ar: "إِنْجِيل مَتَّى" },
     writer: "matthew",
     len: 28,
     description: {
@@ -486,6 +526,7 @@ export const BookMap = {
     key: "MAR",
     title: { en: "Mark", ar: "مرقس" },
     titleDiacrited: { en: "Mark", ar: "مَرْقُس" },
+    titleFull: { en: "Mark", ar: "إِنْجِيل مَرْقُس" },
     writer: "mark",
     len: 16,
     description: {
@@ -498,6 +539,7 @@ export const BookMap = {
     key: "LUK",
     title: { en: "Luke", ar: "لوقا" },
     titleDiacrited: { en: "Luke", ar: "لُوقَا" },
+    titleFull: { en: "Luke", ar: "إِنْجِيل لُوقَا" },
     writer: "luke",
     len: 24,
     description: {
@@ -510,6 +552,7 @@ export const BookMap = {
     key: "JOH",
     title: { en: "John", ar: "يوحنا" },
     titleDiacrited: { en: "John", ar: "يُوحَنَّا" },
+    titleFull: { en: "John", ar: "إِنْجِيل يُوحَنَّا" },
     writer: "john",
     len: 21,
     description: {
@@ -522,6 +565,7 @@ export const BookMap = {
     key: "ACT",
     title: { en: "Acts", ar: "أعمال الرسل" },
     titleDiacrited: { en: "Acts", ar: "أَعْمَال ٱلرُّسُل" },
+    titleFull: { en: "Acts", ar: "سِفْرُ أَعْمَالِ ٱلرُّسُل" },
     writer: "luke",
     len: 28,
     description: {
@@ -534,6 +578,7 @@ export const BookMap = {
     key: "ROM",
     title: { en: "Romans", ar: "رومية" },
     titleDiacrited: { en: "Romans", ar: "رُومِيَة" },
+    titleFull: { en: "Romans", ar: "رِسَالَةُ رُومِيَّة" },
     writer: "paul",
     len: 16,
     description: {
@@ -546,6 +591,7 @@ export const BookMap = {
     key: "1CO",
     title: { en: "1Corinthians", ar: "كورنثوس الأولى" },
     titleDiacrited: { en: "1Corinthians", ar: "كُورِنْثُوس ٱلْأُولَى" },
+    titleFull: { en: "1Corinthians", ar: "رِسَالَةُ كُورِنْثُوس ٱلْأُولَى" },
     writer: "paul",
     len: 16,
     description: {
@@ -558,6 +604,7 @@ export const BookMap = {
     key: "2CO",
     title: { en: "2Corinthians", ar: "كورنثوس الثانية" },
     titleDiacrited: { en: "2Corinthians", ar: "كُورِنْثُوس ٱلثَّانِيَة" },
+    titleFull: { en: "2Corinthians", ar: "رِسَالَةُ كُورِنْثُوس ٱلثَّانِيَة" },
     writer: "paul",
     len: 13,
     description: {
@@ -570,6 +617,7 @@ export const BookMap = {
     key: "GAL",
     title: { en: "Galatians", ar: "غلاطية" },
     titleDiacrited: { en: "Galatians", ar: "غَلاَطِيَّة" },
+    titleFull: { en: "Galatians", ar: "رِسَالَةُ غَلَاطِيَّة" },
     writer: "paul",
     len: 6,
     description: {
@@ -582,6 +630,7 @@ export const BookMap = {
     key: "EPH",
     title: { en: "Ephesians", ar: "أفسس" },
     titleDiacrited: { en: "Ephesians", ar: "أَفَسُس" },
+    titleFull: { en: "Ephesians", ar: "رِسَالَةُ أَفَسُس" },
     writer: "paul",
     len: 6,
     description: {
@@ -594,6 +643,7 @@ export const BookMap = {
     key: "PHI",
     title: { en: "Philippians", ar: "فيلبي" },
     titleDiacrited: { en: "Philippians", ar: "فِيلِبِّي" },
+    titleFull: { en: "Philippians", ar: "رِسَالَةُ فِيلِبِّي" },
     writer: "paul",
     len: 4,
     description: {
@@ -606,6 +656,7 @@ export const BookMap = {
     key: "COL",
     title: { en: "Colossians", ar: "كولوسي" },
     titleDiacrited: { en: "Colossians", ar: "كُولُوسِّي" },
+    titleFull: { en: "Colossians", ar: "رِسَالَةُ كُولُوسِّي" },
     writer: "paul",
     len: 4,
     description: {
@@ -618,6 +669,7 @@ export const BookMap = {
     key: "1TH",
     title: { en: "1Thessalonians", ar: "تسالونيكي الأولى" },
     titleDiacrited: { en: "1Thessalonians", ar: "تَسَالُونِيكِي ٱلْأُولَى" },
+    titleFull: { en: "1Thessalonians", ar: "رِسَالَةُ تَسَالُونِيكِي ٱلْأُولَى" },
     writer: "paul",
     len: 5,
     description: {
@@ -630,6 +682,7 @@ export const BookMap = {
     key: "2TH",
     title: { en: "2Thessalonians", ar: "تسالونيكي الثانية" },
     titleDiacrited: { en: "2Thessalonians", ar: "تَسَالُونِيكِي ٱلثَّانِيَة" },
+    titleFull: { en: "2Thessalonians", ar: "رِسَالَةُ تَسَالُونِيكِي ٱلثَّانِيَة" },
     writer: "paul",
     len: 3,
     description: {
@@ -642,6 +695,7 @@ export const BookMap = {
     key: "1TI",
     title: { en: "1Timothy", ar: "تيموثاوس الأولى" },
     titleDiacrited: { en: "1Timothy", ar: "تِيمُوثَاوُس ٱلْأُولَى" },
+    titleFull: { en: "1Timothy", ar: "رِسَالَةُ تِيمُوثَاوُس ٱلْأُولَى" },
     writer: "paul",
     len: 6,
     description: {
@@ -654,6 +708,7 @@ export const BookMap = {
     key: "2TI",
     title: { en: "2Timothy", ar: "تيموثاوس الثانية" },
     titleDiacrited: { en: "2Timothy", ar: "تِيمُوثَاوُس ٱلثَّانِيَة" },
+    titleFull: { en: "2Timothy", ar: "رِسَالَةُ تِيمُوثَاوُس ٱلثَّانِيَة" },
     writer: "paul",
     len: 4,
     description: {
@@ -666,6 +721,7 @@ export const BookMap = {
     key: "TIT",
     title: { en: "Titus", ar: "تيطس" },
     titleDiacrited: { en: "Titus", ar: "تِيطُس" },
+    titleFull: { en: "Titus", ar: "رِسَالَةُ تِيطُس" },
     writer: "paul",
     len: 3,
     description: {
@@ -678,6 +734,7 @@ export const BookMap = {
     key: "PHM",
     title: { en: "Philemon", ar: "فيليمون" },
     titleDiacrited: { en: "Philemon", ar: "فِيلِيمُون" },
+    titleFull: { en: "Philemon", ar: "رِسَالَةُ فِيلِيمُون" },
     writer: "paul",
     len: 1,
     description: {
@@ -690,6 +747,7 @@ export const BookMap = {
     key: "HEB",
     title: { en: "Hebrews", ar: "العبرانيين" },
     titleDiacrited: { en: "Hebrews", ar: "ٱلْعِبْرَانِيِّين" },
+    titleFull: { en: "Hebrews", ar: "رِسَالَةُ ٱلْعِبْرَانِيِّين" },
     writer: "paul",
     len: 13,
     description: {
@@ -702,6 +760,7 @@ export const BookMap = {
     key: "JAM",
     title: { en: "James", ar: "يعقوب" },
     titleDiacrited: { en: "James", ar: "يَعْقُوب" },
+    titleFull: { en: "James", ar: "رِسَالَةُ يَعْقُوب" },
     writer: "james",
     len: 5,
     description: {
@@ -714,6 +773,7 @@ export const BookMap = {
     key: "1PE",
     title: { en: "1Peter", ar: "بطرس الأولى" },
     titleDiacrited: { en: "1Peter", ar: "بُطْرُس ٱلْأُولَى" },
+    titleFull: { en: "1Peter", ar: "رِسَالَةُ بُطْرُس ٱلْأُولَى" },
     writer: "peter",
     len: 5,
     description: {
@@ -726,6 +786,7 @@ export const BookMap = {
     key: "2PE",
     title: { en: "2Peter", ar: "بطرس الثانية" },
     titleDiacrited: { en: "2Peter", ar: "بُطْرُس ٱلثَّانِيَة" },
+    titleFull: { en: "2Peter", ar: "رِسَالَةُ بُطْرُس ٱلثَّانِيَة" },
     writer: "peter",
     len: 3,
     description: {
@@ -738,6 +799,7 @@ export const BookMap = {
     key: "1JO",
     title: { en: "1John", ar: "يوحنا الأولى" },
     titleDiacrited: { en: "1John", ar: "يُوحَنَّا ٱلْأُولَى" },
+    titleFull: { en: "1John", ar: "رِسَالَةُ يُوحَنَّا ٱلْأُولَى" },
     writer: "john",
     len: 5,
     description: {
@@ -750,6 +812,7 @@ export const BookMap = {
     key: "2JO",
     title: { en: "2John", ar: "يوحنا الثانية" },
     titleDiacrited: { en: "2John", ar: "يُوحَنَّا ٱلثَّانِيَة" },
+    titleFull: { en: "2John", ar: "رِسَالَةُ يُوحَنَّا ٱلثَّانِيَة" },
     writer: "john",
     len: 1,
     description: {
@@ -762,6 +825,7 @@ export const BookMap = {
     key: "3JO",
     title: { en: "3John", ar: "يوحنا الثالثة" },
     titleDiacrited: { en: "3John", ar: "يُوحَنَّا ٱلثَّالِثَة" },
+    titleFull: { en: "3John", ar: "رِسَالَةُ يُوحَنَّا ٱلثَّالِثَة" },
     writer: "john",
     len: 1,
     description: {
@@ -774,6 +838,7 @@ export const BookMap = {
     key: "JUD",
     title: { en: "Jude", ar: "يهوذا" },
     titleDiacrited: { en: "Jude", ar: "يَهُوذَا" },
+    titleFull: { en: "Jude", ar: "رِسَالَةُ يَهُوذَا" },
     writer: "jude",
     len: 1,
     description: {
@@ -786,6 +851,7 @@ export const BookMap = {
     key: "REV",
     title: { en: "Revelation", ar: "الرؤيا" },
     titleDiacrited: { en: "Revelation", ar: "ٱلرُّؤْيَا" },
+    titleFull: { en: "Revelation", ar: "سِفْرُ ٱلرُّؤْيَا" },
     writer: "john",
     len: 22,
     description: {
