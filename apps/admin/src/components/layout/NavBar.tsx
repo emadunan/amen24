@@ -33,10 +33,10 @@ const NavBar: FC<Props> = ({ user, handleLogout }) => {
       </li>}
 
 
-      {/* <li className={styles.listItem} >
+      <li className={styles.listItem} >
         <NavLink to={`/glossary`}>Glossary</NavLink>
       </li>
-      <li className={styles.listItem} >
+      {/* <li className={styles.listItem} >
         <NavLink to={`/blogs`}>Blogs</NavLink>
       </li>
       <li className={styles.listItem} >

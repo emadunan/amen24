@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import styles from "./ChapterToolbox.module.css";
-import { FaCopy, FaEraser, FaStar } from "react-icons/fa";
+import { FaCopy, FaEraser, FaStar, FaBookOpen } from "react-icons/fa";
 import { MdPushPin } from "react-icons/md";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { HiSparkles } from "react-icons/hi2";
@@ -25,10 +25,12 @@ import { useAddFavoriteMutation } from "@/store/apis/favoriteApi";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
 import { useAddToFeaturedMutation } from "@/store/apis/featuredApi";
 import ToggleDraggableBtn from "../ui/ToggleDraggableBtn";
+import GlossaryModal from "../chapter-toolbox/GlossaryModal";
 
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
     useHighlightContext();
+
   const { t, i18n } = useTranslation();
   const isRTL = isRtl(i18n.language as Lang);
 
@@ -49,8 +51,13 @@ const ChapterToolbox = () => {
   const [addFavorite] = useAddFavoriteMutation();
   const [addFeatured] = useAddToFeaturedMutation();
 
+  const [isGlossaryModalOpen, setIsGlossaryModalOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
+
+  function handleCloseGlossaryModal() {
+    setIsGlossaryModalOpen(false);
+  }
 
   useEffect(() => {
     setIsClient(true);
@@ -132,6 +139,7 @@ const ChapterToolbox = () => {
         width: i18n.language === "ar" ? "9rem" : "11rem",
       }}
     >
+      <GlossaryModal isOpen={isGlossaryModalOpen} onClose={handleCloseGlossaryModal} />
       <div className={styles.toolboxHeader} ref={headerRef}>
         <RxDragHandleDots2 className={styles.dragIcon} />
         <h4>{t("toolbox.title")}</h4>
@@ -146,6 +154,13 @@ const ChapterToolbox = () => {
           <button onClick={copyHighlighted}>
             <FaCopy /> {t("toolbox.copy")}
           </button>
+
+          {user &&
+            hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
+              <button onClick={() => setIsGlossaryModalOpen(true)}>
+                <FaBookOpen /> {t("toolbox.addToGlossary")}
+              </button>
+            )}
 
           {user &&
             hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (

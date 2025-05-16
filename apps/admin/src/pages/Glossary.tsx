@@ -1,9 +1,12 @@
+import GlossaryForm from "../components/glossary/GlossaryForm"
 
 const Glossary = () => {
   return (
     <div>
       <h3>Glossary</h3>
-      <div></div>
+      <div>
+        <GlossaryForm />
+      </div>
     </div>
   )
 }

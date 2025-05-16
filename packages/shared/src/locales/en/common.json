@@ -76,6 +76,7 @@
   "toolbox": {
     "title": "Toolbox",
     "copy": "Copy Highlighted",
+    "addToGlossary": "Add to Glossary",
     "addToFavorites": "Add to Favorites",
     "addToFeatured": "Add to Featured",
     "progress": "Save As Last Read",

@@ -1,11 +1,14 @@
 :root {
   --logo: url("/img/logo-light.png");
+  --max: #000;
+  --min: #fff;
   --text: #3b3a34;
   --text-rgb: 59, 58, 52;
   --background: #f4efe6;
   --background-hover: #e6dfd2;
   --background-rgb: 244, 239, 230;
   --primary: #8a6e4a;
+  --primary-hover: #765e3c;
   --secondary: #d6ccb1;
   --secondary-hover: #c8bda3;
   --accent: #3d6b50;
@@ -27,12 +30,15 @@
 
 [data-theme="dark"] {
   --logo: url("/img/logo-dark.png");
+  --max: #fff;
+  --min: #000;
   --text: #f4efe6;
   --text-rgb: 244, 239, 230;
   --background: #3a332b;
   --background-hover: #403831;
   --background-rgb: 58, 51, 43;
   --primary: #a68a5e;
+  --primary-hover: #b49a72;
   --secondary: #524a3f;
   --secondary-hover: #6a5f53;
   --accent: #82b48a;

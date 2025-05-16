@@ -1,0 +1,91 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(var(--text-rgb), 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.modal {
+  z-index: 21;
+  background-color: var(--background);
+  color: var(--text);
+  padding: 2rem;
+  border-radius: 2pxem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(var(--text-rgb), 0.4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  color: var(--gray-hover);
+}
+
+.btnRow {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.btnSubmit {
+  background-color: var(--primary);
+  color: var(--min);
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 2px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnSubmit:hover {
+  background-color: var(--primary-hover);
+}
+
+.btnClear {
+  background-color: var(--secondary);
+  color: var(--min);
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 2px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnClear:hover {
+  background-color: var(--secondary-hover);
+}
+
+.btnCancel {
+  background-color: var(--gray);
+  color: var(--min);
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 2px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-left: auto;
+}
+
+.btnCancel:hover {
+  background-color: var(--gray-hover);
+}
