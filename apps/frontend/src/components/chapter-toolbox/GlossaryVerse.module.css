@@ -1,0 +1,10 @@
+.verse {
+  display: flex;
+  flex-wrap: wrap;
+  border: solid var(--secondary) 1px;
+  margin-bottom: 1rem;
+}
+
+.word {
+  margin: 0rem 0.4rem;
+}

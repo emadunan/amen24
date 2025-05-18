@@ -37,8 +37,10 @@ const VerseHighlight: FC<Props> = ({ children, verseId }) => {
           .map((id) => parseInt(id, 10))
           .filter((n) => !isNaN(n));
 
-
-        if (highlightedIds.includes(verseId) && !highlighted.includes(verseId)) {
+        if (
+          highlightedIds.includes(verseId) &&
+          !highlighted.includes(verseId)
+        ) {
           toggleHighlight(verseId);
         }
       }

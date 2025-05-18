@@ -117,8 +117,7 @@ const AudioPlayer: React.FC = () => {
 
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
-    const ratio =
-      isRTL ? 1 - clickX / rect.width : clickX / rect.width;
+    const ratio = isRTL ? 1 - clickX / rect.width : clickX / rect.width;
     const newTime = ratio * audio.duration;
 
     audio.currentTime = newTime;

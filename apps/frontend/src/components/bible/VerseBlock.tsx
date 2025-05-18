@@ -38,10 +38,7 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
   }, [verses]);
 
   return (
-    <div
-      className={styles.verseContainer}
-      dir={getDirection(lang)}
-    >
+    <div className={styles.verseContainer} dir={getDirection(lang)}>
       <p>
         {useMemo(() => {
           return verses

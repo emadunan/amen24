@@ -32,6 +32,15 @@ export class VersesController {
     return await this.versesService.findVerseGroups();
   }
 
+  @Get(':verseId/:lang')
+  @UseGuards(OptionalJwtAuthGuard)
+  async findOneById(
+    @Param('verseId', ParseIntPipe) id: number,
+    @Param('lang') lang: Lang,
+  ) {
+    return await this.versesService.findOneById(id, lang);
+  }
+
   @Get(':bookKey/:chapterNum/:lang')
   @UseGuards(OptionalJwtAuthGuard)
   findChapter(

@@ -38,18 +38,18 @@ export class VersesService {
     if (!verseIds.length) {
       throw new BadRequestException('verseIds array is empty');
     }
-  
+
     const verses = await this.versesRepo.find({
       where: { id: In(verseIds) },
       order: { id: 'ASC' },
     });
-  
+
     if (verses.length !== verseIds.length) {
       const foundIds = new Set(verses.map((v) => v.id));
       const missingIds = verseIds.filter((id) => !foundIds.has(id));
       throw new NotFoundException(`Verses not found for IDs: ${missingIds.join(', ')}`);
     }
-  
+
     return verses;
   }
 
@@ -169,6 +169,18 @@ export class VersesService {
         },
       },
     });
+  }
+
+  async findOneById(id: number, lang: Lang) {
+    return await this.versesRepo.findOne({
+      where: {
+        id,
+        verseTranslations: {
+          lang
+        }
+      },
+      relations: ['verseTranslations']
+    })
   }
 
   async findManyByQuery(query: string, scope: BookKey[], email?: string) {

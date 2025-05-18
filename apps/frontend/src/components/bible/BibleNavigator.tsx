@@ -26,7 +26,7 @@ const BibleNavigator = () => {
   const [urlBookKey, chapterNum] = bookParams as [BookKey?, string?, string?];
 
   const { position, handleMouseDown, handleTouchStart, elementRef } =
-    useDraggable(5, 5,  isRTL, 12, headerRef);
+    useDraggable(5, 5, isRTL, 12, headerRef);
 
   const isBookChapterPage = /^\/(?:[a-z]{2}\/)?[A-Z0-9]+\/\d+\/\d+$/.test(
     pathname,

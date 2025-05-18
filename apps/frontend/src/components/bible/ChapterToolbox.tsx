@@ -31,6 +31,8 @@ const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
     useHighlightContext();
 
+  const lastHighlighted = highlighted.at(-1);
+
   const { t, i18n } = useTranslation();
   const isRTL = isRtl(i18n.language as Lang);
 
@@ -38,13 +40,7 @@ const ChapterToolbox = () => {
   const [updateProgress] = useUpdateProgressMutation();
   const { showApiError, showError, showMessage } = useFeedback(t);
   const { position, handleMouseDown, elementRef, handleTouchStart } =
-    useDraggable(
-      5,
-      7,
-      !isRTL,
-      i18n.language === "ar" ? 9 : 11,
-      headerRef,
-    );
+    useDraggable(5, 7, !isRTL, i18n.language === "ar" ? 9 : 11, headerRef);
 
   const { data: user } = useGetMeQuery();
   const { data: progress } = useGetUserLastReadProgressQuery();
@@ -71,8 +67,6 @@ const ChapterToolbox = () => {
     progressId?: number,
     profileEmail?: string,
   ) {
-    const lastHighlighted = highlighted.at(-1);
-
     if (!lastHighlighted) {
       showError(ERROR_KEYS.HIGHLIGHT_VERSE);
       return;
@@ -139,7 +133,13 @@ const ChapterToolbox = () => {
         width: i18n.language === "ar" ? "9rem" : "11rem",
       }}
     >
-      <GlossaryModal isOpen={isGlossaryModalOpen} onClose={handleCloseGlossaryModal} />
+      {lastHighlighted && (
+        <GlossaryModal
+          isOpen={isGlossaryModalOpen}
+          onClose={handleCloseGlossaryModal}
+          verseId={lastHighlighted}
+        />
+      )}
       <div className={styles.toolboxHeader} ref={headerRef}>
         <RxDragHandleDots2 className={styles.dragIcon} />
         <h4>{t("toolbox.title")}</h4>

@@ -19,6 +19,7 @@ export function convertToSuperscript(num: number): string {
     .join("");
 }
 
+export * from "./bible";
 export * from "./formatNumber";
 export * from "./hasPermission";
 export * from "./textNormalization";

@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [imageUrl],
     },
   };
-};
+}
 
 const BookPage: FC<Props> = async ({ params }) => {
   const { book, locale } = await params;

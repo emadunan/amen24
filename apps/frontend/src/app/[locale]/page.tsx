@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props) {
   const title = "Amen24";
   const description = t("homepage.description");
   const url = `https://amen24.org/`;
-  const imageUrl = "https://amen24.org/img/og-default.jpg?v=2"
+  const imageUrl = "https://amen24.org/img/og-default.jpg?v=2";
 
   return {
     title,
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: Props) {
       images: [imageUrl],
     },
   };
-};
+}
 
 const HomePage: FC<Props> = async ({ params }) => {
   const { locale } = await params;

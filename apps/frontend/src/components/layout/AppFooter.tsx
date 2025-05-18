@@ -10,10 +10,7 @@ const AppFooter = () => {
   const { t, i18n } = useTranslation();
   return (
     <footer className={styles.footer}>
-      <p
-        className={styles.copyright}
-        dir={getDirection(i18n.language as Lang)}
-      >
+      <p className={styles.copyright} dir={getDirection(i18n.language as Lang)}>
         &copy; {new Date().getFullYear()}&mdash;{t("footer.copyright")}
       </p>
       <nav className={styles.nav}>

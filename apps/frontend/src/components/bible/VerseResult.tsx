@@ -30,10 +30,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
   const formattedVerseNum = formatNumber(verseNum, lang);
 
   return (
-    <div
-      className={styles.verseContainer}
-      dir={getDirection(lang)}
-    >
+    <div className={styles.verseContainer} dir={getDirection(lang)}>
       <VerseResultText text={text} queryTerms={queryTerms} />
       <Link
         className={styles.reference}

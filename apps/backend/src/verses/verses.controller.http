@@ -1,6 +1,9 @@
 ### Get all books
 GET http://localhost:5000/api/books
 
+### Get verse
+GET http://localhost:5000/api/verses/2749/ar
+
 ### Get verses of one chapter
 GET http://localhost:5000/api/verses/GEN/1/en
 
