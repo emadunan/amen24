@@ -42,6 +42,8 @@
   display: flex;
   justify-content: flex-start;
   gap: 1rem;
+  flex-wrap: wrap;
+  font-family: amiri;
 }
 
 .btnSubmit {
@@ -53,6 +55,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: background 0.2s;
+  font-family: amiri;
 }
 
 .btnSubmit:hover {
@@ -68,6 +71,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: background 0.2s;
+  font-family: amiri;
 }
 
 .btnClear:hover {
@@ -84,6 +88,13 @@
   cursor: pointer;
   transition: background 0.2s;
   margin-left: auto;
+  font-family: amiri;
+
+}
+
+[dir="rtl"] .btnCancel {
+  margin-left: 0;
+  margin-right: auto;
 }
 
 .btnCancel:hover {

@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import styles from "./GlossaryModal.module.css";
+import { useTranslation } from "react-i18next";
 
 interface GlossaryModalProps {
   onClose: () => void;
@@ -10,6 +11,8 @@ interface GlossaryModalProps {
 }
 
 const GlossaryModal: React.FC<GlossaryModalProps> = ({ onClose, isOpen }) => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -28,15 +31,15 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({ onClose, isOpen }) => {
         <button className={styles.closeButton} onClick={onClose}>
           &times;
         </button>
-        <h2>Add Glossary Term</h2>
+        <h2>{t("toolbox.addGlossaryTerm")}</h2>
         <div>
           <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </div>
         <div className={styles.btnRow}>
-          <button className={styles.btnSubmit}>Add to Glossary</button>
-          <button className={styles.btnClear}>Clear</button>
-          <button className={styles.btnCancel} onClick={onClose}>Cancel</button>
+          <button className={styles.btnSubmit}>{t("main.add")}</button>
+          <button className={styles.btnClear}>{t("main.clear")}</button>
+          <button className={styles.btnCancel} onClick={onClose}>{t("main.cancel")}</button>
         </div>
       </div>
     </div>,

@@ -155,20 +155,6 @@ const ChapterToolbox = () => {
             <FaCopy /> {t("toolbox.copy")}
           </button>
 
-          {user &&
-            hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-              <button onClick={() => setIsGlossaryModalOpen(true)}>
-                <FaBookOpen /> {t("toolbox.addToGlossary")}
-              </button>
-            )}
-
-          {user &&
-            hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-              <button onClick={handleAddFeatured}>
-                <HiSparkles /> {t("toolbox.addToFeatured")}
-              </button>
-            )}
-
           {user && (
             <Fragment>
               <button onClick={handleAddFavorite}>
@@ -203,6 +189,20 @@ const ChapterToolbox = () => {
               </button>
             </Fragment>
           )}
+
+          {user &&
+            hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
+              <button onClick={() => setIsGlossaryModalOpen(true)}>
+                <FaBookOpen /> {t("toolbox.addToGlossary")}
+              </button>
+            )}
+
+          {user &&
+            hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
+              <button onClick={handleAddFeatured}>
+                <HiSparkles /> {t("toolbox.addToFeatured")}
+              </button>
+            )}
 
           <button onClick={clearHighlighted} className={styles.eraserBtn}>
             <FaEraser /> {t("toolbox.clearHighlighting")}
