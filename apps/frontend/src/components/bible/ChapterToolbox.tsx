@@ -122,17 +122,7 @@ const ChapterToolbox = () => {
   }
 
   const toolboxComponent = (
-    <div
-      className={styles.toolbox}
-      ref={elementRef}
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleTouchStart}
-      style={{
-        left: position.x,
-        top: position.y,
-        width: i18n.language === "ar" ? "9rem" : "11rem",
-      }}
-    >
+    <>
       {lastHighlighted && (
         <GlossaryModal
           isOpen={isGlossaryModalOpen}
@@ -140,76 +130,89 @@ const ChapterToolbox = () => {
           verseId={lastHighlighted}
         />
       )}
-      <div className={styles.toolboxHeader} ref={headerRef}>
-        <RxDragHandleDots2 className={styles.dragIcon} />
-        <h4>{t("toolbox.title")}</h4>
-        <CloseDraggableBtn onClose={clearHighlighted} />
-        <ToggleDraggableBtn
-          onToggle={handleIsExpanded}
-          isExpanded={isExpanded}
-        />
-      </div>
-      {isExpanded && (
-        <div className={styles.toolboxContainer}>
-          <button onClick={copyHighlighted}>
-            <FaCopy /> {t("toolbox.copy")}
-          </button>
 
-          {user && (
-            <Fragment>
-              <button onClick={handleAddFavorite}>
-                <FaStar /> {t("toolbox.addToFavorites")}
-              </button>
-
-              <button
-                className={styles.progress}
-                onClick={handleUpdateProgress.bind(
-                  this,
-                  progress?.id,
-                  user?.email,
-                )}
-              >
-                {isClient && <MdPushPin size="1.2rem" />}
-                <div className={styles.progressContent}>
-                  <p className={styles.progressTitle}>
-                    {t("toolbox.progress")}
-                  </p>
-                  {progress && (
-                    <small className={styles.progressRef}>
-                      {t(`book:${progress.verse.chapter.book.bookKey}`)} (
-                      {formatNumber(
-                        progress.verse.chapter.num,
-                        i18n.language as Lang,
-                      )}{" "}
-                      :{" "}
-                      {formatNumber(progress.verse.num, i18n.language as Lang)})
-                    </small>
-                  )}
-                </div>
-              </button>
-            </Fragment>
-          )}
-
-          {user &&
-            hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-              <button onClick={() => setIsGlossaryModalOpen(true)}>
-                <FaBookOpen /> {t("toolbox.addToGlossary")}
-              </button>
-            )}
-
-          {user &&
-            hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-              <button onClick={handleAddFeatured}>
-                <HiSparkles /> {t("toolbox.addToFeatured")}
-              </button>
-            )}
-
-          <button onClick={clearHighlighted} className={styles.eraserBtn}>
-            <FaEraser /> {t("toolbox.clearHighlighting")}
-          </button>
+      <div
+        className={styles.toolbox}
+        ref={elementRef}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+        style={{
+          left: position.x,
+          top: position.y,
+          width: i18n.language === "ar" ? "9rem" : "11rem",
+        }}
+      >
+        <div className={styles.toolboxHeader} ref={headerRef}>
+          <RxDragHandleDots2 className={styles.dragIcon} />
+          <h4>{t("toolbox.title")}</h4>
+          <CloseDraggableBtn onClose={clearHighlighted} />
+          <ToggleDraggableBtn
+            onToggle={handleIsExpanded}
+            isExpanded={isExpanded}
+          />
         </div>
-      )}
-    </div>
+        {isExpanded && (
+          <div className={styles.toolboxContainer}>
+            <button onClick={copyHighlighted}>
+              <FaCopy /> {t("toolbox.copy")}
+            </button>
+
+            {user && (
+              <Fragment>
+                <button onClick={handleAddFavorite}>
+                  <FaStar /> {t("toolbox.addToFavorites")}
+                </button>
+
+                <button
+                  className={styles.progress}
+                  onClick={handleUpdateProgress.bind(
+                    this,
+                    progress?.id,
+                    user?.email,
+                  )}
+                >
+                  {isClient && <MdPushPin size="1.2rem" />}
+                  <div className={styles.progressContent}>
+                    <p className={styles.progressTitle}>
+                      {t("toolbox.progress")}
+                    </p>
+                    {progress && (
+                      <small className={styles.progressRef}>
+                        {t(`book:${progress.verse.chapter.book.bookKey}`)} (
+                        {formatNumber(
+                          progress.verse.chapter.num,
+                          i18n.language as Lang,
+                        )}{" "}
+                        :{" "}
+                        {formatNumber(progress.verse.num, i18n.language as Lang)})
+                      </small>
+                    )}
+                  </div>
+                </button>
+              </Fragment>
+            )}
+
+            {user &&
+              hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
+                <button onClick={() => setIsGlossaryModalOpen(true)}>
+                  <FaBookOpen /> {t("toolbox.addToGlossary")}
+                </button>
+              )}
+
+            {user &&
+              hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
+                <button onClick={handleAddFeatured}>
+                  <HiSparkles /> {t("toolbox.addToFeatured")}
+                </button>
+              )}
+
+            <button onClick={clearHighlighted} className={styles.eraserBtn}>
+              <FaEraser /> {t("toolbox.clearHighlighting")}
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 
   return createPortal(toolboxComponent, document.body);
