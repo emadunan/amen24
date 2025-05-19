@@ -28,10 +28,12 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
     verseId,
     lang: Lang.NATIVE,
   });
+
   const { data: verseAr } = useGetVerseByIdQuery({
     verseId,
     lang: Lang.ARABIC,
   });
+
   const { data: verseEn } = useGetVerseByIdQuery({
     verseId,
     lang: Lang.ENGLISH,

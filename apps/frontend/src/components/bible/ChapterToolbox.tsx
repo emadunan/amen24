@@ -21,8 +21,8 @@ import {
   useUpdateProgressMutation,
 } from "@/store/apis/progressApi";
 import { useGetMeQuery } from "@/store/apis/authApi";
-import { useAddFavoriteMutation } from "@/store/apis/favoriteApi";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
+import { useAddFavoriteMutation } from "@/store/apis/favoriteApi";
 import { useAddToFeaturedMutation } from "@/store/apis/featuredApi";
 import ToggleDraggableBtn from "../ui/ToggleDraggableBtn";
 import GlossaryModal from "../chapter-toolbox/GlossaryModal";
