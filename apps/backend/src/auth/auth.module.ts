@@ -9,8 +9,8 @@ import { ConfigService } from '@nestjs/config';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { AuthController } from './auth.controller';
 import { FacebookStratrgy } from './strategies/facebook.strategy';
-import { AuditingModule } from 'src/auditing/auditing.module';
-import { ProfilesModule } from 'src/profiles/profiles.module';
+import { AuditingModule } from '../auditing/auditing.module';
+import { ProfilesModule } from '../profiles/profiles.module';
 
 @Module({
   imports: [

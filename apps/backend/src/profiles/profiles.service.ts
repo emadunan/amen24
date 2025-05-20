@@ -11,7 +11,7 @@ import { Profile } from './entities/profile.entity';
 import { AuthProvider, ERROR_KEYS } from '@amen24/shared';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class ProfilesService {

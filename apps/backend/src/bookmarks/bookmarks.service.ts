@@ -2,10 +2,10 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { InjectRepository } from '@nestjs/typeorm';
 import { Bookmark } from './entities/bookmark.entity';
 import { Repository } from 'typeorm';
-import { ProfilesService } from 'src/profiles/profiles.service';
-import { VersesService } from 'src/verses/verses.service';
+import { ProfilesService } from '../profiles/profiles.service';
+import { VersesService } from '../verses/verses.service';
 import { ERROR_KEYS } from '@amen24/shared';
-import { ChaptersService } from 'src/chapters/chapters.service';
+import { ChaptersService } from '../chapters/chapters.service';
 
 @Injectable()
 export class BookmarksService {

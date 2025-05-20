@@ -26,8 +26,6 @@ const GlossaryVerse: React.FC<Props> = ({
 
   if (!text?.trim()) return <div className={styles.verse}>—</div>;
 
-  // className={`${styles.verseContainer} ${highlighted.includes(verseId) ? styles.highlight : ""}`}
-
   return (
     <div dir={dir} className={styles.verse}>
       {words.map((w, i) => (

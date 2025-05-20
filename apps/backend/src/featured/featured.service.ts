@@ -59,7 +59,7 @@ export class FeaturedService {
 
     // 6. Create FeaturedText records
     const featuredTexts = langs.map((lang) => {
-      const joinedText = buildJoinedText(populatedGroup.verses, lang);
+      const joinedText = buildJoinedText(populatedGroup.verses as unknown as import('@amen24/shared').Verse[], lang);
 
       return this.featuredTextRepo.create({
         featured,

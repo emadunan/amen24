@@ -6,8 +6,8 @@ import { Verse } from './entities/verse.entity';
 import { ChaptersModule } from '../chapters/chapters.module';
 import { VerseTranslation } from './entities/verse-translation.entity';
 import { VerseGroup } from './entities/verse-group.entity';
-import { DashboardModule } from 'src/dashboard/dashboard.module';
-import { AuditingModule } from 'src/auditing/auditing.module';
+import { DashboardModule } from '../dashboard/dashboard.module';
+import { AuditingModule } from '../auditing/auditing.module';
 
 @Module({
   imports: [

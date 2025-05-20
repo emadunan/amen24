@@ -16,6 +16,7 @@ import {
   removeArDiacritics,
   detectLanguage,
   replaceWaslaAlef,
+  removeNaDiacritics,
 } from '@amen24/shared';
 import { ChaptersService } from '../chapters/chapters.service';
 import { VerseTranslation } from './entities/verse-translation.entity';
@@ -377,6 +378,9 @@ export class VersesService {
             text = replaceWaslaAlef(text);
             text = removeArDiacritics(text);
             textNormalized = normalizeArText(text);
+          } else if (lang === Lang.NATIVE) {
+            text = removeNaDiacritics(text);
+            textNormalized = text;
           }
 
           const verse = await this.versesRepo.findOneBy({

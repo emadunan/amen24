@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { BibleGlossary } from './entities/bible-glossary.entity';
 import { BibleGlossaryTranslation } from './entities/bible-glossary-translation.entity';
 import { ERROR_KEYS, Lang } from '@amen24/shared';
-import { VersesService } from 'src/verses/verses.service';
+import { VersesService } from '../verses/verses.service';
 
 @Injectable()
 export class BibleGlossaryService {

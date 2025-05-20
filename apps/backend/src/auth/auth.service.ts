@@ -17,7 +17,7 @@ import { Profile } from 'passport';
 import * as bcrypt from 'bcrypt';
 import { ProfilesService } from '../profiles/profiles.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { logError } from 'src/utils/log.util';
+import { logError } from '../utils/log.util';
 
 @Injectable()
 export class AuthService {

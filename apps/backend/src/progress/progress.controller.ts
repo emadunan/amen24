@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Patch, UseGuards, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { ProgressService } from './progress.service';
 import { CreateProgressDto } from './dto/create-progress.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { CurrentUser } from 'src/auth/decorators/user.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CurrentUser } from '../auth/decorators/user.decorator';
 import { User } from '../users/entities/user.entity';
 import { ERROR_KEYS } from '@amen24/shared';
 

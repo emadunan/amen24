@@ -9,10 +9,10 @@ import {
 } from '@nestjs/common';
 import { VersesService } from './verses.service';
 import { BookKey, Lang } from '@amen24/shared';
-import { DashboardService } from 'src/dashboard/dashboard.service';
-import { CurrentUser } from 'src/auth/decorators/user.decorator';
-import { OptionalJwtAuthGuard } from 'src/auth/guards/optional-jwt-auth.guard';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { DashboardService } from '../dashboard/dashboard.service';
+import { CurrentUser } from '../auth/decorators/user.decorator';
+import { OptionalJwtAuthGuard } from '../auth/guards/optional-jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('verses')
 export class VersesController {

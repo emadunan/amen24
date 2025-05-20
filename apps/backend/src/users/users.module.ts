@@ -6,7 +6,7 @@ import { User } from './entities/user.entity';
 import { AuthModule } from '../auth/auth.module';
 import { VersesModule } from '../verses/verses.module';
 import { ProfilesModule } from '../profiles/profiles.module';
-import { ProgressModule } from 'src/progress/progress.module';
+import { ProgressModule } from '../progress/progress.module';
 
 @Module({
   imports: [

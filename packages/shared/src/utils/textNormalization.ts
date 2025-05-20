@@ -1,6 +1,34 @@
 import { Lang } from "../enums";
 import { Verse } from "../interfaces";
 
+export function removeNaDiacritics(text: string): string {
+  // Normalize text to decompose combined characters into base + diacritics
+  // Then remove the diacritics with a regex that covers common Unicode combining marks for Hebrew and Greek
+
+  // Unicode ranges for combining marks relevant to Hebrew and Greek:
+  // Hebrew: U+0591 to U+05BD, U+05BF, U+05C1 to U+05C2, U+05C4, U+05C5, U+05C7
+  // Greek: Mainly in the combining diacritical marks range U+0300 to U+036F
+
+  return text
+    .normalize('NFD')
+    // Remove Hebrew combining marks
+    .replace(/[\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7]/g, '')
+    // Remove Greek combining marks
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+export function removeHebrewDiacritics(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7]/g, '');
+}
+
+export function removeGreekDiacritics(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
 const DIACRITICS_REGEX = /[\u064B-\u065F\u0670]/g; // Arabic diacritics range
 
 export function removeArDiacritics(text: string): string {
