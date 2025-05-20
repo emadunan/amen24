@@ -184,7 +184,11 @@ const ChapterToolbox = () => {
                           i18n.language as Lang,
                         )}{" "}
                         :{" "}
-                        {formatNumber(progress.verse.num, i18n.language as Lang)})
+                        {formatNumber(
+                          progress.verse.num,
+                          i18n.language as Lang,
+                        )}
+                        )
                       </small>
                     )}
                   </div>

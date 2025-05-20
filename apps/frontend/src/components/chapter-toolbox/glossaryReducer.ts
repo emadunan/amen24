@@ -7,6 +7,7 @@ export type GlossaryState = Record<ActiveLang, string[]>;
 export type GlossaryAction =
   | { type: "add"; lang: ActiveLang; word: string }
   | { type: "remove"; lang: ActiveLang; word: string }
+  | { type: "toggle"; lang: ActiveLang; word: string }
   | { type: "clear" };
 
 export const initialState: GlossaryState = {
@@ -17,7 +18,7 @@ export const initialState: GlossaryState = {
 
 export function glossaryReducer(
   state: GlossaryState,
-  action: GlossaryAction
+  action: GlossaryAction,
 ): GlossaryState {
   switch (action.type) {
     case "add": {
@@ -30,10 +31,21 @@ export function glossaryReducer(
     }
 
     case "remove": {
-      const words = state[action.lang].filter(w => w !== action.word);
+      const words = state[action.lang].filter((w) => w !== action.word);
       return {
         ...state,
         [action.lang]: words,
+      };
+    }
+
+    case "toggle": {
+      const words = state[action.lang];
+      const exists = words.includes(action.word);
+      return {
+        ...state,
+        [action.lang]: exists
+          ? words.filter((w) => w !== action.word)
+          : [...words, action.word],
       };
     }
 

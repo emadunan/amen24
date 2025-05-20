@@ -7,4 +7,9 @@
 
 .word {
   margin: 0rem 0.4rem;
+  cursor: pointer;
+}
+
+.highlight {
+  background-color: var(--highlight);
 }

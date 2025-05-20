@@ -53,3 +53,12 @@ export function buildJoinedText(verses: Verse[], lang: Lang): string {
     })
     .join('');
 }
+
+export function sanitizeWord(input: string): string {
+  return input
+    .trim()                             // Remove leading/trailing whitespace
+    .replace(/["'“”‘’«»]/g, "")         // Remove all quotation marks including Arabic-style «»
+    .replace(/[()[\]{}<>]/g, "")        // Remove all types of brackets
+    .replace(/[^\p{L}]/gu, "")          // Remove everything except Unicode letters
+    .normalize("NFC");                  // Normalize composed characters
+}

@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import ReactDOM from "react-dom";
 import styles from "./GlossaryModal.module.css";
 import { useTranslation } from "react-i18next";
 import { useGetVerseByIdQuery } from "@/store/apis/verseApi";
-import { BookKey, Lang } from "@amen24/shared";
+import { BookKey, Lang, sanitizeWord } from "@amen24/shared";
 import GlossaryVerse from "./GlossaryVerse";
 import { useParams } from "next/navigation";
+import { ActiveLang, glossaryReducer, initialState } from "./glossaryReducer";
 
 interface GlossaryModalProps {
   onClose: () => void;
@@ -23,6 +24,20 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   const { t } = useTranslation();
   const params = useParams<{ book: [BookKey] }>();
   const [bookKey] = params.book;
+
+  const [glossaryState, glossaryDispatch] = useReducer(
+    glossaryReducer,
+    initialState,
+  );
+
+  function handleToggleGlossaryTerm(lang: ActiveLang, rawWord: string) {
+    const word = sanitizeWord(rawWord);
+    glossaryDispatch({ type: "toggle", lang, word });
+  }
+
+  function handleClearGlossaryTerms() {
+    glossaryDispatch({ type: "clear" });
+  }
 
   const { data: verseNA } = useGetVerseByIdQuery({
     verseId,
@@ -68,6 +83,8 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
               lang={Lang.NATIVE}
               bookKey={bookKey}
               text={verseNAText}
+              selectedWords={glossaryState.na}
+              onToggleTerm={handleToggleGlossaryTerm}
             />
           )}
           {verseArText && (
@@ -75,6 +92,8 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
               lang={Lang.ARABIC}
               bookKey={bookKey}
               text={verseArText}
+              selectedWords={glossaryState.ar}
+              onToggleTerm={handleToggleGlossaryTerm}
             />
           )}
           {verseEnText && (
@@ -82,12 +101,14 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
               lang={Lang.ENGLISH}
               bookKey={bookKey}
               text={verseEnText}
+              selectedWords={glossaryState.en}
+              onToggleTerm={handleToggleGlossaryTerm}
             />
           )}
         </div>
         <div className={styles.btnRow}>
           <button className={styles.btnSubmit}>{t("main.add")}</button>
-          <button className={styles.btnClear}>{t("main.clear")}</button>
+          <button className={styles.btnClear} onClick={handleClearGlossaryTerms}>{t("main.clear")}</button>
           <button className={styles.btnCancel} onClick={onClose}>
             {t("main.cancel")}
           </button>
