@@ -1,0 +1,30 @@
+.item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  margin: 1rem 0;
+  border-bottom: solid 1px var(--secondary);
+}
+
+.verseCount {
+  color: var(--danger);
+  font-size: .8rem;
+  background-color: var(--background-hover);
+  padding: .1rem .2rem;
+  font-weight: bold;
+}
+
+.openBtn {
+  margin-left: auto;
+  padding: .3rem .6rem;
+  font-family: amiri;
+  border: none;
+  border-radius: 2px;
+  background-color: var(--secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.openBtn:hover {
+  background-color: var(--secondary-hover);
+}

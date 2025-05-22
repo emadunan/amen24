@@ -1,12 +1,14 @@
-import GlossaryForm from "../components/glossary/GlossaryForm"
+import React from 'react'
+import { useGetAllTermsQuery } from '../store/glossaryApi'
+import GlossaryTermItem from '../components/glossary/GlossaryTermItem';
+import PageTitle from '../components/ui/PageTitle';
 
-const Glossary = () => {
+const Glossary: React.FC = () => {
+  const { data: terms } = useGetAllTermsQuery();
   return (
     <div>
-      <h3>Glossary</h3>
-      <div>
-        <GlossaryForm />
-      </div>
+      <PageTitle>Glossary</PageTitle>
+      <div>{terms?.map(t => <GlossaryTermItem item={t}/>)}</div>
     </div>
   )
 }

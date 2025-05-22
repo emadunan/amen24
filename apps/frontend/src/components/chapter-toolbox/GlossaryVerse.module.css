@@ -27,7 +27,7 @@
 
 .term p {
   display: flex;
-  gap: .4rem;
+  gap: 0.4rem;
 }
 
 .clear:hover {

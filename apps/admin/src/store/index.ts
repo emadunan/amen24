@@ -1,9 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from './authApi'
 import { verseApi } from './verseApi';
 import { profileApi } from './profileApi';
 import { featuredApi } from "./featuredApi";
 import { auditingApi } from './auditingApi';
+import { glossaryApi } from './glossaryApi';
 
 export const MakeStore = () => {
   const store = configureStore({
@@ -11,6 +12,7 @@ export const MakeStore = () => {
       [authApi.reducerPath]: authApi.reducer,
       [verseApi.reducerPath]: verseApi.reducer,
       [profileApi.reducerPath]: profileApi.reducer,
+      [glossaryApi.reducerPath]: glossaryApi.reducer,
       [featuredApi.reducerPath]: featuredApi.reducer,
       [auditingApi.reducerPath]: auditingApi.reducer,
     },
@@ -18,6 +20,7 @@ export const MakeStore = () => {
       getDefaultMiddleware()
         .concat(authApi.middleware)
         .concat(profileApi.middleware)
+        .concat(glossaryApi.middleware)
         .concat(featuredApi.middleware)
         .concat(verseApi.middleware)
         .concat(auditingApi.middleware)

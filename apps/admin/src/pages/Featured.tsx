@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useGetAllFeaturedQuery } from "../store/featuredApi";
 import FeaturedListItem from "../components/featured/FeaturedListItem";
 import styles from "./Featured.module.css";
+import PageTitle from "../components/ui/PageTitle";
 
 const Featured: FC = () => {
   const { data: featured } = useGetAllFeaturedQuery();
@@ -10,7 +11,7 @@ const Featured: FC = () => {
 
   return (
     <div className={styles.featured}>
-      <h3 className={styles.title}>Featured</h3>
+      <PageTitle>Featured</PageTitle>
       <div className={styles.featuredContainer}>
         {featured?.map(f => <FeaturedListItem key={f.id} featuredItem={f} />)}
       </div>

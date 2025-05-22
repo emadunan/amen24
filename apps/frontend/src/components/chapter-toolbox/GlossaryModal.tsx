@@ -67,7 +67,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
     try {
       const result = await handleAddTerm(payload).unwrap();
       console.log(result);
-      
+
       showMessage(result.message);
       handleClearTerm();
       onClose();
@@ -147,8 +147,15 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
           )}
         </div>
         <div className={styles.btnRow}>
-          <button className={styles.btnSubmit} onClick={handleAddGlossaryTerm}>{t("main.add")}</button>
-          <button className={styles.btnClear} onClick={handleClearTerm.bind(null, undefined)}>{t("main.clear")}</button>
+          <button className={styles.btnSubmit} onClick={handleAddGlossaryTerm}>
+            {t("main.add")}
+          </button>
+          <button
+            className={styles.btnClear}
+            onClick={handleClearTerm.bind(null, undefined)}
+          >
+            {t("main.clear")}
+          </button>
           <button className={styles.btnCancel} onClick={onClose}>
             {t("main.cancel")}
           </button>

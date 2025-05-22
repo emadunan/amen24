@@ -1,1 +1,6 @@
 GET http://localhost:5000/api/bible-glossary/check/Israel
+
+
+### Get all bible glossary terms
+GET http://localhost:5000/api/bible-glossary
+

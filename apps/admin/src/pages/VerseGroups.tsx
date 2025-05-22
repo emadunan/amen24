@@ -2,13 +2,14 @@ import React from 'react';
 import styles from './VerseGroups.module.css'
 
 import { useGetVerseGroupsQuery } from '../store/verseApi';
+import PageTitle from '../components/ui/PageTitle';
 
 const VerseGroups: React.FC = () => {
   const { data: verseGroups } = useGetVerseGroupsQuery();
 
   return (
     <div>
-      <h3 className={styles.title}>Verse Groups</h3>
+      <PageTitle>Verse Groups</PageTitle>
       <div>
         {verseGroups?.map((vg) => (
           <div key={vg.id} className={styles.verseGroupCard}>

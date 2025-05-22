@@ -30,7 +30,6 @@ const Verified: FC<VerifiedProps> = ({ isLoading, isFound, term }) => {
   return null;
 };
 
-
 const GlossaryVerse: React.FC<Props> = ({
   text,
   lang,
@@ -55,12 +54,21 @@ const GlossaryVerse: React.FC<Props> = ({
     <div className={styles.verse}>
       <div className={styles.verseFlag}>{flagMap[lang]}</div>
       <div className={styles.term}>
-        <p>{term} <Verified isLoading={isLoading} isFound={isFound} term={term} /></p>
+        <p>
+          {term}{" "}
+          <Verified isLoading={isLoading} isFound={isFound} term={term} />
+        </p>
       </div>
-      <div className={styles.clear} onClick={onClearTerm.bind(null, lang)}><AiOutlineClear /></div>
+      <div className={styles.clear} onClick={onClearTerm.bind(null, lang)}>
+        <AiOutlineClear />
+      </div>
       <div className={styles.verseText} dir={dir}>
         {words.map((w, i) => (
-          <span className={`${styles.word}`} key={i} onClick={onAddWordToTerm.bind(null, lang as ActiveLang, w)}>
+          <span
+            className={`${styles.word}`}
+            key={i}
+            onClick={onAddWordToTerm.bind(null, lang as ActiveLang, w)}
+          >
             {w}
           </span>
         ))}

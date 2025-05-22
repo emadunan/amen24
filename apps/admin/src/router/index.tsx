@@ -11,6 +11,7 @@ import Auditing from "../pages/Auditing"
 import Blogs from "../pages/Blogs"
 import Library from "../pages/Library"
 import FeaturedItem from "../pages/FeaturedItem"
+import GlossaryItem from "../pages/GlossaryItem"
 
 
 const AppRoutes = () => {
@@ -26,6 +27,7 @@ const AppRoutes = () => {
           <Route path='/featured' element={<Featured />} />
           <Route path='/featured/:id' element={<FeaturedItem />} />
           <Route path='/glossary' element={<Glossary />} />
+          <Route path='/glossary/:slug' element={<GlossaryItem />} />
           <Route path='/blogs' element={<Blogs />} />
           <Route path='/library' element={<Library />} />
         </Route>

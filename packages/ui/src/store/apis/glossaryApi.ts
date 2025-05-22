@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
-import { ApiMessage } from "@amen24/shared";
+import { ApiMessage, BibleGlossary } from "@amen24/shared";
 
 export type CreateBibleGlossaryDto = {
   slug: string;
@@ -29,6 +29,10 @@ export const createGlossaryApi = (baseUrl: string) =>
       }),
       checkTermByTitle: builder.query<boolean, string>({
         query: (title) => `check/${title}`,
+        providesTags: ["GlossaryTerm"]
+      }),
+      getAllTerms: builder.query<BibleGlossary[], void>({
+        query: () => ``,
         providesTags: ["GlossaryTerm"]
       })
     }),
