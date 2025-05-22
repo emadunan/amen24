@@ -23,6 +23,10 @@
   gap: 1.25rem;
 }
 
+.modal h2 {
+  text-align: center;
+}
+
 .closeButton {
   position: absolute;
   top: 1rem;

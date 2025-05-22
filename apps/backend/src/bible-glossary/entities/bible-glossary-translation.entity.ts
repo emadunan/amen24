@@ -20,8 +20,8 @@ export class BibleGlossaryTranslation {
   @Column()
   title: string;
 
-  @Column({ type: 'text' })
-  description: string;
+  @Column({ type: 'text', nullable: true })
+  description?: string;
 
   @ManyToOne(() => BibleGlossary, (glossary) => glossary.translations, {
     onDelete: 'CASCADE',

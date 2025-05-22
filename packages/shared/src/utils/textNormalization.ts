@@ -87,6 +87,6 @@ export function sanitizeWord(input: string): string {
     .trim()                             // Remove leading/trailing whitespace
     .replace(/["'“”‘’«»]/g, "")         // Remove all quotation marks including Arabic-style «»
     .replace(/[()[\]{}<>]/g, "")        // Remove all types of brackets
-    .replace(/[^\p{L}]/gu, "")          // Remove everything except Unicode letters
+    .replace(/[^\p{L}\-–—]/gu, "")      // Remove everything except Unicode letters and dashes
     .normalize("NFC");                  // Normalize composed characters
 }

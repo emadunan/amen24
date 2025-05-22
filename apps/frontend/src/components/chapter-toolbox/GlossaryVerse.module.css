@@ -8,16 +8,8 @@
   margin-bottom: 1rem;
 }
 
-.term {
-  border-right: solid 1px var(--primary);
-  border-left: solid 1px var(--primary);
-}
-
-.term p {
-  text-align: center;
-}
-
 .clear,
+.term p,
 .verseFlag {
   display: flex;
   justify-content: center;
@@ -26,6 +18,16 @@
 
 .clear {
   cursor: pointer;
+}
+
+.term {
+  border-right: solid 1px var(--primary);
+  border-left: solid 1px var(--primary);
+}
+
+.term p {
+  display: flex;
+  gap: .4rem;
 }
 
 .clear:hover {

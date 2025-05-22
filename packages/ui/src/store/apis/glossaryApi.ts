@@ -27,5 +27,9 @@ export const createGlossaryApi = (baseUrl: string) =>
         }),
         invalidatesTags: ["GlossaryTerm"],
       }),
+      checkTermByTitle: builder.query<boolean, string>({
+        query: (title) => `check/${title}`,
+        providesTags: ["GlossaryTerm"]
+      })
     }),
   });

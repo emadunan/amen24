@@ -6,7 +6,7 @@ import {
 import { CreateBibleGlossaryDto } from './dto/create-bible-glossary.dto';
 import { UpdateBibleGlossaryDto } from './dto/update-bible-glossary.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Or, Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { BibleGlossary } from './entities/bible-glossary.entity';
 import { BibleGlossaryTranslation } from './entities/bible-glossary-translation.entity';
 import { ERROR_KEYS, Lang, MESSAGE_KEYS } from '@amen24/shared';
@@ -25,7 +25,7 @@ export class BibleGlossaryService {
   ) { }
 
   async create(dto: CreateBibleGlossaryDto) {
-    const termTitles = Object.values(dto.translations).map((t) => t.term);
+    const termTitles = Object.values(dto.translations).map((t) => t.term.toLowerCase());
     const targetVerseId = dto.verseIds?.[0];
 
     const existing = await this.glossaryTranslationRepo.findOne({
@@ -64,8 +64,7 @@ export class BibleGlossaryService {
     const translations = Object.entries(dto.translations).map(([lang, value]) =>
       this.glossaryTranslationRepo.create({
         lang: lang as Lang,
-        title: value.term,
-        description: value.definition,
+        title: value.term.toLowerCase(),
       }),
     );
 
@@ -80,15 +79,22 @@ export class BibleGlossaryService {
     }
 
     await this.glossaryRepo.save(glossary);
-
-    return {message: MESSAGE_KEYS.ADDED_TO_GLOSSARY};
+    return { message: MESSAGE_KEYS.ADDED_TO_GLOSSARY };
   }
 
 
-  async findAll() {
+  async findAll(query?: { title: string }) {
+    const title = query?.title;
     return await this.glossaryRepo.find({
       relations: ['verses', 'translations'],
+      where: {
+        ...(title && { translations: { title } })
+      }
     });
+  }
+
+  async checkExistByTitle(title: string) {
+    return await this.glossaryRepo.existsBy({ translations: { title } });
   }
 
   async findOne(id: number) {

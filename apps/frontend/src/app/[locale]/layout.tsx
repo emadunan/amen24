@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   title: "amen24",
   description:
     "Amen24 is a free non-profitable project to introduce bible content for all",
+  icons: {
+    icon: '/img/favicon.ico', // or '/favicon.ico' if using ICO
+  },
 };
 
 const i18nNamespaces = [

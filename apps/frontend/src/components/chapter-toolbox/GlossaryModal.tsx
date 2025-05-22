@@ -4,10 +4,10 @@ import React, { useEffect, useReducer } from "react";
 import ReactDOM from "react-dom";
 import styles from "./GlossaryModal.module.css";
 import { useTranslation } from "react-i18next";
-import { useGetVerseByIdQuery } from "@/store/apis/verseApi";
-import { BookKey, ERROR_KEYS, Lang, MESSAGE_KEYS, sanitizeWord } from "@amen24/shared";
 import GlossaryVerse from "./GlossaryVerse";
 import { useParams } from "next/navigation";
+import { useGetVerseByIdQuery } from "@/store/apis/verseApi";
+import { BookKey, ERROR_KEYS, Lang, sanitizeWord } from "@amen24/shared";
 import { ActiveLang, glossaryReducer, initialState } from "./glossaryReducer";
 import { useAddGlossaryTermMutation } from "@/store/apis/glossaryApi";
 import { CreateBibleGlossaryDto, useFeedback } from "@amen24/ui";
@@ -23,7 +23,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   isOpen,
   verseId,
 }) => {
-  const [handleAddTerm, result] = useAddGlossaryTermMutation();
+  const [handleAddTerm, _result] = useAddGlossaryTermMutation();
   const params = useParams<{ book: [BookKey] }>();
   const { t } = useTranslation();
   const [bookKey] = params.book;
