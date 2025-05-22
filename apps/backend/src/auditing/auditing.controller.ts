@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { AuditingService } from './auditing.service';
 import { CreateAuditingDto } from './dto/create-auditing.dto';
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('auditing')
 export class AuditingController {
-  constructor(private readonly auditingService: AuditingService) { }
+  constructor(private readonly auditingService: AuditingService) {}
 
   @Post()
   recordEvent(@Body() createAuditingDto: CreateAuditingDto) {

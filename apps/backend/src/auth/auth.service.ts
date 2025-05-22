@@ -4,7 +4,14 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthProvider, Lang, ERROR_KEYS, MESSAGE_KEYS, UserRole, SysLogLevel } from '@amen24/shared';
+import {
+  AuthProvider,
+  Lang,
+  ERROR_KEYS,
+  MESSAGE_KEYS,
+  UserRole,
+  SysLogLevel,
+} from '@amen24/shared';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
@@ -115,7 +122,7 @@ export class AuthService {
           oldTestament: '',
           newTestament: '',
         },
-        roles: [UserRole.MEMBER]
+        roles: [UserRole.MEMBER],
       };
 
       return this.usersService.create(createUserDto);
@@ -123,7 +130,7 @@ export class AuthService {
       logError(this.eventEmitter, error, {
         context: 'AuthService.validateOAuthUser',
         metadata: { email, provider, profileId: id },
-      })
+      });
 
       throw error;
     }
@@ -250,7 +257,10 @@ export class AuthService {
       ...profileRest
     } = user.profile;
 
-    const access_token = this.jwtService.sign({ ...rest, profile: profileRest });
+    const access_token = this.jwtService.sign({
+      ...rest,
+      profile: profileRest,
+    });
 
     // Optionally: rotate refresh token
     const { email, displayName, provider } = user;

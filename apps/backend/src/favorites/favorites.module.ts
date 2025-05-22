@@ -10,6 +10,6 @@ import { VersesModule } from '../verses/verses.module';
   imports: [TypeOrmModule.forFeature([Favorite]), ProfilesModule, VersesModule],
   controllers: [FavoritesController],
   providers: [FavoritesService],
-  exports: [FavoritesService]
+  exports: [FavoritesService],
 })
 export class FavoritesModule {}

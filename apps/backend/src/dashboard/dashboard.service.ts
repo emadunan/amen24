@@ -6,7 +6,9 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class DashboardService {
-  constructor(@InjectRepository(Dashboard) private dashboardRepo: Repository<Dashboard>) { }
+  constructor(
+    @InjectRepository(Dashboard) private dashboardRepo: Repository<Dashboard>,
+  ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async handleNewDay() {
@@ -24,7 +26,9 @@ export class DashboardService {
   async getTodayDashboard(): Promise<Dashboard> {
     const today = new Date().toISOString().split('T')[0];
 
-    let dashboard = await this.dashboardRepo.findOne({ where: { date: today } });
+    let dashboard = await this.dashboardRepo.findOne({
+      where: { date: today },
+    });
 
     if (!dashboard) {
       dashboard = this.dashboardRepo.create({ date: today });

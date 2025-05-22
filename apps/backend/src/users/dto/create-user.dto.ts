@@ -44,5 +44,5 @@ export class CreateUserDto {
   };
 
   @IsArray()
-  roles: UserRole[]
+  roles: UserRole[];
 }

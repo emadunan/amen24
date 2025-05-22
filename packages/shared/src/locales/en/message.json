@@ -8,5 +8,7 @@
   "userProfileUpdated": "User profile has been successfully updated",
   "removedFromFavorites": "The verse has been removed from your favorites.",
   "addedToFavorites": "Selected verses were successfully added to your favorites.",
-  "addedToFeatured": "Selected verses were successfully added to your featured."
+  "addedToFeatured": "Selected verses were successfully added to your featured.",
+  "addedToGlossary": "Term was successfully added to the glossary.",
+  "connectedWithGlossary": "This term was already added to the glossary. The current verse has now been linked to the existing term."
 }

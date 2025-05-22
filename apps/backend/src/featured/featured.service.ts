@@ -20,7 +20,7 @@ export class FeaturedService {
     @InjectRepository(FeaturedText)
     private featuredTextRepo: Repository<FeaturedText>,
     private versesService: VersesService,
-  ) { }
+  ) {}
 
   async addToFeatured(verseIds: number[]) {
     // 1. Retrieve or create the verse group
@@ -59,7 +59,10 @@ export class FeaturedService {
 
     // 6. Create FeaturedText records
     const featuredTexts = langs.map((lang) => {
-      const joinedText = buildJoinedText(populatedGroup.verses as unknown as import('@amen24/shared').Verse[], lang);
+      const joinedText = buildJoinedText(
+        populatedGroup.verses as unknown as import('@amen24/shared').Verse[],
+        lang,
+      );
 
       return this.featuredTextRepo.create({
         featured,
@@ -95,7 +98,12 @@ export class FeaturedService {
 
     const featured = await this.featuredRepo
       .createQueryBuilder('featured')
-      .leftJoinAndSelect('featured.featuredText', 'featuredText', 'featuredText.lang = :lang', { lang })
+      .leftJoinAndSelect(
+        'featured.featuredText',
+        'featuredText',
+        'featuredText.lang = :lang',
+        { lang },
+      )
       .leftJoinAndSelect('featured.verseGroup', 'verseGroup')
       .leftJoinAndSelect('verseGroup.verses', 'verse')
       .leftJoinAndSelect(
@@ -131,8 +139,8 @@ export class FeaturedService {
         'featured.verseGroup.startingVerse.chapter.book',
       ],
       order: {
-        lang: "ASC"
-      }
+        lang: 'ASC',
+      },
     });
 
     if (!featuredText) throw new NotFoundException();

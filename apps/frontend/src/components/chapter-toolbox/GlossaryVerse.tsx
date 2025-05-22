@@ -1,15 +1,17 @@
 import React from "react";
 import styles from "./GlossaryVerse.module.css";
-import { BookKey, Lang, resolveRenderLang, sanitizeWord } from "@amen24/shared";
+import { BookKey, flagMap, Lang, resolveRenderLang } from "@amen24/shared";
 import { getDirection } from "@amen24/ui";
 import { ActiveLang } from "./glossaryReducer";
+import { AiOutlineClear } from "react-icons/ai";
 
 interface Props {
   text: string;
-  lang: Lang;
+  lang: ActiveLang;
   bookKey: BookKey;
   selectedWords: string[];
-  onToggleTerm: (lang: ActiveLang, word: string) => void;
+  onAddWordToTerm: (lang: ActiveLang, word: string) => void;
+  onClearTerm: (lang?: ActiveLang) => void;
 }
 
 const GlossaryVerse: React.FC<Props> = ({
@@ -17,7 +19,8 @@ const GlossaryVerse: React.FC<Props> = ({
   lang,
   bookKey,
   selectedWords,
-  onToggleTerm,
+  onAddWordToTerm,
+  onClearTerm,
 }) => {
   const words: string[] = text.trim().split(/\s+/);
 
@@ -27,12 +30,17 @@ const GlossaryVerse: React.FC<Props> = ({
   if (!text?.trim()) return <div className={styles.verse}>—</div>;
 
   return (
-    <div dir={dir} className={styles.verse}>
-      {words.map((w, i) => (
-        <span className={`${styles.word} ${selectedWords.includes(sanitizeWord(w)) ? styles.highlight : ""}`} key={i} onClick={onToggleTerm.bind(null, lang as ActiveLang, w)}>
-          {w}
-        </span>
-      ))}
+    <div className={styles.verse}>
+      <div className={styles.verseFlag}>{flagMap[lang]}</div>
+      <div className={styles.term}><p>{selectedWords.join(" ")}</p></div>
+      <div className={styles.clear} onClick={onClearTerm.bind(null, lang)}><AiOutlineClear /></div>
+      <div className={styles.verseText} dir={dir}>
+        {words.map((w, i) => (
+          <span className={`${styles.word}`} key={i} onClick={onAddWordToTerm.bind(null, lang as ActiveLang, w)}>
+            {w}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };

@@ -17,9 +17,10 @@ import { UsersService } from '../users/users.service';
 export class ProfilesService {
   constructor(
     @InjectRepository(Profile) private profilesRepo: Repository<Profile>,
-    @Inject(forwardRef(() => UsersService)) private readonly usersService: UsersService,
+    @Inject(forwardRef(() => UsersService))
+    private readonly usersService: UsersService,
     private readonly eventEmitter: EventEmitter2,
-  ) { }
+  ) {}
 
   async create(createProfileDto: Partial<CreateProfileDto>) {
     const profile = this.profilesRepo.create(createProfileDto);
@@ -29,7 +30,11 @@ export class ProfilesService {
   }
 
   async findAll() {
-    return await this.profilesRepo.find({ relations: ['users', 'favorites'], take: 100, order: { lastLogin: 'DESC' } });
+    return await this.profilesRepo.find({
+      relations: ['users', 'favorites'],
+      take: 100,
+      order: { lastLogin: 'DESC' },
+    });
   }
 
   async findOne(email: string) {
@@ -53,10 +58,7 @@ export class ProfilesService {
     return await this.usersService.findOneByEmailProvider(email, provider);
   }
 
-  async updateUserProfile(
-    email: string,
-    updateProfileDto: UpdateProfileDto,
-  ) {
+  async updateUserProfile(email: string, updateProfileDto: UpdateProfileDto) {
     const profile = await this.profilesRepo.findOneBy({ email });
 
     if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);

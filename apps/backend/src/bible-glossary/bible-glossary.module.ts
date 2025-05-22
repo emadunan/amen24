@@ -7,8 +7,11 @@ import { BibleGlossaryTranslation } from './entities/bible-glossary-translation.
 import { VersesModule } from '../verses/verses.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BibleGlossary, BibleGlossaryTranslation]), VersesModule],
+  imports: [
+    TypeOrmModule.forFeature([BibleGlossary, BibleGlossaryTranslation]),
+    VersesModule,
+  ],
   controllers: [BibleGlossaryController],
   providers: [BibleGlossaryService],
 })
-export class BibleGlossaryModule { }
+export class BibleGlossaryModule {}

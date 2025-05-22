@@ -9,4 +9,6 @@ export const MESSAGE_KEYS = {
   USER_PROFILE_UPDATED: "message:userProfileUpdated",
   ADDED_TO_FAVORITES: "message:addedToFavorites",
   ADDED_TO_FEATURED: "message:addedToFeatured",
+  ADDED_TO_GLOSSARY: "message:addedToGlossary",
+  CONNECTED_WITH_GLOSSARY: "message:connectedWithGlossary"
 } as const;

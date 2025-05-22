@@ -6,10 +6,11 @@ import { SysLog } from './entities/sys-log.entity';
 import { LessThan, Repository } from 'typeorm';
 import { Cron } from '@nestjs/schedule';
 
-
 @Injectable()
 export class SysLogsService {
-  constructor(@InjectRepository(SysLog) private sysLogRepo: Repository<SysLog>) { }
+  constructor(
+    @InjectRepository(SysLog) private sysLogRepo: Repository<SysLog>,
+  ) {}
 
   async create(sysLogDto: CreateSysLogDto) {
     const sysLog = this.sysLogRepo.create(sysLogDto);
@@ -47,6 +48,8 @@ export class SysLogsService {
       createdAt: LessThan(sevenDaysAgo),
     });
 
-    console.log(`🧹 Deleted ${result.affected} system log records older than 7 days`);
+    console.log(
+      `🧹 Deleted ${result.affected} system log records older than 7 days`,
+    );
   }
 }

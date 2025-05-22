@@ -27,7 +27,7 @@ export class BibleGlossary {
   })
   verses: Verse[];
 
-  @OneToMany(() => BibleGlossaryTranslation, t => t.glossary, {
+  @OneToMany(() => BibleGlossaryTranslation, (t) => t.glossary, {
     cascade: true,
     eager: true,
   })

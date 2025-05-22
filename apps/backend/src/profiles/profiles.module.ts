@@ -7,9 +7,13 @@ import { UsersModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Profile]), forwardRef(() => UsersModule), forwardRef(() => AuthModule)],
+  imports: [
+    TypeOrmModule.forFeature([Profile]),
+    forwardRef(() => UsersModule),
+    forwardRef(() => AuthModule),
+  ],
   controllers: [ProfilesController],
   providers: [ProfilesService],
-  exports: [ProfilesService]
+  exports: [ProfilesService],
 })
-export class ProfilesModule { }
+export class ProfilesModule {}

@@ -14,10 +14,10 @@ import { AuditingModule } from '../auditing/auditing.module';
     TypeOrmModule.forFeature([Verse, VerseGroup, VerseTranslation]),
     AuditingModule,
     ChaptersModule,
-    DashboardModule
+    DashboardModule,
   ],
   controllers: [VersesController],
   providers: [VersesService],
   exports: [VersesService],
 })
-export class VersesModule { }
+export class VersesModule {}

@@ -23,7 +23,7 @@ export class BibleGlossaryTranslation {
   @Column({ type: 'text' })
   description: string;
 
-  @ManyToOne(() => BibleGlossary, glossary => glossary.translations, {
+  @ManyToOne(() => BibleGlossary, (glossary) => glossary.translations, {
     onDelete: 'CASCADE',
   })
   glossary: BibleGlossary;

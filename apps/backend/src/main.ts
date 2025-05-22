@@ -6,9 +6,9 @@ import * as cookieParser from 'cookie-parser';
 const parseOrigins = (originStr?: string): string[] =>
   originStr
     ? originStr
-      .split(',')
-      .map(origin => origin.trim())
-      .filter(Boolean)
+        .split(',')
+        .map((origin) => origin.trim())
+        .filter(Boolean)
     : [];
 
 async function bootstrap() {

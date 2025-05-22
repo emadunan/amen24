@@ -16,7 +16,7 @@ import { Request, Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { User } from '../users/entities/user.entity';
-import { CurrentUser } from "./decorators/user.decorator";
+import { CurrentUser } from './decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -54,9 +54,12 @@ export class AuthController {
   async login(@Req() req: Request & { user: User }, @Res() res: Response) {
     const origin = req.headers.origin;
 
-    if (origin?.includes(this.adminSiteUrl) && !hasPermission(req.user.profile.roles, Permission.LOGIN_ADMINSITE)) {
+    if (
+      origin?.includes(this.adminSiteUrl) &&
+      !hasPermission(req.user.profile.roles, Permission.LOGIN_ADMINSITE)
+    ) {
       throw new UnauthorizedException(
-        `Access restricted: Only content managers and administrators are permitted to log in. If you're interested in volunteering, please contact us at support@amen24.org.`
+        `Access restricted: Only content managers and administrators are permitted to log in. If you're interested in volunteering, please contact us at support@amen24.org.`,
       );
     }
 
@@ -66,7 +69,7 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleLogin(): Promise<void> { }
+  async googleLogin(): Promise<void> {}
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
@@ -86,7 +89,7 @@ export class AuthController {
 
   @Get('facebook')
   @UseGuards(AuthGuard('facebook'))
-  async facebookLogin(): Promise<void> { }
+  async facebookLogin(): Promise<void> {}
 
   @Get('facebook/callback')
   @UseGuards(AuthGuard('facebook'))

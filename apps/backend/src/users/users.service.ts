@@ -11,7 +11,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { ProfilesService } from '../profiles/profiles.service';
-import { AuthProvider, ERROR_KEYS, MESSAGE_KEYS, SysLogLevel } from '@amen24/shared';
+import {
+  AuthProvider,
+  ERROR_KEYS,
+  MESSAGE_KEYS,
+  SysLogLevel,
+} from '@amen24/shared';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { ProgressService } from '../progress/progress.service';
@@ -26,10 +31,11 @@ export class UsersService {
     private profilesService: ProfilesService,
     private progressService: ProgressService,
     private readonly eventEmitter: EventEmitter2,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const { email, password, provider, uiLang, progress, roles } = createUserDto;
+    const { email, password, provider, uiLang, progress, roles } =
+      createUserDto;
 
     if (password && password.length < 4)
       throw new BadRequestException(ERROR_KEYS.PASSWORD_TOO_SHORT);
@@ -40,7 +46,11 @@ export class UsersService {
 
     // Create profile
     try {
-      const profile = await this.profilesService.create({ email, uiLang, roles });
+      const profile = await this.profilesService.create({
+        email,
+        uiLang,
+        roles,
+      });
       if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
     } catch (error) {
       logError(this.eventEmitter, error, {

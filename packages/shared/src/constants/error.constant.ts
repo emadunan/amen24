@@ -26,4 +26,6 @@ export const ERROR_KEYS = {
   VERSE_GROUP_FAVORITED: "error:verseGroupFavorited",
   VERSE_GROUP_FEATURED: "error:verseGroupFeatured",
   GLOSSARY_NOT_FOUND: "error:glossaryNotFound",
+  GLOSSARY_MISSING_TERM: "error:glossaryMissingTerm",
+  GLOSSARY_TERM_EXIST: "error:glossaryTermExist"
 } as const;

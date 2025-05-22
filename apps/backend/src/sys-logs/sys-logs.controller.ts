@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SysLogsService } from './sys-logs.service';
 import { CreateSysLogDto } from './dto/create-sys-log.dto';
 import { UpdateSysLogDto } from './dto/update-sys-log.dto';

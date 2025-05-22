@@ -8,6 +8,6 @@ import { Dashboard } from './entities/dashboard.entity';
   imports: [TypeOrmModule.forFeature([Dashboard])],
   controllers: [DashboardController],
   providers: [DashboardService],
-  exports: [DashboardService]
+  exports: [DashboardService],
 })
-export class DashboardModule { }
+export class DashboardModule {}

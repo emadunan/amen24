@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Bookmark } from './entities/bookmark.entity';
 import { Repository } from 'typeorm';
@@ -18,7 +22,11 @@ export class BookmarksService {
     private readonly versesService: VersesService,
   ) {}
 
-  async createBookmark_DEV_ONLY(profileEmail: string, chapterId: number, verseIds: number[]): Promise<Bookmark> {
+  async createBookmark_DEV_ONLY(
+    profileEmail: string,
+    chapterId: number,
+    verseIds: number[],
+  ): Promise<Bookmark> {
     const profile = await this.profilesService.findOne(profileEmail);
     if (!profile) throw new NotFoundException(ERROR_KEYS.PROFILE_NOT_FOUND);
 

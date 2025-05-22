@@ -1,11 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateBibleGlossaryDto } from './dto/create-bible-glossary.dto';
 import { UpdateBibleGlossaryDto } from './dto/update-bible-glossary.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Or, Repository } from 'typeorm';
 import { BibleGlossary } from './entities/bible-glossary.entity';
 import { BibleGlossaryTranslation } from './entities/bible-glossary-translation.entity';
-import { ERROR_KEYS, Lang } from '@amen24/shared';
+import { ERROR_KEYS, Lang, MESSAGE_KEYS } from '@amen24/shared';
 import { VersesService } from '../verses/verses.service';
 
 @Injectable()
@@ -21,6 +25,42 @@ export class BibleGlossaryService {
   ) { }
 
   async create(dto: CreateBibleGlossaryDto) {
+    const termTitles = Object.values(dto.translations).map((t) => t.term);
+    const targetVerseId = dto.verseIds?.[0];
+
+    const existing = await this.glossaryTranslationRepo.findOne({
+      where: { title: In(termTitles) },
+      relations: ['glossary', 'glossary.verses'],
+    });
+
+    // CASE 1: term exists and already connected to this verse → throw error
+    if (
+      existing &&
+      existing.glossary.verses.some((v) => v.id === targetVerseId)
+    ) {
+      throw new ConflictException({
+        message: ERROR_KEYS.GLOSSARY_TERM_EXIST,
+        meta: {
+          term: existing.title,
+          lang: existing.lang,
+        },
+      });
+    }
+
+    // CASE 2: term exists but NOT connected to this verse → just connect
+    if (existing && existing.glossary) {
+      if (targetVerseId) {
+        const verse = await this.versesService.findOneById(targetVerseId);
+        if (!verse) throw new NotFoundException();
+        existing.glossary.verses.push(verse);
+        await this.glossaryRepo.save(existing.glossary);
+
+        return { message: MESSAGE_KEYS.CONNECTED_WITH_GLOSSARY };
+      }
+      return existing.glossary; // no verse to connect, just return
+    }
+
+    // CASE 3: term doesn't exist at all → create new glossary with verses
     const translations = Object.entries(dto.translations).map(([lang, value]) =>
       this.glossaryTranslationRepo.create({
         lang: lang as Lang,
@@ -39,11 +79,16 @@ export class BibleGlossaryService {
       glossary.verses = verses;
     }
 
-    return await this.glossaryRepo.save(glossary);
+    await this.glossaryRepo.save(glossary);
+
+    return {message: MESSAGE_KEYS.ADDED_TO_GLOSSARY};
   }
 
+
   async findAll() {
-    return await this.glossaryRepo.find({ relations: ['verses', 'translations'] });
+    return await this.glossaryRepo.find({
+      relations: ['verses', 'translations'],
+    });
   }
 
   async findOne(id: number) {
@@ -67,7 +112,7 @@ export class BibleGlossaryService {
       glossary.verses = verses;
     }
 
-    return this.glossaryRepo.save(glossary);
+    return await this.glossaryRepo.save(glossary);
   }
 
   async remove(id: number) {

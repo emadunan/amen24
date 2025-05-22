@@ -38,8 +38,6 @@ export class Verse {
   )
   verseTranslations: VerseTranslation[];
 
-
   @ManyToMany(() => BibleGlossary, (glossary) => glossary.verses)
   glossaryTerms: BibleGlossary[];
-
 }

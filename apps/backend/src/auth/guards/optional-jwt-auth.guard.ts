@@ -5,7 +5,9 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 export class OptionalJwtAuthGuard extends AuthGuard('jwt') {
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
-    const token = request.cookies?.access_token || request.headers?.authorization?.split(' ')[1];
+    const token =
+      request.cookies?.access_token ||
+      request.headers?.authorization?.split(' ')[1];
 
     // If token not exists, skip passport authentication
     if (!token) {

@@ -24,5 +24,7 @@
   "progressExceedLimit": "You have reached the maximum number of progresses allowed.",
   "verseGroupFavorited": "This verse group is already in your favorites.",
   "verseGroupFeatured": "This verse group is already featured.",
-  "glossaryNotFound": "The requested glossary term was not found."
+  "glossaryNotFound": "The requested glossary term was not found.",
+  "glossaryMissingTerm": "You must provide the term in all supported languages.",
+  "glossaryTermExist": "Glossary term already exists"
 }

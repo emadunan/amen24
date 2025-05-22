@@ -8,7 +8,7 @@ export type GlossaryAction =
   | { type: "add"; lang: ActiveLang; word: string }
   | { type: "remove"; lang: ActiveLang; word: string }
   | { type: "toggle"; lang: ActiveLang; word: string }
-  | { type: "clear" };
+  | { type: "clear"; lang?: ActiveLang };
 
 export const initialState: GlossaryState = {
   [Lang.NATIVE]: [],
@@ -23,7 +23,7 @@ export function glossaryReducer(
   switch (action.type) {
     case "add": {
       const words = state[action.lang];
-      if (words.includes(action.word)) return state;
+      // if (words.includes(action.word)) return state;
       return {
         ...state,
         [action.lang]: [...words, action.word],
@@ -49,8 +49,14 @@ export function glossaryReducer(
       };
     }
 
-    case "clear":
-      return initialState;
+    case "clear": {
+      if (!action.lang) return initialState;
+
+      return {
+        ...state,
+        [action.lang]: [],
+      };
+    }
 
     default:
       return state;

@@ -48,7 +48,9 @@ export class VersesService {
     if (verses.length !== verseIds.length) {
       const foundIds = new Set(verses.map((v) => v.id));
       const missingIds = verseIds.filter((id) => !foundIds.has(id));
-      throw new NotFoundException(`Verses not found for IDs: ${missingIds.join(', ')}`);
+      throw new NotFoundException(
+        `Verses not found for IDs: ${missingIds.join(', ')}`,
+      );
     }
 
     return verses;
@@ -74,7 +76,9 @@ export class VersesService {
   }
 
   async findVerseGroups() {
-    return await this.verseGroupRepo.find({ relations: ['startingVerse', 'verses', 'featured', 'favorites'] });
+    return await this.verseGroupRepo.find({
+      relations: ['startingVerse', 'verses', 'featured', 'favorites'],
+    });
   }
 
   async findVerseGroupById(id: number): Promise<VerseGroup> {
@@ -91,7 +95,9 @@ export class VersesService {
     return group;
   }
 
-  async findVerseGroupByVerseIds(verseIds: number[]): Promise<VerseGroup | null> {
+  async findVerseGroupByVerseIds(
+    verseIds: number[],
+  ): Promise<VerseGroup | null> {
     if (!verseIds.length) return null;
 
     // Sort IDs to normalize
@@ -100,13 +106,16 @@ export class VersesService {
     const matchingGroup = await this.verseGroupRepo
       .createQueryBuilder('group')
       .leftJoinAndSelect('group.verses', 'verse')
-      .where(qb => {
-        const subQuery = qb.subQuery()
+      .where((qb) => {
+        const subQuery = qb
+          .subQuery()
           .select('vg.id')
           .from('verse_group', 'vg')
           .innerJoin('verse_group_verses', 'vgv', 'vgv."verseGroupId" = vg.id')
           .groupBy('vg.id')
-          .having('array_agg(DISTINCT vgv."verseId" ORDER BY vgv."verseId") = :verseIds')
+          .having(
+            'array_agg(DISTINCT vgv."verseId" ORDER BY vgv."verseId") = :verseIds',
+          )
           .getQuery();
 
         return 'group.id IN ' + subQuery;
@@ -117,13 +126,20 @@ export class VersesService {
     return matchingGroup || null;
   }
 
-
   async deleteVerseGroup(id: number) {
     return await this.verseGroupRepo.delete(id);
   }
 
-  async findChapter(bookKey: BookKey, chapterNum: number, lang: Lang, email?: string) {
-    this.eventEmitter.emit('bible.open', { email, details: `${bookKey} ${chapterNum} in ${lang}` });
+  async findChapter(
+    bookKey: BookKey,
+    chapterNum: number,
+    lang: Lang,
+    email?: string,
+  ) {
+    this.eventEmitter.emit('bible.open', {
+      email,
+      details: `${bookKey} ${chapterNum} in ${lang}`,
+    });
     return await this.versesRepo.find({
       where: {
         chapter: {
@@ -172,16 +188,20 @@ export class VersesService {
     });
   }
 
-  async findOneById(id: number, lang: Lang) {
+  async findOneById(id: number) {
+    return await this.versesRepo.findOne({ where: { id } });
+  }
+
+  async findOneByIdWithLang(id: number, lang: Lang) {
     return await this.versesRepo.findOne({
       where: {
         id,
         verseTranslations: {
-          lang
-        }
+          lang,
+        },
       },
-      relations: ['verseTranslations']
-    })
+      relations: ['verseTranslations'],
+    });
   }
 
   async findManyByQuery(query: string, scope: BookKey[], email?: string) {
@@ -307,7 +327,9 @@ export class VersesService {
     const missingVerses = allVerses.filter((v) => !translatedIds.has(v.id));
 
     if (missingVerses.length) {
-      console.warn(`⚠️  Missing ${missingVerses.length} verses for ${lang.toUpperCase()}:`);
+      console.warn(
+        `⚠️  Missing ${missingVerses.length} verses for ${lang.toUpperCase()}:`,
+      );
       missingVerses.forEach((v) => {
         console.warn(`- ${v.chapter.book.bookKey} ${v.chapter.num}:${v.num}`);
       });
@@ -315,7 +337,6 @@ export class VersesService {
       console.log(`✅ All verses are present for ${lang.toUpperCase()}`);
     }
   }
-
 
   private async seedBible(lang: Lang) {
     const progressBar = new SingleBar(

@@ -21,7 +21,7 @@ import { Permission } from '@amen24/shared';
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 @RequirePermissions(Permission.MANAGE_FEATURED)
 export class FeaturedController {
-  constructor(private readonly featuredService: FeaturedService) { }
+  constructor(private readonly featuredService: FeaturedService) {}
 
   @Post()
   create(@Body() body: { verseIds: number[] }) {
@@ -34,7 +34,7 @@ export class FeaturedController {
   }
 
   @Patch('text')
-  async updateFeatuedText(@Body() body: { id: number, text: string }) {
+  async updateFeatuedText(@Body() body: { id: number; text: string }) {
     const { id, text } = body;
     return await this.featuredService.updateFeaturedText(id, text);
   }

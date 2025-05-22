@@ -5,10 +5,12 @@ import ReactDOM from "react-dom";
 import styles from "./GlossaryModal.module.css";
 import { useTranslation } from "react-i18next";
 import { useGetVerseByIdQuery } from "@/store/apis/verseApi";
-import { BookKey, Lang, sanitizeWord } from "@amen24/shared";
+import { BookKey, ERROR_KEYS, Lang, MESSAGE_KEYS, sanitizeWord } from "@amen24/shared";
 import GlossaryVerse from "./GlossaryVerse";
 import { useParams } from "next/navigation";
 import { ActiveLang, glossaryReducer, initialState } from "./glossaryReducer";
+import { useAddGlossaryTermMutation } from "@/store/apis/glossaryApi";
+import { CreateBibleGlossaryDto, useFeedback } from "@amen24/ui";
 
 interface GlossaryModalProps {
   onClose: () => void;
@@ -21,22 +23,57 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   isOpen,
   verseId,
 }) => {
-  const { t } = useTranslation();
+  const [handleAddTerm, result] = useAddGlossaryTermMutation();
   const params = useParams<{ book: [BookKey] }>();
+  const { t } = useTranslation();
   const [bookKey] = params.book;
+  const { showError, showApiError, showMessage } = useFeedback(t);
 
   const [glossaryState, glossaryDispatch] = useReducer(
     glossaryReducer,
     initialState,
   );
 
-  function handleToggleGlossaryTerm(lang: ActiveLang, rawWord: string) {
+  function handleAddWordToTerm(lang: ActiveLang, rawWord: string) {
     const word = sanitizeWord(rawWord);
-    glossaryDispatch({ type: "toggle", lang, word });
+    glossaryDispatch({ type: "add", lang, word });
   }
 
-  function handleClearGlossaryTerms() {
-    glossaryDispatch({ type: "clear" });
+  function handleClearTerm(lang?: ActiveLang) {
+    glossaryDispatch({ type: "clear", lang });
+  }
+
+  async function handleAddGlossaryTerm() {
+    const translations: CreateBibleGlossaryDto["translations"] = {};
+
+    for (const [lang, words] of Object.entries(glossaryState)) {
+      if (words.length < 1) {
+        showError(ERROR_KEYS.GLOSSARY_MISSING_TERM);
+        return;
+      }
+
+      translations[lang] = {
+        term: words.join(" "),
+        definition: "",
+      };
+    }
+
+    const payload = {
+      slug: glossaryState.en.join("-").toLowerCase(),
+      verseIds: [verseId],
+      translations,
+    };
+
+    try {
+      const result = await handleAddTerm(payload).unwrap();
+      console.log(result);
+      
+      showMessage(result.message);
+      handleClearTerm();
+      onClose();
+    } catch (error) {
+      showApiError(error);
+    }
   }
 
   const { data: verseNA } = useGetVerseByIdQuery({
@@ -84,7 +121,8 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
               bookKey={bookKey}
               text={verseNAText}
               selectedWords={glossaryState.na}
-              onToggleTerm={handleToggleGlossaryTerm}
+              onAddWordToTerm={handleAddWordToTerm}
+              onClearTerm={handleClearTerm}
             />
           )}
           {verseArText && (
@@ -93,7 +131,8 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
               bookKey={bookKey}
               text={verseArText}
               selectedWords={glossaryState.ar}
-              onToggleTerm={handleToggleGlossaryTerm}
+              onAddWordToTerm={handleAddWordToTerm}
+              onClearTerm={handleClearTerm}
             />
           )}
           {verseEnText && (
@@ -102,13 +141,14 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
               bookKey={bookKey}
               text={verseEnText}
               selectedWords={glossaryState.en}
-              onToggleTerm={handleToggleGlossaryTerm}
+              onAddWordToTerm={handleAddWordToTerm}
+              onClearTerm={handleClearTerm}
             />
           )}
         </div>
         <div className={styles.btnRow}>
-          <button className={styles.btnSubmit}>{t("main.add")}</button>
-          <button className={styles.btnClear} onClick={handleClearGlossaryTerms}>{t("main.clear")}</button>
+          <button className={styles.btnSubmit} onClick={handleAddGlossaryTerm}>{t("main.add")}</button>
+          <button className={styles.btnClear} onClick={handleClearTerm.bind(null, undefined)}>{t("main.clear")}</button>
           <button className={styles.btnCancel} onClick={onClose}>
             {t("main.cancel")}
           </button>

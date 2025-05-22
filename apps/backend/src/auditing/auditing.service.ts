@@ -7,7 +7,9 @@ import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class AuditingService {
-  constructor(@InjectRepository(Auditing) private auditingRepo: Repository<Auditing>) { }
+  constructor(
+    @InjectRepository(Auditing) private auditingRepo: Repository<Auditing>,
+  ) {}
 
   recordEvent(auditingDto: CreateAuditingDto) {
     const auditingRecord = this.auditingRepo.create(auditingDto);
@@ -15,7 +17,7 @@ export class AuditingService {
   }
 
   findAll() {
-    return this.auditingRepo.find({ take: 100, order: { createdAt: "DESC" } });
+    return this.auditingRepo.find({ take: 100, order: { createdAt: 'DESC' } });
   }
 
   findOne(id: number) {
@@ -31,6 +33,8 @@ export class AuditingService {
       createdAt: LessThan(sevenDaysAgo),
     });
 
-    console.log(`🧹 Deleted ${result.affected} audit records older than 7 days`);
+    console.log(
+      `🧹 Deleted ${result.affected} audit records older than 7 days`,
+    );
   }
 }

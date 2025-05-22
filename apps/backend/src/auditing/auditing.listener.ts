@@ -5,9 +5,7 @@ import { AuditingAction } from '@amen24/shared';
 
 @Injectable()
 export class AuditListener {
-  constructor(
-    private readonly auditingService: AuditingService,
-  ) { }
+  constructor(private readonly auditingService: AuditingService) {}
 
   @OnEvent('user.login')
   handleUserLoginEvent(payload: { email: string }) {
@@ -58,7 +56,7 @@ export class AuditListener {
   }
 
   @OnEvent('bible.search')
-  handleSearchBibleEvent(payload: { email: string, details: string }) {
+  handleSearchBibleEvent(payload: { email: string; details: string }) {
     this.auditingService.recordEvent({
       performedBy: payload.email,
       action: AuditingAction.SEARCH_BIBLE,
@@ -67,7 +65,7 @@ export class AuditListener {
   }
 
   @OnEvent('bible.open')
-  handleOpenChapterEvent(payload: { email: string, details: string }) {
+  handleOpenChapterEvent(payload: { email: string; details: string }) {
     this.auditingService.recordEvent({
       performedBy: payload.email,
       action: AuditingAction.OPEN_BIBLE,

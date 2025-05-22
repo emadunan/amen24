@@ -1,10 +1,22 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, Put, Res, BadRequestException, NotImplementedException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+  Put,
+  Res,
+  BadRequestException,
+  NotImplementedException,
+} from '@nestjs/common';
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { MESSAGE_KEYS } from '@amen24/shared';
-import { Response } from "express";
+import { Response } from 'express';
 import { CurrentUser } from '../auth/decorators/user.decorator';
 import { User } from '../users/entities/user.entity';
 import { AuthService } from '../auth/auth.service';
@@ -14,8 +26,8 @@ import { AuthService } from '../auth/auth.service';
 export class ProfilesController {
   constructor(
     private readonly profilesService: ProfilesService,
-    private readonly authService: AuthService
-  ) { }
+    private readonly authService: AuthService,
+  ) {}
 
   @Post()
   create(@Body() createProfileDto: CreateProfileDto) {
@@ -42,10 +54,7 @@ export class ProfilesController {
 
   @Put()
   @UseGuards(JwtAuthGuard)
-  async update(
-    @Body() body: UpdateProfileDto,
-    @Res() res: Response,
-  ) {
+  async update(@Body() body: UpdateProfileDto, @Res() res: Response) {
     if (!body.email) throw new BadRequestException();
 
     const user = await this.profilesService.updateUserProfile(body.email, body);
@@ -53,7 +62,6 @@ export class ProfilesController {
 
     res.json({ message: MESSAGE_KEYS.USER_PROFILE_UPDATED });
   }
-
 
   @Put('me')
   @UseGuards(JwtAuthGuard)

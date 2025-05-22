@@ -9,4 +9,4 @@ import { SysLog } from './entities/sys-log.entity';
   controllers: [SysLogsController],
   providers: [SysLogsService],
 })
-export class SysLogsModule { }
+export class SysLogsModule {}

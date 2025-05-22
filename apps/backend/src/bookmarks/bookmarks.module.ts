@@ -8,8 +8,13 @@ import { VersesModule } from '../verses/verses.module';
 import { ChaptersModule } from '../chapters/chapters.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Bookmark]), ProfilesModule, ChaptersModule ,VersesModule],
+  imports: [
+    TypeOrmModule.forFeature([Bookmark]),
+    ProfilesModule,
+    ChaptersModule,
+    VersesModule,
+  ],
   controllers: [BookmarksController],
   providers: [BookmarksService],
 })
-export class BookmarksModule { }
+export class BookmarksModule {}

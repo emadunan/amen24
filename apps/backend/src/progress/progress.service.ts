@@ -14,7 +14,7 @@ import { ERROR_KEYS } from '@amen24/shared';
 export class ProgressService {
   constructor(
     @InjectRepository(Progress) private progressRepo: Repository<Progress>,
-  ) { }
+  ) {}
 
   async getAll(profileEmail: string) {
     return await this.progressRepo.findBy({

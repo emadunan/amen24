@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, UseGuards, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  UseGuards,
+  UnauthorizedException,
+  NotFoundException,
+} from '@nestjs/common';
 import { ProgressService } from './progress.service';
 import { CreateProgressDto } from './dto/create-progress.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -9,7 +18,7 @@ import { ERROR_KEYS } from '@amen24/shared';
 @Controller('progress')
 @UseGuards(JwtAuthGuard)
 export class ProgressController {
-  constructor(private readonly progressService: ProgressService) { }
+  constructor(private readonly progressService: ProgressService) {}
 
   @Post()
   create(@Body() createProgressDto: CreateProgressDto) {

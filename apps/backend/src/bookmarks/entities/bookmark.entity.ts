@@ -36,4 +36,3 @@ export class Bookmark {
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 }
-

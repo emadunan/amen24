@@ -42,4 +42,4 @@ import { ProfilesModule } from '../profiles/profiles.module';
   exports: [AuthService],
   controllers: [AuthController],
 })
-export class AuthModule { }
+export class AuthModule {}

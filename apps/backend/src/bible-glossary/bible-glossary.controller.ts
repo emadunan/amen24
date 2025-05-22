@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BibleGlossaryService } from './bible-glossary.service';
 import { CreateBibleGlossaryDto } from './dto/create-bible-glossary.dto';
 import { UpdateBibleGlossaryDto } from './dto/update-bible-glossary.dto';
@@ -8,13 +16,13 @@ export class BibleGlossaryController {
   constructor(private readonly bibleGlossaryService: BibleGlossaryService) {}
 
   @Post()
-  create(@Body() createBibleGlossaryDto: CreateBibleGlossaryDto) {
-    return this.bibleGlossaryService.create(createBibleGlossaryDto);
+  async create(@Body() createBibleGlossaryDto: CreateBibleGlossaryDto) {
+    return await this.bibleGlossaryService.create(createBibleGlossaryDto);
   }
 
   @Get()
-  findAll() {
-    return this.bibleGlossaryService.findAll();
+  async findAll() {
+    return await this.bibleGlossaryService.findAll();
   }
 
   @Get(':id')
@@ -23,7 +31,10 @@ export class BibleGlossaryController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBibleGlossaryDto: UpdateBibleGlossaryDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateBibleGlossaryDto: UpdateBibleGlossaryDto,
+  ) {
     return this.bibleGlossaryService.update(+id, updateBibleGlossaryDto);
   }
 
