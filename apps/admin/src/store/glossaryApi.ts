@@ -6,6 +6,7 @@ export const glossaryApi = createGlossaryApi(apiUrl);
 export const {
   useAddGlossaryTermMutation,
   useCheckTermByTitleQuery,
+  useUpdateTermMutation,
   useGetAllTermsQuery,
-  useGetOneTermQuery
+  useGetOneTermQuery,
 } = glossaryApi;

@@ -2,10 +2,10 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 import { ApiMessage, BibleGlossary } from "@amen24/shared";
 
-export type CreateBibleGlossaryDto = {
+export type BibleGlossaryDto = {
   slug: string;
-  native: string;
-  translations: {
+  native?: string;
+  translations?: {
     [langCode: string]: {
       term: string;
       definition: string;
@@ -20,7 +20,7 @@ export const createGlossaryApi = (baseUrl: string) =>
     tagTypes: ["GlossaryTerm"],
     baseQuery: createBaseQueryWithReauth(baseUrl, "bible-glossary"),
     endpoints: (builder) => ({
-      addGlossaryTerm: builder.mutation<ApiMessage, CreateBibleGlossaryDto>({
+      addGlossaryTerm: builder.mutation<ApiMessage, BibleGlossaryDto>({
         query: (body) => ({
           method: "POST",
           url: ``,
@@ -45,6 +45,14 @@ export const createGlossaryApi = (baseUrl: string) =>
           return ``;
         },
         providesTags: ["GlossaryTerm"]
+      }),
+      updateTerm: builder.mutation<ApiMessage, BibleGlossaryDto>({
+        query: (body) => ({
+          url: `${body.slug}`,
+          method: "PATCH",
+          body
+        }),
+        invalidatesTags: ["GlossaryTerm"]
       })
     }),
   });

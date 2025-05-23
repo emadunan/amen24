@@ -1,13 +1,23 @@
 .pageHeader {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.title {
+.absoluteTitle {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%);
+}
+
+.editableInput {
   font-size: 1.2rem;
+  padding: 0.2em 0.4em;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  text-align: center;
 }
 
 .backLink {
