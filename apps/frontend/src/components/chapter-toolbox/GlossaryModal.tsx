@@ -115,7 +115,9 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
         </button>
         <h2>{t("toolbox.addGlossaryTerm")}</h2>
         <div>
-          <div className={styles.slug} dir="ltr">Slug: {glossaryState.en.join("-").toLowerCase()}</div>
+          <div className={styles.slug} dir="ltr">
+            Slug: {glossaryState.en.join("-").toLowerCase()}
+          </div>
           {verseNAText && (
             <GlossaryVerse
               lang={Lang.NATIVE}

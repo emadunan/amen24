@@ -31,8 +31,18 @@ export const createGlossaryApi = (baseUrl: string) =>
         query: (title) => `check/${title}`,
         providesTags: ["GlossaryTerm"]
       }),
-      getAllTerms: builder.query<BibleGlossary[], void>({
-        query: () => ``,
+      getOneTerm: builder.query<BibleGlossary, string>({
+        query: (slug) => `${slug}`,
+        providesTags: ["GlossaryTerm"]
+      }),
+      getAllTerms: builder.query<BibleGlossary[], { slug?: string } | void>({
+        query: (q) => {
+          if (q?.slug) {
+            return `?slug=${q.slug}`;
+          }
+
+          return ``;
+        },
         providesTags: ["GlossaryTerm"]
       })
     }),

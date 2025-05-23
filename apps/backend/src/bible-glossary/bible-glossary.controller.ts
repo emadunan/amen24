@@ -7,12 +7,10 @@ import {
   Param,
   Delete,
   Query,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { BibleGlossaryService } from './bible-glossary.service';
 import { CreateBibleGlossaryDto } from './dto/create-bible-glossary.dto';
 import { UpdateBibleGlossaryDto } from './dto/update-bible-glossary.dto';
-import { title } from 'process';
 
 @Controller('bible-glossary')
 export class BibleGlossaryController {
@@ -24,7 +22,7 @@ export class BibleGlossaryController {
   }
 
   @Get()
-  async findAll(@Query() query: { title: string }) {
+  async findAll(@Query() query: { slug: string }) {
     return await this.bibleGlossaryService.findAll(query);
   }
 
@@ -33,21 +31,21 @@ export class BibleGlossaryController {
     return this.bibleGlossaryService.checkExistByTitle(title);
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.bibleGlossaryService.findOne(id);
+  @Get(':slug')
+  findOne(@Param('slug') slug: string) {
+    return this.bibleGlossaryService.findOne(slug);
   }
 
-  @Patch(':id')
+  @Patch(':slug')
   update(
-    @Param('id') id: string,
+    @Param('slug') slug: string,
     @Body() updateBibleGlossaryDto: UpdateBibleGlossaryDto,
   ) {
-    return this.bibleGlossaryService.update(+id, updateBibleGlossaryDto);
+    return this.bibleGlossaryService.update(slug, updateBibleGlossaryDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bibleGlossaryService.remove(+id);
+  @Delete(':slug')
+  remove(@Param('slug') slug: string) {
+    return this.bibleGlossaryService.remove(slug);
   }
 }

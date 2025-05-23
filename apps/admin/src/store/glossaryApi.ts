@@ -3,4 +3,9 @@ import { apiUrl } from "../constants";
 
 export const glossaryApi = createGlossaryApi(apiUrl);
 
-export const { useAddGlossaryTermMutation, useCheckTermByTitleQuery, useGetAllTermsQuery } = glossaryApi;
+export const {
+  useAddGlossaryTermMutation,
+  useCheckTermByTitleQuery,
+  useGetAllTermsQuery,
+  useGetOneTermQuery
+} = glossaryApi;

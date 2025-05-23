@@ -1,4 +1,3 @@
-import i18next from "i18next";
 import { Lang } from "@amen24/shared";
 
 export function getDirection(lang: Lang): "rtl" | "ltr" {

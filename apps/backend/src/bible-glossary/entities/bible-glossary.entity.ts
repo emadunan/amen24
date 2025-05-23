@@ -19,6 +19,9 @@ export class BibleGlossary {
   @Column()
   slug: string;
 
+  @Column()
+  native: string;
+
   @ManyToMany(() => Verse, (verse) => verse.glossaryTerms)
   @JoinTable({
     name: 'bible_glossary_verses',

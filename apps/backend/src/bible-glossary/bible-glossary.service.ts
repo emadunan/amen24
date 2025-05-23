@@ -83,13 +83,13 @@ export class BibleGlossaryService {
   }
 
 
-  async findAll(query?: { title: string }) {
-    const title = query?.title;
+  async findAll(query?: { slug: string }) {
+    const slug = query?.slug;
     return await this.glossaryRepo.find({
-      relations: ['verses', 'translations'],
       where: {
-        ...(title && { translations: { title } })
-      }
+        ...(slug && { slug: query.slug })
+      },
+      ...(slug ? { relations: ['verses', 'translations'] } : {}),
     });
   }
 
@@ -97,10 +97,10 @@ export class BibleGlossaryService {
     return await this.glossaryRepo.existsBy({ translations: { title } });
   }
 
-  async findOne(id: number) {
+  async findOne(slug: string) {
     const glossary = await this.glossaryRepo.findOne({
-      where: { id },
-      relations: ['verses'],
+      where: { slug },
+      relations: ['verses', 'translations'],
     });
 
     if (!glossary) throw new NotFoundException(ERROR_KEYS.GLOSSARY_NOT_FOUND);
@@ -108,8 +108,8 @@ export class BibleGlossaryService {
     return glossary;
   }
 
-  async update(id: number, dto: UpdateBibleGlossaryDto) {
-    const glossary = await this.findOne(id);
+  async update(slug: string, dto: UpdateBibleGlossaryDto) {
+    const glossary = await this.findOne(slug);
 
     Object.assign(glossary, dto);
 
@@ -121,8 +121,8 @@ export class BibleGlossaryService {
     return await this.glossaryRepo.save(glossary);
   }
 
-  async remove(id: number) {
-    const glossary = await this.findOne(id);
+  async remove(slug: string) {
+    const glossary = await this.findOne(slug);
     await this.glossaryRepo.remove(glossary);
   }
 }

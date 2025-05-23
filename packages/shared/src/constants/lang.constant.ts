@@ -1,4 +1,5 @@
 export const langMap = {
+  na: "",
   en: "EN",
   ar: "ع",
   he: "עב",
@@ -44,6 +45,7 @@ export const langMap = {
 };
 
 export const flagMap: Record<string, string> = {
+  na: "",
   en: "🇺🇸",
   ar: "🇦🇪",
   he: "🇮🇱",
