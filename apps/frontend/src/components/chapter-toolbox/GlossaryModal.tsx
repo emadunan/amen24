@@ -10,13 +10,17 @@ import { useGetVerseByIdQuery } from "@/store/apis/verseApi";
 import { BookKey, ERROR_KEYS, Lang, sanitizeWord } from "@amen24/shared";
 import { ActiveLang, glossaryReducer, initialState } from "./glossaryReducer";
 import { useAddGlossaryTermMutation } from "@/store/apis/glossaryApi";
-import { CreateBibleGlossaryDto, useFeedback } from "@amen24/ui";
+import { useFeedback } from "@amen24/ui";
 
 interface GlossaryModalProps {
   onClose: () => void;
   isOpen: boolean;
   verseId: number;
 }
+
+type TranslationsPayload = {
+  [lang: string]: { term: string; definition: string };
+};
 
 const GlossaryModal: React.FC<GlossaryModalProps> = ({
   onClose,
@@ -25,8 +29,8 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
 }) => {
   const [handleAddTerm, _result] = useAddGlossaryTermMutation();
   const params = useParams<{ book: [BookKey] }>();
+  const bookKey = params.book?.[0];
   const { t } = useTranslation();
-  const [bookKey] = params.book;
   const { showError, showApiError, showMessage } = useFeedback(t);
 
   const [glossaryState, glossaryDispatch] = useReducer(
@@ -36,17 +40,23 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
 
   function handleAddWordToTerm(lang: ActiveLang, rawWord: string) {
     const word = sanitizeWord(rawWord);
+    if (!word) return;
     glossaryDispatch({ type: "add", lang, word });
   }
 
-  function handleClearTerm(lang?: ActiveLang) {
+  function handleClearTerm(lang: ActiveLang | undefined = undefined) {
     glossaryDispatch({ type: "clear", lang });
   }
 
-  async function handleAddGlossaryTerm() {
-    const translations: CreateBibleGlossaryDto["translations"] = {};
+  function handleCloseModal() {
+    handleClearTerm();
+    onClose();
+  }
 
-    for (const [lang, words] of Object.entries(glossaryState)) {
+  async function handleAddGlossaryTerm() {
+    const translations: TranslationsPayload = {};
+
+    for (const [lang, words] of Object.entries(glossaryState).filter(([lang]) => lang !== "na")) {
       if (words.length < 1) {
         showError(ERROR_KEYS.GLOSSARY_MISSING_TERM);
         return;
@@ -60,6 +70,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
 
     const payload = {
       slug: glossaryState.en.join("-").toLowerCase(),
+      native: glossaryState.na.join(" "),
       verseIds: [verseId],
       translations,
     };
@@ -155,11 +166,11 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
           </button>
           <button
             className={styles.btnClear}
-            onClick={handleClearTerm.bind(null, undefined)}
+            onClick={() => handleClearTerm()}
           >
             {t("main.clear")}
           </button>
-          <button className={styles.btnCancel} onClick={onClose}>
+          <button className={styles.btnCancel} onClick={handleCloseModal}>
             {t("main.cancel")}
           </button>
         </div>

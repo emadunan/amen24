@@ -53,6 +53,7 @@ export class BibleGlossaryService {
         const verse = await this.versesService.findOneById(targetVerseId);
         if (!verse) throw new NotFoundException();
         existing.glossary.verses.push(verse);
+        existing.glossary.native = dto.native;
         await this.glossaryRepo.save(existing.glossary);
 
         return { message: MESSAGE_KEYS.CONNECTED_WITH_GLOSSARY };
@@ -70,6 +71,7 @@ export class BibleGlossaryService {
 
     const glossary = this.glossaryRepo.create({
       slug: dto.slug,
+      native: dto.native,
       translations,
     });
 
@@ -94,7 +96,16 @@ export class BibleGlossaryService {
   }
 
   async checkExistByTitle(title: string) {
-    return await this.glossaryRepo.existsBy({ translations: { title } });
+    const normalizedTitle = title.normalize("NFC");
+
+    const exists = await this.glossaryRepo
+      .createQueryBuilder("g")
+      .leftJoin("g.translations", "t")
+      .where("g.native = :title", { title: normalizedTitle })
+      .orWhere("t.title = :title", { title: normalizedTitle })
+      .getExists();
+
+    return exists;
   }
 
   async findOne(slug: string) {

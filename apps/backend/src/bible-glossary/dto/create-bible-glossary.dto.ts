@@ -4,6 +4,9 @@ export class CreateBibleGlossaryDto {
   @IsString()
   slug: string;
 
+  @IsString()
+  native: string;
+
   @IsObject()
   translations: {
     [langCode: string]: {

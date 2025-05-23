@@ -4,6 +4,7 @@ import { ApiMessage, BibleGlossary } from "@amen24/shared";
 
 export type CreateBibleGlossaryDto = {
   slug: string;
+  native: string;
   translations: {
     [langCode: string]: {
       term: string;

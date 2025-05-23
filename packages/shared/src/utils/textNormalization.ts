@@ -84,9 +84,9 @@ export function buildJoinedText(verses: Verse[], lang: Lang): string {
 
 export function sanitizeWord(input: string): string {
   return input
-    .trim()                             // Remove leading/trailing whitespace
-    .replace(/["'“”‘’«»]/g, "")         // Remove all quotation marks including Arabic-style «»
-    .replace(/[()[\]{}<>]/g, "")        // Remove all types of brackets
-    .replace(/[^\p{L}\-–—]/gu, "")      // Remove everything except Unicode letters and dashes
-    .normalize("NFC");                  // Normalize composed characters
+    .trim()                               // Remove leading/trailing whitespace
+    .replace(/["'“”‘’«»]/g, "")           // Remove all quotation marks including Arabic-style «»
+    .replace(/[()[\]{}<>]/g, "")          // Remove all types of brackets
+    .replace(/[^\p{L}\-–—\u05BE]/gu, "")  // Remove everything except Unicode letters and dashes
+    .normalize("NFC");                    // Normalize composed characters
 }

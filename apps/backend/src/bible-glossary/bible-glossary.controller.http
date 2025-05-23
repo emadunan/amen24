@@ -1,4 +1,4 @@
-GET http://localhost:5000/api/bible-glossary/check/Israel
+GET http://localhost:5000/api/bible-glossary/check/משה
 
 
 ### Get all bible glossary terms

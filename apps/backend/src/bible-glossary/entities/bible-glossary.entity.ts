@@ -9,6 +9,8 @@ import {
 } from 'typeorm';
 import { Verse } from '../../verses/entities/verse.entity';
 import { BibleGlossaryTranslation } from './bible-glossary-translation.entity';
+import { GlossaryCategory } from '@amen24/shared';
+import { string } from 'joi';
 
 @Unique(['slug'])
 @Entity()
@@ -21,6 +23,9 @@ export class BibleGlossary {
 
   @Column()
   native: string;
+
+  @Column({type: "text", default: GlossaryCategory.Other})
+  category: GlossaryCategory;
 
   @ManyToMany(() => Verse, (verse) => verse.glossaryTerms)
   @JoinTable({
