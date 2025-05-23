@@ -20,6 +20,7 @@ import {
 } from "@/store/slices/searchSlice";
 import { VerseResult as VerseResultInterface } from "@amen24/shared";
 import { useBreakpoint, useFeedback, showToast } from "@amen24/ui";
+import { FormEvent } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -89,10 +90,11 @@ const BibleSearch = () => {
       }
     }
 
-    dispatch(setSelectedBooks(Array.from(selectedSet))); // Convert Set back to Array and update Redux state
+    dispatch(setSelectedBooks(Array.from(selectedSet)));
   };
 
-  async function handleSearch() {
+  async function handleSearch(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     if (showDropdown) dispatch(toggleDropdown());
 
     if (query.trim().length < 3) {
@@ -139,8 +141,9 @@ const BibleSearch = () => {
   return (
     <div className={styles.container}>
       <h2>{t("searchEngine.title")}</h2>
-      <div className={styles.searchBox}>
+      <form className={styles.searchBox} onSubmit={handleSearch}>
         <button
+          type="button"
           className={styles.filterBtn}
           onClick={() => dispatch(toggleDropdown())}
         >
@@ -158,7 +161,7 @@ const BibleSearch = () => {
             onClick={() => dispatch(setQuery(""))}
           />
         )}
-        <button className={styles.searchBtn} onClick={handleSearch}>
+        <button className={styles.searchBtn} type="submit">
           <AiOutlineSearch className={styles.searchIcon} />
           {!isRegularPhone && t("searchEngine.searchButtonText")}
         </button>
@@ -200,7 +203,7 @@ const BibleSearch = () => {
             </div>
           </div>
         )}
-      </div>
+      </form>
       <div className={styles.results}>
         {isLoading ? (
           <div className={styles.spinnerContainer}>
