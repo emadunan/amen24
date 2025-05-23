@@ -6,7 +6,7 @@ import {
   Unique,
 } from 'typeorm';
 import { BibleGlossary } from './bible-glossary.entity';
-import { Lang } from '@amen24/shared'; // Assuming you have a Lang enum
+import { Lang } from '@amen24/shared';
 
 @Unique(['lang', 'glossary'])
 @Entity()

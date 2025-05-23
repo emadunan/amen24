@@ -11,7 +11,7 @@ const GlossaryItem: React.FC = () => {
     <div>
       <header className={styles.pageHeader}>
         <NavLink to={"/glossary"}><FaBackspace className={styles.backLink}/></NavLink>
-        <PageTitle className={styles.absoluteTitle}>/{params.slug?.toUpperCase()}</PageTitle>
+        <PageTitle className={styles.title}>/{params.slug?.toUpperCase()}</PageTitle>
       </header>
     </div>
   )
