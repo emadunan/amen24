@@ -39,7 +39,9 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   );
 
   function handleAddWordToTerm(lang: ActiveLang, rawWord: string) {
-    const word = sanitizeWord(rawWord);
+    let word = rawWord;
+    if (lang !== Lang.NATIVE) word = sanitizeWord(rawWord);
+    
     if (!word) return;
     glossaryDispatch({ type: "add", lang, word });
   }
@@ -102,7 +104,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
     lang: Lang.ENGLISH,
   });
 
-  const verseNAText = verseNA?.verseTranslations?.[0]?.text;
+  const verseNAText = verseNA?.verseTranslations?.[0]?.textDiacritized;
   const verseArText = verseAr?.verseTranslations?.[0]?.text;
   const verseEnText = verseEn?.verseTranslations?.[0]?.text;
 

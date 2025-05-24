@@ -11,9 +11,13 @@ const GlossaryTermItem: React.FC<Props> = ({ item }) => {
   return (
     <div className={styles.item}>
       <h4>/ {item.slug.toUpperCase()}</h4>
-      {/* <p className={styles.verseCount}>{item.verses.length}</p> */}
-      {/* <p>{item.translations.filter(t => t.lang === Lang.ENGLISH)[0].description}</p> */}
-      <NavLink to={`${item.slug}`} className={styles.openBtn}>Open</NavLink>
+      
+      <p>[{item.native}]</p>
+      <p> &mdash; {item.category}</p>
+
+      <div className={styles.actions}>
+        <NavLink to={`${item.slug}`} className={styles.openBtn}>Open</NavLink>
+      </div>
     </div>
   )
 }
