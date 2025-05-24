@@ -3,22 +3,29 @@ import styles from './GlossaryTermDesc.module.css';
 import { BibleGlossaryTranslation, flagMap } from '@amen24/shared';
 import { useTranslation } from 'react-i18next';
 import { getDirection } from '@amen24/ui';
+import { useUpdateTranslationMutation } from '../../store/glossaryApi';
 
 interface Props {
   bgt: BibleGlossaryTranslation;
-  onUpdate?: (updatedTitle: string, updatedText: string) => void;
-  onDelete?: () => void;
 }
 
-const GlossaryTermDesc: React.FC<Props> = ({ bgt, onUpdate, onDelete }) => {
+const GlossaryTermDesc: React.FC<Props> = ({ bgt }) => {
   const { t } = useTranslation();
+  const [updateTranslation, _result] = useUpdateTranslationMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(bgt.title);
   const [desc, setDesc] = useState(bgt.description);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsEditing(false);
-    onUpdate?.(title, desc);
+
+    const payload = {
+      id: bgt.id,
+      title,
+      description: desc,
+    }
+
+    await updateTranslation(payload).unwrap()
   };
 
   const handleDiscard = () => {
@@ -50,9 +57,9 @@ const GlossaryTermDesc: React.FC<Props> = ({ bgt, onUpdate, onDelete }) => {
               <button className={styles.editBtn} onClick={() => setIsEditing(true)}>
                 Edit
               </button>
-              <button className={styles.deleteBtn} onClick={onDelete}>
+              {/* <button className={styles.deleteBtn} onClick={() => { }}>
                 Delete
-              </button>
+              </button> */}
             </>
           ) : (
             <>

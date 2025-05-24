@@ -33,7 +33,7 @@ export class VersesService {
     private verseTranslationsRepo: Repository<VerseTranslation>,
     private chaptersService: ChaptersService,
     private readonly eventEmitter: EventEmitter2,
-  ) { }
+  ) {}
 
   async findVersesByIds(verseIds: number[]) {
     if (!verseIds.length) {
@@ -468,5 +468,4 @@ export class VersesService {
 
     console.log('✅ Finished normalizing all Native texts.');
   }
-
 }

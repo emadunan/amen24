@@ -1,4 +1,5 @@
-import { IsString, IsArray, IsOptional, IsObject } from 'class-validator';
+import { GlossaryCategory } from '@amen24/shared';
+import { IsString, IsArray, IsOptional, IsObject, IsEnum } from 'class-validator';
 
 export class CreateBibleGlossaryDto {
   @IsString()
@@ -6,6 +7,10 @@ export class CreateBibleGlossaryDto {
 
   @IsString()
   native: string;
+
+  @IsOptional()
+  @IsEnum(GlossaryCategory)
+  category: GlossaryCategory;
 
   @IsObject()
   translations: {

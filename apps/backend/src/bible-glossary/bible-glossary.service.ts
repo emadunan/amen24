@@ -11,6 +11,7 @@ import { BibleGlossary } from './entities/bible-glossary.entity';
 import { BibleGlossaryTranslation } from './entities/bible-glossary-translation.entity';
 import { ERROR_KEYS, Lang, MESSAGE_KEYS } from '@amen24/shared';
 import { VersesService } from '../verses/verses.service';
+import { UpdateBibleGlossaryTranslationDto } from './dto/update-bible-glossary-translation.dto';
 
 @Injectable()
 export class BibleGlossaryService {
@@ -25,7 +26,9 @@ export class BibleGlossaryService {
   ) { }
 
   async create(dto: CreateBibleGlossaryDto) {
-    const termTitles = Object.values(dto.translations).map((t) => t.term.toLowerCase());
+    const termTitles = Object.values(dto.translations).map((t) =>
+      t.term.toLowerCase(),
+    );
     const targetVerseId = dto.verseIds?.[0];
 
     const existing = await this.glossaryTranslationRepo.findOne({
@@ -84,25 +87,24 @@ export class BibleGlossaryService {
     return { message: MESSAGE_KEYS.ADDED_TO_GLOSSARY };
   }
 
-
   async findAll(query?: { slug: string }) {
     const slug = query?.slug;
     return await this.glossaryRepo.find({
       where: {
-        ...(slug && { slug: query.slug })
+        ...(slug && { slug: query.slug }),
       },
       ...(slug ? { relations: ['verses', 'translations'] } : {}),
     });
   }
 
   async checkExistByTitle(title: string) {
-    const normalizedTitle = title.normalize("NFC");
+    const normalizedTitle = title.normalize('NFC');
 
     const exists = await this.glossaryRepo
-      .createQueryBuilder("g")
-      .leftJoin("g.translations", "t")
-      .where("g.native = :title", { title: normalizedTitle })
-      .orWhere("t.title = :title", { title: normalizedTitle })
+      .createQueryBuilder('g')
+      .leftJoin('g.translations', 't')
+      .where('g.native = :title', { title: normalizedTitle })
+      .orWhere('t.title = :title', { title: normalizedTitle })
       .getExists();
 
     return exists;
@@ -130,6 +132,16 @@ export class BibleGlossaryService {
     }
 
     return await this.glossaryRepo.save(glossary);
+  }
+
+  async updateTranslation(id: number, dto: UpdateBibleGlossaryTranslationDto) {
+    const glossaryTranslation = await this.glossaryTranslationRepo.findOneBy({ id });
+
+    if (!glossaryTranslation) throw new NotFoundException(ERROR_KEYS.GLOSSARY_NOT_FOUND);
+
+    Object.assign(glossaryTranslation, dto);
+
+    return await this.glossaryTranslationRepo.save(glossaryTranslation);
   }
 
   async remove(slug: string) {

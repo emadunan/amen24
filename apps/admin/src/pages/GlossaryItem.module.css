@@ -6,21 +6,38 @@
 }
 
 .absoluteTitle {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%);
+  font-size: 1.5rem;
 }
 
 .editableInput {
-  font-size: 1.2rem;
-  padding: 0.2em 0.4em;
-  border: 1px solid #ccc;
+  font-size: 1rem;
+  height: 2rem;
+  border: 1px solid var(--primary);
   border-radius: 2px;
   text-align: center;
+  outline: none;
 }
 
 .backLink {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: var(--primary);
+}
+
+.titleHeader,
+.termHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.selectCategory {
+  height: 2rem;
+  border-radius: 2px;
+  color: var(--text-color);
+  border: 1px solid var(--primary);
+  outline: none;
+}
+
+.selectCategory:focus {
+  box-shadow: none;
 }

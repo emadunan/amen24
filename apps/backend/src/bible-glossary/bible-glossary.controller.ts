@@ -7,14 +7,16 @@ import {
   Param,
   Delete,
   Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { BibleGlossaryService } from './bible-glossary.service';
 import { CreateBibleGlossaryDto } from './dto/create-bible-glossary.dto';
 import { UpdateBibleGlossaryDto } from './dto/update-bible-glossary.dto';
+import { UpdateBibleGlossaryTranslationDto } from './dto/update-bible-glossary-translation.dto';
 
 @Controller('bible-glossary')
 export class BibleGlossaryController {
-  constructor(private readonly bibleGlossaryService: BibleGlossaryService) { }
+  constructor(private readonly bibleGlossaryService: BibleGlossaryService) {}
 
   @Post()
   async create(@Body() createBibleGlossaryDto: CreateBibleGlossaryDto) {
@@ -47,5 +49,13 @@ export class BibleGlossaryController {
   @Delete(':slug')
   remove(@Param('slug') slug: string) {
     return this.bibleGlossaryService.remove(slug);
+  }
+
+  @Patch('translation/:id')
+  updateTranslation(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateBibleGlossaryTranslationDto,
+  ) {
+    return this.bibleGlossaryService.updateTranslation(id, dto);
   }
 }

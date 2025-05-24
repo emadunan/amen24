@@ -6,6 +6,7 @@ import { FaBackspace } from "react-icons/fa";
 import { useGetOneTermQuery, useUpdateTermMutation } from '../store/glossaryApi';
 import GlossaryTermDesc from '../components/glossary/GlossaryTermDesc';
 import { showToast } from '@amen24/ui';
+import { GlossaryCategory } from '@amen24/shared';
 
 const GlossaryItem: React.FC = () => {
   const params = useParams<{ slug: string }>();
@@ -44,26 +45,47 @@ const GlossaryItem: React.FC = () => {
   return (
     <div>
       <header className={styles.pageHeader}>
-        <NavLink to={"/glossary"}>
-          <FaBackspace className={styles.backLink} />
-        </NavLink>
+        <div className={styles.titleHeader}>
+          <NavLink to={"/glossary"}>
+            <FaBackspace className={styles.backLink} />
+          </NavLink>
 
-        <PageTitle className={styles.absoluteTitle}>/{slug?.toUpperCase()}</PageTitle>
+          <PageTitle className={styles.absoluteTitle}>/{slug?.toUpperCase()}</PageTitle>
+        </div>
 
-        {isEditing ? (
-          <input
-            value={nativeValue}
-            onChange={(e) => setNativeValue(e.target.value)}
-            onBlur={handleBlurOrEnter}
-            onKeyDown={handleBlurOrEnter}
-            autoFocus
-            className={styles.editableInput}
-          />
-        ) : (
-          <h3 onDoubleClick={() => setIsEditing(true)}>
-            {nativeValue}
-          </h3>
-        )}
+        <div className={styles.termHeader}>
+          {isEditing ? (
+            <input
+              value={nativeValue}
+              onChange={(e) => setNativeValue(e.target.value)}
+              onBlur={handleBlurOrEnter}
+              onKeyDown={handleBlurOrEnter}
+              autoFocus
+              className={styles.editableInput}
+            />
+          ) : (
+            <h3 onClick={() => setIsEditing(true)}>
+              {nativeValue}
+            </h3>
+          )}
+
+          <select
+            className={styles.selectCategory}
+            value={term?.category || ''}
+            onChange={async (e) => {
+              const category = e.target.value;
+              if (term && category !== term.category) {
+                await updateTerm({ slug: term.slug, category: category as GlossaryCategory }).unwrap();
+              }
+            }}
+          >
+            {Object.entries(GlossaryCategory).map(([key, value]) => (
+              <option key={value} value={value}>
+                {key}
+              </option>
+            ))}
+          </select>
+        </div>
       </header>
 
       <div>
