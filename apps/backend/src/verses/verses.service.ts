@@ -430,4 +430,43 @@ export class VersesService {
       console.error(`Seeding ${lang} failed: ${error.message}`);
     }
   }
+
+  async normalizeNativeVersesInBatches(batchSize = 1000) {
+    let offset = 0;
+    let processed = 0;
+
+    while (true) {
+      const batch = await this.verseTranslationsRepo
+        .createQueryBuilder('vt')
+        .where('vt.lang = :lang', { lang: Lang.NATIVE })
+        .orderBy('vt.id')
+        .offset(offset)
+        .limit(batchSize)
+        .getMany();
+
+      if (!batch.length) break;
+
+      const updated: VerseTranslation[] = [];
+
+      for (const vt of batch) {
+        const cleaned = removeNaDiacritics(vt.text ?? '');
+        if (vt.text !== cleaned) {
+          vt.text = cleaned;
+          vt.textNormalized = cleaned;
+          updated.push(vt);
+        }
+      }
+
+      if (updated.length) {
+        await this.verseTranslationsRepo.save(updated);
+      }
+
+      processed += batch.length;
+      offset += batchSize;
+      console.log(`✔️ Processed ${processed} translations so far...`);
+    }
+
+    console.log('✅ Finished normalizing all Native texts.');
+  }
+
 }
