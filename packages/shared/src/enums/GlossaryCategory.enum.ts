@@ -1,4 +1,5 @@
 export enum GlossaryCategory {
+  DivineName = 'divine-name',
   Character = 'character',
   Place = 'place',
   Object = 'object',
