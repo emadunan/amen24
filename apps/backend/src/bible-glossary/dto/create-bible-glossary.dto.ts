@@ -1,4 +1,4 @@
-import { GlossaryCategory } from '@amen24/shared';
+import { ApprovalStatus, GlossaryCategory } from '@amen24/shared';
 import { IsString, IsArray, IsOptional, IsObject, IsEnum } from 'class-validator';
 
 export class CreateBibleGlossaryDto {
@@ -11,6 +11,10 @@ export class CreateBibleGlossaryDto {
   @IsOptional()
   @IsEnum(GlossaryCategory)
   category: GlossaryCategory;
+
+  @IsOptional()
+  @IsEnum(ApprovalStatus)
+  approvalStatus: ApprovalStatus;
 
   @IsObject()
   translations: {

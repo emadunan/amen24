@@ -1,11 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
-import { ApiMessage, BibleGlossary, GlossaryCategory, Lang } from "@amen24/shared";
+import { ApiMessage, ApprovalStatus, BibleGlossary, GlossaryCategory, Lang } from "@amen24/shared";
 
 export type BibleGlossaryDto = {
   slug: string;
   native?: string;
   category?: GlossaryCategory;
+  approvalStatus: ApprovalStatus;
   translations?: {
     [langCode: string]: {
       term: string;

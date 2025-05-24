@@ -8,3 +8,4 @@ export * from "./AuthProvider.enum";
 export * from "./AuditingAction.enum";
 export * from "./SysLogLevel.enum";
 export * from "./GlossaryCategory.enum";
+export * from "./ApprovalStatus.enum";

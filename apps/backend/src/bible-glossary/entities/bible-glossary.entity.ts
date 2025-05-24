@@ -9,8 +9,7 @@ import {
 } from 'typeorm';
 import { Verse } from '../../verses/entities/verse.entity';
 import { BibleGlossaryTranslation } from './bible-glossary-translation.entity';
-import { GlossaryCategory } from '@amen24/shared';
-import { string } from 'joi';
+import { ApprovalStatus, GlossaryCategory } from '@amen24/shared';
 
 @Unique(['slug'])
 @Entity()
@@ -40,4 +39,7 @@ export class BibleGlossary {
     eager: true,
   })
   translations: BibleGlossaryTranslation[];
+
+  @Column({ type: 'text', default: ApprovalStatus.Pending })
+  approvalStatus: ApprovalStatus;
 }

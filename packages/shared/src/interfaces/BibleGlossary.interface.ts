@@ -1,4 +1,4 @@
-import { GlossaryCategory } from "../enums";
+import { ApprovalStatus, GlossaryCategory } from "../enums";
 import { BibleGlossaryTranslation } from "./BibleGlossaryTranslation.interface";
 import { Verse } from "./Verse.interface";
 
@@ -7,6 +7,7 @@ export interface BibleGlossary {
   slug: string;
   native: string;
   category: GlossaryCategory;
+  approvalStatus: ApprovalStatus;
   verses: Verse[];
   translations: BibleGlossaryTranslation[];
 }
