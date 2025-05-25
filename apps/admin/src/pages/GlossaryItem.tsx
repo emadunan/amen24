@@ -6,7 +6,7 @@ import { FaBackspace } from "react-icons/fa";
 import { useGetOneTermQuery, useUpdateTermMutation } from '../store/glossaryApi';
 import GlossaryTermDesc from '../components/glossary/GlossaryTermDesc';
 import { showToast } from '@amen24/ui';
-import { GlossaryCategory } from '@amen24/shared';
+import { ApprovalStatus, GlossaryCategory } from '@amen24/shared';
 
 const GlossaryItem: React.FC = () => {
   const params = useParams<{ slug: string }>();
@@ -38,7 +38,7 @@ const GlossaryItem: React.FC = () => {
 
       const trimmedValue = nativeValue.trim();
       if (term.native === trimmedValue) return;
-      updateTerm({ slug: term.slug, native: trimmedValue });
+      updateTerm({ slug: term.slug, native: trimmedValue, approvalStatus: ApprovalStatus.Pending });
     }
   }
 
@@ -75,7 +75,7 @@ const GlossaryItem: React.FC = () => {
             onChange={async (e) => {
               const category = e.target.value;
               if (term && category !== term.category) {
-                await updateTerm({ slug: term.slug, category: category as GlossaryCategory }).unwrap();
+                await updateTerm({ slug: term.slug, category: category as GlossaryCategory, approvalStatus: ApprovalStatus.Pending }).unwrap();
               }
             }}
           >
@@ -90,7 +90,7 @@ const GlossaryItem: React.FC = () => {
 
       <div>
         {term?.translations.map(bgt => (
-          <GlossaryTermDesc key={bgt.lang} bgt={bgt} />
+          <GlossaryTermDesc key={bgt.lang} slug={term.slug} bgt={bgt} />
         ))}
       </div>
     </div>

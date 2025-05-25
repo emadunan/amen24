@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import styles from './GlossaryTermDesc.module.css';
-import { BibleGlossaryTranslation, flagMap } from '@amen24/shared';
+import { ApprovalStatus, BibleGlossaryTranslation, flagMap } from '@amen24/shared';
 import { useTranslation } from 'react-i18next';
 import { getDirection } from '@amen24/ui';
-import { useUpdateTranslationMutation } from '../../store/glossaryApi';
+import { useUpdateTermMutation, useUpdateTranslationMutation } from '../../store/glossaryApi';
 
 interface Props {
+  slug: string;
   bgt: BibleGlossaryTranslation;
 }
 
-const GlossaryTermDesc: React.FC<Props> = ({ bgt }) => {
+const GlossaryTermDesc: React.FC<Props> = ({ slug, bgt }) => {
   const { t } = useTranslation();
-  const [updateTranslation, _result] = useUpdateTranslationMutation();
+  const [updateTranslation, _translationResult] = useUpdateTranslationMutation();
+  const [updateTerm, _termResult] = useUpdateTermMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(bgt.title);
   const [desc, setDesc] = useState(bgt.description);
@@ -25,7 +27,8 @@ const GlossaryTermDesc: React.FC<Props> = ({ bgt }) => {
       description: desc,
     }
 
-    await updateTranslation(payload).unwrap()
+    await updateTranslation(payload).unwrap();
+    await updateTerm({ slug, approvalStatus: ApprovalStatus.Pending });
   };
 
   const handleDiscard = () => {
