@@ -1,0 +1,15 @@
+.term {
+  margin: .5rem 0;
+}
+
+.term p {
+  
+}
+
+.link {
+  color: var(--primary);
+}
+
+.link:hover {
+  text-decoration: underline;
+}

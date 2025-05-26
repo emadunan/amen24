@@ -86,10 +86,11 @@ const ChapterContent: FC<Props> = ({
     );
 
     // Construct formatted string
-    const verseRefString = `(${t(`book:${bookKey}`)} ${formattedChapterNum} : ${formattedFirstVerseNum}${formattedFirstVerseNum !== formattedLastVerseNum
+    const verseRefString = `(${t(`book:${bookKey}`)} ${formattedChapterNum} : ${formattedFirstVerseNum}${
+      formattedFirstVerseNum !== formattedLastVerseNum
         ? ` - ${formattedLastVerseNum}`
         : ""
-      })`;
+    })`;
 
     const baseUrl = `https://amen24.org/${i18n.language}`;
     const passageUrl = `${baseUrl}/${bookKey}/${chapterNum}/${BookMap[bookKey].len}?${queryParameters}`;

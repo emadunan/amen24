@@ -204,7 +204,10 @@ const ChapterToolbox = () => {
               )}
 
             {user &&
-              hasPermission(user.profile.roles, Permission.CREATE_GLOSSARY_TERM) && (
+              hasPermission(
+                user.profile.roles,
+                Permission.CREATE_GLOSSARY_TERM,
+              ) && (
                 <button onClick={() => setIsGlossaryModalOpen(true)}>
                   <FaBookOpen /> {t("toolbox.addToGlossary")}
                 </button>

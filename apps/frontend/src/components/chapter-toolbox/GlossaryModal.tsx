@@ -41,7 +41,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   function handleAddWordToTerm(lang: ActiveLang, rawWord: string) {
     let word = rawWord;
     if (lang !== Lang.NATIVE) word = sanitizeWord(rawWord);
-    
+
     if (!word) return;
     glossaryDispatch({ type: "add", lang, word });
   }
@@ -58,7 +58,9 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   async function handleAddGlossaryTerm() {
     const translations: TranslationsPayload = {};
 
-    for (const [lang, words] of Object.entries(glossaryState).filter(([lang]) => lang !== "na")) {
+    for (const [lang, words] of Object.entries(glossaryState).filter(
+      ([lang]) => lang !== "na",
+    )) {
       if (words.length < 1) {
         showError(ERROR_KEYS.GLOSSARY_MISSING_TERM);
         return;
@@ -166,10 +168,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
           <button className={styles.btnSubmit} onClick={handleAddGlossaryTerm}>
             {t("main.add")}
           </button>
-          <button
-            className={styles.btnClear}
-            onClick={() => handleClearTerm()}
-          >
+          <button className={styles.btnClear} onClick={() => handleClearTerm()}>
             {t("main.clear")}
           </button>
           <button className={styles.btnCancel} onClick={handleCloseModal}>
