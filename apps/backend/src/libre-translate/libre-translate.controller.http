@@ -1,0 +1,9 @@
+### Test LibreTranslate service
+POST http://localhost:5000/api/translate
+Content-Type: application/json
+
+{
+  "text": "أنا أقرأ الكتاب المقدس كل يوم",
+  "source": "ar",
+  "target": "en"
+}

@@ -28,9 +28,9 @@ export class BibleGlossaryController {
     return await this.bibleGlossaryService.findAll(query);
   }
 
-  @Get('check/:title')
-  checkIsExist(@Param('title') title: string) {
-    return this.bibleGlossaryService.checkExistByTitle(title);
+  @Get('check/:term')
+  checkIsExist(@Param('term') term: string) {
+    return this.bibleGlossaryService.checkExistByTerm(term);
   }
 
   @Get(':slug')

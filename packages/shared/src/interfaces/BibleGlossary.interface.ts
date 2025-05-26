@@ -7,7 +7,7 @@ export interface BibleGlossary {
   slug: string;
   native: string;
   category: GlossaryCategory;
-  approvalStatus: ApprovalStatus;
+  approvalStatus?: ApprovalStatus;
   verses: Verse[];
   translations: BibleGlossaryTranslation[];
 }

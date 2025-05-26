@@ -6,7 +6,7 @@ export type BibleGlossaryDto = {
   slug: string;
   native?: string;
   category?: GlossaryCategory;
-  approvalStatus: ApprovalStatus;
+  approvalStatus?: ApprovalStatus;
   translations?: {
     [langCode: string]: {
       term: string;
@@ -19,8 +19,8 @@ export type BibleGlossaryDto = {
 export type BibleGlossaryTranslationDto = {
   id: number;
   lang?: Lang;
-  title?: string;
-  description?: string;
+  term?: string;
+  definition?: string;
   glossary?: BibleGlossary;
 }
 
@@ -30,7 +30,7 @@ export const createGlossaryApi = (baseUrl: string) =>
     tagTypes: ["GlossaryTerm"],
     baseQuery: createBaseQueryWithReauth(baseUrl, "bible-glossary"),
     endpoints: (builder) => ({
-      addGlossaryTerm: builder.mutation<ApiMessage, BibleGlossaryDto>({
+      addTerm: builder.mutation<ApiMessage, BibleGlossaryDto>({
         query: (body) => ({
           method: "POST",
           url: ``,
@@ -38,8 +38,8 @@ export const createGlossaryApi = (baseUrl: string) =>
         }),
         invalidatesTags: ["GlossaryTerm"],
       }),
-      checkTermByTitle: builder.query<boolean, string>({
-        query: (title) => `check/${title}`,
+      isTermExist: builder.query<boolean, string>({
+        query: (term) => `check/${term}`,
         providesTags: ["GlossaryTerm"]
       }),
       getOneTerm: builder.query<BibleGlossary, string>({
@@ -69,8 +69,8 @@ export const createGlossaryApi = (baseUrl: string) =>
           url: `translation/${body.id}`,
           method: "PATCH",
           body: {
-            title: body.title,
-            description: body.description,
+            term: body.term,
+            definition: body.definition,
           }
         }),
         invalidatesTags: ["GlossaryTerm"]

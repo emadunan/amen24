@@ -5,5 +5,5 @@ if (!apiPublicUrl) throw new Error("Api url must be defined!");
 
 export const glossaryApi = createGlossaryApi(apiPublicUrl);
 
-export const { useAddGlossaryTermMutation, useCheckTermByTitleQuery } =
+export const { useAddTermMutation, useIsTermExistQuery } =
   glossaryApi;

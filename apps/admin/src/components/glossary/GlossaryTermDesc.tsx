@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
-import styles from './GlossaryTermDesc.module.css';
-import { ApprovalStatus, BibleGlossaryTranslation, flagMap } from '@amen24/shared';
-import { useTranslation } from 'react-i18next';
 import { getDirection } from '@amen24/ui';
+import { useTranslation } from 'react-i18next';
+import styles from './GlossaryTermDesc.module.css';
+import { useLazyTranslateTextQuery } from '../../store/libreTranslateApi';
+import { ApprovalStatus, BibleGlossaryTranslation, flagMap, Lang } from '@amen24/shared';
 import { useUpdateTermMutation, useUpdateTranslationMutation } from '../../store/glossaryApi';
 
 interface Props {
   slug: string;
+  arabicText: string;
   bgt: BibleGlossaryTranslation;
 }
 
-const GlossaryTermDesc: React.FC<Props> = ({ slug, bgt }) => {
+const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
   const { t } = useTranslation();
   const [updateTranslation, _translationResult] = useUpdateTranslationMutation();
   const [updateTerm, _termResult] = useUpdateTermMutation();
   const [isEditing, setIsEditing] = useState(false);
-  const [title, setTitle] = useState(bgt.title);
-  const [desc, setDesc] = useState(bgt.description);
+  const [term, setTerm] = useState(bgt.term);
+  const [definition, setDefinition] = useState(bgt.definition);
+
+  const [triggerTranslate] = useLazyTranslateTextQuery();
 
   const handleSave = async () => {
     setIsEditing(false);
 
     const payload = {
       id: bgt.id,
-      title,
-      description: desc,
+      term,
+      definition,
     }
 
     await updateTranslation(payload).unwrap();
@@ -32,10 +36,19 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, bgt }) => {
   };
 
   const handleDiscard = () => {
-    setTitle(bgt.title);
-    setDesc(bgt.description);
+    setTerm(bgt.term);
+    setDefinition(bgt.definition);
     setIsEditing(false);
   };
+
+  const handleGenerateText = async () => {
+    const { translatedText } = await triggerTranslate({
+      text: arabicText,
+      target: bgt.lang,
+    }).unwrap();
+
+    setDefinition(translatedText);
+  }
 
   return (
     <div className={styles.card}>
@@ -43,15 +56,15 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, bgt }) => {
         <p>{flagMap[bgt.lang]} {t(`lang:${bgt.lang}`)}</p>
       </div>
 
-      <div className={styles.title}>
+      <div className={styles.term}>
         {!isEditing ? (
-          <p>{title}</p>
+          <p>{term}</p>
         ) : (
           <input
             type="text"
-            className={styles.titleInput}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            className={styles.termInput}
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
           />
         )}
         <div className={styles.actions}>
@@ -66,6 +79,11 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, bgt }) => {
             </>
           ) : (
             <>
+              {bgt.lang !== Lang.ARABIC && (
+                <button className={styles.saveBtn} onClick={handleGenerateText}>
+                  GenerateText
+                </button>
+              )}
               <button className={styles.saveBtn} onClick={handleSave}>
                 Save
               </button>
@@ -79,16 +97,16 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, bgt }) => {
 
       {!isEditing ? (
         <div
-          className={styles.desc}
+          className={styles.definition}
           dir={getDirection(bgt.lang)}
         >
-          {desc}
+          {definition}
         </div>
       ) : (
         <textarea
           className={styles.textarea}
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
+          value={definition}
+          onChange={(e) => setDefinition(e.target.value)}
           dir={getDirection(bgt.lang)}
         />
       )}

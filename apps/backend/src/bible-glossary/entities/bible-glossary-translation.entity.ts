@@ -18,10 +18,13 @@ export class BibleGlossaryTranslation {
   lang: Lang;
 
   @Column()
-  title: string;
+  term: string;
 
   @Column({ type: 'text', nullable: true })
-  description?: string;
+  definition?: string;
+
+  @Column({ type: 'text', nullable: true })
+  oldDefinition?: string;
 
   @ManyToOne(() => BibleGlossary, (glossary) => glossary.translations, {
     onDelete: 'CASCADE',

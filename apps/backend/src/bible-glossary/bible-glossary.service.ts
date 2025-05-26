@@ -26,13 +26,13 @@ export class BibleGlossaryService {
   ) { }
 
   async create(dto: CreateBibleGlossaryDto) {
-    const termTitles = Object.values(dto.translations).map((t) =>
-      t.term.toLowerCase(),
+    const terms = Object.values(dto.translations).map((bgItem) =>
+      bgItem.term.toLowerCase(),
     );
     const targetVerseId = dto.verseIds?.[0];
 
     const existing = await this.glossaryTranslationRepo.findOne({
-      where: { title: In(termTitles) },
+      where: { term: In(terms) },
       relations: ['glossary', 'glossary.verses'],
     });
 
@@ -44,7 +44,7 @@ export class BibleGlossaryService {
       throw new ConflictException({
         message: ERROR_KEYS.GLOSSARY_TERM_EXIST,
         meta: {
-          term: existing.title,
+          term: existing.term,
           lang: existing.lang,
         },
       });
@@ -68,7 +68,7 @@ export class BibleGlossaryService {
     const translations = Object.entries(dto.translations).map(([lang, value]) =>
       this.glossaryTranslationRepo.create({
         lang: lang as Lang,
-        title: value.term.toLowerCase(),
+        term: value.term.toLowerCase(),
       }),
     );
 
@@ -97,24 +97,27 @@ export class BibleGlossaryService {
     });
   }
 
-  async checkExistByTitle(title: string) {
-    const normalizedTitle = title.normalize('NFC');
+  async checkExistByTerm(term: string) {
+    const normalizedTerm = term.normalize('NFC');
 
     const exists = await this.glossaryRepo
       .createQueryBuilder('g')
       .leftJoin('g.translations', 't')
-      .where('g.native = :title', { title: normalizedTitle })
-      .orWhere('t.title = :title', { title: normalizedTitle })
+      .where('g.native = :term', { term: normalizedTerm })
+      .orWhere('t.term = :term', { term: normalizedTerm })
       .getExists();
 
     return exists;
   }
 
   async findOne(slug: string) {
-    const glossary = await this.glossaryRepo.findOne({
-      where: { slug },
-      relations: ['verses', 'translations'],
-    });
+    const glossary = await this.glossaryRepo
+      .createQueryBuilder('glossary')
+      .leftJoinAndSelect('glossary.verses', 'verse')
+      .leftJoinAndSelect('glossary.translations', 'translation')
+      .where('glossary.slug = :slug', { slug })
+      .orderBy('translation.lang', 'ASC')
+      .getOne();
 
     if (!glossary) throw new NotFoundException(ERROR_KEYS.GLOSSARY_NOT_FOUND);
 

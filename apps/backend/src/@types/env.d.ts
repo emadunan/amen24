@@ -1,4 +1,4 @@
-export {};
+export { };
 
 declare namespace NodeJS {
   interface ProcessEnv {
@@ -27,5 +27,7 @@ declare namespace NodeJS {
     FACEBOOK_APP_ID: string;
     FACEBOOK_APP_SECRET: string;
     FACEBOOK_CALLBACK_URL: string;
+    LIBRE_TRANSLATE_KEY: string;
+    LIBRE_TRANSLATE_URL: string;
   }
 }

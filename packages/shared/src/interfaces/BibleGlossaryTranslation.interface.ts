@@ -4,7 +4,8 @@ import { BibleGlossary } from "./BibleGlossary.interface";
 export interface BibleGlossaryTranslation {
   id: number;
   lang: Lang;
-  title: string;
-  description: string;
+  term: string;
+  definition: string;
+  oldDefinition: string;
   glossary: BibleGlossary;
 }

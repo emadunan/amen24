@@ -6,7 +6,7 @@ import { FaBackspace } from "react-icons/fa";
 import { useGetOneTermQuery, useUpdateTermMutation } from '../store/glossaryApi';
 import GlossaryTermDesc from '../components/glossary/GlossaryTermDesc';
 import { showToast } from '@amen24/ui';
-import { ApprovalStatus, GlossaryCategory } from '@amen24/shared';
+import { ApprovalStatus, GlossaryCategory, Lang } from '@amen24/shared';
 
 const GlossaryItem: React.FC = () => {
   const params = useParams<{ slug: string }>();
@@ -90,7 +90,7 @@ const GlossaryItem: React.FC = () => {
 
       <div>
         {term?.translations.map(bgt => (
-          <GlossaryTermDesc key={bgt.lang} slug={term.slug} bgt={bgt} />
+          <GlossaryTermDesc key={bgt.lang} arabicText={term.translations.find(t => t.lang === Lang.ARABIC)?.definition || ''} slug={term.slug} bgt={bgt} />
         ))}
       </div>
     </div>

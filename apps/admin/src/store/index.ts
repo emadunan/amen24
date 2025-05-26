@@ -5,6 +5,7 @@ import { profileApi } from './profileApi';
 import { featuredApi } from "./featuredApi";
 import { auditingApi } from './auditingApi';
 import { glossaryApi } from './glossaryApi';
+import { libreTranslateApi } from './libreTranslateApi';
 
 export const MakeStore = () => {
   const store = configureStore({
@@ -15,6 +16,7 @@ export const MakeStore = () => {
       [glossaryApi.reducerPath]: glossaryApi.reducer,
       [featuredApi.reducerPath]: featuredApi.reducer,
       [auditingApi.reducerPath]: auditingApi.reducer,
+      [libreTranslateApi.reducerPath]: libreTranslateApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
@@ -24,6 +26,7 @@ export const MakeStore = () => {
         .concat(featuredApi.middleware)
         .concat(verseApi.middleware)
         .concat(auditingApi.middleware)
+        .concat(libreTranslateApi.middleware)
   });
 
   return store;

@@ -8,11 +8,15 @@ export class CreateBibleGlossaryTranslationDto {
   lang: Lang;
 
   @IsString()
-  title: string;
+  term: string;
 
   @IsOptional()
   @IsString()
-  description?: string;
+  definition?: string;
+
+  @IsOptional()
+  @IsString()
+  oldDefinition?: string;
 
   glossary: BibleGlossary;
 }

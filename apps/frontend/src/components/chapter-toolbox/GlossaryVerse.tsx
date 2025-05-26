@@ -5,7 +5,7 @@ import { getDirection } from "@amen24/ui";
 import { ActiveLang } from "./glossaryReducer";
 import { AiOutlineClear } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
-import { useCheckTermByTitleQuery } from "@/store/apis/glossaryApi";
+import { useIsTermExistQuery } from "@/store/apis/glossaryApi";
 import SmallSpinner from "../ui/SmallSpinner";
 
 interface Props {
@@ -41,7 +41,7 @@ const GlossaryVerse: React.FC<Props> = ({
   const term = selectedWords.join(" ").toLowerCase();
   const shouldQuery = term.trim().length > 0;
   const words: string[] = text.trim().split(/\s+/);
-  const { data: isFound, isLoading } = useCheckTermByTitleQuery(term, {
+  const { data: isFound, isLoading } = useIsTermExistQuery(term, {
     skip: !shouldQuery,
   });
 

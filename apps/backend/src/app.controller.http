@@ -6,3 +6,14 @@ GET http://localhost:5000/api
 
 ### Test app controller root
 GET https://amen24.org/api
+
+### Test LibreTranslate service
+POST http://46.101.206.105:5000/translate
+Content-Type: application/json
+
+{
+  "q": "أنا أحب القراءة",
+  "source": "ar",
+  "target": "en",
+  "format": "text"
+}

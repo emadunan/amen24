@@ -9,7 +9,7 @@ import { useParams } from "next/navigation";
 import { useGetVerseByIdQuery } from "@/store/apis/verseApi";
 import { BookKey, ERROR_KEYS, Lang, sanitizeWord } from "@amen24/shared";
 import { ActiveLang, glossaryReducer, initialState } from "./glossaryReducer";
-import { useAddGlossaryTermMutation } from "@/store/apis/glossaryApi";
+import { useAddTermMutation } from "@/store/apis/glossaryApi";
 import { useFeedback } from "@amen24/ui";
 
 interface GlossaryModalProps {
@@ -27,7 +27,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   isOpen,
   verseId,
 }) => {
-  const [handleAddTerm, _result] = useAddGlossaryTermMutation();
+  const [handleAddTerm, _result] = useAddTermMutation();
   const params = useParams<{ book: [BookKey] }>();
   const bookKey = params.book?.[0];
   const { t } = useTranslation();

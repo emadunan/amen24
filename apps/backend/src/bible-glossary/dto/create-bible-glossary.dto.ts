@@ -14,7 +14,7 @@ export class CreateBibleGlossaryDto {
 
   @IsOptional()
   @IsEnum(ApprovalStatus)
-  approvalStatus: ApprovalStatus;
+  approvalStatus?: ApprovalStatus;
 
   @IsObject()
   translations: {
