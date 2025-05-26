@@ -7,6 +7,6 @@ import { GoogleTranslateService } from './google-translate/google-translate.serv
 @Module({
   imports: [HttpModule],
   providers: [LibreTranslateService, GoogleTranslateService],
-  controllers: [TranslateController]
+  controllers: [TranslateController],
 })
-export class LibreTranslateModule { }
+export class LibreTranslateModule {}

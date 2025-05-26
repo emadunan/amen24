@@ -8,23 +8,39 @@ export class GoogleTranslateService {
   apiKey: string;
   url: string;
 
-  constructor(private configService: ConfigService, private readonly httpService: HttpService) {
-    this.apiKey = this.configService.getOrThrow<string>("GOOGLE_TRANSLATE_API_KEY");
-    this.url = this.configService.getOrThrow<string>("GOOGLE_TRANSLATE_API_URL");
+  constructor(
+    private configService: ConfigService,
+    private readonly httpService: HttpService,
+  ) {
+    this.apiKey = this.configService.getOrThrow<string>(
+      'GOOGLE_TRANSLATE_API_KEY',
+    );
+    this.url = this.configService.getOrThrow<string>(
+      'GOOGLE_TRANSLATE_API_URL',
+    );
   }
 
-  async translate(text: string, source: string, target: string): Promise<string> {
+  async translate(
+    text: string,
+    source: string,
+    target: string,
+  ): Promise<string> {
     try {
-      const response = await firstValueFrom(this.httpService.post(`${this.url}?key=${this.apiKey}`, {
-        q: text,
-        source,
-        target,
-        format: 'text',
-      }));
+      const response = await firstValueFrom(
+        this.httpService.post(`${this.url}?key=${this.apiKey}`, {
+          q: text,
+          source,
+          target,
+          format: 'text',
+        }),
+      );
 
       return response.data.data.translations[0].translatedText;
     } catch (error) {
-      console.error('Translation error:', error.response?.data || error.message);
+      console.error(
+        'Translation error:',
+        error.response?.data || error.message,
+      );
       throw new Error('Translation failed');
     }
   }

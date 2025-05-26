@@ -23,7 +23,7 @@ export class BibleGlossaryService {
     private glossaryTranslationRepo: Repository<BibleGlossaryTranslation>,
 
     private versesService: VersesService,
-  ) { }
+  ) {}
 
   async create(dto: CreateBibleGlossaryDto) {
     const terms = Object.values(dto.translations).map((bgItem) =>
@@ -138,12 +138,18 @@ export class BibleGlossaryService {
   }
 
   async updateTranslation(id: number, dto: UpdateBibleGlossaryTranslationDto) {
-    const glossaryTranslation = await this.glossaryTranslationRepo.findOneBy({ id });
+    const glossaryTranslation = await this.glossaryTranslationRepo.findOneBy({
+      id,
+    });
 
-    if (!glossaryTranslation) throw new NotFoundException(ERROR_KEYS.GLOSSARY_NOT_FOUND);
+    if (!glossaryTranslation)
+      throw new NotFoundException(ERROR_KEYS.GLOSSARY_NOT_FOUND);
 
     // Only update oldDefinition if the incoming update includes a new definition
-    if (dto.definition !== undefined && dto.definition !== glossaryTranslation.definition) {
+    if (
+      dto.definition !== undefined &&
+      dto.definition !== glossaryTranslation.definition
+    ) {
       glossaryTranslation.oldDefinition = glossaryTranslation.definition;
     }
 

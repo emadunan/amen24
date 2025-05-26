@@ -5,7 +5,7 @@ import { MdPushPin } from "react-icons/md";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { HiSparkles } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
-import { useHighlightContext } from "./ChapterContent";
+import { useHighlightContext } from "../bible/ChapterContent";
 import { createPortal } from "react-dom";
 import { isRtl, useDraggable, useFeedback } from "@amen24/ui";
 import {
@@ -25,7 +25,7 @@ import CloseDraggableBtn from "../ui/CloseDraggableBtn";
 import { useAddFavoriteMutation } from "@/store/apis/favoriteApi";
 import { useAddToFeaturedMutation } from "@/store/apis/featuredApi";
 import ToggleDraggableBtn from "../ui/ToggleDraggableBtn";
-import GlossaryModal from "../chapter-toolbox/GlossaryModal";
+import GlossaryModal from "./GlossaryModal";
 
 const ChapterToolbox = () => {
   const { clearHighlighted, copyHighlighted, highlighted } =
@@ -198,15 +198,15 @@ const ChapterToolbox = () => {
 
             {user &&
               hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-                <button onClick={() => setIsGlossaryModalOpen(true)}>
-                  <FaBookOpen /> {t("toolbox.addToGlossary")}
+                <button onClick={handleAddFeatured}>
+                  <HiSparkles /> {t("toolbox.addToFeatured")}
                 </button>
               )}
 
             {user &&
-              hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-                <button onClick={handleAddFeatured}>
-                  <HiSparkles /> {t("toolbox.addToFeatured")}
+              hasPermission(user.profile.roles, Permission.CREATE_GLOSSARY_TERM) && (
+                <button onClick={() => setIsGlossaryModalOpen(true)}>
+                  <FaBookOpen /> {t("toolbox.addToGlossary")}
                 </button>
               )}
 

@@ -27,7 +27,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   isOpen,
   verseId,
 }) => {
-  const [handleAddTerm, _result] = useAddTermMutation();
+  const [handleAddTerm] = useAddTermMutation();
   const params = useParams<{ book: [BookKey] }>();
   const bookKey = params.book?.[0];
   const { t } = useTranslation();
