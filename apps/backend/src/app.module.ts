@@ -21,7 +21,7 @@ import { ProgressModule } from './progress/progress.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { SysLogsModule } from './sys-logs/sys-logs.module';
 import { BibleGlossaryModule } from './bible-glossary/bible-glossary.module';
-import { LibreTranslateModule } from './libre-translate/libre-translate.module';
+import { LibreTranslateModule } from './translate/translate.module';
 import joiConfig from './_config/joi.config';
 
 @Module({

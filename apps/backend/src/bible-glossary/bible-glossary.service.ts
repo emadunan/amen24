@@ -142,6 +142,11 @@ export class BibleGlossaryService {
 
     if (!glossaryTranslation) throw new NotFoundException(ERROR_KEYS.GLOSSARY_NOT_FOUND);
 
+    // Only update oldDefinition if the incoming update includes a new definition
+    if (dto.definition !== undefined && dto.definition !== glossaryTranslation.definition) {
+      glossaryTranslation.oldDefinition = glossaryTranslation.definition;
+    }
+
     Object.assign(glossaryTranslation, dto);
 
     return await this.glossaryTranslationRepo.save(glossaryTranslation);

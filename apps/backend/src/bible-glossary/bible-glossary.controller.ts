@@ -8,17 +8,24 @@ import {
   Delete,
   Query,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { BibleGlossaryService } from './bible-glossary.service';
 import { CreateBibleGlossaryDto } from './dto/create-bible-glossary.dto';
 import { UpdateBibleGlossaryDto } from './dto/update-bible-glossary.dto';
 import { UpdateBibleGlossaryTranslationDto } from './dto/update-bible-glossary-translation.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
+import { RequirePermissions } from 'src/auth/decorators/permissions.decorator';
+import { Permission } from '@amen24/shared';
 
 @Controller('bible-glossary')
 export class BibleGlossaryController {
   constructor(private readonly bibleGlossaryService: BibleGlossaryService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.CREATE_GLOSSARY_TERM)
   async create(@Body() createBibleGlossaryDto: CreateBibleGlossaryDto) {
     return await this.bibleGlossaryService.create(createBibleGlossaryDto);
   }
@@ -29,6 +36,8 @@ export class BibleGlossaryController {
   }
 
   @Get('check/:term')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.CREATE_GLOSSARY_TERM)
   checkIsExist(@Param('term') term: string) {
     return this.bibleGlossaryService.checkExistByTerm(term);
   }
@@ -39,6 +48,8 @@ export class BibleGlossaryController {
   }
 
   @Patch(':slug')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.UPDATE_GLOSSARY_TERM)
   update(
     @Param('slug') slug: string,
     @Body() updateBibleGlossaryDto: UpdateBibleGlossaryDto,
@@ -52,6 +63,8 @@ export class BibleGlossaryController {
   }
 
   @Patch('translation/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.UPDATE_GLOSSARY_TERM)
   updateTranslation(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateBibleGlossaryTranslationDto,
