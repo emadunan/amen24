@@ -5,8 +5,8 @@ export const glossaryApi = createGlossaryApi(apiUrl);
 
 export const {
   useUpdateTranslationMutation,
-  useAddGlossaryTermMutation,
-  useCheckTermByTitleQuery,
+  useAddTermMutation,
+  useIsTermExistQuery,
   useUpdateTermMutation,
   useGetAllTermsQuery,
   useGetOneTermQuery,
