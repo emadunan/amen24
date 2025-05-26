@@ -94,6 +94,9 @@ export class BibleGlossaryService {
         ...(slug && { slug: query.slug }),
       },
       ...(slug ? { relations: ['verses', 'translations'] } : {}),
+      order: {
+        slug: "ASC"
+      }
     });
   }
 
