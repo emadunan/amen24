@@ -22,3 +22,20 @@
   position: sticky;
   top: var(--header-height);
 }
+
+/* Small tablets (768px) */
+@media (max-width: 48em) {
+  .container {
+    grid-template-columns: 1fr 20rem;
+    gap: 1.5rem;
+  }
+}
+
+/* Large phones (600px) */
+@media (max-width: 37.5em) {}
+
+/* Regular smartphones (480px) */
+@media (max-width: 30em) {}
+
+/* Small phones (360px) */
+@media (max-width: 22.5em) {}

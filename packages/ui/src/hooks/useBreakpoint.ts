@@ -5,6 +5,7 @@ const breakpoints = {
   regularPhone: 480,
   largePhone: 600,
   tablet: 768,
+  laptop: 1024,
 } as const;
 
 export const useBreakpoint = () => {
@@ -16,6 +17,7 @@ export const useBreakpoint = () => {
         isRegularPhone: false,
         isLargePhone: false,
         isTablet: false,
+        isLaptop: false,
         isDesktop: true,
       };
     }
@@ -26,7 +28,8 @@ export const useBreakpoint = () => {
       isRegularPhone: width < breakpoints.regularPhone, // e.g., < 480
       isLargePhone: width < breakpoints.largePhone, // e.g., < 600
       isTablet: width < breakpoints.tablet, // e.g., < 768
-      isDesktop: width >= breakpoints.tablet, // Desktop is 768px and above
+      isLaptop: width < breakpoints.laptop,  // e.g., < 1024
+      isDesktop: width >= breakpoints.laptop, // Desktop is 1024px and above
     };
   };
 
