@@ -1,5 +1,4 @@
 .term {
-  margin: .5rem 0;
 }
 
 .term p {
@@ -7,6 +6,7 @@
 }
 
 .link {
+  font-weight: bold;
   color: var(--primary);
 }
 
