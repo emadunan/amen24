@@ -10,7 +10,7 @@ import { VersesService } from '../verses/verses.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Featured } from './entities/featured.entity';
 import { Repository } from 'typeorm';
-import { buildJoinedText, ERROR_KEYS, Lang } from '@amen24/shared';
+import { buildJoinedText, ERROR_KEYS, FeaturedPosition, Lang } from '@amen24/shared';
 import { FeaturedText } from './entities/featured-text.entity';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class FeaturedService {
     @InjectRepository(FeaturedText)
     private featuredTextRepo: Repository<FeaturedText>,
     private versesService: VersesService,
-  ) {}
+  ) { }
 
   async addToFeatured(verseIds: number[]) {
     // 1. Retrieve or create the verse group
@@ -172,8 +172,20 @@ export class FeaturedService {
     return `This action returns a #${id} featured`;
   }
 
-  update(id: number, featuredDto: UpdateFeaturedDto) {
-    return `This action updates a #${id} featured`;
+  async update(id: number, dto: UpdateFeaturedDto) {
+    const old = await this.featuredRepo.findOneBy({ position: dto.position });
+
+    if (old) {
+      old.position = FeaturedPosition.UNASSIGNED;
+      this.featuredRepo.save(old);
+    }
+
+    const featured = await this.featuredRepo.findOneBy({ id });
+
+    if (!featured) throw new NotFoundException();
+    Object.assign(featured, dto);
+
+    return await this.featuredRepo.save(featured);
   }
 
   remove(id: number) {

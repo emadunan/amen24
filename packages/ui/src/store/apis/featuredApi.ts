@@ -11,6 +11,31 @@ export const createFeaturedApi = (baseUrl: string) => createApi({
       query: () => "",
       providesTags: ["Featured"],
     }),
+    addToFeatured: builder.mutation<Featured, number[]>({
+      query: (verseIds) => ({
+        url: "",
+        method: "POST",
+        body: { verseIds },
+      }),
+      invalidatesTags: ["Featured"],
+    }),
+    updateFeatured: builder.mutation<Featured, Partial<Featured>>({
+      query: ({ id, position }) => ({
+        url: `${id}`,
+        method: "PATCH",
+        body: {
+          position
+        },
+      }),
+      invalidatesTags: ["Featured"],
+    }),
+    removeFromFeatured: builder.mutation<ApiMessage, number>({
+      query: (featuredId) => ({
+        url: `${featuredId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Featured"],
+    }),
     getFeaturedText: builder.query<FeaturedText[], string>({
       query: (featuredId) => `${featuredId}`,
       providesTags: () => ["Featured"],
@@ -22,21 +47,6 @@ export const createFeaturedApi = (baseUrl: string) => createApi({
         body
       }),
       invalidatesTags: ["Featured"]
-    }),
-    addToFeatured: builder.mutation<Featured, number[]>({
-      query: (verseIds) => ({
-        url: "",
-        method: "POST",
-        body: { verseIds },
-      }),
-      invalidatesTags: ["Featured"],
-    }),
-    removeFromFeatured: builder.mutation<ApiMessage, number>({
-      query: (featuredId) => ({
-        url: `${featuredId}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["Featured"],
     }),
   }),
 });
