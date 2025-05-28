@@ -2,6 +2,7 @@
 
 .term p {
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   /* Limit to 2 lines */
   -webkit-box-orient: vertical;
