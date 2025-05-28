@@ -1,6 +1,8 @@
-import { VerseGroup } from '../../verses/entities/verse-group.entity';
+import { FeaturedPosition } from '@amen24/shared';
 import { FeaturedText } from './featured-text.entity';
+import { VerseGroup } from '../../verses/entities/verse-group.entity';
 import {
+  Column,
   Entity,
   JoinColumn,
   OneToMany,
@@ -21,4 +23,7 @@ export class Featured {
 
   @OneToMany(() => FeaturedText, (featuredText) => featuredText.featured)
   featuredText: FeaturedText[];
+
+  @Column({ type: 'text', default: FeaturedPosition.UNASSIGNED })
+  position: FeaturedPosition;
 }
