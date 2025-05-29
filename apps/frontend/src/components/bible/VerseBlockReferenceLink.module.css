@@ -1,5 +1,9 @@
 .reference {
   font-weight: bold;
   color: var(--accent);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
+}
+
+.reference:hover {
+  color: var(--accent-hover);
 }

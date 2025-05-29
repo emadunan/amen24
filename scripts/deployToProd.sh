@@ -44,6 +44,7 @@ npm run build:backend
 # PGPASSWORD=$DB_PASSWORD psql -U "$DB_USERNAME" -h "$DB_HOST" -c "CREATE DATABASE $DB_NAME OWNER $DB_USERNAME;"
 
 npm --prefix apps/backend run migrate:up:prod
+npm --prefix apps/backend run normalize:native:prod
 # npm --prefix apps/backend run seed:prod
 
 # Start backend
