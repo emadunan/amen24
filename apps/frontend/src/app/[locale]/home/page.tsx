@@ -1,24 +1,16 @@
+import BibleSection from '@/components/home/BibleSection'
 import FeaturedSection from '@/components/home/FeaturedSection'
+import ExploreSection from '@/components/home/ExploreSection'
 import React from 'react'
 
 const HomePage = () => {
   return (
     <div>
       <FeaturedSection />
-
-      <section>
-        Bible Entry
-      </section>
-
-      <section>
-        Search Engine Entry
-      </section>
-
-      <section>
-        Glossary Entery
-      </section>
+      <BibleSection />
+      <ExploreSection />
     </div>
   )
 }
 
-export default HomePage
+export default HomePage;

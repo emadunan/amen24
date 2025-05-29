@@ -21,7 +21,16 @@
   },
   "homepage": {
     "title": "Amen24",
-    "description": "Read and explore the Bible in multiple languages. Search, bookmark your favorite verses, and continue your reading from where you left off—anytime, anywhere."
+    "description": "Read and explore the Bible in multiple languages. Search, bookmark your favorite verses, and continue your reading from where you left off—anytime, anywhere.",
+    "bibleSectionHeading": "The Living Word of God",
+    "bibleSectionParagraph": "The Bible is more than a book — it is a divine message of hope, truth, and purpose for all mankind. Dive into the scriptures to explore timeless wisdom and life-transforming truths.",
+    "bibleSectionButton": "Explore the Bible",
+    "searchSectionHeading": "Search the Scriptures",
+    "searchSectionParagraph": "Looking for a specific verse, word, or theme? Our powerful search engine helps you explore the Bible in depth, across languages and translations.",
+    "searchSectionButton": "Start Searching",
+    "glossarySectionHeading": "Explore the Glossary",
+    "glossarySectionParagraph": "Curious about the meaning of biblical terms and names? Our glossary helps you explore the language, context, and cultural significance behind every word.",
+    "glossarySectionButton": "Browse Glossary"
   },
   "chapter": {
     "title": "Chapter",

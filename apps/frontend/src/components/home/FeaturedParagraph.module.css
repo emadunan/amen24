@@ -1,5 +1,10 @@
 .featuredText {
+  font-size: 1.6rem;
   text-align: justify;
+}
+
+[dir="rtl"] .featuredText {
+  line-height: 2;
 }
 
 .featuredText::first-letter {
