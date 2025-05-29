@@ -1,4 +1,4 @@
-import { ApiMessage, Featured, FeaturedText } from "@amen24/shared";
+import { ApiMessage, Featured, FeaturedPosition, FeaturedText, Lang } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 
@@ -7,8 +7,16 @@ export const createFeaturedApi = (baseUrl: string) => createApi({
   baseQuery: createBaseQueryWithReauth(baseUrl, "featured"),
   tagTypes: ["Featured"],
   endpoints: (builder) => ({
-    getAllFeatured: builder.query<Featured[], void>({
-      query: () => "",
+    getAllFeatured: builder.query<Featured[], { lang: Lang; position?: FeaturedPosition }>({
+      query: ({ lang, position }) => {
+        const searchParams = new URLSearchParams();
+
+        if (lang) searchParams.append("lang", lang);
+        if (position) searchParams.append("position", position);
+
+        const queryString = searchParams.toString();
+        return queryString ? `?${queryString}` : "";
+      },
       providesTags: ["Featured"],
     }),
     addToFeatured: builder.mutation<Featured, number[]>({

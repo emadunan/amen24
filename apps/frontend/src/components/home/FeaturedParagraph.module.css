@@ -1,0 +1,7 @@
+.featuredText {
+  text-align: justify;
+}
+
+.featuredText::first-letter {
+  text-transform: uppercase;
+}

@@ -3,9 +3,10 @@ import { useGetAllFeaturedQuery } from "../store/featuredApi";
 import FeaturedListItem from "../components/featured/FeaturedListItem";
 import styles from "./Featured.module.css";
 import PageTitle from "../components/ui/PageTitle";
+import { Lang } from "@amen24/shared";
 
 const Featured: FC = () => {
-  const { data: featured } = useGetAllFeaturedQuery();
+  const { data: featured } = useGetAllFeaturedQuery({ lang: Lang.ARABIC });
 
   console.log(featured);
 

@@ -4,7 +4,6 @@ import {
   NotFoundException,
   NotImplementedException,
 } from '@nestjs/common';
-import { CreateFeaturedDto } from './dto/create-featured.dto';
 import { UpdateFeaturedDto } from './dto/update-featured.dto';
 import { VersesService } from '../verses/verses.service';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -93,10 +92,10 @@ export class FeaturedService {
     return result;
   }
 
-  async getAllFeatured(lang: Lang | null) {
+  async getAllFeatured(lang: Lang | null = null, position?: FeaturedPosition) {
     if (!lang) lang = Lang.ENGLISH;
 
-    const featured = await this.featuredRepo
+    const query = this.featuredRepo
       .createQueryBuilder('featured')
       .leftJoinAndSelect(
         'featured.featuredText',
@@ -115,8 +114,13 @@ export class FeaturedService {
       .leftJoinAndSelect('verseGroup.startingVerse', 'startingVerse')
       .leftJoinAndSelect('startingVerse.chapter', 'chapter')
       .leftJoinAndSelect('chapter.book', 'book')
-      .orderBy('startingVerse.id', 'ASC')
-      .getMany();
+      .orderBy('startingVerse.id', 'ASC');
+
+    if (position) {
+      query.andWhere('featured.position = :position', { position });
+    }
+
+    const featured = await query.getMany();
 
     for (const f of featured) {
       f.verseGroup.verses.sort((a, b) => a.id - b.id);
@@ -124,6 +128,7 @@ export class FeaturedService {
 
     return featured;
   }
+
 
   async getFeaturedText(id: number) {
     const featuredText = await this.featuredTextRepo.find({
@@ -158,18 +163,6 @@ export class FeaturedService {
     Object.assign(featuredText, { text });
 
     return await this.featuredTextRepo.save(featuredText);
-  }
-
-  create(createFeaturedDto: CreateFeaturedDto) {
-    return 'This action adds a new featured';
-  }
-
-  findAll() {
-    return `This action returns all featured`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} featured`;
   }
 
   async update(id: number, dto: UpdateFeaturedDto) {

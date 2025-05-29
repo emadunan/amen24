@@ -1,0 +1,29 @@
+.featuredContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem 3rem;
+  margin: 3rem 0;
+}
+
+/* Laptop (1024px) */
+@media (max-width: 64em) {
+  .featuredContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* tablets (768px) */
+@media (max-width: 48em) {}
+
+/* Large phones (600px) */
+@media (max-width: 37.5em) {
+  .featuredContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Regular smartphones (480px) */
+@media (max-width: 30em) {}
+
+/* Small phones (360px) */
+@media (max-width: 22.5em) {}

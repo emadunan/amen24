@@ -1,11 +1,10 @@
+import FeaturedSection from '@/components/home/FeaturedSection'
 import React from 'react'
 
 const HomePage = () => {
   return (
     <div>
-      <section>
-        Featured Portions
-      </section>
+      <FeaturedSection />
 
       <section>
         Bible Entry
