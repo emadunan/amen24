@@ -1,17 +1,24 @@
 .term {}
 
 .term p {
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
   display: -webkit-box;
   line-clamp: 2;
   -webkit-line-clamp: 2;
   /* Limit to 2 lines */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
   line-height: 1.5;
   /* Optional: tweak for better spacing */
   max-height: 3em;
   /* 2 lines × line-height (1.5em) */
+  text-align: justify;
+  margin-right: 1rem;
+}
+
+[dir="rtl"] .term p {
+  margin-right: 0;
+  margin-left: 1rem;
 }
 
 
@@ -22,4 +29,8 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+.linkText::first-letter {
+  text-transform: uppercase;
 }

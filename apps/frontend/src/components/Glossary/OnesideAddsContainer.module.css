@@ -6,20 +6,6 @@
   gap: 2rem;
 }
 
-.glossary {
-  height: calc(100vh - var(--header-height) - var(--footer-height) + 6rem);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Optional: Makes sure the ads section always stays fully visible */
-.adds {
-  position: sticky;
-  top: var(--header-height);
-}
-
 /* Laptop (1024px) */
 @media (max-width: 64em) {
   .container {

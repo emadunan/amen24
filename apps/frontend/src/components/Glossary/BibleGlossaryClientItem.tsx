@@ -15,8 +15,10 @@ const BibleGlossaryClientItem: React.FC<Props> = ({ bgItem }) => {
   return (
     <div className={styles.container}>
       <article className={styles.term}>
-        <Link href={``} className={styles.link}>
-          {bgt?.term} [{bgItem.native}]
+        <Link href={`/glossary/${bgItem.slug}`} className={styles.link}>
+          <h3 className={styles.linkText}>
+            {bgt?.term} [{bgItem.native}]
+          </h3>
         </Link>
         <p>{bgItem.approvalStatus === ApprovalStatus.Approved
           ? bgt?.definition

@@ -1,0 +1,17 @@
+.term {
+  height: calc(100vh - var(--header-height) - var(--footer-height) + 6rem);
+  overflow-y: auto;
+}
+
+.term::first-letter {
+  text-transform: uppercase;
+}
+
+.term p {
+  text-align: justify;
+}
+
+.adds {
+  position: sticky;
+  top: var(--header-height);
+}
