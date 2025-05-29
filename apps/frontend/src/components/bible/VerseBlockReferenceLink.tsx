@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import React, { useMemo } from 'react';
-import styles from './VerseBlockReferenceLink.module.css';
-import { BookMap, Featured, Lang, formatNumber } from '@amen24/shared';
+import Link from "next/link";
+import React, { useMemo } from "react";
+import styles from "./VerseBlockReferenceLink.module.css";
+import { BookMap, Featured, Lang, formatNumber } from "@amen24/shared";
 
 interface Props {
   featured: Featured;
@@ -26,7 +26,7 @@ const VerseBlockReferenceLink: React.FC<Props> = ({ featured, lang }) => {
   const formattedLastVerseNum = formatNumber(lastVerseNum ?? -1, lang);
 
   const verseIdsQuery = useMemo(() => {
-    const ids = verses.map(v => v.id).join(',');
+    const ids = verses.map((v) => v.id).join(",");
     return `v=${ids}`;
   }, [verses]);
 
@@ -35,7 +35,7 @@ const VerseBlockReferenceLink: React.FC<Props> = ({ featured, lang }) => {
       className={styles.reference}
       href={`/${bookKey}/${chapterNum}/${totalChapters}?${verseIdsQuery}`}
     >
-      &mdash; {BookMap[bookKey].title[lang as 'en' | 'ar']}{" "}
+      &mdash; {BookMap[bookKey].title[lang as "en" | "ar"]}{" "}
       {formattedChapterNum} : {formattedFirstVerseNum}
       {blockLength > 1 && ` - ${formattedLastVerseNum}`}
     </Link>

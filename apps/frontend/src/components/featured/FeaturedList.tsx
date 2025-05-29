@@ -9,7 +9,9 @@ import { useGetAllFeaturedQuery } from "@/store/apis/featuredApi";
 
 const FeaturedList = () => {
   const { t, i18n } = useTranslation();
-  const { data: featured } = useGetAllFeaturedQuery({lang: i18n.language as Lang});
+  const { data: featured } = useGetAllFeaturedQuery({
+    lang: i18n.language as Lang,
+  });
 
   return (
     <div className={styles.container}>

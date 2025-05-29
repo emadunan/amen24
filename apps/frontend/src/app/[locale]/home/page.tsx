@@ -1,7 +1,7 @@
-import BibleSection from '@/components/home/BibleSection'
-import FeaturedSection from '@/components/home/FeaturedSection'
-import ExploreSection from '@/components/home/ExploreSection'
-import React from 'react'
+import BibleSection from "@/components/home/BibleSection";
+import FeaturedSection from "@/components/home/FeaturedSection";
+import ExploreSection from "@/components/home/ExploreSection";
+import React from "react";
 
 const HomePage = () => {
   return (
@@ -10,7 +10,7 @@ const HomePage = () => {
       <BibleSection />
       <ExploreSection />
     </div>
-  )
-}
+  );
+};
 
 export default HomePage;

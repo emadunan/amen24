@@ -83,7 +83,11 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
           `,
           }}
         />
-        <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`} crossOrigin="anonymous" />
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`}
+          crossOrigin="anonymous"
+        />
         {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7915506753470331" crossOrigin="anonymous"></script> */}
       </head>
       <body className={`${amiri.className} ${cardo.variable}`}>

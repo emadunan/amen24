@@ -20,9 +20,11 @@ const BibleGlossaryClientItem: React.FC<Props> = ({ bgItem }) => {
             {bgt?.term} [{bgItem.native}]
           </h3>
         </Link>
-        <p>{bgItem.approvalStatus === ApprovalStatus.Approved
-          ? bgt?.definition
-          : (bgt?.oldDefinition ?? "")}</p>
+        <p>
+          {bgItem.approvalStatus === ApprovalStatus.Approved
+            ? bgt?.definition
+            : (bgt?.oldDefinition ?? "")}
+        </p>
       </article>
     </div>
   );

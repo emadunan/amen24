@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import Link from 'next/link';
-import styles from './BibleSection.module.css';
-import Image from 'next/image';
-import { useTranslation } from 'react-i18next';
+import Link from "next/link";
+import styles from "./BibleSection.module.css";
+import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 const BibleSection = () => {
   const { t } = useTranslation();

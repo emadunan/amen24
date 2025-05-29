@@ -37,7 +37,7 @@
 
 /* Large phones (600px) */
 @media (max-width: 37.5em) {
-.container {
+  .container {
     grid-template-columns: 1fr 10rem;
     gap: 1rem;
   }
@@ -52,4 +52,5 @@
 }
 
 /* Small phones (360px) */
-@media (max-width: 22.5em) {}
+@media (max-width: 22.5em) {
+}
