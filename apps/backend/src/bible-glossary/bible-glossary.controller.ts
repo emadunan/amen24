@@ -14,9 +14,9 @@ import { BibleGlossaryService } from './bible-glossary.service';
 import { CreateBibleGlossaryDto } from './dto/create-bible-glossary.dto';
 import { UpdateBibleGlossaryDto } from './dto/update-bible-glossary.dto';
 import { UpdateBibleGlossaryTranslationDto } from './dto/update-bible-glossary-translation.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
-import { RequirePermissions } from 'src/auth/decorators/permissions.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { PermissionsGuard } from '../auth/guards/permissions.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 import { Permission } from '@amen24/shared';
 
 @Controller('bible-glossary')
