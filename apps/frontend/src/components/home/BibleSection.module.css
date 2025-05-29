@@ -1,6 +1,6 @@
 .bibleSection {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   align-items: center;
   gap: 2rem;
   padding: 4rem 2rem;
@@ -11,7 +11,7 @@
 }
 
 .content {
-  max-width: 600px;
+  max-width: 37.5rem;
 }
 
 .heading {
@@ -22,10 +22,14 @@
 }
 
 .description {
-  font-size: 1.125rem;
+  font-size: 1.6rem;
   line-height: 1.75rem;
   margin-bottom: 2rem;
   color: var(--gray);
+}
+
+[dir="rtl"] .description {
+  line-height: 2.6rem;
 }
 
 .link {

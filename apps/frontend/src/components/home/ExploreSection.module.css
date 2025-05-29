@@ -1,4 +1,4 @@
-.searchSection {
+.exploreSection {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -10,7 +10,7 @@
 }
 
 .content {
-  max-width: 600px;
+  max-width: 37.5rem;
 }
 
 .heading {
@@ -54,7 +54,7 @@
 }
 
 @media (max-width: 768px) {
-  .searchSection {
+  .exploreSection {
     grid-template-columns: 1fr;
     text-align: center;
   }

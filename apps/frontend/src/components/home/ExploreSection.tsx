@@ -9,7 +9,7 @@ const ExploreSection = () => {
   const { t } = useTranslation();
 
   return (
-    <section className={styles.searchSection}>
+    <section className={styles.exploreSection}>
       <div className={styles.content}>
         <h2 className={styles.heading}>{t("homepage.searchSectionHeading")}</h2>
         <p className={styles.description}>
