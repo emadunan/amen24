@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
   const isLoggedIn = request.cookies.has("access_token");
-  const { pathname, origin } = request.nextUrl;
+  const { pathname } = request.nextUrl;
 
   // Redirect root ("/" or "/en") to "/bible"
   const locales = i18nConfig.locales;
