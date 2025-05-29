@@ -21,6 +21,7 @@ import { getDirection } from "@amen24/ui/utils";
 import { Lang } from "@amen24/shared";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_ID;
 
 export const metadata: Metadata = {
   title: "amen24",
@@ -82,6 +83,8 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
           `,
           }}
         />
+        <Script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`} crossOrigin="anonymous" />
+        {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7915506753470331" crossOrigin="anonymous"></script> */}
       </head>
       <body className={`${amiri.className} ${cardo.variable}`}>
         <StoreProvider>
