@@ -33,8 +33,8 @@ const NavMenu: FC<Props> = ({ normalizedPath, isBookPath }) => {
         <ul className={styles.navList}>
           <li className={styles.navItem}>
             <Link
-              className={`${styles.link} ${normalizedPath === "/home" ? styles.active : ""}`}
-              href="/home"
+              className={`${styles.link} ${normalizedPath === "/" ? styles.active : ""}`}
+              href="/"
               onClick={() => setMenuOpen(false)}
             >
               {t("main.home")}

@@ -14,8 +14,8 @@ const NavBar: FC<Props> = ({ normalizedPath, isBookPath }) => {
     <ul className={styles.navList}>
       <li className={styles.navItem}>
         <Link
-          className={`link ${normalizedPath === "/home" || isBookPath ? `${styles.active}` : ""}`}
-          href={"/home"}
+          className={`link ${normalizedPath === "/" || isBookPath ? `${styles.active}` : ""}`}
+          href={"/"}
         >
           {" "}
           <h3>{t("main.home")}</h3>
