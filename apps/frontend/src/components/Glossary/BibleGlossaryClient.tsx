@@ -4,20 +4,20 @@ import BibleGlossaryClientItem from "@/components/Glossary/BibleGlossaryClientIt
 import { useGetAllTermsQuery } from "@/store/apis/glossaryApi";
 import styles from "./BibleGlossaryClient.module.css";
 import React from "react";
-import OnesideAddsContainer from "./OnesideAddsContainer";
+import GlossaryContainer from "./GlossaryContainer";
 
 const BibleGlossaryClient = () => {
   const { data: terms } = useGetAllTermsQuery();
 
   return (
-    <OnesideAddsContainer>
+    <GlossaryContainer>
       <div className={styles.glossary}>
         {terms?.map((bgItem) => (
           <BibleGlossaryClientItem key={bgItem.id} bgItem={bgItem} />
         ))}
       </div>
       <div className={styles.adds}></div>
-    </OnesideAddsContainer>
+    </GlossaryContainer>
   );
 };
 

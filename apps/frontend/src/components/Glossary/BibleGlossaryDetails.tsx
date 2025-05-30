@@ -5,7 +5,7 @@ import { useGetOneTermQuery } from "@/store/apis/glossaryApi";
 import { useTranslation } from "react-i18next";
 import { useParams } from "next/navigation";
 import styles from "./BibleGlossaryDetails.module.css";
-import OnesideAddsContainer from "./OnesideAddsContainer";
+import GlossaryContainer from "./GlossaryContainer";
 
 const BibleGlossaryDetails: React.FC = () => {
   const params = useParams<{ slug: string }>();
@@ -17,7 +17,7 @@ const BibleGlossaryDetails: React.FC = () => {
   const term = glossaryItem?.translations.find((t) => t.lang === i18n.language);
 
   return (
-    <OnesideAddsContainer>
+    <GlossaryContainer>
       <div className={styles.term}>
         <h3>
           {term?.term} [{glossaryItem?.native}]
@@ -25,7 +25,7 @@ const BibleGlossaryDetails: React.FC = () => {
         <p>{term?.definition}</p>
       </div>
       <div className={styles.adds}></div>
-    </OnesideAddsContainer>
+    </GlossaryContainer>
   );
 };
 
