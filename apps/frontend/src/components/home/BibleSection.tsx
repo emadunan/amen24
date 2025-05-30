@@ -21,7 +21,7 @@ const BibleSection = () => {
       </div>
       <div className={styles.imageWrapper}>
         <Image
-          src="/bible.jpg"
+          src="/img/bible.jpg"
           alt="Open Bible"
           fill
           className={styles.image}

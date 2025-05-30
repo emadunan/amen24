@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amen24.org/sitemap.xml
