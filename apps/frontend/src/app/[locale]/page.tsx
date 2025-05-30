@@ -1,4 +1,4 @@
-import BibleSection from "@/components/home/BibleSection";
+import BibleSection from "@/components/home/MessiahSection";
 import FeaturedSection from "@/components/home/FeaturedSection";
 import ExploreSection from "@/components/home/ExploreSection";
 import React from "react";
