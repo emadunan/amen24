@@ -22,7 +22,12 @@ const BibleGlossaryDetails: React.FC = () => {
         <h3>
           {term?.term} [{glossaryItem?.native}]
         </h3>
-        <p>{term?.definition}</p>
+        <div>
+          {term?.definition
+            .split("\n")
+            .filter((line) => line.trim() !== "")
+            .map((para, idx) => <p key={idx}>{para}</p>)}
+        </div>
       </div>
       <div className={styles.adds}></div>
     </GlossaryContainer>

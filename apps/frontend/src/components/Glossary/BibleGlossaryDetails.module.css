@@ -7,8 +7,13 @@
   text-transform: uppercase;
 }
 
+.term h3 {
+  text-align: center;
+}
+
 .term p {
   text-align: justify;
+  margin: 1rem 0;
 }
 
 .adds {

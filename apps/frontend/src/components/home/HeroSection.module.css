@@ -1,0 +1,73 @@
+.container {
+  min-height: calc(100vh - 4rem - var(--header-height));
+  background-image: 
+    /* Left fade */
+    linear-gradient(to right, 
+      var(--background) 0%, 
+      color-mix(in srgb, var(--background) 80%, transparent) 15%, 
+      transparent 30%),
+
+    /* Right fade */
+    linear-gradient(to left, 
+      var(--background) 0%, 
+      color-mix(in srgb, var(--background) 80%, transparent) 15%, 
+      transparent 30%),
+
+    /* Top fade */
+    linear-gradient(to bottom, 
+      var(--background), 
+      color-mix(in srgb, var(--background) 80%, transparent) 50%, 
+      transparent 100%),
+
+    /* Background image */
+    url("/img/bible.jpg");
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: var(--background);
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+
+.content {
+  max-width: 37rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.75rem;
+  margin-bottom: 2rem;
+  color: var(--gray);
+}
+
+[dir="rtl"] .description {
+  line-height: 2.6rem;
+}
+
+.link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--min);
+  border-radius: 2px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.link:hover {
+  background-color: var(--primary-hover);
+}
