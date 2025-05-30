@@ -14,7 +14,6 @@ import BibleNavigation from "@/components/bible/BibleNavigator";
 import { amiri, cardo } from "@/config/fonts.config";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
-import TestSiteWarning from "@/components/layout/TestSiteWarning";
 import TrackVisit from "@/components/analytics/TrackVisite";
 import AudioPlayer from "@/components/ui/AudioPlayer";
 import { getDirection } from "@amen24/ui/utils";
