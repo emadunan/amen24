@@ -100,7 +100,6 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
             <BibleNavigation />
             <AudioPlayer />
             <AppMain>
-              <TestSiteWarning />
               {children}
               <GoogleAnalytics />
             </AppMain>
