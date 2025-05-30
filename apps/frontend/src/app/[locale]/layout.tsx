@@ -21,7 +21,6 @@ import { getDirection } from "@amen24/ui/utils";
 import { Lang } from "@amen24/shared";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_ID;
 
 export const metadata: Metadata = {
   title: "amen24",
