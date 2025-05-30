@@ -20,7 +20,7 @@
       transparent 100%),
 
     /* Background image */
-    url("/img/bible.jpg");
+    url("./bible.jpg");
 
   background-repeat: no-repeat;
   background-position: center;
