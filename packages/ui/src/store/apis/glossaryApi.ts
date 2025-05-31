@@ -46,10 +46,12 @@ export const createGlossaryApi = (baseUrl: string) =>
         query: (slug) => `${slug}`,
         providesTags: ["GlossaryTerm"]
       }),
-      getAllTerms: builder.query<BibleGlossary[], { slug?: string } | void>({
+      getAllTerms: builder.query<BibleGlossary[], { slug?: string, lang?: Lang, term?: string } | void>({
         query: (q) => {
           if (q?.slug) {
             return `?slug=${q.slug}`;
+          } else if (q?.lang && q?.term) {
+            return `?lang=${q?.lang}&term=${q?.term}`;
           }
 
           return ``;

@@ -23,7 +23,7 @@ export class BibleGlossaryService {
     private glossaryTranslationRepo: Repository<BibleGlossaryTranslation>,
 
     private versesService: VersesService,
-  ) {}
+  ) { }
 
   async create(dto: CreateBibleGlossaryDto) {
     const terms = Object.values(dto.translations).map((bgItem) =>
@@ -87,18 +87,28 @@ export class BibleGlossaryService {
     return { message: MESSAGE_KEYS.ADDED_TO_GLOSSARY };
   }
 
-  async findAll(query?: { slug: string }) {
-    const slug = query?.slug;
-    return await this.glossaryRepo.find({
-      where: {
-        ...(slug && { slug: query.slug }),
-      },
-      ...(slug ? { relations: ['verses', 'translations'] } : {}),
-      order: {
-        slug: "ASC"
-      }
-    });
+  async findAll(query?: { slug?: string, lang?: Lang, term?: string }) {
+    const qb = this.glossaryRepo.createQueryBuilder('glossary')
+      .leftJoinAndSelect('glossary.verses', 'verse')
+      .leftJoinAndSelect('glossary.translations', 'translation');
+
+    if (query?.slug) {
+      qb.andWhere('glossary.slug = :slug', { slug: query.slug });
+    }
+
+    if (query?.lang) {
+      qb.andWhere('translation.lang = :lang', { lang: query.lang });
+    }
+
+    if (query?.term) {
+      qb.andWhere('translation.term = :term', { term: query.term });
+    }
+
+    qb.orderBy('translation.term', 'ASC');
+
+    return qb.getMany();
   }
+
 
   async checkExistByTerm(term: string) {
     const normalizedTerm = term.normalize('NFC');

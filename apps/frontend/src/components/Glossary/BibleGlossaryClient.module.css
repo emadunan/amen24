@@ -6,6 +6,50 @@
   gap: 2rem;
 }
 
+.glossaryHeader {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: .3rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: solid 1px var(--secondary);
+}
+
+.glossaryHeader h3 {
+  margin-inline-end: auto;
+}
+
+.glossaryHeader input {
+  padding: .5rem 1rem;
+  border: 1px solid var(--secondary);
+}
+
+.glossaryHeader button {
+  padding: .3rem .5rem;
+  cursor: pointer;
+  border: 1px solid var(--secondary);
+  border-radius: 2px;
+  background-color: var(--primary);
+  color: var(--background);
+  font-weight: bold;
+  font-family: amiri;
+  transition: background .3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+}
+
+.glossaryHeader button:hover {
+  background-color: var(--primary-hover);
+}
+
+.glossaryHeader input:focus {
+  outline: none;
+}
+
+
 .glossary {
   /* height: calc(100vh - var(--header-height) - var(--footer-height) + 6rem);
   overflow-y: auto; */
@@ -52,5 +96,4 @@
 }
 
 /* Small phones (360px) */
-@media (max-width: 22.5em) {
-}
+@media (max-width: 22.5em) {}
