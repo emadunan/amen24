@@ -6,7 +6,7 @@ import HeroSection from "@/components/home/HeroSection";
 
 const HomePage = () => {
   return (
-    <div style={{ height: '100%'}}>
+    <div style={{ height: "100%" }}>
       <HeroSection />
       <FeaturedSection />
       <BibleSection />

@@ -18,7 +18,9 @@ const MessiahSection = () => {
         <p className={styles.paragraph}>
           {t("homepage.messiahSectionParagraph2")}
         </p>
-        <Link href={"/MAT/1/28"} className={styles.link}>{t("homepage.messiahSectionButton")}</Link>
+        <Link href={"/MAT/1/28"} className={styles.link}>
+          {t("homepage.messiahSectionButton")}
+        </Link>
       </div>
       <div className={styles.imageContainer}>
         <div className={styles.imageWrapper}>

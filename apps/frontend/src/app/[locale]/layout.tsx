@@ -18,7 +18,7 @@ import TrackVisit from "@/components/analytics/TrackVisite";
 import AudioPlayer from "@/components/ui/AudioPlayer";
 import { getDirection } from "@amen24/ui/utils";
 import { Lang } from "@amen24/shared";
-import '@amen24/ui/dist/index.css';
+import "@amen24/ui/dist/index.css";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -66,8 +66,11 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
     <html lang={locale} dir={dir}>
       <head>
         <meta name="google-adsense-account" content="ca-pub-7915506753470331" />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7915506753470331"
-          crossOrigin="anonymous"></script>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7915506753470331"
+          crossOrigin="anonymous"
+        />
         <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}

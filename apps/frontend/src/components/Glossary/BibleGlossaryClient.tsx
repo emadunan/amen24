@@ -14,8 +14,8 @@ const ITEMS_PER_PAGE = 20;
 
 const BibleGlossaryClient = () => {
   const { t, i18n } = useTranslation();
-  const [query, setQuery] = useState('');
-  const [filterTerm, setFilterTerm] = useState('');
+  const [query, setQuery] = useState("");
+  const [filterTerm, setFilterTerm] = useState("");
   const [page, setPage] = useState(1);
 
   const lang = i18n.language as Lang;
@@ -47,7 +47,12 @@ const BibleGlossaryClient = () => {
     <GlossaryContainer>
       <div className={styles.glossaryHeader}>
         <h3 className={styles.glossaryTitle}>{t("glossary.title")}</h3>
-        <GlossaryFilterForm t={t} query={query} onInputChange={handleInputChange} onSubmit={handleFilter}/>
+        <GlossaryFilterForm
+          t={t}
+          query={query}
+          onInputChange={handleInputChange}
+          onSubmit={handleFilter}
+        />
       </div>
 
       {isLoading ? (
@@ -60,7 +65,15 @@ const BibleGlossaryClient = () => {
             ))}
           </div>
 
-          {data && <Pagination t={t} lang={lang} page={page} lastPage={data?.meta.lastPage} onPageChange={handlePageChange} />}
+          {data && (
+            <Pagination
+              t={t}
+              lang={lang}
+              page={page}
+              lastPage={data?.meta.lastPage}
+              onPageChange={handlePageChange}
+            />
+          )}
         </>
       )}
     </GlossaryContainer>

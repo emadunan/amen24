@@ -2,25 +2,27 @@
   min-height: calc(100vh - 4rem - var(--header-height));
   background-image: 
     /* Left fade */
-    linear-gradient(to right, 
-      var(--background) 0%, 
-      color-mix(in srgb, var(--background) 80%, transparent) 15%, 
-      transparent 30%),
-
+    linear-gradient(
+      to right,
+      var(--background) 0%,
+      color-mix(in srgb, var(--background) 80%, transparent) 15%,
+      transparent 30%
+    ),
     /* Right fade */
-    linear-gradient(to left, 
-      var(--background) 0%, 
-      color-mix(in srgb, var(--background) 80%, transparent) 15%, 
-      transparent 30%),
-
+      linear-gradient(
+        to left,
+        var(--background) 0%,
+        color-mix(in srgb, var(--background) 80%, transparent) 15%,
+        transparent 30%
+      ),
     /* Top fade */
-    linear-gradient(to bottom, 
-      var(--background), 
-      color-mix(in srgb, var(--background) 80%, transparent) 50%, 
-      transparent 100%),
-
-    /* Background image */
-    url("./bible.jpg");
+      linear-gradient(
+        to bottom,
+        var(--background),
+        color-mix(in srgb, var(--background) 80%, transparent) 50%,
+        transparent 100%
+      ),
+    /* Background image */ url("./bible.jpg");
 
   background-repeat: no-repeat;
   background-position: center;
@@ -29,7 +31,6 @@
   display: flex;
   justify-content: center;
 }
-
 
 .content {
   max-width: 37rem;
