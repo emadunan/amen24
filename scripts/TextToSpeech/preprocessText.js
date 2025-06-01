@@ -71,7 +71,7 @@ const bookMap = {
   "REV": "سِفْرُ ٱلرُّؤْيَا"
 };
 
-const inputFile = path.resolve(__dirname, '..', 'Bible_Ar_SVD_1865.VPL.txt');
+const inputFile = path.resolve(__dirname, '..', '..', 'documentation', 'content', 'Bible_Ar_SVD_1865.VPL.txt');
 const outputDir = path.resolve(__dirname, 'text');
 
 // Ensure output directory exists
