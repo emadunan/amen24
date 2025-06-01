@@ -1,0 +1,37 @@
+.form {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.input {
+  flex: 1 1 0; /* flex-grow, flex-shrink, flex-basis */
+  max-width: 10rem;
+  min-width: 0; /* allow it to shrink smaller than default */
+  font-family: amiri;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--secondary);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.button {
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  border: 1px solid var(--secondary);
+  border-radius: 2px;
+  background-color: var(--primary);
+  color: var(--background);
+  font-weight: bold;
+  font-family: amiri;
+  transition: background 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.button:hover {
+  background-color: var(--primary-hover);
+}

@@ -1,6 +1,14 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
-import { ApiMessage, ApprovalStatus, BibleGlossary, BibleGlossaryQuery, GlossaryCategory, Lang, PaginatedResult } from "@amen24/shared";
+import {
+  ApiMessage,
+  ApprovalStatus,
+  BibleGlossary,
+  BibleGlossaryQuery,
+  GlossaryCategory,
+  Lang,
+  PaginatedResult,
+} from "@amen24/shared";
 
 export type BibleGlossaryDto = {
   slug: string;
@@ -14,7 +22,7 @@ export type BibleGlossaryDto = {
     };
   };
   verseIds?: number[];
-}
+};
 
 export type BibleGlossaryTranslationDto = {
   id: number;
@@ -22,7 +30,7 @@ export type BibleGlossaryTranslationDto = {
   term?: string;
   definition?: string;
   glossary?: BibleGlossary;
-}
+};
 
 export type BibleGlossaryResult = PaginatedResult<BibleGlossary>;
 
@@ -42,48 +50,54 @@ export const createGlossaryApi = (baseUrl: string) =>
       }),
       isTermExist: builder.query<boolean, string>({
         query: (term) => `check/${term}`,
-        providesTags: ["GlossaryTerm"]
+        providesTags: ["GlossaryTerm"],
       }),
       getOneTerm: builder.query<BibleGlossary, string>({
         query: (slug) => `${slug}`,
-        providesTags: ["GlossaryTerm"]
+        providesTags: ["GlossaryTerm"],
       }),
-      getAllTerms: builder.query<BibleGlossaryResult, BibleGlossaryQuery | void>({
+      getAllTerms: builder.query<
+        BibleGlossaryResult,
+        BibleGlossaryQuery | void
+      >({
         query: (q) => {
-          if (!q) return '';
+          if (!q) return "";
 
           const params = new URLSearchParams();
 
-          if (q.slug) params.append('slug', q.slug);
-          if (q.lang) params.append('lang', q.lang);
-          if (q.term) params.append('term', q.term);
-          if (q.page) params.append('page', q.page.toString());
-          if (q.limit) params.append('limit', q.limit.toString());
+          if (q.slug) params.append("slug", q.slug);
+          if (q.lang) params.append("lang", q.lang);
+          if (q.term) params.append("term", q.term);
+          if (q.page) params.append("page", q.page.toString());
+          if (q.limit) params.append("limit", q.limit.toString());
 
           const queryString = params.toString();
 
-          return queryString ? `?${queryString}` : '';
+          return queryString ? `?${queryString}` : "";
         },
-        providesTags: ['GlossaryTerm'],
+        providesTags: ["GlossaryTerm"],
       }),
       updateTerm: builder.mutation<ApiMessage, BibleGlossaryDto>({
         query: (body) => ({
           url: `${body.slug}`,
           method: "PATCH",
-          body
+          body,
         }),
-        invalidatesTags: ["GlossaryTerm"]
+        invalidatesTags: ["GlossaryTerm"],
       }),
-      updateTranslation: builder.mutation<ApiMessage, BibleGlossaryTranslationDto>({
+      updateTranslation: builder.mutation<
+        ApiMessage,
+        BibleGlossaryTranslationDto
+      >({
         query: (body) => ({
           url: `translation/${body.id}`,
           method: "PATCH",
           body: {
             term: body.term,
             definition: body.definition,
-          }
+          },
         }),
-        invalidatesTags: ["GlossaryTerm"]
-      })
+        invalidatesTags: ["GlossaryTerm"],
+      }),
     }),
   });

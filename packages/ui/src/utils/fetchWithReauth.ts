@@ -14,7 +14,7 @@ const mutex = new Mutex();
  */
 export async function fetchWithReauth(
   input: RequestInfo,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<Response> {
   const doFetch = () =>
     fetch(input, {
@@ -25,11 +25,11 @@ export async function fetchWithReauth(
   let response = await doFetch();
 
   // If 401 and not locked (only handle expected auth errors)
-  if (
-    response.status === 401 &&
-    !mutex.isLocked()
-  ) {
-    const errorData = await response.clone().json().catch(() => null);
+  if (response.status === 401 && !mutex.isLocked()) {
+    const errorData = await response
+      .clone()
+      .json()
+      .catch(() => null);
     const message = errorData?.message;
 
     if (

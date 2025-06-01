@@ -9,46 +9,16 @@
 .glossaryHeader {
   display: flex;
   align-items: stretch;
-  justify-content: flex-end;
-  gap: .3rem;
+  justify-content: space-between;
+  flex-direction: row;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
   border-bottom: solid 1px var(--secondary);
 }
 
-.glossaryHeader h3 {
-  margin-inline-end: auto;
+.glossaryTitle {
+  white-space: nowrap;
 }
-
-.glossaryHeader input {
-  padding: .5rem 1rem;
-  border: 1px solid var(--secondary);
-}
-
-.glossaryHeader button {
-  padding: .3rem .5rem;
-  cursor: pointer;
-  border: 1px solid var(--secondary);
-  border-radius: 2px;
-  background-color: var(--primary);
-  color: var(--background);
-  font-weight: bold;
-  font-family: amiri;
-  transition: background .3s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .3rem;
-}
-
-.glossaryHeader button:hover {
-  background-color: var(--primary-hover);
-}
-
-.glossaryHeader input:focus {
-  outline: none;
-}
-
 
 .glossary {
   /* height: calc(100vh - var(--header-height) - var(--footer-height) + 6rem);
@@ -64,36 +34,12 @@
   top: var(--header-height);
 }
 
-/* Laptop (1024px) */
-@media (max-width: 64em) {
-  .container {
-    grid-template-columns: 1fr 20rem;
-  }
-}
-
-/* tablets (768px) */
-@media (max-width: 48em) {
-  .container {
-    grid-template-columns: 1fr 15rem;
-    gap: 1.5rem;
-  }
-}
-
-/* Large phones (600px) */
-@media (max-width: 37.5em) {
-  .container {
-    grid-template-columns: 1fr 10rem;
-    gap: 1rem;
-  }
-}
-
-/* Regular smartphones (480px) */
 @media (max-width: 30em) {
-  .container {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .glossaryHeader {
+    flex-direction: column;
+  }
+
+  .glossaryTitle {
+    margin-bottom: .3rem;
   }
 }
-
-/* Small phones (360px) */
-@media (max-width: 22.5em) {}

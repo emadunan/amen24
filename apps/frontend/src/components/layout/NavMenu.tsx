@@ -1,10 +1,10 @@
 "use client";
 
 import React, { FC, useState } from "react";
-import MenuButton from "./MenuButton";
 import styles from "./NavMenu.module.css";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { MenuButton } from "@amen24/ui";
 
 interface Props {
   normalizedPath: string;

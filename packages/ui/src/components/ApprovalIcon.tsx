@@ -1,7 +1,7 @@
 import React from "react";
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
-import { MdPendingActions } from 'react-icons/md';
-import { ApprovalStatus } from '@amen24/shared';
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { MdPendingActions } from "react-icons/md";
+import { ApprovalStatus } from "@amen24/shared";
 
 interface Props {
   status: ApprovalStatus;
@@ -18,4 +18,3 @@ export const ApprovalIcon: React.FC<Props> = ({ status }) => {
       return <MdPendingActions color="#facc15" title="Pending" />;
   }
 };
-

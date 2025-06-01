@@ -2,35 +2,36 @@ import { Progress } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 
-export const createProgressApi = (baseUrl: string) => createApi({
-  reducerPath: "progressApi",
-  baseQuery: createBaseQueryWithReauth(baseUrl, "progress"),
-  tagTypes: ["Progress"],
-  endpoints: (builder) => ({
-    getUserLastReadProgress: builder.query<Progress, void>({
-      query: () => "last-read",
-      providesTags: ["Progress"],
-    }),
-    createProgress: builder.mutation<void, void>({
-      query: () => ({
-        url: "",
-        method: "POST",
-        body: {},
+export const createProgressApi = (baseUrl: string) =>
+  createApi({
+    reducerPath: "progressApi",
+    baseQuery: createBaseQueryWithReauth(baseUrl, "progress"),
+    tagTypes: ["Progress"],
+    endpoints: (builder) => ({
+      getUserLastReadProgress: builder.query<Progress, void>({
+        query: () => "last-read",
+        providesTags: ["Progress"],
       }),
-      invalidatesTags: ["Progress"],
-    }),
-    updateProgress: builder.mutation<
-    Progress,
-      { id: number; profileEmail: string; verseId: number }
-    >({
-      query: (progress) => {
-        return {
+      createProgress: builder.mutation<void, void>({
+        query: () => ({
           url: "",
-          method: "PATCH",
-          body: progress,
-        };
-      },
-      invalidatesTags: ["Progress"],
+          method: "POST",
+          body: {},
+        }),
+        invalidatesTags: ["Progress"],
+      }),
+      updateProgress: builder.mutation<
+        Progress,
+        { id: number; profileEmail: string; verseId: number }
+      >({
+        query: (progress) => {
+          return {
+            url: "",
+            method: "PATCH",
+            body: progress,
+          };
+        },
+        invalidatesTags: ["Progress"],
+      }),
     }),
-  }),
-});
+  });

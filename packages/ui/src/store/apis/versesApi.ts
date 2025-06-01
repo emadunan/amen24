@@ -3,9 +3,9 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 
 type verseParams = {
-  verseId: number,
-  lang: Lang
-}
+  verseId: number;
+  lang: Lang;
+};
 
 export const createVerseApi = (baseUrl: string) =>
   createApi({
@@ -19,7 +19,7 @@ export const createVerseApi = (baseUrl: string) =>
       }),
       getVerseById: builder.query<Verse, verseParams>({
         query: ({ verseId, lang }) => `${verseId}/${lang}`,
-        providesTags: ["VerseLang"]
-      })
+        providesTags: ["VerseLang"],
+      }),
     }),
   });

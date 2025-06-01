@@ -9,7 +9,7 @@ export function useFeedback(t: TFunction) {
   function showMessage(
     key: string,
     type: "success" | "info" | "warning" | "error" = "info",
-    fallback = "message:unknownSuccess"
+    fallback = "message:unknownSuccess",
   ) {
     showToast(t(key || fallback), type);
   }

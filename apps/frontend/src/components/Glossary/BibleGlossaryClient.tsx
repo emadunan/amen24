@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaFilter } from "react-icons/fa";
 import { Lang } from "@amen24/shared";
 import { useGetAllTermsQuery } from "@/store/apis/glossaryApi";
 
 import BibleGlossaryClientItem from "@/components/Glossary/BibleGlossaryClientItem";
 import GlossaryContainer from "./GlossaryContainer";
 import styles from "./BibleGlossaryClient.module.css";
+import { GlossaryFilterForm, Pagination } from "@amen24/ui";
 
 const ITEMS_PER_PAGE = 2;
 
@@ -37,33 +37,18 @@ const BibleGlossaryClient = () => {
     setQuery(e.target.value);
   };
 
-  const handleNext = () => {
-    if (data && page < data.meta.lastPage) {
-      setPage((prev) => prev + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (page > 1) {
-      setPage((prev) => prev - 1);
+  const handlePageChange = (newPage: number) => {
+    if (data && newPage >= 1 && newPage <= data.meta.lastPage) {
+      setPage(newPage);
     }
   };
 
   return (
     <GlossaryContainer>
-      <form className={styles.glossaryHeader} onSubmit={handleFilter}>
-        <h3>{t("glossary.title")}</h3>
-        <input
-          className={styles.input}
-          value={query}
-          onChange={handleInputChange}
-          placeholder={t("glossary.filterPlaceholder")}
-        />
-        <button type="submit">
-          <FaFilter />
-          {t("glossary.filter")}
-        </button>
-      </form>
+      <div className={styles.glossaryHeader}>
+        <h3 className={styles.glossaryTitle}>{t("glossary.title")}</h3>
+        <GlossaryFilterForm t={t} query={query} onInputChange={handleInputChange} onSubmit={handleFilter}/>
+      </div>
 
       {isLoading ? (
         <p>{t("loading")}</p>
@@ -75,17 +60,7 @@ const BibleGlossaryClient = () => {
             ))}
           </div>
 
-          <div className={styles.pagination}>
-            <button onClick={handlePrev} disabled={page <= 1}>
-              {t("main.prev")}
-            </button>
-            <span>
-              {page} / {data?.meta.lastPage}
-            </span>
-            <button onClick={handleNext} disabled={page >= (data?.meta.lastPage || 1)}>
-              {t("main.next")}
-            </button>
-          </div>
+          {data && <Pagination t={t} lang={i18n.language as Lang} page={page} lastPage={data?.meta.lastPage} onPageChange={handlePageChange} />}
         </>
       )}
     </GlossaryContainer>
