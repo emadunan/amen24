@@ -66,11 +66,8 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
     <html lang={locale} dir={dir}>
       <head>
         <meta name="google-adsense-account" content="ca-pub-7915506753470331" />
-        <Script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7915506753470331`}
-          crossOrigin="anonymous"
-        />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7915506753470331"
+          crossOrigin="anonymous"></script>
         <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
