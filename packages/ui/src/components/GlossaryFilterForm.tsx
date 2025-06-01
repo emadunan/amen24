@@ -22,7 +22,7 @@ export const GlossaryFilterForm: React.FC<Props> = ({
         className={styles.input}
         value={query}
         onChange={onInputChange}
-        placeholder={t("glossary.filterPlaceholder")}
+        placeholder={t("common:glossary.filterPlaceholder")}
       />
       <button className={styles.button} type="submit">
         <FaFilter />
