@@ -10,7 +10,7 @@ import GlossaryContainer from "./GlossaryContainer";
 import styles from "./BibleGlossaryClient.module.css";
 import { GlossaryFilterForm, Pagination } from "@amen24/ui";
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 20;
 
 const BibleGlossaryClient = () => {
   const { t, i18n } = useTranslation();
@@ -20,7 +20,7 @@ const BibleGlossaryClient = () => {
 
   const lang = i18n.language as Lang;
 
-  const { data, isLoading, isFetching } = useGetAllTermsQuery({
+  const { data, isLoading } = useGetAllTermsQuery({
     lang,
     term: filterTerm || undefined,
     limit: ITEMS_PER_PAGE,
@@ -60,7 +60,7 @@ const BibleGlossaryClient = () => {
             ))}
           </div>
 
-          {data && <Pagination t={t} lang={i18n.language as Lang} page={page} lastPage={data?.meta.lastPage} onPageChange={handlePageChange} />}
+          {data && <Pagination t={t} lang={lang} page={page} lastPage={data?.meta.lastPage} onPageChange={handlePageChange} />}
         </>
       )}
     </GlossaryContainer>
