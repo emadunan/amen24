@@ -51,9 +51,10 @@
     "queryTooShort": "Please enter a search term with at least 3 characters.",
     "noBooksSelected": "Please select at least one book."
   },
-    "glossary": {
+  "glossary": {
     "title": "Bible Glossary",
-    "filter": "Filter"
+    "filter": "Filter",
+    "filterPlaceholder": "Search terms..."
   },
   "signin": {
     "email": "Email",

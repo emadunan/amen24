@@ -57,7 +57,7 @@ const BibleGlossaryClient = () => {
           className={styles.input}
           value={query}
           onChange={handleInputChange}
-          placeholder={t("glossary.searchPlaceholder") as string}
+          placeholder={t("glossary.filterPlaceholder")}
         />
         <button type="submit">
           <FaFilter />
@@ -77,13 +77,13 @@ const BibleGlossaryClient = () => {
 
           <div className={styles.pagination}>
             <button onClick={handlePrev} disabled={page <= 1}>
-              {t("glossary.prev")}
+              {t("main.prev")}
             </button>
             <span>
               {page} / {data?.meta.lastPage}
             </span>
             <button onClick={handleNext} disabled={page >= (data?.meta.lastPage || 1)}>
-              {t("glossary.next")}
+              {t("main.next")}
             </button>
           </div>
         </>

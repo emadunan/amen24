@@ -53,7 +53,8 @@
   },
   "glossary": {
     "title": "معجم الكتاب المقدس",
-    "filter": "تصفية"
+    "filter": "تصفية",
+    "filterPlaceholder": "ابحث عن مصطلحات ..."
   },
   "signin": {
     "email": "البريد الإلكتروني",
