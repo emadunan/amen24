@@ -1,6 +1,27 @@
 import { Lang } from "../enums";
 import { Verse } from "../interfaces";
 
+export function normalizeText(text: string, lang: Lang): string {
+  if (!text) return '';
+
+  switch (lang) {
+    case Lang.ARABIC:
+      return normalizeArText(removeArDiacritics(text)).normalize("NFC");
+
+    case Lang.HEBREW:
+      return removeHebrewDiacritics(text).normalize("NFC");
+
+    case Lang.GREEK:
+      return removeGreekDiacritics(text).normalize("NFC");
+
+    case Lang.ENGLISH:
+    case Lang.RUSSIAN:
+    default:
+      return text.trim().normalize("NFC");
+  }
+}
+
+
 export function removeNaDiacritics(text: string): string {
   // Normalize text to decompose combined characters into base + diacritics
   // Then remove the diacritics with a regex that covers common Unicode combining marks for Hebrew and Greek

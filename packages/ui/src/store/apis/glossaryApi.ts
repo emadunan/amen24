@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
-import { ApiMessage, ApprovalStatus, BibleGlossary, GlossaryCategory, Lang } from "@amen24/shared";
+import { ApiMessage, ApprovalStatus, BibleGlossary, BibleGlossaryQuery, GlossaryCategory, Lang, PaginatedResult } from "@amen24/shared";
 
 export type BibleGlossaryDto = {
   slug: string;
@@ -24,6 +24,8 @@ export type BibleGlossaryTranslationDto = {
   glossary?: BibleGlossary;
 }
 
+export type BibleGlossaryResult = PaginatedResult<BibleGlossary>;
+
 export const createGlossaryApi = (baseUrl: string) =>
   createApi({
     reducerPath: "glossaryApi",
@@ -46,17 +48,23 @@ export const createGlossaryApi = (baseUrl: string) =>
         query: (slug) => `${slug}`,
         providesTags: ["GlossaryTerm"]
       }),
-      getAllTerms: builder.query<BibleGlossary[], { slug?: string, lang?: Lang, term?: string } | void>({
+      getAllTerms: builder.query<BibleGlossaryResult, BibleGlossaryQuery | void>({
         query: (q) => {
-          if (q?.slug) {
-            return `?slug=${q.slug}`;
-          } else if (q?.lang && q?.term) {
-            return `?lang=${q?.lang}&term=${q?.term}`;
-          }
+          if (!q) return '';
 
-          return ``;
+          const params = new URLSearchParams();
+
+          if (q.slug) params.append('slug', q.slug);
+          if (q.lang) params.append('lang', q.lang);
+          if (q.term) params.append('term', q.term);
+          if (q.page) params.append('page', q.page.toString());
+          if (q.limit) params.append('limit', q.limit.toString());
+
+          const queryString = params.toString();
+
+          return queryString ? `?${queryString}` : '';
         },
-        providesTags: ["GlossaryTerm"]
+        providesTags: ['GlossaryTerm'],
       }),
       updateTerm: builder.mutation<ApiMessage, BibleGlossaryDto>({
         query: (body) => ({

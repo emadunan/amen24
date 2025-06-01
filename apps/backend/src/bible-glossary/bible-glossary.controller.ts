@@ -17,7 +17,7 @@ import { UpdateBibleGlossaryTranslationDto } from './dto/update-bible-glossary-t
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from '../auth/guards/permissions.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
-import { Permission } from '@amen24/shared';
+import { BibleGlossaryQuery, Lang, Permission } from '@amen24/shared';
 
 @Controller('bible-glossary')
 export class BibleGlossaryController {
@@ -31,7 +31,7 @@ export class BibleGlossaryController {
   }
 
   @Get()
-  async findAll(@Query() query: { slug: string }) {
+  async findAll(@Query() query?: BibleGlossaryQuery) {
     return await this.bibleGlossaryService.findAll(query);
   }
 

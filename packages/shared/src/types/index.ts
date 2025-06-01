@@ -1,1 +1,2 @@
-export * from "./ApiMessage.type"
+export * from "./ApiMessage.type";
+export * from "./PaginatedResult.type";

@@ -9,7 +9,7 @@ const Glossary: React.FC = () => {
   return (
     <div>
       <PageTitle>Glossary</PageTitle>
-      <div>{terms?.map(t => <GlossaryTermItem key={t.id} item={t}/>)}</div>
+      <div>{terms?.data.map(t => <GlossaryTermItem key={t.id} item={t}/>)}</div>
     </div>
   )
 }

@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { BibleGlossary } from './entities/bible-glossary.entity';
 import { BibleGlossaryTranslation } from './entities/bible-glossary-translation.entity';
-import { ERROR_KEYS, Lang, MESSAGE_KEYS } from '@amen24/shared';
+import { BibleGlossaryQuery, ERROR_KEYS, Lang, MESSAGE_KEYS, normalizeText } from '@amen24/shared';
 import { VersesService } from '../verses/verses.service';
 import { UpdateBibleGlossaryTranslationDto } from './dto/update-bible-glossary-translation.dto';
 
@@ -87,7 +87,10 @@ export class BibleGlossaryService {
     return { message: MESSAGE_KEYS.ADDED_TO_GLOSSARY };
   }
 
-  async findAll(query?: { slug?: string, lang?: Lang, term?: string }) {
+  async findAll(query?: BibleGlossaryQuery) {
+    const page = query?.page ?? 1;
+    const limit = Math.min(query?.limit ?? 20, 100);
+
     const qb = this.glossaryRepo.createQueryBuilder('glossary')
       .leftJoinAndSelect('glossary.verses', 'verse')
       .leftJoinAndSelect('glossary.translations', 'translation');
@@ -101,13 +104,28 @@ export class BibleGlossaryService {
     }
 
     if (query?.term) {
-      qb.andWhere('translation.term = :term', { term: query.term });
+      const normalizedTerm = normalizeText(query.term, query.lang || Lang.ENGLISH)
+      qb.andWhere('translation.termNormalized ILIKE :term', { term: `%${normalizedTerm}%` });
     }
 
     qb.orderBy('translation.term', 'ASC');
 
-    return qb.getMany();
+    const [data, total] = await qb
+      .skip((page - 1) * limit)
+      .take(limit)
+      .getManyAndCount();
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        lastPage: Math.ceil(total / limit),
+      },
+    };
   }
+
 
 
   async checkExistByTerm(term: string) {
