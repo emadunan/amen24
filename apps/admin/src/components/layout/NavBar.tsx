@@ -32,16 +32,10 @@ const NavBar: FC<Props> = ({ user, handleLogout }) => {
         <NavLink to={`/featured`}>Featured</NavLink>
       </li>}
 
-
-      <li className={styles.listItem} >
+      {hasPermission(user.profile.roles, Permission.UPDATE_GLOSSARY_TERM) && <li className={styles.listItem} >
         <NavLink to={`/glossary`}>Glossary</NavLink>
-      </li>
-      {/* <li className={styles.listItem} >
-        <NavLink to={`/blogs`}>Blogs</NavLink>
-      </li>
-      <li className={styles.listItem} >
-        <NavLink to={`/library`}>Library</NavLink>
-      </li> */}
+      </li>}
+
       <LogoutBtn onLogout={handleLogout} />
     </ul>
   );

@@ -89,33 +89,18 @@ const NavMenu: FC<Props> = ({ user, handleLogout }) => {
             </li>
           )}
 
-          {/* <li className={styles.navItem}>
-            <NavLink
-              className={styles.link}
-              to="/glossary"
-              onClick={() => setMenuOpen(false)}
-            >
-              Glossary
-            </NavLink>
-          </li>
-          <li className={styles.navItem}>
-            <NavLink
-              className={styles.link}
-              to="/blogs"
-              onClick={() => setMenuOpen(false)}
-            >
-              Blogs
-            </NavLink>
-          </li>
-          <li className={styles.navItem}>
-            <NavLink
-              className={styles.link}
-              to="/library"
-              onClick={() => setMenuOpen(false)}
-            >
-              Library
-            </NavLink>
-          </li> */}
+          {hasPermission(user.profile.roles, Permission.UPDATE_GLOSSARY_TERM) && (
+            <li className={styles.navItem}>
+              <NavLink
+                className={styles.link}
+                to="/glossary"
+                onClick={() => setMenuOpen(false)}
+              >
+                Glossary
+              </NavLink>
+            </li>
+          )}
+
           <LogoutBtn onLogout={handleLogout} />
         </ul>
       </nav>
