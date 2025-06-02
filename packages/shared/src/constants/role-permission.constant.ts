@@ -25,6 +25,7 @@ export const RolePermissions: Record<UserRole, Permission[]> = {
   [UserRole.MODERATOR]: [
     Permission.LOGIN_ADMINSITE,
     Permission.CREATE_LIB_BOOK,
+    Permission.MANAGE_FEATURED,
     Permission.CREATE_GLOSSARY_TERM,
     Permission.UPDATE_GLOSSARY_TERM,
   ],

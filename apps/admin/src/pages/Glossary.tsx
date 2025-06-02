@@ -6,7 +6,7 @@ import { GlossaryFilterForm, Pagination } from '@amen24/ui';
 import { useTranslation } from 'react-i18next';
 import { Lang } from '@amen24/shared';
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 10;
 
 const Glossary: React.FC = () => {
   const { t, i18n } = useTranslation();

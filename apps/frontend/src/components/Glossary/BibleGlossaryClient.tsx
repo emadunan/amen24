@@ -10,7 +10,7 @@ import GlossaryContainer from "./GlossaryContainer";
 import styles from "./BibleGlossaryClient.module.css";
 import { GlossaryFilterForm, Pagination } from "@amen24/ui";
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 10;
 
 const BibleGlossaryClient = () => {
   const { t, i18n } = useTranslation();
