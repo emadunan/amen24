@@ -12,6 +12,7 @@ import { BibleGlossaryTranslation } from './entities/bible-glossary-translation.
 import { BibleGlossaryQuery, ERROR_KEYS, Lang, MESSAGE_KEYS, normalizeText } from '@amen24/shared';
 import { VersesService } from '../verses/verses.service';
 import { UpdateBibleGlossaryTranslationDto } from './dto/update-bible-glossary-translation.dto';
+import { OpenAiService } from 'src/openai/openai.service';
 
 @Injectable()
 export class BibleGlossaryService {
@@ -23,6 +24,7 @@ export class BibleGlossaryService {
     private glossaryTranslationRepo: Repository<BibleGlossaryTranslation>,
 
     private versesService: VersesService,
+    private readonly openAi: OpenAiService,
   ) { }
 
   async create(dto: CreateBibleGlossaryDto) {
@@ -192,5 +194,9 @@ export class BibleGlossaryService {
   async remove(slug: string) {
     const glossary = await this.findOne(slug);
     await this.glossaryRepo.remove(glossary);
+  }
+
+  async createAiDefinition(term: string): Promise<string> {
+    return this.openAi.generateDefinition(term);
   }
 }

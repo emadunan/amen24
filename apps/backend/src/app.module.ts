@@ -22,6 +22,7 @@ import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { SysLogsModule } from './sys-logs/sys-logs.module';
 import { BibleGlossaryModule } from './bible-glossary/bible-glossary.module';
 import { LibreTranslateModule } from './translate/translate.module';
+import { OpenAiModule } from './openai/openai.module';
 import joiConfig from './_config/joi.config';
 
 @Module({
@@ -63,6 +64,7 @@ import joiConfig from './_config/joi.config';
     SysLogsModule,
     BibleGlossaryModule,
     LibreTranslateModule,
+    OpenAiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

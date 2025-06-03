@@ -17,7 +17,7 @@ import { UpdateBibleGlossaryTranslationDto } from './dto/update-bible-glossary-t
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from '../auth/guards/permissions.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
-import { BibleGlossaryQuery, Lang, Permission } from '@amen24/shared';
+import { BibleGlossaryQuery, Permission } from '@amen24/shared';
 
 @Controller('bible-glossary')
 export class BibleGlossaryController {
@@ -28,6 +28,14 @@ export class BibleGlossaryController {
   @RequirePermissions(Permission.CREATE_GLOSSARY_TERM)
   async create(@Body() createBibleGlossaryDto: CreateBibleGlossaryDto) {
     return await this.bibleGlossaryService.create(createBibleGlossaryDto);
+  }
+
+  @Post('ai-generate')
+  async aiGenerate(@Body() body: { term: string }) {
+    const { term } = body;
+    const definition = await this.bibleGlossaryService.createAiDefinition(term);
+    
+    return { term, definition };
   }
 
   @Get()
