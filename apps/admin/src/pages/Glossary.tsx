@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useGetAllTermsQuery } from '../store/glossaryApi'
 import GlossaryTermItem from '../components/glossary/GlossaryTermItem';
-import PageTitle from '../components/ui/PageTitle';
 import { GlossaryFilterForm, Pagination } from '@amen24/ui';
 import { useTranslation } from 'react-i18next';
 import { Lang } from '@amen24/shared';
@@ -41,8 +40,6 @@ const Glossary: React.FC = () => {
 
   return (
     <div>
-      <PageTitle>Glossary</PageTitle>
-
       <GlossaryFilterForm t={t} query={query} onInputChange={handleInputChange} onSubmit={handleFilter} />
 
       {isLoading ? (

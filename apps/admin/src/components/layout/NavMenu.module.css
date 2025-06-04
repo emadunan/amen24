@@ -52,6 +52,11 @@
   margin-bottom: 1rem;
 }
 
+.navItem a {
+  border-radius: 2px;
+  padding: .3rem;
+}
+
 /* Links */
 .link {
   text-decoration: none;
@@ -62,6 +67,5 @@
 
 .link:hover,
 .link.active {
-  color: var(--primary);
-  font-weight: bold;
+  color: var(--accent);
 }

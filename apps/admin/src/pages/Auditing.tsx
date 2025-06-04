@@ -1,13 +1,11 @@
 import React from 'react';
 import styles from './Auditing.module.css';
 import { useGetAuditingRecordsQuery } from '../store/auditingApi';
-import PageTitle from '../components/ui/PageTitle';
 
 const Auditing: React.FC = () => {
   const { data: records } = useGetAuditingRecordsQuery();
   return (
     <div className={styles.container}>
-      <PageTitle>Auditing Logs</PageTitle>
       <div className={styles.list}>
         {records?.map((record) => (
           <div key={record.id} className={styles.item}>

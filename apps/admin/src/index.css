@@ -86,4 +86,5 @@ a {
 
 .active {
   color: var(--max);
+  border: solid 1px var(--gray);
 }

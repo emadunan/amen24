@@ -2,14 +2,12 @@ import React from "react";
 import styles from "./Members.module.css";
 import { useGetProfilesQuery } from "../store/profileApi";
 import SelectPrivilege from "../components/layout/SelectPrivilege";
-import PageTitle from "../components/ui/PageTitle";
 
 const Members: React.FC = () => {
   const { data: profiles } = useGetProfilesQuery();
 
   return (
     <div className={styles.membersContainer}>
-      <PageTitle>Members</PageTitle>
       <div className={styles.members}>
         {profiles?.map((member) => (
           <div className={styles.card} key={member.email}>

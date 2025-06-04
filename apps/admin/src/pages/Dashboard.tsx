@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./Dashboard.module.css";
 import { useGetProfileStatisticsQuery } from "../store/profileApi";
 import { apiUrl } from "../constants";
-import PageTitle from "../components/ui/PageTitle";
 
 interface DashboardData {
   visits: number;
@@ -29,7 +28,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className={styles.dashboard}>
-      <PageTitle>Dashboard</PageTitle>
       <div className={styles.grid}>
         {
           dashboardData && (
