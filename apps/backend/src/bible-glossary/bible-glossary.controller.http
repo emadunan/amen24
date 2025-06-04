@@ -12,5 +12,5 @@ POST http://localhost:5000/api/bible-glossary/ai-generate
 Content-Type: application/json
 
 {
-  "term": "Jesus"
+  "term": "joshua son of nun"
 }

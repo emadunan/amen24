@@ -23,7 +23,11 @@ import { SysLogsModule } from './sys-logs/sys-logs.module';
 import { BibleGlossaryModule } from './bible-glossary/bible-glossary.module';
 import { LibreTranslateModule } from './translate/translate.module';
 import { OpenAiModule } from './openai/openai.module';
+import { QuotaTrackerModule } from './quota-tracker/quota-tracker.module';
 import joiConfig from './_config/joi.config';
+import { CacheModule } from '@nestjs/cache-manager';
+import { createKeyv } from '@keyv/redis';
+import { Keyv } from 'keyv';
 
 @Module({
   imports: [
@@ -33,6 +37,15 @@ import joiConfig from './_config/joi.config';
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: async () => {
+        return {
+          stores: [createKeyv('redis://localhost:6379')],
+          ttl: 0
+        };
+      },
+    }),
     EventEmitterModule.forRoot(),
     ScheduleModule.forRoot(),
     MailerModule.forRoot({
@@ -65,8 +78,9 @@ import joiConfig from './_config/joi.config';
     BibleGlossaryModule,
     LibreTranslateModule,
     OpenAiModule,
+    QuotaTrackerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
