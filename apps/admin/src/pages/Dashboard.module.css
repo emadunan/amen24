@@ -5,6 +5,10 @@
   min-height: 100vh;
 }
 
+.quotas {
+  margin: 2rem 0;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));

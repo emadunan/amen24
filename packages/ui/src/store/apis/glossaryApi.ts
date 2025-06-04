@@ -1,12 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 import {
+  Lang,
   ApiMessage,
   ApprovalStatus,
   BibleGlossary,
   BibleGlossaryQuery,
   GlossaryCategory,
-  Lang,
   PaginatedResult,
 } from "@amen24/shared";
 

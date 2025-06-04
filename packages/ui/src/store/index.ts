@@ -8,6 +8,7 @@ export * from "./apis/versesApi";
 export * from "./apis/auditingApi";
 export * from "./apis/glossaryApi";
 export * from "./apis/libreTranslateApi";
+export * from "./apis/quotaTrackerApi";
 
 export * from "./slices/searchSlice";
 export * from "./slices/navigatorSlice";

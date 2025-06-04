@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Dashboard.module.css";
 import { useGetProfileStatisticsQuery } from "../store/profileApi";
 import { apiUrl } from "../constants";
+import QuotaProgress from "../components/ui/QuotaProgress";
 
 interface DashboardData {
   visits: number;
@@ -100,6 +101,9 @@ const Dashboard: React.FC = () => {
             </>
           )
         }
+      </div>
+      <div className={styles.quotas}>
+        <QuotaProgress provider={"openai"}/>
       </div>
     </div>
   );

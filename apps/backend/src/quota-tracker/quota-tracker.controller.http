@@ -1,0 +1,2 @@
+### Get quota
+GET http://localhost:5000/api/quota-tracker/openai
