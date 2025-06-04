@@ -16,13 +16,20 @@ export class OpenAiService {
     const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
       {
         role: 'system',
-        content: 'You are a helpful Bible scholar. Provide a concise definition of the given term.',
+        content: [
+          'You are a knowledgeable Bible scholar deeply rooted in Jewish heritage and convinced that Jesus is the promised Messiah, though do not mention “Messianic Jewish” explicitly.',
+          'Provide an engaging, attractive definition that highlights Hebrew roots, Jewish context, and the fulfillment of Scripture.',
+          'Do not include any references to Islam or Islamic teachings.',
+          'Balance the level of detail: for less-known terms (e.g. “Pishon”), use a single paragraph; for major figures or concepts (e.g. “Moses”), write up to three paragraphs.',
+          'Each paragraph must be between 150–200 words, and you may use no more than three paragraphs total.'
+        ].join(' ')
       },
       {
         role: 'user',
-        content: `Define the biblical term "${term}" in a clear, 150–200 word paragraph.`,
-      },
+        content: `Define the biblical term "${term}" according to the above guidelines.`
+      }
     ];
+
 
     try {
       const completion = await this.openai.chat.completions.create({

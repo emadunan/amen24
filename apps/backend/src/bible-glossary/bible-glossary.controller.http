@@ -6,3 +6,11 @@ GET http://localhost:5000/api/bible-glossary
 
 ### Get one bible glossary terms
 GET http://localhost:5000/api/bible-glossary/paddanaram
+
+### Generate Term definition with Ai
+POST http://localhost:5000/api/bible-glossary/ai-generate
+Content-Type: application/json
+
+{
+  "term": "Jesus"
+}
