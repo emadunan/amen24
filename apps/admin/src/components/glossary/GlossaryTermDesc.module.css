@@ -77,10 +77,13 @@
 
 .definition {
   grid-column: 1 / span 2;
-  padding: 0.75rem;
-  white-space: pre-wrap;
-  line-height: 1.5;
-  font-size: 0.95rem;
+  font-family: amiri;
+  padding: 1rem;
+}
+
+.definition p {
+  text-align: justify;
+  margin: 1rem 0;
 }
 
 .textarea {

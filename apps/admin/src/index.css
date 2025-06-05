@@ -88,3 +88,11 @@ a {
   color: var(--max);
   border: solid 1px var(--gray);
 }
+
+@font-face {
+  font-family: 'Amiri';
+  src: url('./assets/fonts/Amiri/Amiri-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

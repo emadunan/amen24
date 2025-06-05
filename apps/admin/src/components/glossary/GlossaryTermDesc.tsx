@@ -5,6 +5,7 @@ import styles from './GlossaryTermDesc.module.css';
 import { useLazyTranslateTextQuery } from '../../store/libreTranslateApi';
 import { ApprovalStatus, BibleGlossaryTranslation, flagMap, Lang } from '@amen24/shared';
 import { useGenerateAiDefinitionMutation, useUpdateTermMutation, useUpdateTranslationMutation } from '../../store/glossaryApi';
+import ReactMarkdown from 'react-markdown';
 
 interface Props {
   slug: string;
@@ -20,6 +21,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [term, setTerm] = useState(bgt.term);
   const [definition, setDefinition] = useState(bgt.definition);
+  const [useCache, setUseCache] = useState(true);
 
   const [triggerTranslate] = useLazyTranslateTextQuery();
 
@@ -52,7 +54,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
   }
 
   const handleGenerateAiDefinition = async () => {
-    const { definition: generatedAiDefinition } = await generateAiDefinition(term).unwrap();
+    const { definition: generatedAiDefinition } = await generateAiDefinition({term, useCache}).unwrap();
 
     setDefinition(generatedAiDefinition);
   }
@@ -88,7 +90,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
             <>
               {bgt.lang === Lang.ARABIC ?
                 (<button className={styles.saveBtn} onClick={handleGenerateAiDefinition}>
-                  Ai Define {isLoading && <Spinner size='1rem'/>}
+                  Ai Define {isLoading && <Spinner size='1rem' />}
                 </button>)
                 : (<button className={styles.saveBtn} onClick={handleGenerateText}>
                   Translate
@@ -109,7 +111,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
           className={styles.definition}
           dir={getDirection(bgt.lang)}
         >
-          {definition}
+          <ReactMarkdown>{definition || ''}</ReactMarkdown>
         </div>
       ) : (
         <textarea

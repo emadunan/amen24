@@ -1,20 +1,13 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import type { Cache } from 'cache-manager';
 
-interface RedisCache extends Cache {
-  get<T>(key: string): Promise<T | undefined>;
-  set<T>(key: string, value: T, options?: any): Promise<void>;
-  del(key: string): Promise<void>;
-  store: {name: string}
-}
 
 @Injectable()
 export class QuotaTrackerService {
   constructor(
-    @Inject(CACHE_MANAGER) private readonly cacheManager: RedisCache,
-  ) {
-    console.log('CacheManager store type:', this.cacheManager);
-  }
+    @Inject(CACHE_MANAGER) private readonly cache: Cache,
+  ) {}
 
   private getKey(provider: string): string {
     const now = new Date();
@@ -24,13 +17,13 @@ export class QuotaTrackerService {
 
   async addUsage(provider: string, amount: number): Promise<void> {
     const key = this.getKey(provider);
-    const current = (await this.cacheManager.get<number>(key)) ?? 0;
-    await this.cacheManager.set(key, current + amount);
+    const current = (await this.cache.get<number>(key)) ?? 0;
+    await this.cache.set(key, current + amount);
   }
 
   async getUsage(provider: string): Promise<number> {
     const key = this.getKey(provider);
-    return (await this.cacheManager.get<number>(key)) ?? 0;
+    return (await this.cache.get<number>(key)) ?? 0;
   }
 
   async isWithinLimit(provider: string, limit: number): Promise<boolean> {
@@ -40,6 +33,6 @@ export class QuotaTrackerService {
 
   async resetUsage(provider: string): Promise<void> {
     const key = this.getKey(provider);
-    await this.cacheManager.del(key);
+    await this.cache.del(key);
   }
 }
