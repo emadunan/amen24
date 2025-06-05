@@ -21,7 +21,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [term, setTerm] = useState(bgt.term);
   const [definition, setDefinition] = useState(bgt.definition);
-  const [useCache, setUseCache] = useState(true);
+  const [useCache] = useState(true);
 
   const [triggerTranslate] = useLazyTranslateTextQuery();
 

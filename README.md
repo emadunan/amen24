@@ -106,7 +106,29 @@ pnpm config set node-linker=hoisted --location project
 
 ## Setup Production
 
-#### Secure with an SSL Certificate (Let's Encrypt)
+### Setup Redis Server
+
+- Install redis server
+``` bash
+sudo apt update
+sudo apt install redis-server
+```
+
+- Configure redis
+``` bash
+sudo vim /etc/redis/redis.conf
+# Check Config
+redis-cli CONFIG GET appendonly
+redis-cli CONFIG GET save
+
+# Change appendonly value:
+appendonly yes
+
+# Then restart Redis:
+sudo systemctl restart redis
+```
+
+### Setup Secure with an SSL Certificate (Let's Encrypt)
 ``` bash
 sudo apt install certbot python3-certbot-nginx -y
 sudo certbot --nginx -d amen24.org -d www.amen24.org
