@@ -104,6 +104,7 @@ const Dashboard: React.FC = () => {
       </div>
       <div className={styles.quotas}>
         <QuotaProgress provider={"openai"}/>
+        <QuotaProgress provider={"google-translate"}/>
       </div>
     </div>
   );

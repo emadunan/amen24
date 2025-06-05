@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import PageTitle from '../components/ui/PageTitle';
 import styles from './GlossaryItem.module.css';
 import { FaBackspace } from "react-icons/fa";
@@ -46,9 +46,9 @@ const GlossaryItem: React.FC = () => {
     <div>
       <header className={styles.pageHeader}>
         <div className={styles.titleHeader}>
-          <NavLink to={"/glossary"}>
+          <Link to={"/glossary"}>
             <FaBackspace className={styles.backLink} />
-          </NavLink>
+          </Link>
 
           <PageTitle className={styles.absoluteTitle}>/{slug?.toUpperCase()}</PageTitle>
         </div>

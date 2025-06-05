@@ -6,6 +6,8 @@
   background-color: var(--background);
   color: var(--text);
   margin: 1rem 0;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 .lang p,
@@ -27,6 +29,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding: 0.5rem;
   background-color: var(--secondary-hover);
   font-weight: bold;
@@ -35,7 +38,8 @@
 }
 
 .termInput {
-  flex: 1;
+  flex: 1 0 0;
+  min-width: 5rem;
   font-size: 1rem;
   padding: 0.3rem 0.5rem;
   border: 1px solid var(--primary);
@@ -58,6 +62,9 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  display: flex;
+  gap: .3rem;
+  white-space: nowrap;
 }
 
 .actions .editBtn:hover,
@@ -77,16 +84,19 @@
 }
 
 .textarea {
-  grid-column: 1 / span 2;
-  width: 100%;
+  grid-column: 1 / -1;
   min-height: 100px;
   padding: 0.75rem;
   font-size: 0.95rem;
   font-family: inherit;
   line-height: 1.5;
-  border: 1px solid var(--primary);
+  border: none;
+  border-top: 1px solid var(--primary);
   border-radius: 2px;
   background-color: var(--min);
   color: var(--text);
   resize: vertical;
+  box-sizing: border-box;
+  width: auto;
+  max-width: 100%;
 }

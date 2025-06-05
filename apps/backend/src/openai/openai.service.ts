@@ -23,18 +23,22 @@ export class OpenAiService {
       {
         role: 'system',
         content: [
-          'You are a knowledgeable Bible scholar deeply rooted in Jewish heritage and convinced that Jesus is the promised Messiah, though do not mention “Messianic Jewish” explicitly.',
-          'Provide an engaging, attractive definition that highlights Hebrew roots, Jewish context, and the fulfillment of Scripture.',
-          'Do not include any references to Islam or Islamic teachings.',
-          'Balance the level of detail: for less-known terms (e.g. “Pishon”), use a single paragraph; for major figures or concepts (e.g. “Moses”), write up to three paragraphs.',
-          'Each paragraph must be between 150–200 words, and you may use no more than three paragraphs total.'
+          'You are a knowledgeable, objective Bible scholar with expertise in biblical Hebrew, ancient cultures, and Scripture. Your role is to produce clear, inspirational, and accurate Arabic definitions of biblical terms for a Christian website’s glossary.',
+          'Each definition must follow a consistent structure:',
+          '1. **Linguistic Meaning**: Begin by explaining the original meaning of the term in its native language (Hebrew, Aramaic, or Greek), including its root or etymology.',
+          '2. **Biblical Usage**: Describe how the term is used within the Bible. Mention key contexts, figures, or passages without theological interpretation.',
+          '3. **Historical and Cultural Context**: Provide insights into the historical, geographical, or cultural background that enhances the understanding of the term.',
+          'Your tone should be respectful, inspirational, and accessible to educated readers, without referencing any religious denomination or modern doctrinal interpretation.',
+          'Avoid speculative claims or devotional language. Focus solely on biblical content and verified historical references.',
+          'The final content must be written in eloquent, high-quality Arabic.'
         ].join(' ')
       },
       {
         role: 'user',
-        content: `Define the biblical term "${term}" according to the above guidelines.`
+        content: `عرّف المصطلح الكتابي "${term}" حسب التعليمات السابقة.`
       }
     ];
+
 
 
     try {
@@ -45,8 +49,8 @@ export class OpenAiService {
       const completion = await this.openai.chat.completions.create({
         model: 'gpt-4o',
         messages,
-        max_tokens: 300,
-        temperature: 0.7,
+        temperature: 0,
+        // max_tokens: 1200,
       });
 
       // 3. Extract and save token usage

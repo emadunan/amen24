@@ -34,6 +34,11 @@ export type BibleGlossaryTranslationDto = {
 
 export type BibleGlossaryResult = PaginatedResult<BibleGlossary>;
 
+export type AiGeneratedTerm = {
+  term: string,
+  definition: string,
+}
+
 export const createGlossaryApi = (baseUrl: string) =>
   createApi({
     reducerPath: "glossaryApi",
@@ -45,6 +50,14 @@ export const createGlossaryApi = (baseUrl: string) =>
           method: "POST",
           url: ``,
           body,
+        }),
+        invalidatesTags: ["GlossaryTerm"],
+      }),
+      generateAiDefinition: builder.mutation<AiGeneratedTerm, string>({
+        query: (term) => ({
+          method: "POST",
+          url: `ai-generate`,
+          body: { term },
         }),
         invalidatesTags: ["GlossaryTerm"],
       }),

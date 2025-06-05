@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { getDirection } from '@amen24/ui';
+import { getDirection, Spinner } from '@amen24/ui';
 import { useTranslation } from 'react-i18next';
 import styles from './GlossaryTermDesc.module.css';
 import { useLazyTranslateTextQuery } from '../../store/libreTranslateApi';
 import { ApprovalStatus, BibleGlossaryTranslation, flagMap, Lang } from '@amen24/shared';
-import { useUpdateTermMutation, useUpdateTranslationMutation } from '../../store/glossaryApi';
+import { useGenerateAiDefinitionMutation, useUpdateTermMutation, useUpdateTranslationMutation } from '../../store/glossaryApi';
 
 interface Props {
   slug: string;
@@ -16,6 +16,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
   const { t } = useTranslation();
   const [updateTranslation, _translationResult] = useUpdateTranslationMutation();
   const [updateTerm, _termResult] = useUpdateTermMutation();
+  const [generateAiDefinition, { isLoading }] = useGenerateAiDefinitionMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [term, setTerm] = useState(bgt.term);
   const [definition, setDefinition] = useState(bgt.definition);
@@ -50,6 +51,12 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
     setDefinition(translatedText);
   }
 
+  const handleGenerateAiDefinition = async () => {
+    const { definition: generatedAiDefinition } = await generateAiDefinition(term).unwrap();
+
+    setDefinition(generatedAiDefinition);
+  }
+
   return (
     <div className={styles.card}>
       <div className={styles.lang}>
@@ -79,11 +86,13 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
             </>
           ) : (
             <>
-              {bgt.lang !== Lang.ARABIC && (
-                <button className={styles.saveBtn} onClick={handleGenerateText}>
-                  GenerateText
-                </button>
-              )}
+              {bgt.lang === Lang.ARABIC ?
+                (<button className={styles.saveBtn} onClick={handleGenerateAiDefinition}>
+                  Ai Define {isLoading && <Spinner size='1rem'/>}
+                </button>)
+                : (<button className={styles.saveBtn} onClick={handleGenerateText}>
+                  Translate
+                </button>)}
               <button className={styles.saveBtn} onClick={handleSave}>
                 Save
               </button>
