@@ -14,4 +14,21 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@amen24/shared'],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react';
+            }
+            if (id.includes('@amen24/shared')) {
+              return 'shared';
+            }
+            return 'vendor';
+          }
+        }
+      }
+    }
+  }
 })
