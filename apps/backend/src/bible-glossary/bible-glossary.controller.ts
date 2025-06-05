@@ -31,9 +31,9 @@ export class BibleGlossaryController {
   }
 
   @Post('ai-generate')
-  async aiGenerate(@Body() body: { term: string, useCache: boolean }) {
+  async aiGenerate(@Body() body: { slug: string, term: string, useCache: boolean }) {
     const { term, useCache } = body;
-    const definition = await this.bibleGlossaryService.createAiDefinition(term, useCache);
+    const definition = await this.bibleGlossaryService.createAiDefinition(slug, term, useCache);
     
     return { term, definition };
   }

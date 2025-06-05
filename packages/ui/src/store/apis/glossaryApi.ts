@@ -53,11 +53,11 @@ export const createGlossaryApi = (baseUrl: string) =>
         }),
         invalidatesTags: ["GlossaryTerm"],
       }),
-      generateAiDefinition: builder.mutation<AiGeneratedTerm, { term: string, useCache: boolean }>({
-        query: ({ term, useCache }) => ({
+      generateAiDefinition: builder.mutation<AiGeneratedTerm, { slug: string, term: string, useCache: boolean }>({
+        query: ({ slug, term, useCache }) => ({
           method: "POST",
           url: `ai-generate`,
-          body: { term, useCache },
+          body: { slug, term, useCache },
         }),
         invalidatesTags: ["GlossaryTerm"],
       }),

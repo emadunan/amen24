@@ -21,8 +21,8 @@ export class OpenAiService {
     this.openai = new OpenAI({ apiKey });
   }
 
-  async generateDefinition(term: string, useCache = false): Promise<string> {
-    const cacheKey = `bible-term-def:${term}`;
+  async generateDefinition(slug: string,term: string, useCache = false): Promise<string> {
+    const cacheKey = `bible:term:${slug}`;
 
     if (useCache) {
       const cached = await this.cache.get<string>(cacheKey);

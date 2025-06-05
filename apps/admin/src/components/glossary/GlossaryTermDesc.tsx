@@ -23,7 +23,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
   const [definition, setDefinition] = useState(bgt.definition);
   const [useCache] = useState(true);
 
-  const [triggerTranslate] = useLazyTranslateTextQuery();
+  const [triggerTranslate, { isLoading: isLoadingTranslation }] = useLazyTranslateTextQuery();
 
   const handleSave = async () => {
     setIsEditing(false);
@@ -44,7 +44,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
     setIsEditing(false);
   };
 
-  const handleGenerateText = async () => {
+  const handleGenerateTranslation = async () => {
     const { translatedText } = await triggerTranslate({
       text: arabicText,
       target: bgt.lang,
@@ -54,7 +54,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
   }
 
   const handleGenerateAiDefinition = async () => {
-    const { definition: generatedAiDefinition } = await generateAiDefinition({term, useCache}).unwrap();
+    const { definition: generatedAiDefinition } = await generateAiDefinition({ slug, term, useCache }).unwrap();
 
     setDefinition(generatedAiDefinition);
   }
@@ -92,8 +92,8 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
                 (<button className={styles.saveBtn} onClick={handleGenerateAiDefinition}>
                   Ai Define {isLoading && <Spinner size='1rem' />}
                 </button>)
-                : (<button className={styles.saveBtn} onClick={handleGenerateText}>
-                  Translate
+                : (<button className={styles.saveBtn} onClick={handleGenerateTranslation}>
+                  Translate {isLoadingTranslation && <Spinner size='1rem' />}
                 </button>)}
               <button className={styles.saveBtn} onClick={handleSave}>
                 Save
