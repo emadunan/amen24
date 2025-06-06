@@ -12,8 +12,16 @@
   border: 1px solid var(--secondary);
 }
 
+.select {
+  border: 1px solid var(--secondary);
+  background-color: var(--min);
+}
+
+.select:focus,
 .input:focus {
   outline: none;
+  box-shadow: none;
+  border-color: var(--primary);
 }
 
 .button {

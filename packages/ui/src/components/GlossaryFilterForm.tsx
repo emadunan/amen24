@@ -39,12 +39,12 @@ export const GlossaryFilterForm: React.FC<Props> = ({
       />
       {ui === "advanced" && (
         <>
-          <select onChange={onBookChange} value={bookKey || ""}>
+          <select className={styles.select} onChange={onBookChange} value={bookKey || ""}>
             <option value=""></option>
             {Object.values(BookKey).map(bk => <option key={bk} value={bk}>{BookMap[bk].title.en}</option>)}
           </select>
           {bookKey && (
-            <select onChange={onChapterChange} value={chapter ?? ""}>
+            <select className={styles.select} onChange={onChapterChange} value={chapter ?? ""}>
               <option value=""></option>
               {Array.from({ length: BookMap[bookKey as BookKey].len }, (_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>)}
             </select>

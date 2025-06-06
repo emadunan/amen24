@@ -1,26 +1,42 @@
 :root {
+  --logo: url("/img/logo-light.png");
   --max: #000;
+  --max-rgb: 0, 0, 0;
   --min: #fff;
+  --min-rgb: 255, 255, 255;
   --text: #3b3a34;
   --text-rgb: 59, 58, 52;
   --background: #f4efe6;
-  --background-hover: #e6dfd2;
   --background-rgb: 244, 239, 230;
+  --background-hover: #e6dfd2;
+  --background-hover-rgb: 230, 223, 210;
   --primary: #8a6e4a;
+  --primary-rgb: 138, 110, 74;
   --primary-hover: #765e3c;
+  --primary-hover-rgb: 118, 94, 60;
   --secondary: #d6ccb1;
+  --secondary-rgb: 214, 204, 177;
   --secondary-hover: #c8bda3;
+  --secondary-hover-rgb: 200, 189, 163;
   --accent: #3d6b50;
+  --accent-rgb: 61, 107, 80;
   --accent-hover: #2e5840;
+  --accent-hover-rgb: 46, 88, 64;
   --gray: #5c564a;
+  --gray-rgb: 92, 86, 74;
   --gray-hover: #4a443a;
+  --gray-hover-rgb: 74, 68, 58;
   --danger: #c62828;
+  --danger-rgb: 198, 40, 40;
   --danger-hover: #b71c1c;
+  --danger-hover-rgb: 183, 28, 28;
   --highlight: #ffeb3b;
+  --highlight-rgb: 255, 235, 59;
 
   --header-height: 4rem;
   --footer-height: 12rem;
 
+  --laptopWidth: 64em;
   --tabletWidth: 48em;
   --largePhoneWidth: 37.5em;
   --regularPhoneWidth: 30em;
@@ -28,24 +44,39 @@
 }
 
 [data-theme="dark"] {
+  --logo: url("/img/logo-dark.png");
   --max: #fff;
+  --max-rgb: 255, 255, 255;
   --min: #000;
+  --min-rgb: 0, 0, 0;
   --text: #f4efe6;
   --text-rgb: 244, 239, 230;
   --background: #3a332b;
-  --background-hover: #403831;
   --background-rgb: 58, 51, 43;
+  --background-hover: #403831;
+  --background-hover-rgb: 64, 56, 49;
   --primary: #a68a5e;
+  --primary-rgb: 166, 138, 94;
   --primary-hover: #b49a72;
+  --primary-hover-rgb: 180, 154, 114;
   --secondary: #524a3f;
+  --secondary-rgb: 82, 74, 63;
   --secondary-hover: #6a5f53;
+  --secondary-hover-rgb: 106, 95, 83;
   --accent: #82b48a;
+  --accent-rgb: 130, 180, 138;
   --accent-hover: #9cc9a4;
+  --accent-hover-rgb: 156, 201, 164;
   --gray: #d6cfc7;
+  --gray-rgb: 214, 207, 199;
   --gray-hover: #e4ddd6;
+  --gray-hover-rgb: 228, 221, 214;
   --danger: #e57373;
+  --danger-rgb: 229, 115, 115;
   --danger-hover: #f28b82;
+  --danger-hover-rgb: 242, 139, 130;
   --highlight: #b88b4a;
+  --highlight-rgb: 184, 139, 74;
 }
 
 html {
