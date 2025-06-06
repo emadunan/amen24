@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useGetAllTermsQuery } from '../store/glossaryApi'
+import React, { useEffect, useState } from 'react'
+import { useLazyGetAllTermsQuery } from '../store/glossaryApi'
 import GlossaryTermItem from '../components/glossary/GlossaryTermItem';
 import { GlossaryFilterForm, Pagination } from '@amen24/ui';
 import { useTranslation } from 'react-i18next';
@@ -10,26 +10,49 @@ const ITEMS_PER_PAGE = 10;
 const Glossary: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [query, setQuery] = useState('');
-  const [filterTerm, setFilterTerm] = useState('');
+  const [bookKey, setBookKey] = useState('');
+  const [chapter, setChapter] = useState('');
   const [page, setPage] = useState(1);
 
   const lang = i18n.language as Lang;
 
-  const { data, isLoading } = useGetAllTermsQuery({
-    lang,
-    term: filterTerm || undefined,
-    limit: ITEMS_PER_PAGE,
-    page,
-  });
+  const [handleFetchTerms, { data, isLoading }] = useLazyGetAllTermsQuery();
 
-  const handleFilter = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setPage(1);
-    setFilterTerm(query.trim());
+  const fetchTerms = async (pageToUse = page) => {
+    try {
+      await handleFetchTerms({
+        lang,
+        term: query,
+        bookKey,
+        chapter,
+        limit: ITEMS_PER_PAGE,
+        page: pageToUse,
+      }).unwrap();
+    } catch (error) {
+      console.error('Failed to fetch glossary terms');
+    }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    fetchTerms();
+  }, [page]);
+
+  const handleFilter = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setPage(1);
+    fetchTerms(1);
+  };
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
+  };
+
+  const handleBookKeyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setBookKey(e.target.value);
+  };
+
+  const handleChapterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setChapter(e.target.value);
   };
 
   const handlePageChange = (newPage: number) => {
@@ -38,9 +61,17 @@ const Glossary: React.FC = () => {
     }
   };
 
+  const handleReset = () => {
+    setPage(1);
+    setQuery('');
+    setBookKey('');
+    setChapter('');
+    fetchTerms(1);
+  }
+
   return (
     <div>
-      <GlossaryFilterForm t={t} query={query} onInputChange={handleInputChange} onSubmit={handleFilter} />
+      <GlossaryFilterForm t={t} ui='advanced' query={query} bookKey={bookKey} chapter={chapter} onQueryChange={handleQueryChange} onBookChange={handleBookKeyChange} onChapterChange={handleChapterChange} onSubmit={handleFilter} onReset={handleReset} />
 
       {isLoading ? (
         <p>{t("loading")}</p>

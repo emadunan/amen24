@@ -81,6 +81,8 @@ export const createGlossaryApi = (baseUrl: string) =>
           if (q.slug) params.append("slug", q.slug);
           if (q.lang) params.append("lang", q.lang);
           if (q.term) params.append("term", q.term);
+          if (q.bookKey) params.append("bookKey", q.bookKey);
+          if (q.chapter) params.append("chapter", q.chapter);
           if (q.page) params.append("page", q.page.toString());
           if (q.limit) params.append("limit", q.limit.toString());
 

@@ -43,6 +43,12 @@ const BibleGlossaryClient = () => {
     }
   };
 
+  const handleReset = () => {
+    setPage(1);
+    setQuery('');
+    setFilterTerm('');
+  }
+
   return (
     <GlossaryContainer>
       <div className={styles.glossaryHeader}>
@@ -50,8 +56,9 @@ const BibleGlossaryClient = () => {
         <GlossaryFilterForm
           t={t}
           query={query}
-          onInputChange={handleInputChange}
+          onQueryChange={handleInputChange}
           onSubmit={handleFilter}
+          onReset={handleReset}
         />
       </div>
 

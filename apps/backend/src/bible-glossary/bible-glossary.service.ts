@@ -94,8 +94,10 @@ export class BibleGlossaryService {
     const limit = Math.min(query?.limit ?? 20, 100);
 
     const qb = this.glossaryRepo.createQueryBuilder('glossary')
+      .leftJoinAndSelect('glossary.translations', 'translation')
       .leftJoinAndSelect('glossary.verses', 'verse')
-      .leftJoinAndSelect('glossary.translations', 'translation');
+      .leftJoinAndSelect('verse.chapter', 'chapter')
+      .leftJoinAndSelect('chapter.book', 'book');
 
     if (query?.slug) {
       qb.andWhere('glossary.slug = :slug', { slug: query.slug });
@@ -108,6 +110,16 @@ export class BibleGlossaryService {
     if (query?.term) {
       const normalizedTerm = normalizeText(query.term, query.lang || Lang.ENGLISH)
       qb.andWhere('translation.termNormalized ILIKE :term', { term: `%${normalizedTerm}%` });
+    }
+
+    if (query?.bookKey) {
+      qb.andWhere('book.bookKey = :bookKey', { bookKey: query.bookKey });
+    }
+
+    if (query?.chapter) {
+      qb.andWhere('chapter.num = :chapter', {
+        chapter: Number(query.chapter),
+      });
     }
 
     qb.orderBy('translation.term', 'ASC');
