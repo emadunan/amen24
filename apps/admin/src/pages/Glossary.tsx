@@ -4,6 +4,7 @@ import GlossaryTermItem from '../components/glossary/GlossaryTermItem';
 import { GlossaryFilterForm, Pagination } from '@amen24/ui';
 import { useTranslation } from 'react-i18next';
 import { Lang } from '@amen24/shared';
+import styles from './Glossary.module.css'
 
 const ITEMS_PER_PAGE = 10;
 
@@ -78,7 +79,9 @@ const Glossary: React.FC = () => {
 
   return (
     <div>
-      <GlossaryFilterForm t={t} ui='advanced' query={query} bookKey={bookKey} chapter={chapter} approvalStatus={approvalStatus} onQueryChange={handleQueryChange} onBookChange={handleBookKeyChange} onChapterChange={handleChapterChange} onApprovalStatusChange={handleApprovalStatusChange} onSubmit={handleFilter} onReset={handleReset} />
+      <div className={styles.header}>
+        <GlossaryFilterForm t={t} ui='advanced' query={query} bookKey={bookKey} chapter={chapter} approvalStatus={approvalStatus} onQueryChange={handleQueryChange} onBookChange={handleBookKeyChange} onChapterChange={handleChapterChange} onApprovalStatusChange={handleApprovalStatusChange} onSubmit={handleFilter} onReset={handleReset} />
+      </div>
 
       {isLoading ? (
         <p>{t("loading")}</p>

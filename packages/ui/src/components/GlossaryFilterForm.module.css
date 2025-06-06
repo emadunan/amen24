@@ -1,12 +1,13 @@
 .form {
   display: flex;
   gap: 0.2rem;
+  flex-wrap: wrap;
 }
 
 .input {
   flex: 1 1 0; /* flex-grow, flex-shrink, flex-basis */
   max-width: 10rem;
-  min-width: 0; /* allow it to shrink smaller than default */
+  min-width: 5rem; /* allow it to shrink smaller than default */
   font-family: amiri;
   padding: 0.5rem 1rem;
   border: 1px solid var(--secondary);
