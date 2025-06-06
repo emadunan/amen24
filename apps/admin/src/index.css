@@ -1,5 +1,4 @@
 :root {
-  --logo: url("/img/logo-light.png");
   --max: #000;
   --max-rgb: 0, 0, 0;
   --min: #fff;
@@ -44,7 +43,6 @@
 }
 
 [data-theme="dark"] {
-  --logo: url("/img/logo-dark.png");
   --max: #fff;
   --max-rgb: 255, 255, 255;
   --min: #000;

@@ -3,9 +3,9 @@ import { useGetMeQuery } from "../../store/authApi";
 import { hasPermission, Permission } from "@amen24/shared";
 import { useCallback } from "react";
 import { apiUrl } from "../../constants";
+import { useBreakpoint } from "@amen24/ui";
 import NavBar from "./NavBar";
 import NavMenu from "./NavMenu";
-import { useBreakpoint } from "@amen24/ui";
 
 const AppHeader = () => {
   const { data: user } = useGetMeQuery();
@@ -32,7 +32,7 @@ const AppHeader = () => {
         <h2>Amen24</h2>
         <h3>AdminSite</h3>
       </div>
-      {user?.profile?.roles.length ? (
+      {user?.profile?.roles.length && (
         <nav>
           {hasPermission(user.profile.roles, Permission.LOGIN_ADMINSITE) ? (
             isTablet ? (
@@ -41,10 +41,7 @@ const AppHeader = () => {
               <NavBar handleLogout={handleLogout} user={user} />
             )
           ) : null}
-        </nav>
-      ) : (
-        "loading ..."
-      )}
+        </nav>)}
     </header>
   );
 };
