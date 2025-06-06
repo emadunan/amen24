@@ -18,6 +18,7 @@ export interface BibleGlossaryQuery {
   term?: string;
   bookKey?: string;
   chapter?: string;
+  approvalStatus?: string;
   page?: number;
   limit?: number;
 }

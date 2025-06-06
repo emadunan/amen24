@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent } from "react";
 import styles from "./GlossaryFilterForm.module.css";
 import { FaFilter, FaSync } from "react-icons/fa";
 import { TFunction } from "i18next";
-import { BookKey, BookMap } from "@amen24/shared";
+import { ApprovalStatus, BookKey, BookMap } from "@amen24/shared";
 
 interface Props {
   t: TFunction;
@@ -10,9 +10,11 @@ interface Props {
   query: string;
   bookKey?: string,
   chapter?: string;
+  approvalStatus?: string;
   onQueryChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onBookChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
   onChapterChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
+  onApprovalStatusChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   onReset: () => void;
 }
@@ -23,9 +25,11 @@ export const GlossaryFilterForm: React.FC<Props> = ({
   query,
   bookKey,
   chapter,
+  approvalStatus,
   onBookChange,
   onChapterChange,
   onQueryChange,
+  onApprovalStatusChange,
   onSubmit,
   onReset,
 }) => {
@@ -39,8 +43,12 @@ export const GlossaryFilterForm: React.FC<Props> = ({
       />
       {ui === "advanced" && (
         <>
+          <select className={styles.select} onChange={onApprovalStatusChange} value={approvalStatus || ""}>
+            <option value="">Status</option>
+            {Object.values(ApprovalStatus).map(status => <option key={status} value={status}>{status}</option>)}
+          </select>
           <select className={styles.select} onChange={onBookChange} value={bookKey || ""}>
-            <option value=""></option>
+            <option value="">Book</option>
             {Object.values(BookKey).map(bk => <option key={bk} value={bk}>{BookMap[bk].title.en}</option>)}
           </select>
           {bookKey && (

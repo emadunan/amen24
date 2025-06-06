@@ -1,42 +1,39 @@
 .item {
   display: flex;
   gap: 1rem;
-  align-items: flex-end;
+  align-items: center;
   flex-wrap: wrap;
-  margin: 1rem 0;
-  padding: .2rem 0;
-  border-bottom: solid 1px var(--secondary);
+  margin: .5rem 0;
+  background-color: var(--secondary);
 }
 
 .actions {
   margin-left: auto;
+  display: flex;
+  gap: .4rem;
+}
+
+.btn {
+  padding: .3rem .6rem;
+  font-family: amiri;
+  color: var(--background);
+  border: none;
+  border-radius: 2px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .openBtn {
-  padding: .3rem .6rem;
-  font-family: amiri;
-  border: none;
-  border-radius: 2px;
-  background-color: var(--secondary);
-  font-size: 1.2rem;
-  cursor: pointer;
+  background-color: var(--primary);
 }
 
 .openBtn:hover {
-  background-color: var(--secondary-hover);
+  background-color: var(--primary-hover);
 }
 
 .approveBtn {
-  padding: 0.3rem 0.6rem;
-  font-family: amiri;
-  border: none;
-  border-radius: 2px;
   background-color: var(--accent);
-  color: var(--min);
-  font-size: 1.2rem;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  transition: background-color 0.2s ease;
 }
 
 .approveBtn:hover {
@@ -44,16 +41,7 @@
 }
 
 .rejectBtn {
-  padding: 0.3rem 0.6rem;
-  font-family: amiri;
-  border: none;
-  border-radius: 2px;
   background-color: var(--danger);
-  color: var(--min);
-  font-size: 1.2rem;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  transition: background-color 0.2s ease;
 }
 
 .rejectBtn:hover {

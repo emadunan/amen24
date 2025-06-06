@@ -24,7 +24,7 @@ const GlossaryTermItem: React.FC<Props> = ({ item }) => {
 
   return (
     <div className={styles.item}>
-      <h4>/ {item.slug.toUpperCase()}</h4>
+      <NavLink to={`${item.slug}`} className={`${styles.btn} ${styles.openBtn}`}>/{item.slug}</NavLink>
 
       <p>[{item.native}]</p>
       <p> &mdash; {item.category}</p>
@@ -34,11 +34,10 @@ const GlossaryTermItem: React.FC<Props> = ({ item }) => {
       <div className={styles.actions}>
         {user?.profile.roles.includes(UserRole.ADMIN) && item.approvalStatus === ApprovalStatus.Pending && (
           <>
-            <button onClick={handleApproveTerm.bind(null, item.slug)} className={styles.approveBtn}>Approve</button>
-            <button onClick={handleRejectTerm.bind(null, item.slug)} className={styles.rejectBtn}>Reject</button>
+            <button onClick={handleApproveTerm.bind(null, item.slug)} className={`${styles.btn} ${styles.approveBtn}`}>Approve</button>
+            <button onClick={handleRejectTerm.bind(null, item.slug)} className={`${styles.btn} ${styles.rejectBtn}`}>Reject</button>
           </>
         )}
-        <NavLink to={`${item.slug}`} className={styles.openBtn}>Open</NavLink>
       </div>
     </div>
   )

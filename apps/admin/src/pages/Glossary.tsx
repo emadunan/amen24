@@ -12,6 +12,7 @@ const Glossary: React.FC = () => {
   const [query, setQuery] = useState('');
   const [bookKey, setBookKey] = useState('');
   const [chapter, setChapter] = useState('');
+  const [approvalStatus, setApprovalStatus] = useState('');
   const [page, setPage] = useState(1);
 
   const lang = i18n.language as Lang;
@@ -25,6 +26,7 @@ const Glossary: React.FC = () => {
         term: query,
         bookKey,
         chapter,
+        approvalStatus,
         limit: ITEMS_PER_PAGE,
         page: pageToUse,
       }).unwrap();
@@ -55,6 +57,10 @@ const Glossary: React.FC = () => {
     setChapter(e.target.value);
   };
 
+  const handleApprovalStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setApprovalStatus(e.target.value);
+  };
+
   const handlePageChange = (newPage: number) => {
     if (data && newPage >= 1 && newPage <= data.meta.lastPage) {
       setPage(newPage);
@@ -66,12 +72,13 @@ const Glossary: React.FC = () => {
     setQuery('');
     setBookKey('');
     setChapter('');
+    setApprovalStatus('');
     fetchTerms(1);
   }
 
   return (
     <div>
-      <GlossaryFilterForm t={t} ui='advanced' query={query} bookKey={bookKey} chapter={chapter} onQueryChange={handleQueryChange} onBookChange={handleBookKeyChange} onChapterChange={handleChapterChange} onSubmit={handleFilter} onReset={handleReset} />
+      <GlossaryFilterForm t={t} ui='advanced' query={query} bookKey={bookKey} chapter={chapter} approvalStatus={approvalStatus} onQueryChange={handleQueryChange} onBookChange={handleBookKeyChange} onChapterChange={handleChapterChange} onApprovalStatusChange={handleApprovalStatusChange} onSubmit={handleFilter} onReset={handleReset} />
 
       {isLoading ? (
         <p>{t("loading")}</p>

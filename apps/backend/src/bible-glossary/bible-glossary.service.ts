@@ -122,6 +122,10 @@ export class BibleGlossaryService {
       });
     }
 
+    if (query?.approvalStatus) {
+      qb.andWhere('glossary.approvalStatus = :approvalStatus', { approvalStatus: query.approvalStatus });
+    }
+
     qb.orderBy('translation.term', 'ASC');
 
     const [data, total] = await qb

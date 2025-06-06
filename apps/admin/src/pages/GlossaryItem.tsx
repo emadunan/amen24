@@ -6,10 +6,12 @@ import { FaBackspace } from "react-icons/fa";
 import { useGetOneTermQuery, useUpdateTermMutation } from '../store/glossaryApi';
 import GlossaryTermDesc from '../components/glossary/GlossaryTermDesc';
 import { showToast } from '@amen24/ui';
-import { ApprovalStatus, GlossaryCategory, Lang } from '@amen24/shared';
+import { ApprovalStatus, GlossaryCategory, Lang, UserRole } from '@amen24/shared';
+import { useGetMeQuery } from '../store/authApi';
 
 const GlossaryItem: React.FC = () => {
   const params = useParams<{ slug: string }>();
+  const { data: user } = useGetMeQuery();
   const slug = params.slug;
 
   const { data: term } = useGetOneTermQuery(slug || '');
@@ -42,6 +44,14 @@ const GlossaryItem: React.FC = () => {
     }
   }
 
+  function handleApproveTerm(slug: string) {
+    updateTerm({ slug, approvalStatus: ApprovalStatus.Approved });
+  }
+
+  function handleRejectTerm(slug: string) {
+    updateTerm({ slug, approvalStatus: ApprovalStatus.Rejected });
+  }
+
   return (
     <div>
       <header className={styles.pageHeader}>
@@ -50,7 +60,7 @@ const GlossaryItem: React.FC = () => {
             <FaBackspace className={styles.backLink} />
           </Link>
 
-          <PageTitle className={styles.absoluteTitle}>/{slug?.toUpperCase()}</PageTitle>
+          <PageTitle className={styles.absoluteTitle}>/{slug}</PageTitle>
         </div>
 
         <div className={styles.termHeader}>
@@ -92,6 +102,14 @@ const GlossaryItem: React.FC = () => {
         {term?.translations.map(bgt => (
           <GlossaryTermDesc key={bgt.lang} arabicText={term.translations.find(t => t.lang === Lang.ARABIC)?.definition || ''} slug={term.slug} bgt={bgt} />
         ))}
+      </div>
+      <div className={styles.actions}>
+        {user?.profile.roles.includes(UserRole.ADMIN) && term?.approvalStatus === ApprovalStatus.Pending && (
+          <>
+            <button onClick={handleApproveTerm.bind(null,term.slug)} className={`${styles.btn} ${styles.approveBtn}`}>Approve</button>
+            <button onClick={handleRejectTerm.bind(null, term.slug)} className={`${styles.btn} ${styles.rejectBtn}`}>Reject</button>
+          </>
+        )}
       </div>
     </div>
   );

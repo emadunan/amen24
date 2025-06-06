@@ -42,3 +42,36 @@
 .selectCategory:focus {
   box-shadow: none;
 }
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.3rem 0.6rem;
+  font-family: amiri;
+  border: none;
+  border-radius: 2px;
+  color: var(--min);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.approveBtn {
+  background-color: var(--accent);
+}
+
+.approveBtn:hover {
+  background-color: var(--accent-hover);
+}
+
+.rejectBtn {
+  background-color: var(--danger);
+}
+
+.rejectBtn:hover {
+  background-color: var(--danger-hover);
+}
