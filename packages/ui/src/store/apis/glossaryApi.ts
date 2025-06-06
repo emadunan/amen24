@@ -55,12 +55,12 @@ export const createGlossaryApi = (baseUrl: string) =>
       }),
       generateAiDefinition: builder.mutation<
         AiGeneratedTerm,
-        { slug: string; term: string; useCache: boolean }
+        { slug: string; term: string; native: string; useCache: boolean }
       >({
-        query: ({ slug, term, useCache }) => ({
+        query: ({ slug, term, native, useCache }) => ({
           method: "POST",
           url: `ai-generate`,
-          body: { slug, term, useCache },
+          body: { slug, term, native, useCache },
         }),
         invalidatesTags: ["GlossaryTerm"],
       }),

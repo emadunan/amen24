@@ -121,6 +121,7 @@ const GlossaryItem: React.FC = () => {
                 ?.definition || ""
             }
             slug={term.slug}
+            native={term.native}
             bgt={bgt}
           />
         ))}

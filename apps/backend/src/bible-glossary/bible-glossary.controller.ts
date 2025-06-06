@@ -21,7 +21,7 @@ import { BibleGlossaryQuery, Permission } from '@amen24/shared';
 
 @Controller('bible-glossary')
 export class BibleGlossaryController {
-  constructor(private readonly bibleGlossaryService: BibleGlossaryService) {}
+  constructor(private readonly bibleGlossaryService: BibleGlossaryService) { }
 
   @Post()
   @UseGuards(JwtAuthGuard, PermissionsGuard)
@@ -31,10 +31,10 @@ export class BibleGlossaryController {
   }
 
   @Post('ai-generate')
-  async aiGenerate(@Body() body: { slug: string, term: string, useCache: boolean }) {
-    const { slug, term, useCache } = body;
-    const definition = await this.bibleGlossaryService.createAiDefinition(slug, term, useCache);
-    
+  async aiGenerate(@Body() body: { slug: string, term: string, native: string, useCache: boolean }) {
+    const { slug, term, native, useCache } = body;
+    const definition = await this.bibleGlossaryService.createAiDefinition(slug, term, native, useCache);
+
     return { term, definition };
   }
 
