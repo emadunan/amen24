@@ -196,7 +196,7 @@ export class BibleGlossaryService {
     await this.glossaryRepo.remove(glossary);
   }
 
-  async createAiDefinition(slug, term: string, useCache: boolean): Promise<string> {
-    return this.openAi.generateDefinition(term, useCache);
+  async createAiDefinition(slug: string, term: string, useCache: boolean): Promise<string> {
+    return this.openAi.generateDefinition(slug, term, useCache);
   }
 }
