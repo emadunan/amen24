@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { useLazyGetAllTermsQuery } from '../store/glossaryApi'
-import GlossaryTermItem from '../components/glossary/GlossaryTermItem';
-import { GlossaryFilterForm, Pagination } from '@amen24/ui';
-import { useTranslation } from 'react-i18next';
-import { Lang } from '@amen24/shared';
-import styles from './Glossary.module.css'
+import React, { useEffect, useState } from "react";
+import { useLazyGetAllTermsQuery } from "../store/glossaryApi";
+import GlossaryTermItem from "../components/glossary/GlossaryTermItem";
+import { GlossaryFilterForm, Pagination } from "@amen24/ui";
+import { useTranslation } from "react-i18next";
+import { Lang } from "@amen24/shared";
+import styles from "./Glossary.module.css";
 
 const ITEMS_PER_PAGE = 10;
 
 const Glossary: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const [query, setQuery] = useState('');
-  const [bookKey, setBookKey] = useState('');
-  const [chapter, setChapter] = useState('');
-  const [approvalStatus, setApprovalStatus] = useState('');
+  const [query, setQuery] = useState("");
+  const [bookKey, setBookKey] = useState("");
+  const [chapter, setChapter] = useState("");
+  const [approvalStatus, setApprovalStatus] = useState("");
   const [page, setPage] = useState(1);
 
   const lang = i18n.language as Lang;
@@ -32,7 +32,7 @@ const Glossary: React.FC = () => {
         page: pageToUse,
       }).unwrap();
     } catch (error) {
-      console.error('Failed to fetch glossary terms');
+      console.error("Failed to fetch glossary terms");
     }
   };
 
@@ -58,7 +58,9 @@ const Glossary: React.FC = () => {
     setChapter(e.target.value);
   };
 
-  const handleApprovalStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleApprovalStatusChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     setApprovalStatus(e.target.value);
   };
 
@@ -70,30 +72,53 @@ const Glossary: React.FC = () => {
 
   const handleReset = () => {
     setPage(1);
-    setQuery('');
-    setBookKey('');
-    setChapter('');
-    setApprovalStatus('');
+    setQuery("");
+    setBookKey("");
+    setChapter("");
+    setApprovalStatus("");
     fetchTerms(1);
-  }
+  };
 
   return (
     <div>
       <div className={styles.header}>
-        <GlossaryFilterForm t={t} ui='advanced' query={query} bookKey={bookKey} chapter={chapter} approvalStatus={approvalStatus} onQueryChange={handleQueryChange} onBookChange={handleBookKeyChange} onChapterChange={handleChapterChange} onApprovalStatusChange={handleApprovalStatusChange} onSubmit={handleFilter} onReset={handleReset} />
+        <GlossaryFilterForm
+          t={t}
+          ui="advanced"
+          query={query}
+          bookKey={bookKey}
+          chapter={chapter}
+          approvalStatus={approvalStatus}
+          onQueryChange={handleQueryChange}
+          onBookChange={handleBookKeyChange}
+          onChapterChange={handleChapterChange}
+          onApprovalStatusChange={handleApprovalStatusChange}
+          onSubmit={handleFilter}
+          onReset={handleReset}
+        />
       </div>
 
       {isLoading ? (
         <p>{t("loading")}</p>
       ) : (
         <>
-          <div>{data?.data.map(t => <GlossaryTermItem key={t.id} item={t} />)}</div>
+          <div>
+            {data?.data.map((t) => <GlossaryTermItem key={t.id} item={t} />)}
+          </div>
 
-          {data && <Pagination t={t} lang={lang} page={page} lastPage={data?.meta.lastPage} onPageChange={handlePageChange} />}
+          {data && (
+            <Pagination
+              t={t}
+              lang={lang}
+              page={page}
+              lastPage={data?.meta.lastPage}
+              onPageChange={handlePageChange}
+            />
+          )}
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Glossary;

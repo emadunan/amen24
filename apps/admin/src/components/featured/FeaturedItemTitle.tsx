@@ -1,5 +1,5 @@
-import { Featured } from '@amen24/shared';
-import { FC } from 'react';
+import { Featured } from "@amen24/shared";
+import { FC } from "react";
 import styles from "./FeaturedItemTitle.module.css";
 
 interface Props {
@@ -17,11 +17,11 @@ const FeaturedItemTitle: FC<Props> = ({ featuredItem }) => {
 
   return (
     <h4 className={styles.title}>
-      #{featuredItem.id} [VG-{featuredItem.verseGroup.id}] — {bookKey}{' '}
+      #{featuredItem.id} [VG-{featuredItem.verseGroup.id}] — {bookKey}{" "}
       {chapterNum}:{firstVerseNum}
-      {firstVerseNum !== lastVerseNum ? `-${lastVerseNum}` : ''}
+      {firstVerseNum !== lastVerseNum ? `-${lastVerseNum}` : ""}
     </h4>
-  )
-}
+  );
+};
 
-export default FeaturedItemTitle
+export default FeaturedItemTitle;

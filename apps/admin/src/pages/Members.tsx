@@ -21,14 +21,50 @@ const Members: React.FC = () => {
             </div>
 
             <div className={styles.infoGrid}>
-              <div><strong>Providers:</strong><br />{member.users.map((u) => `${u.provider} (${u.displayName})`).join(", ")}</div>
-              <div><strong>Created:</strong><br />{new Date(member.createdAt).toLocaleDateString()}</div>
-              <div><strong>Last Login:</strong><br />{member.lastLogin ? new Date(member.lastLogin).toLocaleDateString() : "—"}</div>
-              <div><strong>Language:</strong><br />{member.uiLang?.toUpperCase() ?? "—"}</div>
-              <div><strong>Font Size:</strong><br />{member.fontSize}</div>
-              <div><strong>Theme:</strong><br />{member.themeMode}</div>
-              <div><strong>Calendar:</strong><br />{member.dateCalendar}</div>
-              <div><strong>Favorites:</strong><br />{member.favorites.length}</div>
+              <div>
+                <strong>Providers:</strong>
+                <br />
+                {member.users
+                  .map((u) => `${u.provider} (${u.displayName})`)
+                  .join(", ")}
+              </div>
+              <div>
+                <strong>Created:</strong>
+                <br />
+                {new Date(member.createdAt).toLocaleDateString()}
+              </div>
+              <div>
+                <strong>Last Login:</strong>
+                <br />
+                {member.lastLogin
+                  ? new Date(member.lastLogin).toLocaleDateString()
+                  : "—"}
+              </div>
+              <div>
+                <strong>Language:</strong>
+                <br />
+                {member.uiLang?.toUpperCase() ?? "—"}
+              </div>
+              <div>
+                <strong>Font Size:</strong>
+                <br />
+                {member.fontSize}
+              </div>
+              <div>
+                <strong>Theme:</strong>
+                <br />
+                {member.themeMode}
+              </div>
+              <div>
+                <strong>Calendar:</strong>
+                <br />
+                {member.dateCalendar}
+              </div>
+              <div>
+                <strong>Favorites:</strong>
+                <br />
+                {member.favorites.length}
+              </div>
             </div>
           </div>
         ))}

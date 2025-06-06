@@ -35,9 +35,9 @@ export type BibleGlossaryTranslationDto = {
 export type BibleGlossaryResult = PaginatedResult<BibleGlossary>;
 
 export type AiGeneratedTerm = {
-  term: string,
-  definition: string,
-}
+  term: string;
+  definition: string;
+};
 
 export const createGlossaryApi = (baseUrl: string) =>
   createApi({
@@ -53,7 +53,10 @@ export const createGlossaryApi = (baseUrl: string) =>
         }),
         invalidatesTags: ["GlossaryTerm"],
       }),
-      generateAiDefinition: builder.mutation<AiGeneratedTerm, { slug: string, term: string, useCache: boolean }>({
+      generateAiDefinition: builder.mutation<
+        AiGeneratedTerm,
+        { slug: string; term: string; useCache: boolean }
+      >({
         query: ({ slug, term, useCache }) => ({
           method: "POST",
           url: `ai-generate`,
@@ -83,7 +86,8 @@ export const createGlossaryApi = (baseUrl: string) =>
           if (q.term) params.append("term", q.term);
           if (q.bookKey) params.append("bookKey", q.bookKey);
           if (q.chapter) params.append("chapter", q.chapter);
-          if (q.approvalStatus) params.append("approvalStatus", q.approvalStatus);
+          if (q.approvalStatus)
+            params.append("approvalStatus", q.approvalStatus);
           if (q.page) params.append("page", q.page.toString());
           if (q.limit) params.append("limit", q.limit.toString());
 

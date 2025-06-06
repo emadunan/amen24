@@ -3,6 +3,4 @@ import { apiUrl } from "../constants";
 
 export const quotaTrackerApi = createQuotaTrackerApi(apiUrl);
 
-export const {
-  useGetProviderQuotaQuery
-} = quotaTrackerApi;
+export const { useGetProviderQuotaQuery } = quotaTrackerApi;

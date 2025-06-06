@@ -2,9 +2,9 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
 
 type QuotaState = {
-  "value": number,
-  "max": number
-}
+  value: number;
+  max: number;
+};
 
 export const createQuotaTrackerApi = (baseUrl: string) =>
   createApi({
@@ -15,6 +15,6 @@ export const createQuotaTrackerApi = (baseUrl: string) =>
       getProviderQuota: builder.query<QuotaState, string>({
         query: (provider) => `${provider}`,
         providesTags: ["Quota"],
-      })
+      }),
     }),
   });

@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import styles from './Login.module.css';
-import { useLoginMutation } from '../store/authApi';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import styles from "./Login.module.css";
+import { useLoginMutation } from "../store/authApi";
+import { useNavigate } from "react-router-dom";
 import { InputItem, Spinner, SubmitButton, useFeedback } from "@amen24/ui";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +30,11 @@ const Login = () => {
   }
 
   if (isLoading || localLoading) {
-    return <div className={styles.container}><Spinner /></div>
+    return (
+      <div className={styles.container}>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -51,13 +55,10 @@ const Login = () => {
           required
         />
 
-        <SubmitButton
-          isLoading={isLoading || localLoading}
-          text={"Login"}
-        />
+        <SubmitButton isLoading={isLoading || localLoading} text={"Login"} />
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

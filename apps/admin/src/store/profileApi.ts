@@ -3,4 +3,8 @@ import { apiUrl } from "../constants";
 
 export const profileApi = createProfileApi(apiUrl);
 
-export const { useGetProfileStatisticsQuery, useGetProfilesQuery, useUpdateUserProfileMutation } = profileApi;
+export const {
+  useGetProfileStatisticsQuery,
+  useGetProfilesQuery,
+  useUpdateUserProfileMutation,
+} = profileApi;

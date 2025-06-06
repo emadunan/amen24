@@ -1,8 +1,8 @@
-import { FeaturedText } from '@amen24/shared';
-import { FC, useEffect, useState } from 'react';
-import styles from './FeaturedTranslationText.module.css';
-import { useUpdateFeaturedTextMutation } from '../../store/featuredApi';
-import { getDirection } from '@amen24/ui';
+import { FeaturedText } from "@amen24/shared";
+import { FC, useEffect, useState } from "react";
+import styles from "./FeaturedTranslationText.module.css";
+import { useUpdateFeaturedTextMutation } from "../../store/featuredApi";
+import { getDirection } from "@amen24/ui";
 
 interface Props {
   featuredTextItem: FeaturedText;
@@ -19,7 +19,7 @@ const FeaturedTranslationText: FC<Props> = ({ featuredTextItem }) => {
 
   const handleSave = () => {
     setIsEditing(false);
-    updateText({ id: featuredTextItem.id, text })
+    updateText({ id: featuredTextItem.id, text });
   };
 
   const handleDiscard = () => {
@@ -33,7 +33,10 @@ const FeaturedTranslationText: FC<Props> = ({ featuredTextItem }) => {
         <span className={styles.lang}>{featuredTextItem.lang}</span>
         <div className={styles.buttonGroup}>
           {!isEditing ? (
-            <button className={styles.editBtn} onClick={() => setIsEditing(true)}>
+            <button
+              className={styles.editBtn}
+              onClick={() => setIsEditing(true)}
+            >
               Edit
             </button>
           ) : (
@@ -50,10 +53,7 @@ const FeaturedTranslationText: FC<Props> = ({ featuredTextItem }) => {
       </div>
 
       {!isEditing ? (
-        <p
-          className={styles.text}
-          dir={getDirection(featuredTextItem.lang)}
-        >
+        <p className={styles.text} dir={getDirection(featuredTextItem.lang)}>
           {text}
         </p>
       ) : (

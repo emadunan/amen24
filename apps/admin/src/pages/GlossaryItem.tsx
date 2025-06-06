@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import PageTitle from '../components/ui/PageTitle';
-import styles from './GlossaryItem.module.css';
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import PageTitle from "../components/ui/PageTitle";
+import styles from "./GlossaryItem.module.css";
 import { FaBackspace } from "react-icons/fa";
-import { useGetOneTermQuery, useUpdateTermMutation } from '../store/glossaryApi';
-import GlossaryTermDesc from '../components/glossary/GlossaryTermDesc';
-import { showToast } from '@amen24/ui';
-import { ApprovalStatus, GlossaryCategory, Lang, UserRole } from '@amen24/shared';
-import { useGetMeQuery } from '../store/authApi';
+import {
+  useGetOneTermQuery,
+  useUpdateTermMutation,
+} from "../store/glossaryApi";
+import GlossaryTermDesc from "../components/glossary/GlossaryTermDesc";
+import { showToast } from "@amen24/ui";
+import {
+  ApprovalStatus,
+  GlossaryCategory,
+  Lang,
+  UserRole,
+} from "@amen24/shared";
+import { useGetMeQuery } from "../store/authApi";
 
 const GlossaryItem: React.FC = () => {
   const params = useParams<{ slug: string }>();
   const { data: user } = useGetMeQuery();
   const slug = params.slug;
 
-  const { data: term } = useGetOneTermQuery(slug || '');
+  const { data: term } = useGetOneTermQuery(slug || "");
   const [updateTerm, _result] = useUpdateTermMutation();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [nativeValue, setNativeValue] = useState(term?.native || '');
+  const [nativeValue, setNativeValue] = useState(term?.native || "");
 
   React.useEffect(() => {
     if (term?.native) {
@@ -28,19 +36,23 @@ const GlossaryItem: React.FC = () => {
 
   function handleBlurOrEnter(e: React.KeyboardEvent | React.FocusEvent) {
     if (
-      ('key' in e && e.key === 'Enter') ||
-      ('type' in e && e.type === 'blur')
+      ("key" in e && e.key === "Enter") ||
+      ("type" in e && e.type === "blur")
     ) {
       setIsEditing(false);
 
       if (!term) {
-        showToast("Invalid term value, update failed!")
+        showToast("Invalid term value, update failed!");
         return;
       }
 
       const trimmedValue = nativeValue.trim();
       if (term.native === trimmedValue) return;
-      updateTerm({ slug: term.slug, native: trimmedValue, approvalStatus: ApprovalStatus.Pending });
+      updateTerm({
+        slug: term.slug,
+        native: trimmedValue,
+        approvalStatus: ApprovalStatus.Pending,
+      });
     }
   }
 
@@ -74,18 +86,20 @@ const GlossaryItem: React.FC = () => {
               className={styles.editableInput}
             />
           ) : (
-            <h3 onClick={() => setIsEditing(true)}>
-              {nativeValue}
-            </h3>
+            <h3 onClick={() => setIsEditing(true)}>{nativeValue}</h3>
           )}
 
           <select
             className={styles.selectCategory}
-            value={term?.category || ''}
+            value={term?.category || ""}
             onChange={async (e) => {
               const category = e.target.value;
               if (term && category !== term.category) {
-                await updateTerm({ slug: term.slug, category: category as GlossaryCategory, approvalStatus: ApprovalStatus.Pending }).unwrap();
+                await updateTerm({
+                  slug: term.slug,
+                  category: category as GlossaryCategory,
+                  approvalStatus: ApprovalStatus.Pending,
+                }).unwrap();
               }
             }}
           >
@@ -99,17 +113,36 @@ const GlossaryItem: React.FC = () => {
       </header>
 
       <div>
-        {term?.translations.map(bgt => (
-          <GlossaryTermDesc key={bgt.lang} arabicText={term.translations.find(t => t.lang === Lang.ARABIC)?.definition || ''} slug={term.slug} bgt={bgt} />
+        {term?.translations.map((bgt) => (
+          <GlossaryTermDesc
+            key={bgt.lang}
+            arabicText={
+              term.translations.find((t) => t.lang === Lang.ARABIC)
+                ?.definition || ""
+            }
+            slug={term.slug}
+            bgt={bgt}
+          />
         ))}
       </div>
       <div className={styles.actions}>
-        {user?.profile.roles.includes(UserRole.ADMIN) && term?.approvalStatus === ApprovalStatus.Pending && (
-          <>
-            <button onClick={handleApproveTerm.bind(null,term.slug)} className={`${styles.btn} ${styles.approveBtn}`}>Approve</button>
-            <button onClick={handleRejectTerm.bind(null, term.slug)} className={`${styles.btn} ${styles.rejectBtn}`}>Reject</button>
-          </>
-        )}
+        {user?.profile.roles.includes(UserRole.ADMIN) &&
+          term?.approvalStatus === ApprovalStatus.Pending && (
+            <>
+              <button
+                onClick={handleApproveTerm.bind(null, term.slug)}
+                className={`${styles.btn} ${styles.approveBtn}`}
+              >
+                Approve
+              </button>
+              <button
+                onClick={handleRejectTerm.bind(null, term.slug)}
+                className={`${styles.btn} ${styles.rejectBtn}`}
+              >
+                Reject
+              </button>
+            </>
+          )}
       </div>
     </div>
   );

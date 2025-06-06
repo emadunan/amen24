@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './VerseGroups.module.css'
+import React from "react";
+import styles from "./VerseGroups.module.css";
 
-import { useGetVerseGroupsQuery } from '../store/verseApi';
+import { useGetVerseGroupsQuery } from "../store/verseApi";
 
 const VerseGroups: React.FC = () => {
   const { data: verseGroups } = useGetVerseGroupsQuery();
@@ -44,10 +44,9 @@ const VerseGroups: React.FC = () => {
             </div>
           </div>
         ))}
-
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default VerseGroups;

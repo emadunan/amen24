@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import styles from './PageTitle.module.css';
+import React, { ReactNode } from "react";
+import styles from "./PageTitle.module.css";
 
 interface Props {
   children: ReactNode;
@@ -7,11 +7,9 @@ interface Props {
 }
 
 const PageTitle: React.FC<Props> = ({ children, className }) => {
-  const combinedClassName = [styles.title, className].filter(Boolean).join(' ');
+  const combinedClassName = [styles.title, className].filter(Boolean).join(" ");
 
-  return (
-    <h2 className={combinedClassName}>{children}</h2>
-  );
+  return <h2 className={combinedClassName}>{children}</h2>;
 };
 
 export default PageTitle;

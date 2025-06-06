@@ -1,7 +1,7 @@
-import { FC } from 'react';
-import styles from './SelectPrivilege.module.css';
-import { Profile, UserRole } from '@amen24/shared';
-import { useUpdateUserProfileMutation } from '../../store/profileApi';
+import { FC } from "react";
+import styles from "./SelectPrivilege.module.css";
+import { Profile, UserRole } from "@amen24/shared";
+import { useUpdateUserProfileMutation } from "../../store/profileApi";
 
 interface Props {
   member: Profile;

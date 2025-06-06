@@ -8,7 +8,7 @@ interface Props {
   t: TFunction;
   ui?: "basic" | "advanced";
   query: string;
-  bookKey?: string,
+  bookKey?: string;
   chapter?: string;
   approvalStatus?: string;
   onQueryChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -43,18 +43,45 @@ export const GlossaryFilterForm: React.FC<Props> = ({
       />
       {ui === "advanced" && (
         <>
-          <select className={styles.select} onChange={onApprovalStatusChange} value={approvalStatus || ""}>
+          <select
+            className={styles.select}
+            onChange={onApprovalStatusChange}
+            value={approvalStatus || ""}
+          >
             <option value="">Status</option>
-            {Object.values(ApprovalStatus).map(status => <option key={status} value={status}>{status}</option>)}
+            {Object.values(ApprovalStatus).map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
           </select>
-          <select className={styles.select} onChange={onBookChange} value={bookKey || ""}>
+          <select
+            className={styles.select}
+            onChange={onBookChange}
+            value={bookKey || ""}
+          >
             <option value="">Book</option>
-            {Object.values(BookKey).map(bk => <option key={bk} value={bk}>{BookMap[bk].title.en}</option>)}
+            {Object.values(BookKey).map((bk) => (
+              <option key={bk} value={bk}>
+                {BookMap[bk].title.en}
+              </option>
+            ))}
           </select>
           {bookKey && (
-            <select className={styles.select} onChange={onChapterChange} value={chapter ?? ""}>
+            <select
+              className={styles.select}
+              onChange={onChapterChange}
+              value={chapter ?? ""}
+            >
               <option value=""></option>
-              {Array.from({ length: BookMap[bookKey as BookKey].len }, (_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>)}
+              {Array.from(
+                { length: BookMap[bookKey as BookKey].len },
+                (_, i) => (
+                  <option key={i + 1} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ),
+              )}
             </select>
           )}
         </>

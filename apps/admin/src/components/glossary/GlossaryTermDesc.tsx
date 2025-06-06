@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { getDirection, Spinner } from '@amen24/ui';
-import { useTranslation } from 'react-i18next';
-import styles from './GlossaryTermDesc.module.css';
-import { useLazyTranslateTextQuery } from '../../store/libreTranslateApi';
-import { ApprovalStatus, BibleGlossaryTranslation, flagMap, Lang } from '@amen24/shared';
-import { useGenerateAiDefinitionMutation, useUpdateTermMutation, useUpdateTranslationMutation } from '../../store/glossaryApi';
-import ReactMarkdown from 'react-markdown';
+import React, { useState } from "react";
+import { getDirection, Spinner } from "@amen24/ui";
+import { useTranslation } from "react-i18next";
+import styles from "./GlossaryTermDesc.module.css";
+import { useLazyTranslateTextQuery } from "../../store/libreTranslateApi";
+import {
+  ApprovalStatus,
+  BibleGlossaryTranslation,
+  flagMap,
+  Lang,
+} from "@amen24/shared";
+import {
+  useGenerateAiDefinitionMutation,
+  useUpdateTermMutation,
+  useUpdateTranslationMutation,
+} from "../../store/glossaryApi";
+import ReactMarkdown from "react-markdown";
 
 interface Props {
   slug: string;
@@ -15,15 +24,18 @@ interface Props {
 
 const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
   const { t } = useTranslation();
-  const [updateTranslation, _translationResult] = useUpdateTranslationMutation();
+  const [updateTranslation, _translationResult] =
+    useUpdateTranslationMutation();
   const [updateTerm, _termResult] = useUpdateTermMutation();
-  const [generateAiDefinition, { isLoading }] = useGenerateAiDefinitionMutation();
+  const [generateAiDefinition, { isLoading }] =
+    useGenerateAiDefinitionMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [term, setTerm] = useState(bgt.term);
   const [definition, setDefinition] = useState(bgt.definition);
   const [useCache] = useState(true);
 
-  const [triggerTranslate, { isLoading: isLoadingTranslation }] = useLazyTranslateTextQuery();
+  const [triggerTranslate, { isLoading: isLoadingTranslation }] =
+    useLazyTranslateTextQuery();
 
   const handleSave = async () => {
     setIsEditing(false);
@@ -32,7 +44,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
       id: bgt.id,
       term,
       definition,
-    }
+    };
 
     await updateTranslation(payload).unwrap();
     await updateTerm({ slug, approvalStatus: ApprovalStatus.Pending });
@@ -51,18 +63,24 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
     }).unwrap();
 
     setDefinition(translatedText);
-  }
+  };
 
   const handleGenerateAiDefinition = async () => {
-    const { definition: generatedAiDefinition } = await generateAiDefinition({ slug, term, useCache }).unwrap();
+    const { definition: generatedAiDefinition } = await generateAiDefinition({
+      slug,
+      term,
+      useCache,
+    }).unwrap();
 
     setDefinition(generatedAiDefinition);
-  }
+  };
 
   return (
     <div className={styles.card}>
       <div className={styles.lang}>
-        <p>{flagMap[bgt.lang]} {t(`lang:${bgt.lang}`)}</p>
+        <p>
+          {flagMap[bgt.lang]} {t(`lang:${bgt.lang}`)}
+        </p>
       </div>
 
       <div className={styles.term}>
@@ -79,7 +97,10 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
         <div className={styles.actions}>
           {!isEditing ? (
             <>
-              <button className={styles.editBtn} onClick={() => setIsEditing(true)}>
+              <button
+                className={styles.editBtn}
+                onClick={() => setIsEditing(true)}
+              >
                 Edit
               </button>
               {/* <button className={styles.deleteBtn} onClick={() => { }}>
@@ -88,13 +109,21 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
             </>
           ) : (
             <>
-              {bgt.lang === Lang.ARABIC ?
-                (<button className={styles.saveBtn} onClick={handleGenerateAiDefinition}>
-                  Ai Define {isLoading && <Spinner size='1rem' />}
-                </button>)
-                : (<button className={styles.saveBtn} onClick={handleGenerateTranslation}>
-                  Translate {isLoadingTranslation && <Spinner size='1rem' />}
-                </button>)}
+              {bgt.lang === Lang.ARABIC ? (
+                <button
+                  className={styles.saveBtn}
+                  onClick={handleGenerateAiDefinition}
+                >
+                  Ai Define {isLoading && <Spinner size="1rem" />}
+                </button>
+              ) : (
+                <button
+                  className={styles.saveBtn}
+                  onClick={handleGenerateTranslation}
+                >
+                  Translate {isLoadingTranslation && <Spinner size="1rem" />}
+                </button>
+              )}
               <button className={styles.saveBtn} onClick={handleSave}>
                 Save
               </button>
@@ -107,11 +136,8 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, arabicText, bgt }) => {
       </div>
 
       {!isEditing ? (
-        <div
-          className={styles.definition}
-          dir={getDirection(bgt.lang)}
-        >
-          <ReactMarkdown>{definition || ''}</ReactMarkdown>
+        <div className={styles.definition} dir={getDirection(bgt.lang)}>
+          <ReactMarkdown>{definition || ""}</ReactMarkdown>
         </div>
       ) : (
         <textarea

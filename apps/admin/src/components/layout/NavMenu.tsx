@@ -7,7 +7,7 @@ import LogoutBtn from "./LogoutBtn";
 
 interface Props {
   user: User;
-  handleLogout: () => Promise<void>
+  handleLogout: () => Promise<void>;
 }
 
 const NavMenu: FC<Props> = ({ user, handleLogout }) => {
@@ -32,7 +32,7 @@ const NavMenu: FC<Props> = ({ user, handleLogout }) => {
           {hasPermission(user.profile.roles, Permission.READ_DASHBOARD) && (
             <li className={styles.navItem}>
               <NavLink
-                to='/'
+                to="/"
                 className={styles.link}
                 onClick={() => setMenuOpen(false)}
               >
@@ -65,7 +65,10 @@ const NavMenu: FC<Props> = ({ user, handleLogout }) => {
             </li>
           )}
 
-          {hasPermission(user.profile.roles, Permission.MANAGE_VERSE_GROUPS) && (
+          {hasPermission(
+            user.profile.roles,
+            Permission.MANAGE_VERSE_GROUPS,
+          ) && (
             <li className={styles.navItem}>
               <NavLink
                 className={styles.link}
@@ -89,7 +92,10 @@ const NavMenu: FC<Props> = ({ user, handleLogout }) => {
             </li>
           )}
 
-          {hasPermission(user.profile.roles, Permission.UPDATE_GLOSSARY_TERM) && (
+          {hasPermission(
+            user.profile.roles,
+            Permission.UPDATE_GLOSSARY_TERM,
+          ) && (
             <li className={styles.navItem}>
               <NavLink
                 className={styles.link}

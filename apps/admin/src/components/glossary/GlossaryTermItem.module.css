@@ -3,18 +3,18 @@
   gap: 1rem;
   align-items: center;
   flex-wrap: wrap;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   background-color: var(--secondary);
 }
 
 .actions {
   margin-left: auto;
   display: flex;
-  gap: .4rem;
+  gap: 0.4rem;
 }
 
 .btn {
-  padding: .3rem .6rem;
+  padding: 0.3rem 0.6rem;
   font-family: amiri;
   color: var(--background);
   border: none;

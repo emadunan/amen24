@@ -12,10 +12,10 @@ const Featured: FC = () => {
   return (
     <div className={styles.featured}>
       <div className={styles.featuredContainer}>
-        {featured?.map(f => <FeaturedListItem key={f.id} featuredItem={f} />)}
+        {featured?.map((f) => <FeaturedListItem key={f.id} featuredItem={f} />)}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Featured
+export default Featured;

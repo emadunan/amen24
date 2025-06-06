@@ -1,4 +1,4 @@
-import styles from './LayoutCorners.module.css';
+import styles from "./LayoutCorners.module.css";
 
 const LayoutCorners = () => {
   return (
@@ -8,7 +8,7 @@ const LayoutCorners = () => {
       <div className={`${styles.corner} ${styles.bottomLeft}`} />
       <div className={`${styles.corner} ${styles.bottomRight}`} />
     </>
-  )
-}
+  );
+};
 
-export default LayoutCorners
+export default LayoutCorners;

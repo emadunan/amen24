@@ -17,7 +17,9 @@
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   border: 1px solid transparent;
 }
 
@@ -26,7 +28,7 @@
   border-color: var(--accent);
 }
 
-.checkboxLabel input[type='checkbox'] {
+.checkboxLabel input[type="checkbox"] {
   accent-color: var(--accent);
   cursor: pointer;
 }

@@ -1,12 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { authApi } from './authApi'
-import { verseApi } from './verseApi';
-import { profileApi } from './profileApi';
+import { configureStore } from "@reduxjs/toolkit";
+import { authApi } from "./authApi";
+import { verseApi } from "./verseApi";
+import { profileApi } from "./profileApi";
 import { featuredApi } from "./featuredApi";
-import { auditingApi } from './auditingApi';
-import { glossaryApi } from './glossaryApi';
-import { libreTranslateApi } from './libreTranslateApi';
-import { quotaTrackerApi } from './quotaTrackerApi';
+import { auditingApi } from "./auditingApi";
+import { glossaryApi } from "./glossaryApi";
+import { libreTranslateApi } from "./libreTranslateApi";
+import { quotaTrackerApi } from "./quotaTrackerApi";
 
 export const MakeStore = () => {
   const store = configureStore({
@@ -29,7 +29,7 @@ export const MakeStore = () => {
         .concat(verseApi.middleware)
         .concat(auditingApi.middleware)
         .concat(quotaTrackerApi.middleware)
-        .concat(libreTranslateApi.middleware)
+        .concat(libreTranslateApi.middleware),
   });
 
   return store;
