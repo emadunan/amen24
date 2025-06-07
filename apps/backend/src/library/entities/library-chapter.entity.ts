@@ -1,18 +1,11 @@
 // library-chapter.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Index } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { LibraryBook } from './library-book.entity';
 
 @Entity()
 export class LibraryChapter {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column()
-  @Index()
-  bookId: string;
-
-  @ManyToOne(() => LibraryBook, book => book.chapters, { onDelete: 'CASCADE' })
-  book: LibraryBook;
 
   @Column({ type: 'varchar', length: 255 })
   title: string;
@@ -25,4 +18,7 @@ export class LibraryChapter {
 
   @Column({ type: 'text' })
   normalizedContent: string; // Raw or HTML-formatted text
+  
+  @ManyToOne(() => LibraryBook, book => book.chapters, { onDelete: 'CASCADE' })
+  book: LibraryBook;
 }

@@ -11,3 +11,4 @@ export * from "./GlossaryCategory.enum";
 export * from "./ApprovalStatus.enum";
 export * from "./FeaturedPosition.enum";
 export * from "./Denomination.enum";
+export * from "./BookCategory.enum";

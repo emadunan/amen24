@@ -1,14 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { LibraryService } from './library.service';
-import { CreateLibraryDto } from './dto/create-library-book.dto';
-import { UpdateLibraryDto } from './dto/update-library-book.dto';
+import { CreateLibraryBookDto } from './dto/create-library-book.dto';
+import { UpdateLibraryBookDto } from './dto/update-library-book.dto';
 
 @Controller('library')
 export class LibraryController {
   constructor(private readonly libraryService: LibraryService) { }
 
   @Post()
-  create(@Body() createLibraryDto: CreateLibraryDto) {
+  create(@Body() createLibraryDto: CreateLibraryBookDto) {
     return this.libraryService.create(createLibraryDto);
   }
 
@@ -23,7 +23,7 @@ export class LibraryController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLibraryDto: UpdateLibraryDto) {
+  update(@Param('id') id: string, @Body() updateLibraryDto: UpdateLibraryBookDto) {
     return this.libraryService.update(+id, updateLibraryDto);
   }
 

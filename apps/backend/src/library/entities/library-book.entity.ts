@@ -1,9 +1,7 @@
 // library-book.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { LibraryChapter } from './library-chapter.entity';
-import { Lang } from '@amen24/shared';
-import { Denomination } from '@amen24/shared';
-import { Church } from '@amen24/shared';
+import { Lang, Denomination, Church, BookCategory } from '@amen24/shared';
 
 @Entity()
 export class LibraryBook {
@@ -20,7 +18,7 @@ export class LibraryBook {
   description: string;
 
   @Column({ type: 'varchar', length: 100, nullable: true })
-  category: string; // e.g., Theology, Biography, Devotional
+  category: BookCategory; // e.g., Theology, Biography, Devotional
 
   @Column({ type: 'varchar', length: 100, nullable: true })
   denomination: Denomination; // e.g., Catholic, Orthodox, Protestant
