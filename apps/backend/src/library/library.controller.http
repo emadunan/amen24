@@ -1,0 +1,25 @@
+### Create library book
+POST http://localhost:5000/api/library
+Content-Type: application/json
+
+{
+  "title": "test book",
+  "author": "Emad Younan",
+  "description": "loremadsa dfjkdsnfkjsdnfk djs",
+  "category": "biblical-studies",
+  "denomination": "non-denominational",
+  "lang": "ar",
+  "year": 2019
+}
+
+### Create library chapter
+POST http://localhost:5000/api/library/chapter
+Content-Type: application/json
+
+{
+  "title": "Chapter 1",
+  "order": 2,
+  "lang": "en",
+  "content": "Chapter one content",
+  "bookId": "256b770a-6280-498f-b639-2e5be41e8940"
+}
