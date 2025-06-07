@@ -28,6 +28,7 @@ import joiConfig from './_config/joi.config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { createKeyv } from '@keyv/redis';
 import { Keyv } from 'keyv';
+import { LibraryModule } from './library/library.module';
 
 @Module({
   imports: [
@@ -79,6 +80,7 @@ import { Keyv } from 'keyv';
     LibreTranslateModule,
     OpenAiModule,
     QuotaTrackerModule,
+    LibraryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
