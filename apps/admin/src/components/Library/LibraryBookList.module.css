@@ -1,0 +1,15 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+  background-color: var(--background);
+  min-height: 100vh;
+}
+
+/* Optional: Center when few items */
+@media (min-width: 768px) {
+  .grid {
+    justify-content: center;
+  }
+}

@@ -1,4 +1,3 @@
-// library-book.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { LibraryChapter } from './library-chapter.entity';
 import { Lang, Denomination, Church, BookCategory } from '@amen24/shared';
@@ -10,6 +9,9 @@ export class LibraryBook {
 
   @Column({ type: 'varchar', length: 255 })
   title: string;
+
+  @Column({ type: 'varchar', length: 255, unique: true })
+  slug: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   author: string;

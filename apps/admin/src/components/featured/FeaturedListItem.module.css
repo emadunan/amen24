@@ -30,6 +30,8 @@
 
 .positionSelect {
   cursor: pointer;
+  margin: 0;
+  height: 2.2rem;
 }
 
 .openButton {
@@ -45,6 +47,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 2.2rem;
+  font-weight: bold;
 }
 
 .openButton:hover {

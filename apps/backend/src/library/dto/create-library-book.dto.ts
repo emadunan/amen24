@@ -9,6 +9,9 @@ export class CreateLibraryBookDto {
   author: string;
 
   @IsString()
+  slug: string;
+
+  @IsString()
   description: string;
 
   @IsEnum(BookCategory)

@@ -13,3 +13,5 @@ export * from "./VerseResult.interface";
 export * from "./AuditingRecord.interface";
 export * from "./BibleGlossary.interface";
 export * from "./BibleGlossaryTranslation.interface";
+export * from "./LibraryBook.interface";
+export * from "./LibraryChapter.interface";

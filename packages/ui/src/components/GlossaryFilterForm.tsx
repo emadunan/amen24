@@ -73,7 +73,7 @@ export const GlossaryFilterForm: React.FC<Props> = ({
               onChange={onChapterChange}
               value={chapter ?? ""}
             >
-              <option value=""></option>
+              <option value="">All</option>
               {Array.from(
                 { length: BookMap[bookKey as BookKey].len },
                 (_, i) => (
@@ -86,13 +86,15 @@ export const GlossaryFilterForm: React.FC<Props> = ({
           )}
         </>
       )}
-      <button className={styles.button} type="button" onClick={onReset}>
-        <FaSync />
-      </button>
-      <button className={styles.button} type="submit">
-        <FaFilter />
-        {t("glossary.filter")}
-      </button>
+      <div className={styles.buttonGroup}>
+        <button className={styles.button} type="button" onClick={onReset}>
+          <FaSync />
+        </button>
+        <button className={styles.button} type="submit">
+          <FaFilter />
+          {t("glossary.filter")}
+        </button>
+      </div>
     </form>
   );
 };

@@ -1,6 +1,6 @@
 import styles from "./GlossaryTermItem.module.css";
 import { ApprovalStatus, BibleGlossary, UserRole } from "@amen24/shared";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import React from "react";
 import { ApprovalIcon } from "@amen24/ui";
 import { useUpdateTermMutation } from "../../store/glossaryApi";
@@ -24,12 +24,13 @@ const GlossaryTermItem: React.FC<Props> = ({ item }) => {
 
   return (
     <div className={styles.item}>
-      <NavLink
+      <Link
+        target="_blank"
         to={`${item.slug}`}
         className={`${styles.btn} ${styles.openBtn}`}
       >
         /{item.slug}
-      </NavLink>
+      </Link>
 
       <p>[{item.native}]</p>
       <p> &mdash; {item.category}</p>

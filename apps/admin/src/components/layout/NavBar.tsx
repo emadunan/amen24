@@ -48,6 +48,12 @@ const NavBar: FC<Props> = ({ user, handleLogout }) => {
         </li>
       )}
 
+      {hasPermission(user.profile.roles, Permission.UPDATE_GLOSSARY_TERM) && (
+        <li className={styles.listItem}>
+          <NavLink to={`/library`}>Library</NavLink>
+        </li>
+      )}
+
       <LogoutBtn onLogout={handleLogout} />
     </ul>
   );
