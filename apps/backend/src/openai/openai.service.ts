@@ -21,7 +21,7 @@ export class OpenAiService {
     this.openai = new OpenAI({ apiKey });
   }
 
-  async generateDefinition(slug: string, term: string, native: string, useCache = false): Promise<string> {
+  async generateDefinition(slug: string, term: string, native: string, verseRef: string, useCache = false): Promise<string> {
     const cacheKey = `bible:term:${slug}`;
 
     if (useCache) {
@@ -50,11 +50,15 @@ export class OpenAiService {
       },
       {
         role: 'user',
-        content: `عرّف المصطلح الكتابي "${term}"، والذي يُقابله في اللغة الأصلية "${native}"، وفقًا للتعليمات السابقة.`
+        content: [
+          `عرّف المصطلح الكتابي "${term}"، والذي يُقابله في اللغة الأصلية "${native}"، وفقًا للتعليمات السابقة.`,
+          `المصطلح مذكور في الآية التالية:`,
+          ``,
+          `${verseRef}`,
+          `استخدم هذه الآية لتحديد المعنى المقصود للمصطلح ضمن سياقه الكتابي الصحيح.`
+        ].join('\n')
       }
     ];
-
-    console.log(messages);
 
     try {
       // 1. Check quota before making call

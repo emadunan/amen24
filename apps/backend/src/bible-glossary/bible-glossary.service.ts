@@ -162,8 +162,11 @@ export class BibleGlossaryService {
   async findOne(slug: string) {
     const glossary = await this.glossaryRepo
       .createQueryBuilder('glossary')
-      .leftJoinAndSelect('glossary.verses', 'verse')
       .leftJoinAndSelect('glossary.translations', 'translation')
+      .leftJoinAndSelect('glossary.verses', 'verse')
+      .leftJoinAndSelect('verse.chapter', 'chapter')
+      .leftJoinAndSelect('chapter.book', 'book')
+      .leftJoinAndSelect('verse.verseTranslations', 'verseTranslation')
       .where('glossary.slug = :slug', { slug })
       .orderBy('translation.lang', 'ASC')
       .getOne();
@@ -212,7 +215,7 @@ export class BibleGlossaryService {
     await this.glossaryRepo.remove(glossary);
   }
 
-  async createAiDefinition(slug: string, term: string, native: string, useCache: boolean): Promise<string> {
-    return this.openAi.generateDefinition(slug, term, native, useCache);
+  async createAiDefinition(slug: string, term: string, native: string, verseRef: string, useCache: boolean): Promise<string> {
+    return this.openAi.generateDefinition(slug, term, native, verseRef, useCache);
   }
 }

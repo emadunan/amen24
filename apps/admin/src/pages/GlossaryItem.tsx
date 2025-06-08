@@ -11,6 +11,8 @@ import GlossaryTermDesc from "../components/glossary/GlossaryTermDesc";
 import { showToast } from "@amen24/ui";
 import {
   ApprovalStatus,
+  BookKey,
+  BookMap,
   GlossaryCategory,
   Lang,
   UserRole,
@@ -23,6 +25,20 @@ const GlossaryItem: React.FC = () => {
   const slug = params.slug;
 
   const { data: term } = useGetOneTermQuery(slug || "");
+
+  const verseRef = React.useMemo(() => {
+    if (!term?.verses?.length) return null;
+
+    const verse = term.verses[0];
+    const arabicVerse = verse.verseTranslations.find(v => v.lang === Lang.ARABIC);
+    const bookKey = verse.chapter.book.bookKey as BookKey;
+    const bookTitleAr = BookMap[bookKey]?.title?.ar || bookKey;
+
+    if (!arabicVerse?.textDiacritized) return null;
+
+    return `${arabicVerse.textDiacritized} (${bookTitleAr} ${verse.chapter.num} : ${verse.num})`;
+  }, [term]);
+
   const [updateTerm, _result] = useUpdateTermMutation();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -123,6 +139,7 @@ const GlossaryItem: React.FC = () => {
             slug={term.slug}
             native={term.native}
             bgt={bgt}
+            verseRef={verseRef ?? ''}
           />
         ))}
       </div>

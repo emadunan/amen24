@@ -19,11 +19,12 @@ import ReactMarkdown from "react-markdown";
 interface Props {
   slug: string;
   native: string;
+  verseRef: string;
   arabicText: string;
   bgt: BibleGlossaryTranslation;
 }
 
-const GlossaryTermDesc: React.FC<Props> = ({ slug, native, arabicText, bgt }) => {
+const GlossaryTermDesc: React.FC<Props> = ({ slug, native, verseRef, arabicText, bgt }) => {
   const { t } = useTranslation();
   const [updateTranslation, _translationResult] =
     useUpdateTranslationMutation();
@@ -71,6 +72,7 @@ const GlossaryTermDesc: React.FC<Props> = ({ slug, native, arabicText, bgt }) =>
       slug,
       term,
       native,
+      verseRef,
       useCache,
     }).unwrap();
 
