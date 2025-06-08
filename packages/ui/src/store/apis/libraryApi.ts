@@ -7,11 +7,11 @@ export const createLibraryApi = (baseUrl: string) =>
     tagTypes: ["LibraryBook"],
     baseQuery: createBaseQueryWithReauth(baseUrl, "library"),
     endpoints: (builder) => ({
-      createLibraryBook: builder.mutation({
-        query: (body) => ({
+      createLibraryBook: builder.mutation<any, FormData>({
+        query: (formData) => ({
           method: "POST",
           url: ``,
-          body,
+          body: formData
         })
       }),
       getLibraryBooks: builder.query({

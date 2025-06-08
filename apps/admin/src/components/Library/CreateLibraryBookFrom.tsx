@@ -40,9 +40,24 @@ const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    createBook(form);
+    const formData = new FormData();
+    formData.append('title', form.title);
+    formData.append('author', form.author);
+    formData.append('description', form.description);
+    formData.append('category', form.category);
+    formData.append('denomination', form.denomination);
+    formData.append('lang', form.lang);
+    formData.append('year', form.year);
+    formData.append('approvalStatus', form.approvalStatus);
+
+    if (form.cover) {
+      formData.append('cover', form.cover);
+    }
+
+    await createBook(formData);
     onToggleMode();
   };
+
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>

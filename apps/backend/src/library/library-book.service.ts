@@ -10,12 +10,14 @@ export class LibraryBookService {
   constructor(@InjectRepository(LibraryBook) private libraryBookRepo: Repository<LibraryBook>) { }
 
   async create(dto: CreateLibraryBookDto) {
-    dto.slug = dto.title.toLowerCase().split(' ').join('-');
-
     const book = this.libraryBookRepo.create(dto);
     return this.libraryBookRepo.save(book);
   }
-
+  
+  async checkByTitle(title: string) {
+    return await this.libraryBookRepo.existsBy({ title });
+  }
+  
   findAll() { }
   findOne(id: string) { }
   update(id: string, dto: UpdateLibraryBookDto) { }
