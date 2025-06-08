@@ -1,4 +1,4 @@
-import { BookCategory, Church, Denomination, Lang } from "@amen24/shared";
+import { ApprovalStatus, BookCategory, Church, Denomination, Lang } from "@amen24/shared";
 import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateLibraryBookDto {
@@ -9,6 +9,7 @@ export class CreateLibraryBookDto {
   author: string;
 
   @IsString()
+  @IsOptional()
   slug: string;
 
   @IsString()
@@ -27,7 +28,6 @@ export class CreateLibraryBookDto {
   @IsEnum(Lang)
   lang: Lang;
 
-  @IsNumber()
   @IsOptional()
   year: number;
 }

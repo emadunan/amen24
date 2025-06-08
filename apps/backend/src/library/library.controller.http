@@ -8,8 +8,25 @@ Content-Type: application/json
   "description": "loremadsa dfjkdsnfkjsdnfk djs",
   "category": "biblical-studies",
   "denomination": "non-denominational",
+  "approvalStatus": "pending",
   "lang": "ar",
   "year": 2019
+}
+
+### Create library book test
+POST http://localhost:5000/api/library
+Content-Type: application/json
+
+{
+  "author": "sadasd",
+  "category": "church-history",
+  "cover": null,
+  "denomination": "catholic",
+  "description": "sajkdjaksas",
+  "approvalStatus": "pending",
+  "lang": "hi",
+  "title": "sjhdsa",
+  "year": "12"
 }
 
 ### Create library chapter

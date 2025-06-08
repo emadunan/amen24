@@ -1,19 +1,26 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { BookCategory, Denomination, Lang } from '@amen24/shared';
+import { ApprovalStatus, BookCategory, Denomination, Lang } from '@amen24/shared';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './CreateLibraryBookFrom.module.css';
+import { useCreateLibraryBookMutation } from '../../store/libraryApi';
 
-const CreateLibraryBookForm = () => {
+interface Props {
+  onToggleMode: () => void
+}
+
+const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
   const [form, setForm] = useState({
     title: '',
     author: '',
     description: '',
     category: '',
     denomination: '',
-    church: '',
-    language: 'en',
+    lang: 'en',
     year: '',
+    approvalStatus: ApprovalStatus.Pending,
     cover: null as File | null
   });
+
+  const [createBook] = useCreateLibraryBookMutation();
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -30,9 +37,11 @@ const CreateLibraryBookForm = () => {
     setPreviewUrl(file ? URL.createObjectURL(file) : null);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Submitting book form', form);
+
+    createBook(form);
+    onToggleMode();
   };
 
   return (
@@ -90,8 +99,8 @@ const CreateLibraryBookForm = () => {
       </select>
 
       <select
-        name="language"
-        value={form.language}
+        name="lang"
+        value={form.lang}
         onChange={handleChange}
         required
       >
@@ -102,7 +111,6 @@ const CreateLibraryBookForm = () => {
           </option>
         ))}
       </select>
-
 
       <input
         name="year"
@@ -118,6 +126,7 @@ const CreateLibraryBookForm = () => {
         onChange={handleCoverChange}
         className={styles.fileInput}
       />
+
       {previewUrl && (
         <img src={previewUrl} alt="Preview" className={styles.preview} />
       )}

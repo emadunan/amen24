@@ -7,6 +7,7 @@ import { auditingApi } from "./auditingApi";
 import { glossaryApi } from "./glossaryApi";
 import { libreTranslateApi } from "./libreTranslateApi";
 import { quotaTrackerApi } from "./quotaTrackerApi";
+import { libraryApi } from "./libraryApi";
 
 export const MakeStore = () => {
   const store = configureStore({
@@ -15,6 +16,7 @@ export const MakeStore = () => {
       [verseApi.reducerPath]: verseApi.reducer,
       [profileApi.reducerPath]: profileApi.reducer,
       [glossaryApi.reducerPath]: glossaryApi.reducer,
+      [libraryApi.reducerPath]: libraryApi.reducer,
       [featuredApi.reducerPath]: featuredApi.reducer,
       [auditingApi.reducerPath]: auditingApi.reducer,
       [quotaTrackerApi.reducerPath]: quotaTrackerApi.reducer,
@@ -25,6 +27,7 @@ export const MakeStore = () => {
         .concat(authApi.middleware)
         .concat(profileApi.middleware)
         .concat(glossaryApi.middleware)
+        .concat(libraryApi.middleware)
         .concat(featuredApi.middleware)
         .concat(verseApi.middleware)
         .concat(auditingApi.middleware)

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { LibraryChapter } from './library-chapter.entity';
-import { Lang, Denomination, Church, BookCategory } from '@amen24/shared';
+import { Lang, Denomination, Church, BookCategory, ApprovalStatus } from '@amen24/shared';
 
 @Entity()
 export class LibraryBook {
@@ -33,6 +33,9 @@ export class LibraryBook {
 
   @Column({ type: 'int', nullable: true })
   year: number;
+
+  @Column({ type: 'text', default: ApprovalStatus.Pending })
+  approvalStatus: ApprovalStatus;
 
   @OneToMany(() => LibraryChapter, chapter => chapter.book, { cascade: true })
   chapters: LibraryChapter[];
