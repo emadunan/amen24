@@ -121,6 +121,57 @@ a {
   border: solid 1px var(--gray);
 }
 
+label {
+  display: block;
+  font-weight: 600;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid var(--secondary);
+  border-radius: 2px;
+  background-color: var(--min);
+  color: var(--text);
+  font-size: 1rem;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: var(--background-hover);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 6rem;
+  font-family: inherit;
+}
+
+button.submit {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--primary);
+  color: var(--min);
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+button.submit:hover {
+  background-color: var(--primary-hover);
+}
+
 @font-face {
   font-family: "Amiri";
   src: url("./assets/fonts/Amiri/Amiri-Regular.ttf") format("truetype");

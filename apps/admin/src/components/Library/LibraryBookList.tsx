@@ -18,7 +18,9 @@ const LibraryBookList: React.FC = () => {
           author={book.author}
           category={book.category}
           coverImageTitle={book.slug}
-          onClick={() => {navigate(`/library/${book.slug}`)}}
+          onClick={() => {
+            navigate(`/library/${book.slug}`);
+          }}
         />
       ))}
     </div>

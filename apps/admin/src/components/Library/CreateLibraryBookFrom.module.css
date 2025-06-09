@@ -93,35 +93,3 @@ button.submit:hover {
   border-radius: 6px;
   border: 1px solid var(--secondary);
 }
-
-@media (prefers-color-scheme: dark) {
-  .form {
-    background-color: var(--background);
-    color: var(--text);
-    box-shadow: 0 0 8px rgba(var(--min-rgb), 0.15);
-  }
-
-  input,
-  textarea,
-  select {
-    background-color: var(--min);
-    border-color: var(--secondary);
-    color: var(--text);
-  }
-
-  input:focus,
-  textarea:focus,
-  select:focus {
-    border-color: var(--primary);
-    background-color: var(--background-hover);
-  }
-
-  button.submit {
-    background-color: var(--primary);
-    color: var(--min);
-  }
-
-  button.submit:hover {
-    background-color: var(--primary-hover);
-  }
-}

@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.toggleWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.toggleButton {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: 2px solid var(--primary);
+  background-color: var(--secondary);
+  color: var(--primary);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 2px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.toggleButton:hover {
+  background-color: var(--secondary-hover);
+}
