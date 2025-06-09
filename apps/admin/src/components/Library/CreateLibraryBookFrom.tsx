@@ -1,23 +1,28 @@
-import { ApprovalStatus, BookCategory, Denomination, Lang } from '@amen24/shared';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import styles from './CreateLibraryBookFrom.module.css';
-import { useCreateLibraryBookMutation } from '../../store/libraryApi';
+import {
+  ApprovalStatus,
+  BookCategory,
+  Denomination,
+  Lang,
+} from "@amen24/shared";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import styles from "./CreateLibraryBookFrom.module.css";
+import { useCreateLibraryBookMutation } from "../../store/libraryApi";
 
 interface Props {
-  onToggleMode: () => void
+  onToggleMode: () => void;
 }
 
 const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
   const [form, setForm] = useState({
-    title: '',
-    author: '',
-    description: '',
-    category: '',
-    denomination: '',
-    lang: 'en',
-    year: '',
+    title: "",
+    author: "",
+    description: "",
+    category: "",
+    denomination: "",
+    lang: "en",
+    year: "",
     approvalStatus: ApprovalStatus.Pending,
-    cover: null as File | null
+    cover: null as File | null,
   });
 
   const [createBook] = useCreateLibraryBookMutation();
@@ -25,7 +30,7 @@ const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -33,7 +38,7 @@ const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
 
   const handleCoverChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    setForm(prev => ({ ...prev, cover: file }));
+    setForm((prev) => ({ ...prev, cover: file }));
     setPreviewUrl(file ? URL.createObjectURL(file) : null);
   };
 
@@ -41,23 +46,22 @@ const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('title', form.title);
-    formData.append('author', form.author);
-    formData.append('description', form.description);
-    formData.append('category', form.category);
-    formData.append('denomination', form.denomination);
-    formData.append('lang', form.lang);
-    formData.append('year', form.year);
-    formData.append('approvalStatus', form.approvalStatus);
+    formData.append("title", form.title);
+    formData.append("author", form.author);
+    formData.append("description", form.description);
+    formData.append("category", form.category);
+    formData.append("denomination", form.denomination);
+    formData.append("lang", form.lang);
+    formData.append("year", form.year);
+    formData.append("approvalStatus", form.approvalStatus);
 
     if (form.cover) {
-      formData.append('cover', form.cover);
+      formData.append("cover", form.cover);
     }
 
     await createBook(formData);
     onToggleMode();
   };
-
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
@@ -94,7 +98,7 @@ const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
         <option value="">Select Category</option>
         {Object.entries(BookCategory).map(([key, val]) => (
           <option key={key} value={val}>
-            {key.replace(/([A-Z])/g, ' $1').trim()}
+            {key.replace(/([A-Z])/g, " $1").trim()}
           </option>
         ))}
       </select>
@@ -108,17 +112,12 @@ const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
         <option value="">Select Denomination</option>
         {Object.entries(Denomination).map(([key, val]) => (
           <option key={key} value={val}>
-            {key.replace(/([A-Z])/g, ' $1').trim()}
+            {key.replace(/([A-Z])/g, " $1").trim()}
           </option>
         ))}
       </select>
 
-      <select
-        name="lang"
-        value={form.lang}
-        onChange={handleChange}
-        required
-      >
+      <select name="lang" value={form.lang} onChange={handleChange} required>
         <option value="">Select Language</option>
         {Object.entries(Lang).map(([key, val]) => (
           <option key={key} value={val}>
@@ -146,7 +145,9 @@ const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
         <img src={previewUrl} alt="Preview" className={styles.preview} />
       )}
 
-      <button type="submit" className={styles.submit}>Create</button>
+      <button type="submit" className={styles.submit}>
+        Create
+      </button>
     </form>
   );
 };

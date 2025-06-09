@@ -3,7 +3,5 @@ import { apiUrl } from "../constants";
 
 export const libraryApi = createLibraryApi(apiUrl);
 
-export const {
-  useGetLibraryBooksQuery,
-  useCreateLibraryBookMutation
-} = libraryApi;
+export const { useGetLibraryBooksQuery, useCreateLibraryBookMutation } =
+  libraryApi;

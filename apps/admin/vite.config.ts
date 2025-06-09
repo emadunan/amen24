@@ -19,7 +19,7 @@ export default defineConfig({
         manualChunks: {
           // React ecosystem
           react: ["react", "react-dom", "react-router-dom"],
-          
+
           // State management
           redux: ["@reduxjs/toolkit", "react-redux"],
 

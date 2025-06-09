@@ -24,7 +24,13 @@ interface Props {
   bgt: BibleGlossaryTranslation;
 }
 
-const GlossaryTermDesc: React.FC<Props> = ({ slug, native, verseRef, arabicText, bgt }) => {
+const GlossaryTermDesc: React.FC<Props> = ({
+  slug,
+  native,
+  verseRef,
+  arabicText,
+  bgt,
+}) => {
   const { t } = useTranslation();
   const [updateTranslation, _translationResult] =
     useUpdateTranslationMutation();

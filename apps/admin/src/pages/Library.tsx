@@ -6,7 +6,7 @@ import CreateLibraryBookForm from "../components/Library/CreateLibraryBookFrom";
 const Library: React.FC = () => {
   const [isCreateMode, setIsCreateMode] = useState(false);
 
-  const toggleMode = () => setIsCreateMode(prev => !prev);
+  const toggleMode = () => setIsCreateMode((prev) => !prev);
 
   return (
     <div className={styles.libraryContainer}>
@@ -17,7 +17,11 @@ const Library: React.FC = () => {
       </div>
 
       <div className={styles.content}>
-        {isCreateMode ? <CreateLibraryBookForm onToggleMode={toggleMode}/> : <LibraryBookList />}
+        {isCreateMode ? (
+          <CreateLibraryBookForm onToggleMode={toggleMode} />
+        ) : (
+          <LibraryBookList />
+        )}
       </div>
     </div>
   );

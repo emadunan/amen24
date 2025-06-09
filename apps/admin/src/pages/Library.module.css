@@ -20,7 +20,9 @@
   font-weight: bold;
   cursor: pointer;
   border-radius: 2px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .toggleButton:hover {

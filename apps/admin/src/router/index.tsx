@@ -12,6 +12,7 @@ import Blogs from "../pages/Blogs";
 import Library from "../pages/Library";
 import FeaturedItem from "../pages/FeaturedItem";
 import GlossaryItem from "../pages/GlossaryItem";
+import LibraryBook from "../pages/LibraryBook";
 
 const AppRoutes = () => {
   return (
@@ -29,6 +30,7 @@ const AppRoutes = () => {
           <Route path="/glossary/:slug" element={<GlossaryItem />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/library" element={<Library />} />
+          <Route path="/library/:slug" element={<LibraryBook />} />
         </Route>
       </Route>
     </Routes>

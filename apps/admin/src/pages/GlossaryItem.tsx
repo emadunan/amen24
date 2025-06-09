@@ -30,7 +30,9 @@ const GlossaryItem: React.FC = () => {
     if (!term?.verses?.length) return null;
 
     const verse = term.verses[0];
-    const arabicVerse = verse.verseTranslations.find(v => v.lang === Lang.ARABIC);
+    const arabicVerse = verse.verseTranslations.find(
+      (v) => v.lang === Lang.ARABIC,
+    );
     const bookKey = verse.chapter.book.bookKey as BookKey;
     const bookTitleAr = BookMap[bookKey]?.title?.ar || bookKey;
 
@@ -139,7 +141,7 @@ const GlossaryItem: React.FC = () => {
             slug={term.slug}
             native={term.native}
             bgt={bgt}
-            verseRef={verseRef ?? ''}
+            verseRef={verseRef ?? ""}
           />
         ))}
       </div>

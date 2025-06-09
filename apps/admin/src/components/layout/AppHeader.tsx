@@ -41,7 +41,8 @@ const AppHeader = () => {
               <NavBar handleLogout={handleLogout} user={user} />
             )
           ) : null}
-        </nav>)}
+        </nav>
+      )}
     </header>
   );
 };

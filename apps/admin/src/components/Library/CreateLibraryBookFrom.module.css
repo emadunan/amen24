@@ -33,7 +33,9 @@ select {
   background-color: var(--min);
   color: var(--text);
   font-size: 1rem;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 input:focus,
@@ -98,7 +100,7 @@ button.submit:hover {
     color: var(--text);
     box-shadow: 0 0 8px rgba(var(--min-rgb), 0.15);
   }
-  
+
   input,
   textarea,
   select {
@@ -106,19 +108,19 @@ button.submit:hover {
     border-color: var(--secondary);
     color: var(--text);
   }
-  
+
   input:focus,
   textarea:focus,
   select:focus {
     border-color: var(--primary);
     background-color: var(--background-hover);
   }
-  
+
   button.submit {
     background-color: var(--primary);
     color: var(--min);
   }
-  
+
   button.submit:hover {
     background-color: var(--primary-hover);
   }
