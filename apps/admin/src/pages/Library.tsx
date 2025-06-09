@@ -17,7 +17,7 @@ const Library: React.FC = () => {
       </div>
 
       <div className={styles.content}>
-        {isCreateMode ? <CreateLibraryBookForm onToggleMode={toggleMode}/> : <LibraryBookList books={[]} />}
+        {isCreateMode ? <CreateLibraryBookForm onToggleMode={toggleMode}/> : <LibraryBookList />}
       </div>
     </div>
   );

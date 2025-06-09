@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './LibraryBookList.module.css';
 import LibraryBookCard from './LibraryBookCard';
+import { useGetLibraryBooksQuery } from '../../store/libraryApi';
 
 export const dummyBooks = [
   {
@@ -84,22 +85,22 @@ interface Book {
   coverImageTitle: string;
 }
 
-interface BookCardListProps {
-  books: Book[];
-  onBookClick?: (bookId: string) => void;
-}
+interface BookCardListProps {}
 
-const LibraryBookList: React.FC<BookCardListProps> = ({ books, onBookClick }) => {
+const LibraryBookList: React.FC<BookCardListProps> = () => {
+  const { data: books } = useGetLibraryBooksQuery();
+  if (!books) return null;
+
   return (
     <div className={styles.grid}>
-      {dummyBooks.map(book => (
+      {books.map(book => (
         <LibraryBookCard
           key={book.id}
           title={book.title}
           author={book.author}
           category={book.category}
-          coverImageTitle={book.coverImageTitle}
-          onClick={() => onBookClick && onBookClick(book.id)}
+          coverImageTitle={book.slug}
+          onClick={() => {}}
         />
       ))}
     </div>

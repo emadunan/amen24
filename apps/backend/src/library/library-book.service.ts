@@ -18,7 +18,10 @@ export class LibraryBookService {
     return await this.libraryBookRepo.existsBy({ title });
   }
   
-  findAll() { }
+  async findAll() {
+    return await this.libraryBookRepo.find();
+  }
+  
   findOne(id: string) { }
   update(id: string, dto: UpdateLibraryBookDto) { }
   remove(id: string) { }

@@ -64,8 +64,8 @@ export class LibraryController {
   }
 
   @Get()
-  findAll() {
-    return this.libraryBookService.findAll();
+  async findAll() {
+    return await this.libraryBookService.findAll();
   }
 
   // @Get(':id')

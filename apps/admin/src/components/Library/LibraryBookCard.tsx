@@ -5,13 +5,12 @@ interface BookCardProps {
   title: string;
   author?: string;
   category?: string;
-  coverImageTitle: string; // used for image path /img/library-book-cover/<bookTitle>.jpg
+  coverImageTitle: string;
   onClick?: () => void;
 }
 
 const LibraryBookCard: React.FC<BookCardProps> = ({ title, author, category, coverImageTitle, onClick }) => {
-  // const coverImageUrl = `/img/library-book-cover/${encodeURIComponent(coverImageTitle)}.jpg`;
-  const coverImageUrl = `/img/lib-book-cover-fallback.jpg`;
+  const coverImageUrl = `http://localhost/img/library-book-covers/${encodeURIComponent(coverImageTitle)}.webp`;
 
   return (
     <div

@@ -1,5 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
+import { LibraryBook } from "@amen24/shared";
 
 export const createLibraryApi = (baseUrl: string) =>
   createApi({
@@ -14,7 +15,7 @@ export const createLibraryApi = (baseUrl: string) =>
           body: formData
         })
       }),
-      getLibraryBooks: builder.query({
+      getLibraryBooks: builder.query<LibraryBook[], void>({
         query: () => ({
           url: ``,
         }),
