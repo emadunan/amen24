@@ -78,14 +78,14 @@ export class LibraryController {
     return await this.libraryBookService.findOne(id);
   }
 
-  @Get('chapter/:id')
-  async findOneChapter(@Param('id') id: string) {
-    return await this.libraryChapterService.findOne(id);
-  }
-
   @Get('slug/:slug')
   async findOneBySlug(@Param('slug') slug: string) {
     return await this.libraryBookService.findOneBySlug(slug);
+  }
+
+  @Get('chapter/:id')
+  async findOneChapter(@Param('id') id: string) {
+    return await this.libraryChapterService.findOne(id);
   }
 
   @Patch(':id')

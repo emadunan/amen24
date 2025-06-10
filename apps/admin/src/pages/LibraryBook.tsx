@@ -12,6 +12,8 @@ const LibraryBook: React.FC = () => {
 
   const toggleMode = () => setIsCreateMode((prev) => !prev);
 
+  if (!slug) return null;
+
   return (
     <div>
       <div className={styles.header}>
@@ -23,7 +25,7 @@ const LibraryBook: React.FC = () => {
           </button>
         </div>
       </div>
-      {isCreateMode ? <CreateLibraryChapterForm /> : <LibraryChapterList />}
+      {isCreateMode ? <CreateLibraryChapterForm slug={slug} onToggle={toggleMode}/> : <LibraryChapterList slug={slug}/>}
     </div>
   );
 };

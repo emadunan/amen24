@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
-import { LibraryBook } from "@amen24/shared";
+import { LibraryBook, LibraryChapter } from "@amen24/shared";
 
 export const createLibraryApi = (baseUrl: string) =>
   createApi({
@@ -8,17 +8,49 @@ export const createLibraryApi = (baseUrl: string) =>
     tagTypes: ["LibraryBook"],
     baseQuery: createBaseQueryWithReauth(baseUrl, "library"),
     endpoints: (builder) => ({
-      createLibraryBook: builder.mutation<any, FormData>({
+      createLibraryBook: builder.mutation<LibraryBook, FormData>({
         query: (formData) => ({
           method: "POST",
           url: ``,
           body: formData
-        })
+        }),
+        invalidatesTags: ["LibraryBook"]
+      }),
+      createLibraryChapter: builder.mutation<LibraryChapter, Partial<LibraryChapter> & {slug: string}>({
+        query: (body) => ({
+          method: "POST",
+          url: `chapter`,
+          body
+        }),
+        invalidatesTags: ["LibraryBook"]
       }),
       getLibraryBooks: builder.query<LibraryBook[], void>({
         query: () => ({
           url: ``,
         }),
+        providesTags: ["LibraryBook"]
+      }),
+      getLibraryBook:builder.query<LibraryBook, string>({
+        query: (slug) => ({
+          url: `slug/${slug}`,
+        }),
+        providesTags: ["LibraryBook"]
+      }),
+      updateLibraryBook: builder.mutation<LibraryBook, Partial<LibraryBook>>({
+        query: (body) => ({
+          url: `${body.id}`,
+          method: "PATCH",
+          body,
+        }),
+        invalidatesTags: ["LibraryBook"]
+      }),
+      updateLibraryChapter: builder.mutation<LibraryChapter, Partial<LibraryChapter>>({
+        query: (body) => ({
+          url: `chapter/${body.id}`,
+          method: "PATCH",
+          body
+        }),
+        invalidatesTags: ["LibraryBook"]
       })
     }),
   });

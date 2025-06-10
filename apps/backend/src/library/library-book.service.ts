@@ -23,11 +23,16 @@ export class LibraryBookService {
   }
 
   async findOne(id: string) {
-    return await this.libraryBookRepo.findOneBy({ id })
+    return await this.libraryBookRepo.findOneBy({ id });
   }
 
   async findOneBySlug(slug: string) {
-    return await this.libraryBookRepo.findOneBy({ slug });
+    return await this.libraryBookRepo
+      .createQueryBuilder('book')
+      .leftJoinAndSelect('book.chapters', 'chapter')
+      .where('book.slug = :slug', { slug })
+      .orderBy('chapter.order', 'ASC')
+      .getOne();
   }
 
   async update(id: string, dto: UpdateLibraryBookDto) {

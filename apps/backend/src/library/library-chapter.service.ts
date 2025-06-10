@@ -5,13 +5,22 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { LibraryChapter } from './entities/library-chapter.entity';
 import { Repository } from 'typeorm';
 import { normalizeText } from '@amen24/shared';
+import { LibraryBookService } from './library-book.service';
 
 @Injectable()
 export class LibraryChapterService {
-  constructor(@InjectRepository(LibraryChapter) private libraryChapterRepo: Repository<LibraryChapter>) { }
+  constructor(
+    @InjectRepository(LibraryChapter) private libraryChapterRepo: Repository<LibraryChapter>,
+    private readonly libraryBookService: LibraryBookService,
+  ) { }
 
   async create(dto: CreateLibraryChapterDto) {
-    const normalizedContent = normalizeText(dto.content, dto.lang);
+    const book = await this.libraryBookService.findOneBySlug(dto.slug);
+
+    if(!book) throw new NotFoundException();
+
+    dto.book = book;
+    const normalizedContent = normalizeText(dto.content, book.lang);
     dto.normalizedContent = normalizedContent;
 
     const chapter = this.libraryChapterRepo.create(dto);
