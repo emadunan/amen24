@@ -68,18 +68,43 @@ export class LibraryController {
     return await this.libraryBookService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.LibraryBookService.findOne(+id);
-  // }
+  @Get('chapter')
+  async findAllChapters() {
+    return await this.libraryChapterService.findAll();
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() dto: UpdateLibraryBookDto) {
-  //   return this.LibraryBookService.update(+id, dto);
-  // }
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return await this.libraryBookService.findOne(id);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.LibraryBookService.remove(+id);
-  // }
+  @Get('chapter/:id')
+  async findOneChapter(@Param('id') id: string) {
+    return await this.libraryChapterService.findOne(id);
+  }
+
+  @Get('slug/:slug')
+  async findOneBySlug(@Param('slug') slug: string) {
+    return await this.libraryBookService.findOneBySlug(slug);
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() dto: UpdateLibraryBookDto) {
+    return await this.libraryBookService.update(id, dto);
+  }
+
+  @Patch('chapter/:id')
+  async updateChapter(@Param('id') id: string, @Body() dto: UpdateLibraryBookDto) {
+    return await this.libraryChapterService.update(id, dto);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return await this.libraryBookService.remove(id);
+  }
+
+  @Delete('chapter/:id')
+  async removeChapter(@Param('id') id: string) {
+    return await this.libraryChapterService.remove(id);
+  }
 }

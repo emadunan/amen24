@@ -1,0 +1,28 @@
+.button {
+  font-family: amiri;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.3rem 1rem;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.primary {
+  background-color: var(--primary);
+  color: var(--min);
+}
+
+.primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.secondary {
+  background-color: var(--secondary);
+  color: var(--text);
+}
+
+.secondary:hover {
+  background-color: var(--secondary-hover);
+}

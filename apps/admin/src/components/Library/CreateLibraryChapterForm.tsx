@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import styles from "./CreateLibraryChapterForm.module.css";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import Button from "../ui/Button";
 
 const CreateLibraryChapterForm: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -18,15 +19,16 @@ const CreateLibraryChapterForm: React.FC = () => {
     <div>
       <div className={styles.header}>
         <input
-          type="text"
-          className={styles.titleInput}
-          placeholder="Chapter Title"
-        />
-        <input
           type="number"
           className={styles.orderInput}
           placeholder="Order"
         />
+        <input
+          type="text"
+          className={styles.titleInput}
+          placeholder="Chapter Title"
+        />
+        <Button type="button" variant="primary" className={styles.save}>Save</Button>
       </div>
       <div className={styles.content} dir="rtl">
         <textarea onChange={handleContentChange} value={content} />

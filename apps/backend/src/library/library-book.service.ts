@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLibraryBookDto } from './dto/create-library-book.dto';
 import { UpdateLibraryBookDto } from './dto/update-library-book.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,16 +13,35 @@ export class LibraryBookService {
     const book = this.libraryBookRepo.create(dto);
     return this.libraryBookRepo.save(book);
   }
-  
+
   async checkByTitle(title: string) {
     return await this.libraryBookRepo.existsBy({ title });
   }
-  
+
   async findAll() {
     return await this.libraryBookRepo.find();
   }
-  
-  findOne(id: string) { }
-  update(id: string, dto: UpdateLibraryBookDto) { }
-  remove(id: string) { }
+
+  async findOne(id: string) {
+    return await this.libraryBookRepo.findOneBy({ id })
+  }
+
+  async findOneBySlug(slug: string) {
+    return await this.libraryBookRepo.findOneBy({ slug });
+  }
+
+  async update(id: string, dto: UpdateLibraryBookDto) {
+    const book = await this.libraryBookRepo.findOneBy({ id });
+    if (!book) throw new NotFoundException();
+
+    Object.assign(book, dto);
+    return await this.libraryBookRepo.save(book);
+  }
+
+  async remove(id: string) {
+    const book = await this.libraryBookRepo.findOneBy({ id });
+    if (!book) throw new NotFoundException();
+
+    return await this.libraryBookRepo.remove(book);
+  }
 }
