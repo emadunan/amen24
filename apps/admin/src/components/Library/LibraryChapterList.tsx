@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useGetLibraryBookQuery } from "../../store/libraryApi";
 import styles from "./LibraryChapterList.module.css";
-import Button from "../ui/Button";
+import { Link } from "react-router-dom";
 
 interface Props {
   slug: string;
@@ -10,7 +10,7 @@ interface Props {
 const LibraryChapterList: React.FC<Props> = ({ slug }) => {
   const { data } = useGetLibraryBookQuery(slug);
   const [selected, setSelected] = useState<string | undefined>(
-    data?.chapters.find((ch) => ch.order === 1)?.id
+    data?.chapters.find((ch) => ch.order === 1)?.id,
   );
 
   const handleChangeSelected = (id: string) => {
@@ -39,7 +39,11 @@ const LibraryChapterList: React.FC<Props> = ({ slug }) => {
       </aside>
 
       <main className={styles.content}>
-        <Button className={styles.editBtn}>Edit</Button>
+        {data?.chapters?.length && data.chapters.length >= 1 && (
+          <Link to={`/library/${slug}/${selected}`} className={styles.editBtn}>
+            Edit
+          </Link>
+        )}
         <h3 className={styles.chapterTitle}>{selectedChapter?.title}</h3>
         <article className={styles.chapterBody}>
           {selectedChapter?.content}

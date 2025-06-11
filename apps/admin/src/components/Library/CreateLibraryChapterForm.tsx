@@ -59,7 +59,14 @@ const CreateLibraryChapterForm: React.FC<Props> = ({ slug, onToggle }) => {
           onChange={handleTitleChange}
           value={title}
         />
-        <Button type="button" variant="primary" className={styles.save} onClick={onSave}>Save</Button>
+        <Button
+          type="button"
+          variant="primary"
+          className={styles.save}
+          onClick={onSave}
+        >
+          Save
+        </Button>
       </div>
       <div className={styles.content} dir="rtl">
         <textarea onChange={handleContentChange} value={content} />

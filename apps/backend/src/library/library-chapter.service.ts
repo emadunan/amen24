@@ -32,11 +32,11 @@ export class LibraryChapterService {
   }
 
   async findOne(id: string) {
-    return await this.libraryChapterRepo.findBy({ id });
+    return await this.libraryChapterRepo.findOneBy({ id });
   }
 
   async update(id: string, dto: UpdateLibraryChapterDto) {
-    const chapter = await this.libraryChapterRepo.findBy({ id });
+    const chapter = await this.libraryChapterRepo.findOneBy({ id });
     if (!chapter) throw new NotFoundException();
 
     Object.assign(chapter, dto);
@@ -44,9 +44,9 @@ export class LibraryChapterService {
   }
 
   async remove(id: string) {
-    const chapter = await this.libraryChapterRepo.findBy({ id });
+    const chapter = await this.libraryChapterRepo.findOneBy({ id });
     if (!chapter) throw new NotFoundException();
 
-    return await this.libraryChapterRepo.remove(chapter)
+    return await this.libraryChapterRepo.remove(chapter);
   }
 }

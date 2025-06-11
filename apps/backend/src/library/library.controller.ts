@@ -10,6 +10,7 @@ import * as multer from 'multer';
 import * as sharp from 'sharp';
 import { writeFile } from 'fs/promises';
 import { promises as fs } from 'fs';
+import { UpdateLibraryChapterDto } from './dto/update-library-chapter.dto';
 
 
 @Controller('library')
@@ -94,7 +95,7 @@ export class LibraryController {
   }
 
   @Patch('chapter/:id')
-  async updateChapter(@Param('id') id: string, @Body() dto: UpdateLibraryBookDto) {
+  async updateChapter(@Param('id') id: string, @Body() dto: UpdateLibraryChapterDto) {
     return await this.libraryChapterService.update(id, dto);
   }
 
