@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, BadRequestException, InternalServerErrorException, ConflictException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, BadRequestException, InternalServerErrorException, ConflictException, Put } from '@nestjs/common';
 import { LibraryBookService } from './library-book.service';
 import { CreateLibraryBookDto } from './dto/create-library-book.dto';
 import { UpdateLibraryBookDto } from './dto/update-library-book.dto';
@@ -84,6 +84,11 @@ export class LibraryController {
     return await this.libraryBookService.findOneBySlug(slug);
   }
 
+  @Get('chapter/order/:slug')
+  async getNextChapterOrder(@Param('slug') slug: string) {
+    return await this.libraryChapterService.getNextOrder(slug);
+  }
+
   @Get('chapter/:id')
   async findOneChapter(@Param('id') id: string) {
     return await this.libraryChapterService.findOne(id);
@@ -97,6 +102,12 @@ export class LibraryController {
   @Patch('chapter/:id')
   async updateChapter(@Param('id') id: string, @Body() dto: UpdateLibraryChapterDto) {
     return await this.libraryChapterService.update(id, dto);
+  }
+
+  @Put('chapter/order/:slug')
+  async changeChapterOrder(@Param('slug') slug: string, @Body() body: { chapterOrder: number, targetOrder: number }) {
+    const { chapterOrder, targetOrder } = body;
+    return await this.libraryChapterService.changeOrder(slug, chapterOrder, targetOrder);
   }
 
   @Delete(':id')

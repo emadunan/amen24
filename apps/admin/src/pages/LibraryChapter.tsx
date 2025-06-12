@@ -8,6 +8,7 @@ import {
   useCreateLibraryChapterMutation,
   useUpdateLibraryChapterMutation,
   useDeleteLibraryChapterMutation,
+  useGetLibraryChapterNextOrderQuery,
 } from "../store/libraryApi";
 import styles from "./LibraryChapter.module.css";
 import { showToast } from "@amen24/ui";
@@ -24,6 +25,9 @@ const LibraryChapter: React.FC = () => {
   const skip = !id || id === "create";
   const { data, isLoading } = useGetLibraryChapterQuery(id || "", { skip });
 
+  const skipGetNextorder = !id || id !== "create";
+  const { data: nextOrder } = useGetLibraryChapterNextOrderQuery(slug || '', { skip: skipGetNextorder });
+
   const [createChapter] = useCreateLibraryChapterMutation();
   const [updateChapter] = useUpdateLibraryChapterMutation();
   const [deleteChapter] = useDeleteLibraryChapterMutation();
@@ -35,6 +39,12 @@ const LibraryChapter: React.FC = () => {
       setContent(data.content ?? "");
     }
   }, [data]);
+
+  useEffect(() => {
+    if (id === "create" && nextOrder) {
+      setOrder(nextOrder);
+    }
+  }, [id, nextOrder]);
 
   const handleChange = {
     title: (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value),
@@ -88,24 +98,28 @@ const LibraryChapter: React.FC = () => {
           placeholder="Order"
           onChange={handleChange.order}
           value={order}
-          min={order ?? 1}
+          min={1}
+          disabled={id === "create"}
         />
+
         <Button
           type="button"
           variant="primary"
           className={styles.save}
           onClick={handleSubmit}
         >
-          Save
+          {id !== "create" ? "Save" : "Create"}
         </Button>
-        <Button
-          type="button"
-          variant="secondary"
-          className={styles.save}
-          onClick={handleDelete}
-        >
-          Delete
-        </Button>
+        {id !== "create" && (
+          <Button
+            type="button"
+            variant="secondary"
+            className={styles.save}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        )}
       </div>
 
       <div className={styles.content} dir="rtl">

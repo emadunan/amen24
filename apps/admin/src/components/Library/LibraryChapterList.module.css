@@ -1,84 +1,86 @@
 .container {
   display: flex;
-  gap: 2rem;
-  background-color: var(--background);
-  color: var(--text);
-  padding: 1.5rem;
-  border-radius: 2px;
-  box-shadow: 0 0 10px rgba(var(--max-rgb), 0.05);
-  font-family: amiri;
+  gap: 1rem;
+  height: 100%;
 }
 
 .sidebar {
-  width: 240px;
-  flex-shrink: 0;
   background-color: var(--min);
   padding: 1rem;
-  border-radius: 2px;
   border: 1px solid var(--secondary);
-  overflow-y: auto;
-  max-height: 80vh;
 }
 
 .sidebarHeading {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   margin-bottom: 1rem;
-  color: var(--primary);
+  font-weight: bold;
   text-align: center;
 }
 
 .chapterList {
+  width: 14.7rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 .chapterItem {
-  padding: 0.5rem 0.75rem;
-  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 1px solid var(--secondary);
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-bottom: 0.5rem;
+  user-select: none;
+  background-color: white;
+  transition: background 0.2s;
 }
 
 .chapterItem:hover {
-  background-color: var(--background-hover);
+  background-color: var(--background);
 }
 
 .active {
-  background-color: var(--primary);
-  color: var(--min);
+  background-color: var(--secondary);
   font-weight: bold;
 }
 
+.dragHandle {
+  cursor: grab;
+  padding: 4px;
+  user-select: none;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
 .content {
-  flex: 1;
-  padding: 1rem;
-  border-radius: 2px;
-  max-height: 80vh;
+  flex-grow: 1;
+  /* padding: 2rem; */
   overflow-y: auto;
   position: relative;
 }
 
 .editBtn {
-  position: absolute;
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
   background-color: var(--secondary);
-  padding: .1rem .6rem;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: 2px;
+  position: absolute;
   left: 1rem;
-  top: 0;
 }
 
 .editBtn:hover {
   background-color: var(--secondary-hover);
 }
 
-.chapterTitle {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: var(--primary);
-}
-
 .chapterBody {
-  font-size: 1.1rem;
-  line-height: 1.8;
+  background-color: #fff;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 2px;
 }

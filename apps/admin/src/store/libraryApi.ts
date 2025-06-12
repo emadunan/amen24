@@ -7,6 +7,8 @@ export const {
   useGetLibraryBookQuery,
   useGetLibraryBooksQuery,
   useGetLibraryChapterQuery,
+  useGetLibraryChapterNextOrderQuery,
+  useChangeLibraryChapterOrderMutation,
   useCreateLibraryBookMutation,
   useCreateLibraryChapterMutation,
   useUpdateLibraryChapterMutation,

@@ -49,6 +49,12 @@ export const createLibraryApi = (baseUrl: string) =>
         }),
         providesTags: ["LibraryBook"]
       }),
+      getLibraryChapterNextOrder: builder.query<number, string>({
+        query: (slug) => ({
+          url: `chapter/order/${slug}`,
+        }),
+        providesTags: ["LibraryBook"]
+      }),
       updateLibraryBook: builder.mutation<LibraryBook, Partial<LibraryBook>>({
         query: (body) => ({
           url: `${body.id}`,
@@ -88,6 +94,14 @@ export const createLibraryApi = (baseUrl: string) =>
           method: "DELETE",
         }),
         invalidatesTags: ["LibraryBook"]
-      })
+      }),
+      changeLibraryChapterOrder: builder.mutation<void, { slug: string, body: { chapterOrder: number, targetOrder: number } }>({
+        query: ({ slug, body }) => ({
+          url: `chapter/order/${slug}`,
+          method: "PUT",
+          body
+        }),
+        invalidatesTags: ["LibraryBook"]
+      }),
     }),
   });
