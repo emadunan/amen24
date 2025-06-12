@@ -7,11 +7,10 @@ export default defineConfig({
   resolve: {
     alias: {
       "@amen24/shared": path.resolve(__dirname, "../../packages/shared/"),
-      "@amen24/ui": path.resolve(__dirname, "../../packages/ui/"),
     },
   },
   optimizeDeps: {
-    include: ["@amen24/shared", "@amen24/ui"],
+    include: ["@amen24/shared"],
   },
   build: {
     rollupOptions: {

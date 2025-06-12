@@ -62,8 +62,14 @@
 
 .editBtn {
   position: absolute;
-  left: 0;
+  background-color: var(--secondary);
+  padding: .1rem .6rem;
+  left: 1rem;
   top: 0;
+}
+
+.editBtn:hover {
+  background-color: var(--secondary-hover);
 }
 
 .chapterTitle {

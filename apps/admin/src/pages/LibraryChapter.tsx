@@ -29,10 +29,6 @@ const LibraryChapter: React.FC = () => {
   const [deleteChapter] = useDeleteLibraryChapterMutation();
 
   useEffect(() => {
-    showToast("Test toast")
-  }, [])
-
-  useEffect(() => {
     if (data && data.id) {
       setTitle(data.title ?? "");
       setOrder(data.order ?? 1);
@@ -52,11 +48,12 @@ const LibraryChapter: React.FC = () => {
 
     if (id && id !== "create") {
       await updateChapter({ id, title, order, content }).unwrap();
+      showToast("Current Chapter has been updated!")
     } else {
       await createChapter({ slug, title, order, content }).unwrap();
+      showToast("New Chapter has been created!")
     }
 
-    showToast("New Chapter has been created!")
     navigate(`/library/${slug}`);
   };
 
