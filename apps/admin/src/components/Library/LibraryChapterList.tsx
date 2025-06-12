@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useGetLibraryBookQuery } from "../../store/libraryApi";
 import styles from "./LibraryChapterList.module.css";
 import { Link } from "react-router-dom";
+import Markdown from "react-markdown";
 
 interface Props {
   slug: string;
@@ -39,14 +40,13 @@ const LibraryChapterList: React.FC<Props> = ({ slug }) => {
       </aside>
 
       <main className={styles.content}>
-        {data?.chapters?.length && data.chapters.length >= 1 && (
+        {selected && (
           <Link to={`/library/${slug}/${selected}`} className={styles.editBtn}>
             Edit
           </Link>
         )}
-        <h3 className={styles.chapterTitle}>{selectedChapter?.title}</h3>
         <article className={styles.chapterBody}>
-          {selectedChapter?.content}
+          <Markdown>{selectedChapter?.content}</Markdown>
         </article>
       </main>
     </div>

@@ -75,5 +75,19 @@ export const createLibraryApi = (baseUrl: string) =>
         },
         invalidatesTags: ["LibraryBook"]
       }),
+      deleteLibraryBook: builder.mutation<void, string>({
+        query: (id) => ({
+          url: `${id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["LibraryBook"]
+      }),
+      deleteLibraryChapter: builder.mutation<void, string>({
+        query: (id) => ({
+          url: `chapter/${id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["LibraryBook"]
+      })
     }),
   });

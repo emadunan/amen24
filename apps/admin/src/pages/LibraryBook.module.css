@@ -1,19 +1,18 @@
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 1rem;
+  gap: .5rem;
 }
 
-.toggleWrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
+.title {
+  margin-right: auto;
 }
 
 .toggleButton {
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
-  border: 2px solid var(--primary);
+  border: 1px solid var(--primary);
   background-color: var(--secondary);
   color: var(--primary);
   font-weight: bold;

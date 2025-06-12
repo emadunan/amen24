@@ -1,17 +1,21 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/ui/Button";
 import {
   useGetLibraryChapterQuery,
   useCreateLibraryChapterMutation,
   useUpdateLibraryChapterMutation,
+  useDeleteLibraryChapterMutation,
 } from "../store/libraryApi";
 import styles from "./LibraryChapter.module.css";
+import { showToast } from "@amen24/ui";
 
 const LibraryChapter: React.FC = () => {
   const { slug, id } = useParams<{ slug?: string; id?: string }>();
+
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [order, setOrder] = useState(1);
@@ -21,12 +25,15 @@ const LibraryChapter: React.FC = () => {
   const { data, isLoading } = useGetLibraryChapterQuery(id || "", { skip });
 
   const [createChapter] = useCreateLibraryChapterMutation();
-  const [updateLibraryChapter] = useUpdateLibraryChapterMutation();
+  const [updateChapter] = useUpdateLibraryChapterMutation();
+  const [deleteChapter] = useDeleteLibraryChapterMutation();
+
+  useEffect(() => {
+    showToast("Test toast")
+  }, [])
 
   useEffect(() => {
     if (data && data.id) {
-      console.log("Fetched chapter:", data); // 🕵️‍♂️
-
       setTitle(data.title ?? "");
       setOrder(data.order ?? 1);
       setContent(data.content ?? "");
@@ -44,25 +51,26 @@ const LibraryChapter: React.FC = () => {
     if (!slug || !title.trim() || !content.trim() || order <= 0) return;
 
     if (id && id !== "create") {
-      console.log("UPDATE", id);
-      console.log(id, title, order, content);
-
-      try {
-        const res = await updateLibraryChapter({
-          id,
-          title,
-          order,
-          content,
-        }).unwrap();
-        console.log("✅ Success", res);
-      } catch (err) {
-        console.error("❌ Mutation failed", err);
-      }
+      await updateChapter({ id, title, order, content }).unwrap();
     } else {
-      console.log("CREATE", id);
       await createChapter({ slug, title, order, content }).unwrap();
     }
+
+    showToast("New Chapter has been created!")
+    navigate(`/library/${slug}`);
   };
+
+  async function handleDelete() {
+    if (!id || id === "create") return;
+
+    try {
+      await deleteChapter(id).unwrap();
+      showToast("Chapter has been deleted");
+      navigate(`/library/${slug}`);
+    } catch (err) {
+      console.error("❌ Failed to delete chapter", err);
+    }
+  }
 
   if (id && isLoading) return <p>Loading chapter...</p>;
 
@@ -92,6 +100,14 @@ const LibraryChapter: React.FC = () => {
           onClick={handleSubmit}
         >
           Save
+        </Button>
+        <Button
+          type="button"
+          variant="secondary"
+          className={styles.save}
+          onClick={handleDelete}
+        >
+          Delete
         </Button>
       </div>
 
