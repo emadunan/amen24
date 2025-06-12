@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./LibraryBook.module.css";
 import LibraryChapterList from "../components/Library/LibraryChapterList";
 import { useDeleteLibraryBookMutation, useGetLibraryBookQuery } from "../store/libraryApi";
@@ -10,6 +10,8 @@ const LibraryBook: React.FC = () => {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
 
+  const navigate = useNavigate();
+
   const skip = !params.slug;
   const { data } = useGetLibraryBookQuery(slug || '', { skip });
   const [deleteBook] = useDeleteLibraryBookMutation();
@@ -17,6 +19,7 @@ const LibraryBook: React.FC = () => {
   async function handleDelete() {
     if (!data?.id) return;
     await deleteBook(data.id).unwrap();
+    navigate(`/library`);
   }
 
   if (!slug) return null;
