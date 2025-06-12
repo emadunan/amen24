@@ -12,6 +12,7 @@ import {
 } from "../store/libraryApi";
 import styles from "./LibraryChapter.module.css";
 import { showToast } from "@amen24/ui";
+import BackLink from "../components/ui/BackLink";
 
 const LibraryChapter: React.FC = () => {
   const { slug, id } = useParams<{ slug?: string; id?: string }>();
@@ -83,7 +84,10 @@ const LibraryChapter: React.FC = () => {
 
   return (
     <div>
-      <h2 className={styles.slug}>{slug}</h2>
+      <div className={styles.titleContainer}>
+        <h3 className={styles.slug}>{slug}</h3>
+        <BackLink to={`/library/${slug}`}></BackLink>
+      </div>
       <div className={styles.header}>
         <input
           type="text"
@@ -91,15 +95,6 @@ const LibraryChapter: React.FC = () => {
           placeholder="Chapter Title"
           onChange={handleChange.title}
           value={title ?? ""}
-        />
-        <input
-          type="number"
-          className={styles.orderInput}
-          placeholder="Order"
-          onChange={handleChange.order}
-          value={order}
-          min={1}
-          disabled={id === "create"}
         />
 
         <Button

@@ -1,0 +1,17 @@
+.backLink {
+  position: relative;
+  top: 0;
+  left: 0;
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--accent);
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+.backLink:hover {
+  background-color: var(--accent-hover);
+  color: var(--min);
+}

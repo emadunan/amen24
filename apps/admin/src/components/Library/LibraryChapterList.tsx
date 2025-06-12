@@ -6,6 +6,7 @@ import styles from "./LibraryChapterList.module.css";
 import { useSensor, useSensors, PointerSensor, DndContext } from "@dnd-kit/core";
 import { useChangeLibraryChapterOrderMutation, useGetLibraryBookQuery } from "../../store/libraryApi";
 import { useSortable, SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import rehypeRaw from "rehype-raw";
 
 interface Props {
   slug: string;
@@ -58,9 +59,14 @@ const LibraryChapterList: React.FC<Props> = ({ slug }) => {
   const { data } = useGetLibraryBookQuery(slug);
   const [changeOrder] = useChangeLibraryChapterOrderMutation();
 
-  const [selected, setSelected] = useState<string | undefined>(
-    data?.chapters.find((ch) => ch.order === 1)?.id,
-  );
+  const [selected, setSelected] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (data?.chapters && !selected) {
+      const first = data.chapters.find((ch) => ch.order === 1);
+      if (first) setSelected(first.id);
+    }
+  }, [data, selected]);
 
   const [items, setItems] = useState<string[]>([]);
 
@@ -115,11 +121,7 @@ const LibraryChapterList: React.FC<Props> = ({ slug }) => {
                   id={ch!.id}
                   title={ch!.title}
                   isSelected={selected === ch!.id}
-                  onClick={() => {
-                    console.log("Clicked");
-
-                    setSelected(ch!.id)
-                  }}
+                  onClick={() => setSelected(ch!.id)}
                 />
               ))}
             </ul>
@@ -134,7 +136,7 @@ const LibraryChapterList: React.FC<Props> = ({ slug }) => {
           </Link>
         )}
         <article className={styles.chapterBody}>
-          <Markdown>{selectedChapter?.content}</Markdown>
+          <Markdown rehypePlugins={[rehypeRaw]}>{selectedChapter?.content}</Markdown>
         </article>
       </main>
     </div>
