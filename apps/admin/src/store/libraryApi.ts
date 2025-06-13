@@ -12,6 +12,7 @@ export const {
   useCreateLibraryBookMutation,
   useCreateLibraryChapterMutation,
   useUpdateLibraryChapterMutation,
+  useUpdateLibraryBookMutation,
   useDeleteLibraryBookMutation,
   useDeleteLibraryChapterMutation,
 } = libraryApi;

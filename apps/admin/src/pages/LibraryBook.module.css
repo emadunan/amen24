@@ -27,6 +27,43 @@
     transform 0.2s ease;
 }
 
-.toggleButton:hover {
+.createChapterLink:hover {
   background-color: var(--secondary-hover);
+}
+
+.editModeToggler {
+  height: 2rem;
+  border-radius: 2px;
+}
+
+/* Optional: transition wrapper if you use class toggle */
+.form {
+  margin: 2rem 0;
+  padding: 2rem;
+  background-color: var(--background-hover);
+  border-radius: 2px;
+
+  /* Smooth transition styles */
+  transition:
+    max-height 0.5s ease,
+    opacity 0.4s ease,
+    transform 0.4s ease;
+
+  overflow: hidden;
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 1000px;
+  /* Adjust based on expected form height */
+}
+
+/* Hidden state (e.g., add class `.collapsed` conditionally) */
+.form.collapsed {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  pointer-events: none;
 }

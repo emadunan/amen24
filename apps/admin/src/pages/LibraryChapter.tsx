@@ -11,8 +11,8 @@ import {
   useGetLibraryChapterNextOrderQuery,
 } from "../store/libraryApi";
 import styles from "./LibraryChapter.module.css";
-import { showToast } from "@amen24/ui";
 import BackLink from "../components/ui/BackLink";
+import { showToast } from "@amen24/ui";
 
 const LibraryChapter: React.FC = () => {
   const { slug, id } = useParams<{ slug?: string; id?: string }>();
@@ -62,7 +62,7 @@ const LibraryChapter: React.FC = () => {
       showToast("Current Chapter has been updated!")
     } else {
       await createChapter({ slug, title, order, content }).unwrap();
-      showToast("New Chapter has been created!")
+      showToast("New Chapter has been created!", "info")
     }
 
     navigate(`/library/${slug}`);

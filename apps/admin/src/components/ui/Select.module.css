@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.label {
+  font-size: 0.9rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  background-color: var(--min);
+  color: var(--text);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+}
+
+.select:hover {
+  border-color: var(--primary-hover);
+}
+
+.error {
+  border-color: var(--danger);
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: var(--danger);
+}
