@@ -45,9 +45,9 @@ const BibleGlossaryClient = () => {
 
   const handleReset = () => {
     setPage(1);
-    setQuery('');
-    setFilterTerm('');
-  }
+    setQuery("");
+    setFilterTerm("");
+  };
 
   return (
     <GlossaryContainer>

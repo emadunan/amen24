@@ -48,6 +48,14 @@ const NavBar: FC<Props> = ({ normalizedPath, isBookPath }) => {
       </li>
       <li className={styles.navItem}>
         <Link
+          className={`link ${normalizedPath === "/library" ? `${styles.active}` : ""}`}
+          href={"/library"}
+        >
+          <h3>{t("library.title")}</h3>
+        </Link>
+      </li>
+      <li className={styles.navItem}>
+        <Link
           className={`link ${normalizedPath === "/contact-us" ? `${styles.active}` : ""}`}
           href={"/contact-us"}
         >

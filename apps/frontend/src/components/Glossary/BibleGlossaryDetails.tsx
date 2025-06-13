@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "next/navigation";
 import styles from "./BibleGlossaryDetails.module.css";
 import GlossaryContainer from "./GlossaryContainer";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 
 const BibleGlossaryDetails: React.FC = () => {
   const params = useParams<{ slug: string }>();
@@ -24,7 +24,7 @@ const BibleGlossaryDetails: React.FC = () => {
           {term?.term} [{glossaryItem?.native}]
         </h3>
         <div>
-          <ReactMarkdown>{term?.definition || ''}</ReactMarkdown>
+          <ReactMarkdown>{term?.definition || ""}</ReactMarkdown>
         </div>
       </div>
       <div className={styles.adds}></div>

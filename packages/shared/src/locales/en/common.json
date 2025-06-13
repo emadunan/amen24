@@ -56,6 +56,10 @@
     "filter": "Filter",
     "filterPlaceholder": "Search terms..."
   },
+  "library": {
+    "title": "Library",
+    "index": "Index"
+  },
   "signin": {
     "email": "Email",
     "displayName": "Display Name",
