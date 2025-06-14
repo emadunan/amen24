@@ -109,7 +109,7 @@ const NavMenu: FC<Props> = ({ user, handleLogout }) => {
 
           {hasPermission(
             user.profile.roles,
-            Permission.UPDATE_GLOSSARY_TERM,
+            Permission.UPDATE_LIBRARY_BOOK,
           ) && (
             <li className={styles.navItem}>
               <NavLink

@@ -11,12 +11,14 @@ import Button from "../components/ui/Button";
 import BackLink from "../components/ui/BackLink";
 import Input from "../components/ui/Input";
 import Select from "../components/ui/Select";
-import { ApprovalStatus, BookCategory, Church, Denomination } from "@amen24/shared";
+import { ApprovalStatus, BookCategory, Church, Denomination, hasPermission, Permission } from "@amen24/shared";
 import { showToast } from "@amen24/ui";
 import { FaRegEdit } from "react-icons/fa";
 import { RiCloseLargeLine } from "react-icons/ri";
+import { useGetMeQuery } from "../store/authApi";
 
 const LibraryBook: React.FC = () => {
+  const { data: user } = useGetMeQuery();
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
 
@@ -118,9 +120,11 @@ const LibraryBook: React.FC = () => {
         <Link className={styles.createChapterLink} to={`/library/${slug}/create`}>
           ➕ Add New Chapter
         </Link>
-        <Button variant="secondary" onClick={handleDelete}>
-          Delete
-        </Button>
+        {user?.profile.roles && hasPermission(user?.profile.roles, Permission.DELETE_LIBRARY_BOOK) && (
+          <Button variant="secondary" onClick={handleDelete}>
+            Delete
+          </Button>
+        )}
       </div>
 
       {bookUpdateMode && (
@@ -150,14 +154,15 @@ const LibraryBook: React.FC = () => {
 
           <div className={styles.actions}>
             <Button onClick={handleSave}>Save Changes</Button>
-            {
+            {user?.profile.roles &&
+              hasPermission(user.profile.roles, Permission.DELETE_LIBRARY_BOOK) &&
               data?.approvalStatus === ApprovalStatus.Pending && (
                 <>
                   <Button variant="accent" onClick={handleApprove}>Approve</Button>
                   <Button variant="danger" onClick={handleReject}>Reject</Button>
                 </>
-              )
-            }
+              )}
+
           </div>
 
         </div>

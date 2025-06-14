@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, BadRequestException, InternalServerErrorException, ConflictException, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, BadRequestException, InternalServerErrorException, ConflictException, Put, UseGuards } from '@nestjs/common';
 import { LibraryBookService } from './library-book.service';
 import { CreateLibraryBookDto } from './dto/create-library-book.dto';
 import { UpdateLibraryBookDto } from './dto/update-library-book.dto';
@@ -11,6 +11,10 @@ import * as sharp from 'sharp';
 import { writeFile } from 'fs/promises';
 import { promises as fs } from 'fs';
 import { UpdateLibraryChapterDto } from './dto/update-library-chapter.dto';
+import { RequirePermissions } from 'src/auth/decorators/permissions.decorator';
+import { Permission } from '@amen24/shared';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
 
 
 @Controller('library')
@@ -21,6 +25,8 @@ export class LibraryController {
   ) { }
 
   @Post()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.CREATE_LIBRARY_BOOK)
   @UseInterceptors(FileInterceptor('cover', { storage: multer.memoryStorage() }))
   async create(
     @Body() dto: CreateLibraryBookDto,
@@ -60,6 +66,8 @@ export class LibraryController {
   }
 
   @Post('chapter')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.UPDATE_LIBRARY_BOOK)
   async createChapter(@Body() dto: CreateLibraryChapterDto) {
     return await this.libraryChapterService.create(dto);
   }
@@ -95,27 +103,37 @@ export class LibraryController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.UPDATE_LIBRARY_BOOK)
   async update(@Param('id') id: string, @Body() dto: UpdateLibraryBookDto) {
     return await this.libraryBookService.update(id, dto);
   }
 
   @Patch('chapter/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.UPDATE_LIBRARY_BOOK)
   async updateChapter(@Param('id') id: string, @Body() dto: UpdateLibraryChapterDto) {
     return await this.libraryChapterService.update(id, dto);
   }
 
   @Put('chapter/order/:slug')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.UPDATE_LIBRARY_BOOK)
   async changeChapterOrder(@Param('slug') slug: string, @Body() body: { chapterOrder: number, targetOrder: number }) {
     const { chapterOrder, targetOrder } = body;
     return await this.libraryChapterService.changeOrder(slug, chapterOrder, targetOrder);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.DELETE_LIBRARY_BOOK)
   async remove(@Param('id') id: string) {
     return await this.libraryBookService.remove(id);
   }
 
   @Delete('chapter/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.DELETE_LIBRARY_BOOK)
   async removeChapter(@Param('id') id: string) {
     return await this.libraryChapterService.remove(id);
   }

@@ -13,11 +13,14 @@ import {
 import styles from "./LibraryChapter.module.css";
 import BackLink from "../components/ui/BackLink";
 import { showToast } from "@amen24/ui";
+import { useGetMeQuery } from "../store/authApi";
+import { hasPermission, Permission } from "@amen24/shared";
 
 const LibraryChapter: React.FC = () => {
   const { slug, id } = useParams<{ slug?: string; id?: string }>();
 
   const navigate = useNavigate();
+  const { data: user } = useGetMeQuery();
 
   const [title, setTitle] = useState("");
   const [order, setOrder] = useState(1);
@@ -105,7 +108,7 @@ const LibraryChapter: React.FC = () => {
         >
           {id !== "create" ? "Save" : "Create"}
         </Button>
-        {id !== "create" && (
+        {user?.profile.roles && hasPermission(user?.profile.roles, Permission.DELETE_LIBRARY_BOOK) && id !== "create" && (
           <Button
             type="button"
             variant="secondary"

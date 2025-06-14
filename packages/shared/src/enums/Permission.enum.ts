@@ -7,9 +7,11 @@ export enum Permission {
   MANAGE_VERSE_GROUPS = "manage_verse_groups",
   MANAGE_FEATURED = "manage_featured",
   WRITE_BLOG = "write_blog",
-  CREATE_LIB_BOOK = "create_lib_book",
-  PUBLISH_LIB_BOOK = "publish_lib_book",
   CREATE_GLOSSARY_TERM = "create_glossary_term",
   UPDATE_GLOSSARY_TERM = "update_glossary_term",
   APPROVE_GLOSSARY_TERM = "approve_glossary_term",
+  CREATE_LIBRARY_BOOK = "create_library_book",
+  UPDATE_LIBRARY_BOOK = "update_library_book",
+  DELETE_LIBRARY_BOOK = "delete_librart_book",
+  APPROVE_LIBRARY_BOOK = "approve_library_book",
 }

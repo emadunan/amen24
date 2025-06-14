@@ -48,7 +48,7 @@ const NavBar: FC<Props> = ({ user, handleLogout }) => {
         </li>
       )}
 
-      {hasPermission(user.profile.roles, Permission.UPDATE_GLOSSARY_TERM) && (
+      {hasPermission(user.profile.roles, Permission.UPDATE_LIBRARY_BOOK) && (
         <li className={styles.listItem}>
           <NavLink to={`/library`}>Library</NavLink>
         </li>
