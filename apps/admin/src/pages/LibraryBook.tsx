@@ -11,7 +11,7 @@ import Button from "../components/ui/Button";
 import BackLink from "../components/ui/BackLink";
 import Input from "../components/ui/Input";
 import Select from "../components/ui/Select";
-import { BookCategory, Church, Denomination } from "@amen24/shared";
+import { ApprovalStatus, BookCategory, Church, Denomination } from "@amen24/shared";
 import { showToast } from "@amen24/ui";
 import { FaRegEdit } from "react-icons/fa";
 import { RiCloseLargeLine } from "react-icons/ri";
@@ -60,6 +60,12 @@ const LibraryBook: React.FC = () => {
   async function handleSave() {
     if (!data?.id) return;
 
+    let approvalStatus = data.approvalStatus;
+
+    if (data.approvalStatus === ApprovalStatus.Rejected) {
+      approvalStatus = ApprovalStatus.Pending;
+    }
+
     await updateBook({
       id: data.id,
       title,
@@ -69,9 +75,32 @@ const LibraryBook: React.FC = () => {
       category: category as BookCategory,
       denomination: denomination as Denomination,
       church: church as Church,
+      approvalStatus,
     }).unwrap();
 
-    showToast("")
+    showToast("Library book data has been updated!");
+  }
+
+  async function handleApprove() {
+    if (!data?.id) return;
+
+    await updateBook({
+      id: data.id,
+      approvalStatus: ApprovalStatus.Approved
+    }).unwrap();
+
+    showToast("Library book data has been approved!");
+  }
+
+  async function handleReject() {
+    if (!data?.id) return;
+
+    await updateBook({
+      id: data.id,
+      approvalStatus: ApprovalStatus.Rejected
+    }).unwrap();
+
+    showToast("Library book data has been rejected!");
   }
 
   if (!slug) return null;
@@ -119,7 +148,18 @@ const LibraryBook: React.FC = () => {
             options={Object.entries(Church).map(([key, value]) => ({ label: key, value }))}
           />
 
-          <Button onClick={handleSave}>Save Changes</Button>
+          <div className={styles.actions}>
+            <Button onClick={handleSave}>Save Changes</Button>
+            {
+              data?.approvalStatus === ApprovalStatus.Pending && (
+                <>
+                  <Button variant="accent" onClick={handleApprove}>Approve</Button>
+                  <Button variant="danger" onClick={handleReject}>Reject</Button>
+                </>
+              )
+            }
+          </div>
+
         </div>
       )}
 

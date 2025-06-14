@@ -26,3 +26,21 @@
 .secondary:hover {
   background-color: var(--secondary-hover);
 }
+
+.accent {
+  background-color: var(--accent);
+  color: var(--min);
+}
+
+.accent:hover {
+  background-color: var(--accent-hover);
+}
+
+.danger {
+  background-color: var(--danger);
+  color: var(--min);
+}
+
+.danger:hover {
+  background-color: var(--danger-hover);
+}

@@ -49,15 +49,13 @@
 
 .aside li.selected,
 .drawer li.selected {
-  background-color: var(--primary);
-  color: var(--min);
+  background-color: var(--secondary-hover);
   font-weight: bold;
 }
 
 .aside li:hover,
 .drawer li:hover {
-  background-color: var(--secondary-hover);
-  color: var(--max);
+  background-color: var(--secondary);
 }
 
 .content {

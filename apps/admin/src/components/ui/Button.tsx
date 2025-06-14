@@ -3,7 +3,7 @@ import styles from "./Button.module.css";
 import clsx from "clsx";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "accent" | "danger";
 };
 
 const Button: React.FC<Props> = ({

@@ -30,4 +30,8 @@ export class CreateLibraryBookDto {
 
   @IsOptional()
   year: number;
+
+  @IsEnum(ApprovalStatus)
+  @IsOptional()
+  approvalStatus: ApprovalStatus;
 }
