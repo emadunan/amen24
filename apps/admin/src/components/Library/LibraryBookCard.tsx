@@ -1,52 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./LibraryBookCard.module.css";
+import { Link } from "react-router-dom";
+import { baseUrl } from "../../constants";
 
-interface BookCardProps {
+interface LibraryBookCardProps {
+  slug: string;
   title: string;
   author?: string;
-  category?: string;
-  coverImageTitle: string;
-  onClick?: () => void;
 }
 
-const fallbackUrl = "/img/lib-book-cover-fallback.webp"; // adjust to your actual fallback path
-
-const LibraryBookCard: React.FC<BookCardProps> = ({
+const LibraryBookCard: React.FC<LibraryBookCardProps> = ({
+  slug,
   title,
   author,
-  category,
-  coverImageTitle,
-  onClick,
 }) => {
-  const initialUrl = `http://localhost/img/library-book-covers/${encodeURIComponent(coverImageTitle)}.webp`;
-  const [imgSrc, setImgSrc] = useState(initialUrl);
+  const imageBaseUrl = baseUrl || "http://localhost";
 
   return (
-    <div
+    <Link
       className={styles.card}
-      onClick={onClick}
-      role={onClick ? "button" : undefined}
-      tabIndex={onClick ? 0 : undefined}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" && onClick) onClick();
+      style={{
+        backgroundImage: `url(${imageBaseUrl}/img/library-book-covers/${encodeURIComponent(slug)}.webp)`,
       }}
+      to={`/library/${slug}`}
     >
-      <img
-        src={imgSrc}
-        alt={title}
-        className={styles.coverImage}
-        onError={() => setImgSrc(fallbackUrl)}
-      />
       <div className={styles.overlay}>
-        <div className={styles.info}>
-          <h3 className={styles.title} title={title}>
-            {title}
-          </h3>
-          {author && <p className={styles.author}>{author}</p>}
-          {category && <p className={styles.category}>{category}</p>}
+        <div className={styles.content}>
+          <h3 className={styles.title}>{title}</h3>
+          {author && <p className={styles.author}>&mdash; {author}</p>}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

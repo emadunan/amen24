@@ -79,8 +79,33 @@
 }
 
 .chapterBody {
-  background-color: #fff;
-  padding: 1rem;
-  border: 1px solid #ccc;
+  background-color: var(--min);
+  border: 1px solid var(--secondary);
+  padding: 3rem 1rem 1rem 1rem;
   border-radius: 2px;
+  font-family: amiri;
+  text-align: justify;
+}
+
+.chapterBody h2,
+.chapterBody h3,
+.chapterBody h4,
+.chapterBody h5,
+.chapterBody h6 {
+  margin: 1.5rem 0 0.5rem;
+  color: var(--accent);
+}
+
+.chapterBody p {
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.chapterBody li {
+  margin-inline-start: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text);
 }

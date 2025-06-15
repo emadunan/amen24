@@ -72,4 +72,29 @@
   padding: 1rem;
   border-radius: 2px;
   font-family: amiri;
+  text-align: justify;
+}
+
+
+.markdownContainer h2,
+.markdownContainer h3,
+.markdownContainer h4,
+.markdownContainer h5,
+.markdownContainer h6 {
+  margin: 1.5rem 0 0.5rem;
+  color: var(--accent);
+}
+
+.markdownContainer p {
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.markdownContainer li {
+  margin-inline-start: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text);
 }
