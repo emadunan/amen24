@@ -6,6 +6,7 @@ export class CreateLibraryBookDto {
   title: string;
 
   @IsString()
+  @IsOptional()
   author: string;
 
   @IsString()
@@ -13,6 +14,7 @@ export class CreateLibraryBookDto {
   slug: string;
 
   @IsString()
+  @IsOptional()
   description: string;
 
   @IsEnum(BookCategory)

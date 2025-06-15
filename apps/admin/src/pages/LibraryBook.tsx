@@ -46,7 +46,7 @@ const LibraryBook: React.FC = () => {
       setTitle(data.title ?? "");
       setBookSlug(data.slug ?? "");
       setAuthor(data.author ?? "");
-      setYear(data.year.toString() ?? "");
+      setYear(data.year?.toString() ?? "");
       setCategory(data.category ?? "");
       setDenomination(data.denomination ?? "");
       setChurch(data.church ?? "");
@@ -68,7 +68,8 @@ const LibraryBook: React.FC = () => {
       approvalStatus = ApprovalStatus.Pending;
     }
 
-    await updateBook({
+    try {
+      await updateBook({
       id: data.id,
       title,
       slug: bookSlug,
@@ -81,6 +82,9 @@ const LibraryBook: React.FC = () => {
     }).unwrap();
 
     showToast("Library book data has been updated!");
+    } catch (error) {
+      showToast("Failed to update book data, check input data.", "error");
+    }
   }
 
   async function handleApprove() {

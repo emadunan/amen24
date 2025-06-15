@@ -7,6 +7,7 @@ import {
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./CreateLibraryBookFrom.module.css";
 import { useCreateLibraryBookMutation } from "../../store/libraryApi";
+import { showToast } from "@amen24/ui";
 
 interface Props {
   onToggleMode: () => void;
@@ -52,16 +53,26 @@ const CreateLibraryBookForm: React.FC<Props> = ({ onToggleMode }) => {
     formData.append("category", form.category);
     formData.append("denomination", form.denomination);
     formData.append("lang", form.lang);
-    formData.append("year", form.year);
     formData.append("approvalStatus", form.approvalStatus);
+
+    if (form.year.trim()) {
+      formData.append("year", form.year);
+    }
 
     if (form.cover) {
       formData.append("cover", form.cover);
     }
 
-    await createBook(formData);
+    try {
+      await createBook(formData).unwrap();
+      showToast("Book has been created successfully");
+    } catch (error) {
+      showToast("Failed to create book, check input data and attached cover photo", "error");
+    }
+
     onToggleMode();
   };
+
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
