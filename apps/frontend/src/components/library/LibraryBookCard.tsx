@@ -13,11 +13,14 @@ const LibraryBookCard: React.FC<LibraryBookCardProps> = ({
   title,
   author,
 }) => {
+  const imageBaseUrl =
+    process.env.NEXT_PUBLIC_IMAGE_BASE_URL || "http://localhost";
+
   return (
     <Link
       className={styles.card}
       style={{
-        backgroundImage: `url(http://localhost/img/library-book-covers/${slug}.webp)`,
+        backgroundImage: `url(${imageBaseUrl}/img/library-book-covers/${encodeURIComponent(slug)}.webp)`,
       }}
       href={`/library/${slug}`}
     >
