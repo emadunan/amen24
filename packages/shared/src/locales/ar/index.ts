@@ -5,6 +5,7 @@ import privacy from "./privacy.json";
 import terms from "./terms.json";
 import month from './month.json';
 import error from "./error.json";
-import message from './message.json'
+import message from './message.json';
+import writer from './writer.json';
 
-export default { book, common, lang, privacy, terms, month, error, message };
+export default { book, writer, common, lang, privacy, terms, month, error, message };

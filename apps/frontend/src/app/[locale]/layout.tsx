@@ -34,6 +34,7 @@ export const metadata: Metadata = {
 const i18nNamespaces = [
   "common",
   "book",
+  "writer",
   "lang",
   "privacy",
   "terms",

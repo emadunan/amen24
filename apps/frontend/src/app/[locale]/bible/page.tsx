@@ -1,9 +1,9 @@
-import BookCover from "@/components/bible/BookCover";
 import styles from "./page.module.css";
 import { Book, BookMap } from "@amen24/shared";
 import { FC } from "react";
 import initTranslations from "../../i18n";
 import { apiPrivateUrl } from "@/constants";
+import BibleBookCard from "@/components/bible/BibleBookCard";
 
 const i18nNamespaces = ["common", "book"];
 
@@ -60,7 +60,7 @@ const BiblePage: FC<Props> = async ({ params }) => {
       <h1>{t("main.bible")}</h1>
       <div className={styles.bibleIndex}>
         {books.map((b: Book) => (
-          <BookCover
+          <BibleBookCard
             key={b.id}
             bookId={b.id}
             bookLen={BookMap[b.bookKey].len}

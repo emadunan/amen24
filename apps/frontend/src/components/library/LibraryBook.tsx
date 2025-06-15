@@ -1,13 +1,13 @@
 "use client";
 
-import { useGetLibraryBookQuery } from '@/store/apis/libraryApi';
-import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import styles from './LibraryBook.module.css';
-import Markdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-import { getDirection, useBreakpoint } from '@amen24/ui';
-import { useTranslation } from 'react-i18next';
+import { useGetLibraryBookQuery } from "@/store/apis/libraryApi";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import styles from "./LibraryBook.module.css";
+import Markdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import { getDirection, useBreakpoint } from "@amen24/ui";
+import { useTranslation } from "react-i18next";
 
 const LibraryBook: React.FC = () => {
   const { t } = useTranslation();
@@ -17,7 +17,7 @@ const LibraryBook: React.FC = () => {
   const { isTablet } = useBreakpoint();
 
   const skip = !slug;
-  const { data } = useGetLibraryBookQuery(slug || '', { skip });
+  const { data } = useGetLibraryBookQuery(slug || "", { skip });
 
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -37,7 +37,7 @@ const LibraryBook: React.FC = () => {
       {data?.chapters.map((ch) => (
         <li
           key={ch.id}
-          className={ch.id === selectedId ? styles.selected : ''}
+          className={ch.id === selectedId ? styles.selected : ""}
           onClick={() => {
             setSelectedId(ch.id);
             setDrawerOpen(false);
@@ -51,27 +51,34 @@ const LibraryBook: React.FC = () => {
 
   const dir = data?.lang ? getDirection(data.lang) : undefined;
 
-  if (!dir) return <span>Loading ...</span>
+  if (!dir) return <span>Loading ...</span>;
 
   return (
     <div className={styles.container} dir={dir}>
       {hasMounted && isTablet ? (
         <>
-          <button className={styles.toggleButton} onClick={() => setDrawerOpen(true)}>
-            {t('library.index')} ▾
+          <button
+            className={styles.toggleButton}
+            onClick={() => setDrawerOpen(true)}
+          >
+            {t("library.index")} ▾
           </button>
           {drawerOpen && (
             <div className={styles.drawer}>
               <div className={styles.drawerHeader}>
                 <h2>{data?.title}</h2>
-                <button className={styles.closeButton} onClick={() => setDrawerOpen(false)}>✕</button>
+                <button
+                  className={styles.closeButton}
+                  onClick={() => setDrawerOpen(false)}
+                >
+                  ✕
+                </button>
               </div>
               {renderChapterList()}
             </div>
           )}
         </>
       ) : (
-
         <aside className={styles.aside}>
           <h2>{data?.title}</h2>
           {renderChapterList()}

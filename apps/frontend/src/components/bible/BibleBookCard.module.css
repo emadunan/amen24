@@ -13,7 +13,7 @@
     box-shadow 0.3s ease;
   cursor: pointer;
   text-decoration: none;
-  color: inherit;
+  color: var(--max);
 }
 
 .card:hover {
@@ -50,4 +50,19 @@
   font-size: 0.9rem;
   color: var(--gray);
   margin: 0.2rem 0;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 9rem;
+    height: 13.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+  }
 }
