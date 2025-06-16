@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./BibleBookCard.module.css";
 import Link from "next/link";
 import initTranslations from "@/app/i18n";
-import { BookKey, BookMap } from "@amen24/shared";
 
 interface Props {
   bookId: number;
@@ -30,9 +29,9 @@ const BibleBookCard: React.FC<Props> = async ({
       <div className={styles.overlay}>
         <div className={styles.content}>
           <h3 className={styles.title}>{t(`book:${bookKey}`)}</h3>
-          <p className={styles.author}>
+          {/* <p className={styles.author}>
             &mdash; {t(`writer:${BookMap[bookKey as BookKey].writer}`)}
-          </p>
+          </p> */}
         </div>
       </div>
     </Link>

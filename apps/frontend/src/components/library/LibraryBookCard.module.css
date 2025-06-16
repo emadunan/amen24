@@ -44,10 +44,25 @@
   font-size: 1.2rem;
   font-weight: bold;
   margin: 0;
+  text-align: center;
 }
 
 .author {
   font-size: 0.9rem;
   color: var(--gray);
   margin: 0.2rem 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 48em) {
+  .card {
+    width: 9rem;
+    height: 13.5rem;
+  }
+
+  .title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+  }
 }

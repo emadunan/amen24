@@ -12,53 +12,47 @@ const NavBar: FC<Props> = ({ normalizedPath, isBookPath }) => {
   const { t } = useTranslation();
   return (
     <ul className={styles.navList}>
-      <li className={styles.navItem}>
-        <Link
-          className={`link ${normalizedPath === "/" || isBookPath ? `${styles.active}` : ""}`}
-          href={"/"}
-        >
+      <li
+        className={`${styles.navItem} ${normalizedPath === "/" || isBookPath ? `${styles.active}` : ""}`}
+      >
+        <Link className={`link`} href={"/"}>
           {" "}
           <h3>{t("main.home")}</h3>
         </Link>
       </li>
-      <li className={styles.navItem}>
-        <Link
-          className={`link ${normalizedPath === "/bible" || isBookPath ? `${styles.active}` : ""}`}
-          href={"/bible"}
-        >
+      <li
+        className={`${styles.navItem} ${normalizedPath === "/bible" || isBookPath ? `${styles.active}` : ""}`}
+      >
+        <Link className={`link`} href={"/bible"}>
           {" "}
           <h3>{t("main.bible")}</h3>
         </Link>
       </li>
-      <li className={styles.navItem}>
-        <Link
-          className={`link ${normalizedPath === "/search" ? `${styles.active}` : ""}`}
-          href={"/search"}
-        >
+      <li
+        className={`${styles.navItem} ${normalizedPath === "/search" || isBookPath ? `${styles.active}` : ""}`}
+      >
+        <Link className={`link`} href={"/search"}>
           <h3>{t("main.search")}</h3>
         </Link>
       </li>
-      <li className={styles.navItem}>
-        <Link
-          className={`link ${normalizedPath === "/glossary" ? `${styles.active}` : ""}`}
-          href={"/glossary"}
-        >
+      <li
+        className={`${styles.navItem} ${normalizedPath === "/glossary" || isBookPath ? `${styles.active}` : ""}`}
+      >
+        <Link className={`link`} href={"/glossary"}>
           <h3>{t("main.glossary")}</h3>
         </Link>
       </li>
-      <li className={styles.navItem}>
-        <Link
-          className={`link ${normalizedPath === "/library" ? `${styles.active}` : ""}`}
-          href={"/library"}
-        >
+      <li
+        className={`${styles.navItem} ${normalizedPath === "/library" || isBookPath ? `${styles.active}` : ""}`}
+      >
+        <Link className={`link`} href={"/library"}>
           <h3>{t("library.title")}</h3>
         </Link>
       </li>
-      <li className={styles.navItem}>
-        <Link
-          className={`link ${normalizedPath === "/contact-us" ? `${styles.active}` : ""}`}
-          href={"/contact-us"}
-        >
+      <li
+        className={`${styles.navItem} ${normalizedPath === "/contact-us" || isBookPath ? `${styles.active}` : ""}`}
+      >
+        <Link className={`link`} href={"/contact-us"}>
           <h3>{t("main.contactUsTitle")}</h3>
         </Link>
       </li>

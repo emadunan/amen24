@@ -39,7 +39,7 @@ const AppHeader: FC<Props> = () => {
     skip: typeof window === "undefined",
   });
 
-  const { isTablet, isLargePhone } = useBreakpoint();
+  const { isLargePhone, isLaptop } = useBreakpoint();
 
   const [isClient, setIsClient] = useState(false);
 
@@ -78,7 +78,7 @@ const AppHeader: FC<Props> = () => {
 
       <nav className={styles.nav}>
         <div className={styles.navSide}>
-          {isTablet ? (
+          {isLaptop ? (
             <NavMenu normalizedPath={normalizedPath} isBookPath={isBookPath} />
           ) : (
             <NavBar normalizedPath={normalizedPath} isBookPath={isBookPath} />

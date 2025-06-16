@@ -61,7 +61,7 @@
 }
 
 .content {
-  background-color: var(--min);
+  background-color: var(--background-hover);
   border-radius: 2px;
   padding: 2rem;
   border: 1px solid var(--secondary);

@@ -14,9 +14,14 @@
 
 .navItem {
   position: relative;
+  word-spacing: -0.2rem;
   color: var(--gray);
   font-size: 0.95rem;
   transition: transform 0.2s ease-in-out;
+}
+
+.navItem h3 {
+  white-space: nowrap;
 }
 
 .navItem::after {
@@ -35,6 +40,7 @@
   transition: transform 0.3s ease-in-out;
 }
 
+.navItem.active::after,
 .navItem:hover::after {
   transform: scaleX(1);
   transform-origin: center;

@@ -2,59 +2,84 @@
   display: block;
   width: 12rem;
   height: 18rem;
-  border-radius: 2px;
+  position: relative;
+  border: 1px solid var(--text);
+  border-radius: 2px; /* more visible rounding */
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  position: relative;
   box-shadow: 0 4px 10px rgba(var(--text-rgb), 0.1);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
   cursor: pointer;
   text-decoration: none;
-  color: var(--max);
+  color: black;
+  /* default for text inside */
 }
 
+/* Darken whole image on hover for feedback */
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 16px rgba(var(--text-rgb), 0.15);
 }
 
+/* Overlay that covers only the bottom 30% */
 .overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 18%;
   background: linear-gradient(
     to top,
-    rgba(var(--background-rgb), 0.7) 0%,
-    rgba(var(--background-rgb), 0.3) 40%,
-    transparent 80%
+    rgba(var(--background-rgb), 0.95),
+    /* more solid */ rgba(var(--background-rgb), 0.85),
+    /* slightly faded */ rgba(var(--background-rgb), 0.6)
+      /* fade out to transparent */
   );
-  display: flex;
-  align-items: flex-end;
-  padding: 1rem;
-  padding-bottom: 0.2rem;
+  z-index: 1;
 }
 
+/* Content on top of overlay */
 .content {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  width: 100%;
+  padding: 0 1rem;
+  z-index: 2;
   color: var(--text);
+  text-shadow: none;
+  /* remove shadow since text is black on background */
 }
 
 .title {
   font-size: 1.2rem;
   font-weight: bold;
   margin: 0;
+  text-align: center;
 }
 
 .author {
   font-size: 0.9rem;
-  color: var(--gray);
-  margin: 0.2rem 0;
+  margin: 0.2rem 0 0 0;
 }
 
+/* Mobile responsiveness */
 @media (max-width: 48em) {
   .card {
     width: 9rem;
     height: 13.5rem;
+  }
+
+  .overlay {
+    height: 20%;
+  }
+
+  .title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
   }
 }
