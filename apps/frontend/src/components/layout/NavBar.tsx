@@ -13,46 +13,44 @@ const NavBar: FC<Props> = ({ normalizedPath, isBookPath }) => {
   return (
     <ul className={styles.navList}>
       <li
-        className={`${styles.navItem} ${normalizedPath === "/" || isBookPath ? `${styles.active}` : ""}`}
+        className={`${styles.navItem} ${normalizedPath === "/" ? styles.active : ""}`}
       >
-        <Link className={`link`} href={"/"}>
-          {" "}
+        <Link className="link" href="/">
           <h3>{t("main.home")}</h3>
         </Link>
       </li>
       <li
-        className={`${styles.navItem} ${normalizedPath === "/bible" || isBookPath ? `${styles.active}` : ""}`}
+        className={`${styles.navItem} ${normalizedPath === "/bible" || isBookPath ? styles.active : ""}`}
       >
-        <Link className={`link`} href={"/bible"}>
-          {" "}
+        <Link className="link" href="/bible">
           <h3>{t("main.bible")}</h3>
         </Link>
       </li>
       <li
-        className={`${styles.navItem} ${normalizedPath === "/search" || isBookPath ? `${styles.active}` : ""}`}
+        className={`${styles.navItem} ${normalizedPath === "/search" ? styles.active : ""}`}
       >
-        <Link className={`link`} href={"/search"}>
+        <Link className="link" href="/search">
           <h3>{t("main.search")}</h3>
         </Link>
       </li>
       <li
-        className={`${styles.navItem} ${normalizedPath === "/glossary" || isBookPath ? `${styles.active}` : ""}`}
+        className={`${styles.navItem} ${normalizedPath === "/glossary" ? styles.active : ""}`}
       >
-        <Link className={`link`} href={"/glossary"}>
+        <Link className="link" href="/glossary">
           <h3>{t("main.glossary")}</h3>
         </Link>
       </li>
       <li
-        className={`${styles.navItem} ${normalizedPath === "/library" || isBookPath ? `${styles.active}` : ""}`}
+        className={`${styles.navItem} ${normalizedPath === "/library" ? styles.active : ""}`}
       >
-        <Link className={`link`} href={"/library"}>
+        <Link className="link" href="/library">
           <h3>{t("library.title")}</h3>
         </Link>
       </li>
       <li
-        className={`${styles.navItem} ${normalizedPath === "/contact-us" || isBookPath ? `${styles.active}` : ""}`}
+        className={`${styles.navItem} ${normalizedPath === "/contact-us" ? styles.active : ""}`}
       >
-        <Link className={`link`} href={"/contact-us"}>
+        <Link className="link" href="/contact-us">
           <h3>{t("main.contactUsTitle")}</h3>
         </Link>
       </li>
