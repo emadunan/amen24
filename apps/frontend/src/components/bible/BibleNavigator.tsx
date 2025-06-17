@@ -23,14 +23,12 @@ const BibleNavigator = () => {
   const isRTL = isRtl(i18n.language as Lang);
 
   const bookParams = params.book ?? []; // Ensure it's an array
-  const [urlBookKey, chapterNum] = bookParams as [BookKey, string, string];
+  const [urlBookKey, chapterNum] = bookParams as [BookKey?, string?, string?];
 
   const { position, handleMouseDown, handleTouchStart, elementRef } =
     useDraggable(5, 5, isRTL, 12, headerRef);
 
-  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?[A-Z0-9]+\/\d+\/\d+$/.test(
-    pathname,
-  );
+  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?bible\/[A-Z]{3}\/\d+\/\d+$/.test(pathname);
 
   const [openBook, setOpenBook] = useState<BookKey | null>(null);
 
@@ -90,11 +88,11 @@ const BibleNavigator = () => {
         {Object.values(BookMap).map((book) => (
           <Accordion
             key={book.id}
-            bookKey={urlBookKey}
+            bookKey={book.key as BookKey}
             openBook={openBook}
             onOpenBook={handleOpenBook}
           >
-            {openBook === urlBookKey ? (
+            {openBook === book.key ? (
               <div className={styles.chaptersContainer}>
                 {Array.from({ length: book.len }, (_, i) => {
                   const chapterIndex = i + 1;
@@ -106,12 +104,12 @@ const BibleNavigator = () => {
                     <Link
                       className={
                         chapterIndex.toString() === chapterNum &&
-                        urlBookKey === urlBookKey
+                        book.key === urlBookKey
                           ? styles.currentChapter
                           : ""
                       }
                       key={chapterIndex}
-                      href={`/${urlBookKey}/${chapterIndex}/${book.len}`}
+                      href={`/bible/${book.key}/${chapterIndex}/${book.len}`}
                       ref={(el) => {
                         chapterRefs.current.set(chapterIndex, el);
                       }}
