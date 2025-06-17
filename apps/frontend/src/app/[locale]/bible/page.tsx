@@ -63,6 +63,7 @@ const BiblePage: FC<Props> = async ({ params }) => {
           <BibleBookCard
             key={b.id}
             bookId={b.id}
+            bookSlug={b.slug}
             bookLen={BookMap[b.bookKey].len}
             bookKey={b.bookKey}
             locale={locale}

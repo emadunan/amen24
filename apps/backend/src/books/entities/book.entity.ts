@@ -7,6 +7,9 @@ export class Book {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ nullable: true })
+  slug: string;
+
   @Column({ unique: true })
   bookKey: BookKey;
 

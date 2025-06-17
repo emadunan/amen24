@@ -5,6 +5,7 @@ import initTranslations from "@/app/i18n";
 
 interface Props {
   bookId: number;
+  bookSlug: string
   bookKey: string;
   bookLen: number;
   locale: string;
@@ -24,7 +25,7 @@ const BibleBookCard: React.FC<Props> = async ({
       style={{
         backgroundImage: `url(/img/book-cover/${bookId}_${bookKey}.jpg)`,
       }}
-      href={`/${bookKey}/1/${bookLen}`}
+      href={`/bible/${bookKey}/1/${bookLen}`}
     >
       <div className={styles.overlay}>
         <div className={styles.content}>

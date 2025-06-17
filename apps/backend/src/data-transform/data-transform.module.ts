@@ -5,6 +5,7 @@ import { BibleGlossaryTranslation } from '../bible-glossary/entities/bible-gloss
 import { ConfigModule } from '@nestjs/config';
 import joiConfig from '../_config/joi.config';
 import { TypeOrmConfigService } from '../_config/database.config';
+import { Book } from '../books/entities/book.entity';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { TypeOrmConfigService } from '../_config/database.config';
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
-    TypeOrmModule.forFeature([BibleGlossaryTranslation])
+    TypeOrmModule.forFeature([BibleGlossaryTranslation, Book])
   ],
   providers: [DataTransformService],
 })

@@ -1,3 +1,4 @@
+import { BookMap } from "../constants";
 import { BookKey, Lang } from "../enums";
 
 export const isOldTestament = (bookKey: string): boolean => {
@@ -52,3 +53,9 @@ export function resolveRenderLang(lang: Lang, bookKey: BookKey) {
       : Lang.GREEK
     : lang;
 }
+
+export const getBookKeyBySlug = (slug: string): string | undefined => {
+  return Object.entries(BookMap).find(
+    ([_, value]) => value.slug === slug
+  )?.[0];
+};

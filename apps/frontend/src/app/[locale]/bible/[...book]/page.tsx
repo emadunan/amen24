@@ -114,7 +114,7 @@ const BookPage: FC<Props> = async ({ params }) => {
           <div className={styles.chapterNav}>
             {+chapterNum > 1 ? (
               <Link
-                href={`/${bookKey}/${+chapterNum - 1}/${bookLen}`}
+                href={`/bible/${bookKey}/${+chapterNum - 1}/${bookLen}`}
                 className={styles.chapterLink}
               >
                 <GrLinkPrevious className="flip-icon" />
@@ -147,7 +147,7 @@ const BookPage: FC<Props> = async ({ params }) => {
             </div>
             {+chapterNum < +bookLen ? (
               <Link
-                href={`/${bookKey}/${+chapterNum + 1}/${bookLen}`}
+                href={`/bible/${bookKey}/${+chapterNum + 1}/${bookLen}`}
                 className={styles.chapterLink}
               >
                 {t("main.next")}
