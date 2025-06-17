@@ -34,7 +34,7 @@ const VerseResult: React.FC<VerseResultProps> = ({
       <VerseResultText text={text} queryTerms={queryTerms} />
       <Link
         className={styles.reference}
-        href={`/${bookKey}/${chapterNum}/${totalChapters}?v=${verseId}`}
+        href={`/bible/${bookKey}/${chapterNum}/${totalChapters}?v=${verseId}`}
       >
         &mdash; {BookMap[bookKey].title[lang as Lang.ARABIC | Lang.ENGLISH]}{" "}
         {formattedChapterNum} : {formattedVerseNum}
