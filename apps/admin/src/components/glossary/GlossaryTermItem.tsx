@@ -23,7 +23,7 @@ const GlossaryTermItem: React.FC<Props> = ({ item }) => {
     updateTerm({ slug, approvalStatus: ApprovalStatus.Rejected });
   }
 
-  function handleTermDelete(slug:string) {
+  function handleTermDelete(slug: string) {
     deleteTerm(slug);
   }
 
@@ -57,14 +57,17 @@ const GlossaryTermItem: React.FC<Props> = ({ item }) => {
               >
                 Reject
               </button>
-              <button
-                onClick={handleTermDelete.bind(null, item.slug)}
-                className={`${styles.btn} ${styles.deleteBtn}`}
-              >
-                Delete
-              </button>
             </>
           )}
+
+        {item && (
+          <button
+            onClick={handleTermDelete.bind(null, item.slug)}
+            className={`${styles.btn} ${styles.deleteBtn}`}
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );
