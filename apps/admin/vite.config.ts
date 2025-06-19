@@ -27,7 +27,6 @@ export default defineConfig({
 
           // UI add-ons
           icons: ["react-icons"],
-          toast: ["react-toastify"],
 
           // Internal packages (if large enough to benefit from chunking)
           shared: ["@amen24/shared"],
