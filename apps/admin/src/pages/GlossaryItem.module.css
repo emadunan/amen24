@@ -9,6 +9,10 @@
   font-size: 1.5rem;
 }
 
+.pageHeader h3 {
+  white-space: nowrap;
+}
+
 .editableInput {
   font-size: 1rem;
   height: 2rem;
@@ -32,11 +36,11 @@
 }
 
 .selectCategory {
-  height: 2rem;
   border-radius: 2px;
   color: var(--text-color);
   border: 1px solid var(--primary);
   outline: none;
+  margin: 0;
 }
 
 .selectCategory:focus {
