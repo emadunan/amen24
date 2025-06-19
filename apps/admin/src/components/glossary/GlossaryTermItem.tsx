@@ -3,7 +3,7 @@ import { ApprovalStatus, BibleGlossary, UserRole } from "@amen24/shared";
 import { Link } from "react-router-dom";
 import React from "react";
 import { ApprovalIcon } from "@amen24/ui";
-import { useUpdateTermMutation } from "../../store/glossaryApi";
+import { useDeleteTermMutation, useUpdateTermMutation } from "../../store/glossaryApi";
 import { useGetMeQuery } from "../../store/authApi";
 
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
 const GlossaryTermItem: React.FC<Props> = ({ item }) => {
   const { data: user } = useGetMeQuery();
   const [updateTerm, _result] = useUpdateTermMutation();
+  const [deleteTerm] = useDeleteTermMutation();
 
   function handleApproveTerm(slug: string) {
     updateTerm({ slug, approvalStatus: ApprovalStatus.Approved });
@@ -20,6 +21,10 @@ const GlossaryTermItem: React.FC<Props> = ({ item }) => {
 
   function handleRejectTerm(slug: string) {
     updateTerm({ slug, approvalStatus: ApprovalStatus.Rejected });
+  }
+
+  function handleTermDelete(slug:string) {
+    deleteTerm(slug);
   }
 
   return (
@@ -51,6 +56,12 @@ const GlossaryTermItem: React.FC<Props> = ({ item }) => {
                 className={`${styles.btn} ${styles.rejectBtn}`}
               >
                 Reject
+              </button>
+              <button
+                onClick={handleTermDelete.bind(null, item.slug)}
+                className={`${styles.btn} ${styles.deleteBtn}`}
+              >
+                Delete
               </button>
             </>
           )}

@@ -119,5 +119,12 @@ export const createGlossaryApi = (baseUrl: string) =>
         }),
         invalidatesTags: ["GlossaryTerm"],
       }),
+      deleteTerm: builder.mutation<void, string>({
+        query: (slug) => ({
+          url: `${slug}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["GlossaryTerm"]
+      })
     }),
   });

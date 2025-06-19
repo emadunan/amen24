@@ -41,9 +41,17 @@
 }
 
 .rejectBtn {
-  background-color: var(--danger);
+  background-color: var(--primary);
 }
 
 .rejectBtn:hover {
+  background-color: var(--primary-hover);
+}
+
+.deleteBtn {
+  background-color: var(--danger);
+}
+
+.deleteBtn:hover {
   background-color: var(--danger-hover);
 }

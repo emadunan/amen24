@@ -7,6 +7,7 @@ export const {
   useGenerateAiDefinitionMutation,
   useUpdateTranslationMutation,
   useUpdateTermMutation,
+  useDeleteTermMutation,
   useLazyGetAllTermsQuery,
   useGetOneTermQuery,
 } = glossaryApi;
