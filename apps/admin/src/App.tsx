@@ -14,8 +14,8 @@ function App() {
         <AppHeader />
         <AppRoutes />
         <AppFooter />
-        <ToastContainer toastStyle={{ fontFamily: "amiri, serif" }} />
       </BrowserRouter>
+      <ToastContainer toastStyle={{ fontFamily: "amiri, serif" }} />
     </StoreProvider>
   );
 }
