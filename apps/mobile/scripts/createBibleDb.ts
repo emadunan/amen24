@@ -1,139 +1,132 @@
 import { open, Database } from "sqlite";
 import sqlite3 from "sqlite3";
-
 import { readFile } from "fs/promises";
-import { BookKeys as books } from "@/constants";
+import { existsSync, unlinkSync } from "fs";
+import { BookKey, BookMap, Lang, removeArDiacritics, normalizeArText, replaceWaslaAlef, removeNaDiacritics } from "@amen24/shared";
 
-type BookKey = keyof typeof books;
+const dbPath = "../data/bible.db";
+if (existsSync(dbPath)) {
+  unlinkSync(dbPath);
+  console.log("🧹 Old bible.db deleted.");
+}
 
 async function initDatabase() {
-  // open the database
   const db: Database = await open({
-    filename: "../data/bible.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
 
-  // Create Books and Chapters Entities
   try {
-    await db.exec(
-      `CREATE TABLE IF NOT EXISTS books (
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS book (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        key TEXT NOT NULL UNIQUE
-        )`,
-    );
+        bookKey TEXT NOT NULL UNIQUE,
+        slug TEXT
+      );
 
-    await db.exec(
-      `CREATE TABLE IF NOT EXISTS chapters (
+      CREATE TABLE IF NOT EXISTS chapter (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         num INTEGER NOT NULL,
         bookId INTEGER NOT NULL,
-        FOREIGN KEY (bookId) REFERENCES books (id),
-        UNIQUE (num, bookId)
-        )`,
-    );
+        FOREIGN KEY (bookId) REFERENCES book(id) ON DELETE CASCADE,
+        UNIQUE (bookId, num)
+      );
 
-    console.log("Books and Chapters tables has been created!!!");
+      CREATE TABLE IF NOT EXISTS verse (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        num SMALLINT NOT NULL,
+        chapterId INTEGER NOT NULL,
+        FOREIGN KEY (chapterId) REFERENCES chapter(id) ON DELETE CASCADE,
+        UNIQUE (chapterId, num)
+      );
+
+      CREATE TABLE IF NOT EXISTS verse_translation (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        verseId INTEGER NOT NULL,
+        lang TEXT NOT NULL,
+        text TEXT,
+        textNormalized TEXT,
+        textDiacritized TEXT,
+        FOREIGN KEY (verseId) REFERENCES verse(id) ON DELETE CASCADE,
+        UNIQUE (verseId, lang)
+      );
+    `);
+
+    console.log("✅ All tables created following backend schema.");
   } catch (error) {
-    console.error("Error creating Books or chapters table:", error);
-    throw new Error("Database operation failed!");
+    console.error("❌ Error creating tables:", error);
+    throw new Error("Database schema creation failed!");
   }
 
-  // Populate books and chapters
-  for (const key in books) {
-    if (Object.prototype.hasOwnProperty.call(books, key)) {
-      const response = await db.run(`INSERT INTO books (key) VALUES (?)`, [
-        key,
-      ]);
-      const bookId = response.lastID;
+  for (const key in BookMap) {
+    const book = BookMap[key as BookKey];
+    const { slug } = book;
+    const response = await db.run(`INSERT INTO book (bookKey, slug) VALUES (?, ?)`, [key, slug]);
+    const bookId = response.lastID;
 
-      const bookMaxlength = books[key as BookKey].len;
-      const chapters = Array.from({ length: bookMaxlength }, (_, k) => k + 1);
-      for (const chapter of chapters) {
-        await db.run(`INSERT INTO chapters (num, bookId) VALUES (?, ?)`, [
-          chapter,
-          bookId,
-        ]);
-      }
+    for (let chapterNum = 1; chapterNum <= book.len; chapterNum++) {
+      await db.run(`INSERT INTO chapter (num, bookId) VALUES (?, ?)`, [chapterNum, bookId]);
     }
   }
 
-  await migrate(
-    db,
-    "../../content/Holy-Bible---English---Free-Bible-Version---Source-Edition.VPL.txt",
-    "versesEn",
-  );
-
-  await migrate(
-    db,
-    "../../content/Holy-Bible---Arabic---Arabic-Van-Dyck-Bible---Source-Edition.VPL.txt",
-    "versesAr",
-  );
-
-  await migrate(db, "../../content/original-scripts.txt", "versesNative");
+  await migrateTranslations(db, "../../../documentation/content/Bible_Native_MasoreticSBL.VPL.txt", "native");
+  await migrateTranslations(db, "../../../documentation/content/Bible_En_ESV_2001.VPL.txt", "en");
+  await migrateTranslations(db, "../../../documentation/content/Bible_Ar_SVD_1865.VPL.txt", "ar");
 
   await db.close();
 }
 
-async function migrate(db: Database, filePath: string, bibleVersion: string) {
-  if (!/^[a-zA-Z0-9_]+$/.test(bibleVersion)) {
-    throw new Error("Invalid table name");
-  }
-
-  try {
-    await db.exec(
-      `CREATE TABLE IF NOT EXISTS ${bibleVersion} (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        num INTEGER NOT NULL,
-        text TEXT NOT NULL,
-        textNormalized TEXT,
-        chapterId INTEGER NOT NULL,
-        FOREIGN KEY (chapterId) REFERENCES chapters (id)
-        )`,
-    );
-
-    console.log("Verses table has been created!!!");
-  } catch (error) {
-    console.error("Error creating verses table:", error);
-    throw new Error("Database operation failed!");
-  }
-
+async function migrateTranslations(db: Database, filePath: string, lang: string) {
   const BibleData = await readFile(filePath, "utf-8");
-
   const lines = BibleData.split("\n");
 
   let bookId: number | undefined = 0;
   let chapterId: number | undefined = 0;
+  let verseId: number | undefined = 0;
 
   for (const line of lines) {
-    const result = line.match(/^(\S+)\s(\d+):(\d+)\s(.*)$/);
+    const result = line.match(/^([A-Z0-9]+)\s(\d+):(\d+)\s(.*)$/);
+    if (!result) continue;
 
-    if (result) {
-      const bookKey = result.at(1);
-      const chapterNum = result.at(2);
-      const verseNum = result.at(3);
-      const verseText = result.at(4);
+    const bookKey = result[1];
+    const chapterNum = parseInt(result[2]);
+    const verseNum = parseInt(result[3]);
+    let text = result[4];
 
-      if (chapterNum === "1" && verseNum === "1") {
-        bookId = (await db.get(`SELECT id from books where key = ?`, [bookKey]))
-          .id;
+    let textNormalized = text;
+    const textDiacritized = text;
 
-        console.log(bookId, bookKey, "--- processing!");
-      }
-
-      if (verseNum === "1") {
-        chapterId = (
-          await db.get(`SELECT id FROM chapters where bookId = ? AND num = ?`, [
-            bookId,
-            chapterNum,
-          ])
-        ).id;
-      }
-
-      await db.run(
-        `INSERT INTO ${bibleVersion} (num, text, chapterId) VALUES (?, ?, ?)`,
-        [verseNum, verseText, chapterId],
-      );
+    if (lang === Lang.ARABIC) {
+      text = replaceWaslaAlef(text);
+      text = removeArDiacritics(text);
+      textNormalized = normalizeArText(text);
+    } else if (lang === Lang.NATIVE) {
+      text = removeNaDiacritics(text);
+      textNormalized = text;
     }
+
+    if (chapterNum === 1 && verseNum === 1) {
+      bookId = (await db.get(`SELECT id FROM book WHERE bookKey = ?`, [bookKey]))?.id;
+      console.log(bookId, bookKey, "--- processing");
+    }
+
+    if (verseNum === 1) {
+      chapterId = (await db.get(`SELECT id FROM chapter WHERE bookId = ? AND num = ?`, [bookId, chapterNum]))?.id;
+    }
+
+    const verseResult = await db.get(`SELECT id FROM verse WHERE chapterId = ? AND num = ?`, [chapterId, verseNum]);
+
+    if (!verseResult) {
+      const res = await db.run(`INSERT INTO verse (num, chapterId) VALUES (?, ?)`, [verseNum, chapterId]);
+      verseId = res.lastID;
+    } else {
+      verseId = verseResult.id;
+    }
+
+    await db.run(
+      `INSERT OR IGNORE INTO verse_translation (verseId, lang, text, textNormalized, textDiacritized) VALUES (?, ?, ?, ?, ?)`,
+      [verseId, lang, text, textNormalized, textDiacritized]
+    );
   }
 }
 

@@ -18,6 +18,8 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@amen24/shared": "file:../../packages/shared",
+    "@amen24/ui": "file:../../packages/ui",
     "@babel/runtime": "^7.26.9",
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/bottom-tabs": "^7.2.0",

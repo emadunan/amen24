@@ -48,7 +48,7 @@ sudo systemctl status postgresql.service # Check service availability
 psql -U postgres # Login with postgres through md5 authentication
 ```
 
-#### Run bible database scripts
+#### Run bible sqlite database scripts
 ```bash
 npx tsc createBibleDb.ts --resolveJsonModule --esModuleInterop # Compile the script to JS
 node createBibleDb.js # Run the migration program
