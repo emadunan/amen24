@@ -76,6 +76,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
       <ThemedText style={styles.verseText}>{highlightText(v.text)}</ThemedText>
       <Pressable onPress={handleDirectToChapter}>
         <ThemedText
+        type="subtitle"
           style={[
             styles.verseRef,
             { color: Colors[colorScheme ?? "light"].primary },
@@ -105,19 +106,17 @@ const styles = StyleSheet.create({
   },
   verseText: {
     fontSize: 18,
-    lineHeight: 28,
+    lineHeight: 34,
     textAlign: "justify",
   },
   verseWord: {
     fontSize: 18,
   },
   highlighted: {
-    fontWeight: "bold",
   },
   verseRef: {
     flexWrap: "nowrap",
     textAlign: "center",
-    fontWeight: "bold",
   },
 });
 

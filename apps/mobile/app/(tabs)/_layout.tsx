@@ -22,12 +22,21 @@ export default function TabLayout() {
         tabBarInactiveTintColor: Colors[colorScheme ?? "light"].primary,
         tabBarActiveBackgroundColor: Colors[colorScheme ?? "light"].secondary,
         tabBarInactiveBackgroundColor: Colors[colorScheme ?? "light"].secondary,
+        tabBarLabelStyle: {
+          fontFamily: "AmiriBold",
+          fontSize: 12,
+          lineHeight: 16, // match or slightly exceed fontSize
+          paddingBottom: 4, // optional fine-tuning
+        },
         headerRight: () => <AppHeader />,
         headerShown: true,
         headerStyle: {
           backgroundColor: Colors[colorScheme ?? "light"].background,
         },
         headerTintColor: Colors[colorScheme ?? "light"].text,
+        headerTitleStyle: {
+          fontFamily: "AmiriBold",
+        },
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
@@ -62,6 +71,9 @@ export default function TabLayout() {
         name="search"
         options={{
           title: t("search"),
+          headerTitleStyle: {
+            fontFamily: "AmiriBold"
+          },
           tabBarIcon: ({ color }) => (
             <Feather
               name="search"

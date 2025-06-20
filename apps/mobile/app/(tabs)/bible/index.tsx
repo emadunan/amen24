@@ -48,7 +48,7 @@ const BibleScreen = () => {
       <ThemedView style={styles.container}>
         {books.map((b) => (
           <Pressable onPress={() => handlePress(b)} key={b.id}>
-            <ThemedText style={[styles.bookText, themedTextStyle]}>
+            <ThemedText type="subtitle" style={[styles.bookText, themedTextStyle]}>
               {t(b.bookKey, { ns: "book" })}
             </ThemedText>
           </Pressable>
@@ -76,8 +76,7 @@ const styles = StyleSheet.create({
     margin: 8,
     padding: 8,
     borderWidth: 1,
-    borderRadius: 4,
-    fontWeight: "bold",
+    borderRadius: 2,
     textAlign: "center",
   },
 });

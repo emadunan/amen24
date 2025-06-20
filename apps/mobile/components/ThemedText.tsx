@@ -37,24 +37,27 @@ const styles = StyleSheet.create({
   default: {
     fontSize: 16,
     lineHeight: 24,
+    fontFamily: "AmiriRegular"
   },
   defaultSemiBold: {
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: "600",
+    fontFamily: "AmiriBold"
   },
   title: {
-    fontSize: 32,
-    fontWeight: "bold",
+    fontSize: 22,
     lineHeight: 32,
+    fontFamily: "AmiriBold"
   },
   subtitle: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 18,
+    lineHeight: 32,
+    fontFamily: "AmiriBold"
   },
   link: {
     lineHeight: 30,
     fontSize: 16,
     color: "#0a7ea4",
+    fontFamily: "AmiriRegular"
   },
 });

@@ -26,7 +26,7 @@ export function ThemedTextInput({
         { backgroundColor, color: textColor, borderColor },
         style,
       ]}
-      placeholderTextColor={textColor} // Adjusted to keep it readable
+      placeholderTextColor={textColor}
       {...rest}
     />
   );
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 16,
     lineHeight: 24,
+    fontFamily: "AmiriRegular",
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderWidth: 1,

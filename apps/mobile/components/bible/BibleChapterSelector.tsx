@@ -106,12 +106,13 @@ const styles = StyleSheet.create({
   },
   chapterNumContainer: {
     width: 44,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
     borderRadius: 2,
   },
   chapterNumText: {
     fontSize: 20,
+    lineHeight: 32
   }
 });
 

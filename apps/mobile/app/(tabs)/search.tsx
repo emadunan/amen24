@@ -166,5 +166,6 @@ const styles = StyleSheet.create({
     margin: 16,
     fontSize: 18,
     textAlign: "center",
+    lineHeight: 48
   },
 });

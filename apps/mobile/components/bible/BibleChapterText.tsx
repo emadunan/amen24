@@ -25,7 +25,7 @@ const BibleChapterText: FC<Props> = ({
 }) => {
   const db = useSQLiteContext();
   const { i18n } = useTranslation();
-  const [verses, setVerses] = useState<{ num: number; text: string }[]>([]);
+  const [verses, setVerses] = useState<{ num: number; textDiacritized: string }[]>([]);
 
   const highlightTheme: TextStyle = {
     textDecorationLine: "underline",
@@ -35,9 +35,9 @@ const BibleChapterText: FC<Props> = ({
     const fetchChapter = async () => {
       console.log(chapterNum, bookId, bibleLang);
       
-      const data = await db.getAllAsync<{ num: number; text: string }>(
+      const data = await db.getAllAsync<{ num: number; textDiacritized: string }>(
         `
-        SELECT v.num, vt.text FROM verse v
+        SELECT v.num, vt.textDiacritized FROM verse v
         JOIN chapter c ON v.chapterId = c.id
         JOIN book b ON c.bookId = b.id
         JOIN verse_translation vt ON vt.verseId = v.id
@@ -79,7 +79,7 @@ const BibleChapterText: FC<Props> = ({
               highlighted.includes(verse.num.toString()) && highlightTheme,
             ]}
           >
-            {verse.text}{" "}
+            {verse.textDiacritized}{" "}
           </ThemedText>
         </ThemedText>
       ))}
@@ -94,12 +94,12 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   verseText: {
-    fontSize: 20,
-    lineHeight: 32,
+    fontSize: 22,
+    lineHeight: 48,
   },
   verseNum: {
     fontSize: 12,
-    lineHeight: 32,
+    lineHeight: 48,
     color: "#f00",
   },
 });

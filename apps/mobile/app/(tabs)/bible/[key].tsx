@@ -36,6 +36,9 @@ const BookDrawer: FC = () => {
         headerStyle: {
           backgroundColor: Colors[colorScheme ?? "light"].secondary,
         },
+        headerTitleStyle: {
+          fontFamily: "AmiriBold",
+        },
         drawerStyle: {
           width: 128,
           backgroundColor: Colors[colorScheme ?? "light"].background,

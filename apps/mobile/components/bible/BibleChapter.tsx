@@ -103,7 +103,7 @@ const BibleChapter: FC = () => {
 
   return (
     <ThemedView style={styles.container}>
-      {highlighted.length > 0 && (
+      {/* {highlighted.length > 0 && (
         <View style={styles.toolbar}>
           <Pressable onPress={handleRemoveHighlights}>
             <MaterialIcons
@@ -120,7 +120,7 @@ const BibleChapter: FC = () => {
             />
           </Pressable>
         </View>
-      )}
+      )} */}
       <ScrollView>
         <View
           key={`${i18n.language}-${bookId}-${chapterNum}`}
