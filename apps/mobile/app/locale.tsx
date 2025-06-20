@@ -20,7 +20,7 @@ const LocaleScreen = () => {
       title: t("locale"),
       headerStyle: {
         color: Colors[colorScheme ?? "light"].text,
-        backgroundColor: Colors[colorScheme ?? "light"].background, // Change this to your preferred color
+        backgroundColor: Colors[colorScheme ?? "light"].background,
       },
     });
   }, [t, navigation, colorScheme]);

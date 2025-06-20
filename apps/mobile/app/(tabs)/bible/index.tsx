@@ -19,36 +19,40 @@ const BibleScreen = () => {
   useMobileBackBtn();
 
   const db = useSQLiteContext();
-
-  const [books, setBooks] = useState<{ id: number; key: string }[]>([]);
-
   const { t } = useTranslation();
+
+  const [books, setBooks] = useState<{ id: number; bookKey: string; bookLen: number }[]>([]);
 
   useEffect(() => {
     async function setup() {
-      const result = await db.getAllAsync<{ id: number; key: string }>(
-        "SELECT books.id, books.key, COUNT(chapters.id) as bookLen FROM books LEFT JOIN chapters ON books.id = chapters.bookId GROUP BY key ORDER BY books.id;",
-      );
+      const result = await db.getAllAsync<{ id: number; bookKey: string; bookLen: number }>(
+        `SELECT book.id, book.bookKey, COUNT(chapter.id) as bookLen 
+          FROM book
+          LEFT JOIN chapter ON book.id = chapter.bookId 
+          GROUP BY book.id 
+          ORDER BY book.id;
+        `);
       setBooks(result);
     }
     setup();
   }, []);
 
-  function handlePress(b: any) {
-    router.push(
-      `/(tabs)/bible/${b.key}?bookId=${b.id}&bookLen=${b.bookLen}&chapterNum=1`,
-    );
+
+  function handlePress(b: { id: number; bookKey: string; bookLen: number }) {
+    router.push(`/(tabs)/bible/${b.bookKey}?bookId=${b.id}&bookLen=${b.bookLen}&chapterNum=1`);
   }
+
 
   return (
     <ScrollView>
       <ThemedView style={styles.container}>
         {books.map((b) => (
-          <Pressable onPress={handlePress.bind(this, b)} key={b.id}>
+          <Pressable onPress={() => handlePress(b)} key={b.id}>
             <ThemedText style={[styles.bookText, themedTextStyle]}>
-              {t(b.key, { ns: "book" })}
+              {t(b.bookKey, { ns: "book" })}
             </ThemedText>
           </Pressable>
+
         ))}
       </ThemedView>
     </ScrollView>

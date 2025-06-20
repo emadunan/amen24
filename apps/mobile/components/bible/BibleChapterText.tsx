@@ -4,7 +4,7 @@ import { ThemedText } from "../ThemedText";
 import { useSQLiteContext } from "expo-sqlite";
 import { useTranslation } from "react-i18next";
 
-type BibleLang = "En" | "Ar";
+type BibleLang = "en" | "ar" | "native"; // new lowercase lang codes matching DB
 
 interface Props {
   bibleLang: BibleLang;
@@ -33,12 +33,18 @@ const BibleChapterText: FC<Props> = ({
 
   useEffect(() => {
     const fetchChapter = async () => {
+      console.log(chapterNum, bookId, bibleLang);
+      
       const data = await db.getAllAsync<{ num: number; text: string }>(
-        `SELECT verses${bibleLang}.num, text FROM verses${bibleLang} 
-        LEFT JOIN chapters ON verses${bibleLang}.chapterId = chapters.id 
-        LEFT JOIN books ON chapters.bookId = books.id 
-        WHERE chapters.num = ? AND books.id = ?;`,
-        [chapterNum, bookId],
+        `
+        SELECT v.num, vt.text FROM verse v
+        JOIN chapter c ON v.chapterId = c.id
+        JOIN book b ON c.bookId = b.id
+        JOIN verse_translation vt ON vt.verseId = v.id
+        WHERE c.num = ? AND b.id = ? AND vt.lang = ?
+        ORDER BY v.num ASC
+        `,
+        [chapterNum, bookId, bibleLang],
       );
 
       setVerses(data);
@@ -46,7 +52,7 @@ const BibleChapterText: FC<Props> = ({
     };
 
     fetchChapter();
-  }, [chapterNum, bookId]);
+  }, [chapterNum, bookId, bibleLang]);
 
   function handleHighlight(verseNum: number) {
     const num = verseNum.toString();
@@ -60,13 +66,10 @@ const BibleChapterText: FC<Props> = ({
   return (
     <ThemedText style={styles.chapterContent}>
       {verses.map((verse) => (
-        <ThemedText
-          key={verse.num}
-          onPress={handleHighlight.bind(this, verse.num)}
-        >
-          <ThemedText style={[styles.verseNum]} numberOfLines={1}>
+        <ThemedText key={verse.num} onPress={() => handleHighlight(verse.num)}>
+          <ThemedText style={styles.verseNum} numberOfLines={1}>
             {i18n.language === "ar"
-              ? verse.num.toLocaleString("ar-EG") // Arabic numerals
+              ? verse.num.toLocaleString("ar-EG")
               : verse.num}
             {"\u00A0"}
           </ThemedText>

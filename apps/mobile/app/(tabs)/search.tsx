@@ -18,6 +18,7 @@ import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemedText } from "@/components/ThemedText";
 import { normalizeArabicText } from "@/utils";
+import { buildVerseSearchQuery } from "@/db/queries";
 
 function detectLanguage(text: string): "ar" | "en" {
   return /[\u0600-\u06FF]/.test(text) ? "ar" : "en";
@@ -49,44 +50,29 @@ export default function SearchScreen() {
 
     Keyboard.dismiss();
 
-    const noramlizedText = normalizeArabicText(query);
-
-    lastQueryRef.current = noramlizedText;
+    const normalizedText = normalizeArabicText(query);
+    lastQueryRef.current = normalizedText;
 
     setLoading(true);
     setSearchPerformed(true);
-    setVerses([]); // Clear old results before fetching new ones
+    setVerses([]);
 
-    const language = detectLanguage(noramlizedText);
+    const language = detectLanguage(normalizedText);
     setQuerylang(language);
 
-    const table = language === "ar" ? "versesAr" : "versesEn";
-    const attribute = language === "ar" ? "textNormalized" : "text";
-
-    // Normalize query and split into words
-    const words = noramlizedText.trim().split(/\s+/);
-
-    // Generate the WHERE clause with multiple LIKE conditions
-    const whereClause = words.map(() => `${attribute} LIKE ?`).join(" AND ");
-    const queryParams = words.map((word) => `%${word}%`);
-
     try {
-      const result = await db.getAllAsync<IVerse>(
-        `SELECT ${table}.id, ${table}.num as verseNum, ${table}.textNormalized as text, 
-            chapters.num as chapterNum, books.key as bookKey, books.id as bookId, (SELECT COUNT(*) FROM chapters WHERE chapters.bookId = books.id) as bookLen 
-         FROM ${table} 
-         LEFT JOIN chapters ON ${table}.chapterId = chapters.id 
-         LEFT JOIN books ON chapters.bookId = books.id 
-         WHERE ${whereClause}`,
-        queryParams,
-      );
+      const { sql, params } = buildVerseSearchQuery({
+        lang: language,
+        query: normalizedText,
+      });
 
+      const result = await db.getAllAsync<IVerse>(sql, params);
       setVerses(result);
     } catch (error) {
       console.error("Search error:", error);
     } finally {
       setQuery("");
-      setLoading(false); // Hide loading indicator when search is complete
+      setLoading(false);
     }
   }
 

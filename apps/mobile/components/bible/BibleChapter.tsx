@@ -58,14 +58,21 @@ const BibleChapter: FC = () => {
   }
 
   async function handleCopySelected() {
-    if (highlighted.length === 0) {
-      console.log("No verses selected");
-      return;
-    }
+    if (highlighted.length === 0) return;
 
     const verses = await db.getAllAsync<IVerseRaw>(
-      `SELECT text, verses${bibleLang}.num as num FROM verses${bibleLang} LEFT JOIN chapters ON chapters.id = chapterId WHERE bookId = ? AND chapters.num = ? AND verses${bibleLang}.num IN (${highlighted.map(() => "?").join(",")}) ORDER BY verses${bibleLang}.id`,
-      [bookId, chapterNum, ...highlighted],
+      `
+        SELECT vt.text, v.num as num 
+        FROM verse_translation vt
+        LEFT JOIN verse v ON vt.verseId = v.id
+        LEFT JOIN chapter c ON v.chapterId = c.id
+        WHERE c.bookId = ? 
+          AND c.num = ? 
+          AND v.num IN (${highlighted.map(() => "?").join(",")}) 
+          AND vt.lang = ?
+        ORDER BY v.id
+      `,
+      [bookId, chapterNum, ...highlighted, bibleLang],
     );
 
     let formattedText = "";
@@ -121,7 +128,7 @@ const BibleChapter: FC = () => {
         >
           {i18n.language === "ar" ? (
             <BibleChapterText
-              bibleLang="Ar"
+              bibleLang="ar"
               bookId={bookId}
               chapterNum={chapterNum}
               verseNum={verseNum}
@@ -130,7 +137,7 @@ const BibleChapter: FC = () => {
             />
           ) : (
             <BibleChapterText
-              bibleLang="En"
+              bibleLang="en"
               bookId={bookId}
               chapterNum={chapterNum}
               verseNum={verseNum}
