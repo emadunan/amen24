@@ -1,5 +1,8 @@
 {
   "main": {
+    "exit": "Exit",
+    "exitTitle": "Exit App",
+    "exitDialog": "Do you want to exit?",
     "home": "Home",
     "back": "Back",
     "bible": "Bible",
