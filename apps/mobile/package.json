@@ -12,7 +12,8 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "postinstall": "cd ../../packages/shared && npm install && npm run build"
   },
   "jest": {
     "preset": "jest-expo"
