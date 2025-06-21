@@ -6,6 +6,7 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemedView } from "../ThemedView";
+import { ThemedText } from "../ThemedText";
 
 interface Props {
   chapter: any;
@@ -55,7 +56,7 @@ const ChapterLink: FC<Props> = ({
       style={[styles.chapterItem, selected && selectedChapterItemTheme]}
     >
       <Pressable onPress={handlePress}>
-        <Text
+        <ThemedText
           style={[
             styles.chapterText,
             chapterTextTheme,
@@ -63,7 +64,7 @@ const ChapterLink: FC<Props> = ({
           ]}
         >
           {`${t("chapter.title")} ${i18n.language === "ar" ? Number(chapter).toLocaleString("ar-EG") : chapter}`}
-        </Text>
+        </ThemedText>
       </Pressable>
     </ThemedView>
   );

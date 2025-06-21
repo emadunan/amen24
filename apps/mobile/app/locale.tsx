@@ -17,7 +17,7 @@ const LocaleScreen = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: t("locale"),
+      title: t("main.locale"),
       headerStyle: {
         color: Colors[colorScheme ?? "light"].text,
         backgroundColor: Colors[colorScheme ?? "light"].background,

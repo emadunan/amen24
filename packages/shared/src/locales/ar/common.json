@@ -40,7 +40,7 @@
     "glossarySectionButton": "تصفّح المعجم"
   },
   "chapter": {
-    "chapter": "إصحاح",
+    "title": "إصحاح",
     "showTranslation": "عرض الترجمة",
     "hideTranslation": "إخفاء الترجمة"
   },

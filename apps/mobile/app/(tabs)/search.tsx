@@ -121,7 +121,7 @@ export default function SearchScreen() {
         )
       ) : (
         <ThemedText style={styles.feedbackText}>
-          {t("searchWelcome", { ns: "common" })}
+          {t("main.searchWelcome", { ns: "common" })}
         </ThemedText>
       )}
     </ThemedView>

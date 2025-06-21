@@ -52,7 +52,7 @@ export default function TabLayout() {
         name="index"
         options={{
           href: null,
-          title: t("home"),
+          title: t("main.home"),
           tabBarIcon: ({ color }) => (
             <Feather name="home" size={24} color={color} />
           ),
@@ -61,7 +61,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="bible"
         options={{
-          title: t("bible"),
+          title: t("main.bible"),
           tabBarIcon: ({ color }) => (
             <Feather name="book-open" size={24} color={color} />
           ),
@@ -70,7 +70,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="search"
         options={{
-          title: t("search"),
+          title: t("main.search"),
           headerTitleStyle: {
             fontFamily: "AmiriBold"
           },

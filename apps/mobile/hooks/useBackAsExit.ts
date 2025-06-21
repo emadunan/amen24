@@ -7,12 +7,12 @@ const useBackAsExit = () => {
   useFocusEffect(() => {
     const onBackPress = () => {
       Alert.alert(
-        t("exit-title", { ns: "ui" }),
-        t("exit-dialog", { ns: "ui" }),
+        t("main.exitTitle"),
+        t("main.exitDialog"),
         [
-          { text: t("cancel", { ns: "ui" }), style: "cancel" },
+          { text: t("main.cancel"), style: "cancel" },
           {
-            text: t("exit", { ns: "ui" }),
+            text: t("main.exit"),
             onPress: () => BackHandler.exitApp(),
           },
         ],
