@@ -5,22 +5,22 @@ export function buildVerseSearchQuery({
   lang: string;
   query: string;
 }) {
-  const isArabic = lang === "ar";
-  const attribute = isArabic ? "textNormalized" : "text";
+  // const isArabic = lang === "ar";
+  // const attribute = isArabic ? "textNormalized" : "text";
 
   const words = query.trim().split(/\s+/);
   if (words.length === 0) {
     throw new Error("Query is empty");
   }
 
-  const whereConditions = words.map(() => `vt.${attribute} LIKE ?`).join(" AND ");
+  const whereConditions = words.map(() => `vt.textNormalized LIKE ?`).join(" AND ");
   const queryParams = words.map((word) => `%${word}%`);
   queryParams.unshift(lang); // for vt.lang = ?
 
   const sql = `
     SELECT
       vt.id,
-      vt.${attribute} as text,
+      vt.text,
       v.num as verseNum,
       c.num as chapterNum,
       b.bookKey as bookKey,

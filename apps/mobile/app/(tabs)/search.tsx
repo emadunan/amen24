@@ -19,6 +19,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemedText } from "@/components/ThemedText";
 import { normalizeArabicText } from "@/utils";
 import { buildVerseSearchQuery } from "@/db/queries";
+import { Lang, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef } from "@amen24/shared";
 
 function detectLanguage(text: string): "ar" | "en" {
   return /[\u0600-\u06FF]/.test(text) ? "ar" : "en";
@@ -50,20 +51,28 @@ export default function SearchScreen() {
 
     Keyboard.dismiss();
 
-    const normalizedText = normalizeArabicText(query);
-    lastQueryRef.current = normalizedText;
+    let text = query;
+    let textNormalized = query;
 
     setLoading(true);
     setSearchPerformed(true);
     setVerses([]);
 
-    const language = detectLanguage(normalizedText);
+    const language = detectLanguage(query);
     setQuerylang(language);
+
+    if (language === Lang.ARABIC) {
+      text = replaceWaslaAlef(text);
+      text = removeArDiacritics(text);
+      textNormalized = normalizeArText(text);
+    }
+
+    lastQueryRef.current = text ?? '';
 
     try {
       const { sql, params } = buildVerseSearchQuery({
         lang: language,
-        query: normalizedText,
+        query: textNormalized ?? '',
       });
 
       const result = await db.getAllAsync<IVerse>(sql, params);

@@ -8,6 +8,12 @@ import { useRouter } from "expo-router";
 import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
+import {
+  normalizeArText,
+  removeArDiacritics,
+  replaceWaslaAlef,
+} from "@amen24/shared";
+
 interface Props {
   v: IVerse;
   queryLang: string;
@@ -19,64 +25,118 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
   const router = useRouter();
 
   const words = query.trim().split(/\s+/);
-
-  const isRtlQuery: boolean = queryLang === "ar";
-
-  const rtlStyles = {
-    direction: "rtl" as "rtl" | "ltr",
-  };
-
+  const isRtlQuery = queryLang === "ar";
   const colorScheme = useColorScheme();
 
   const highlightedTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].highlight,
   };
 
-  function handleDirectToChapter() {
+  const handleDirectToChapter = () => {
     router.push(
-      `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}&verseNum=${v.verseNum}`,
+      `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}&verseNum=${v.verseNum}`
     );
-  }
+  };
+
+  const mapIndexToOriginal = (
+    original: string,
+    normalized: string,
+    targetIndex: number
+  ): number => {
+    let originalIndex = 0;
+    let normIndex = 0;
+
+    while (originalIndex < original.length && normIndex < targetIndex) {
+      let char = original[originalIndex];
+      let normChar = char;
+
+      if (queryLang === "ar") {
+        normChar = normalizeArText(removeArDiacritics(replaceWaslaAlef(char)));
+      }
+
+      normIndex += normChar.length;
+      originalIndex++;
+    }
+
+    return originalIndex;
+  };
 
   const highlightText = (text: string) => {
-    if (!query) return text; // If there's no query, return the text as is
+    if (!query) return text;
 
-    // Escape special regex characters in the query words
-    const escapedWords = words.map((word) =>
-      word.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"),
-    );
+    // Normalize query
+    const normalizedQueryWords = words.map((word) => {
+      if (queryLang === "ar") {
+        return normalizeArText(removeArDiacritics(replaceWaslaAlef(word)));
+      }
+      return word;
+    });
 
-    // Create a regex pattern to match any of the words in the array
-    const regex = new RegExp(`(${escapedWords.join("|")})`, "gi");
+    // Normalize full verse
+    let normalizedText = text;
+    if (queryLang === "ar") {
+      normalizedText = normalizeArText(removeArDiacritics(replaceWaslaAlef(text)));
+    }
 
-    // Split the text into words and spaces, keeping track of spaces
-    const parts = text.split(/(\s+)/); // Split by spaces but keep the spaces in the array
-
-    // Process each part and wrap matching words in a highlight style
-    return parts.map((part, index) => {
-      if (regex.test(part)) {
-        // If it's a word that matches the query, highlight it
-        return (
-          <Text key={index} style={[styles.highlighted, highlightedTheme]}>
-            {part}
-          </Text>
-        );
-      } else {
-        // Otherwise, it's just normal text, return it as-is
-        return <Text key={index}>{part}</Text>;
+    // Find matches in normalized text
+    const matches: { start: number; end: number }[] = [];
+    normalizedQueryWords.forEach((word) => {
+      const regex = new RegExp(word, "gi");
+      let match;
+      while ((match = regex.exec(normalizedText)) !== null) {
+        matches.push({ start: match.index, end: match.index + word.length });
       }
     });
+
+    // Merge overlapping matches
+    matches.sort((a, b) => a.start - b.start);
+    const merged: typeof matches = [];
+    for (const m of matches) {
+      if (merged.length && m.start <= merged[merged.length - 1].end) {
+        merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, m.end);
+      } else {
+        merged.push(m);
+      }
+    }
+
+    // Build final output
+    const parts: React.ReactNode[] = [];
+    let currentIndex = 0;
+
+    for (const { start, end } of merged) {
+      const originalStart = mapIndexToOriginal(text, normalizedText, start);
+      const originalEnd = mapIndexToOriginal(text, normalizedText, end);
+
+      if (currentIndex < originalStart) {
+        parts.push(
+          <Text key={`text-${currentIndex}`}>{text.slice(currentIndex, originalStart)}</Text>
+        );
+      }
+
+      parts.push(
+        <Text key={`highlight-${originalStart}`} style={[styles.highlighted, highlightedTheme]}>
+          {text.slice(originalStart, originalEnd)}
+        </Text>
+      );
+
+      currentIndex = originalEnd;
+    }
+
+    if (currentIndex < text.length) {
+      parts.push(
+        <Text key={`last-${currentIndex}`}>{text.slice(currentIndex)}</Text>
+      );
+    }
+
+    return parts;
   };
 
   return (
-    <ThemedView
-      key={v.id}
-      style={[styles.verseContainer, isRtlQuery && rtlStyles]}
-    >
+    <ThemedView style={[styles.verseContainer, isRtlQuery && { direction: "rtl" }]}>
       <ThemedText style={styles.verseText}>{highlightText(v.text)}</ThemedText>
       <Pressable onPress={handleDirectToChapter}>
         <ThemedText
-        type="subtitle"
+          type="subtitle"
           style={[
             styles.verseRef,
             { color: Colors[colorScheme ?? "light"].primary },
@@ -108,9 +168,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 34,
     textAlign: "justify",
-  },
-  verseWord: {
-    fontSize: 18,
   },
   highlighted: {
   },
