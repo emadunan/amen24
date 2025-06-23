@@ -5,8 +5,13 @@ import * as Linking from "expo-linking";
 WebBrowser.maybeCompleteAuthSession();
 
 export async function signInWithGoogle() {
-  const redirectUri = Linking.createURL('auth-callback'); // This works in dev too!
-  const authUrl = `https://test.amen24.org/api/auth/google?state=${encodeURIComponent(redirectUri)}`;
+  const redirectUri = Linking.createURL('auth-callback');
+  const state = encodeURIComponent(JSON.stringify({
+    mobile: true,
+    redirectUri
+  }))
+
+  const authUrl = `https://test.amen24.org/api/auth/google?state=${state}`;
 
   try {
     await WebBrowser.openAuthSessionAsync(authUrl, redirectUri);
