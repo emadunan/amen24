@@ -39,7 +39,7 @@ export class AuthController {
 
   @Post('refresh')
   async refresh(@Req() req: Request, @Res() res: Response) {
-    const isMobile = req.query['mobile'] === 'true';
+    const isMobile = req.query['state'] === 'mobile';;
 
     const refreshToken = isMobile
       ? req.headers['authorization']?.replace('Bearer ', '')
@@ -82,11 +82,13 @@ export class AuthController {
   async googleAuthRedirect(@Req() req, @Res() res) {
     const user = req.user;
 
+    console.log('OAuth Callback Query:', req.query);
+
     if (!user) {
       return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
-    const isMobile = req.query['mobile'] === 'true';
+    const isMobile = req.query['state'] === 'mobile';;
     const redirectUri = req.query['redirectUri'];
 
     if (isMobile && redirectUri) {
