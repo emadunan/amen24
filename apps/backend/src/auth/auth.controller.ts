@@ -75,19 +75,7 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleLogin(@Req() req, @Res() res): Promise<void> {
-    const isMobile = req.query['mobile'] === 'true';
-
-    if (isMobile) {
-      res.cookie('mobile_client', 'true', {
-        httpOnly: false, // must be readable by the browser
-        sameSite: 'lax',
-        maxAge: 5 * 60 * 1000, // 5 mins
-      });
-    }
-
-    return; // AuthGuard will handle redirect to Google
-  }
+  async googleLogin(): Promise<void> {}
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
@@ -100,8 +88,8 @@ export class AuthController {
       return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
-    const isMobile = req.cookies['mobile_client'] === 'true';
-    const redirectUri = req.query['redirectUri'];
+    const isMobile = req.query.state?.startsWith('amen24://');
+    const redirectUri = req.query.state;
 
     if (isMobile && redirectUri) {
       const tokens = await this.authService.loadTokens(user, undefined, true);
