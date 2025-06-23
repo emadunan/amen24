@@ -23,6 +23,7 @@ import { Colors } from "@/constants";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const router = useRouter();
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
@@ -42,8 +43,6 @@ export default function RootLayout() {
   }, [loaded]);
 
   useEffect(() => {
-    const router = useRouter();
-
     const handleDeepLink = (event: Linking.EventType) => {
       const url = event.url;
       const { queryParams } = Linking.parse(url);
@@ -55,7 +54,7 @@ export default function RootLayout() {
         // Handle token storage, maybe navigate to home
         console.log("Received tokens from deep link");
         console.log(accessToken, refreshToken);
-        
+
         // Save tokens to secure storage or context
         router.replace('/'); // or any page
       }
