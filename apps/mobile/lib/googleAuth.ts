@@ -6,7 +6,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 export async function signInWithGoogle() {
   const redirectUri = Linking.createURL('auth-callback'); // This works in dev too!
-  const authUrl = `https://test.amen24.org/api/auth/google?state=mobile&redirectUri=${encodeURIComponent(redirectUri)}`;
+  const authUrl = `https://test.amen24.org/api/auth/google?mobile=true&redirectUri=${encodeURIComponent(redirectUri)}`;
 
   try {
     await WebBrowser.openAuthSessionAsync(authUrl, redirectUri);

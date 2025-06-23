@@ -39,7 +39,7 @@ export class AuthController {
 
   @Post('refresh')
   async refresh(@Req() req: Request, @Res() res: Response) {
-    const isMobile = req.query['state'] === 'mobile';;
+    const isMobile = req.query['mobile'] === 'true';
 
     const refreshToken = isMobile
       ? req.headers['authorization']?.replace('Bearer ', '')
@@ -75,7 +75,19 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleLogin(): Promise<void> { }
+  async googleLogin(@Req() req, @Res() res): Promise<void> {
+    const isMobile = req.query['mobile'] === 'true';
+
+    if (isMobile) {
+      res.cookie('mobile_client', 'true', {
+        httpOnly: false, // must be readable by the browser
+        sameSite: 'lax',
+        maxAge: 5 * 60 * 1000, // 5 mins
+      });
+    }
+
+    return; // AuthGuard will handle redirect to Google
+  }
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
@@ -88,7 +100,7 @@ export class AuthController {
       return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
-    const isMobile = req.query['state'] === 'mobile';;
+    const isMobile = req.cookies['mobile_client'] === 'true';
     const redirectUri = req.query['redirectUri'];
 
     if (isMobile && redirectUri) {
