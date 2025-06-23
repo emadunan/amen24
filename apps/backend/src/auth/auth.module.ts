@@ -11,6 +11,7 @@ import { AuthController } from './auth.controller';
 import { FacebookStratrgy } from './strategies/facebook.strategy';
 import { AuditingModule } from '../auditing/auditing.module';
 import { ProfilesModule } from '../profiles/profiles.module';
+import { GoogleMobileStrategy } from './strategies/google-mobile.strategy';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ProfilesModule } from '../profiles/profiles.module';
     LocalStrategy,
     JwtStrategy,
     GoogleStrategy,
+    GoogleMobileStrategy,
     FacebookStratrgy,
   ],
   exports: [AuthService],

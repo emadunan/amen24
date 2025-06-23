@@ -5,7 +5,7 @@ import { AuthService } from '../auth.service';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
+export class GoogleMobileStrategy extends PassportStrategy(Strategy, 'google-mobile') {
   constructor(
     private authService: AuthService,
     configService: ConfigService,
@@ -13,7 +13,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: configService.getOrThrow<string>('GOOGLE_CLIENT_ID'),
       clientSecret: configService.getOrThrow<string>('GOOGLE_CLIENT_SECRET'),
-      callbackURL: configService.getOrThrow<string>('GOOGLE_CALLBACK_URL'),
+      callbackURL: configService.getOrThrow<string>('GOOGLE_MOBILE_CALLBACK_URL'),
       scope: ['profile', 'email'],
     });
   }

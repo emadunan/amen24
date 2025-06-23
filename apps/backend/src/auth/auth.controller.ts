@@ -77,21 +77,32 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   async googleLogin(): Promise<void> { }
 
-  @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req, @Res() res) {
+  @Get('google/mobile')
+  @UseGuards(AuthGuard('google-mobile'))
+  async googleMobileLogin(): Promise<void> { }
+
+  @Get('google/mobile/callback')
+  @UseGuards(AuthGuard('google-mobile'))
+  async googleMobileAuthRedirect(@Req() req, @Res() res) {
     const user = req.user as any;
-    const isMobile = user?.isMobile === true;
-    const redirectUri = user?.redirectUri;
 
     if (!user) {
       return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
-    if (isMobile && redirectUri?.startsWith('http') === false) {
-      const tokens = await this.authService.loadTokens(user, undefined, true);
-      const deepLink = `${redirectUri}?accessToken=${tokens.accessToken}&refreshToken=${tokens.refreshToken}`;
-      return res.redirect(deepLink);
+    const tokens = await this.authService.loadTokens(user, undefined, true);
+    console.log("##deepLink Tokens: ", tokens);
+    const deepLink = `amen24://auth-callback?accessToken=${tokens.accessToken}&refreshToken=${tokens.refreshToken}`;
+    return res.redirect(deepLink);
+  }
+
+  @Get('google/callback')
+  @UseGuards(AuthGuard('google'))
+  async googleAuthRedirect(@Req() req, @Res() res) {
+    const user = req.user as any;
+
+    if (!user) {
+      return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
     await this.authService.loadTokens(user, res, false);

@@ -9,7 +9,7 @@ export async function signInWithGoogle() {
     mobile: true,
     redirectUri
   }));
-  const authUrl = `https://test.amen24.org/api/auth/google?state=${state}`;
+  const authUrl = `https://test.amen24.org/api/auth/google/mobile`;
 
   const result = await WebBrowser.openAuthSessionAsync(authUrl, redirectUri);
   return result.type === "success" ? { success: true } : { success: false };
