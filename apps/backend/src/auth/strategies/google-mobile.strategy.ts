@@ -13,7 +13,7 @@ export class GoogleMobileStrategy extends PassportStrategy(Strategy, 'google-mob
     super({
       clientID: configService.getOrThrow<string>('GOOGLE_CLIENT_ID'),
       clientSecret: configService.getOrThrow<string>('GOOGLE_CLIENT_SECRET'),
-      callbackURL: configService.getOrThrow<string>('GOOGLE_MOBILE_CALLBACK_URL'),
+      callbackURL: 'https://test.amen24.org/api/auth/google/mobile/callback',
       scope: ['profile', 'email'],
     });
   }
