@@ -39,7 +39,7 @@ export class AuthController {
 
   @Post('refresh')
   async refresh(@Req() req: Request, @Res() res: Response) {
-    const isMobile = req.headers['x-mobile-client'] === 'true';
+    const isMobile = req.query['mobile'] === 'true';
 
     const refreshToken = isMobile
       ? req.headers['authorization']?.replace('Bearer ', '')
@@ -50,7 +50,7 @@ export class AuthController {
     }
 
     const tokens = await this.authService.refreshAccessToken(refreshToken, res, isMobile);
-    
+
     if (isMobile) return res.json(tokens);
     return res.sendStatus(204);
   }
@@ -86,11 +86,15 @@ export class AuthController {
       return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
-    const isMobile = req.headers['x-mobile-client'] === 'true';
+    const isMobile = req.query['mobile'] === 'true';
+    const redirectUri = req.query['redirectUri'];
 
-    if (isMobile) {
+    if (isMobile && redirectUri) {
       const tokens = await this.authService.loadTokens(user, undefined, true);
-      return res.json(tokens);
+      const { accessToken, refreshToken } = tokens;
+
+      const deepLink = `${redirectUri}?accessToken=${accessToken}&refreshToken=${refreshToken}`;
+      return res.redirect(deepLink);
     }
 
     await this.authService.loadTokens(user, res, false);

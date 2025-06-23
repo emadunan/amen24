@@ -4,7 +4,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -15,6 +15,8 @@ import { SQLiteProvider } from "expo-sqlite";
 import { I18nextProvider } from "react-i18next";
 import i18n from "@/i18n/i18n";
 import * as SystemUI from "expo-system-ui";
+import * as Linking from 'expo-linking';
+
 import { Colors } from "@/constants";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -38,6 +40,39 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  useEffect(() => {
+    const router = useRouter();
+
+    const handleDeepLink = (event: Linking.EventType) => {
+      const url = event.url;
+      const { queryParams } = Linking.parse(url);
+
+      const accessToken = queryParams?.accessToken;
+      const refreshToken = queryParams?.refreshToken;
+
+      if (accessToken && refreshToken) {
+        // Handle token storage, maybe navigate to home
+        console.log("Received tokens from deep link");
+        console.log(accessToken, refreshToken);
+        
+        // Save tokens to secure storage or context
+        router.replace('/'); // or any page
+      }
+    };
+
+    const subscription = Linking.addEventListener('url', handleDeepLink);
+
+    // Optional: handle the initial URL (cold start)
+    (async () => {
+      const initialUrl = await Linking.getInitialURL();
+      if (initialUrl) handleDeepLink({ url: initialUrl });
+    })();
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   if (!loaded) {
     return null;
