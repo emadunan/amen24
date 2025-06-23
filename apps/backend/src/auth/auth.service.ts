@@ -136,7 +136,7 @@ export class AuthService {
     }
   }
 
-  async loadTokens(user: User, response: Response): Promise<void> {
+  async loadTokens(user: User, response: Response | undefined, isMobile = false): Promise<any> {
     const {
       resetPasswordExpires,
       resetPasswordToken,
@@ -157,7 +157,7 @@ export class AuthService {
       ...profileRest
     } = user.profile;
 
-    const access_token = this.jwtService.sign({
+    const accessToken = this.jwtService.sign({
       ...rest,
       profile: profileRest,
     });
@@ -178,6 +178,12 @@ export class AuthService {
       refreshToken: await bcrypt.hash(refreshToken, this.bcryptRounds),
     });
 
+    if (isMobile) {
+      return { accessToken, refreshToken };
+    }
+
+    if (!response) return;
+
     response.cookie('refresh_token', refreshToken, {
       httpOnly: true,
       sameSite: 'lax',
@@ -185,7 +191,7 @@ export class AuthService {
       secure: this.isSecureResponse,
     });
 
-    response.cookie('access_token', access_token, {
+    response.cookie('access_token', accessToken, {
       httpOnly: true,
       sameSite: 'lax',
       maxAge: this.jwtAccessMaxAge * 60 * 1000,
@@ -209,11 +215,12 @@ export class AuthService {
 
   async refreshAccessToken(
     refreshToken: string,
-    response: Response,
-  ): Promise<void> {
+    response?: Response,
+    isMobile = false,
+  ): Promise<void | { accessToken: string; refreshToken: string }> {
     const payload = this.jwtService.decode(refreshToken);
 
-    if (!payload?.email) {
+    if (!payload || typeof payload !== 'object' || !payload.email) {
       throw new UnauthorizedException(ERROR_KEYS.INVALID_REFRESH_TOKEN);
     }
 
@@ -229,7 +236,7 @@ export class AuthService {
       throw new UnauthorizedException(ERROR_KEYS.INVALID_REFRESH_TOKEN);
     }
 
-    // Get user from profile (we assume there's always one preferred or primary user)
+    // Get user
     const user = await this.usersService.findOneByEmailProvider(
       payload.email,
       payload.provider,
@@ -237,6 +244,7 @@ export class AuthService {
 
     if (!user) throw new UnauthorizedException(ERROR_KEYS.USER_NOT_FOUND);
 
+    // Generate new access and refresh tokens
     const {
       resetPasswordExpires,
       resetPasswordToken,
@@ -257,29 +265,34 @@ export class AuthService {
       ...profileRest
     } = user.profile;
 
-    const access_token = this.jwtService.sign({
+    const accessToken = this.jwtService.sign({
       ...rest,
       profile: profileRest,
     });
 
-    // Optionally: rotate refresh token
-    const { email, displayName, provider } = user;
     const newRefreshToken = this.jwtService.sign(
-      { email, displayName, provider },
+      { email: user.email, displayName: user.displayName, provider: user.provider },
       {
         secret: this.jwtRefreshSecret,
         expiresIn: this.jwtRefreshExpiresIn,
       },
     );
 
-    // Save new hashed token
-    const refreshTokenHash = await bcrypt.hash(
-      newRefreshToken,
-      this.bcryptRounds,
-    );
+    // Save hashed new refresh token
+    const hashed = await bcrypt.hash(newRefreshToken, this.bcryptRounds);
     await this.profilesService.update(user.email, user.provider, {
-      refreshToken: refreshTokenHash,
+      refreshToken: hashed,
     });
+
+    if (isMobile) {
+      return {
+        accessToken,
+        refreshToken: newRefreshToken,
+      };
+    }
+
+    // ✅ Guard cookie logic
+    if (!response) return;
 
     response.cookie('refresh_token', newRefreshToken, {
       httpOnly: true,
@@ -288,13 +301,14 @@ export class AuthService {
       secure: this.isSecureResponse,
     });
 
-    response.cookie('access_token', access_token, {
+    response.cookie('access_token', accessToken, {
       httpOnly: true,
       sameSite: 'lax',
       maxAge: this.jwtAccessMaxAge * 60 * 1000,
       secure: this.isSecureResponse,
     });
   }
+
 
   async requestPasswordRestore(email: string) {
     const user = await this.usersService.findOneByEmailProvider(

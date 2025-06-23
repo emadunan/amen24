@@ -13,7 +13,7 @@
     "test": "jest --watchAll",
     "lint": "expo lint",
     "format": "prettier . --write",
-    "postinstall": "cd ../../packages/shared && npm install && npm run build"
+    "postinstall": "cd ../../packages/shared && npm install && npm run build && cd ../ui && npm install && npm run build"
   },
   "jest": {
     "preset": "jest-expo"
@@ -28,6 +28,7 @@
     "@react-navigation/elements": "^2.2.5",
     "@react-navigation/native": "^7.0.14",
     "@reduxjs/toolkit": "^2.5.0",
+    "dotenv": "^16.5.0",
     "expo": "~52.0.25",
     "expo-blur": "~14.0.3",
     "expo-clipboard": "~7.0.1",
@@ -58,7 +59,9 @@
     "react-native-webview": "13.12.5",
     "react-redux": "^9.2.0",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "expo-auth-session": "~6.0.3",
+    "expo-crypto": "~14.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

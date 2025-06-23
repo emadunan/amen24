@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import RtlReducer from "./rtl/rtlSlice";
+import RtlReducer from "./slices/rtlSlice";
 
 export const store = configureStore({
   reducer: {

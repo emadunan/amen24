@@ -1,4 +1,6 @@
-{
+import "dotenv/config";
+
+export default {
   "expo": {
     "name": "Amen24",
     "slug": "amen24",
@@ -68,7 +70,8 @@
       },
       "eas": {
         "projectId": "c197183c-5985-4300-a147-d737a73a267f"
-      }
+      },
+      API_URL: process.env.API_URL
     }
   }
 }

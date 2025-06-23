@@ -7,7 +7,7 @@ const AppHeader = () => {
   return (
     <View style={styles.btnsContainer}>
       <LocaleSelector />
-      {/* <LoginBtn /> */}
+      <LoginBtn />
     </View>
   );
 };

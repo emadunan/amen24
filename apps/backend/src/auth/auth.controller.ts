@@ -39,13 +39,19 @@ export class AuthController {
 
   @Post('refresh')
   async refresh(@Req() req: Request, @Res() res: Response) {
-    const refreshToken = req.cookies['refresh_token'];
+    const isMobile = req.headers['x-mobile-client'] === 'true';
+
+    const refreshToken = isMobile
+      ? req.headers['authorization']?.replace('Bearer ', '')
+      : req.cookies['refresh_token'];
 
     if (!refreshToken) {
       throw new UnauthorizedException('Refresh token not provided');
     }
 
-    await this.authService.refreshAccessToken(refreshToken, res);
+    const tokens = await this.authService.refreshAccessToken(refreshToken, res, isMobile);
+    
+    if (isMobile) return res.json(tokens);
     return res.sendStatus(204);
   }
 
@@ -69,27 +75,31 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleLogin(): Promise<void> {}
+  async googleLogin(): Promise<void> { }
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req, @Res() res) {
-    const user = req.user; // This is set by GoogleStrategy after validation
+    const user = req.user;
 
     if (!user) {
       return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
-    // Store JWT token as an HTTP-only cookie
-    await this.authService.loadTokens(user, res);
+    const isMobile = req.headers['x-mobile-client'] === 'true';
 
-    // Redirect to frontend (no token in URL for better security)
+    if (isMobile) {
+      const tokens = await this.authService.loadTokens(user, undefined, true);
+      return res.json(tokens);
+    }
+
+    await this.authService.loadTokens(user, res, false);
     return res.redirect(this.appUrl);
   }
 
   @Get('facebook')
   @UseGuards(AuthGuard('facebook'))
-  async facebookLogin(): Promise<void> {}
+  async facebookLogin(): Promise<void> { }
 
   @Get('facebook/callback')
   @UseGuards(AuthGuard('facebook'))
