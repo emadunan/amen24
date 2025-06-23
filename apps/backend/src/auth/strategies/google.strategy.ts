@@ -17,6 +17,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       callbackURL: configService.getOrThrow<string>('GOOGLE_CALLBACK_URL'),
       scope: ['profile', 'email'],
       passReqToCallback: true,
+      state: false,
     });
   }
 
@@ -27,6 +28,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: Profile,
     done: VerifyCallback,
   ) {
+    console.log(req.query);
+
     const state = req.query.state;
     let redirectUri: string | undefined = undefined;
     let isMobile = false;

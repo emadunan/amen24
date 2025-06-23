@@ -80,28 +80,24 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req, @Res() res) {
-    const user = req.user;
-
-    console.log('OAuth Callback Query:', req.query);
+    const user = req.user as any;
+    const isMobile = user?.isMobile === true;
+    const redirectUri = user?.redirectUri;
 
     if (!user) {
       return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
     }
 
-    const redirectUri = (req.user as any).redirectUri;
-    const isMobile = (req.user as any).isMobile;
-
-    if (isMobile && redirectUri) {
+    if (isMobile && redirectUri?.startsWith('http') === false) {
       const tokens = await this.authService.loadTokens(user, undefined, true);
-      const { accessToken, refreshToken } = tokens;
-
-      const deepLink = `${redirectUri}?accessToken=${accessToken}&refreshToken=${refreshToken}`;
+      const deepLink = `${redirectUri}?accessToken=${tokens.accessToken}&refreshToken=${tokens.refreshToken}`;
       return res.redirect(deepLink);
     }
 
     await this.authService.loadTokens(user, res, false);
     return res.redirect(this.appUrl);
   }
+
 
   @Get('facebook')
   @UseGuards(AuthGuard('facebook'))
