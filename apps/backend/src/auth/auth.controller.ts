@@ -91,8 +91,9 @@ export class AuthController {
     }
 
     const tokens = await this.authService.loadTokens(user, undefined, true);
-    console.log("##deepLink Tokens: ", tokens);
+    // ✅ Hardcoded deep link to your mobile app
     const deepLink = `amen24://auth-callback?accessToken=${tokens.accessToken}&refreshToken=${tokens.refreshToken}`;
+    console.log('✅ Redirecting to:', deepLink);
     return res.redirect(deepLink);
   }
 

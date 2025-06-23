@@ -26,7 +26,7 @@ export class GoogleMobileStrategy extends PassportStrategy(Strategy, 'google-mob
   ) {
     const user = await this.authService.validateOAuthUser(profile);
     if (!user) throw new UnauthorizedException();
-
     return done(null, user);
   }
 }
+
