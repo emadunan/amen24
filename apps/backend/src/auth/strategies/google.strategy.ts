@@ -24,6 +24,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: Profile,
     done: VerifyCallback,
   ) {
+    console.log("/google ENDPOINT CALLED!");
+    
     const user = await this.authService.validateOAuthUser(profile);
     if (!user) throw new UnauthorizedException();
 

@@ -24,6 +24,8 @@ export class GoogleMobileStrategy extends PassportStrategy(Strategy, 'google-mob
     profile: Profile,
     done: VerifyCallback,
   ) {
+    console.log("/google/mobile ENDPOINT CALLED!");
+    
     const user = await this.authService.validateOAuthUser(profile);
     if (!user) throw new UnauthorizedException();
     return done(null, user);

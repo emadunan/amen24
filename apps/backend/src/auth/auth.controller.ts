@@ -75,15 +75,24 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleLogin(): Promise<void> {
-    console.log("/google ENDPOINT CALLED!");
+  async googleLogin(): Promise<void> {}
+
+  @Get('google/callback')
+  @UseGuards(AuthGuard('google'))
+  async googleAuthRedirect(@Req() req, @Res() res) {
+    const user = req.user as any;
+
+    if (!user) {
+      return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
+    }
+
+    await this.authService.loadTokens(user, res, false);
+    return res.redirect(this.appUrl);
   }
 
   @Get('google/mobile')
   @UseGuards(AuthGuard('google-mobile'))
-  async googleMobileLogin(): Promise<void> {
-    console.log("/google/mobile ENDPOINT CALLED!");
-  }
+  async googleMobileLogin(): Promise<void> {}
 
   @Get('google/mobile/callback')
   @UseGuards(AuthGuard('google-mobile'))
@@ -100,20 +109,6 @@ export class AuthController {
     console.log('✅ Redirecting to:', deepLink);
     return res.redirect(deepLink);
   }
-
-  @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req, @Res() res) {
-    const user = req.user as any;
-
-    if (!user) {
-      return res.redirect(`${this.appUrl}?error=AuthenticationFailed`);
-    }
-
-    await this.authService.loadTokens(user, res, false);
-    return res.redirect(this.appUrl);
-  }
-
 
   @Get('facebook')
   @UseGuards(AuthGuard('facebook'))
