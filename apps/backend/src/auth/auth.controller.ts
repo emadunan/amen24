@@ -75,11 +75,15 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleLogin(): Promise<void> { }
+  async googleLogin(): Promise<void> {
+    console.log("/google ENDPOINT CALLED!");
+  }
 
   @Get('google/mobile')
   @UseGuards(AuthGuard('google-mobile'))
-  async googleMobileLogin(): Promise<void> { }
+  async googleMobileLogin(): Promise<void> {
+    console.log("/google/mobile ENDPOINT CALLED!");
+  }
 
   @Get('google/mobile/callback')
   @UseGuards(AuthGuard('google-mobile'))
