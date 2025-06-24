@@ -1,14 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
 import RtlReducer from "./slices/rtlSlice";
+import { authApi } from "./apis/authApi";
 
-export const store = configureStore({
-  reducer: {
-    rtl: RtlReducer,
-  },
-});
+export const MakeStore = () => {
+  const store = configureStore({
+    reducer: {
+      rtl: RtlReducer,
+      [authApi.reducerPath]: authApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware()
+        .concat(authApi.middleware)
+  });
 
-// Infer the `RootState`,  `AppDispatch`, and `AppStore` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
+  return store;
+}
+
+export type AppStore = ReturnType<typeof MakeStore>;
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<AppStore["getState"]>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch;
-export type AppStore = typeof store;
+export type AppDispatch = AppStore["dispatch"];
+
+
+

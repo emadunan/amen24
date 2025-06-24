@@ -61,7 +61,8 @@
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "expo-auth-session": "~6.0.3",
-    "expo-crypto": "~14.0.2"
+    "expo-crypto": "~14.0.2",
+    "expo-secure-store": "~14.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

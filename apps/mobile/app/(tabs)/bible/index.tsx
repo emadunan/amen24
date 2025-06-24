@@ -8,6 +8,7 @@ import { useSQLiteContext } from "expo-sqlite";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import useMobileBackBtn from "@/hooks/useBackAsExit";
+import { useGetMeQuery } from "@/store/apis/authApi";
 
 const BibleScreen = () => {
   const router = useRouter();
@@ -15,6 +16,9 @@ const BibleScreen = () => {
   const themedTextStyle = {
     borderColor: colorScheme === "light" ? Colors.light.text : Colors.dark.text,
   };
+
+  const { data: user } = useGetMeQuery();
+  console.log(user);
 
   useMobileBackBtn();
 

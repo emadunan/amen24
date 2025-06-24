@@ -59,7 +59,8 @@ export default {
         }
       ],
       "expo-font",
-      "expo-localization"
+      "expo-localization",
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true

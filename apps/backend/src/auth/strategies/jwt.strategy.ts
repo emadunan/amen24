@@ -9,7 +9,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
-        (req: Request) => req?.cookies?.access_token,
+        // ✅ First check for Bearer token in header (mobile apps)
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+
+        // ✅ Then fallback to access_token cookie (web)
+        (req: Request) => req?.cookies?.access_token || null,
       ]),
       ignoreExpiration: false,
       secretOrKey: configService.getOrThrow<string>('JWT_ACCESS_SECRET'),
@@ -17,7 +21,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    if (!payload) throw new UnauthorizedException();
+    if (!payload) {
+      throw new UnauthorizedException();
+    }
     return { ...payload };
   }
 }

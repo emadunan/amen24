@@ -1,0 +1,86 @@
+import { ERROR_KEYS } from "@amen24/shared";
+import {
+  fetchBaseQuery,
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+} from "@reduxjs/toolkit/query";
+import { Mutex } from "async-mutex";
+
+// To prevent multiple refreshes
+const mutex = new Mutex();
+
+interface Options {
+  useBearerToken?: boolean;
+  getToken?: () => Promise<string | null>;
+  onAuthFailure?: () => void; // optional callback
+}
+
+export const createBaseQueryWithReauth = (
+  baseUrl: string,
+  segment: string,
+  options?: Options
+): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> => {
+  const rawBaseQuery = fetchBaseQuery({
+    baseUrl,
+    credentials: options?.useBearerToken ? undefined : "include",
+    prepareHeaders: async (headers) => {
+      if (options?.useBearerToken && options.getToken) {
+        const token = await options.getToken();
+        if (token) {
+          headers.set("Authorization", `Bearer ${token}`);
+        }
+      }
+      return headers;
+    },
+  });
+
+  return async (args, api, extraOptions) => {
+    // Prefix URL with segment if needed
+    if (typeof args === "string") {
+      args = `/${segment}${args.startsWith("/") ? args : `/${args}`}`;
+    } else if ("url" in args && !args.url.startsWith("http") && !args.url.startsWith("/auth")) {
+      args = {
+        ...args,
+        url: `/${segment}${args.url.startsWith("/") ? args.url : `/${args.url}`}`,
+      };
+    }
+
+    let result = await rawBaseQuery(args, api, extraOptions);
+
+    // Reauth flow
+    if (
+      result.error?.status === 401 &&
+      ((result.error.data as { message?: string })?.message === ERROR_KEYS.SESSION_NOT_EXIST ||
+        (result.error.data as { message?: string })?.message === ERROR_KEYS.SESSION_EXPIRED)
+    ) {
+      console.log("[Reauth] Token expired or session missing");
+
+      if (!mutex.isLocked()) {
+        const release = await mutex.acquire();
+        try {
+          const refreshResult = await rawBaseQuery(
+            { url: "/auth/refresh", method: "POST" },
+            api,
+            extraOptions
+          );
+
+          if (!refreshResult.error) {
+            console.log("[Reauth] Retrying original request after refresh...");
+            result = await rawBaseQuery(args, api, extraOptions);
+          } else {
+            console.warn("[Reauth] Refresh failed");
+            options?.onAuthFailure?.();
+          }
+        } finally {
+          release();
+        }
+      } else {
+        await mutex.waitForUnlock();
+        result = await rawBaseQuery(args, api, extraOptions);
+      }
+    }
+
+    return result;
+  };
+};
