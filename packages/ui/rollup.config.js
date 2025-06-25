@@ -75,4 +75,21 @@ export default [
     external,
     plugins,
   },
+  {
+    input: "src/store/index.ts",
+    output: [
+      {
+        file: "dist/store.esm.js",
+        format: "esm",
+        sourcemap: true,
+      },
+      {
+        file: "dist/store.cjs.js",
+        format: "cjs",
+        sourcemap: true,
+      },
+    ],
+    external,
+    plugins,
+  },
 ];

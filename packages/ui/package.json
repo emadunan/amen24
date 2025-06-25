@@ -17,6 +17,11 @@
       "require": "./dist/utils.cjs.js",
       "types": "./dist/utils/index.d.ts"
     },
+    "./store": {
+      "import": "./dist/store.esm.js",
+      "require": "./dist/store.cjs.js",
+      "types": "./dist/store/index.d.ts"
+    },
     "./dist/index.css": "./dist/index.css"
   },
   "scripts": {
