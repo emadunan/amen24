@@ -18,7 +18,13 @@ export const createAuthApi = (baseUrl: string, options: Options) =>
     baseQuery: createBaseQueryWithReauth(baseUrl, "auth", options),
     endpoints: (builder) => ({
       getMe: builder.query<User | null, void>({
-        query: () => `/me`,
+        query: () => {
+          console.log("Endpoint called /me");
+          console.log("BaseURL: ", baseUrl);
+          
+          
+          return `/me`;
+        },
         providesTags: ["User"],
       }),
       login: builder.mutation<void, UserLogin>({

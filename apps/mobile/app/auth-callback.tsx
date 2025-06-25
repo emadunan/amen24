@@ -1,4 +1,3 @@
-// app/auth-callback.tsx
 import { useEffect } from "react";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { saveTokens } from "@/lib/auth";
@@ -8,15 +7,15 @@ export default function AuthCallbackScreen() {
   const router = useRouter();
 
   useEffect(() => {
-  if (accessToken && refreshToken) {
-    console.log("✅ Received tokens via deep link:");
-    console.log(accessToken, refreshToken);
+    if (accessToken && refreshToken) {
+      console.log("✅ Received tokens via deep link:");
+      console.log(accessToken);
 
-    saveTokens(accessToken as string, refreshToken as string);
+      saveTokens(accessToken as string, refreshToken as string);
 
-    router.replace("/bible");
-  }
-}, []);
+      router.replace("/bible");
+    }
+  }, []);
 
 
   return null;

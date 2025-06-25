@@ -20,6 +20,11 @@ config.resolver.nodeModulesPaths = [
   path.resolve(workspaceRoot, "node_modules"),
 ];
 
+// 👇 Add this to ensure subpath "@amen24/ui/store" is resolved
+config.resolver.extraNodeModules = {
+  "@amen24/ui": path.resolve(workspaceRoot, "packages/ui"),
+};
+
 // Optional: If using symlinked modules
 config.resolver.disableHierarchicalLookup = true;
 
