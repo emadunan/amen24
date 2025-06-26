@@ -11,7 +11,7 @@ type Options = {
   onAuthFailure?: () => void;
 }
 
-export const createAuthApi = (baseUrl: string, options: Options) =>
+export const createAuthApi = (baseUrl: string, options?: Options) =>
   createApi({
     reducerPath: "authApi",
     tagTypes: ["User"],

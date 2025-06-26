@@ -13,5 +13,3 @@ export * from "./apis/quotaTrackerApi";
 
 export * from "./slices/searchSlice";
 export * from "./slices/navigatorSlice";
-
-export * from "./crossBaseQueryWithReauth";
