@@ -8,7 +8,7 @@ const LoginBtn = () => {
   const router = useRouter();
 
   function handleRedirect() {
-    router.replace("/login");
+    router.replace("/(tabs)/login");
   }
 
   return (

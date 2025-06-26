@@ -8,3 +8,8 @@ export async function saveTokens(accessToken: string, refreshToken: string) {
 export async function getAccessToken() {
   return await SecureStore.getItemAsync('accessToken');
 }
+
+export const logout = async () => {
+  await SecureStore.deleteItemAsync("accessToken");
+  await SecureStore.deleteItemAsync("refreshToken");
+};

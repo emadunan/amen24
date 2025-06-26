@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import AppHeader from "@/components/app-header/AppHeader";
 import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "@/constants";
+import { Ionicons } from "@expo/vector-icons";
+import BackBtn from "@/components/ui/BackBtn";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -82,6 +84,32 @@ export default function TabLayout() {
               style={I18nManager.isRTL && styles.flipIcon}
             />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          href: null,
+          title: t('userMenu.favorite'),
+          headerLeft: () => <BackBtn uri={"/bible"} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="login"
+        options={{
+          href: null,
+          title: t('userMenu.favorite'),
+          headerLeft: () => <BackBtn uri={"/bible"} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="locale"
+        options={{
+          href: null,
+          title: t('userMenu.favorite'),
+          headerLeft: () => <BackBtn uri={"/bible"} />,
         }}
       />
     </Tabs>

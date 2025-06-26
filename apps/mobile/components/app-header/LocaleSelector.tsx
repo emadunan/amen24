@@ -8,7 +8,7 @@ const LocaleSelector = () => {
   const router = useRouter();
 
   function handleRedirect() {
-    router.replace("/locale");
+    router.replace("/(tabs)/locale");
   }
 
   return (
