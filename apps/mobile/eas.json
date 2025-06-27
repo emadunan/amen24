@@ -6,17 +6,26 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "API_URL": "https://test.amen24.org/api"
+      }
     },
     "preview": {
       "distribution": "internal",
+      "env": {
+        "API_URL": "https://test.amen24.org/api"
+      },
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleRelease"
       }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "API_URL": "https://amen24.org/api"
+      }
     }
   },
   "submit": {
