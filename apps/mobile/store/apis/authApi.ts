@@ -1,5 +1,5 @@
 import { apiUrl } from "@/constants";
-import { createAuthApi } from "@amen24/ui/store";
+import { createAuthApi } from "@amen24/store";
 import * as SecureStore from "expo-secure-store";
 
 if (!apiUrl) throw new Error("Api url must be defined!");

@@ -1,0 +1,29 @@
+{
+  "name": "@amen24/store",
+  "author": "emadunan",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "format": "prettier . --write"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@amen24/shared": "file:../shared",
+    "async-mutex": "^0.5.0"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "@reduxjs/toolkit": "^2.7.0",
+    "react": "^19.0.0",
+    "react-redux": "^9.2.0"
+  }
+}

@@ -13,14 +13,14 @@
     "test": "jest --watchAll",
     "lint": "expo lint",
     "format": "prettier . --write",
-    "postinstall": "cd ../../packages/shared && npm install && npm run build && cd ../ui && npm install && npm run build"
+    "postinstall": "cd ../../packages/shared && npm install && npm run build && cd ../store && npm install && npm run build"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
     "@amen24/shared": "file:../../packages/shared",
-    "@amen24/ui": "file:../../packages/ui",
+    "@amen24/store": "file:../../packages/store",
     "@babel/runtime": "^7.26.9",
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/bottom-tabs": "^7.2.0",

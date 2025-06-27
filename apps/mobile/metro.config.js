@@ -7,11 +7,11 @@ const workspaceRoot = path.resolve(__dirname, "../../");
 
 const config = getDefaultConfig(projectRoot);
 
-// Watch folders (Metro must watch the shared and ui packages)
+// Watch folders (Metro must watch the shared and store packages)
 config.watchFolders = [
   workspaceRoot,
   path.resolve(workspaceRoot, "packages/shared"),
-  path.resolve(workspaceRoot, "packages/ui"),
+  path.resolve(workspaceRoot, "packages/store"),
 ];
 
 // Fix module resolution
@@ -19,11 +19,6 @@ config.resolver.nodeModulesPaths = [
   path.resolve(projectRoot, "node_modules"),
   path.resolve(workspaceRoot, "node_modules"),
 ];
-
-// 👇 Add this to ensure subpath "@amen24/ui/store" is resolved
-config.resolver.extraNodeModules = {
-  "@amen24/ui": path.resolve(workspaceRoot, "packages/ui"),
-};
 
 // Optional: If using symlinked modules
 config.resolver.disableHierarchicalLookup = true;

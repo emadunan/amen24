@@ -99,7 +99,7 @@ export default function TabLayout() {
         name="login"
         options={{
           href: null,
-          title: t('userMenu.favorite'),
+          title: t('signin.login'),
           headerLeft: () => <BackBtn uri={"/bible"} />,
         }}
       />
