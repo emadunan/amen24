@@ -5,7 +5,7 @@ import { createBaseQueryWithReauth } from "../crossBaseQueryWithReauth";
 
 type UserLogin = Pick<User, "email" | "password">;
 
-type Options = {
+export type Options = {
   useBearerToken?: boolean;
   getToken?: () => Promise<string | null>;
   onAuthFailure?: () => void;

@@ -1,11 +1,12 @@
 import { ApiMessage, Favorite } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
+import { createBaseQueryWithReauth } from "../crossBaseQueryWithReauth";
+import { Options } from "./authApi";
 
-export const createFavoriteApi = (baseUrl: string) =>
+export const createFavoriteApi = (baseUrl: string, options?: Options) =>
   createApi({
     reducerPath: "favoriteApi",
-    baseQuery: createBaseQueryWithReauth(baseUrl, "favorites"),
+    baseQuery: createBaseQueryWithReauth(baseUrl, "favorites", options),
     tagTypes: ["Favorite"],
     endpoints: (builder) => ({
       getUserFavorites: builder.query<Favorite[], void>({
