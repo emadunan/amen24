@@ -78,9 +78,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderLeftWidth: 4,
     padding: 12,
-    marginVertical: 16,
+    marginVertical: 8,
     marginHorizontal: 4,
-    borderRadius: 6,
+    borderRadius: 2,
   },
   rtl: {
     borderLeftWidth: 1,
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
   },
   verseText: {
     fontSize: 16,
-    lineHeight: 24,
+    lineHeight: 36,
     textAlign: "justify",
   },
   rtlText: {
-    writingDirection: "rtl",
+    writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr',
     lineHeight: 32,
   },
   actions: {

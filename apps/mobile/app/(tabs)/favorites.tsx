@@ -10,7 +10,7 @@ const Favorites = () => {
   const { i18n } = useTranslation();
   const lang = i18n.language as Lang;
 
-  const { data: favorites } = useGetUserFavoritesQuery();
+  const { data: favorites } = useGetUserFavoritesQuery(lang);
   
   return (
     <ThemedView style={styles.container}>

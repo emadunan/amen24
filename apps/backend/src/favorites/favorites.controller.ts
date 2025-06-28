@@ -8,12 +8,13 @@ import {
   UseGuards,
   ParseIntPipe,
   NotImplementedException,
+  Query,
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/user.decorator';
 import { User } from '../users/entities/user.entity';
-import { ApiMessage } from '@amen24/shared';
+import { ApiMessage, Lang } from '@amen24/shared';
 
 @Controller('favorites')
 @UseGuards(JwtAuthGuard)
@@ -27,10 +28,12 @@ export class FavoritesController {
   }
 
   @Get()
-  async getFavorites(@CurrentUser() user: User) {
+  async getFavorites(@CurrentUser() user: User, @Query() lang: Lang) {
+    const versesLang = lang || user.profile.uiLang;
+
     return await this.favoritesService.getFavorites(
       user.email,
-      user.profile.uiLang,
+      versesLang,
     );
   }
 

@@ -9,8 +9,8 @@ export const createFavoriteApi = (baseUrl: string, options?: Options) =>
     baseQuery: createBaseQueryWithReauth(baseUrl, "favorites", options),
     tagTypes: ["Favorite"],
     endpoints: (builder) => ({
-      getUserFavorites: builder.query<Favorite[], void>({
-        query: () => "",
+      getUserFavorites: builder.query<Favorite[], string | void>({
+        query: (lang) => `?lang=${lang ?? ""}`,
         providesTags: ["Favorite"],
       }),
       addFavorite: builder.mutation<Favorite, number[]>({
