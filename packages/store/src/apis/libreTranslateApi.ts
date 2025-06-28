@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
+import { createBaseQueryWithReauth } from "../config/baseQueryWithReauth";
 
 type Payload = {
   text: string;

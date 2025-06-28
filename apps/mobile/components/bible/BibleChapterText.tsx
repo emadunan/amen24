@@ -1,40 +1,44 @@
 import React, { FC, useEffect, useState } from "react";
-import { StyleSheet, TextStyle } from "react-native";
+import { StyleSheet, TextStyle, useColorScheme } from "react-native";
 import { ThemedText } from "../ThemedText";
 import { useSQLiteContext } from "expo-sqlite";
 import { useTranslation } from "react-i18next";
+import { Colors } from "@/constants";
+import { BookKey } from "@amen24/shared";
+import { HighlightProvider, useHighlightContext } from "@amen24/store";
 
 type BibleLang = "en" | "ar" | "native"; // new lowercase lang codes matching DB
 
 interface Props {
   bibleLang: BibleLang;
+  bookKey: BookKey;
   bookId: string;
   chapterNum: string;
   verseNum?: string;
-  highlighted: string[];
-  setHighlighted: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const BibleChapterText: FC<Props> = ({
   bibleLang,
+  bookKey,
   bookId,
   chapterNum,
   verseNum,
-  highlighted,
-  setHighlighted,
 }) => {
   const db = useSQLiteContext();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const colorScheme = useColorScheme();
   const [verses, setVerses] = useState<{ num: number; textDiacritized: string }[]>([]);
 
+  const { highlighted, toggleHighlight } = useHighlightContext();
+
   const highlightTheme: TextStyle = {
-    textDecorationLine: "underline",
+    backgroundColor: Colors[colorScheme ?? 'light'].highlight,
   };
 
   useEffect(() => {
     const fetchChapter = async () => {
       console.log(chapterNum, bookId, bibleLang);
-      
+
       const data = await db.getAllAsync<{ num: number; textDiacritized: string }>(
         `
         SELECT v.num, vt.textDiacritized FROM verse v
@@ -48,26 +52,24 @@ const BibleChapterText: FC<Props> = ({
       );
 
       setVerses(data);
-      if (verseNum) setHighlighted([verseNum]);
+      if (verseNum) toggleHighlight(+verseNum);
     };
 
     fetchChapter();
   }, [chapterNum, bookId, bibleLang]);
 
   function handleHighlight(verseNum: number) {
-    const num = verseNum.toString();
-    setHighlighted((prevState) =>
-      prevState.includes(num)
-        ? prevState.filter((v) => v !== num)
-        : [...prevState, num],
-    );
+    toggleHighlight(verseNum);
   }
 
   return (
     <ThemedText style={styles.chapterContent}>
       {verses.map((verse) => (
         <ThemedText key={verse.num} onPress={() => handleHighlight(verse.num)}>
-          <ThemedText style={styles.verseNum} numberOfLines={1}>
+          <ThemedText style={[
+            styles.verseNum,
+            highlighted.includes(verse.num) && highlightTheme,
+          ]} numberOfLines={1}>
             {i18n.language === "ar"
               ? verse.num.toLocaleString("ar-EG")
               : verse.num}
@@ -76,7 +78,7 @@ const BibleChapterText: FC<Props> = ({
           <ThemedText
             style={[
               styles.verseText,
-              highlighted.includes(verse.num.toString()) && highlightTheme,
+              highlighted.includes(verse.num) && highlightTheme,
             ]}
           >
             {verse.textDiacritized}{" "}

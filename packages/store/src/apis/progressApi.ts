@@ -1,11 +1,12 @@
 import { Progress } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
+import { createBaseQueryWithReauth } from "../config/crossBaseQueryWithReauth";
+import { Options } from "./authApi";
 
-export const createProgressApi = (baseUrl: string) =>
+export const createProgressApi = (baseUrl: string, options?: Options) =>
   createApi({
     reducerPath: "progressApi",
-    baseQuery: createBaseQueryWithReauth(baseUrl, "progress"),
+    baseQuery: createBaseQueryWithReauth(baseUrl, "progress", options),
     tagTypes: ["Progress"],
     endpoints: (builder) => ({
       getUserLastReadProgress: builder.query<Progress, void>({

@@ -1,6 +1,6 @@
 import { ApiMessage, Favorite } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../crossBaseQueryWithReauth";
+import { createBaseQueryWithReauth } from "../config/crossBaseQueryWithReauth";
 import { Options } from "./authApi";
 
 export const createFavoriteApi = (baseUrl: string, options?: Options) =>

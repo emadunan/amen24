@@ -29,6 +29,15 @@ interface highlightState {
 
 const HighlightContext = createContext<highlightState | null>(null);
 
+export function useHighlightContext() {
+  const context = useContext(HighlightContext);
+
+  if (!context)
+    throw new Error("useHighlightContext must be used within a ChapterContent");
+
+  return context;
+}
+
 const ChapterContent: FC<Props> = ({
   children,
   bookKey,
@@ -126,12 +135,3 @@ const ChapterContent: FC<Props> = ({
 };
 
 export default ChapterContent;
-
-export function useHighlightContext() {
-  const context = useContext(HighlightContext);
-
-  if (!context)
-    throw new Error("useHighlightContext must be used within a ChapterContent");
-
-  return context;
-}

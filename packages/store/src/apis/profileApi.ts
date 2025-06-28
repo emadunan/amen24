@@ -1,6 +1,6 @@
 import { ApiMessage, Profile, ProfileStatistics } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
+import { createBaseQueryWithReauth } from "../config/baseQueryWithReauth";
 
 export const createProfileApi = (baseUrl: string) =>
   createApi({

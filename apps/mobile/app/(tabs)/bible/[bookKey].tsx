@@ -14,8 +14,8 @@ const BookDrawer: FC = () => {
   const { data: user } = useGetMeQuery();
   console.log("USER: ", user);
 
-  const { key, bookId, bookLen, chapterNum } = useLocalSearchParams<{
-    key: string;
+  const { bookKey, bookId, bookLen, chapterNum } = useLocalSearchParams<{
+    bookKey: string;
     bookId: string;
     bookLen: string;
     chapterNum: string;
@@ -26,10 +26,10 @@ const BookDrawer: FC = () => {
 
   return (
     <Drawer.Navigator
-      key={key}
+      key={bookKey}
       drawerContent={(props) => (
         <BookDrawerContent
-          bookKey={key}
+          bookKey={bookKey}
           bookId={bookId}
           bookLen={bookLen}
           currentChapter={chapterNum}

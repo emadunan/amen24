@@ -7,7 +7,7 @@ import {
   UserRole,
 } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../baseQueryWithReauth";
+import { createBaseQueryWithReauth } from "../config/baseQueryWithReauth";
 
 type UserSignup = Partial<User> & {
   uiLang: Lang;
