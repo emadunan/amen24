@@ -1,19 +1,35 @@
-import React, { useState } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  Modal,
+  PanResponder,
+  Animated,
   ScrollView,
+  I18nManager,
+  Dimensions,
+  Pressable,
 } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import {
+  hasPermission,
+  Permission,
+  MESSAGE_KEYS,
+  ERROR_KEYS,
+  BookKey,
+  Verse,
+} from "@amen24/shared";
+import { useGetMeQuery } from "@/store/apis/authApi";
+import { useHighlightContext } from "@amen24/store";
+import { ThemedView } from "../ThemedView";
+import { useGetUserLastReadProgressQuery, useUpdateProgressMutation } from "@/store/apis/progressApi";
 import { useAddFavoriteMutation } from "@/store/apis/favoriteApi";
 import { useAddToFeaturedMutation } from "@/store/apis/featuredApi";
-import { useGetUserLastReadProgressQuery, useUpdateProgressMutation } from "@/store/apis/progressApi";
-import { useGetMeQuery } from "@/store/apis/authApi";
-import { hasPermission, Permission, formatNumber, Lang, MESSAGE_KEYS, ERROR_KEYS, BookKey, Verse } from "@amen24/shared";
-import { useHighlightContext } from "@amen24/store";
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+const TOOLBOX_WIDTH = 180;
+const TOOLBOX_HEIGHT = 280;
 
 interface Props {
   bookKey: BookKey;
@@ -21,23 +37,63 @@ interface Props {
   verses: Verse[];
 }
 
-const ChapterToolbox: React.FC<Props> = ({bookKey, chapterNum, verses}) => {
-  const { t, i18n } = useTranslation();
-  const { data: progress } = useGetUserLastReadProgressQuery();
-  const { highlighted, clearHighlighted, copyHighlighted } = useHighlightContext();
-  const [isExpanded, setIsExpanded] = useState(true);
+const BibleChapterToolbox: React.FC<Props> = ({
+  bookKey,
+  chapterNum,
+  verses,
+}) => {
+  const { t } = useTranslation();
+  const window = Dimensions.get("window");
+
+  const offsetX = useRef(40);
+  const offsetY = useRef(200);
 
   const { data: user } = useGetMeQuery();
+  const { data: progress } = useGetUserLastReadProgressQuery();
   const [addFavorite] = useAddFavoriteMutation();
   const [addFeatured] = useAddToFeaturedMutation();
   const [updateProgress] = useUpdateProgressMutation();
 
+  const { highlighted, clearHighlighted, copyHighlighted } =
+    useHighlightContext();
+  const [isExpanded, setIsExpanded] = useState(true);
   const lastHighlighted = highlighted.at(-1);
+  const pan = useRef(new Animated.ValueXY({ x: 40, y: 200 })).current;
+
+  // Add this right after pan is created:
+  useEffect(() => {
+    pan.extractOffset();
+  }, []);
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (_, gestureState) => {
+        const dx = I18nManager.isRTL ? -gestureState.dx : gestureState.dx;
+        const dy = gestureState.dy;
+
+        const newX = offsetX.current + dx;
+        const newY = offsetY.current + dy;
+
+        // Clamp X and Y
+        const clampedX = Math.max(0, Math.min(newX, window.width - TOOLBOX_WIDTH));
+        const clampedY = Math.max(0, Math.min(newY, window.height - TOOLBOX_HEIGHT));
+
+        pan.setValue({ x: clampedX - offsetX.current, y: clampedY - offsetY.current });
+      },
+
+      onPanResponderRelease: (_, gestureState) => {
+        offsetX.current += I18nManager.isRTL ? -gestureState.dx : gestureState.dx;
+        offsetY.current += gestureState.dy;
+        pan.extractOffset();
+      },
+    })
+  ).current;
+
   if (!highlighted.length) return null;
 
   const handleCopy = () => {
-    copyHighlighted(verses, chapterNum, bookKey); // uses the same logic from context
-    setIsExpanded(false);
+    copyHighlighted(verses, chapterNum, bookKey);
   };
 
   const handleAddFavorite = async () => {
@@ -62,10 +118,9 @@ const ChapterToolbox: React.FC<Props> = ({bookKey, chapterNum, verses}) => {
 
   const handleUpdateProgress = async () => {
     if (!user || !progress || !lastHighlighted) return;
-
     try {
       await updateProgress({
-        id: progress?.id,
+        id: progress.id,
         profileEmail: user.email,
         verseId: lastHighlighted,
       }).unwrap();
@@ -77,88 +132,128 @@ const ChapterToolbox: React.FC<Props> = ({bookKey, chapterNum, verses}) => {
   };
 
   return (
-    <Modal transparent visible={highlighted.length > 0} animationType="slide">
-      <View style={styles.overlay}>
-        <View style={styles.toolbox}>
-          <TouchableOpacity onPress={() => setIsExpanded(!isExpanded)}>
-            <Text style={styles.title}>{t("toolbox.title")}</Text>
-          </TouchableOpacity>
+    <Animated.View
+      style={[styles.wrapper, pan.getLayout()]}
+      {...panResponder.panHandlers}
+    >
+      <ThemedView style={styles.toolbox}>
+        <View
+          style={[
+            styles.toolboxHeader,
+          ]}
+        >
+          <MaterialIcons name="drag-indicator" size={24} style={styles.dragIcon} />
 
-          {isExpanded && (
-            <ScrollView contentContainerStyle={styles.container}>
-              <TouchableOpacity style={styles.btn} onPress={handleCopy}>
-                <Text>📋 {t("toolbox.copy")}</Text>
-              </TouchableOpacity>
+          <Text style={styles.title}>{t("toolbox.title")}</Text>
 
-              {user && (
-                <>
-                  <TouchableOpacity style={styles.btn} onPress={handleAddFavorite}>
-                    <Text>⭐ {t("toolbox.addToFavorites")}</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={styles.btn} onPress={handleUpdateProgress}>
-                    <Text>📍 {t("toolbox.progress")}</Text>
-                  </TouchableOpacity>
-
-                  {hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-                    <TouchableOpacity style={styles.btn} onPress={handleAddFeatured}>
-                      <Text>✨ {t("toolbox.addToFeatured")}</Text>
-                    </TouchableOpacity>
-                  )}
-                </>
-              )}
-
-              <TouchableOpacity style={styles.btn} onPress={clearHighlighted}>
-                <Text>🧽 {t("toolbox.clearHighlighting")}</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          )}
-
-          <TouchableOpacity style={styles.closeBtn} onPress={clearHighlighted}>
-            <Text style={styles.closeText}>✖</Text>
-          </TouchableOpacity>
+          <View style={styles.iconGroup}>
+            <Pressable onPress={() => setIsExpanded(prev => !prev)}>
+              {isExpanded ? <Ionicons name="chevron-up" size={18} style={styles.headerBtn} /> : <Ionicons name="chevron-down" size={18} style={styles.headerBtn} />}
+            </Pressable>
+            <Pressable onPress={clearHighlighted}>
+              <Ionicons name="close" size={18} style={styles.headerBtn} />
+            </Pressable>
+          </View>
         </View>
-      </View>
-    </Modal>
+
+        {isExpanded && (
+          <ScrollView contentContainerStyle={styles.container}>
+            <Pressable style={styles.btn} onPress={handleCopy}>
+              <Text>📋 {t("toolbox.copy")}</Text>
+            </Pressable>
+
+            {user && (
+              <>
+                <Pressable style={styles.btn} onPress={handleAddFavorite}>
+                  <Text>⭐ {t("toolbox.addToFavorites")}</Text>
+                </Pressable>
+
+                <Pressable style={styles.btn} onPress={handleUpdateProgress}>
+                  <Text>📍 {t("toolbox.progress")}</Text>
+                </Pressable>
+
+                {hasPermission(
+                  user.profile.roles,
+                  Permission.MANAGE_FEATURED
+                ) && (
+                    <Pressable
+                      style={styles.btn}
+                      onPress={handleAddFeatured}
+                    >
+                      <Text>✨ {t("toolbox.addToFeatured")}</Text>
+                    </Pressable>
+                  )}
+              </>
+            )}
+
+            <Pressable style={styles.btn} onPress={clearHighlighted}>
+              <Text>🧽 {t("toolbox.clearHighlighting")}</Text>
+            </Pressable>
+          </ScrollView>
+        )}
+      </ThemedView>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.2)",
-    justifyContent: "flex-end",
+  wrapper: {
+    position: "absolute",
+    zIndex: 100,
   },
   toolbox: {
-    backgroundColor: "#fff",
+    backgroundColor: "#f0f0f0",
     padding: 10,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    elevation: 4,
+    borderRadius: 2,
+    borderWidth: 1,
+    borderColor: "#888",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    width: 200,
+  },
+  toolboxHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  dragIcon: {
+    marginHorizontal: 4,
+  },
+  iconGroup: {
+    flexDirection: "row",
+    gap: 4,
+  },
+  headerBtn: {
+    borderColor: "#000",
+    borderWidth: 1
   },
   title: {
-    fontSize: 18,
-    fontWeight: "700",
+    flex: 1,
+    fontSize: 16,
+    fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 10,
-  },
-  container: {
-    paddingBottom: 10,
-  },
-  btn: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderColor: "#ddd",
-  },
-  closeBtn: {
-    position: "absolute",
-    top: 10,
-    right: 20,
   },
   closeText: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 14,
+  },
+  container: {
+    gap: 4,
+  },
+  btn: {
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    backgroundColor: "#fff",
+    borderRadius: 3,
+    marginBottom: 6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
 });
 
-export default ChapterToolbox;
+export default BibleChapterToolbox;

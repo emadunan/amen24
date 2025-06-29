@@ -2,18 +2,24 @@ import { configureStore } from "@reduxjs/toolkit";
 import RtlReducer from "./slices/rtlSlice";
 import { authApi } from "./apis/authApi";
 import { favoriteApi } from "./apis/favoriteApi";
+import { featuredApi } from "./apis/featuredApi";
+import { progressApi } from "./apis/progressApi";
 
 export const MakeStore = () => {
   const store = configureStore({
     reducer: {
       rtl: RtlReducer,
       [authApi.reducerPath]: authApi.reducer,
-      [favoriteApi.reducerPath]: favoriteApi.reducer
+      [favoriteApi.reducerPath]: favoriteApi.reducer,
+      [featuredApi.reducerPath]: featuredApi.reducer,
+      [progressApi.reducerPath]: progressApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(authApi.middleware)
         .concat(favoriteApi.middleware)
+        .concat(featuredApi.middleware)
+        .concat(progressApi.middleware)
   });
 
   return store;

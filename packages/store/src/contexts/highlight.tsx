@@ -59,7 +59,7 @@ export const HighlightProvider: React.FC<HighlightProviderProps> = ({ children, 
     const baseUrl = `https://amen24.org/${language}`;
     const passageUrl = `${baseUrl}/${bookKey}/${chapterNum}/${BookMap[bookKey].len}?v=${highlighted.join(",")}`;
 
-    const formattedText = `${verseText} ${verseRef}\n\n${t("main.readMore")}: ${passageUrl}`;
+    const formattedText = `${verseText}\n${verseRef}\n\n${t("main.readMore")}: ${passageUrl}`;
 
     // Check mobile copyToClipboard and fallback to web
     const safeCopy = copyToClipboard || ((text: string) =>

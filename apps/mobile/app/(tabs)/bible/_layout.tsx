@@ -9,7 +9,7 @@ const BibleLayout = () => {
       }}
     >
       <Stack.Screen name="index" options={{ title: "" }} />
-      <Stack.Screen name="[key]" />
+      <Stack.Screen name="[bookKey]" />
     </Stack>
   );
 };
