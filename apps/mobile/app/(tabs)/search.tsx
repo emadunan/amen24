@@ -17,7 +17,6 @@ import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemedText } from "@/components/ThemedText";
-import { normalizeArabicText } from "@/utils";
 import { buildVerseSearchQuery } from "@/db/queries";
 import { Lang, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef } from "@amen24/shared";
 

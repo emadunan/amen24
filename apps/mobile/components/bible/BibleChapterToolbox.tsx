@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   PanResponder,
   Animated,
@@ -9,6 +8,7 @@ import {
   I18nManager,
   Dimensions,
   Pressable,
+  useColorScheme,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -27,6 +27,8 @@ import { useGetUserLastReadProgressQuery, useUpdateProgressMutation } from "@/st
 import { useAddFavoriteMutation } from "@/store/apis/favoriteApi";
 import { useAddToFeaturedMutation } from "@/store/apis/featuredApi";
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Colors } from "@/constants";
+import { ThemedText } from "../ThemedText";
 
 const TOOLBOX_WIDTH = 180;
 const TOOLBOX_HEIGHT = 280;
@@ -42,6 +44,10 @@ const BibleChapterToolbox: React.FC<Props> = ({
   chapterNum,
   verses,
 }) => {
+  const colorScheme = useColorScheme();
+  const toolboxBgColor = Colors[colorScheme ?? "light"].secondary;
+  const btnBgColor = Colors[colorScheme ?? "light"].background;
+
   const { t } = useTranslation();
   const window = Dimensions.get("window");
 
@@ -136,7 +142,7 @@ const BibleChapterToolbox: React.FC<Props> = ({
       style={[styles.wrapper, pan.getLayout()]}
       {...panResponder.panHandlers}
     >
-      <ThemedView style={styles.toolbox}>
+      <ThemedView style={[styles.toolbox, { backgroundColor: toolboxBgColor }]}>
         <View
           style={[
             styles.toolboxHeader,
@@ -144,7 +150,7 @@ const BibleChapterToolbox: React.FC<Props> = ({
         >
           <MaterialIcons name="drag-indicator" size={24} style={styles.dragIcon} />
 
-          <Text style={styles.title}>{t("toolbox.title")}</Text>
+          <ThemedText type="title" style={styles.title}>{t("toolbox.title")}</ThemedText>
 
           <View style={styles.iconGroup}>
             <Pressable onPress={() => setIsExpanded(prev => !prev)}>
@@ -158,18 +164,18 @@ const BibleChapterToolbox: React.FC<Props> = ({
 
         {isExpanded && (
           <ScrollView contentContainerStyle={styles.container}>
-            <Pressable style={styles.btn} onPress={handleCopy}>
-              <Text>📋 {t("toolbox.copy")}</Text>
+            <Pressable style={[styles.btn, { backgroundColor: btnBgColor }]} onPress={handleCopy}>
+              <ThemedText>📋 {t("toolbox.copy")}</ThemedText>
             </Pressable>
 
             {user && (
               <>
-                <Pressable style={styles.btn} onPress={handleAddFavorite}>
-                  <Text>⭐ {t("toolbox.addToFavorites")}</Text>
+                <Pressable style={[styles.btn, { backgroundColor: btnBgColor }]} onPress={handleAddFavorite}>
+                  <ThemedText>⭐ {t("toolbox.addToFavorites")}</ThemedText>
                 </Pressable>
 
-                <Pressable style={styles.btn} onPress={handleUpdateProgress}>
-                  <Text>📍 {t("toolbox.progress")}</Text>
+                <Pressable style={[styles.btn, { backgroundColor: btnBgColor }]} onPress={handleUpdateProgress}>
+                  <ThemedText>📍 {t("toolbox.progress")}</ThemedText>
                 </Pressable>
 
                 {hasPermission(
@@ -177,17 +183,17 @@ const BibleChapterToolbox: React.FC<Props> = ({
                   Permission.MANAGE_FEATURED
                 ) && (
                     <Pressable
-                      style={styles.btn}
+                      style={[styles.btn, { backgroundColor: btnBgColor }]}
                       onPress={handleAddFeatured}
                     >
-                      <Text>✨ {t("toolbox.addToFeatured")}</Text>
+                      <ThemedText>✨ {t("toolbox.addToFeatured")}</ThemedText>
                     </Pressable>
                   )}
               </>
             )}
 
-            <Pressable style={styles.btn} onPress={clearHighlighted}>
-              <Text>🧽 {t("toolbox.clearHighlighting")}</Text>
+            <Pressable style={[styles.btn, { backgroundColor: btnBgColor }]} onPress={clearHighlighted}>
+              <ThemedText>🧽 {t("toolbox.clearHighlighting")}</ThemedText>
             </Pressable>
           </ScrollView>
         )}
@@ -202,7 +208,6 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   toolbox: {
-    backgroundColor: "#f0f0f0",
     padding: 10,
     borderRadius: 2,
     borderWidth: 1,
@@ -228,13 +233,11 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   headerBtn: {
-    borderColor: "#000",
     borderWidth: 1
   },
   title: {
     flex: 1,
     fontSize: 16,
-    fontWeight: "bold",
     textAlign: "center",
   },
   closeText: {
@@ -246,7 +249,6 @@ const styles = StyleSheet.create({
   btn: {
     paddingVertical: 8,
     paddingHorizontal: 10,
-    backgroundColor: "#fff",
     borderRadius: 3,
     marginBottom: 6,
     shadowColor: "#000",
