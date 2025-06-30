@@ -4,17 +4,17 @@ import { useGetUserFavoritesQuery } from '@/store/apis/favoriteApi';
 import VerseFavorite from '@/components/favorite/VerseFavorite';
 import { useTranslation } from 'react-i18next';
 import { Lang } from '@amen24/shared';
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 const Favorites = () => {
   const { i18n } = useTranslation();
   const lang = i18n.language as Lang;
 
   const { data: favorites } = useGetUserFavoritesQuery(lang);
-  
+
   return (
     <ThemedView style={styles.container}>
-      {favorites?.map(f => <VerseFavorite key={f.id} favorite={f} lang={lang}/>)}
+      <FlatList data={favorites} renderItem={({ item }) => <VerseFavorite key={item.id} favorite={item} lang={lang} />} />
     </ThemedView>
   )
 }
