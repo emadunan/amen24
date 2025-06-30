@@ -98,12 +98,14 @@ const BibleChapterToolbox: React.FC<Props> = ({
 
   if (!highlighted.length) return null;
 
-  const handleCopy = () => {
+  const handleCopy = () => {    
     copyHighlighted(verses, chapterNum, bookKey);
   };
 
   const handleAddFavorite = async () => {
     try {
+      console.log(highlighted);
+      
       await addFavorite(highlighted).unwrap();
       console.log(t(MESSAGE_KEYS.ADDED_TO_FAVORITES));
     } catch (error) {

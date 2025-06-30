@@ -28,10 +28,10 @@ const BibleChapterText: FC<Props> = ({
   const db = useSQLiteContext();
   const { t, i18n } = useTranslation();
   const colorScheme = useColorScheme();
-  const [verses, setVerses] = useState<{ num: number; text: string; textDiacritized: string }[]>([]);
+  const [verses, setVerses] = useState<{ id: number, num: number; text: string; textDiacritized: string }[]>([]);
 
   const formattedVerses = verses.map((v) => ({
-    id: v.num,
+    id: v.id,
     num: v.num,
     verseTranslations: [{ text: v.textDiacritized }],
   }));
@@ -46,9 +46,9 @@ const BibleChapterText: FC<Props> = ({
     const fetchChapter = async () => {
       console.log(chapterNum, bookId, bibleLang);
 
-      const data = await db.getAllAsync<{ num: number; text: string; textDiacritized: string }>(
+      const data = await db.getAllAsync<{ id: number, num: number; text: string; textDiacritized: string }>(
         `
-        SELECT v.num, vt.text, vt.textDiacritized FROM verse v
+        SELECT v.id, v.num, vt.text, vt.textDiacritized FROM verse v
         JOIN chapter c ON v.chapterId = c.id
         JOIN book b ON c.bookId = b.id
         JOIN verse_translation vt ON vt.verseId = v.id
@@ -59,24 +59,30 @@ const BibleChapterText: FC<Props> = ({
       );
 
       setVerses(data);
-      if (verseNum) toggleHighlight(+verseNum);
+
+      if (verseNum) {
+        const verseId = verses.find(v => v.num = +verseNum)?.id;
+        if (!verseId) return;
+
+        toggleHighlight(verseId)
+      };
     };
 
     fetchChapter();
   }, [chapterNum, bookId, bibleLang]);
 
-  function handleHighlight(verseNum: number) {
-    toggleHighlight(verseNum);
+  function handleHighlight(verseId: number) {
+    toggleHighlight(verseId);
   }
 
   return (
     <>
       <ThemedText style={styles.chapterContent}>
         {verses.map((verse) => (
-          <ThemedText key={verse.num} onPress={() => handleHighlight(verse.num)}>
+          <ThemedText key={verse.num} onPress={() => handleHighlight(verse.id)}>
             <ThemedText style={[
               styles.verseNum,
-              highlighted.includes(verse.num) && highlightTheme,
+              highlighted.includes(verse.id) && highlightTheme,
             ]} numberOfLines={1}>
               {i18n.language === "ar"
                 ? verse.num.toLocaleString("ar-EG")
@@ -86,7 +92,7 @@ const BibleChapterText: FC<Props> = ({
             <ThemedText
               style={[
                 styles.verseText,
-                highlighted.includes(verse.num) && highlightTheme,
+                highlighted.includes(verse.id) && highlightTheme,
               ]}
             >
               {verse.textDiacritized}{" "}

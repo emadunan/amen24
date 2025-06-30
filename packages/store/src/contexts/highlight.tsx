@@ -21,9 +21,9 @@ interface HighlightProviderProps {
 export const HighlightProvider: React.FC<HighlightProviderProps> = ({ children, t, language, copyToClipboard }) => {
   const [highlighted, setHighlighted] = useState<number[]>([]);
 
-  const toggleHighlight = (verseNum: number) => {
+  const toggleHighlight = (verseId: number) => {
     setHighlighted((prev: number[]) =>
-      prev.includes(verseNum) ? prev.filter((v) => v !== verseNum) : [...prev, verseNum]
+      prev.includes(verseId) ? prev.filter((v) => v !== verseId) : [...prev, verseId]
     );
   };
 

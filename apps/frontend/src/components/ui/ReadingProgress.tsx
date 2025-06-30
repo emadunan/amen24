@@ -35,7 +35,7 @@ const ReadingProgress = () => {
   return (
     <Link
       className={styles.progress}
-      href={`/${bookKey}/${chapterNum}/${BookMap[bookKey].len}`}
+      href={`/bible/${bookKey}/${chapterNum}/${BookMap[bookKey].len}`}
     >
       {/* This MdPushPin cause hydration error, so I need to finds a solution first then add it */}
       {/* <MdPushPin /> */}

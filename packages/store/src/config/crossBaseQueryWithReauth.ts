@@ -10,9 +10,11 @@ import { Mutex } from "async-mutex";
 // To prevent multiple refreshes
 const mutex = new Mutex();
 
-interface Options {
+export interface Options {
   useBearerToken?: boolean;
-  getToken?: () => Promise<string | null>;
+  getAccessToken?: () => Promise<string | null>;
+  getRefreshToken?: () => Promise<string | null>;
+  setTokens?: (accessToken: string, refreshToken: string) => Promise<void>;
   onAuthFailure?: () => void; // optional callback
 }
 
@@ -25,8 +27,8 @@ export const createBaseQueryWithReauth = (
     baseUrl,
     credentials: options?.useBearerToken ? undefined : "include",
     prepareHeaders: async (headers) => {
-      if (options?.useBearerToken && options.getToken) {
-        const token = await options.getToken();
+      if (options?.useBearerToken && options.getAccessToken) {
+        const token = await options.getAccessToken();
         if (token) {
           headers.set("Authorization", `Bearer ${token}`);
         }
@@ -58,7 +60,7 @@ export const createBaseQueryWithReauth = (
       ((result.error.data as { message?: string })?.message ===
         ERROR_KEYS.SESSION_NOT_EXIST ||
         (result.error.data as { message?: string })?.message ===
-          ERROR_KEYS.SESSION_EXPIRED)
+        ERROR_KEYS.SESSION_EXPIRED)
     ) {
       console.log("[Reauth] Token expired or session missing");
 
@@ -66,7 +68,13 @@ export const createBaseQueryWithReauth = (
         const release = await mutex.acquire();
         try {
           const refreshResult = await rawBaseQuery(
-            { url: "/auth/refresh", method: "POST" },
+            {
+              url: "/auth/refresh",
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${await options.getRefreshToken?.()}`,
+              },
+            },
             api,
             extraOptions,
           );
@@ -74,6 +82,14 @@ export const createBaseQueryWithReauth = (
           if (!refreshResult.error) {
             console.log("[Reauth] Retrying original request after refresh...");
             result = await rawBaseQuery(args, api, extraOptions);
+
+            if (refreshResult.data) {
+              const { accessToken, refreshToken } = refreshResult.data as any;
+
+              if (options?.setTokens) {
+                await options.setTokens(accessToken, refreshToken);
+              }
+            }
           } else {
             console.warn("[Reauth] Refresh failed");
             options?.onAuthFailure?.();

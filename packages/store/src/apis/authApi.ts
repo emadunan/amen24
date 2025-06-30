@@ -1,15 +1,9 @@
 // Need to use the React-specific entry point to import createApi
 import { User } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../config/crossBaseQueryWithReauth";
+import { createBaseQueryWithReauth, Options } from "../config/crossBaseQueryWithReauth";
 
 type UserLogin = Pick<User, "email" | "password">;
-
-export type Options = {
-  useBearerToken?: boolean;
-  getToken?: () => Promise<string | null>;
-  onAuthFailure?: () => void;
-};
 
 export const createAuthApi = (baseUrl: string, options?: Options) =>
   createApi({

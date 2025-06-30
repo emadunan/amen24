@@ -47,11 +47,11 @@ const ChapterContent: FC<Props> = ({
   const { t, i18n } = useTranslation(["common", "book"]);
   const [highlighted, setHighlighted] = useState<number[]>([]);
 
-  function toggleHighlight(verseNum: number) {
+  function toggleHighlight(verseId: number) {
     setHighlighted((prev) =>
-      prev.includes(verseNum)
-        ? prev.filter((num) => num !== verseNum)
-        : [...prev, verseNum],
+      prev.includes(verseId)
+        ? prev.filter((num) => num !== verseId)
+        : [...prev, verseId],
     );
   }
 

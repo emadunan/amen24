@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { saveTokens } from "@/lib/auth";
+import { setTokens } from "@/lib/auth";
 
 export default function AuthCallbackScreen() {
   const { accessToken, refreshToken } = useLocalSearchParams();
@@ -11,7 +11,7 @@ export default function AuthCallbackScreen() {
       console.log("✅ Received tokens via deep link:");
       console.log(accessToken);
 
-      saveTokens(accessToken as string, refreshToken as string);
+      setTokens(accessToken as string, refreshToken as string);
 
       router.replace("/bible");
     }

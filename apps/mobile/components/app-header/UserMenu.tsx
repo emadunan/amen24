@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, StyleSheet, I18nManager, Modal } from 'react-native';
-import { useColorScheme } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  I18nManager,
+  Modal,
+  useColorScheme,
+} from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { logout } from '@/lib/auth';
 import { authApi, useGetMeQuery } from '@/store/apis/authApi';
@@ -15,10 +22,9 @@ const UserMenu = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const theme = Colors[colorScheme];
   const isRTL = I18nManager.isRTL;
-  const { data: user } = useGetMeQuery();
   const dispatch = useDispatch();
+  const { data: user } = useGetMeQuery();
   const router = useRouter();
-
   const { t } = useTranslation();
 
   const firstLetter = user?.displayName?.[0]?.toUpperCase() ?? '?';
@@ -39,29 +45,38 @@ const UserMenu = () => {
       </Pressable>
 
       <Modal visible={open} transparent animationType="fade">
-        <Pressable
-          style={styles.overlay}
-          onPress={() => setOpen(false)}
-        >
+        <Pressable style={styles.overlay} onPress={() => setOpen(false)}>
           <ThemedView
             style={[
               styles.dropdown,
               {
                 backgroundColor: theme.background,
                 borderColor: theme.primary,
-                right: isRTL ? undefined : 16,
-                left: isRTL ? 16 : undefined,
+                right: 16
               },
             ]}
           >
-            <Link href="/(tabs)/favorites">
-              <ThemedText style={styles.item}>{t("userMenu.favorite")}</ThemedText>
-            </Link>
+            <View style={{ flex: 1 }}>
+              <Link href="/(tabs)/favorites" asChild>
+                <Pressable onPress={() => setOpen(false)}>
+                  <ThemedText style={styles.item}>{t('userMenu.favorite')}</ThemedText>
+                </Pressable>
+              </Link>
 
-            <View style={styles.divider} />
-            <Pressable onPress={() => { logout(); dispatch(authApi.util.resetApiState()); setOpen(false); }}>
-              <ThemedText style={[styles.item, { color: theme.accent }]}>{t("userMenu.logout")}</ThemedText>
-            </Pressable>
+              <View style={[styles.divider, { backgroundColor: theme.primary }]} />
+
+              <Pressable
+                onPress={() => {
+                  logout();
+                  dispatch(authApi.util.resetApiState());
+                  setOpen(false);
+                }}
+              >
+                <ThemedText style={[styles.item, { color: theme.accent }]}>
+                  {t('userMenu.logout')}
+                </ThemedText>
+              </Pressable>
+            </View>
           </ThemedView>
         </Pressable>
       </Modal>
@@ -88,18 +103,22 @@ const styles = StyleSheet.create({
   dropdown: {
     position: 'absolute',
     top: 60,
+    minWidth: 100,
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     borderWidth: 1,
+    borderTopEndRadius: 8,
+    borderBottomStartRadius: 8,
     zIndex: 999,
   },
   item: {
     paddingVertical: 8,
+    fontSize: 16,
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
   },
   divider: {
     height: 1,
     marginVertical: 4,
-    backgroundColor: '#ccc',
   },
 });
 
