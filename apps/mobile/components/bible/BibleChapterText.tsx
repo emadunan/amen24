@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { StyleSheet, TextStyle, useColorScheme } from "react-native";
+import { ScrollView, StyleSheet, TextStyle, useColorScheme } from "react-native";
 import { ThemedText } from "../ThemedText";
 import { useSQLiteContext } from "expo-sqlite";
 import { useTranslation } from "react-i18next";
@@ -77,29 +77,31 @@ const BibleChapterText: FC<Props> = ({
 
   return (
     <>
-      <ThemedText style={styles.chapterContent}>
-        {verses.map((verse) => (
-          <ThemedText key={verse.num} onPress={() => handleHighlight(verse.id)}>
-            <ThemedText style={[
-              styles.verseNum,
-              highlighted.includes(verse.id) && highlightTheme,
-            ]} numberOfLines={1}>
-              {i18n.language === "ar"
-                ? verse.num.toLocaleString("ar-EG")
-                : verse.num}
-              {"\u00A0"}
-            </ThemedText>
-            <ThemedText
-              style={[
-                styles.verseText,
+      <ScrollView>
+        <ThemedText style={styles.chapterContent}>
+          {verses.map((verse) => (
+            <ThemedText key={verse.num} onPress={() => handleHighlight(verse.id)}>
+              <ThemedText style={[
+                styles.verseNum,
                 highlighted.includes(verse.id) && highlightTheme,
-              ]}
-            >
-              {verse.textDiacritized}{" "}
+              ]} numberOfLines={1}>
+                {i18n.language === "ar"
+                  ? verse.num.toLocaleString("ar-EG")
+                  : verse.num}
+                {"\u00A0"}
+              </ThemedText>
+              <ThemedText
+                style={[
+                  styles.verseText,
+                  highlighted.includes(verse.id) && highlightTheme,
+                ]}
+              >
+                {verse.textDiacritized}{" "}
+              </ThemedText>
             </ThemedText>
-          </ThemedText>
-        ))}
-      </ThemedText>
+          ))}
+        </ThemedText>
+      </ScrollView>
       <BibleChapterToolbox bookKey={bookKey} chapterNum={+chapterNum} verses={formattedVerses as Verse[]} />
     </>
   );

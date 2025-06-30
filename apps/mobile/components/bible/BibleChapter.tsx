@@ -48,7 +48,6 @@ const BibleChapter: FC = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <ScrollView>
         <View
           key={`${i18n.language}-${bookId}-${chapterNum}`}
           style={styles.chapterContainer}
@@ -77,7 +76,6 @@ const BibleChapter: FC = () => {
             )}
           </HighlightProvider>
         </View>
-      </ScrollView>
     </ThemedView>
   );
 };
