@@ -67,9 +67,11 @@ export const createBaseQueryWithReauth = (
       if (!mutex.isLocked()) {
         const release = await mutex.acquire();
         try {
+          console.log("REFRESH_TOKEN: ", await options.getRefreshToken?.());
+          
           const refreshResult = await rawBaseQuery(
             {
-              url: "/auth/refresh",
+              url: "/auth/refresh?mobile=true",
               method: "POST",
               headers: {
                 Authorization: `Bearer ${await options.getRefreshToken?.()}`,
