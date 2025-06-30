@@ -8,9 +8,9 @@ import { FlatList, StyleSheet } from 'react-native';
 
 const Favorites = () => {
   const { i18n } = useTranslation();
-  const lang = i18n.language as Lang;
-
-  const { data: favorites } = useGetUserFavoritesQuery(lang);
+  const lang = i18n.language as Lang;  
+  
+  const { data: favorites } = useGetUserFavoritesQuery(lang);  
 
   return (
     <ThemedView style={styles.container}>

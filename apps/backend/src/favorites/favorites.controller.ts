@@ -19,7 +19,7 @@ import { ApiMessage, Lang } from '@amen24/shared';
 @Controller('favorites')
 @UseGuards(JwtAuthGuard)
 export class FavoritesController {
-  constructor(private readonly favoritesService: FavoritesService) {}
+  constructor(private readonly favoritesService: FavoritesService) { }
 
   @Post()
   create(@CurrentUser() user: User, @Body() body: { verseIds: number[] }) {
@@ -28,7 +28,7 @@ export class FavoritesController {
   }
 
   @Get()
-  async getFavorites(@CurrentUser() user: User, @Query() lang: Lang) {
+  async getFavorites(@CurrentUser() user: User, @Query('lang') lang: Lang) {
     const versesLang = lang || user.profile.uiLang;
 
     return await this.favoritesService.getFavorites(

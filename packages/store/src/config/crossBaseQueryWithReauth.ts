@@ -37,6 +37,12 @@ export const createBaseQueryWithReauth = (
     },
   });
 
+  // 🔑 Create a second base query with no headers setup
+  const baseQueryWithoutAuth = fetchBaseQuery({
+    baseUrl,
+    credentials: options?.useBearerToken ? undefined : "include",
+  });
+
   return async (args, api, extraOptions) => {
     // Prefix URL with segment if needed
     if (typeof args === "string") {
@@ -67,9 +73,7 @@ export const createBaseQueryWithReauth = (
       if (!mutex.isLocked()) {
         const release = await mutex.acquire();
         try {
-          console.log("REFRESH_TOKEN: ", await options.getRefreshToken?.());
-          
-          const refreshResult = await rawBaseQuery(
+          const refreshResult = await baseQueryWithoutAuth(
             {
               url: "/auth/refresh?mobile=true",
               method: "POST",

@@ -17,7 +17,7 @@ export class FavoritesService {
     @InjectRepository(Favorite) private favoritesRepo: Repository<Favorite>,
     private profilesService: ProfilesService,
     private versesService: VersesService,
-  ) {}
+  ) { }
 
   async getFavorites(email: string, lang: Lang | null) {
     if (!lang) lang = Lang.ENGLISH;
