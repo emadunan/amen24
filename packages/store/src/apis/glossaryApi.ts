@@ -1,5 +1,4 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../config/baseQueryWithReauth";
 import {
   Lang,
   ApiMessage,
@@ -9,6 +8,7 @@ import {
   GlossaryCategory,
   PaginatedResult,
 } from "@amen24/shared";
+import { createBaseQueryWithReauth, Options } from "../config/crossBaseQueryWithReauth";
 
 export type BibleGlossaryDto = {
   slug: string;
@@ -39,11 +39,11 @@ export type AiGeneratedTerm = {
   definition: string;
 };
 
-export const createGlossaryApi = (baseUrl: string) =>
+export const createGlossaryApi = (baseUrl: string, options?: Options) =>
   createApi({
     reducerPath: "glossaryApi",
     tagTypes: ["GlossaryTerm"],
-    baseQuery: createBaseQueryWithReauth(baseUrl, "bible-glossary"),
+    baseQuery: createBaseQueryWithReauth(baseUrl, "bible-glossary", options),
     endpoints: (builder) => ({
       addTerm: builder.mutation<ApiMessage, BibleGlossaryDto>({
         query: (body) => ({

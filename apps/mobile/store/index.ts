@@ -4,6 +4,7 @@ import { authApi } from "./apis/authApi";
 import { favoriteApi } from "./apis/favoriteApi";
 import { featuredApi } from "./apis/featuredApi";
 import { progressApi } from "./apis/progressApi";
+import { glossaryApi } from "./apis/glossaryApi";
 
 export const MakeStore = () => {
   const store = configureStore({
@@ -13,6 +14,7 @@ export const MakeStore = () => {
       [favoriteApi.reducerPath]: favoriteApi.reducer,
       [featuredApi.reducerPath]: featuredApi.reducer,
       [progressApi.reducerPath]: progressApi.reducer,
+      [glossaryApi.reducerPath]: glossaryApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
@@ -20,6 +22,7 @@ export const MakeStore = () => {
         .concat(favoriteApi.middleware)
         .concat(featuredApi.middleware)
         .concat(progressApi.middleware)
+        .concat(glossaryApi.middleware)
   });
 
   return store;

@@ -52,7 +52,9 @@ const BibleGlossaryClient = () => {
   return (
     <GlossaryContainer>
       <div className={styles.glossaryHeader}>
-        <h3 className={styles.glossaryTitle}>{t("glossary.title")}</h3>
+        <h3 className={styles.glossaryTitle}>
+          {t("glossary.title")}
+        </h3>
         <GlossaryFilterForm
           t={t}
           query={query}

@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import AppHeader from "@/components/app-header/AppHeader";
 import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "@/constants";
-import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import BackBtn from "@/components/ui/BackBtn";
 
 export default function TabLayout() {
