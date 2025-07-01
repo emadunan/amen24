@@ -4,21 +4,29 @@ import { AntDesign } from "@expo/vector-icons";
 import { ThemedView } from "@/components/ThemedView";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { signInWithGoogle } from "@/lib/googleAuth";
+import { Colors } from "@/constants";
+import { useGetMeQuery } from "@/store/apis/authApi";
+import { useRouter } from "expo-router";
 
 
 const Login = () => {
+  const { data: user } = useGetMeQuery();
+  const router = useRouter();
+
+  if (user) return router.replace("/(tabs)/bible");
+
   const colorScheme = useColorScheme();
-  
+  const theme = Colors[colorScheme ?? "light"];
+
 
   const handleGoogleLogin = () => {
-    // 🔐 Call your Google OAuth logic here
     signInWithGoogle();
   };
 
   return (
     <ThemedView style={styles.container}>
       <Pressable style={[styles.button, styles.shadow]} onPress={handleGoogleLogin}>
-        <AntDesign name="google" size={24} color="#DB4437" style={styles.icon} />
+        <AntDesign name="google" size={24} color={theme.secondary} style={styles.icon} />
         <Text style={styles.text}>Continue with Google</Text>
       </Pressable>
     </ThemedView>
