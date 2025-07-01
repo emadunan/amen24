@@ -63,6 +63,18 @@ const UserMenu = () => {
                 </Pressable>
               </Link>
 
+              <Link href="/(tabs)/settings" asChild>
+                <Pressable onPress={() => setOpen(false)}>
+                  <ThemedText style={styles.item}>{t('userMenu.settings')}</ThemedText>
+                </Pressable>
+              </Link>
+
+              <Link href="/(tabs)/featured" asChild>
+                <Pressable onPress={() => setOpen(false)}>
+                  <ThemedText style={styles.item}>{t('userMenu.featured')}</ThemedText>
+                </Pressable>
+              </Link>
+
               <View style={[styles.divider, { backgroundColor: theme.primary }]} />
 
               <Pressable
@@ -70,9 +82,10 @@ const UserMenu = () => {
                   logout();
                   dispatch(authApi.util.resetApiState());
                   setOpen(false);
+                  router.replace("/(tabs)/bible")
                 }}
               >
-                <ThemedText style={[styles.item, { color: theme.accent }]}>
+                <ThemedText style={[styles.item]}>
                   {t('userMenu.logout')}
                 </ThemedText>
               </Pressable>

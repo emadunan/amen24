@@ -1,7 +1,8 @@
+import { Colors } from "@/constants";
 import { AntDesign } from "@expo/vector-icons";
 import { Href, useRouter } from "expo-router";
 import React, { FC } from "react";
-import { I18nManager, Pressable, StyleSheet, ViewStyle } from "react-native";
+import { I18nManager, Pressable, StyleSheet, useColorScheme, ViewStyle } from "react-native";
 
 interface Props {
   color?: string;
@@ -11,6 +12,9 @@ interface Props {
 
 const BackBtn: FC<Props> = ({ uri, color, style }) => {
   const router = useRouter();
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
+
   function handlePress() {
     if (!uri) return router.back();
 
@@ -19,9 +23,9 @@ const BackBtn: FC<Props> = ({ uri, color, style }) => {
   return (
     <Pressable onPress={handlePress} style={[styles.button, style]}>
       {I18nManager.isRTL ? (
-        <AntDesign name="arrowright" size={24} color={color || "black"} />
+        <AntDesign name="arrowright" size={24} color={color ?? theme.text} />
       ) : (
-        <AntDesign name="arrowleft" size={24} color={color || "black"} />
+        <AntDesign name="arrowleft" size={24} color={color ?? theme.text} />
       )}
     </Pressable>
   );

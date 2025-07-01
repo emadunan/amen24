@@ -1,15 +1,17 @@
 import React from "react";
-import { StyleSheet, View, I18nManager } from "react-native";
+import { StyleSheet, View } from "react-native";
 import LocaleSelector from "./LocaleSelector";
 import LoginBtn from "./LoginBtn";
 import { useGetMeQuery } from "@/store/apis/authApi";
 import UserMenu from "./UserMenu";
+import ReadingProgress from "./ReadingProgress";
 
 const AppHeader = () => {
   const { data: user } = useGetMeQuery();
 
   return (
     <View style={styles.btnsContainer}>
+      <ReadingProgress />
       <LocaleSelector />
       <View style={styles.authContainer}>
         {user ? <UserMenu /> : <LoginBtn />}

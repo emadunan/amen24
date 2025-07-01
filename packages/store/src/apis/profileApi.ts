@@ -1,11 +1,11 @@
 import { ApiMessage, Profile, ProfileStatistics } from "@amen24/shared";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../config/baseQueryWithReauth";
+import { createBaseQueryWithReauth, Options } from "../config/crossBaseQueryWithReauth";
 
-export const createProfileApi = (baseUrl: string) =>
+export const createProfileApi = (baseUrl: string, options?: Options) =>
   createApi({
     reducerPath: "profileApi",
-    baseQuery: createBaseQueryWithReauth(baseUrl, "profiles"),
+    baseQuery: createBaseQueryWithReauth(baseUrl, "profiles", options),
     tagTypes: ["Profile"],
     endpoints: (builder) => ({
       updateProfile: builder.mutation<void, Partial<Profile>>({

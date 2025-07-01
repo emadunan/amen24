@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import VerseBlock from "../bible/VerseBlock";
-import { BookMap, Featured, Lang } from "@amen24/shared";
+import VerseBlock from "../verse/VerseBlock";
+import { Lang, BookMap, Featured } from "@amen24/shared";
 import { useRemoveFromFeaturedMutation } from "@/store/apis/featuredApi";
 
 interface Props {
@@ -18,9 +18,9 @@ const VerseFeatured: FC<Props> = ({ featured, lang }) => {
   const chapterNum = chapter.num;
   const totalChapters = BookMap[bookKey].len;
 
-  function handleRemoveFeatured() {
+  const handleRemoveFeatured = () => {
     removeFeatured(featured.id);
-  }
+  };
 
   return (
     <VerseBlock

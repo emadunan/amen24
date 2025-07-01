@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import AppHeader from "@/components/app-header/AppHeader";
 import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "@/constants";
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import BackBtn from "@/components/ui/BackBtn";
 
 export default function TabLayout() {
@@ -86,11 +86,54 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="glossary"
+        options={{
+          title: t("main.glossary"),
+          headerTitleStyle: {
+            fontFamily: "AmiriBold"
+          },
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="list-circle-outline" size={24} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="library"
+        options={{
+          title: t("library.title"),
+          headerTitleStyle: {
+            fontFamily: "AmiriBold"
+          },
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="library-outline" size={24} color={color} />
+          ),
+        }}
+      />
+
       <Tabs.Screen
         name="favorites"
         options={{
           href: null,
           title: t('userMenu.favorite'),
+          headerLeft: () => <BackBtn uri={"/bible"} />,
+        }}
+      />
+      <Tabs.Screen
+        name="featured"
+        options={{
+          href: null,
+          title: t('userMenu.featured'),
+          headerLeft: () => <BackBtn uri={"/bible"} />,
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          href: null,
+          title: t('userMenu.settings'),
           headerLeft: () => <BackBtn uri={"/bible"} />,
         }}
       />

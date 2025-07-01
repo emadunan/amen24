@@ -87,14 +87,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   chapterContainer: {
-    padding: 16,
-  },
-  toolbar: {
-    flexDirection: "row",
-    gap: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
+    margin: 16,
+  }
 });

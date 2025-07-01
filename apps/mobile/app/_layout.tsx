@@ -18,6 +18,10 @@ import * as SystemUI from "expo-system-ui";
 
 import { Colors } from "@/constants";
 import StoreProvider from "@/providers/StoreProvider";
+import CenteredLogo from "@/components/app-header/CenteredLogo";
+import { View } from "react-native";
+import { StyleSheet } from "react-native";
+import { Image } from "react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -55,10 +59,13 @@ export default function RootLayout() {
           <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
           >
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="+not-found" />
-            </Stack>
+            <View style={{ flex: 1 }}>
+              <CenteredLogo />
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </View>
             <StatusBar style="auto" />
           </ThemeProvider>
         </SQLiteProvider>
