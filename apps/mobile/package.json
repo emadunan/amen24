@@ -5,6 +5,7 @@
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
+    "clean": "rm -rf .expo .expo-shared node_modules ios/build android/app/build android/.gradle android/.cxx dist .turbo && npm cache clean --force && watchman watch-del-all",
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
