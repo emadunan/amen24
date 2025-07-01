@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { ThemedView } from "@/components/ThemedView";
@@ -12,12 +12,12 @@ import { useRouter } from "expo-router";
 const Login = () => {
   const { data: user } = useGetMeQuery();
   const router = useRouter();
-
-  if (user) return router.replace("/(tabs)/bible");
-
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
 
+  useEffect(() => {
+    if (user) return router.replace("/(tabs)/bible");
+  }, [user]);
 
   const handleGoogleLogin = () => {
     signInWithGoogle();
