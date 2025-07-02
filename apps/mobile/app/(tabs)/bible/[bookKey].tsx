@@ -6,14 +6,10 @@ import BookDrawerContent from "@/components/book-drawer/BookDrawerContent";
 import BackBtn from "@/components/ui/BackBtn";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Colors } from "@/constants";
-import { useGetMeQuery } from "@/store/apis/authApi";
 
 const Drawer = createDrawerNavigator();
 
 const BookDrawer: FC = () => {
-  const { data: user } = useGetMeQuery();
-  console.log("USER: ", user);
-
   const { bookKey, bookId, bookLen, chapterNum } = useLocalSearchParams<{
     bookKey: string;
     bookId: string;

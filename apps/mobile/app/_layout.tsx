@@ -4,7 +4,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -22,6 +22,7 @@ import CenteredLogo from "@/components/app-header/CenteredLogo";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Image } from "react-native";
+import { ThemedView } from "@/components/ThemedView";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -59,13 +60,13 @@ export default function RootLayout() {
           <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
           >
-            <View style={{ flex: 1 }}>
+            <ThemedView style={{ flex: 1 }}>
               <CenteredLogo />
               <Stack>
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 <Stack.Screen name="+not-found" />
               </Stack>
-            </View>
+            </ThemedView>
             <StatusBar style="auto" />
           </ThemeProvider>
         </SQLiteProvider>

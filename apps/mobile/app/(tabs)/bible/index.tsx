@@ -68,7 +68,7 @@ export default BibleScreen;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingVertical: 48,
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
