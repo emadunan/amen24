@@ -2,13 +2,11 @@ import React, { useLayoutEffect } from 'react';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ThemedText } from '@/components/ThemedText';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 import { useGetOneTermQuery } from '@/store/apis/glossaryApi';
-import { ThemedView } from '@/components/ThemedView';
 import Marked from 'react-native-marked';
-import Markdown from 'react-native-markdown-display';
 
 const GlossaryDetails = () => {
   const { slug } = useLocalSearchParams<{ slug: string }>();
