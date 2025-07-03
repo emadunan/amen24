@@ -2,13 +2,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem 3rem;
-  margin: 4rem 0;
+  margin: 8rem 0;
 }
 
 /* Laptop (1024px) */
 @media (max-width: 64em) {
   .featuredContainer {
     grid-template-columns: 1fr 1fr;
+    margin: 6rem 0;
   }
 }
 
@@ -20,6 +21,7 @@
 @media (max-width: 37.5em) {
   .featuredContainer {
     grid-template-columns: 1fr;
+    margin: 4rem 0;
   }
 }
 
