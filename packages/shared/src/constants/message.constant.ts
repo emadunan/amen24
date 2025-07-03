@@ -10,5 +10,8 @@ export const MESSAGE_KEYS = {
   ADDED_TO_FAVORITES: "message:addedToFavorites",
   ADDED_TO_FEATURED: "message:addedToFeatured",
   ADDED_TO_GLOSSARY: "message:addedToGlossary",
-  CONNECTED_WITH_GLOSSARY: "message:connectedWithGlossary"
+  CONNECTED_WITH_GLOSSARY: "message:connectedWithGlossary",
+  READING_PROGRESS_SAVED: "message:readingProgressSaved",
+  COPIED_TO_CLIPBOARD: "message:copiedToClipboard",
+  SEARCH_KEYWORD_TOO_SHORT: "message:searchKeywordTooShort",
 } as const;

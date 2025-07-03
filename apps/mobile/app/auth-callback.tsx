@@ -8,9 +8,6 @@ export default function AuthCallbackScreen() {
 
   useEffect(() => {
     if (accessToken && refreshToken) {
-      console.log("✅ Received tokens via deep link:");
-      console.log(accessToken);
-
       setTokens(accessToken as string, refreshToken as string);
 
       router.replace("/bible");

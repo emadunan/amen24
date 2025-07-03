@@ -1,5 +1,5 @@
-import { IVerse } from "@/interfaces/verse";
 import React, { FC } from "react";
+import { IVerse } from "@/interfaces/verse";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemedView } from "../ThemedView";

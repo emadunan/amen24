@@ -19,10 +19,9 @@ import * as SystemUI from "expo-system-ui";
 import { Colors } from "@/constants";
 import StoreProvider from "@/providers/StoreProvider";
 import CenteredLogo from "@/components/app-header/CenteredLogo";
-import { View } from "react-native";
-import { StyleSheet } from "react-native";
-import { Image } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
+import Toast from 'react-native-toast-message';
+import { toastConfig } from "@/lib/toast";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -51,26 +50,28 @@ export default function RootLayout() {
   }
 
   return (
-    <StoreProvider>
-      <I18nextProvider i18n={i18n}>
-        <SQLiteProvider
-          databaseName="bible.db"
-          assetSource={{ assetId: require("@/data/bible.db") }}
-        >
-          <ThemeProvider
-            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    <>
+      <StoreProvider>
+        <I18nextProvider i18n={i18n}>
+          <SQLiteProvider
+            databaseName="bible.db"
+            assetSource={{ assetId: require("@/data/bible.db") }}
           >
-            <ThemedView style={{ flex: 1 }}>
-              <CenteredLogo />
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" />
-              </Stack>
-            </ThemedView>
-            <StatusBar style="auto" />
-          </ThemeProvider>
-        </SQLiteProvider>
-      </I18nextProvider>
-    </StoreProvider>
+            <ThemeProvider
+              value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+            >
+              <ThemedView style={{ flex: 1 }}>
+                <CenteredLogo />
+                <Stack>
+                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen name="+not-found" />
+                </Stack>
+              </ThemedView>
+              <StatusBar style="auto" />
+            </ThemeProvider>
+          </SQLiteProvider>
+        </I18nextProvider>
+      </StoreProvider>
+    </>
   );
 }

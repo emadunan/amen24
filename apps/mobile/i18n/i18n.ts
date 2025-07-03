@@ -23,7 +23,7 @@ i18n
     lng: I18nManager.isRTL ? "ar" : "en",
     fallbackLng: "en",
     defaultNS: "common",
-    ns: ["common", "book", "lang", "message"],
+    ns: ["common", "book", "lang", "message", "error"],
     interpolation: {
       escapeValue: false,
     },

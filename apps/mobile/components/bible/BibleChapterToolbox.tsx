@@ -31,6 +31,8 @@ import { Colors } from "@/constants";
 import { useHighlightContext } from "@amen24/store";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
+import { showToast } from "@/lib/toast";
+import Toast from "react-native-toast-message";
 
 const TOOLBOX_WIDTH = 190;
 const TOOLBOX_HEIGHT = 280;
@@ -110,26 +112,34 @@ const BibleChapterToolbox: React.FC<Props> = ({
   if (!highlighted.length) return null;
 
   const handleCopy = () => {
-    copyHighlighted(verses, chapterNum, bookKey);
+    try {
+      copyHighlighted(verses, chapterNum, bookKey);
+
+      showToast("success", MESSAGE_KEYS.COPIED_TO_CLIPBOARD);
+    } catch (error) {
+      showToast("error", ERROR_KEYS.UNKNOWN_ERROR);
+    }
+
   };
 
   const handleAddFavorite = async () => {
     try {
       await addFavorite(highlighted).unwrap();
-      console.log(t(MESSAGE_KEYS.ADDED_TO_FAVORITES));
+
+      showToast("success", MESSAGE_KEYS.ADDED_TO_FAVORITES);
     } catch (error) {
       console.error(error);
-      console.log(t(ERROR_KEYS.UNKNOWN_ERROR));
+      showToast("error", ERROR_KEYS.UNKNOWN_ERROR);
     }
   };
 
   const handleAddFeatured = async () => {
     try {
       await addFeatured(highlighted).unwrap();
-      console.log(t(MESSAGE_KEYS.ADDED_TO_FEATURED));
+      showToast("success", MESSAGE_KEYS.ADDED_TO_FEATURED);
     } catch (error) {
       console.error(error);
-      console.log(t(ERROR_KEYS.UNKNOWN_ERROR));
+      showToast("error", ERROR_KEYS.UNKNOWN_ERROR);
     }
   };
 
@@ -141,10 +151,10 @@ const BibleChapterToolbox: React.FC<Props> = ({
         profileEmail: user.email,
         verseId: lastHighlighted,
       }).unwrap();
-      console.log(t("toolbox.lastReadSaved"));
+      showToast("success", MESSAGE_KEYS.READING_PROGRESS_SAVED);
     } catch (error) {
       console.error(error);
-      console.log(t(ERROR_KEYS.UNKNOWN_ERROR));
+      showToast("error" ,ERROR_KEYS.UNKNOWN_ERROR);
     }
   };
 

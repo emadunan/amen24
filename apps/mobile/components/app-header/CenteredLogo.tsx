@@ -1,5 +1,7 @@
+import { toastConfig } from "@/lib/toast";
 import React from "react";
 import { Image, View, StyleSheet } from "react-native";
+import Toast from "react-native-toast-message";
 
 const CenteredLogo = () => {
   return (
@@ -9,6 +11,8 @@ const CenteredLogo = () => {
         style={styles.logo}
         resizeMode="contain"
       />
+
+      <Toast config={toastConfig} />
     </View>
   );
 };
@@ -20,7 +24,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: "center",
-    zIndex: 999,
+    zIndex: 99,
     pointerEvents: "none", // Let touches pass through the logo
   },
   logo: {

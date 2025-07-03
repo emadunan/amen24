@@ -44,8 +44,6 @@ const BibleChapterText: FC<Props> = ({
 
   useEffect(() => {
     const fetchChapter = async () => {
-      console.log(chapterNum, bookId, bibleLang);
-
       const data = await db.getAllAsync<{ id: number, num: number; text: string; textDiacritized: string }>(
         `
         SELECT v.id, v.num, vt.text, vt.textDiacritized FROM verse v

@@ -18,7 +18,6 @@ const BibleScreen = () => {
   };
 
   const { data: user } = useGetMeQuery();
-  console.log(user);
 
   useMobileBackBtn();
 

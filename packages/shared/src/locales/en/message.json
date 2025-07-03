@@ -10,5 +10,8 @@
   "addedToFavorites": "Selected verses were successfully added to your favorites.",
   "addedToFeatured": "Selected verses were successfully added to your featured.",
   "addedToGlossary": "Term was successfully added to the glossary.",
-  "connectedWithGlossary": "This term was already added to the glossary. The current verse has now been linked to the existing term."
+  "connectedWithGlossary": "This term was already added to the glossary. The current verse has now been linked to the existing term.",
+  "readingProgressSaved": "Saved as last read successfully! 📖✅",
+  "copiedToClipboard": "Copied to clipboard ✅",
+  "searchKeywordTooShort": "Search keyword must be at least 3 characters long."
 }

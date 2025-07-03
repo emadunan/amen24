@@ -18,7 +18,8 @@ import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemedText } from "@/components/ThemedText";
 import { buildVerseSearchQuery } from "@/db/queries";
-import { Lang, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef } from "@amen24/shared";
+import { Lang, MESSAGE_KEYS, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef } from "@amen24/shared";
+import { showToast } from "@/lib/toast";
 
 function detectLanguage(text: string): "ar" | "en" {
   return /[\u0600-\u06FF]/.test(text) ? "ar" : "en";
@@ -46,7 +47,10 @@ export default function SearchScreen() {
   };
 
   async function handleSearch() {
-    if (!query.trim() || query.trim().length < 2) return;
+    if (!query.trim() || query.trim().length < 3) {
+      showToast("info", MESSAGE_KEYS.SEARCH_KEYWORD_TOO_SHORT)
+      return;
+    }
 
     Keyboard.dismiss();
 
