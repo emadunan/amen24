@@ -18,7 +18,7 @@ const MessiahSection = () => {
         <p className={styles.paragraph}>
           {t("homepage.messiahSectionParagraph2")}
         </p>
-        <Link href={"/MAT/1/28"} className={styles.link}>
+        <Link href={"/bible/MAT/1/28"} className={styles.link}>
           {t("homepage.messiahSectionButton")}
         </Link>
       </div>

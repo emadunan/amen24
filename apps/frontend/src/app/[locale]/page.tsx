@@ -1,4 +1,4 @@
-import BibleSection from "@/components/home/MessiahSection";
+import MessiahSection from "@/components/home/MessiahSection";
 import FeaturedSection from "@/components/home/FeaturedSection";
 import ExploreSection from "@/components/home/ExploreSection";
 import React from "react";
@@ -9,7 +9,7 @@ const HomePage = () => {
     <div style={{ height: "100%" }}>
       <HeroSection />
       <FeaturedSection />
-      <BibleSection />
+      <MessiahSection />
       <ExploreSection />
     </div>
   );
