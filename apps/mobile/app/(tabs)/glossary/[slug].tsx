@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ThemedText } from '@/components/ThemedText';
@@ -17,7 +17,7 @@ const GlossaryDetails = () => {
 
   const { data: term, isLoading } = useGetOneTermQuery(slug);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!term) return;
 
     const translation = term.translations.find(

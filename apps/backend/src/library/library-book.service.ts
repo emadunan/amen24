@@ -19,7 +19,17 @@ export class LibraryBookService {
   }
 
   async findAll() {
-    return await this.libraryBookRepo.find();
+    const books = await this.libraryBookRepo
+      .createQueryBuilder('book')
+      .leftJoinAndSelect('book.chapters', 'chapter')
+      .orderBy('chapter.order', 'ASC')
+      .getMany();
+
+    return books.map(book => ({
+      ...book,
+      firstChapterId: book.chapters?.[0]?.id ?? null,
+      chapters: undefined,
+    }));
   }
 
   async findOne(id: string) {

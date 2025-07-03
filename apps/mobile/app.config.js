@@ -72,7 +72,8 @@ export default {
       "eas": {
         "projectId": "c197183c-5985-4300-a147-d737a73a267f"
       },
-      API_URL: process.env.API_URL
+      API_URL: process.env.API_URL,
+      BASE_URL: process.env.BASE_URL
     }
   }
 }

@@ -13,9 +13,6 @@ export const createAuthApi = (baseUrl: string, options?: Options) =>
     endpoints: (builder) => ({
       getMe: builder.query<User | null, void>({
         query: () => {
-          console.log("Endpoint called /me");
-          console.log("BaseURL: ", baseUrl);
-
           return `/me`;
         },
         providesTags: ["User"],

@@ -40,3 +40,6 @@ Content-Type: application/json
   "content": "Chapter one content",
   "bookId": "256b770a-6280-498f-b639-2e5be41e8940"
 }
+
+### Fetch library books
+GET http://localhost:5000/api/library

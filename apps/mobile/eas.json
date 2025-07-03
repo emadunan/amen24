@@ -14,7 +14,8 @@
     "preview": {
       "distribution": "internal",
       "env": {
-        "API_URL": "https://test.amen24.org/api"
+        "API_URL": "https://test.amen24.org/api",
+        "BASE_URL": "https://test.amen24.org"
       },
       "android": {
         "buildType": "apk",
@@ -24,7 +25,8 @@
     "production": {
       "autoIncrement": true,
       "env": {
-        "API_URL": "https://amen24.org/api"
+        "API_URL": "https://amen24.org/api",
+        "BASE_URL": "https://amen24.org"
       }
     }
   },

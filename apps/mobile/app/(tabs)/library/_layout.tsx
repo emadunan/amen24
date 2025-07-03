@@ -1,8 +1,7 @@
-import { ThemedText } from "@/components/ThemedText";
 import { Stack } from "expo-router";
 import React from "react";
 
-const GlossaryLayout = () => {
+const LibraryLayout = () => {
   return (
     <Stack
       screenOptions={{
@@ -11,11 +10,10 @@ const GlossaryLayout = () => {
     >
       <Stack.Screen name="index" options={{ title: "" }} />
       <Stack.Screen name="[slug]" options={{
-        headerShown: true,
         headerTitleAlign: "center",
       }} />
     </Stack>
   );
 };
 
-export default GlossaryLayout;
+export default LibraryLayout;

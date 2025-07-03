@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { createBaseQueryWithReauth } from "../config/baseQueryWithReauth";
 import { LibraryBook, LibraryChapter } from "@amen24/shared";
+import { Options, createBaseQueryWithReauth } from "../config/crossBaseQueryWithReauth";
 
 type UpdateLibraryChapterDto = {
   id: string;
@@ -9,11 +9,11 @@ type UpdateLibraryChapterDto = {
   content?: string;
 };
 
-export const createLibraryApi = (baseUrl: string) =>
+export const createLibraryApi = (baseUrl: string, options?: Options) =>
   createApi({
     reducerPath: "libraryApi",
     tagTypes: ["LibraryBook"],
-    baseQuery: createBaseQueryWithReauth(baseUrl, "library"),
+    baseQuery: createBaseQueryWithReauth(baseUrl, "library", options),
     endpoints: (builder) => ({
       createLibraryBook: builder.mutation<LibraryBook, FormData>({
         query: (formData) => ({
