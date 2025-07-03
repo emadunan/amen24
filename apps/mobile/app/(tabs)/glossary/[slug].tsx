@@ -52,7 +52,7 @@ const GlossaryDetails = () => {
   const translation = term.translations.find(t => t.lang === i18n.language);
 
   return (
-    <View style={[styles.container, { backgroundColor: '#fff' }]}>
+    <View style={[styles.container, { backgroundColor: theme.min }]}>
       <Marked value={translation?.definition ?? ''} styles={{
         text: {
           fontSize: 18,

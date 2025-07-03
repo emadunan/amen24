@@ -15,6 +15,7 @@ type SearchParams = {
 const LibraryChapter: FC = () => {
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? 'light'];
 
   const params = useLocalSearchParams<SearchParams>();
   const { slug, current } = params;
@@ -25,7 +26,7 @@ const LibraryChapter: FC = () => {
     if (currentChapter?.title) {
       navigation.setOptions({
         title: (
-          <Text style={{ color: Colors[colorScheme ?? "light"].primary }}>
+          <Text style={{ color: theme.primary }}>
             {libBook?.title}
           </Text>
         ),
@@ -35,7 +36,7 @@ const LibraryChapter: FC = () => {
   }, [currentChapter?.title, colorScheme, libBook?.title]);
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={[styles.container, { backgroundColor: theme.min }]}>
       <ThemedText type='title' style={styles.chapterTitle}>{currentChapter?.title}</ThemedText>
       <Marked value={currentChapter?.content || ''} />
     </ThemedView>
@@ -46,7 +47,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#fff"
   },
   chapterTitle: {
     marginTop: 12,

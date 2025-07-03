@@ -1,13 +1,20 @@
 import { toastConfig } from "@/lib/toast";
 import React from "react";
-import { Image, View, StyleSheet } from "react-native";
+import { Image, View, StyleSheet, useColorScheme } from "react-native";
 import Toast from "react-native-toast-message";
 
 const CenteredLogo = () => {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark";
+
   return (
     <View style={styles.container}>
       <Image
-        source={require("@/assets/images/favicon.png")}
+        source={
+          isDark
+            ? require("@/assets/images/logo-dark.png")
+            : require("@/assets/images/logo-light.png")
+        }
         style={styles.logo}
         resizeMode="contain"
       />
