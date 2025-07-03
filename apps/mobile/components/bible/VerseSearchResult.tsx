@@ -64,69 +64,37 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
   const highlightText = (text: string) => {
     if (!query) return text;
 
-    // Normalize query
-    const normalizedQueryWords = words.map((word) => {
-      if (queryLang === "ar") {
-        return normalizeArText(removeArDiacritics(replaceWaslaAlef(word)));
-      }
-      return word;
-    });
+    const normalizedQueryWords = words.map((word) =>
+      queryLang === "ar"
+        ? normalizeArText(removeArDiacritics(replaceWaslaAlef(word)))
+        : word
+    );
 
-    // Normalize full verse
-    let normalizedText = text;
-    if (queryLang === "ar") {
-      normalizedText = normalizeArText(removeArDiacritics(replaceWaslaAlef(text)));
-    }
+    const tokenize = (str: string) => str.split(/(\s+)/); // Keep spaces
 
-    // Find matches in normalized text
-    const matches: { start: number; end: number }[] = [];
-    normalizedQueryWords.forEach((word) => {
-      const regex = new RegExp(word, "gi");
-      let match;
-      while ((match = regex.exec(normalizedText)) !== null) {
-        matches.push({ start: match.index, end: match.index + word.length });
-      }
-    });
-
-    // Merge overlapping matches
-    matches.sort((a, b) => a.start - b.start);
-    const merged: typeof matches = [];
-    for (const m of matches) {
-      if (merged.length && m.start <= merged[merged.length - 1].end) {
-        merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, m.end);
-      } else {
-        merged.push(m);
-      }
-    }
-
-    // Build final output
+    const tokens = tokenize(text);
     const parts: React.ReactNode[] = [];
-    let currentIndex = 0;
 
-    for (const { start, end } of merged) {
-      const originalStart = mapIndexToOriginal(text, normalizedText, start);
-      const originalEnd = mapIndexToOriginal(text, normalizedText, end);
+    tokens.forEach((token, index) => {
+      const normalizedToken =
+        queryLang === "ar"
+          ? normalizeArText(removeArDiacritics(replaceWaslaAlef(token)))
+          : token;
 
-      if (currentIndex < originalStart) {
+      const shouldHighlight = normalizedQueryWords.some((queryWord) =>
+        normalizedToken.includes(queryWord)
+      );
+
+      if (shouldHighlight && token.trim()) {
         parts.push(
-          <Text key={`text-${currentIndex}`}>{text.slice(currentIndex, originalStart)}</Text>
+          <Text key={`highlight-${index}`} style={[styles.highlighted, highlightedTheme]}>
+            {token}
+          </Text>
         );
+      } else {
+        parts.push(<Text key={`text-${index}`}>{token}</Text>);
       }
-
-      parts.push(
-        <Text key={`highlight-${originalStart}`} style={[styles.highlighted, highlightedTheme]}>
-          {text.slice(originalStart, originalEnd)}
-        </Text>
-      );
-
-      currentIndex = originalEnd;
-    }
-
-    if (currentIndex < text.length) {
-      parts.push(
-        <Text key={`last-${currentIndex}`}>{text.slice(currentIndex)}</Text>
-      );
-    }
+    });
 
     return parts;
   };
