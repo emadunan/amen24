@@ -16,7 +16,7 @@ const CenteredLogo = () => {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    top: 0, // or whatever space you want from the top
+    top: 34, // or whatever space you want from the top
     left: 0,
     right: 0,
     alignItems: "center",

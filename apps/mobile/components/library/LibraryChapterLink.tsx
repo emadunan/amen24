@@ -34,8 +34,6 @@ const LibraryChapterLink: FC<Props> = ({
   };
 
   const selected = chapter.id === current;
-
-  console.log(current, chapter.id);
   
   function handlePress() {
     navigation.closeDrawer();

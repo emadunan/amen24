@@ -11,7 +11,7 @@ import Marked from 'react-native-marked';
 const GlossaryDetails = () => {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const navigation = useNavigation();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? 'light'];
 

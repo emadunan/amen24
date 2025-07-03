@@ -16,7 +16,7 @@ const Library: React.FC = () => {
             slug={item.slug}
             title={item.title}
             author={item.author}
-            current={item.chapters[0].id}
+            current={item.firstChapterId!}
           />
         )}
         numColumns={2}

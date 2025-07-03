@@ -9,6 +9,10 @@ type UpdateLibraryChapterDto = {
   content?: string;
 };
 
+interface LibraryBookDto extends LibraryBook {
+  firstChapterId?: string | null;
+}
+
 export const createLibraryApi = (baseUrl: string, options?: Options) =>
   createApi({
     reducerPath: "libraryApi",
@@ -34,7 +38,7 @@ export const createLibraryApi = (baseUrl: string, options?: Options) =>
         }),
         invalidatesTags: ["LibraryBook"],
       }),
-      getLibraryBooks: builder.query<LibraryBook[], void>({
+      getLibraryBooks: builder.query<LibraryBookDto[], void>({
         query: () => ({
           url: ``,
         }),

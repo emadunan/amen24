@@ -16,13 +16,14 @@ const LibraryChapterSelector: FC<Props> = ({ title }) => {
   const theme = Colors[colorScheme ?? "light"];
 
   return (
-    <View style={[styles.container, {backgroundColor: theme.background}]}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Pressable
         onPress={() => {
           navigation.dispatch(DrawerActions.openDrawer());
         }}
       >
-        <ThemedText style={[styles.chapterTitle, { color: theme.primary }]}>
+        <ThemedText numberOfLines={1}
+          ellipsizeMode="tail" style={[styles.chapterTitle, { color: theme.primary }]}>
           {title}
         </ThemedText>
       </Pressable>
@@ -36,11 +37,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 2,
     paddingHorizontal: 4,
-    marginHorizontal: 8
+    marginHorizontal: 8,
+    marginVertical: 8
   },
   chapterTitle: {
     fontSize: 20,
-    lineHeight: 32
+    lineHeight: 32,
   }
 });
 
