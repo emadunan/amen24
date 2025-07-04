@@ -74,14 +74,14 @@ pm2 start ecosystem.config.js --only frontend --env test
 pm2 restart backend --name backend-test
 pm2 restart frontend --name frontend-test
 
-# Deploy admin site to /var/www/html
-sudo rm -rf /var/www/html/adminsiteTest/*
-sudo cp -ru /home/emad/projects/amen24test/apps/admin/dist/* /var/www/html/adminsiteTest
+# Deploy admin site to /var/www/
+sudo rm -rf /var/www/testadmin.amen24.org/*
+sudo cp -ru /home/emad/projects/amen24test/apps/admin/dist/* /var/www/testadmin.amen24.org
 
-sudo chown -R www-data:www-data /var/www/html/adminsiteTest
-sudo chmod -R 755 /var/www/html/adminsiteTest
+sudo chown -R www-data:www-data /var/www/testadmin.amen24.org
+sudo chmod -R 755 /var/www/testadmin.amen24.org
 
 # Restart nginx
-sudo systemctl restart nginx.service
+sudo nginx -t && sudo systemctl restart nginx.service
 
 echo "✅ Test Deployment Completed Successfully!"

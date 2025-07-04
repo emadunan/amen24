@@ -37,6 +37,16 @@ npm run build:packages
 # Build and start backend
 npm run build:backend
 
+# Create backup folder if it doesn't exist
+mkdir -p /home/emad/db_backups_prod
+
+# Generate timestamped backup file
+BACKUP_FILE="/home/emad/db_backups_prod/${DB_NAME}_backup_$(date +%F_%H-%M-%S).sql"
+
+# Perform the backup
+echo -e "\n📦 Backing up production database to: \n$BACKUP_FILE\n"
+PGPASSWORD=$DB_PASSWORD pg_dump -U "$DB_USERNAME" -h "$DB_HOST" -d "$DB_NAME" -F c -f "$BACKUP_FILE"
+
 # Run database migrations
 # Drop and recreate production database
 # echo "Resetting production database..."
@@ -64,14 +74,14 @@ pm2 start ecosystem.config.js --only frontend --env production
 pm2 restart backend --name backend-prod
 pm2 restart frontend --name frontend-prod
 
-# Deploy admin site to /var/www/html
-sudo rm -rf /var/www/html/adminsite/*
-sudo cp -ru /home/emad/projects/amen24prod/apps/admin/dist/* /var/www/html/adminsite
+# Deploy admin site to /var/www/
+sudo rm -rf /var/www/admin.amen24.org/*
+sudo cp -ru /home/emad/projects/amen24prod/apps/admin/dist/* /var/www/admin.amen24.org
 
-sudo chown -R www-data:www-data /var/www/html/adminsite
-sudo chmod -R 755 /var/www/html/adminsite
+sudo chown -R www-data:www-data /var/www/admin.amen24.org
+sudo chmod -R 755 /var/www/admin.amen24.org
 
 # Restart nginx
-sudo systemctl restart nginx.service
+sudo nginx -t && sudo systemctl restart nginx.service
 
 echo "✅ Production Deployment Completed Successfully!"
