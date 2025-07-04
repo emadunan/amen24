@@ -32,7 +32,7 @@ const HebrewMonthMap: Record<string, number> = {
   nisan: 8,
   iyar: 9,
   sivan: 10,
-  tammuz: 11,
+  tamuz: 11,
   av: 12,
   elul: 13,
 };
