@@ -25,7 +25,7 @@
   "peerDependencies": {
     "@reduxjs/toolkit": "^2.7.0",
     "i18next": "^24.2.2",
-    "react": "^19.0.0",
+    "react": "19.0.0",
     "react-redux": "^9.2.0"
   }
 }
