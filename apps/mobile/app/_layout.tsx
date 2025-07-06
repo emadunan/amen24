@@ -20,8 +20,7 @@ import { Colors } from "@/constants";
 import StoreProvider from "@/providers/StoreProvider";
 import CenteredLogo from "@/components/app-header/CenteredLogo";
 import { ThemedView } from "@/components/ThemedView";
-import Toast from 'react-native-toast-message';
-import { toastConfig } from "@/lib/toast";
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

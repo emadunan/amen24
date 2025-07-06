@@ -18,6 +18,8 @@ import {
   ERROR_KEYS,
   BookKey,
   Verse,
+  formatNumber,
+  Lang,
 } from "@amen24/shared";
 import { useGetMeQuery } from "@/store/apis/authApi";
 import {
@@ -32,7 +34,6 @@ import { useHighlightContext } from "@amen24/store";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
 import { showToast } from "@/lib/toast";
-import Toast from "react-native-toast-message";
 
 const TOOLBOX_WIDTH = 190;
 const TOOLBOX_HEIGHT = 280;
@@ -48,9 +49,10 @@ const BibleChapterToolbox: React.FC<Props> = ({
   chapterNum,
   verses,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const window = Dimensions.get("window");
   const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
   const toolboxBgColor = Colors[colorScheme ?? "light"].secondary;
   const btnBgColor = Colors[colorScheme ?? "light"].background;
   const iconColor = Colors[colorScheme ?? "light"].primary;
@@ -64,11 +66,20 @@ const BibleChapterToolbox: React.FC<Props> = ({
   const lastHighlighted = highlighted.at(-1);
   const [isExpanded, setIsExpanded] = useState(true);
 
-  const { data: user } = useGetMeQuery();
-  const { data: progress } = useGetUserLastReadProgressQuery();
   const [addFavorite] = useAddFavoriteMutation();
   const [addFeatured] = useAddToFeaturedMutation();
   const [updateProgress] = useUpdateProgressMutation();
+
+  const { data: user } = useGetMeQuery();
+  const { data: progress, refetch } = useGetUserLastReadProgressQuery(
+    undefined,
+    { skip: !user },
+  );
+
+  const progressBookId = progress?.verse.chapter.book.id;
+  const progressBookKey = progress?.verse.chapter.book.bookKey;
+  const progressChapterNum = progress?.verse.chapter.num;
+  const progressVerseNum = progress?.verse.num;
 
   useEffect(() => {
     pan.extractOffset();
@@ -154,13 +165,13 @@ const BibleChapterToolbox: React.FC<Props> = ({
       showToast("success", MESSAGE_KEYS.READING_PROGRESS_SAVED);
     } catch (error) {
       console.error(error);
-      showToast("error" ,ERROR_KEYS.UNKNOWN_ERROR);
+      showToast("error", ERROR_KEYS.UNKNOWN_ERROR);
     }
   };
 
   return (
     <Animated.View style={[styles.wrapper, pan.getLayout()]} {...panResponder.panHandlers}>
-      <ThemedView style={[styles.toolbox, { backgroundColor: toolboxBgColor }]}>
+      <ThemedView style={[styles.toolbox, { backgroundColor: theme.secondary }]}>
         <View style={styles.toolboxHeader}>
           <MaterialIcons name="drag-indicator" size={24} style={styles.dragIcon} />
           <ThemedText type="title" style={styles.title}>
@@ -171,41 +182,47 @@ const BibleChapterToolbox: React.FC<Props> = ({
               <Ionicons
                 name={isExpanded ? "chevron-up" : "chevron-down"}
                 size={18}
-                style={[styles.headerBtn, { borderColor: iconColor }]}
-                color={iconColor}
+                style={[styles.headerBtn, { borderColor: theme.primary }]}
+                color={theme.primary}
               />
             </Pressable>
             <Pressable onPress={clearHighlighted}>
-              <Ionicons name="close" size={18} style={[styles.headerBtn, { borderColor: iconColor }]} color={iconColor} />
+              <Ionicons name="close" size={18} style={[styles.headerBtn, { borderColor: theme.primary }]} color={theme.primary} />
             </Pressable>
           </View>
         </View>
 
         {isExpanded && (
           <ScrollView contentContainerStyle={styles.container}>
-            <Pressable style={[styles.btn, { backgroundColor: btnBgColor }]} onPress={handleCopy}>
+            <Pressable style={[styles.btn, { backgroundColor: theme.background }]} onPress={handleCopy}>
               <ThemedText>📋 {t("toolbox.copy")}</ThemedText>
             </Pressable>
 
             {user && (
               <>
-                <Pressable style={[styles.btn, { backgroundColor: btnBgColor }]} onPress={handleAddFavorite}>
+                <Pressable style={[styles.btn, { backgroundColor: theme.background }]} onPress={handleAddFavorite}>
                   <ThemedText>⭐ {t("toolbox.addToFavorites")}</ThemedText>
                 </Pressable>
 
-                <Pressable style={[styles.btn, { backgroundColor: btnBgColor }]} onPress={handleUpdateProgress}>
-                  <ThemedText>📍 {t("toolbox.progress")}</ThemedText>
+                <Pressable style={[styles.btn, { backgroundColor: theme.background, paddingVertical: 0 }]} onPress={handleUpdateProgress}>
+                  <ThemedView style={styles.progressBtnContainer}>
+                    <ThemedText style={styles.progressPin} >📍</ThemedText>
+                    <ThemedView style={styles.progressTextContainer}>
+                      <ThemedText style={{ borderBottomColor: theme.gray, borderBottomWidth: 1 }}> {t("toolbox.progress")}</ThemedText>
+                      <ThemedText style={styles.progressRefText}>{`${t(`book:${progressBookKey}`)} ${progressChapterNum && formatNumber(progressChapterNum, i18n.language as Lang)}:${progressVerseNum && formatNumber(progressVerseNum, i18n.language as Lang)}`}</ThemedText>
+                    </ThemedView>
+                  </ThemedView>
                 </Pressable>
 
                 {hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-                  <Pressable style={[styles.btn, { backgroundColor: btnBgColor }]} onPress={handleAddFeatured}>
+                  <Pressable style={[styles.btn, { backgroundColor: theme.background }]} onPress={handleAddFeatured}>
                     <ThemedText>✨ {t("toolbox.addToFeatured")}</ThemedText>
                   </Pressable>
                 )}
               </>
             )}
 
-            <Pressable style={[styles.btn, { backgroundColor: btnBgColor }]} onPress={clearHighlighted}>
+            <Pressable style={[styles.btn, { backgroundColor: theme.background }]} onPress={clearHighlighted}>
               <ThemedText>🧽 {t("toolbox.clearHighlighting")}</ThemedText>
             </Pressable>
           </ScrollView>
@@ -265,6 +282,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
   },
+  progressBtnContainer: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  progressPin: {
+    alignSelf: "center"
+  },
+  progressTextContainer: {
+    flex: 1
+  },
+  progressRefText: {
+    fontSize: 14
+  }
 });
 
 export default BibleChapterToolbox;

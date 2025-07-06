@@ -27,7 +27,7 @@ const CenteredLogo = () => {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    top: 34,
+    top: 24,
     left: 0,
     right: 0,
     alignItems: "center",
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     pointerEvents: "none", // Let touches pass through the logo
   },
   logo: {
-    width: 92,
-    height: 92,
+    width: 72,
+    height: 72,
   },
 });
 
