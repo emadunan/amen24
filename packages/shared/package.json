@@ -1,7 +1,7 @@
 {
   "name": "@amen24/shared",
   "author": "emadunan",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "license": "ISC",
   "description": "Shared utilities and types for amen24 project",
   "main": "dist/index.js",
@@ -16,7 +16,8 @@
     "build": "tsup",
     "clean": "rm -rf dist",
     "format": "prettier . --write",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build",
+    "release": "npm publish --access public"
   },
   "keywords": [],
   "devDependencies": {

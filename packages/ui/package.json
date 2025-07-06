@@ -1,7 +1,7 @@
 {
   "name": "@amen24/ui",
   "author": "emadunan",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -27,7 +27,9 @@
   "scripts": {
     "build": "tsc && rollup -c",
     "clean": "rm -rf dist",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "prepublishOnly": "npm run clean && npm run build",
+    "release": "npm publish --access public"
   },
   "license": "ISC",
   "description": "",
@@ -64,6 +66,6 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@amen24/shared": "file:../shared"
+    "@amen24/shared": "^1.0.5"
   }
 }
