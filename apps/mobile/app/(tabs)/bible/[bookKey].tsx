@@ -17,8 +17,8 @@ const BookDrawer: FC = () => {
     chapterNum: string;
   }>();
   const chapters = Array.from({ length: parseInt(bookLen) }, (_, i) => i + 1);
-
   const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
 
   return (
     <Drawer.Navigator
@@ -34,17 +34,17 @@ const BookDrawer: FC = () => {
       )}
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors[colorScheme ?? "light"].secondary,
+          backgroundColor: theme.secondary,
         },
         headerTitleStyle: {
           fontFamily: "AmiriBold",
         },
         drawerStyle: {
           width: 128,
-          backgroundColor: Colors[colorScheme ?? "light"].background,
+          backgroundColor: theme.background,
         },
         headerLeft: () => (
-          <BackBtn color={Colors[colorScheme ?? "light"].primary} />
+          <BackBtn color={theme.primary} />
         ),
       }}
     >

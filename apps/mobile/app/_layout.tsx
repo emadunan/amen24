@@ -20,6 +20,8 @@ import { Colors } from "@/constants";
 import StoreProvider from "@/providers/StoreProvider";
 import CenteredLogo from "@/components/app-header/CenteredLogo";
 import { ThemedView } from "@/components/ThemedView";
+import { useGetMeQuery } from "@/store/apis/authApi";
+import AppLoadingScreen from "@/components/ui/AppLoadingScreen";
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.

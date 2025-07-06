@@ -17,8 +17,6 @@ const BibleScreen = () => {
     borderColor: colorScheme === "light" ? Colors.light.text : Colors.dark.text,
   };
 
-  const { data: user } = useGetMeQuery();
-
   useMobileBackBtn();
 
   const db = useSQLiteContext();

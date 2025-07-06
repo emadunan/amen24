@@ -10,20 +10,25 @@ import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "@/constants";
 import { Ionicons } from "@expo/vector-icons";
 import BackBtn from "@/components/ui/BackBtn";
+import { useGetMeQuery } from "@/store/apis/authApi";
+import AppLoadingScreen from "@/components/ui/AppLoadingScreen";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   const { t } = useTranslation();
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
+
+  const { isLoading } = useGetMeQuery();
+  if (isLoading) return <AppLoadingScreen />;
 
   return (
     <Tabs
       initialRouteName="bible"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].text,
-        tabBarInactiveTintColor: Colors[colorScheme ?? "light"].primary,
-        tabBarActiveBackgroundColor: Colors[colorScheme ?? "light"].secondary,
-        tabBarInactiveBackgroundColor: Colors[colorScheme ?? "light"].secondary,
+        tabBarActiveTintColor: theme.text,
+        tabBarInactiveTintColor: theme.primary,
+        tabBarActiveBackgroundColor: theme.secondary,
+        tabBarInactiveBackgroundColor: theme.secondary,
         tabBarLabelStyle: {
           fontFamily: "AmiriBold",
           fontSize: 12,
@@ -33,9 +38,9 @@ export default function TabLayout() {
         headerRight: () => <AppHeader />,
         headerShown: true,
         headerStyle: {
-          backgroundColor: Colors[colorScheme ?? "light"].background,
+          backgroundColor: theme.background,
         },
-        headerTintColor: Colors[colorScheme ?? "light"].text,
+        headerTintColor: theme.text,
         headerTitleStyle: {
           fontFamily: "AmiriBold",
         },
