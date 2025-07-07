@@ -18,9 +18,6 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
 
-  const { isLoading } = useGetMeQuery();
-  if (isLoading) return <AppLoadingScreen />;
-
   return (
     <Tabs
       initialRouteName="bible"

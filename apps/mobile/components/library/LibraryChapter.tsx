@@ -6,6 +6,7 @@ import { Colors } from '@/constants';
 import { useGetLibraryBookQuery } from '@/store/apis/libraryApi';
 import { ThemedView } from '../ThemedView';
 import Marked from 'react-native-marked';
+import { MarkdownContent } from '../ui/MarkdownContent';
 
 type SearchParams = {
   slug: string;
@@ -36,9 +37,9 @@ const LibraryChapter: FC = () => {
   }, [currentChapter?.title, colorScheme, libBook?.title]);
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor: theme.min }]}>
+    <ThemedView style={[styles.container]}>
       <ThemedText type='title' style={styles.chapterTitle}>{currentChapter?.title}</ThemedText>
-      <Marked value={currentChapter?.content || ''} />
+      <MarkdownContent markdown={currentChapter?.content || ''} />
     </ThemedView>
   )
 }

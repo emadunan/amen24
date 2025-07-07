@@ -9,6 +9,7 @@ import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import useMobileBackBtn from "@/hooks/useBackAsExit";
 import { useGetMeQuery } from "@/store/apis/authApi";
+import AppLoadingScreen from "@/components/ui/AppLoadingScreen";
 
 const BibleScreen = () => {
   const router = useRouter();
@@ -37,6 +38,10 @@ const BibleScreen = () => {
     }
     setup();
   }, []);
+
+
+  const { isLoading } = useGetMeQuery();
+  if (isLoading) return <AppLoadingScreen />;
 
 
   function handlePress(b: { id: number; bookKey: string; bookLen: number }) {
