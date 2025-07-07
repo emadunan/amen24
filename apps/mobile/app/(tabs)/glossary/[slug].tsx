@@ -6,7 +6,6 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 import { useGetOneTermQuery } from '@/store/apis/glossaryApi';
-import Marked from 'react-native-marked';
 import { MarkdownContent } from '@/components/ui/MarkdownContent';
 import { ThemedView } from '@/components/ThemedView';
 
