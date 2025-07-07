@@ -44,7 +44,7 @@ const BookDrawer: FC = () => {
           backgroundColor: theme.background,
         },
         headerLeft: () => (
-          <BackBtn color={theme.primary} />
+          <BackBtn color={theme.primary} uri={'/(tabs)/bible'}/>
         ),
       }}
     >

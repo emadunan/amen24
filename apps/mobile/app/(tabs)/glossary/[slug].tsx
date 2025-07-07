@@ -8,6 +8,7 @@ import { Colors } from '@/constants/Colors';
 import { useGetOneTermQuery } from '@/store/apis/glossaryApi';
 import { MarkdownContent } from '@/components/ui/MarkdownContent';
 import { ThemedView } from '@/components/ThemedView';
+import BackBtn from '@/components/ui/BackBtn';
 
 const GlossaryDetails = () => {
   const { slug } = useLocalSearchParams<{ slug: string }>();
@@ -26,16 +27,16 @@ const GlossaryDetails = () => {
     );
 
     navigation.setOptions({
-      headerTitle: () => (
-        <ThemedText type='title' style={{
-          color: theme.primary,
-          fontSize: 18,
-          paddingTop: 40,
-          paddingBottom: 12
-        }}>
-          {translation?.term} [{term.native}]
-        </ThemedText>
-      ),
+      // headerTitle: () => (
+      //   <ThemedText type='title' style={{
+      //     color: theme.primary,
+      //     fontSize: 18,
+      //   }}>
+      //     {translation?.term} [{term.native}]
+      //   </ThemedText>
+      // ),
+      headerTitle: () => <ThemedText type='title'>{translation?.term}</ThemedText>,
+      headerRight: () => <ThemedText>{term.native}</ThemedText>,
       headerStyle: {
         backgroundColor: theme.secondary,
       },
@@ -54,7 +55,7 @@ const GlossaryDetails = () => {
 
   return (
     <ThemedView style={[styles.container]}>
-      <MarkdownContent markdown={translation?.definition ?? ''}/>
+      <MarkdownContent markdown={translation?.definition ?? ''} />
     </ThemedView>
   );
 };

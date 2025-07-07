@@ -1,7 +1,9 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import { useRouter } from 'expo-router';
-import { baseUrl } from '@/constants';
+import { Colors } from '@/constants';
+import { ThemedText } from '../ThemedText';
+import { ThemedView } from '../ThemedView';
 
 interface Props {
   slug: string;
@@ -12,21 +14,16 @@ interface Props {
 
 const LibraryBookCard: React.FC<Props> = ({ slug, title, author, current }) => {
   const router = useRouter();
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
   return (
     <TouchableOpacity
       onPress={() => router.push(`/library/${slug}?current=${current}`)}
-      style={styles.card}
     >
-      <ImageBackground
-        source={{ uri: `${baseUrl}/img/library-book-covers/${encodeURIComponent(slug)}.webp` }}
-        style={styles.image}
-        imageStyle={styles.imageStyle}
-      >
-        <View style={styles.overlay}>
-          <Text style={styles.title}>{title}</Text>
-          {author && <Text style={styles.author}>&mdash; {author}</Text>}
-        </View>
-      </ImageBackground>
+      <ThemedView style={[styles.card, {backgroundColor: theme.secondary, borderColor: theme.text, borderWidth: 1}]}>
+        <ThemedText style={styles.title}>{title}</ThemedText>
+        {author && <ThemedText style={[styles.author, {color: theme.gray}]}>{author}</ThemedText>}
+      </ThemedView>
     </TouchableOpacity>
   );
 };
@@ -35,30 +32,15 @@ export default LibraryBookCard;
 
 const styles = StyleSheet.create({
   card: {
-    width: 160,
-    aspectRatio: 2 / 3,
-    margin: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 12,
     borderRadius: 2,
-    overflow: 'hidden',
-  },
-  image: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  imageStyle: {
-    borderRadius: 2,
-  },
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    padding: 10,
   },
   title: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 22,
   },
   author: {
-    color: '#ccc',
     fontSize: 14,
   },
 });

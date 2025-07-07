@@ -20,9 +20,6 @@ const Library: React.FC = () => {
             current={item.firstChapterId!}
           />
         )}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={styles.listContent}
       />
     </ThemedView>
   );

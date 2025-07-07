@@ -46,7 +46,7 @@ const LibraryBookDrawer: FC = () => {
           backgroundColor: Colors[colorScheme ?? "light"].background,
         },
         headerLeft: () => (
-          <BackBtn color={Colors[colorScheme ?? "light"].primary} />
+          <BackBtn color={Colors[colorScheme ?? "light"].primary} uri={"/(tabs)/library"}/>
         ),
       }}
     >
