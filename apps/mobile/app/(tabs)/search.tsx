@@ -11,7 +11,7 @@ import { Feather } from "@expo/vector-icons";
 import { useSQLiteContext } from "expo-sqlite";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { IVerse } from "@/interfaces/verse";
+import { VerseWithMeta } from "@/interfaces/verse";
 import VerseSearchResult from "@/components/bible/VerseSearchResult";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { Colors } from "@/constants";
@@ -28,7 +28,7 @@ function detectLanguage(text: string): "ar" | "en" {
 export default function SearchScreen() {
   const db = useSQLiteContext();
   const { i18n, t } = useTranslation();
-  const [verses, setVerses] = useState<IVerse[]>([]);
+  const [verses, setVerses] = useState<VerseWithMeta[]>([]);
   const [query, setQuery] = useState<string>("");
   const [queryLang, setQuerylang] = useState(i18n.language);
   const [loading, setLoading] = useState(false);
@@ -78,7 +78,7 @@ export default function SearchScreen() {
         query: textNormalized ?? '',
       });
 
-      const result = await db.getAllAsync<IVerse>(sql, params);
+      const result = await db.getAllAsync<VerseWithMeta>(sql, params);
       setVerses(result);
     } catch (error) {
       console.error("Search error:", error);

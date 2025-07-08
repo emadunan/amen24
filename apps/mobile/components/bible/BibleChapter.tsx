@@ -11,7 +11,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { useTranslation } from "react-i18next";
 import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import BibleChapterText from "@/components/bible/BibleChapterText";
+import BibleChapterText, { BibleLang } from "@/components/bible/BibleChapterText";
 import BibleChapterSelector from "./BibleChapterSelector";
 import { BookKey } from "@amen24/shared";
 import { HighlightProvider } from "@amen24/store";
@@ -48,34 +48,25 @@ const BibleChapter: FC = () => {
 
   return (
     <ThemedView style={styles.container}>
-        <View
-          key={`${i18n.language}-${bookId}-${chapterNum}`}
-          style={styles.chapterContainer}
+      <View
+        key={`${i18n.language}-${bookId}-${chapterNum}`}
+        style={styles.chapterContainer}
+      >
+        <HighlightProvider
+          language={i18n.language}
+          t={t}
+          copyToClipboard={(text: string) => Clipboard.setStringAsync(text)}
         >
-          <HighlightProvider
-            language={i18n.language}
-            t={t}
-            copyToClipboard={(text: string) => Clipboard.setStringAsync(text)}
-          >
-            {i18n.language === "ar" ? (
-              <BibleChapterText
-                bibleLang="ar"
-                bookKey={bookKey as BookKey}
-                bookId={bookId}
-                chapterNum={chapterNum}
-                verseNum={verseNum}
-              />
-            ) : (
-              <BibleChapterText
-                bibleLang="en"
-                bookKey={bookKey as BookKey}
-                bookId={bookId}
-                chapterNum={chapterNum}
-                verseNum={verseNum}
-              />
-            )}
-          </HighlightProvider>
-        </View>
+          <BibleChapterText
+            uiLang={i18n.language as BibleLang}
+            translationLang="en"
+            bookKey={bookKey as BookKey}
+            bookId={bookId}
+            chapterNum={chapterNum}
+            verseNum={verseNum}
+          />
+        </HighlightProvider>
+      </View>
     </ThemedView>
   );
 };
@@ -88,5 +79,8 @@ const styles = StyleSheet.create({
   },
   chapterContainer: {
     margin: 16,
+    display: "flex",
+    flexDirection: "row",
+    gap: 16
   }
 });

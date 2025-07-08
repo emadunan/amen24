@@ -1,17 +1,26 @@
 import React, { FC, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TextStyle, useColorScheme } from "react-native";
-import { ThemedText } from "../ThemedText";
+import { ScrollView, StyleSheet } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
-import { useTranslation } from "react-i18next";
-import { Colors } from "@/constants";
-import { BookKey, Verse } from "@amen24/shared";
+import { BookKey } from "@amen24/shared";
 import { useHighlightContext } from "@amen24/store";
 import BibleChapterToolbox from "../chapter-toolbox/BibleChapterToolbox";
+import ChapterTextTranslation from "./ChapterTextTranslation";
+import ChapterTextWithTranslation from "./ChapterTextWithTranslation";
+import { Verse, VerseWithTranslation } from "@/interfaces/verse";
+import { type Verse as SharedVerse } from "@amen24/shared";
+import { ThemedView } from "../ThemedView";
 
-type BibleLang = "en" | "ar" | "native"; // new lowercase lang codes matching DB
+export type BibleLang = "en" | "ar" | "na";
+
+function isVerseWithTranslationArray(
+  arr: Verse[] | VerseWithTranslation[]
+): arr is VerseWithTranslation[] {
+  return arr.length > 0 && "text2Diacritized" in arr[0];
+}
 
 interface Props {
-  bibleLang: BibleLang;
+  uiLang: BibleLang;
+  translationLang?: BibleLang;
   bookKey: BookKey;
   bookId: string;
   chapterNum: string;
@@ -19,55 +28,87 @@ interface Props {
 }
 
 const BibleChapterText: FC<Props> = ({
-  bibleLang,
+  uiLang,
+  translationLang,
   bookKey,
   bookId,
   chapterNum,
   verseNum,
 }) => {
   const db = useSQLiteContext();
-  const { t, i18n } = useTranslation();
-  const colorScheme = useColorScheme();
-  const [verses, setVerses] = useState<{ id: number, num: number; text: string; textDiacritized: string }[]>([]);
-
-  const formattedVerses = verses.map((v) => ({
-    id: v.id,
-    num: v.num,
-    verseTranslations: [{ text: v.textDiacritized }],
-  }));
-
   const { highlighted, toggleHighlight } = useHighlightContext();
 
-  const highlightTheme: TextStyle = {
-    backgroundColor: Colors[colorScheme ?? 'light'].highlight,
-  };
+  const [verses, setVerses] = useState<Verse[] | VerseWithTranslation[]>([]);
+
+  const formattedVerses = verses.map((v) => {
+    if ("text2Diacritized" in v) {
+      // v is VerseWithTranslation
+      return {
+        id: v.id,
+        num: v.num,
+        verseTranslations: [
+          { text: v.textDiacritized ?? "" },
+          { text: v.text2Diacritized ?? "" },
+        ],
+      };
+    }
+
+    // v is Verse
+    return {
+      id: v.id,
+      num: v.num,
+      verseTranslations: [{ text: v.textDiacritized ?? "" }],
+    };
+  });
 
   useEffect(() => {
     const fetchChapter = async () => {
-      const data = await db.getAllAsync<{ id: number, num: number; text: string; textDiacritized: string }>(
-        `
-        SELECT v.id, v.num, vt.text, vt.textDiacritized FROM verse v
-        JOIN chapter c ON v.chapterId = c.id
-        JOIN book b ON c.bookId = b.id
-        JOIN verse_translation vt ON vt.verseId = v.id
-        WHERE c.num = ? AND b.id = ? AND vt.lang = ?
-        ORDER BY v.num ASC
+      if (translationLang) {
+        const data = await db.getAllAsync<VerseWithTranslation>(
+          `
+          SELECT 
+            v.id,
+            v.num,
+            vt1.text AS text,
+            vt1.textDiacritized AS textDiacritized,
+            vt2.text AS text2,
+            vt2.textDiacritized AS text2Diacritized
+          FROM verse v
+          JOIN chapter c ON v.chapterId = c.id
+          JOIN book b ON c.bookId = b.id
+          LEFT JOIN verse_translation vt1 ON vt1.verseId = v.id AND vt1.lang = ?
+          LEFT JOIN verse_translation vt2 ON vt2.verseId = v.id AND vt2.lang = ?
+          WHERE c.num = ? AND b.id = ?
+          ORDER BY v.num ASC
         `,
-        [chapterNum, bookId, bibleLang],
-      );
+          [uiLang, translationLang, chapterNum, bookId]
+        );
+        setVerses(data);
+      } else {
+        const data = await db.getAllAsync<Verse>(
+          `
+          SELECT v.id, v.num, vt.text, vt.textDiacritized
+          FROM verse v
+          JOIN chapter c ON v.chapterId = c.id
+          JOIN book b ON c.bookId = b.id
+          JOIN verse_translation vt ON vt.verseId = v.id
+          WHERE c.num = ? AND b.id = ? AND vt.lang = ?
+          ORDER BY v.num ASC
+        `,
+          [chapterNum, bookId, uiLang]
+        );
+        setVerses(data);
+      }
 
-      setVerses(data);
-
+      // Highlight specific verse if requested
       if (verseNum) {
-        const verseId = verses.find(v => v.num = +verseNum)?.id;
-        if (!verseId) return;
-
-        toggleHighlight(verseId)
-      };
+        const verseId = verses.find((v) => v.num === +verseNum)?.id;
+        if (verseId) toggleHighlight(verseId);
+      }
     };
 
     fetchChapter();
-  }, [chapterNum, bookId, bibleLang]);
+  }, [chapterNum, bookId, uiLang]);
 
   function handleHighlight(verseId: number) {
     toggleHighlight(verseId);
@@ -76,48 +117,41 @@ const BibleChapterText: FC<Props> = ({
   return (
     <>
       <ScrollView>
-        <ThemedText style={styles.chapterContent}>
-          {verses.map((verse) => (
-            <ThemedText key={verse.num} onPress={() => handleHighlight(verse.id)}>
-              <ThemedText style={[
-                styles.verseNum,
-                highlighted.includes(verse.id) && highlightTheme,
-              ]} numberOfLines={1}>
-                {i18n.language === "ar"
-                  ? verse.num.toLocaleString("ar-EG")
-                  : verse.num}
-                {"\u00A0"}
-              </ThemedText>
-              <ThemedText
-                style={[
-                  styles.verseText,
-                  highlighted.includes(verse.id) && highlightTheme,
-                ]}
-              >
-                {verse.textDiacritized}{" "}
-              </ThemedText>
-            </ThemedText>
-          ))}
-        </ThemedText>
+        <ThemedView style={styles.translationsContainer}>
+          {isVerseWithTranslationArray(verses) ? (
+            <ChapterTextWithTranslation
+              uiLang={uiLang}
+              translationLang={translationLang!}
+              verses={verses}
+              highlighted={highlighted}
+              onHighlight={handleHighlight}
+            />
+          ) : (
+            <ChapterTextTranslation
+              lang={uiLang}
+              verses={verses}
+              highlighted={highlighted}
+              onHighlight={handleHighlight}
+            />
+          )}
+        </ThemedView>
       </ScrollView>
-      <BibleChapterToolbox bookKey={bookKey} chapterNum={+chapterNum} verses={formattedVerses as Verse[]} />
+
+      <BibleChapterToolbox
+        bookKey={bookKey}
+        chapterNum={+chapterNum}
+        verses={formattedVerses as SharedVerse[]}
+      />
     </>
   );
 };
 
-export default BibleChapterText;
-
 const styles = StyleSheet.create({
-  chapterContent: {
-    textAlign: "justify",
-  },
-  verseText: {
-    fontSize: 22,
-    lineHeight: 48,
-  },
-  verseNum: {
-    fontSize: 12,
-    lineHeight: 48,
-    color: "#f00",
+  translationsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 32,
   },
 });
+
+export default BibleChapterText;

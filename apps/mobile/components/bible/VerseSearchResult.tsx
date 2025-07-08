@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { IVerse } from "@/interfaces/verse";
+import { VerseWithMeta } from "@/interfaces/verse";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemedView } from "../ThemedView";
@@ -15,7 +15,7 @@ import {
 } from "@amen24/shared";
 
 interface Props {
-  v: IVerse;
+  v: VerseWithMeta;
   queryLang: string;
   query: string;
 }
@@ -34,7 +34,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
 
   const handleDirectToChapter = () => {
     router.push(
-      `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}&verseNum=${v.verseNum}`
+      `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}&verseNum=${v.num}`
     );
   };
 
@@ -116,8 +116,8 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
             : v.chapterNum}{" "}
           :{" "}
           {queryLang === "ar"
-            ? Number(v.verseNum).toLocaleString("ar-EG")
-            : v.verseNum}{" "}
+            ? Number(v.num).toLocaleString("ar-EG")
+            : v.num}{" "}
           )
         </ThemedText>
       </Pressable>

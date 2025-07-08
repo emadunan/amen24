@@ -1,17 +1,23 @@
-export interface IVerse {
+export interface Verse {
   id: number;
+  num: number;
   text: string;
-  verseNum: number;
+  textNormalized: string;
+  textDiacritized: string;
+}
+
+export interface VerseWithMeta extends Verse {
   chapterNum: string;
   bookKey: string;
   bookId: number;
   bookLen: number;
 }
 
-export interface IVerseRaw {
+export interface VerseWithTranslation {
   id: number;
   num: number;
   text: string;
-  textNormalized: string;
-  chapterId: number;
+  textDiacritized: string;
+  text2: string;
+  text2Diacritized: string;
 }

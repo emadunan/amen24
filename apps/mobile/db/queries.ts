@@ -21,7 +21,7 @@ export function buildVerseSearchQuery({
     SELECT
       vt.id,
       vt.text,
-      v.num as verseNum,
+      v.num,
       c.num as chapterNum,
       b.bookKey as bookKey,
       b.id as bookId,
