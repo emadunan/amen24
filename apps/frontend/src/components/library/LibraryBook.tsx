@@ -6,8 +6,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./LibraryBook.module.css";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
-import { getDirection, useBreakpoint } from "@amen24/ui";
+import { useBreakpoint } from "@amen24/ui";
 import { useTranslation } from "react-i18next";
+import { getDirection } from "@amen24/shared";
 
 const LibraryBook: React.FC = () => {
   const { t } = useTranslation();

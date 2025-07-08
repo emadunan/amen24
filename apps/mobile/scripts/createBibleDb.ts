@@ -69,7 +69,7 @@ async function initDatabase() {
     }
   }
 
-  await migrateTranslations(db, "../../../documentation/content/Bible_Native_MasoreticSBL.VPL.txt", "native");
+  await migrateTranslations(db, "../../../documentation/content/Bible_Native_MasoreticSBL.VPL.txt", "na");
   await migrateTranslations(db, "../../../documentation/content/Bible_En_ESV_2001.VPL.txt", "en");
   await migrateTranslations(db, "../../../documentation/content/Bible_Ar_SVD_1865.VPL.txt", "ar");
 

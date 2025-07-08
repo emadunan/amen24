@@ -1,10 +1,9 @@
-import { BookKey, BookMap, formatNumber, Lang, Verse } from "@amen24/shared";
+import { BookKey, BookMap, formatNumber, Lang, Verse, getDirection } from "@amen24/shared";
 import { MdDeleteForever } from "react-icons/md";
 import styles from "./VerseBlock.module.css";
 import Link from "next/link";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { getDirection } from "@amen24/ui/utils";
 
 interface VerseBlockProps {
   bookKey: BookKey;

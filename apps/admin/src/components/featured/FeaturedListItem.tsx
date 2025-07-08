@@ -1,8 +1,7 @@
-import { Featured, FeaturedPosition } from "@amen24/shared";
+import { Featured, FeaturedPosition, getDirection } from "@amen24/shared";
 import { ChangeEvent, FC } from "react";
 import styles from "./FeaturedListItem.module.css";
 import { NavLink } from "react-router-dom";
-import { getDirection } from "@amen24/ui";
 import { useUpdateFeaturedMutation } from "../../store/featuredApi";
 
 interface Props {

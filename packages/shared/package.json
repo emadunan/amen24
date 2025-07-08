@@ -1,7 +1,7 @@
 {
   "name": "@amen24/shared",
   "author": "emadunan",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "license": "ISC",
   "description": "Shared utilities and types for amen24 project",
   "main": "dist/index.js",

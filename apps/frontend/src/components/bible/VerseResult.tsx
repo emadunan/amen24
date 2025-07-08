@@ -1,9 +1,8 @@
 import React from "react";
 import styles from "./VerseResult.module.css";
-import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
+import { BookKey, BookMap, formatNumber, getDirection, Lang } from "@amen24/shared";
 import Link from "next/link";
 import VerseResultText from "./VerseResultText";
-import { getDirection } from "@amen24/ui";
 
 interface VerseResultProps {
   bookKey: BookKey;

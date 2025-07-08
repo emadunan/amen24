@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import styles from "./GlossaryVerse.module.css";
-import { BookKey, flagMap, Lang, resolveRenderLang } from "@amen24/shared";
-import { getDirection } from "@amen24/ui";
+import { BookKey, flagMap, Lang, resolveRenderLang, getDirection } from "@amen24/shared";
 import { ActiveLang } from "./glossaryReducer";
 import { AiOutlineClear } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";

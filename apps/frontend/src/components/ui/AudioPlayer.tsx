@@ -12,13 +12,12 @@ import {
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useDraggable } from "@amen24/ui";
-import { isRtl, getDirection } from "@amen24/ui/utils";
 
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { useParams, usePathname } from "next/navigation";
-import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
+import { BookKey, BookMap, formatNumber, getDirection, isRtl, Lang } from "@amen24/shared";
 import { ttsBooks } from "@/constants/ttsBooks";
 import CloseDraggableBtn from "./CloseDraggableBtn";
 import { close } from "../../store/slices/audioPlayerSlice";

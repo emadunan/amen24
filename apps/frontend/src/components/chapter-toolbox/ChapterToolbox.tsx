@@ -7,7 +7,7 @@ import { HiSparkles } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 import { useHighlightContext } from "../bible/ChapterContent";
 import { createPortal } from "react-dom";
-import { isRtl, useDraggable, useFeedback } from "@amen24/ui";
+import { useDraggable, useFeedback } from "@amen24/ui";
 import {
   ERROR_KEYS,
   Lang,
@@ -15,6 +15,7 @@ import {
   Permission,
   formatNumber,
   hasPermission,
+  isRtl,
 } from "@amen24/shared";
 import {
   useGetUserLastReadProgressQuery,

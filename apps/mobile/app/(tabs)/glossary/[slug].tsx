@@ -27,14 +27,6 @@ const GlossaryDetails = () => {
     );
 
     navigation.setOptions({
-      // headerTitle: () => (
-      //   <ThemedText type='title' style={{
-      //     color: theme.primary,
-      //     fontSize: 18,
-      //   }}>
-      //     {translation?.term} [{term.native}]
-      //   </ThemedText>
-      // ),
       headerTitle: () => <ThemedText type='title'>{translation?.term}</ThemedText>,
       headerRight: () => <ThemedText>{term.native}</ThemedText>,
       headerStyle: {

@@ -1,8 +1,7 @@
-import { FeaturedText } from "@amen24/shared";
+import { FeaturedText, getDirection } from "@amen24/shared";
 import { FC, useEffect, useState } from "react";
 import styles from "./FeaturedTranslationText.module.css";
 import { useUpdateFeaturedTextMutation } from "../../store/featuredApi";
-import { getDirection } from "@amen24/ui";
 
 interface Props {
   featuredTextItem: FeaturedText;

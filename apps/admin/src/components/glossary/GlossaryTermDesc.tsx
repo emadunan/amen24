@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getDirection, Spinner } from "@amen24/ui";
+import { Spinner } from "@amen24/ui";
 import { useTranslation } from "react-i18next";
 import styles from "./GlossaryTermDesc.module.css";
 import { useLazyTranslateTextQuery } from "../../store/libreTranslateApi";
@@ -8,6 +8,7 @@ import {
   BibleGlossaryTranslation,
   flagMap,
   Lang,
+  getDirection
 } from "@amen24/shared";
 import {
   useGenerateAiDefinitionMutation,

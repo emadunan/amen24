@@ -16,8 +16,7 @@ import Script from "next/script";
 import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
 import TrackVisit from "@/components/analytics/TrackVisite";
 import AudioPlayer from "@/components/ui/AudioPlayer";
-import { getDirection } from "@amen24/ui/utils";
-import { Lang } from "@amen24/shared";
+import { getDirection, Lang } from "@amen24/shared";
 import "@amen24/ui/dist/index.css";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;

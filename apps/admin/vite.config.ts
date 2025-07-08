@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@amen24/shared": path.resolve(__dirname, "../../packages/shared/"),
       'react-toastify': path.resolve(__dirname, 'node_modules/react-toastify'),
     },
   },

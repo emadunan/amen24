@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Lang } from "@amen24/shared";
+import { getDirection, Lang } from "@amen24/shared";
 import styles from "./AppFooter.module.css";
 import { useTranslation } from "react-i18next";
-import { getDirection } from "@amen24/ui/utils";
 
 const AppFooter = () => {
   const { t, i18n } = useTranslation();

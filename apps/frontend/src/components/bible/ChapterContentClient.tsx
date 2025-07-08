@@ -1,12 +1,11 @@
 "use client";
 
-import { formatNumber, Lang, Verse } from "@amen24/shared";
+import { formatNumber, Lang, Verse, getDirection } from "@amen24/shared";
 import React, { FC, Fragment, useEffect, useState } from "react";
 import VerseHighlight from "./VerseHighlight";
 import styles from "./ChapterContentClient.module.css";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
-import { getDirection } from "@amen24/ui/utils";
 
 interface Props {
   bookKey: string;

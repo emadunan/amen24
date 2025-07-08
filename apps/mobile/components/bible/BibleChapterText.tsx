@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Colors } from "@/constants";
 import { BookKey, Verse } from "@amen24/shared";
 import { useHighlightContext } from "@amen24/store";
-import BibleChapterToolbox from "./BibleChapterToolbox";
+import BibleChapterToolbox from "../chapter-toolbox/BibleChapterToolbox";
 
 type BibleLang = "en" | "ar" | "native"; // new lowercase lang codes matching DB
 

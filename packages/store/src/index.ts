@@ -11,6 +11,8 @@ export * from "./apis/libraryApi";
 export * from "./apis/libreTranslateApi";
 export * from "./apis/quotaTrackerApi";
 
+export * from "./reducers/glossaryReducer";
+
 export * from "./slices/searchSlice";
 export * from "./slices/navigatorSlice";
 

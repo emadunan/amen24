@@ -3,13 +3,13 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Accordion from "./BookAccordion";
 import styles from "./BibleNavigator.module.css";
-import { BookKey, BookMap, formatNumber, Lang } from "@amen24/shared";
+import { BookKey, BookMap, formatNumber, isRtl, Lang } from "@amen24/shared";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { close, selectNavigator } from "@/store/slices/navigatorSlice";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { useParams, usePathname } from "next/navigation";
-import { isRtl, useDraggable } from "@amen24/ui";
+import { useDraggable } from "@amen24/ui";
 import { useTranslation } from "react-i18next";
 import CloseDraggableBtn from "../ui/CloseDraggableBtn";
 
