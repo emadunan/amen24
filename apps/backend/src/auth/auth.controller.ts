@@ -45,8 +45,6 @@ export class AuthController {
       ? req.headers['authorization']?.replace('Bearer ', '')
       : req.cookies['refresh_token'];
 
-    console.log("REFRESH_TOKEN: ", refreshToken);
-
     if (!refreshToken) {
       throw new UnauthorizedException('Refresh token not provided');
     }

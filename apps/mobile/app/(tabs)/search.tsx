@@ -18,8 +18,9 @@ import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemedText } from "@/components/ThemedText";
 import { buildVerseSearchQuery } from "@/db/queries";
-import { Lang, MESSAGE_KEYS, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef } from "@amen24/shared";
+import { Lang, BookKey, MESSAGE_KEYS, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef, categoryList } from "@amen24/shared";
 import { showToast } from "@/lib/toast";
+import BookDropdown from "@/components/search/BookDropdown";
 
 function detectLanguage(text: string): "ar" | "en" {
   return /[\u0600-\u06FF]/.test(text) ? "ar" : "en";
@@ -33,10 +34,51 @@ export default function SearchScreen() {
   const [queryLang, setQuerylang] = useState(i18n.language);
   const [loading, setLoading] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const [selectedBooks, setSelectedBooks] = useState<string[]>(Object.values(BookKey));
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const isWholeBibleSelected =
+    selectedBooks.length === Object.values(BookKey).length;
+
+  const isCategorySelected = (category: string) =>
+    categoryList[category]?.every((book) => selectedBooks.includes(book));
+
+  const toggleBookSelection = (book: string) => {
+    if (book === "WholeBible") {
+      setSelectedBooks(
+        isWholeBibleSelected ? [] : [...Object.values(BookKey)]
+      );
+      return;
+    }
+
+    const selectedSet = new Set(selectedBooks);
+
+    if (Object.values(BookKey).includes(book as BookKey)) {
+      // Toggle single book selection
+      if (selectedSet.has(book)) {
+        selectedSet.delete(book);
+      } else {
+        selectedSet.add(book);
+      }
+    } else if (categoryList[book]) {
+      // Toggle category selection
+      const allBooksInCategory = new Set(categoryList[book]);
+      const allSelected = categoryList[book].every((b) => selectedSet.has(b));
+
+      if (allSelected) {
+        allBooksInCategory.forEach((b) => selectedSet.delete(b));
+      } else {
+        allBooksInCategory.forEach((b) => selectedSet.add(b));
+      }
+    }
+
+    setSelectedBooks(Array.from(selectedSet));
+  };
 
   const lastQueryRef = useRef<string>("");
 
   const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? 'light'];
 
   function handleQuery(inputText: string) {
     setQuery(inputText);
@@ -91,20 +133,29 @@ export default function SearchScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={[styles.searchGroup, backgroundTheme]}>
+        <Pressable style={styles.filterBtn} onPress={() => setShowDropdown(prev => !prev)}>
+          <Feather
+            name="filter"
+            size={32}
+            color={Colors[colorScheme ?? "light"].accent}
+            style={I18nManager.isRTL && styles.flipIcon}
+          />
+        </Pressable>
         <ThemedTextInput
           style={styles.searchInput}
           value={query}
           onChangeText={handleQuery}
         />
-        <Pressable style={styles.searchBtn} onPress={handleSearch}>
+        <Pressable style={[styles.searchBtn, { backgroundColor: theme.accent }]} onPress={handleSearch}>
           <Feather
             name="search"
             size={32}
-            color={Colors[colorScheme ?? "light"].text}
+            color={Colors[colorScheme ?? "light"].background}
             style={I18nManager.isRTL && styles.flipIcon}
           />
         </Pressable>
       </ThemedView>
+      {showDropdown && <BookDropdown selectedBooks={selectedBooks} toggleBookSelection={toggleBookSelection} isCategorySelected={isCategorySelected} />}
       {loading ? (
         <ThemedView style={styles.loadingContainer}>
           <ActivityIndicator
@@ -160,8 +211,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     textAlign: "center",
   },
+  filterBtn: {
+    position: "absolute",
+    top: 37,
+    left: 24,
+    zIndex: 2
+  },
   searchBtn: {
-    marginLeft: 8,
+    position: "absolute",
+    top: 35,
+    right: 19,
+    borderRadius: 2,
+    padding: 2
   },
   flipIcon: {
     transform: [{ scaleX: -1 }],

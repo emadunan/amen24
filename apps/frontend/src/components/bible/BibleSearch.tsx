@@ -4,7 +4,7 @@ import styles from "./BibleSearch.module.css";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
 import { FaCheckSquare, FaRegSquare, FaSync } from "react-icons/fa";
-import { BookKey, BookMap, books, formatNumber, Lang } from "@amen24/shared";
+import { BookKey, BookMap, books, categoryList, formatNumber, Lang } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import VerseResult from "./VerseResult";
 import Spinner from "../ui/Spinner";
@@ -23,27 +23,6 @@ import { useBreakpoint, useFeedback, showToast } from "@amen24/ui";
 import { FormEvent } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-const oldTestamentBooks = books.slice(0, 39);
-const newTestamentBooks = books.slice(39, 66);
-const torahBooks = books.slice(0, 5);
-const historicalBooks = books.slice(5, 17);
-const wisdomBooks = books.slice(17, 22);
-const propheticBooks = books.slice(22, 39);
-const gospelsBooks = books.slice(39, 43);
-const actsEpistlesBooks = books.slice(43, 66);
-
-const categoryList: Record<string, string[]> = {
-  WholeBible: Object.values(BookKey),
-  OldTestament: oldTestamentBooks,
-  NewTestament: newTestamentBooks,
-  Torah: torahBooks,
-  Historical: historicalBooks,
-  Wisdom: wisdomBooks,
-  Prophetic: propheticBooks,
-  Gospels: gospelsBooks,
-  Epistles: actsEpistlesBooks,
-};
 
 const BibleSearch = () => {
   const { t, i18n } = useTranslation(["book", "error"]);

@@ -929,6 +929,27 @@ export const BookMap = {
 
 export const books: string[] = Object.values(BookKey);
 
+const oldTestamentBooks = books.slice(0, 39);
+const newTestamentBooks = books.slice(39, 66);
+const torahBooks = books.slice(0, 5);
+const historicalBooks = books.slice(5, 17);
+const wisdomBooks = books.slice(17, 22);
+const propheticBooks = books.slice(22, 39);
+const gospelsBooks = books.slice(39, 43);
+const actsEpistlesBooks = books.slice(43, 66);
+
+export const categoryList: Record<string, string[]> = {
+  WholeBible: Object.values(BookKey),
+  OldTestament: oldTestamentBooks,
+  NewTestament: newTestamentBooks,
+  Torah: torahBooks,
+  Historical: historicalBooks,
+  Wisdom: wisdomBooks,
+  Prophetic: propheticBooks,
+  Gospels: gospelsBooks,
+  Epistles: actsEpistlesBooks,
+};
+
 export const bookList = [
   "WholeBible",
   "OldTestament",
