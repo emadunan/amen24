@@ -30,7 +30,7 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
   
   return (
     <View style={styles.wrapper}>
-      {verses.map((verse) => {
+      {verses.map((verse) => {       
         return (
           <ThemedView key={verse.id} style={styles.verseRow}>
             {/* UI Language Column */}

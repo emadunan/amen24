@@ -63,26 +63,40 @@ const BibleChapterText: FC<Props> = ({
 
   useEffect(() => {
     const fetchChapter = async () => {
+      console.log("QUERY PARAMS", {
+        uiLang,
+        translationLang,
+        chapterNum,
+        bookId,
+      });
+
       if (translationLang) {
         const data = await db.getAllAsync<VerseWithTranslation>(
           `
-          SELECT 
-            v.id,
-            v.num,
-            vt1.text AS text,
-            vt1.textDiacritized AS textDiacritized,
-            vt2.text AS text2,
-            vt2.textDiacritized AS text2Diacritized
-          FROM verse v
-          JOIN chapter c ON v.chapterId = c.id
-          JOIN book b ON c.bookId = b.id
-          LEFT JOIN verse_translation vt1 ON vt1.verseId = v.id AND vt1.lang = ?
-          LEFT JOIN verse_translation vt2 ON vt2.verseId = v.id AND vt2.lang = ?
-          WHERE c.num = ? AND b.id = ?
-          ORDER BY v.num ASC
-        `,
-          [uiLang, translationLang, chapterNum, bookId]
+            SELECT 
+              v.id,
+              v.num,
+              vt1.text AS text,
+              vt1.textDiacritized AS textDiacritized,
+              vt2.text AS text2,
+              vt2.textDiacritized AS text2Diacritized
+            FROM verse v
+            JOIN chapter c ON v.chapterId = c.id
+            JOIN book b ON c.bookId = b.id
+            LEFT JOIN verse_translation vt1 ON vt1.verseId = v.id AND vt1.lang = ?
+            LEFT JOIN verse_translation vt2 ON vt2.verseId = v.id AND vt2.lang = ?
+            WHERE c.num = ? AND b.id = ?
+            ORDER BY v.num ASC
+          `,
+          [
+            uiLang.trim().toLowerCase(),
+            translationLang.trim().toLowerCase(),
+            Number(chapterNum),
+            Number(bookId)
+          ]
         );
+        console.log(data);
+
         setVerses(data);
       } else {
         const data = await db.getAllAsync<Verse>(
@@ -108,7 +122,7 @@ const BibleChapterText: FC<Props> = ({
     };
 
     fetchChapter();
-  }, [chapterNum, bookId, uiLang]);
+  }, [uiLang, translationLang, chapterNum, bookId]);
 
   function handleHighlight(verseId: number) {
     toggleHighlight(verseId);

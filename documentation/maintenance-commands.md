@@ -34,6 +34,11 @@ sed 's/\bbookmark\b/progress/g' bookmark_data.sql > progress_data.sql
 psql -U postgres -d amen24test -f progress_data.sql
 ```
 
+### Copy sqlite internal mobile database
+``` bash
+adb shell "run-as yeshua.emadunan.amen24 cat files/SQLite/bible.db" > bible-device.db
+```
+
 ## Alter table change column datatype
 Just add new attribute without delete the old
 Then Update the value of the first from the latter
