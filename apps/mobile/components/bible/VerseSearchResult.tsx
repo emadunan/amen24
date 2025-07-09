@@ -27,6 +27,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
   const words = query.trim().split(/\s+/);
   const isRtlQuery = queryLang === "ar";
   const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
 
   const highlightedTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].highlight,
@@ -67,11 +68,10 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
     const normalizedQueryWords = words.map((word) =>
       queryLang === "ar"
         ? normalizeArText(removeArDiacritics(replaceWaslaAlef(word)))
-        : word
+        : word.toLowerCase()
     );
 
     const tokenize = (str: string) => str.split(/(\s+)/); // Keep spaces
-
     const tokens = tokenize(text);
     const parts: React.ReactNode[] = [];
 
@@ -79,7 +79,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
       const normalizedToken =
         queryLang === "ar"
           ? normalizeArText(removeArDiacritics(replaceWaslaAlef(token)))
-          : token;
+          : token.toLowerCase();
 
       const shouldHighlight = normalizedQueryWords.some((queryWord) =>
         normalizedToken.includes(queryWord)
@@ -87,7 +87,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
 
       if (shouldHighlight && token.trim()) {
         parts.push(
-          <Text key={`highlight-${index}`} style={[styles.highlighted, highlightedTheme]}>
+          <Text key={`highlight-${index}`} style={[styles.highlighted, { backgroundColor: theme.highlight }]}>
             {token}
           </Text>
         );
@@ -138,6 +138,9 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   highlighted: {
+    backgroundColor: "#ffe58a", // light yellow
+    borderRadius: 4,
+    paddingHorizontal: 2,
   },
   verseRef: {
     flexWrap: "nowrap",

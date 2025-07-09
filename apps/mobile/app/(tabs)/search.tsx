@@ -118,6 +118,7 @@ export default function SearchScreen() {
       const { sql, params } = buildVerseSearchQuery({
         lang: language,
         query: textNormalized ?? '',
+        selectedBooks,
       });
 
       const result = await db.getAllAsync<VerseWithMeta>(sql, params);
