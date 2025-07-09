@@ -27,36 +27,30 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
 
   const isLangRTL = getDirection(uiLang as Lang) === "rtl";
   const isTranslationRTL = getDirection(translationLang as Lang) === "rtl";
-
-  const shouldFlipLangDirection = isLangRTL !== I18nManager.isRTL;
-  const shouldFlipTranslationDirection = isTranslationRTL !== I18nManager.isRTL;
-
+  
   return (
     <View style={styles.wrapper}>
       {verses.map((verse) => {
-        const uiText = uiLang === "ar" ? verse.textDiacritized : verse.text;
-        const transText = translationLang === "ar" ? verse.text2Diacritized : verse.text2;
-
         return (
           <ThemedView key={verse.id} style={styles.verseRow}>
             {/* UI Language Column */}
             <View
               style={[
                 styles.verseCol,
+                isLangRTL ? styles.rtl : styles.ltr
               ]}
             >
               <ThemedText
                 onPress={() => onHighlight(verse.id)}
                 style={[
                   styles.verseText,
-                  {
-                    writingDirection: shouldFlipLangDirection ? 'rtl' : 'ltr',
-                    textAlign: shouldFlipLangDirection ? 'right' : 'left',
-                  },
+                  uiLang === Lang.ARABIC && styles.textAr,
+                  uiLang === Lang.ENGLISH && styles.textEn,
                   highlighted.includes(verse.id) && { backgroundColor: theme.highlight },
                 ]}
               >
-                <ThemedText style={styles.verseNum}>
+                <ThemedText style={[styles.verseNum, uiLang === Lang.ARABIC && styles.textAr, uiLang === Lang.ENGLISH && styles.textEn
+                ]}>
                   {formatNumber(verse.num, uiLang as Lang)}{"\u00A0"}
                 </ThemedText>
                 {verse.textDiacritized}
@@ -67,21 +61,19 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
             <View
               style={[
                 styles.verseCol,
-
+                isTranslationRTL ? styles.rtl : styles.ltr
               ]}
             >
               <ThemedText
                 onPress={() => onHighlight(verse.id)}
                 style={[
                   styles.verseText,
-                  {
-                    writingDirection: shouldFlipTranslationDirection ? 'rtl' : 'ltr',
-                    textAlign: shouldFlipTranslationDirection ? 'right' : 'left',
-                  },
+                  uiLang === Lang.ARABIC && styles.textAr,
+                  uiLang === Lang.ENGLISH && styles.textEn,
                   highlighted.includes(verse.id) && { backgroundColor: theme.highlight },
                 ]}
               >
-                <ThemedText style={styles.verseNum}>
+                <ThemedText style={[styles.verseNum, uiLang === Lang.ARABIC && styles.textAr, uiLang === Lang.ENGLISH && styles.textEn]}>
                   {formatNumber(verse.num, translationLang as Lang)}{"\u00A0"}
                 </ThemedText>
                 {verse.text2Diacritized}
@@ -110,21 +102,24 @@ const styles = StyleSheet.create({
   verseNum: {
     fontSize: 12,
     color: "#f00",
+    textAlign: "justify"
   },
   verseText: {
     fontSize: 20,
-    lineHeight: 32,
-    flexWrap: "wrap",
-    flexDirection: "row",
+    textAlign: "justify"
   },
   rtl: {
-    textAlign: "right",
-    writingDirection: "rtl",
+    direction: "rtl",
   },
   ltr: {
-    textAlign: "left",
-    writingDirection: "ltr",
+    direction: "ltr",
   },
+  textAr: {
+    lineHeight: 40
+  },
+  textEn: {
+    lineHeight: 28
+  }
 });
 
 export default ChapterTextWithTranslation;
