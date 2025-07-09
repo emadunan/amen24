@@ -29,10 +29,6 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
 
-  const highlightedTheme = {
-    backgroundColor: Colors[colorScheme ?? "light"].highlight,
-  };
-
   const handleDirectToChapter = () => {
     router.push(
       `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}&verseNum=${v.num}`

@@ -89,6 +89,8 @@ export default function SearchScreen() {
   };
 
   async function handleSearch() {
+    setShowDropdown(false);
+    
     if (!query.trim() || query.trim().length < 3) {
       showToast("info", MESSAGE_KEYS.SEARCH_KEYWORD_TOO_SHORT)
       return;
