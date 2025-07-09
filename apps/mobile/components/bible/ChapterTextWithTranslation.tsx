@@ -4,12 +4,13 @@ import { Colors } from "@/constants";
 import { ThemedText } from "../ThemedText";
 import { ThemedView } from "../ThemedView";
 import { VerseWithTranslation } from "@/interfaces/verse";
-import { formatNumber, getDirection, Lang } from "@amen24/shared";
+import { BookKey, formatNumber, getDirection, Lang, resolveRenderLang } from "@amen24/shared";
 import { BibleLang } from './BibleChapterText';
 
 interface Props {
   uiLang: BibleLang;
   translationLang: BibleLang;
+  bookKey: BookKey;
   verses: VerseWithTranslation[];
   highlighted: number[];
   onHighlight: (verseId: number) => void;
@@ -18,6 +19,7 @@ interface Props {
 const ChapterTextWithTranslation: React.FC<Props> = ({
   uiLang,
   translationLang,
+  bookKey,
   verses,
   highlighted,
   onHighlight,
@@ -26,11 +28,14 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
   const theme = Colors[colorScheme ?? "light"];
 
   const isLangRTL = getDirection(uiLang as Lang) === "rtl";
-  const isTranslationRTL = getDirection(translationLang as Lang) === "rtl";
-  
+
+  const renderLang = resolveRenderLang(translationLang as Lang, bookKey);
+  const isTranslationRTL = getDirection(renderLang as Lang) === "rtl";
+
+
   return (
     <View style={styles.wrapper}>
-      {verses.map((verse) => {       
+      {verses.map((verse) => {
         return (
           <ThemedView key={verse.id} style={styles.verseRow}>
             {/* UI Language Column */}

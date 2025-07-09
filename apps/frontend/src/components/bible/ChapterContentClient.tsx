@@ -1,6 +1,6 @@
 "use client";
 
-import { formatNumber, Lang, Verse, getDirection } from "@amen24/shared";
+import { formatNumber, Lang, Verse, getDirection, isOldTestament } from "@amen24/shared";
 import React, { FC, Fragment, useEffect, useState } from "react";
 import VerseHighlight from "./VerseHighlight";
 import styles from "./ChapterContentClient.module.css";
@@ -11,51 +11,6 @@ interface Props {
   bookKey: string;
   chapterNum: string;
 }
-
-const isOldTestament = (bookKey: string): boolean => {
-  const oldTestamentBooks = [
-    "GEN",
-    "EXO",
-    "LEV",
-    "NUM",
-    "DEU",
-    "JOS",
-    "JDG",
-    "RUT",
-    "1SA",
-    "2SA",
-    "1KI",
-    "2KI",
-    "1CH",
-    "2CH",
-    "EZR",
-    "NEH",
-    "EST",
-    "JOB",
-    "PSA",
-    "PRO",
-    "ECC",
-    "SNG",
-    "ISA",
-    "JER",
-    "LAM",
-    "EZK",
-    "DAN",
-    "HOS",
-    "JOL",
-    "AMO",
-    "OBA",
-    "JON",
-    "MIC",
-    "NAM",
-    "HAB",
-    "ZEP",
-    "HAG",
-    "ZEC",
-    "MAL",
-  ];
-  return oldTestamentBooks.includes(bookKey);
-};
 
 const ChapterContentClient: FC<Props> = ({ bookKey, chapterNum }) => {
   const lang = useSelector((state: RootState) => state.translation.lang);

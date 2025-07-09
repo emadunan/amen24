@@ -136,6 +136,7 @@ const BibleChapterText: FC<Props> = ({
             <ChapterTextWithTranslation
               uiLang={uiLang}
               translationLang={translationLang!}
+              bookKey={bookKey}
               verses={verses}
               highlighted={highlighted}
               onHighlight={handleHighlight}
