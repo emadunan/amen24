@@ -90,7 +90,7 @@ export default function SearchScreen() {
 
   async function handleSearch() {
     setShowDropdown(false);
-    
+
     if (!query.trim() || query.trim().length < 3) {
       showToast("info", MESSAGE_KEYS.SEARCH_KEYWORD_TOO_SHORT)
       return;
@@ -139,7 +139,7 @@ export default function SearchScreen() {
         <Pressable style={styles.filterBtn} onPress={() => setShowDropdown(prev => !prev)}>
           <Feather
             name="filter"
-            size={32}
+            size={24}
             color={Colors[colorScheme ?? "light"].accent}
             style={I18nManager.isRTL && styles.flipIcon}
           />
@@ -182,7 +182,7 @@ export default function SearchScreen() {
           />
         ) : (
           <ThemedText style={styles.feedbackText}>
-            {t("noResult", { ns: "common" })}
+            {t("searchEngine.noResult", { ns: "common" })}
           </ThemedText>
         )
       ) : (
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   },
   filterBtn: {
     position: "absolute",
-    top: 37,
+    top: 41,
     left: 24,
     zIndex: 2
   },

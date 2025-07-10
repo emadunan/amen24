@@ -52,7 +52,8 @@
     "resultsCount": "Results Count",
     "resetSearch": "Reset Search",
     "queryTooShort": "Please enter a search term with at least 3 characters.",
-    "noBooksSelected": "Please select at least one book."
+    "noBooksSelected": "Please select at least one book.",
+    "noResult": "We couldn't find any verses for that search. Try different words."
   },
   "glossary": {
     "title": "Bible Glossary",
