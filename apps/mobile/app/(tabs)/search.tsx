@@ -12,7 +12,7 @@ import { useSQLiteContext } from "expo-sqlite";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { VerseWithMeta } from "@/interfaces/verse";
-import VerseSearchResult from "@/components/bible/VerseSearchResult";
+import VerseSearchResult from "@/components/search/VerseSearchResult";
 import { ThemedTextInput } from "@/components/ui/ThemedTextInput";
 import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -139,7 +139,7 @@ export default function SearchScreen() {
           <Feather
             name="filter"
             size={24}
-            color={Colors[colorScheme ?? "light"].accent}
+            color={Colors[colorScheme ?? "light"].text}
             style={I18nManager.isRTL && styles.flipIcon}
           />
         </Pressable>
@@ -148,7 +148,7 @@ export default function SearchScreen() {
           value={query}
           onChangeText={handleQuery}
         />
-        <Pressable style={[styles.searchBtn, { backgroundColor: theme.accent }]} onPress={handleSearch}>
+        <Pressable style={[styles.searchBtn, { backgroundColor: theme.text }]} onPress={handleSearch}>
           <Feather
             name="search"
             size={32}

@@ -63,15 +63,9 @@ const BibleChapterText: FC<Props> = ({
 
   useEffect(() => {
     const fetchChapter = async () => {
-      console.log("QUERY PARAMS", {
-        uiLang,
-        translationLang,
-        chapterNum,
-        bookId,
-      });
-
+      let data: Verse[] | VerseWithTranslation[];
       if (translationLang) {
-        const data = await db.getAllAsync<VerseWithTranslation>(
+        data = await db.getAllAsync<VerseWithTranslation>(
           `
             SELECT 
               v.id,
@@ -95,11 +89,8 @@ const BibleChapterText: FC<Props> = ({
             Number(bookId)
           ]
         );
-        console.log(data);
-
-        setVerses(data);
       } else {
-        const data = await db.getAllAsync<Verse>(
+        data = await db.getAllAsync<Verse>(
           `
           SELECT v.id, v.num, vt.text, vt.textDiacritized
           FROM verse v
@@ -111,18 +102,22 @@ const BibleChapterText: FC<Props> = ({
         `,
           [chapterNum, bookId, uiLang]
         );
-        setVerses(data);
       }
 
-      // Highlight specific verse if requested
-      if (verseNum) {
-        const verseId = verses.find((v) => v.num === +verseNum)?.id;
-        if (verseId) toggleHighlight(verseId);
-      }
-    };
+      setVerses(data);
+    }
 
     fetchChapter();
   }, [uiLang, translationLang, chapterNum, bookId]);
+
+  useEffect(() => {
+    if (!verseNum || verses.length === 0) return;
+
+    const verse = verses.find((v) => v.num === +verseNum);
+    if (verse && !highlighted.includes(verse.id)) {
+      toggleHighlight(verse.id);
+    }
+  }, [verseNum, verses]);
 
   function handleHighlight(verseId: number) {
     toggleHighlight(verseId);

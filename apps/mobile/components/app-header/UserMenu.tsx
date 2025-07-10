@@ -82,7 +82,6 @@ const UserMenu = () => {
                   logout();
                   dispatch(authApi.util.resetApiState());
                   setOpen(false);
-                  router.replace("/(tabs)/bible")
                 }}
               >
                 <ThemedText style={[styles.item]}>

@@ -35,29 +35,6 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
     );
   };
 
-  const mapIndexToOriginal = (
-    original: string,
-    normalized: string,
-    targetIndex: number
-  ): number => {
-    let originalIndex = 0;
-    let normIndex = 0;
-
-    while (originalIndex < original.length && normIndex < targetIndex) {
-      let char = original[originalIndex];
-      let normChar = char;
-
-      if (queryLang === "ar") {
-        normChar = normalizeArText(removeArDiacritics(replaceWaslaAlef(char)));
-      }
-
-      normIndex += normChar.length;
-      originalIndex++;
-    }
-
-    return originalIndex;
-  };
-
   const highlightText = (text: string) => {
     if (!query) return text;
 

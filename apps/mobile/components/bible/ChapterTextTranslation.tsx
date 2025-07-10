@@ -27,6 +27,7 @@ const ChapterTextTranslation: React.FC<Props> = ({ lang, verses, highlighted, on
         <ThemedText key={verse.num} onPress={() => onHighlight(verse.id)}>
           <ThemedText style={[
             styles.verseNum,
+            { color: theme.danger },
             highlighted.includes(verse.id) && { backgroundColor: theme.highlight },
           ]} numberOfLines={1}>
             {formatNumber(verse.num, lang as Lang)}
@@ -58,8 +59,7 @@ const styles = StyleSheet.create({
   verseNum: {
     fontSize: 12,
     lineHeight: 48,
-    color: "#f00",
   },
 });
 
-export default ChapterTextTranslation
+export default ChapterTextTranslation;
