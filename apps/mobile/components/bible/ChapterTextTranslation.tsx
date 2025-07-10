@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   chapterView: {
     flexDirection: "row",
     marginVertical: 12,
+    marginRight: 42,
     columnGap: 8
   },
   verseText: {
