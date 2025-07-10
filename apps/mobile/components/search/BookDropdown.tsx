@@ -3,8 +3,8 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-nati
 import { useTranslation } from "react-i18next";
 import { books, categoryList } from "@amen24/shared";
 import { FontAwesome } from "@expo/vector-icons";
-import { ThemedView } from "../ThemedView";
-import { ThemedText } from "../ThemedText";
+import { ThemedView } from "../ui/ThemedView";
+import { ThemedText } from "../ui/ThemedText";
 
 interface Props {
   selectedBooks: string[];

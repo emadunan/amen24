@@ -8,7 +8,7 @@ import ChapterTextTranslation from "./ChapterTextTranslation";
 import ChapterTextWithTranslation from "./ChapterTextWithTranslation";
 import { Verse, VerseWithTranslation } from "@/interfaces/verse";
 import { type Verse as SharedVerse } from "@amen24/shared";
-import { ThemedView } from "../ThemedView";
+import { ThemedView } from "../ui/ThemedView";
 
 export type BibleLang = "en" | "ar" | "na";
 

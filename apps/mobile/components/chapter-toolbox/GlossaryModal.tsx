@@ -17,6 +17,9 @@ import { Lang, BookKey, sanitizeWord, ERROR_KEYS } from '@amen24/shared';
 import GlossaryVerse from './GlossaryVerse';
 import { useAddTermMutation } from '@/store/apis/glossaryApi';
 import { showToast } from '@/lib/toast';
+import { ThemedView } from '../ui/ThemedView';
+import { ThemedText } from '../ui/ThemedText';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 type Props = {
   verseId: number;
@@ -122,14 +125,14 @@ export default function GlossaryModal({ verseId, bookKey, isOpen, onClose }: Pro
 
   return (
     <Modal isVisible={isOpen} onBackdropPress={onClose}>
-      <View style={[styles.modal, { backgroundColor: theme.background }]}>
+      <ThemedView style={[styles.modal]}>
         <Pressable style={styles.closeButton} onPress={onClose}>
-          <Text style={{ fontSize: 24, color: theme.text }}>×</Text>
+          <FontAwesome name="window-close-o" size={28} color={theme.primary} />
+          {/* <Text style={{ fontSize: 24, color: theme.text }}>×</Text> */}
         </Pressable>
 
-        <Text style={[styles.title, { color: theme.text }]}>{t('toolbox.addGlossaryTerm')}</Text>
-
-        <Text style={[styles.slug, { color: theme.text }]}>Slug: {termSlug}</Text>
+        <ThemedText style={[styles.title, { color: theme.text }]}>{t('toolbox.addGlossaryTerm')}</ThemedText>
+        <ThemedText type='subtitle' style={[styles.slug]}>Slug: {termSlug}</ThemedText>
 
         <ScrollView style={{ maxHeight: 400 }}>
           {verseTexts.na && (
@@ -165,17 +168,17 @@ export default function GlossaryModal({ verseId, bookKey, isOpen, onClose }: Pro
         </ScrollView>
 
         <View style={styles.btnRow}>
-          <Pressable style={[styles.btn, styles.btnSubmit]} onPress={handleAdd}>
+          <Pressable style={[styles.btn, {backgroundColor: theme.accent}]} onPress={handleAdd}>
             <Text style={styles.btnText}>{t('main.add')}</Text>
           </Pressable>
-          <Pressable style={[styles.btn, styles.btnClear]} onPress={() => handleClearTerm()}>
+          <Pressable style={[styles.btn, {backgroundColor: theme.gray}]} onPress={() => handleClearTerm()}>
             <Text style={styles.btnText}>{t('main.clear')}</Text>
           </Pressable>
-          <Pressable style={[styles.btn, styles.btnCancel, isRTL && { marginLeft: 0, marginRight: 'auto' }]} onPress={onClose}>
+          <Pressable style={[styles.btn, {backgroundColor: theme.primary}, isRTL && { marginLeft: 0, marginRight: 'auto' }]} onPress={onClose}>
             <Text style={styles.btnText}>{t('main.cancel')}</Text>
           </Pressable>
         </View>
-      </View>
+      </ThemedView>
     </Modal>
   );
 }
@@ -195,8 +198,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   slug: {
-    fontFamily: 'AmiriRegular',
-    marginBottom: 10,
+    direction: "ltr",
   },
   closeButton: {
     position: 'absolute',
@@ -214,16 +216,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 2,
-  },
-  btnSubmit: {
-    backgroundColor: '#047857',
-  },
-  btnClear: {
-    backgroundColor: '#6b7280',
-  },
-  btnCancel: {
-    backgroundColor: '#9ca3af',
-    marginLeft: 'auto',
   },
   btnText: {
     color: 'white',

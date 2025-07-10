@@ -2,7 +2,7 @@ import React from 'react';
 import LibraryBookCard from './LibraryBookCard';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useGetLibraryBooksQuery } from '@/store/apis/libraryApi';
-import { ThemedView } from '../ThemedView';
+import { ThemedView } from '../ui/ThemedView';
 
 const Library: React.FC = () => {
   const { data: books } = useGetLibraryBooksQuery();

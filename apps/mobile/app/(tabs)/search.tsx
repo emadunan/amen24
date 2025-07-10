@@ -6,17 +6,17 @@ import {
   Pressable,
   StyleSheet,
 } from "react-native";
-import { ThemedView } from "@/components/ThemedView";
+import { ThemedView } from "@/components/ui/ThemedView";
 import { Feather } from "@expo/vector-icons";
 import { useSQLiteContext } from "expo-sqlite";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { VerseWithMeta } from "@/interfaces/verse";
 import VerseSearchResult from "@/components/bible/VerseSearchResult";
-import { ThemedTextInput } from "@/components/ThemedTextInput";
+import { ThemedTextInput } from "@/components/ui/ThemedTextInput";
 import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { ThemedText } from "@/components/ThemedText";
+import { ThemedText } from "@/components/ui/ThemedText";
 import { buildVerseSearchQuery } from "@/db/queries";
 import { Lang, BookKey, MESSAGE_KEYS, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef, categoryList } from "@amen24/shared";
 import { showToast } from "@/lib/toast";

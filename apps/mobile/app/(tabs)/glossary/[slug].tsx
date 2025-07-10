@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedText } from '@/components/ui/ThemedText';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 import { useGetOneTermQuery } from '@/store/apis/glossaryApi';
 import { MarkdownContent } from '@/components/ui/MarkdownContent';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemedView } from '@/components/ui/ThemedView';
 import BackBtn from '@/components/ui/BackBtn';
 
 const GlossaryDetails = () => {

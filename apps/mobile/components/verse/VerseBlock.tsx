@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { I18nManager, Pressable, StyleSheet } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ui/ThemedText";
+import { ThemedView } from "@/components/ui/ThemedView";
 import { BookKey, BookMap, formatNumber, Lang, Verse } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons"; // Or use any icon library

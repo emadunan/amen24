@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { FlatList } from "react-native";
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
-import { ThemedView } from "../ThemedView";
+import { ThemedView } from "../ui/ThemedView";
 import LibraryChapterLink from "./LibraryChapterLink";
 import { LibraryChapter } from "@amen24/shared";
 import { current } from "@reduxjs/toolkit";

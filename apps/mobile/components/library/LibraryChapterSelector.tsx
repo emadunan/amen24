@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { DrawerActions } from "@react-navigation/native";
 import { Colors } from "@/constants";
-import { ThemedText } from "../ThemedText";
+import { ThemedText } from "../ui/ThemedText";
 import { useNavigation } from "expo-router";
 import { useColorScheme } from "@/hooks/useColorScheme";
 

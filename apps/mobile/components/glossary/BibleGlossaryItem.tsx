@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { ApprovalStatus, BibleGlossary } from '@amen24/shared';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
-import { ThemedText } from '../ThemedText';
+import { ThemedText } from '../ui/ThemedText';
 
 interface Props {
   bgItem: BibleGlossary;
@@ -26,7 +26,7 @@ const BibleGlossaryItem: React.FC<Props> = ({ bgItem }) => {
     >
       <ThemedText type='title' style={[styles.term, { color: theme.primary }]}> {translation?.term} [{bgItem.native}]</ThemedText>
       <ThemedText numberOfLines={2}
-  ellipsizeMode="tail" style={[styles.definition, { color: theme.text }]}>
+        ellipsizeMode="tail" style={[styles.definition, { color: theme.text }]}>
         {bgItem.approvalStatus === ApprovalStatus.Approved
           ? translation?.definition
           : translation?.oldDefinition ?? ''}

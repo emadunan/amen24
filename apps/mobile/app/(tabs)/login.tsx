@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { ThemedView } from "@/components/ThemedView";
+import { ThemedView } from "@/components/ui/ThemedView";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { signInWithGoogle } from "@/lib/googleAuth";
 import { Colors } from "@/constants";

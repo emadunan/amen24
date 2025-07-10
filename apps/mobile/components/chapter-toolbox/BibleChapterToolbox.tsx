@@ -31,8 +31,8 @@ import { useAddToFeaturedMutation } from "@/store/apis/featuredApi";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Colors } from "@/constants";
 import { useHighlightContext } from "@amen24/store";
-import { ThemedView } from "../ThemedView";
-import { ThemedText } from "../ThemedText";
+import { ThemedView } from "../ui/ThemedView";
+import { ThemedText } from "../ui/ThemedText";
 import { showToast } from "@/lib/toast";
 import GlossaryModal from "./GlossaryModal";
 

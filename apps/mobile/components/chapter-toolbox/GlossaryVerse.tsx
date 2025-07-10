@@ -1,17 +1,18 @@
 import React, { FC } from "react";
 import {
-  Text,
   Pressable,
   StyleSheet,
   ActivityIndicator,
   I18nManager,
+  useColorScheme,
 } from "react-native";
 import { BookKey, flagMap, getDirection, Lang, resolveRenderLang } from "@amen24/shared";
 import { ActiveLang } from "@amen24/store";
 import { useIsTermExistQuery } from "@/store/apis/glossaryApi";
 import { MaterialIcons } from '@expo/vector-icons';
-import { ThemedText } from "../ThemedText";
-import { ThemedView } from "../ThemedView";
+import { ThemedText } from "../ui/ThemedText";
+import { ThemedView } from "../ui/ThemedView";
+import { Colors } from "@/constants";
 
 interface Props {
   text: string;
@@ -30,6 +31,9 @@ const GlossaryVerse: FC<Props> = ({
   onAddWordToTerm,
   onClearTerm,
 }) => {
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
+
   const term = selectedWords.join(" ").toLowerCase();
   const shouldQuery = term.trim().length > 0;
   const words = text.trim().split(/\s+/);
@@ -48,15 +52,14 @@ const GlossaryVerse: FC<Props> = ({
   }
 
   return (
-    <ThemedView style={styles.container}>
-
-      <ThemedView style={styles.termRow}>
+    <ThemedView style={[styles.container, { borderColor: theme.text }]}>
+      <ThemedView style={[styles.termRow, { borderColor: theme.text }]}>
         <ThemedText style={styles.flag}>{flagMap[lang]}</ThemedText>
         <ThemedText style={styles.termText}>
           {term} {isLoading ? <ActivityIndicator size="small" /> : isFound ? <MaterialIcons name="verified" size={20} color="green" /> : null}
         </ThemedText>
         <Pressable onPress={() => onClearTerm(lang)} style={{ display: "flex", justifyContent: "center" }}>
-          <MaterialIcons name="cleaning-services" size={24} color="black" style={{ marginBottom: 6, marginHorizontal: 6 }} />
+          <MaterialIcons name="cleaning-services" size={24} color={theme.text} style={{ marginBottom: 6, marginHorizontal: 6 }} />
         </Pressable>
       </ThemedView>
 
@@ -69,14 +72,14 @@ const GlossaryVerse: FC<Props> = ({
             onPress={() => onAddWordToTerm(lang, w)}
             style={styles.wordButton}
           >
-            <Text
+            <ThemedText
               style={[
                 styles.word,
                 shouldFlipDirection ? styles.textRtl : styles.textLtr,
               ]}
             >
               {w}
-            </Text>
+            </ThemedText>
           </Pressable>
         ))}
       </ThemedView>

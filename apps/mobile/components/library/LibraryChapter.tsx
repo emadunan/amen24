@@ -1,10 +1,10 @@
 import React, { FC, useLayoutEffect } from 'react';
-import { ThemedText } from '../ThemedText';
+import { ThemedText } from '../ui/ThemedText';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { StyleSheet, Text, useColorScheme } from 'react-native';
 import { Colors } from '@/constants';
 import { useGetLibraryBookQuery } from '@/store/apis/libraryApi';
-import { ThemedView } from '../ThemedView';
+import { ThemedView } from '../ui/ThemedView';
 import Marked from 'react-native-marked';
 import { MarkdownContent } from '../ui/MarkdownContent';
 

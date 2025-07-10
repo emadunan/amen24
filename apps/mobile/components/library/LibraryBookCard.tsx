@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants';
-import { ThemedText } from '../ThemedText';
-import { ThemedView } from '../ThemedView';
+import { ThemedText } from '../ui/ThemedText';
+import { ThemedView } from '../ui/ThemedView';
 
 interface Props {
   slug: string;
@@ -20,9 +20,9 @@ const LibraryBookCard: React.FC<Props> = ({ slug, title, author, current }) => {
     <TouchableOpacity
       onPress={() => router.push(`/library/${slug}?current=${current}`)}
     >
-      <ThemedView style={[styles.card, {backgroundColor: theme.secondary, borderColor: theme.text, borderWidth: 1}]}>
+      <ThemedView style={[styles.card, { backgroundColor: theme.secondary, borderColor: theme.text, borderWidth: 1 }]}>
         <ThemedText style={styles.title}>{title}</ThemedText>
-        {author && <ThemedText style={[styles.author, {color: theme.gray}]}>{author}</ThemedText>}
+        {author && <ThemedText style={[styles.author, { color: theme.gray }]}>{author}</ThemedText>}
       </ThemedView>
     </TouchableOpacity>
   );

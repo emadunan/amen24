@@ -1,8 +1,8 @@
 import React from 'react';
 import { I18nManager, StyleSheet, useColorScheme, View } from "react-native";
 import { Colors } from "@/constants";
-import { ThemedText } from "../ThemedText";
-import { ThemedView } from "../ThemedView";
+import { ThemedText } from "../ui/ThemedText";
+import { ThemedView } from "../ui/ThemedView";
 import { VerseWithTranslation } from "@/interfaces/verse";
 import { BookKey, formatNumber, getDirection, Lang, resolveRenderLang } from "@amen24/shared";
 import { BibleLang } from './BibleChapterText';

@@ -8,8 +8,8 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 import { formatNumber, Lang } from '@amen24/shared';
 import { TFunction } from 'i18next';
-import { ThemedText } from '../ThemedText';
-import { ThemedView } from '../ThemedView';
+import { ThemedText } from './ThemedText';
+import { ThemedView } from './ThemedView';
 
 interface Props {
   t: TFunction;

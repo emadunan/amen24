@@ -14,8 +14,8 @@ import { authApi, useGetMeQuery } from '@/store/apis/authApi';
 import { useDispatch } from 'react-redux';
 import { Link, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { ThemedText } from '../ThemedText';
-import { ThemedView } from '../ThemedView';
+import { ThemedText } from '../ui/ThemedText';
+import { ThemedView } from '../ui/ThemedView';
 
 const UserMenu = () => {
   const [open, setOpen] = useState(false);

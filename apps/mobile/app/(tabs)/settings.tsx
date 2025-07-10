@@ -12,8 +12,8 @@ import { Colors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDeleteAccountMutation } from '@/store/apis/profileApi';
-import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
+import { ThemedText } from '@/components/ui/ThemedText';
 
 const SettingsScreen = () => {
   const { t } = useTranslation();

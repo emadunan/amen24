@@ -4,8 +4,8 @@ import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript
 import { useRouter } from "expo-router";
 import React, { FC } from "react";
 import { Pressable, StyleSheet } from "react-native";
-import { ThemedView } from "../ThemedView";
-import { ThemedText } from "../ThemedText";
+import { ThemedView } from "../ui/ThemedView";
+import { ThemedText } from "../ui/ThemedText";
 import { LibraryChapter } from "@amen24/shared";
 
 interface Props {
@@ -34,7 +34,7 @@ const LibraryChapterLink: FC<Props> = ({
   };
 
   const selected = chapter.id === current;
-  
+
   function handlePress() {
     navigation.closeDrawer();
     router.push(

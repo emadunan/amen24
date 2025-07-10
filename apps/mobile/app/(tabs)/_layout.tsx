@@ -1,7 +1,7 @@
 import { Tabs } from "expo-router";
 import React from "react";
 import { I18nManager, Platform, StyleSheet } from "react-native";
-import { HapticTab } from "@/components/HapticTab";
+import { HapticTab } from "@/components/ui/HapticTab";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { useTranslation } from "react-i18next";
@@ -10,8 +10,6 @@ import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "@/constants";
 import { Ionicons } from "@expo/vector-icons";
 import BackBtn from "@/components/ui/BackBtn";
-import { useGetMeQuery } from "@/store/apis/authApi";
-import AppLoadingScreen from "@/components/ui/AppLoadingScreen";
 
 export default function TabLayout() {
   const { t } = useTranslation();

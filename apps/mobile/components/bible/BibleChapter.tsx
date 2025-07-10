@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { ThemedView } from "@/components/ThemedView";
+import { ThemedView } from "@/components/ui/ThemedView";
 import { useTranslation } from "react-i18next";
 import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -17,7 +17,7 @@ import { BookKey, Lang } from "@amen24/shared";
 import { HighlightProvider } from "@amen24/store";
 import * as Clipboard from "expo-clipboard";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import { ThemedText } from "../ThemedText";
+import { ThemedText } from "../ui/ThemedText";
 
 type SearchParams = {
   bookKey: string;

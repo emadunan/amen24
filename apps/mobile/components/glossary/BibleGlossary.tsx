@@ -12,7 +12,7 @@ import Pagination from '../ui/Pagination';
 import { useGetAllTermsQuery } from '@/store/apis/glossaryApi';
 import { Lang } from '@amen24/shared';
 import GlossaryFilterForm from './GlossaryFilterForm';
-import { ThemedView } from '../ThemedView';
+import { ThemedView } from '../ui/ThemedView';
 
 const ITEMS_PER_PAGE = 10;
 

@@ -3,7 +3,7 @@ import { I18nManager, Pressable, StyleSheet, View, } from "react-native";
 import { DrawerActions } from "@react-navigation/native";
 import { Colors } from "@/constants";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { ThemedText } from "../ThemedText";
+import { ThemedText } from "../ui/ThemedText";
 import { useNavigation, useRouter } from "expo-router";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { useTranslation } from "react-i18next";

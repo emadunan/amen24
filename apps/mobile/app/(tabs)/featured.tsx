@@ -1,5 +1,5 @@
 import VerseFeatured from '@/components/featured/VerseFeatured';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { useGetAllFeaturedQuery } from '@/store/apis/featuredApi';
 import { Lang } from '@amen24/shared';
 import React from 'react'

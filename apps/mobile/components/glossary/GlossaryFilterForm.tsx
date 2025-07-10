@@ -9,8 +9,8 @@ import {
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 import { AntDesign } from '@expo/vector-icons';
-import { ThemedView } from '../ThemedView';
-import { ThemedText } from '../ThemedText';
+import { ThemedView } from '../ui/ThemedView';
+import { ThemedText } from '../ui/ThemedText';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -41,7 +41,7 @@ const GlossaryFilterForm: React.FC<Props> = ({
         placeholderTextColor={theme.text}
       />
 
-      <ThemedView style={[styles.buttons, {direction: isRTL ? "rtl" : "ltr"}]}>
+      <ThemedView style={[styles.buttons, { direction: isRTL ? "rtl" : "ltr" }]}>
         <Pressable style={[styles.button, { backgroundColor: theme.primary }]} onPress={onReset}>
           <AntDesign name="sync" size={18} color={theme.background} />
         </Pressable>

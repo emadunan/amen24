@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemedText } from '../ThemedText';
+import { ThemedText } from '../ui/ThemedText';
 import { StyleSheet, useColorScheme } from "react-native";
 import { useTranslation } from "react-i18next";
 

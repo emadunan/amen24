@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { useGetUserFavoritesQuery } from '@/store/apis/favoriteApi';
 import VerseFavorite from '@/components/favorite/VerseFavorite';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +8,9 @@ import { FlatList, StyleSheet } from 'react-native';
 
 const Favorites = () => {
   const { i18n } = useTranslation();
-  const lang = i18n.language as Lang;  
-  
-  const { data: favorites } = useGetUserFavoritesQuery(lang);  
+  const lang = i18n.language as Lang;
+
+  const { data: favorites } = useGetUserFavoritesQuery(lang);
 
   return (
     <ThemedView style={styles.container}>
