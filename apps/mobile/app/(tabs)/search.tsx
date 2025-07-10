@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Button,
   FlatList,
   I18nManager,
   Keyboard,
@@ -18,7 +19,7 @@ import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemedText } from "@/components/ui/ThemedText";
 import { buildVerseSearchQuery } from "@/db/queries";
-import { Lang, BookKey, MESSAGE_KEYS, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef, categoryList } from "@amen24/shared";
+import { Lang, BookKey, MESSAGE_KEYS, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef, categoryList, formatNumber } from "@amen24/shared";
 import { showToast } from "@/lib/toast";
 import BookDropdown from "@/components/search/BookDropdown";
 
@@ -132,31 +133,53 @@ export default function SearchScreen() {
     }
   }
 
+  function handleSearchReset() {
+    setQuery('');
+    setShowDropdown(false);
+    setSelectedBooks(Object.values(BookKey));
+    setSearchPerformed(false);
+    setVerses([]);
+  }
+
   return (
     <ThemedView style={styles.container}>
-      <ThemedView style={[styles.searchGroup, backgroundTheme]}>
-        <Pressable style={styles.filterBtn} onPress={() => setShowDropdown(prev => !prev)}>
-          <Feather
-            name="filter"
-            size={24}
-            color={Colors[colorScheme ?? "light"].text}
-            style={I18nManager.isRTL && styles.flipIcon}
+      <ThemedView>
+
+        <ThemedView style={[styles.searchGroup, backgroundTheme]}>
+          <Pressable style={styles.filterBtn} onPress={() => setShowDropdown(prev => !prev)}>
+            <Feather
+              name="filter"
+              size={24}
+              color={Colors[colorScheme ?? "light"].text}
+              style={I18nManager.isRTL && styles.flipIcon}
+            />
+          </Pressable>
+          <ThemedTextInput
+            style={styles.searchInput}
+            value={query}
+            onChangeText={handleQuery}
           />
-        </Pressable>
-        <ThemedTextInput
-          style={styles.searchInput}
-          value={query}
-          onChangeText={handleQuery}
-        />
-        <Pressable style={[styles.searchBtn, { backgroundColor: theme.text }]} onPress={handleSearch}>
-          <Feather
-            name="search"
-            size={32}
-            color={Colors[colorScheme ?? "light"].background}
-            style={I18nManager.isRTL && styles.flipIcon}
-          />
-        </Pressable>
+          <Pressable style={[styles.searchBtn, { backgroundColor: theme.text }]} onPress={handleSearch}>
+            <Feather
+              name="search"
+              size={32}
+              color={Colors[colorScheme ?? "light"].background}
+              style={I18nManager.isRTL && styles.flipIcon}
+            />
+          </Pressable>
+        </ThemedView>
+        {verses.length > 0 && (
+          <ThemedView style={[styles.searchReport, { backgroundColor: theme.secondary }]}>
+            <ThemedText>
+              {t("searchEngine.resultsCount")}: {formatNumber(verses.length, i18n.language as Lang)}
+            </ThemedText>
+            <Pressable onPress={handleSearchReset}>
+              <ThemedText>{t("searchEngine.resetSearch")}</ThemedText>
+            </Pressable>
+          </ThemedView>
+        )}
       </ThemedView>
+
       {showDropdown && <BookDropdown selectedBooks={selectedBooks} toggleBookSelection={toggleBookSelection} isCategorySelected={isCategorySelected} />}
       {loading ? (
         <ThemedView style={styles.loadingContainer}>
@@ -202,9 +225,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     paddingTop: 32,
-    paddingBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    paddingBottom: 16,
+  },
+  searchReport: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   searchInput: {
     flex: 1,
