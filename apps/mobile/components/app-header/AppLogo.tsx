@@ -1,16 +1,31 @@
 import { toastConfig } from "@/lib/toast";
-import { Link } from "expo-router";
 import React from "react";
-import { Image, View, StyleSheet, useColorScheme } from "react-native";
+import {
+  Image,
+  View,
+  StyleSheet,
+  useColorScheme,
+  Pressable,
+} from "react-native";
 import Toast from "react-native-toast-message";
+import { useRouter } from "expo-router";
 
 const CenteredLogo = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
+  const router = useRouter();
+
+  const handlePress = () => {
+    router.replace("/");
+  };
 
   return (
-    <View style={styles.container}>
-      <Link href={`/(tabs)/bible`}>
+    <View style={styles.container} pointerEvents="box-none">
+      <Pressable
+        onPress={handlePress}
+        style={styles.pressable}
+        pointerEvents="auto"
+      >
         <Image
           source={
             isDark
@@ -20,7 +35,7 @@ const CenteredLogo = () => {
           style={styles.logo}
           resizeMode="contain"
         />
-      </Link>
+      </Pressable>
       <Toast config={toastConfig} />
     </View>
   );
@@ -34,11 +49,15 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: "center",
     zIndex: 99,
+    pointerEvents: "box-none", // 👈 allow children to receive touches
+  },
+  pressable: {
+    zIndex: 100,
+    pointerEvents: "auto", // 👈 explicitly allows this to receive touches
   },
   logo: {
     width: 72,
     height: 72,
-    pointerEvents: "none",     // Let touches pass through the logo
   },
 });
 

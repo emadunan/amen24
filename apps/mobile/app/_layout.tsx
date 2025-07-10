@@ -18,7 +18,7 @@ import * as SystemUI from "expo-system-ui";
 
 import { Colors } from "@/constants";
 import StoreProvider from "@/providers/StoreProvider";
-import CenteredLogo from "@/components/app-header/CenteredLogo";
+import CenteredLogo from "@/components/app-header/AppLogo";
 import { ThemedView } from "@/components/ui/ThemedView";
 import { useGetMeQuery } from "@/store/apis/authApi";
 import AppLoadingScreen from "@/components/ui/AppLoadingScreen";
