@@ -128,7 +128,6 @@ export default function SearchScreen() {
     } catch (error) {
       console.error("Search error:", error);
     } finally {
-      setQuery("");
       setLoading(false);
     }
   }

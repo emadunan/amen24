@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Text,
   Pressable,
   StyleSheet,
   useColorScheme,
@@ -79,10 +78,10 @@ const SettingsScreen = () => {
       </Pressable>
 
       <Pressable
-        style={[styles.deleteBtn, { backgroundColor: theme.text }]}
+        style={[styles.deleteBtn, { backgroundColor: theme.danger }]}
         onPress={handleDeleteAccount}
       >
-        <ThemedText type='title' style={styles.deleteText}>
+        <ThemedText type='title' style={[styles.deleteText]}>
           {t('profileSettings.deleteAccount')}
         </ThemedText>
       </Pressable>
