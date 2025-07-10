@@ -10,7 +10,7 @@ import {
 import Toast from "react-native-toast-message";
 import { useRouter } from "expo-router";
 
-const CenteredLogo = () => {
+const AppLogo = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const router = useRouter();
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CenteredLogo;
+export default AppLogo;

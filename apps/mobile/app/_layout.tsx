@@ -18,11 +18,9 @@ import * as SystemUI from "expo-system-ui";
 
 import { Colors } from "@/constants";
 import StoreProvider from "@/providers/StoreProvider";
-import CenteredLogo from "@/components/app-header/AppLogo";
+import AppLogo from "@/components/app-header/AppLogo";
 import { ThemedView } from "@/components/ui/ThemedView";
-import { useGetMeQuery } from "@/store/apis/authApi";
-import AppLoadingScreen from "@/components/ui/AppLoadingScreen";
-
+import AuthBootstrap from "@/components/ui/AuthBootstrap";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -61,13 +59,15 @@ export default function RootLayout() {
             <ThemeProvider
               value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
             >
-              <ThemedView style={{ flex: 1 }}>
-                <CenteredLogo />
-                <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                  <Stack.Screen name="+not-found" />
-                </Stack>
-              </ThemedView>
+              <AuthBootstrap>
+                <ThemedView style={{ flex: 1 }}>
+                  <AppLogo />
+                  <Stack>
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen name="+not-found" />
+                  </Stack>
+                </ThemedView>
+              </AuthBootstrap>
               <StatusBar style="auto" />
             </ThemeProvider>
           </SQLiteProvider>
