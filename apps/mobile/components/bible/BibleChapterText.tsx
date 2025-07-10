@@ -142,6 +142,7 @@ const BibleChapterText: FC<Props> = ({
               verses={verses}
               highlighted={highlighted}
               onHighlight={handleHighlight}
+              verseNum={verseNum ? parseInt(verseNum) : undefined}
             />
           )}
         </ThemedView>

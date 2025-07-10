@@ -144,7 +144,6 @@ export default function SearchScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView>
-
         <ThemedView style={[styles.searchGroup, backgroundTheme]}>
           <Pressable style={styles.filterBtn} onPress={() => setShowDropdown(prev => !prev)}>
             <Feather

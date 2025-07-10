@@ -1,25 +1,61 @@
 import React from 'react'
 import { ThemedText } from '../ui/ThemedText';
-import { StyleSheet, useColorScheme } from "react-native";
+import { Pressable, StyleSheet, useColorScheme } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import { Colors } from '@/constants';
 import { Verse } from '@/interfaces/verse';
 import { formatNumber, Lang } from '@amen24/shared';
 import { BibleLang } from './BibleChapterText';
+import { ThemedView } from '../ui/ThemedView';
 
 interface Props {
   lang: BibleLang;
   verses: Verse[];
+  verseNum?: number;
   highlighted: number[];
   onHighlight: (verseNum: number) => void;
+  onVerseLayout?: (verseNum: number, y: number) => void;
 }
 
-const ChapterTextTranslation: React.FC<Props> = ({ lang, verses, highlighted, onHighlight }) => {
+const ChapterTextTranslation: React.FC<Props> = ({ lang, verses, verseNum, highlighted, onHighlight, onVerseLayout }) => {
   const { i18n } = useTranslation();
   const colorScheme = useColorScheme();
 
   const theme = Colors[colorScheme ?? 'light'];
+
+  if (verseNum) {
+    return (
+      <ThemedView>
+        {verses.map((verse) => (
+          <Pressable key={verse.num} onPress={() => onHighlight(verse.id)}>
+            <ThemedView
+              style={styles.chapterView}
+              onLayout={(e) => {
+                onVerseLayout?.(verse.num, e.nativeEvent.layout.y);
+              }}
+            >
+              <ThemedText
+                style={[styles.verseNum, { color: theme.danger }]}
+              >
+                {formatNumber(verse.num, lang as Lang)}
+              </ThemedText>
+              <ThemedText
+                style={[
+                  styles.verseText,
+                  highlighted.includes(verse.id) && {
+                    backgroundColor: theme.highlight,
+                  },
+                ]}
+              >
+                {verse.textDiacritized}
+              </ThemedText>
+            </ThemedView>
+          </Pressable>
+        ))}
+      </ThemedView>
+    );
+  }
 
   return (
     <ThemedText style={styles.chapterContent}>
@@ -51,6 +87,11 @@ const styles = StyleSheet.create({
   chapterContent: {
     flex: 1,
     textAlign: "justify",
+  },
+  chapterView: {
+    flexDirection: "row",
+    marginVertical: 12,
+    columnGap: 8
   },
   verseText: {
     fontSize: 22,
