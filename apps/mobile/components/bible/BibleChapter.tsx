@@ -62,7 +62,10 @@ const BibleChapter: FC = () => {
     <ThemedView style={styles.container}>
       {/* Language Toggle Button */}
       <Pressable
-        style={styles.languageToggle}
+        style={[
+          styles.languageToggle,
+          I18nManager.isRTL ? { left: 18 } : { left: -13 }
+        ]}
         onPress={() => setMenuVisible(prev => !prev)}
       >
         <FontAwesome5 name="language" size={24} color={theme.text} />
@@ -70,7 +73,10 @@ const BibleChapter: FC = () => {
 
       {/* Toggle Menu */}
       {menuVisible && (
-        <View style={styles.menu}>
+        <View style={[
+          styles.menu,
+          I18nManager.isRTL ? {left: 57} : {left: -52}
+        ]}>
           <Pressable
             onPress={() => {
               setTranslationLang(undefined);
@@ -160,15 +166,14 @@ const styles = StyleSheet.create({
   },
   languageToggle: {
     position: "absolute",
-    top: -20,
+    top: -4,
     zIndex: 100,
-    left: "50%",
     transform: [{ translateX: 16 }],
   },
   menu: {
     position: "absolute",
-    top: 2,
-    left: "50%",
+    top: 18,
+    left: 57,
     transform: [{ translateX: 55 }],
     backgroundColor: "#fff",
     borderRadius: 2,
