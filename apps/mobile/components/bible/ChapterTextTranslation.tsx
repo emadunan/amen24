@@ -12,9 +12,9 @@ interface Props {
   lang: BibleLang;
   verses: Verse[];
   verseNum?: number;
+  textJustify: boolean;
   highlighted: number[];
   onHighlight: (verseNum: number) => void;
-  textJustify: boolean;
 }
 
 const ChapterTextTranslation: React.FC<Props> = ({

@@ -6,6 +6,7 @@ import { featuredApi } from "./apis/featuredApi";
 import { progressApi } from "./apis/progressApi";
 import { glossaryApi } from "./apis/glossaryApi";
 import { libraryApi } from "./apis/libraryApi";
+import { setStore } from "./storeRef";
 
 export const MakeStore = () => {
   const store = configureStore({
@@ -28,6 +29,7 @@ export const MakeStore = () => {
         .concat(libraryApi.middleware),
   });
 
+  setStore(store);
   return store;
 };
 

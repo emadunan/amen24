@@ -14,8 +14,18 @@ export interface Options {
   useBearerToken?: boolean;
   getAccessToken?: () => Promise<string | null>;
   getRefreshToken?: () => Promise<string | null>;
-  setTokens?: (accessToken: string, refreshToken: string) => Promise<void>;
-  onAuthFailure?: () => void; // optional callback
+  onAuthEvent?: (event: {
+    type: "login" | "refresh" | "logout" | "failure";
+    tokens?: {
+      accessToken: string;
+      refreshToken: string;
+    };
+  }) => void;
+}
+
+interface TokenResponse {
+  accessToken: string;
+  refreshToken: string;
 }
 
 export const createBaseQueryWithReauth = (
@@ -90,15 +100,16 @@ export const createBaseQueryWithReauth = (
             result = await rawBaseQuery(args, api, extraOptions);
 
             if (refreshResult.data) {
-              const { accessToken, refreshToken } = refreshResult.data as any;
+              const { accessToken, refreshToken } = refreshResult.data as TokenResponse;
 
-              if (options?.setTokens) {
-                await options.setTokens(accessToken, refreshToken);
-              }
+              options?.onAuthEvent?.({
+                type: "refresh",
+                tokens: { accessToken, refreshToken },
+              });
             }
           } else {
             console.warn("[Reauth] Refresh failed");
-            options?.onAuthFailure?.();
+            options?.onAuthEvent({ type: "failure" });
           }
         } finally {
           release();
