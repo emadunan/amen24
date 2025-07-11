@@ -1,8 +1,8 @@
-import React from 'react';
-import LibraryBookCard from './LibraryBookCard';
-import { FlatList, StyleSheet, View } from 'react-native';
-import { useGetLibraryBooksQuery } from '@/store/apis/libraryApi';
-import { ThemedView } from '../ui/ThemedView';
+import React from "react";
+import LibraryBookCard from "./LibraryBookCard";
+import { FlatList, StyleSheet, View } from "react-native";
+import { useGetLibraryBooksQuery } from "@/store/apis/libraryApi";
+import { ThemedView } from "../ui/ThemedView";
 
 const Library: React.FC = () => {
   const { data: books } = useGetLibraryBooksQuery();
@@ -32,13 +32,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 12,
     paddingBottom: 12,
-    paddingTop: 36
+    paddingTop: 36,
   },
   listContent: {
     gap: 12,
   },
   row: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     marginBottom: 12,
   },
 });

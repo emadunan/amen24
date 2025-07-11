@@ -31,7 +31,7 @@ export const ThemedTextInput: React.FC<ThemedTextInputProps> = ({
       {...rest}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   input: {

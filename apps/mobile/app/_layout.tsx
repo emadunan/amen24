@@ -61,7 +61,10 @@ export default function RootLayout() {
               <ThemedView style={{ flex: 1 }}>
                 <AppLogo />
                 <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
                   <Stack.Screen name="+not-found" />
                 </Stack>
               </ThemedView>

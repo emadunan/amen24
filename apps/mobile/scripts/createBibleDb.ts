@@ -2,7 +2,15 @@ import { open, Database } from "sqlite";
 import sqlite3 from "sqlite3";
 import { readFile } from "fs/promises";
 import { existsSync, unlinkSync } from "fs";
-import { BookKey, BookMap, Lang, removeArDiacritics, normalizeArText, replaceWaslaAlef, removeNaDiacritics } from "@amen24/shared";
+import {
+  BookKey,
+  BookMap,
+  Lang,
+  removeArDiacritics,
+  normalizeArText,
+  replaceWaslaAlef,
+  removeNaDiacritics,
+} from "@amen24/shared";
 
 const dbPath = "../data/bible.db";
 if (existsSync(dbPath)) {
@@ -61,22 +69,44 @@ async function initDatabase() {
   for (const key in BookMap) {
     const book = BookMap[key as BookKey];
     const { slug } = book;
-    const response = await db.run(`INSERT INTO book (bookKey, slug) VALUES (?, ?)`, [key, slug]);
+    const response = await db.run(
+      `INSERT INTO book (bookKey, slug) VALUES (?, ?)`,
+      [key, slug],
+    );
     const bookId = response.lastID;
 
     for (let chapterNum = 1; chapterNum <= book.len; chapterNum++) {
-      await db.run(`INSERT INTO chapter (num, bookId) VALUES (?, ?)`, [chapterNum, bookId]);
+      await db.run(`INSERT INTO chapter (num, bookId) VALUES (?, ?)`, [
+        chapterNum,
+        bookId,
+      ]);
     }
   }
 
-  await migrateTranslations(db, "../../../documentation/content/Bible_Native_MasoreticSBL.VPL.txt", "na");
-  await migrateTranslations(db, "../../../documentation/content/Bible_En_ESV_2001.VPL.txt", "en");
-  await migrateTranslations(db, "../../../documentation/content/Bible_Ar_SVD_1865.VPL.txt", "ar");
+  await migrateTranslations(
+    db,
+    "../../../documentation/content/Bible_Native_MasoreticSBL.VPL.txt",
+    "na",
+  );
+  await migrateTranslations(
+    db,
+    "../../../documentation/content/Bible_En_ESV_2001.VPL.txt",
+    "en",
+  );
+  await migrateTranslations(
+    db,
+    "../../../documentation/content/Bible_Ar_SVD_1865.VPL.txt",
+    "ar",
+  );
 
   await db.close();
 }
 
-async function migrateTranslations(db: Database, filePath: string, lang: string) {
+async function migrateTranslations(
+  db: Database,
+  filePath: string,
+  lang: string,
+) {
   const BibleData = await readFile(filePath, "utf-8");
   const lines = BibleData.split("\n");
 
@@ -106,18 +136,31 @@ async function migrateTranslations(db: Database, filePath: string, lang: string)
     }
 
     if (chapterNum === 1 && verseNum === 1) {
-      bookId = (await db.get(`SELECT id FROM book WHERE bookKey = ?`, [bookKey]))?.id;
+      bookId = (
+        await db.get(`SELECT id FROM book WHERE bookKey = ?`, [bookKey])
+      )?.id;
       console.log(bookId, bookKey, "--- processing");
     }
 
     if (verseNum === 1) {
-      chapterId = (await db.get(`SELECT id FROM chapter WHERE bookId = ? AND num = ?`, [bookId, chapterNum]))?.id;
+      chapterId = (
+        await db.get(`SELECT id FROM chapter WHERE bookId = ? AND num = ?`, [
+          bookId,
+          chapterNum,
+        ])
+      )?.id;
     }
 
-    const verseResult = await db.get(`SELECT id FROM verse WHERE chapterId = ? AND num = ?`, [chapterId, verseNum]);
+    const verseResult = await db.get(
+      `SELECT id FROM verse WHERE chapterId = ? AND num = ?`,
+      [chapterId, verseNum],
+    );
 
     if (!verseResult) {
-      const res = await db.run(`INSERT INTO verse (num, chapterId) VALUES (?, ?)`, [verseNum, chapterId]);
+      const res = await db.run(
+        `INSERT INTO verse (num, chapterId) VALUES (?, ?)`,
+        [verseNum, chapterId],
+      );
       verseId = res.lastID;
     } else {
       verseId = verseResult.id;
@@ -125,7 +168,7 @@ async function migrateTranslations(db: Database, filePath: string, lang: string)
 
     await db.run(
       `INSERT OR IGNORE INTO verse_translation (verseId, lang, text, textNormalized, textDiacritized) VALUES (?, ?, ?, ?, ?)`,
-      [verseId, lang, text, textNormalized, textDiacritized]
+      [verseId, lang, text, textNormalized, textDiacritized],
     );
   }
 }

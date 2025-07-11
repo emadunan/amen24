@@ -31,7 +31,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
 
   const handleDirectToChapter = () => {
     router.push(
-      `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}&verseNum=${v.num}`
+      `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}&verseNum=${v.num}`,
     );
   };
 
@@ -41,7 +41,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
     const normalizedQueryWords = words.map((word) =>
       queryLang === "ar"
         ? normalizeArText(removeArDiacritics(replaceWaslaAlef(word)))
-        : word.toLowerCase()
+        : word.toLowerCase(),
     );
 
     const tokenize = (str: string) => str.split(/(\s+)/); // Keep spaces
@@ -55,14 +55,17 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
           : token.toLowerCase();
 
       const shouldHighlight = normalizedQueryWords.some((queryWord) =>
-        normalizedToken.includes(queryWord)
+        normalizedToken.includes(queryWord),
       );
 
       if (shouldHighlight && token.trim()) {
         parts.push(
-          <Text key={`highlight-${index}`} style={[styles.highlighted, { backgroundColor: theme.highlight }]}>
+          <Text
+            key={`highlight-${index}`}
+            style={[styles.highlighted, { backgroundColor: theme.highlight }]}
+          >
             {token}
-          </Text>
+          </Text>,
         );
       } else {
         parts.push(<Text key={`text-${index}`}>{token}</Text>);
@@ -73,7 +76,9 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
   };
 
   return (
-    <ThemedView style={[styles.verseContainer, isRtlQuery && { direction: "rtl" }]}>
+    <ThemedView
+      style={[styles.verseContainer, isRtlQuery && { direction: "rtl" }]}
+    >
       <ThemedText style={styles.verseText}>{highlightText(v.text)}</ThemedText>
       <Pressable onPress={handleDirectToChapter}>
         <ThemedText
@@ -87,10 +92,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
           {queryLang === "ar"
             ? Number(v.chapterNum).toLocaleString("ar-EG")
             : v.chapterNum}{" "}
-          :{" "}
-          {queryLang === "ar"
-            ? Number(v.num).toLocaleString("ar-EG")
-            : v.num}{" "}
+          : {queryLang === "ar" ? Number(v.num).toLocaleString("ar-EG") : v.num}{" "}
           )
         </ThemedText>
       </Pressable>

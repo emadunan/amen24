@@ -3,9 +3,9 @@
   "compilerOptions": {
     "strict": true,
     "moduleResolution": "bundler",
-    "module": "esnext", 
+    "module": "esnext",
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./*"]
     }
   },
   "include": [

@@ -13,7 +13,7 @@ import { ThemedView } from "../ui/ThemedView";
 export type BibleLang = "en" | "ar" | "na";
 
 function isVerseWithTranslationArray(
-  arr: Verse[] | VerseWithTranslation[]
+  arr: Verse[] | VerseWithTranslation[],
 ): arr is VerseWithTranslation[] {
   return arr.length > 0 && "text2Diacritized" in arr[0];
 }
@@ -25,6 +25,7 @@ interface Props {
   bookId: string;
   chapterNum: string;
   verseNum?: string;
+  textJustify: boolean;
 }
 
 const BibleChapterText: FC<Props> = ({
@@ -34,6 +35,7 @@ const BibleChapterText: FC<Props> = ({
   bookId,
   chapterNum,
   verseNum,
+  textJustify
 }) => {
   const db = useSQLiteContext();
   const { highlighted, toggleHighlight } = useHighlightContext();
@@ -86,8 +88,8 @@ const BibleChapterText: FC<Props> = ({
             uiLang.trim().toLowerCase(),
             translationLang.trim().toLowerCase(),
             Number(chapterNum),
-            Number(bookId)
-          ]
+            Number(bookId),
+          ],
         );
       } else {
         data = await db.getAllAsync<Verse>(
@@ -100,12 +102,12 @@ const BibleChapterText: FC<Props> = ({
           WHERE c.num = ? AND b.id = ? AND vt.lang = ?
           ORDER BY v.num ASC
         `,
-          [chapterNum, bookId, uiLang]
+          [chapterNum, bookId, uiLang],
         );
       }
 
       setVerses(data);
-    }
+    };
 
     fetchChapter();
   }, [uiLang, translationLang, chapterNum, bookId]);
@@ -143,6 +145,7 @@ const BibleChapterText: FC<Props> = ({
               highlighted={highlighted}
               onHighlight={handleHighlight}
               verseNum={verseNum ? parseInt(verseNum) : undefined}
+              textJustify={textJustify}
             />
           )}
         </ThemedView>

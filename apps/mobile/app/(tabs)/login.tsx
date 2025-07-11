@@ -8,7 +8,6 @@ import { Colors } from "@/constants";
 import { useGetMeQuery } from "@/store/apis/authApi";
 import { useRouter } from "expo-router";
 
-
 const Login = () => {
   const { data: user } = useGetMeQuery();
   const router = useRouter();
@@ -25,8 +24,16 @@ const Login = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <Pressable style={[styles.button, styles.shadow]} onPress={handleGoogleLogin}>
-        <AntDesign name="google" size={24} color={theme.secondary} style={styles.icon} />
+      <Pressable
+        style={[styles.button, styles.shadow]}
+        onPress={handleGoogleLogin}
+      >
+        <AntDesign
+          name="google"
+          size={24}
+          color={theme.secondary}
+          style={styles.icon}
+        />
         <Text style={styles.text}>Continue with Google</Text>
       </Pressable>
     </ThemedView>

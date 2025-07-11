@@ -3,7 +3,11 @@ import AppLoadingScreen from "./AppLoadingScreen";
 import { useGetMeQuery } from "@/store/apis/authApi";
 import { useRouter, usePathname } from "expo-router";
 
-export default function AuthBootstrap({ children }: { children: React.ReactNode }) {
+export default function AuthBootstrap({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { isLoading, isSuccess } = useGetMeQuery();
   const router = useRouter();
   const pathname = usePathname();

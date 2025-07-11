@@ -1,23 +1,19 @@
 import React, { FC, useLayoutEffect, useState } from "react";
-import {
-  I18nManager,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { I18nManager, Pressable, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { ThemedView } from "@/components/ui/ThemedView";
 import { useTranslation } from "react-i18next";
 import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import BibleChapterText, { BibleLang } from "@/components/bible/BibleChapterText";
+import BibleChapterText, {
+  BibleLang,
+} from "@/components/bible/BibleChapterText";
 import BibleChapterSelector from "./BibleChapterSelector";
 import { BookKey, Lang } from "@amen24/shared";
 import { HighlightProvider } from "@amen24/store";
 import * as Clipboard from "expo-clipboard";
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { ThemedText } from "../ui/ThemedText";
+import { FontAwesome5, Feather } from "@expo/vector-icons";
 
 type SearchParams = {
   bookKey: string;
@@ -33,8 +29,12 @@ const BibleChapter: FC = () => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
   const params = useLocalSearchParams<SearchParams>();
-  const [translationLang, setTranslationLang] = useState<BibleLang | undefined>(undefined);
-  const [menuVisible, setMenuVisible] = useState(false);
+  const [translationLang, setTranslationLang] = useState<BibleLang | undefined>(
+    undefined,
+  );
+  const [translationMenuVisible, setTranslationMenuVisible] = useState(false);
+  const [layoutMenuVisible, setLayoutVisible] = useState(false);
+  const [textJustify, setTextJustify] = useState(true);
 
   const { bookKey, bookId, bookLen, chapterNum, verseNum } = params;
 
@@ -62,25 +62,27 @@ const BibleChapter: FC = () => {
     <ThemedView style={styles.container}>
       {/* Language Toggle Button */}
       <Pressable
-        style={[
-          styles.languageToggle,
-          I18nManager.isRTL ? { left: 18 } : { left: -13 }
-        ]}
-        onPress={() => setMenuVisible(prev => !prev)}
+        style={[styles.languageToggle]}
+        onPress={() => setTranslationMenuVisible((prev) => !prev)}
       >
         <FontAwesome5 name="language" size={24} color={theme.text} />
       </Pressable>
 
       {/* Toggle Menu */}
-      {menuVisible && (
-        <View style={[
-          styles.menu,
-          I18nManager.isRTL ? {left: 57} : {left: -52}
-        ]}>
+      {translationMenuVisible && (
+        <View
+          style={[
+            styles.menu,
+            {
+              backgroundColor: theme.background,
+              borderColor: theme.primary,
+            },
+          ]}
+        >
           <Pressable
             onPress={() => {
               setTranslationLang(undefined);
-              setMenuVisible(false);
+              setTranslationMenuVisible(false);
             }}
           >
             <ThemedText style={styles.menuItem}>
@@ -91,7 +93,7 @@ const BibleChapter: FC = () => {
             <Pressable
               onPress={() => {
                 setTranslationLang(Lang.ARABIC);
-                setMenuVisible(false);
+                setTranslationMenuVisible(false);
               }}
             >
               <ThemedText style={styles.menuItem}>
@@ -104,7 +106,7 @@ const BibleChapter: FC = () => {
             <Pressable
               onPress={() => {
                 setTranslationLang(Lang.ENGLISH);
-                setMenuVisible(false);
+                setTranslationMenuVisible(false);
               }}
             >
               <ThemedText style={styles.menuItem}>
@@ -117,7 +119,7 @@ const BibleChapter: FC = () => {
             <Pressable
               onPress={() => {
                 setTranslationLang(Lang.NATIVE);
-                setMenuVisible(false);
+                setTranslationMenuVisible(false);
               }}
             >
               <ThemedText style={styles.menuItem}>
@@ -128,9 +130,47 @@ const BibleChapter: FC = () => {
         </View>
       )}
 
+      {!translationLang && (
+        <Pressable
+          style={[styles.layoutToggle]}
+          onPress={() => setLayoutVisible((prev) => !prev)}
+        >
+          {textJustify ? (
+            <Feather name="align-justify" size={20} color={theme.text} />
+          ) : I18nManager.isRTL ? (
+            <Feather name="align-right" size={20} color={theme.text} />
+          ) : (
+            <Feather name="align-left" size={20} color={theme.text} />
+          )}
+        </Pressable>
+      )}
+
+      {layoutMenuVisible && (
+        <View
+          style={[
+            styles.layoutMenu,
+            {
+              backgroundColor: theme.background,
+            },
+          ]}
+        >
+          <Pressable onPress={() => { setTextJustify((prev) => !prev); setLayoutVisible(false) }}>
+            {textJustify ? (
+              I18nManager.isRTL ? (
+                <Feather name="align-right" size={20} color={theme.text} />
+              ) : (
+                <Feather name="align-left" size={20} color={theme.text} />
+              )
+            ) : (
+              <Feather name="align-justify" size={20} color={theme.text} />
+            )}
+          </Pressable>
+        </View>
+      )}
+
       {/* Chapter Content */}
       <View
-        key={`${i18n.language}-${bookId}-${chapterNum}-${translationLang ?? 'none'}`}
+        key={`${i18n.language}-${bookId}-${chapterNum}-${translationLang ?? "none"}`}
         style={styles.chapterContainer}
       >
         <HighlightProvider
@@ -145,6 +185,7 @@ const BibleChapter: FC = () => {
             bookId={bookId}
             chapterNum={chapterNum}
             verseNum={verseNum}
+            textJustify={textJustify}
           />
         </HighlightProvider>
       </View>
@@ -159,38 +200,44 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   chapterContainer: {
-    margin: 16,
+    marginVertical: 32,
+    marginHorizontal: 16,
     display: "flex",
     flexDirection: "row",
     gap: 16,
   },
   languageToggle: {
     position: "absolute",
-    top: -4,
+    top: 0,
+    right: 4,
     zIndex: 100,
-    transform: [{ translateX: 16 }],
+  },
+  layoutToggle: {
+    position: "absolute",
+    top: 0,
+    left: 4,
+    zIndex: 100,
   },
   menu: {
     position: "absolute",
-    top: 18,
-    left: 57,
-    transform: [{ translateX: 55 }],
-    backgroundColor: "#fff",
+    top: 24,
+    right: 4,
     borderRadius: 2,
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
     paddingVertical: 8,
     paddingHorizontal: 12,
     zIndex: 101,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "flex-start",
+    borderWidth: 1,
+  },
+  layoutMenu: {
+    position: "absolute",
+    top: 24,
+    left: 4,
+    zIndex: 101,
   },
   menuItem: {
     paddingVertical: 6,
     fontSize: 16,
-    color: "#333",
   },
 });

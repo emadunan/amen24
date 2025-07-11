@@ -1,13 +1,13 @@
-import Toast from 'react-native-toast-message';
-import i18n from '@/i18n/i18n';
+import Toast from "react-native-toast-message";
+import i18n from "@/i18n/i18n";
 
-type ToastType = 'success' | 'error' | 'info';
+type ToastType = "success" | "error" | "info";
 
 export function showToast(
   type: ToastType,
   titleKey: string,
   messageKey?: string,
-  options: { params?: Record<string, any> } = {}
+  options: { params?: Record<string, any> } = {},
 ) {
   Toast.show({
     type,
@@ -16,8 +16,8 @@ export function showToast(
   });
 }
 
-import { BaseToast, ErrorToast } from 'react-native-toast-message';
-import { ViewStyle } from 'react-native';
+import { BaseToast, ErrorToast } from "react-native-toast-message";
+import { ViewStyle } from "react-native";
 
 export const toastConfig = {
   success: (props: any) => (
@@ -25,7 +25,7 @@ export const toastConfig = {
       {...props}
       style={toastStyles.toastContainer}
       contentContainerStyle={{ paddingHorizontal: 15 }}
-      text1Style={{ fontFamily: "AmiriRegular",  fontSize: 16 }}
+      text1Style={{ fontFamily: "AmiriRegular", fontSize: 16 }}
     />
   ),
   error: (props: any) => (
@@ -40,9 +40,8 @@ export const toastConfig = {
 
 const toastStyles = {
   toastContainer: {
-    zIndex: 9999,        // High z-index to appear above logo
-    elevation: 9999,     // For Android
-    borderLeftColor: '#4caf50'
+    zIndex: 9999, // High z-index to appear above logo
+    elevation: 9999, // For Android
+    borderLeftColor: "#4caf50",
   } as ViewStyle,
 };
-

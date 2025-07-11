@@ -32,33 +32,33 @@ export const ThemedText: React.FC<ThemedTextProps> = ({
       {...rest}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   default: {
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: "AmiriRegular"
+    fontFamily: "AmiriRegular",
   },
   defaultSemiBold: {
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: "AmiriBold"
+    fontFamily: "AmiriBold",
   },
   title: {
     fontSize: 22,
     lineHeight: 32,
-    fontFamily: "AmiriBold"
+    fontFamily: "AmiriBold",
   },
   subtitle: {
     fontSize: 18,
     lineHeight: 32,
-    fontFamily: "AmiriBold"
+    fontFamily: "AmiriBold",
   },
   link: {
     lineHeight: 30,
     fontSize: 16,
     color: "#0a7ea4",
-    fontFamily: "AmiriRegular"
+    fontFamily: "AmiriRegular",
   },
 });

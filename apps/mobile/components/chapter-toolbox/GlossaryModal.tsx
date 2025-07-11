@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from "react";
 import {
   View,
   Text,
@@ -7,19 +7,19 @@ import {
   ScrollView,
   useColorScheme,
   I18nManager,
-} from 'react-native';
-import Modal from 'react-native-modal';
-import { useSQLiteContext } from 'expo-sqlite';
-import { useTranslation } from 'react-i18next';
-import { glossaryReducer, initialState, ActiveLang } from '@amen24/store';
-import { Colors } from '@/constants';
-import { Lang, BookKey, sanitizeWord, ERROR_KEYS } from '@amen24/shared';
-import GlossaryVerse from './GlossaryVerse';
-import { useAddTermMutation } from '@/store/apis/glossaryApi';
-import { showToast } from '@/lib/toast';
-import { ThemedView } from '../ui/ThemedView';
-import { ThemedText } from '../ui/ThemedText';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+} from "react-native";
+import Modal from "react-native-modal";
+import { useSQLiteContext } from "expo-sqlite";
+import { useTranslation } from "react-i18next";
+import { glossaryReducer, initialState, ActiveLang } from "@amen24/store";
+import { Colors } from "@/constants";
+import { Lang, BookKey, sanitizeWord, ERROR_KEYS } from "@amen24/shared";
+import GlossaryVerse from "./GlossaryVerse";
+import { useAddTermMutation } from "@/store/apis/glossaryApi";
+import { showToast } from "@/lib/toast";
+import { ThemedView } from "../ui/ThemedView";
+import { ThemedText } from "../ui/ThemedText";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 type Props = {
   verseId: number;
@@ -32,8 +32,16 @@ type TranslationsPayload = {
   [lang: string]: { term: string; definition: string };
 };
 
-export default function GlossaryModal({ verseId, bookKey, isOpen, onClose }: Props) {
-  const [glossaryState, glossaryDispatch] = useReducer(glossaryReducer, initialState);
+export default function GlossaryModal({
+  verseId,
+  bookKey,
+  isOpen,
+  onClose,
+}: Props) {
+  const [glossaryState, glossaryDispatch] = useReducer(
+    glossaryReducer,
+    initialState,
+  );
   const [handleAddTerm] = useAddTermMutation();
   const db = useSQLiteContext();
   const colorScheme = useColorScheme();
@@ -41,12 +49,12 @@ export default function GlossaryModal({ verseId, bookKey, isOpen, onClose }: Pro
   const isRTL = I18nManager.isRTL;
 
   const [verseTexts, setVerseTexts] = React.useState({
-    na: '',
-    ar: '',
-    en: '',
+    na: "",
+    ar: "",
+    en: "",
   });
 
-  const theme = Colors[colorScheme ?? 'light'];
+  const theme = Colors[colorScheme ?? "light"];
 
   useEffect(() => {
     if (!isOpen) return;
@@ -60,15 +68,15 @@ export default function GlossaryModal({ verseId, bookKey, isOpen, onClose }: Pro
             `SELECT text FROM verse_translation WHERE verseId = ? AND lang = ?`,
             [verseId, lang],
           ),
-        )
+        ),
       );
 
       console.log(results);
 
       setVerseTexts({
-        na: results[0]?.text ?? '',
-        ar: results[1]?.text ?? '',
-        en: results[2]?.text ?? '',
+        na: results[0]?.text ?? "",
+        ar: results[1]?.text ?? "",
+        en: results[2]?.text ?? "",
       });
     };
 
@@ -78,14 +86,14 @@ export default function GlossaryModal({ verseId, bookKey, isOpen, onClose }: Pro
   const handleAddWordToTerm = (lang: ActiveLang, raw: string) => {
     let word = raw;
     if (lang !== Lang.NATIVE) word = sanitizeWord(raw);
-    glossaryDispatch({ type: 'add', lang, word });
+    glossaryDispatch({ type: "add", lang, word });
   };
 
   const handleClearTerm = (lang?: ActiveLang) => {
-    glossaryDispatch({ type: 'clear', lang });
+    glossaryDispatch({ type: "clear", lang });
   };
 
-  const termSlug = glossaryState.en.join('-').toLowerCase();
+  const termSlug = glossaryState.en.join("-").toLowerCase();
 
   const handleAdd = async () => {
     const translations: TranslationsPayload = {};
@@ -94,7 +102,7 @@ export default function GlossaryModal({ verseId, bookKey, isOpen, onClose }: Pro
       ([lang]) => lang !== "na",
     )) {
       if (words.length < 1) {
-        showToast('error', ERROR_KEYS.GLOSSARY_MISSING_TERM);
+        showToast("error", ERROR_KEYS.GLOSSARY_MISSING_TERM);
         return;
       }
 
@@ -131,8 +139,12 @@ export default function GlossaryModal({ verseId, bookKey, isOpen, onClose }: Pro
           {/* <Text style={{ fontSize: 24, color: theme.text }}>×</Text> */}
         </Pressable>
 
-        <ThemedText style={[styles.title, { color: theme.text }]}>{t('toolbox.addGlossaryTerm')}</ThemedText>
-        <ThemedText type='subtitle' style={[styles.slug]}>Slug: {termSlug}</ThemedText>
+        <ThemedText style={[styles.title, { color: theme.text }]}>
+          {t("toolbox.addGlossaryTerm")}
+        </ThemedText>
+        <ThemedText type="subtitle" style={[styles.slug]}>
+          Slug: {termSlug}
+        </ThemedText>
 
         <ScrollView style={{ maxHeight: 400 }}>
           {verseTexts.na && (
@@ -168,14 +180,27 @@ export default function GlossaryModal({ verseId, bookKey, isOpen, onClose }: Pro
         </ScrollView>
 
         <View style={styles.btnRow}>
-          <Pressable style={[styles.btn, {backgroundColor: theme.accent}]} onPress={handleAdd}>
-            <Text style={styles.btnText}>{t('main.add')}</Text>
+          <Pressable
+            style={[styles.btn, { backgroundColor: theme.accent }]}
+            onPress={handleAdd}
+          >
+            <Text style={styles.btnText}>{t("main.add")}</Text>
           </Pressable>
-          <Pressable style={[styles.btn, {backgroundColor: theme.gray}]} onPress={() => handleClearTerm()}>
-            <Text style={styles.btnText}>{t('main.clear')}</Text>
+          <Pressable
+            style={[styles.btn, { backgroundColor: theme.gray }]}
+            onPress={() => handleClearTerm()}
+          >
+            <Text style={styles.btnText}>{t("main.clear")}</Text>
           </Pressable>
-          <Pressable style={[styles.btn, {backgroundColor: theme.primary}, isRTL && { marginLeft: 0, marginRight: 'auto' }]} onPress={onClose}>
-            <Text style={styles.btnText}>{t('main.cancel')}</Text>
+          <Pressable
+            style={[
+              styles.btn,
+              { backgroundColor: theme.primary },
+              isRTL && { marginLeft: 0, marginRight: "auto" },
+            ]}
+            onPress={onClose}
+          >
+            <Text style={styles.btnText}>{t("main.cancel")}</Text>
           </Pressable>
         </View>
       </ThemedView>
@@ -188,27 +213,27 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     padding: 24,
     maxWidth: 500,
-    alignSelf: 'center',
-    width: '95%',
+    alignSelf: "center",
+    width: "95%",
     gap: 20,
   },
   title: {
-    textAlign: 'center',
-    fontFamily: 'AmiriBold',
+    textAlign: "center",
+    fontFamily: "AmiriBold",
     fontSize: 20,
   },
   slug: {
     direction: "ltr",
   },
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     right: 16,
     top: 16,
     zIndex: 10,
   },
   btnRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: 12,
     marginTop: 16,
   },
@@ -218,8 +243,8 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   btnText: {
-    color: 'white',
-    fontFamily: 'AmiriRegular',
-    fontWeight: 'bold',
+    color: "white",
+    fontFamily: "AmiriRegular",
+    fontWeight: "bold",
   },
 });

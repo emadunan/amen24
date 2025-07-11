@@ -95,10 +95,19 @@ const BibleChapterToolbox: React.FC<Props> = ({
         const newX = offsetX.current + dx;
         const newY = offsetY.current + dy;
 
-        const clampedX = Math.max(0, Math.min(newX, window.width - TOOLBOX_WIDTH));
-        const clampedY = Math.max(0, Math.min(newY, window.height - TOOLBOX_HEIGHT));
+        const clampedX = Math.max(
+          0,
+          Math.min(newX, window.width - TOOLBOX_WIDTH),
+        );
+        const clampedY = Math.max(
+          0,
+          Math.min(newY, window.height - TOOLBOX_HEIGHT),
+        );
 
-        pan.setValue({ x: clampedX - offsetX.current, y: clampedY - offsetY.current });
+        pan.setValue({
+          x: clampedX - offsetX.current,
+          y: clampedY - offsetY.current,
+        });
       },
 
       onPanResponderRelease: (_, gestureState) => {
@@ -109,14 +118,20 @@ const BibleChapterToolbox: React.FC<Props> = ({
         const newY = offsetY.current + dy;
 
         // Clamp to screen bounds
-        offsetX.current = Math.max(0, Math.min(newX, window.width - TOOLBOX_WIDTH));
-        offsetY.current = Math.max(0, Math.min(newY, window.height - TOOLBOX_HEIGHT));
+        offsetX.current = Math.max(
+          0,
+          Math.min(newX, window.width - TOOLBOX_WIDTH),
+        );
+        offsetY.current = Math.max(
+          0,
+          Math.min(newY, window.height - TOOLBOX_HEIGHT),
+        );
 
         pan.flattenOffset();
         pan.setOffset({ x: offsetX.current, y: offsetY.current });
         pan.setValue({ x: 0, y: 0 });
       },
-    })
+    }),
   ).current;
 
   if (!highlighted.length) return null;
@@ -129,7 +144,6 @@ const BibleChapterToolbox: React.FC<Props> = ({
     } catch (error) {
       showToast("error", ERROR_KEYS.UNKNOWN_ERROR);
     }
-
   };
 
   const handleAddFavorite = async () => {
@@ -176,11 +190,21 @@ const BibleChapterToolbox: React.FC<Props> = ({
           isOpen={isGlossaryOpen}
           onClose={() => setGlossaryOpen(false)}
           verseId={lastHighlighted}
-        />)}
-      <Animated.View style={[styles.wrapper, pan.getLayout()]} {...panResponder.panHandlers}>
-        <ThemedView style={[styles.toolbox, { backgroundColor: theme.secondary }]}>
+        />
+      )}
+      <Animated.View
+        style={[styles.wrapper, pan.getLayout()]}
+        {...panResponder.panHandlers}
+      >
+        <ThemedView
+          style={[styles.toolbox, { backgroundColor: theme.secondary }]}
+        >
           <View style={styles.toolboxHeader}>
-            <MaterialIcons name="drag-indicator" size={24} style={styles.dragIcon} />
+            <MaterialIcons
+              name="drag-indicator"
+              size={24}
+              style={styles.dragIcon}
+            />
             <ThemedText type="title" style={styles.title}>
               {t("toolbox.title")}
             </ThemedText>
@@ -194,47 +218,95 @@ const BibleChapterToolbox: React.FC<Props> = ({
                 />
               </Pressable>
               <Pressable onPress={clearHighlighted}>
-                <Ionicons name="close" size={18} style={[styles.headerBtn, { borderColor: theme.primary }]} color={theme.primary} />
+                <Ionicons
+                  name="close"
+                  size={18}
+                  style={[styles.headerBtn, { borderColor: theme.primary }]}
+                  color={theme.primary}
+                />
               </Pressable>
             </View>
           </View>
 
           {isExpanded && (
             <ScrollView contentContainerStyle={styles.container}>
-              <Pressable style={[styles.btn, { backgroundColor: theme.background }]} onPress={handleCopy}>
+              <Pressable
+                style={[styles.btn, { backgroundColor: theme.background }]}
+                onPress={handleCopy}
+              >
                 <ThemedText>📋 {t("toolbox.copy")}</ThemedText>
               </Pressable>
 
               {user && (
                 <>
-                  <Pressable style={[styles.btn, { backgroundColor: theme.background }]} onPress={handleAddFavorite}>
+                  <Pressable
+                    style={[styles.btn, { backgroundColor: theme.background }]}
+                    onPress={handleAddFavorite}
+                  >
                     <ThemedText>⭐ {t("toolbox.addToFavorites")}</ThemedText>
                   </Pressable>
 
-                  <Pressable style={[styles.btn, { backgroundColor: theme.background, paddingVertical: 0 }]} onPress={handleUpdateProgress}>
+                  <Pressable
+                    style={[
+                      styles.btn,
+                      { backgroundColor: theme.background, paddingVertical: 0 },
+                    ]}
+                    onPress={handleUpdateProgress}
+                  >
                     <ThemedView style={styles.progressBtnContainer}>
-                      <ThemedText style={styles.progressPin} >📍</ThemedText>
+                      <ThemedText style={styles.progressPin}>📍</ThemedText>
                       <ThemedView style={styles.progressTextContainer}>
-                        <ThemedText style={{ borderBottomColor: theme.gray, borderBottomWidth: 1 }}> {t("toolbox.progress")}</ThemedText>
-                        <ThemedText style={styles.progressRefText}>{`${t(`book:${progressBookKey}`)} ${progressChapterNum && formatNumber(progressChapterNum, i18n.language as Lang)}:${progressVerseNum && formatNumber(progressVerseNum, i18n.language as Lang)}`}</ThemedText>
+                        <ThemedText
+                          style={{
+                            borderBottomColor: theme.gray,
+                            borderBottomWidth: 1,
+                          }}
+                        >
+                          {" "}
+                          {t("toolbox.progress")}
+                        </ThemedText>
+                        <ThemedText
+                          style={styles.progressRefText}
+                        >{`${t(`book:${progressBookKey}`)} ${progressChapterNum && formatNumber(progressChapterNum, i18n.language as Lang)}:${progressVerseNum && formatNumber(progressVerseNum, i18n.language as Lang)}`}</ThemedText>
                       </ThemedView>
                     </ThemedView>
                   </Pressable>
 
-                  {hasPermission(user.profile.roles, Permission.MANAGE_FEATURED) && (
-                    <Pressable style={[styles.btn, { backgroundColor: theme.background }]} onPress={handleAddFeatured}>
+                  {hasPermission(
+                    user.profile.roles,
+                    Permission.MANAGE_FEATURED,
+                  ) && (
+                    <Pressable
+                      style={[
+                        styles.btn,
+                        { backgroundColor: theme.background },
+                      ]}
+                      onPress={handleAddFeatured}
+                    >
                       <ThemedText>✨ {t("toolbox.addToFeatured")}</ThemedText>
                     </Pressable>
                   )}
-                  {hasPermission(user.profile.roles, Permission.CREATE_GLOSSARY_TERM) && (
-                    <Pressable style={[styles.btn, { backgroundColor: theme.background }]} onPress={() => setGlossaryOpen(true)}>
+                  {hasPermission(
+                    user.profile.roles,
+                    Permission.CREATE_GLOSSARY_TERM,
+                  ) && (
+                    <Pressable
+                      style={[
+                        styles.btn,
+                        { backgroundColor: theme.background },
+                      ]}
+                      onPress={() => setGlossaryOpen(true)}
+                    >
                       <ThemedText>📖 {t("toolbox.addToGlossary")}</ThemedText>
                     </Pressable>
                   )}
                 </>
               )}
 
-              <Pressable style={[styles.btn, { backgroundColor: theme.background }]} onPress={clearHighlighted}>
+              <Pressable
+                style={[styles.btn, { backgroundColor: theme.background }]}
+                onPress={clearHighlighted}
+              >
                 <ThemedText>🧽 {t("toolbox.clearHighlighting")}</ThemedText>
               </Pressable>
             </ScrollView>
@@ -267,8 +339,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 8,
   },
-  dragIcon: {
-  },
+  dragIcon: {},
   iconGroup: {
     flexDirection: "row",
     gap: 4,
@@ -297,17 +368,17 @@ const styles = StyleSheet.create({
   },
   progressBtnContainer: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   progressPin: {
-    alignSelf: "center"
+    alignSelf: "center",
   },
   progressTextContainer: {
-    flex: 1
+    flex: 1,
   },
   progressRefText: {
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 });
 
 export default BibleChapterToolbox;

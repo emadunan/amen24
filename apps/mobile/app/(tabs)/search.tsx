@@ -19,7 +19,17 @@ import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemedText } from "@/components/ui/ThemedText";
 import { buildVerseSearchQuery } from "@/db/queries";
-import { Lang, BookKey, MESSAGE_KEYS, normalizeArText, removeArDiacritics, removeNaDiacritics, replaceWaslaAlef, categoryList, formatNumber } from "@amen24/shared";
+import {
+  Lang,
+  BookKey,
+  MESSAGE_KEYS,
+  normalizeArText,
+  removeArDiacritics,
+  removeNaDiacritics,
+  replaceWaslaAlef,
+  categoryList,
+  formatNumber,
+} from "@amen24/shared";
 import { showToast } from "@/lib/toast";
 import BookDropdown from "@/components/search/BookDropdown";
 
@@ -35,7 +45,9 @@ export default function SearchScreen() {
   const [queryLang, setQuerylang] = useState(i18n.language);
   const [loading, setLoading] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  const [selectedBooks, setSelectedBooks] = useState<string[]>(Object.values(BookKey));
+  const [selectedBooks, setSelectedBooks] = useState<string[]>(
+    Object.values(BookKey),
+  );
   const [showDropdown, setShowDropdown] = useState(false);
 
   const isWholeBibleSelected =
@@ -46,9 +58,7 @@ export default function SearchScreen() {
 
   const toggleBookSelection = (book: string) => {
     if (book === "WholeBible") {
-      setSelectedBooks(
-        isWholeBibleSelected ? [] : [...Object.values(BookKey)]
-      );
+      setSelectedBooks(isWholeBibleSelected ? [] : [...Object.values(BookKey)]);
       return;
     }
 
@@ -79,7 +89,7 @@ export default function SearchScreen() {
   const lastQueryRef = useRef<string>("");
 
   const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? 'light'];
+  const theme = Colors[colorScheme ?? "light"];
 
   function handleQuery(inputText: string) {
     setQuery(inputText);
@@ -93,7 +103,7 @@ export default function SearchScreen() {
     setShowDropdown(false);
 
     if (!query.trim() || query.trim().length < 3) {
-      showToast("info", MESSAGE_KEYS.SEARCH_KEYWORD_TOO_SHORT)
+      showToast("info", MESSAGE_KEYS.SEARCH_KEYWORD_TOO_SHORT);
       return;
     }
 
@@ -115,12 +125,12 @@ export default function SearchScreen() {
       textNormalized = normalizeArText(text);
     }
 
-    lastQueryRef.current = text ?? '';
+    lastQueryRef.current = text ?? "";
 
     try {
       const { sql, params } = buildVerseSearchQuery({
         lang: language,
-        query: textNormalized ?? '',
+        query: textNormalized ?? "",
         selectedBooks,
       });
 
@@ -134,7 +144,7 @@ export default function SearchScreen() {
   }
 
   function handleSearchReset() {
-    setQuery('');
+    setQuery("");
     setShowDropdown(false);
     setSelectedBooks(Object.values(BookKey));
     setSearchPerformed(false);
@@ -145,7 +155,10 @@ export default function SearchScreen() {
     <ThemedView style={styles.container}>
       <ThemedView>
         <ThemedView style={[styles.searchGroup, backgroundTheme]}>
-          <Pressable style={styles.filterBtn} onPress={() => setShowDropdown(prev => !prev)}>
+          <Pressable
+            style={styles.filterBtn}
+            onPress={() => setShowDropdown((prev) => !prev)}
+          >
             <Feather
               name="filter"
               size={24}
@@ -158,7 +171,10 @@ export default function SearchScreen() {
             value={query}
             onChangeText={handleQuery}
           />
-          <Pressable style={[styles.searchBtn, { backgroundColor: theme.text }]} onPress={handleSearch}>
+          <Pressable
+            style={[styles.searchBtn, { backgroundColor: theme.text }]}
+            onPress={handleSearch}
+          >
             <Feather
               name="search"
               size={32}
@@ -168,9 +184,12 @@ export default function SearchScreen() {
           </Pressable>
         </ThemedView>
         {verses.length > 0 && (
-          <ThemedView style={[styles.searchReport, { backgroundColor: theme.secondary }]}>
+          <ThemedView
+            style={[styles.searchReport, { backgroundColor: theme.secondary }]}
+          >
             <ThemedText>
-              {t("searchEngine.resultsCount")}: {formatNumber(verses.length, i18n.language as Lang)}
+              {t("searchEngine.resultsCount")}:{" "}
+              {formatNumber(verses.length, i18n.language as Lang)}
             </ThemedText>
             <Pressable onPress={handleSearchReset}>
               <ThemedText>{t("searchEngine.resetSearch")}</ThemedText>
@@ -179,7 +198,13 @@ export default function SearchScreen() {
         )}
       </ThemedView>
 
-      {showDropdown && <BookDropdown selectedBooks={selectedBooks} toggleBookSelection={toggleBookSelection} isCategorySelected={isCategorySelected} />}
+      {showDropdown && (
+        <BookDropdown
+          selectedBooks={selectedBooks}
+          toggleBookSelection={toggleBookSelection}
+          isCategorySelected={isCategorySelected}
+        />
+      )}
       {loading ? (
         <ThemedView style={styles.loadingContainer}>
           <ActivityIndicator
@@ -243,14 +268,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 41,
     left: 24,
-    zIndex: 2
+    zIndex: 2,
   },
   searchBtn: {
     position: "absolute",
     top: 35,
     right: 19,
     borderRadius: 2,
-    padding: 2
+    padding: 2,
   },
   flipIcon: {
     transform: [{ scaleX: -1 }],
@@ -267,6 +292,6 @@ const styles = StyleSheet.create({
     margin: 16,
     fontSize: 18,
     textAlign: "center",
-    lineHeight: 48
+    lineHeight: 48,
   },
 });

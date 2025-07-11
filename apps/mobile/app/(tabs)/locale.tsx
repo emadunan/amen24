@@ -1,7 +1,12 @@
 import { ThemedView } from "@/components/ui/ThemedView";
 import React, { useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { I18nManager, Platform, StyleSheet, useColorScheme } from "react-native";
+import {
+  I18nManager,
+  Platform,
+  StyleSheet,
+  useColorScheme,
+} from "react-native";
 import * as Updates from "expo-updates";
 import { useNavigation } from "expo-router";
 import BackBtn from "@/components/ui/BackBtn";

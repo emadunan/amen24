@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { I18nManager, Pressable, StyleSheet, View, } from "react-native";
+import { I18nManager, Pressable, StyleSheet, View } from "react-native";
 import { DrawerActions } from "@react-navigation/native";
 import { Colors } from "@/constants";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -15,7 +15,12 @@ interface Props {
   bookKey: string;
 }
 
-const BibleChapterSelector: FC<Props> = ({ chapterNum, bookId, bookLen, bookKey }) => {
+const BibleChapterSelector: FC<Props> = ({
+  chapterNum,
+  bookId,
+  bookLen,
+  bookKey,
+}) => {
   const router = useRouter();
   const navigation = useNavigation();
   const { i18n } = useTranslation();
@@ -95,8 +100,8 @@ const BibleChapterSelector: FC<Props> = ({ chapterNum, bookId, bookLen, bookKey 
         )}
       </Pressable>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   chapterGroup: {
@@ -112,8 +117,8 @@ const styles = StyleSheet.create({
   },
   chapterNumText: {
     fontSize: 20,
-    lineHeight: 32
-  }
+    lineHeight: 32,
+  },
 });
 
-export default BibleChapterSelector
+export default BibleChapterSelector;

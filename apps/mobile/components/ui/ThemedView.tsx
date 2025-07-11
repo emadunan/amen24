@@ -20,4 +20,4 @@ export const ThemedView: React.FC<ThemedViewProps> = ({
   );
 
   return <View style={[{ backgroundColor }, style]} {...otherProps} />;
-}
+};

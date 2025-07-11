@@ -1,22 +1,17 @@
-import React from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  useColorScheme,
-  Alert,
-} from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { useGetMeQuery } from '@/store/apis/authApi';
-import { Colors } from '@/constants/Colors';
-import { useRouter } from 'expo-router';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useDeleteAccountMutation } from '@/store/apis/profileApi';
-import { ThemedView } from '@/components/ui/ThemedView';
-import { ThemedText } from '@/components/ui/ThemedText';
+import React from "react";
+import { Pressable, StyleSheet, useColorScheme, Alert } from "react-native";
+import { useTranslation } from "react-i18next";
+import { useGetMeQuery } from "@/store/apis/authApi";
+import { Colors } from "@/constants/Colors";
+import { useRouter } from "expo-router";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDeleteAccountMutation } from "@/store/apis/profileApi";
+import { ThemedView } from "@/components/ui/ThemedView";
+import { ThemedText } from "@/components/ui/ThemedText";
 
 const SettingsScreen = () => {
   const { t } = useTranslation();
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme() ?? "light";
   const theme = Colors[colorScheme];
   const router = useRouter();
 
@@ -25,46 +20,48 @@ const SettingsScreen = () => {
 
   const handleDeleteAccount = async () => {
     Alert.alert(
-      t('profileSettings.confirmDeleteTitle'),
-      t('profileSettings.confirmDeleteMessage'),
+      t("profileSettings.confirmDeleteTitle"),
+      t("profileSettings.confirmDeleteMessage"),
       [
         {
-          text: t('common.cancel'),
-          style: 'cancel',
+          text: t("common.cancel"),
+          style: "cancel",
         },
         {
-          text: t('profileSettings.deleteAccount'),
-          style: 'destructive',
+          text: t("profileSettings.deleteAccount"),
+          style: "destructive",
           onPress: async () => {
             try {
               const { message } = await deleteAccount().unwrap();
               console.log(message);
               setTimeout(() => {
-                router.replace('/login');
+                router.replace("/login");
               }, 1000);
             } catch (error) {
               console.log(error);
             }
           },
         },
-      ]
+      ],
     );
   };
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor: theme.background }]}>
+    <ThemedView
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       <ThemedView style={styles.section}>
         <ThemedText style={[styles.label, { color: theme.text }]}>
-          {t('profileSettings.email')}
+          {t("profileSettings.email")}
         </ThemedText>
-        <ThemedText type='title' style={[styles.value, { color: theme.text }]}>
-          {user?.email || '-'}
+        <ThemedText type="title" style={[styles.value, { color: theme.text }]}>
+          {user?.email || "-"}
         </ThemedText>
       </ThemedView>
 
       <Pressable
         style={[styles.linkBtn, { borderColor: theme.primary }]}
-        onPress={() => router.push('/')}
+        onPress={() => router.push("/")}
       >
         <MaterialCommunityIcons
           name="lock-reset"
@@ -73,7 +70,7 @@ const SettingsScreen = () => {
           style={{ marginRight: 8 }}
         />
         <ThemedText style={[styles.linkText, { color: theme.primary }]}>
-          {t('signin.resetPassword')}
+          {t("signin.resetPassword")}
         </ThemedText>
       </Pressable>
 
@@ -81,8 +78,8 @@ const SettingsScreen = () => {
         style={[styles.deleteBtn, { backgroundColor: theme.danger }]}
         onPress={handleDeleteAccount}
       >
-        <ThemedText type='title' style={[styles.deleteText]}>
-          {t('profileSettings.deleteAccount')}
+        <ThemedText type="title" style={[styles.deleteText]}>
+          {t("profileSettings.deleteAccount")}
         </ThemedText>
       </Pressable>
     </ThemedView>
@@ -100,15 +97,15 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     marginBottom: 4,
-    textAlign: "center"
+    textAlign: "center",
   },
   value: {
     fontSize: 16,
-    textAlign: "center"
+    textAlign: "center",
   },
   linkBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
     padding: 12,
     borderRadius: 2,
@@ -120,10 +117,10 @@ const styles = StyleSheet.create({
   deleteBtn: {
     padding: 14,
     borderRadius: 2,
-    alignItems: 'center',
+    alignItems: "center",
   },
   deleteText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
 });

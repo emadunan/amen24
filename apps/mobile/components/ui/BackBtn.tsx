@@ -2,7 +2,13 @@ import { Colors } from "@/constants";
 import { AntDesign } from "@expo/vector-icons";
 import { Href, useRouter } from "expo-router";
 import React, { FC } from "react";
-import { I18nManager, Pressable, StyleSheet, useColorScheme, ViewStyle } from "react-native";
+import {
+  I18nManager,
+  Pressable,
+  StyleSheet,
+  useColorScheme,
+  ViewStyle,
+} from "react-native";
 
 interface Props {
   color?: string;

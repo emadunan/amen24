@@ -14,7 +14,7 @@ export const Colors = {
     accent: "#3B754C",
     highlight: "#ffeb3b",
     danger: "#c62828",
-    gray: "#5c564a"
+    gray: "#5c564a",
   },
   dark: {
     max: "#fff",
@@ -26,6 +26,6 @@ export const Colors = {
     accent: "#3B754C",
     highlight: "#B88B4A",
     danger: "#e57373",
-    gray: "#d6cfc7"
+    gray: "#d6cfc7",
   },
 };

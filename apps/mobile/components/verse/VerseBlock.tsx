@@ -1,5 +1,10 @@
 import React, { useMemo } from "react";
-import { I18nManager, Pressable, StyleSheet, useColorScheme } from "react-native";
+import {
+  I18nManager,
+  Pressable,
+  StyleSheet,
+  useColorScheme,
+} from "react-native";
 import { ThemedText } from "@/components/ui/ThemedText";
 import { ThemedView } from "@/components/ui/ThemedView";
 import { BookKey, BookMap, formatNumber, Lang, Verse } from "@amen24/shared";
@@ -55,7 +60,8 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
       .join("");
   }, [verses]);
 
-  const reference = `${BookMap[bookKey].title[lang as Lang.ARABIC | Lang.ENGLISH]} ${formattedChapterNum} : ${formattedVerseNum}` +
+  const reference =
+    `${BookMap[bookKey].title[lang as Lang.ARABIC | Lang.ENGLISH]} ${formattedChapterNum} : ${formattedVerseNum}` +
     (verses.length > 1 ? ` - ${formattedLastVerseNum}` : "");
 
   return (
@@ -65,16 +71,27 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
       </ThemedText>
 
       <ThemedView style={styles.actions}>
-        <Link href={`/(tabs)/bible/${bookKey}?bookId=${bookId}&bookLen=${totalChapters}&chapterNum=${chapterNum}&verseNum=${verseNum}`}>
-          <ThemedText type="title" style={[styles.reference, { color: theme.primary }]} numberOfLines={1}>
+        <Link
+          href={`/(tabs)/bible/${bookKey}?bookId=${bookId}&bookLen=${totalChapters}&chapterNum=${chapterNum}&verseNum=${verseNum}`}
+        >
+          <ThemedText
+            type="title"
+            style={[styles.reference, { color: theme.primary }]}
+            numberOfLines={1}
+          >
             &mdash; {reference}
           </ThemedText>
         </Link>
 
         {onRemove && (
-          <Pressable style={[styles.removeButton, { borderColor: theme.danger }]} onPress={onRemove}>
-            <Ionicons name="trash" size={16} color={theme.danger}/>
-            <ThemedText style={[styles.removeText, {color: theme.danger}]}>{t("main.remove")}</ThemedText>
+          <Pressable
+            style={[styles.removeButton, { borderColor: theme.danger }]}
+            onPress={onRemove}
+          >
+            <Ionicons name="trash" size={16} color={theme.danger} />
+            <ThemedText style={[styles.removeText, { color: theme.danger }]}>
+              {t("main.remove")}
+            </ThemedText>
           </Pressable>
         )}
       </ThemedView>
@@ -101,7 +118,7 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   rtlText: {
-    writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr',
+    writingDirection: I18nManager.isRTL ? "rtl" : "ltr",
     lineHeight: 48,
   },
   actions: {

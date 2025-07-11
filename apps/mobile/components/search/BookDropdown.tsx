@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, useColorScheme } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  useColorScheme,
+} from "react-native";
 import { useTranslation } from "react-i18next";
 import { books, categoryList } from "@amen24/shared";
 import { FontAwesome } from "@expo/vector-icons";
@@ -13,13 +20,17 @@ interface Props {
   isCategorySelected: (category: string) => boolean;
 }
 
-const BookDropdown: React.FC<Props> = ({ selectedBooks, toggleBookSelection, isCategorySelected }) => {
+const BookDropdown: React.FC<Props> = ({
+  selectedBooks,
+  toggleBookSelection,
+  isCategorySelected,
+}) => {
   const { t } = useTranslation();
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
 
   return (
-    <ThemedView style={[styles.dropdown, {borderColor: theme.text}]}>
+    <ThemedView style={[styles.dropdown, { borderColor: theme.text }]}>
       <ScrollView style={styles.bookList}>
         <ThemedView style={{ flexDirection: "row", flexWrap: "wrap" }}>
           {Object.keys(categoryList).map((category) => (
@@ -30,12 +41,18 @@ const BookDropdown: React.FC<Props> = ({ selectedBooks, toggleBookSelection, isC
             >
               <ThemedView style={styles.checkboxIcon}>
                 {isCategorySelected(category) ? (
-                  <FontAwesome name="check-square" size={24} color={theme.text} />
+                  <FontAwesome
+                    name="check-square"
+                    size={24}
+                    color={theme.text}
+                  />
                 ) : (
                   <FontAwesome name="square-o" size={24} color={theme.text} />
                 )}
               </ThemedView>
-              <ThemedText style={styles.optionText}>{t(`book:${category}`)}</ThemedText>
+              <ThemedText style={styles.optionText}>
+                {t(`book:${category}`)}
+              </ThemedText>
             </TouchableOpacity>
           ))}
         </ThemedView>
@@ -51,12 +68,18 @@ const BookDropdown: React.FC<Props> = ({ selectedBooks, toggleBookSelection, isC
             >
               <ThemedView style={styles.checkboxIcon}>
                 {selectedBooks.includes(book) ? (
-                  <FontAwesome name="check-square" size={24} color={theme.text} />
+                  <FontAwesome
+                    name="check-square"
+                    size={24}
+                    color={theme.text}
+                  />
                 ) : (
                   <FontAwesome name="square-o" size={24} color={theme.text} />
                 )}
               </ThemedView>
-              <ThemedText style={styles.optionText}>{t(`book:${book}`)}</ThemedText>
+              <ThemedText style={styles.optionText}>
+                {t(`book:${book}`)}
+              </ThemedText>
             </TouchableOpacity>
           ))}
         </ThemedView>
@@ -70,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     padding: 10,
     maxHeight: 400,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   bookList: {
     paddingVertical: 8,
@@ -80,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 6,
     paddingHorizontal: 8,
-    width: 128
+    width: 128,
   },
   checkboxIcon: {
     marginRight: 8,
@@ -94,6 +117,5 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
 });
-
 
 export default BookDropdown;

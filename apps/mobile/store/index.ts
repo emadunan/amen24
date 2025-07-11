@@ -25,11 +25,11 @@ export const MakeStore = () => {
         .concat(featuredApi.middleware)
         .concat(progressApi.middleware)
         .concat(glossaryApi.middleware)
-        .concat(libraryApi.middleware)
+        .concat(libraryApi.middleware),
   });
 
   return store;
-}
+};
 
 export type AppStore = ReturnType<typeof MakeStore>;
 
@@ -37,6 +37,3 @@ export type AppStore = ReturnType<typeof MakeStore>;
 export type RootState = ReturnType<AppStore["getState"]>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = AppStore["dispatch"];
-
-
-

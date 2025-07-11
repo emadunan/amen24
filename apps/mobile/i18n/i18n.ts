@@ -15,7 +15,8 @@ i18n
     resourcesToBackend((lang: Language, ns: Namespace) =>
       Promise.resolve(locales[lang][ns]),
     ),
-  ).init({
+  )
+  .init({
     debug: __DEV__,
     // You can also try Localization.locale
     // lng: Localization.getLocales()?.[0]?.languageCode ?? "en"

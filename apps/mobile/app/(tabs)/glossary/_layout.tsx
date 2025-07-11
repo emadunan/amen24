@@ -9,9 +9,12 @@ const GlossaryLayout = () => {
       }}
     >
       <Stack.Screen name="index" options={{ title: "" }} />
-      <Stack.Screen name="[slug]" options={{
-        headerShown: true,
-      }} />
+      <Stack.Screen
+        name="[slug]"
+        options={{
+          headerShown: true,
+        }}
+      />
     </Stack>
   );
 };

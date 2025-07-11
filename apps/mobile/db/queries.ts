@@ -12,7 +12,9 @@ export function buildVerseSearchQuery({
     throw new Error("Query is empty");
   }
 
-  const likeConditions = words.map(() => `vt.textNormalized LIKE ?`).join(" AND ");
+  const likeConditions = words
+    .map(() => `vt.textNormalized LIKE ?`)
+    .join(" AND ");
   const queryParams = words.map((word) => `%${word}%`);
 
   // Prepare bookKey placeholders

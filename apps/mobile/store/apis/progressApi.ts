@@ -13,7 +13,7 @@ export const progressApi = createProgressApi(apiUrl, {
   onAuthFailure: () => {
     console.warn("❌ Mobile token expired or invalid");
     // Optionally: dispatch logout, redirect, etc.
-  }
+  },
 });
 
 export const { useGetUserLastReadProgressQuery, useUpdateProgressMutation } =

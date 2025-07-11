@@ -14,6 +14,5 @@ export default function AuthCallbackScreen() {
     }
   }, []);
 
-
   return null;
 }

@@ -16,7 +16,10 @@ interface Props {
 }
 
 const LibraryChapterLink: FC<Props> = ({
-  slug, current, chapter, navigation,
+  slug,
+  current,
+  chapter,
+  navigation,
 }) => {
   const router = useRouter();
   const colorScheme = useColorScheme();
@@ -37,9 +40,7 @@ const LibraryChapterLink: FC<Props> = ({
 
   function handlePress() {
     navigation.closeDrawer();
-    router.push(
-      `/(tabs)/library/${slug}?current=${chapter.id}`,
-    );
+    router.push(`/(tabs)/library/${slug}?current=${chapter.id}`);
   }
 
   return (

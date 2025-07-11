@@ -74,7 +74,7 @@ export default function TabLayout() {
         options={{
           title: t("main.search"),
           headerTitleStyle: {
-            fontFamily: "AmiriBold"
+            fontFamily: "AmiriBold",
           },
           tabBarIcon: ({ color }) => (
             <Feather
@@ -92,7 +92,7 @@ export default function TabLayout() {
         options={{
           title: t("main.glossary"),
           headerTitleStyle: {
-            fontFamily: "AmiriBold"
+            fontFamily: "AmiriBold",
           },
           tabBarIcon: ({ color }) => (
             <Ionicons name="list-circle-outline" size={24} color={color} />
@@ -105,7 +105,7 @@ export default function TabLayout() {
         options={{
           title: t("library.title"),
           headerTitleStyle: {
-            fontFamily: "AmiriBold"
+            fontFamily: "AmiriBold",
           },
           tabBarIcon: ({ color }) => (
             <Ionicons name="library-outline" size={24} color={color} />
@@ -117,7 +117,7 @@ export default function TabLayout() {
         name="favorites"
         options={{
           href: null,
-          title: t('userMenu.favorite'),
+          title: t("userMenu.favorite"),
           headerLeft: () => <BackBtn uri={"/bible"} />,
         }}
       />
@@ -125,7 +125,7 @@ export default function TabLayout() {
         name="featured"
         options={{
           href: null,
-          title: t('userMenu.featured'),
+          title: t("userMenu.featured"),
           headerLeft: () => <BackBtn uri={"/bible"} />,
         }}
       />
@@ -133,7 +133,7 @@ export default function TabLayout() {
         name="settings"
         options={{
           href: null,
-          title: t('userMenu.settings'),
+          title: t("userMenu.settings"),
           headerLeft: () => <BackBtn uri={"/bible"} />,
         }}
       />
@@ -142,7 +142,7 @@ export default function TabLayout() {
         name="login"
         options={{
           href: null,
-          title: t('signin.login'),
+          title: t("signin.login"),
           headerLeft: () => <BackBtn uri={"/bible"} />,
         }}
       />
@@ -151,7 +151,7 @@ export default function TabLayout() {
         name="locale"
         options={{
           href: null,
-          title: t('userMenu.favorite'),
+          title: t("userMenu.favorite"),
           headerLeft: () => <BackBtn uri={"/bible"} />,
         }}
       />

@@ -22,14 +22,17 @@ const LibraryChapterSelector: FC<Props> = ({ title }) => {
           navigation.dispatch(DrawerActions.openDrawer());
         }}
       >
-        <ThemedText numberOfLines={1}
-          ellipsizeMode="tail" style={[styles.chapterTitle, { color: theme.primary }]}>
+        <ThemedText
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={[styles.chapterTitle, { color: theme.primary }]}
+        >
           {title}
         </ThemedText>
       </Pressable>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -38,12 +41,12 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     paddingHorizontal: 4,
     marginHorizontal: 8,
-    marginVertical: 8
+    marginVertical: 8,
   },
   chapterTitle: {
     fontSize: 20,
     lineHeight: 32,
-  }
+  },
 });
 
 export default LibraryChapterSelector;

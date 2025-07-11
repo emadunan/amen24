@@ -1,29 +1,25 @@
-import React, { useState } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
-import BibleGlossaryItem from './BibleGlossaryItem';
-import Pagination from '../ui/Pagination';
-import { useGetAllTermsQuery } from '@/store/apis/glossaryApi';
-import { Lang } from '@amen24/shared';
-import GlossaryFilterForm from './GlossaryFilterForm';
-import { ThemedView } from '../ui/ThemedView';
+import React, { useState } from "react";
+import { FlatList, StyleSheet, ActivityIndicator } from "react-native";
+import { useTranslation } from "react-i18next";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { Colors } from "@/constants/Colors";
+import BibleGlossaryItem from "./BibleGlossaryItem";
+import Pagination from "../ui/Pagination";
+import { useGetAllTermsQuery } from "@/store/apis/glossaryApi";
+import { Lang } from "@amen24/shared";
+import GlossaryFilterForm from "./GlossaryFilterForm";
+import { ThemedView } from "../ui/ThemedView";
 
 const ITEMS_PER_PAGE = 10;
 
 const BibleGlossary = () => {
   const { t, i18n } = useTranslation();
-  const [query, setQuery] = useState('');
-  const [filterTerm, setFilterTerm] = useState('');
+  const [query, setQuery] = useState("");
+  const [filterTerm, setFilterTerm] = useState("");
   const [page, setPage] = useState(1);
 
   const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? 'light'];
+  const theme = Colors[colorScheme ?? "light"];
   const lang = i18n.language as Lang;
 
   const { data, isLoading } = useGetAllTermsQuery({
@@ -39,8 +35,8 @@ const BibleGlossary = () => {
   };
 
   const handleReset = () => {
-    setQuery('');
-    setFilterTerm('');
+    setQuery("");
+    setFilterTerm("");
     setPage(1);
   };
 
@@ -51,7 +47,9 @@ const BibleGlossary = () => {
   };
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor: theme.background }]}>
+    <ThemedView
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       <GlossaryFilterForm
         query={query}
         onQueryChange={setQuery}
@@ -60,7 +58,11 @@ const BibleGlossary = () => {
       />
 
       {isLoading ? (
-        <ActivityIndicator size="large" color={theme.primary} style={styles.loader} />
+        <ActivityIndicator
+          size="large"
+          color={theme.primary}
+          style={styles.loader}
+        />
       ) : (
         <FlatList
           data={data?.data || []}

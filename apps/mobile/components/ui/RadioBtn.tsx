@@ -4,7 +4,7 @@ import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, StyleSheet, ViewStyle, } from "react-native";
+import { Pressable, StyleSheet, ViewStyle } from "react-native";
 
 interface Props {
   label: string;
@@ -19,18 +19,28 @@ const RadioBtn: FC<Props> = ({ label, value, selected, onPress }) => {
 
   const allTheme: ViewStyle = {
     borderColor: Colors[colorScheme ?? "light"].primary,
-  }
+  };
 
   const selectedTheme = {
     backgroundColor: Colors[colorScheme ?? "light"].text,
   };
 
-  const flexDirStyle: ViewStyle = i18n.language === "ar" ? { flexDirection: "row-reverse" } : { flexDirection: "row" };
+  const flexDirStyle: ViewStyle =
+    i18n.language === "ar"
+      ? { flexDirection: "row-reverse" }
+      : { flexDirection: "row" };
 
   return (
-    <Pressable style={[styles.radioContainer, flexDirStyle]} onPress={() => onPress(value)}>
+    <Pressable
+      style={[styles.radioContainer, flexDirStyle]}
+      onPress={() => onPress(value)}
+    >
       <ThemedView
-        style={[styles.radioCircle, allTheme, selected === value && selectedTheme]}
+        style={[
+          styles.radioCircle,
+          allTheme,
+          selected === value && selectedTheme,
+        ]}
       />
       <ThemedText style={styles.radioText}>
         {t(`${label}`, { ns: "lang" })}

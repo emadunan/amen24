@@ -1,33 +1,33 @@
-import React, { useEffect } from 'react';
-import { useLocalSearchParams, useNavigation } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { ThemedText } from '@/components/ui/ThemedText';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
-import { useGetOneTermQuery } from '@/store/apis/glossaryApi';
-import { MarkdownContent } from '@/components/ui/MarkdownContent';
-import { ThemedView } from '@/components/ui/ThemedView';
-import BackBtn from '@/components/ui/BackBtn';
+import React, { useEffect } from "react";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useTranslation } from "react-i18next";
+import { ThemedText } from "@/components/ui/ThemedText";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { Colors } from "@/constants/Colors";
+import { useGetOneTermQuery } from "@/store/apis/glossaryApi";
+import { MarkdownContent } from "@/components/ui/MarkdownContent";
+import { ThemedView } from "@/components/ui/ThemedView";
+import BackBtn from "@/components/ui/BackBtn";
 
 const GlossaryDetails = () => {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const navigation = useNavigation();
   const { i18n } = useTranslation();
   const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? 'light'];
+  const theme = Colors[colorScheme ?? "light"];
 
   const { data: term, isLoading } = useGetOneTermQuery(slug);
 
   useEffect(() => {
     if (!term) return;
 
-    const translation = term.translations.find(
-      (t) => t.lang === i18n.language
-    );
+    const translation = term.translations.find((t) => t.lang === i18n.language);
 
     navigation.setOptions({
-      headerTitle: () => <ThemedText type='title'>{translation?.term}</ThemedText>,
+      headerTitle: () => (
+        <ThemedText type="title">{translation?.term}</ThemedText>
+      ),
       headerRight: () => <ThemedText>{term.native}</ThemedText>,
       headerStyle: {
         backgroundColor: theme.secondary,
@@ -43,11 +43,11 @@ const GlossaryDetails = () => {
     );
   }
 
-  const translation = term.translations.find(t => t.lang === i18n.language);
+  const translation = term.translations.find((t) => t.lang === i18n.language);
 
   return (
     <ThemedView style={[styles.container]}>
-      <MarkdownContent markdown={translation?.definition ?? ''} />
+      <MarkdownContent markdown={translation?.definition ?? ""} />
     </ThemedView>
   );
 };
@@ -57,8 +57,8 @@ export default GlossaryDetails;
 const styles = StyleSheet.create({
   centered: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   container: {
     flex: 1,

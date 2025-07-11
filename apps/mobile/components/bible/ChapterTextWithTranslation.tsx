@@ -1,11 +1,17 @@
-import React from 'react';
+import React from "react";
 import { I18nManager, StyleSheet, useColorScheme, View } from "react-native";
 import { Colors } from "@/constants";
 import { ThemedText } from "../ui/ThemedText";
 import { ThemedView } from "../ui/ThemedView";
 import { VerseWithTranslation } from "@/interfaces/verse";
-import { BookKey, formatNumber, getDirection, Lang, resolveRenderLang } from "@amen24/shared";
-import { BibleLang } from './BibleChapterText';
+import {
+  BookKey,
+  formatNumber,
+  getDirection,
+  Lang,
+  resolveRenderLang,
+} from "@amen24/shared";
+import { BibleLang } from "./BibleChapterText";
 
 interface Props {
   uiLang: BibleLang;
@@ -32,7 +38,6 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
   const renderLang = resolveRenderLang(translationLang as Lang, bookKey);
   const isTranslationRTL = getDirection(renderLang as Lang) === "rtl";
 
-
   return (
     <View style={styles.wrapper}>
       {verses.map((verse) => {
@@ -40,10 +45,7 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
           <ThemedView key={verse.id} style={styles.verseRow}>
             {/* UI Language Column */}
             <View
-              style={[
-                styles.verseCol,
-                isLangRTL ? styles.rtl : styles.ltr
-              ]}
+              style={[styles.verseCol, isLangRTL ? styles.rtl : styles.ltr]}
             >
               <ThemedText
                 onPress={() => onHighlight(verse.id)}
@@ -51,12 +53,21 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
                   styles.verseText,
                   uiLang === Lang.ARABIC && styles.textAr,
                   uiLang === Lang.ENGLISH && styles.textEn,
-                  highlighted.includes(verse.id) && { backgroundColor: theme.highlight },
+                  highlighted.includes(verse.id) && {
+                    backgroundColor: theme.highlight,
+                  },
                 ]}
               >
-                <ThemedText style={[styles.verseNum, { color: theme.danger }, uiLang === Lang.ARABIC && styles.textAr, uiLang === Lang.ENGLISH && styles.textEn
-                ]}>
-                  {formatNumber(verse.num, uiLang as Lang)}{"\u00A0"}
+                <ThemedText
+                  style={[
+                    styles.verseNum,
+                    { color: theme.danger },
+                    uiLang === Lang.ARABIC && styles.textAr,
+                    uiLang === Lang.ENGLISH && styles.textEn,
+                  ]}
+                >
+                  {formatNumber(verse.num, uiLang as Lang)}
+                  {"\u00A0"}
                 </ThemedText>
                 {verse.textDiacritized}
               </ThemedText>
@@ -66,7 +77,7 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
             <View
               style={[
                 styles.verseCol,
-                isTranslationRTL ? styles.rtl : styles.ltr
+                isTranslationRTL ? styles.rtl : styles.ltr,
               ]}
             >
               <ThemedText
@@ -75,11 +86,21 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
                   styles.verseText,
                   uiLang === Lang.ARABIC && styles.textAr,
                   uiLang === Lang.ENGLISH && styles.textEn,
-                  highlighted.includes(verse.id) && { backgroundColor: theme.highlight },
+                  highlighted.includes(verse.id) && {
+                    backgroundColor: theme.highlight,
+                  },
                 ]}
               >
-                <ThemedText style={[styles.verseNum, { color: theme.danger }, uiLang === Lang.ARABIC && styles.textAr, uiLang === Lang.ENGLISH && styles.textEn]}>
-                  {formatNumber(verse.num, translationLang as Lang)}{"\u00A0"}
+                <ThemedText
+                  style={[
+                    styles.verseNum,
+                    { color: theme.danger },
+                    uiLang === Lang.ARABIC && styles.textAr,
+                    uiLang === Lang.ENGLISH && styles.textEn,
+                  ]}
+                >
+                  {formatNumber(verse.num, translationLang as Lang)}
+                  {"\u00A0"}
                 </ThemedText>
                 {verse.text2Diacritized}
               </ThemedText>
@@ -106,11 +127,11 @@ const styles = StyleSheet.create({
   },
   verseNum: {
     fontSize: 12,
-    textAlign: "justify"
+    textAlign: "justify",
   },
   verseText: {
     fontSize: 20,
-    textAlign: "justify"
+    textAlign: "justify",
   },
   rtl: {
     direction: "rtl",
@@ -119,11 +140,11 @@ const styles = StyleSheet.create({
     direction: "ltr",
   },
   textAr: {
-    lineHeight: 40
+    lineHeight: 40,
   },
   textEn: {
-    lineHeight: 28
-  }
+    lineHeight: 28,
+  },
 });
 
 export default ChapterTextWithTranslation;

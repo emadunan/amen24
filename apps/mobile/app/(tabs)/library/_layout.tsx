@@ -9,9 +9,12 @@ const LibraryLayout = () => {
       }}
     >
       <Stack.Screen name="index" options={{ title: "" }} />
-      <Stack.Screen name="[slug]" options={{
-        headerTitleAlign: "center",
-      }} />
+      <Stack.Screen
+        name="[slug]"
+        options={{
+          headerTitleAlign: "center",
+        }}
+      />
     </Stack>
   );
 };

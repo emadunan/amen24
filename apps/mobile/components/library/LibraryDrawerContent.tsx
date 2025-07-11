@@ -19,7 +19,13 @@ const LibraryBookDrawerContent: FC<Props> = (props) => {
       <FlatList
         data={props.chapters}
         renderItem={({ item }) => (
-          <LibraryChapterLink key={item.id} slug={props.slug} current={props.current} chapter={item} navigation={props.navigation} />
+          <LibraryChapterLink
+            key={item.id}
+            slug={props.slug}
+            current={props.current}
+            chapter={item}
+            navigation={props.navigation}
+          />
         )}
       />
     </ThemedView>

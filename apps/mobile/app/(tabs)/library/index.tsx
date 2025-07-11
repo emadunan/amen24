@@ -1,8 +1,8 @@
-import React from 'react';
-import Library from '@/components/library/Library';
+import React from "react";
+import Library from "@/components/library/Library";
 
 const LibraryScreen = () => {
-  return <Library />
-}
+  return <Library />;
+};
 
 export default LibraryScreen;

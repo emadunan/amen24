@@ -46,15 +46,15 @@ const LibraryBookDrawer: FC = () => {
           backgroundColor: Colors[colorScheme ?? "light"].background,
         },
         headerLeft: () => (
-          <BackBtn color={Colors[colorScheme ?? "light"].primary} uri={"/(tabs)/library"}/>
+          <BackBtn
+            color={Colors[colorScheme ?? "light"].primary}
+            uri={"/(tabs)/library"}
+          />
         ),
       }}
     >
       {chapters.map((chapter) => (
-        <Drawer.Screen
-          key={chapter.id}
-          name={chapter.id}
-        >
+        <Drawer.Screen key={chapter.id} name={chapter.id}>
           {() => <LibraryChapter />}
         </Drawer.Screen>
       ))}

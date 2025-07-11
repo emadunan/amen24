@@ -44,7 +44,7 @@ const BookDrawer: FC = () => {
           backgroundColor: theme.background,
         },
         headerLeft: () => (
-          <BackBtn color={theme.primary} uri={'/(tabs)/bible'}/>
+          <BackBtn color={theme.primary} uri={"/(tabs)/bible"} />
         ),
       }}
     >
@@ -52,7 +52,7 @@ const BookDrawer: FC = () => {
         <Drawer.Screen
           key={chapter}
           name={`Chapter ${chapter}`}
-        // initialParams={{ chapter }}
+          // initialParams={{ chapter }}
         >
           {() => <BibleChapter />}
         </Drawer.Screen>

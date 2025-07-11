@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,19 +7,19 @@ import {
   I18nManager,
   Modal,
   useColorScheme,
-} from 'react-native';
-import { Colors } from '@/constants/Colors';
-import { logout } from '@/lib/auth';
-import { authApi, useGetMeQuery } from '@/store/apis/authApi';
-import { useDispatch } from 'react-redux';
-import { Link, useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { ThemedText } from '../ui/ThemedText';
-import { ThemedView } from '../ui/ThemedView';
+} from "react-native";
+import { Colors } from "@/constants/Colors";
+import { logout } from "@/lib/auth";
+import { authApi, useGetMeQuery } from "@/store/apis/authApi";
+import { useDispatch } from "react-redux";
+import { Link, useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
+import { ThemedText } from "../ui/ThemedText";
+import { ThemedView } from "../ui/ThemedView";
 
 const UserMenu = () => {
   const [open, setOpen] = useState(false);
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme() ?? "light";
   const theme = Colors[colorScheme];
   const isRTL = I18nManager.isRTL;
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const UserMenu = () => {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const firstLetter = user?.displayName?.[0]?.toUpperCase() ?? '?';
+  const firstLetter = user?.displayName?.[0]?.toUpperCase() ?? "?";
 
   return (
     <>
@@ -41,7 +41,9 @@ const UserMenu = () => {
           },
         ]}
       >
-        <Text style={[styles.letter, { color: theme.text }]}>{firstLetter}</Text>
+        <Text style={[styles.letter, { color: theme.text }]}>
+          {firstLetter}
+        </Text>
       </Pressable>
 
       <Modal visible={open} transparent animationType="fade">
@@ -52,30 +54,38 @@ const UserMenu = () => {
               {
                 backgroundColor: theme.background,
                 borderColor: theme.primary,
-                right: 16
+                right: 16,
               },
             ]}
           >
             <View style={{ flex: 1 }}>
               <Link href="/(tabs)/favorites" asChild>
                 <Pressable onPress={() => setOpen(false)}>
-                  <ThemedText style={styles.item}>{t('userMenu.favorite')}</ThemedText>
+                  <ThemedText style={styles.item}>
+                    {t("userMenu.favorite")}
+                  </ThemedText>
                 </Pressable>
               </Link>
 
               <Link href="/(tabs)/settings" asChild>
                 <Pressable onPress={() => setOpen(false)}>
-                  <ThemedText style={styles.item}>{t('userMenu.settings')}</ThemedText>
+                  <ThemedText style={styles.item}>
+                    {t("userMenu.settings")}
+                  </ThemedText>
                 </Pressable>
               </Link>
 
               <Link href="/(tabs)/featured" asChild>
                 <Pressable onPress={() => setOpen(false)}>
-                  <ThemedText style={styles.item}>{t('userMenu.featured')}</ThemedText>
+                  <ThemedText style={styles.item}>
+                    {t("userMenu.featured")}
+                  </ThemedText>
                 </Pressable>
               </Link>
 
-              <View style={[styles.divider, { backgroundColor: theme.primary }]} />
+              <View
+                style={[styles.divider, { backgroundColor: theme.primary }]}
+              />
 
               <Pressable
                 onPress={() => {
@@ -85,7 +95,7 @@ const UserMenu = () => {
                 }}
               >
                 <ThemedText style={[styles.item]}>
-                  {t('userMenu.logout')}
+                  {t("userMenu.logout")}
                 </ThemedText>
               </Pressable>
             </View>
@@ -102,18 +112,18 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 100,
     borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   letter: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   overlay: {
     flex: 1,
   },
   dropdown: {
-    position: 'absolute',
+    position: "absolute",
     top: 60,
     minWidth: 100,
     paddingVertical: 8,
@@ -126,7 +136,7 @@ const styles = StyleSheet.create({
   item: {
     paddingVertical: 8,
     fontSize: 16,
-    textAlign: I18nManager.isRTL ? 'right' : 'left',
+    textAlign: I18nManager.isRTL ? "right" : "left",
   },
   divider: {
     height: 1,
