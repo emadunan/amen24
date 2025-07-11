@@ -15,6 +15,7 @@ const VerseFavorite: FC<Props> = ({ favorite, lang }) => {
   const chapter = verse.chapter;
   const verses = favorite.verseGroup.verses;
   const bookKey = chapter.book.bookKey;
+  const bookId = chapter.book.id;
   const chapterNum = chapter.num;
   const totalChapters = BookMap[bookKey].len;
 
@@ -24,6 +25,7 @@ const VerseFavorite: FC<Props> = ({ favorite, lang }) => {
 
   return (
     <VerseBlock
+      bookId={bookId}
       bookKey={bookKey}
       chapterNum={chapterNum}
       totalChapters={totalChapters}

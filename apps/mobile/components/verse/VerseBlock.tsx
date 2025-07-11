@@ -1,12 +1,15 @@
 import React, { useMemo } from "react";
-import { I18nManager, Pressable, StyleSheet } from "react-native";
+import { I18nManager, Pressable, StyleSheet, useColorScheme } from "react-native";
 import { ThemedText } from "@/components/ui/ThemedText";
 import { ThemedView } from "@/components/ui/ThemedView";
 import { BookKey, BookMap, formatNumber, Lang, Verse } from "@amen24/shared";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons"; // Or use any icon library
+import { Link } from "expo-router";
+import { Colors } from "@/constants";
 
 interface VerseBlockProps {
+  bookId: number;
   bookKey: BookKey;
   chapterNum: number;
   totalChapters: number;
@@ -17,6 +20,7 @@ interface VerseBlockProps {
 }
 
 const VerseBlock: React.FC<VerseBlockProps> = ({
+  bookId,
   bookKey,
   chapterNum,
   totalChapters,
@@ -26,6 +30,9 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
   onRemove,
 }) => {
   const { t } = useTranslation();
+  const colorScheme = useColorScheme() ?? "light";
+  const theme = Colors[colorScheme];
+
   const dir = lang === "ar" ? "rtl" : "ltr";
   const isRTL = dir === "rtl";
 
@@ -58,14 +65,16 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
       </ThemedText>
 
       <ThemedView style={styles.actions}>
-        <ThemedText type="title" style={styles.reference} numberOfLines={1}>
-          — {reference}
-        </ThemedText>
+        <Link href={`/(tabs)/bible/${bookKey}?bookId=${bookId}&bookLen=${totalChapters}&chapterNum=${chapterNum}&verseNum=${verseNum}`}>
+          <ThemedText type="title" style={[styles.reference, { color: theme.primary }]} numberOfLines={1}>
+            &mdash; {reference}
+          </ThemedText>
+        </Link>
 
         {onRemove && (
-          <Pressable style={styles.removeButton} onPress={onRemove}>
-            <Ionicons name="trash" size={16} />
-            <ThemedText style={styles.removeText}>{t("main.remove")}</ThemedText>
+          <Pressable style={[styles.removeButton, { borderColor: theme.danger }]} onPress={onRemove}>
+            <Ionicons name="trash" size={16} color={theme.danger}/>
+            <ThemedText style={[styles.removeText, {color: theme.danger}]}>{t("main.remove")}</ThemedText>
           </Pressable>
         )}
       </ThemedView>
@@ -87,13 +96,13 @@ const styles = StyleSheet.create({
     borderRightWidth: 4,
   },
   verseText: {
-    fontSize: 16,
+    fontSize: 22,
     lineHeight: 36,
     textAlign: "justify",
   },
   rtlText: {
     writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr',
-    lineHeight: 32,
+    lineHeight: 48,
   },
   actions: {
     flexDirection: "row",
@@ -102,7 +111,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   reference: {
-    fontSize: 14,
+    fontSize: 18,
   },
   removeButton: {
     flexDirection: "row",

@@ -20,7 +20,6 @@ import { Colors } from "@/constants";
 import StoreProvider from "@/providers/StoreProvider";
 import AppLogo from "@/components/app-header/AppLogo";
 import { ThemedView } from "@/components/ui/ThemedView";
-import AuthBootstrap from "@/components/ui/AuthBootstrap";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
