@@ -59,15 +59,13 @@ export default function RootLayout() {
             <ThemeProvider
               value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
             >
-              <AuthBootstrap>
-                <ThemedView style={{ flex: 1 }}>
-                  <AppLogo />
-                  <Stack>
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                    <Stack.Screen name="+not-found" />
-                  </Stack>
-                </ThemedView>
-              </AuthBootstrap>
+              <ThemedView style={{ flex: 1 }}>
+                <AppLogo />
+                <Stack>
+                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen name="+not-found" />
+                </Stack>
+              </ThemedView>
               <StatusBar style="auto" />
             </ThemeProvider>
           </SQLiteProvider>
