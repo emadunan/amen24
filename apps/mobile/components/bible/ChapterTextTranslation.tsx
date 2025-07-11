@@ -1,7 +1,6 @@
 import React from 'react'
 import { ThemedText } from '../ui/ThemedText';
 import { Pressable, StyleSheet, useColorScheme } from "react-native";
-import { useTranslation } from "react-i18next";
 
 import { Colors } from '@/constants';
 import { Verse } from '@/interfaces/verse';
@@ -15,25 +14,19 @@ interface Props {
   verseNum?: number;
   highlighted: number[];
   onHighlight: (verseNum: number) => void;
-  onVerseLayout?: (verseNum: number, y: number) => void;
 }
 
-const ChapterTextTranslation: React.FC<Props> = ({ lang, verses, verseNum, highlighted, onHighlight, onVerseLayout }) => {
-  const { i18n } = useTranslation();
+const ChapterTextTranslation: React.FC<Props> = ({ lang, verses, verseNum, highlighted, onHighlight }) => {
   const colorScheme = useColorScheme();
-
   const theme = Colors[colorScheme ?? 'light'];
 
-  if (verseNum) {
+  if (false) {
     return (
       <ThemedView>
         {verses.map((verse) => (
           <Pressable key={verse.num} onPress={() => onHighlight(verse.id)}>
             <ThemedView
               style={styles.chapterView}
-              onLayout={(e) => {
-                onVerseLayout?.(verse.num, e.nativeEvent.layout.y);
-              }}
             >
               <ThemedText
                 style={[styles.verseNum, { color: theme.danger }]}
