@@ -179,7 +179,7 @@ const BibleChapter: FC = () => {
 
       {/* Chapter Content */}
       <View
-        key={`${i18n.language}-${bookId}-${chapterNum}-${translationLang ?? "none"}`}
+        key={`${i18n.language}-${bookId}-${chapterNum}`}
         style={styles.chapterContainer}
       >
         <HighlightProvider
