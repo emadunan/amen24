@@ -65,7 +65,7 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
     (verses.length > 1 ? ` - ${formattedLastVerseNum}` : "");
 
   return (
-    <ThemedView style={[styles.container, isRTL && styles.rtl]}>
+    <ThemedView style={[styles.container, isRTL && styles.rtl, {borderColor: theme.primary}]}>
       <ThemedText style={[styles.verseText, isRTL && styles.rtlText]}>
         {verseText}
       </ThemedText>
@@ -103,15 +103,15 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderLeftWidth: 4,
+    borderRightWidth: 4,
     padding: 12,
     marginVertical: 8,
-    marginHorizontal: 4,
+    marginHorizontal: 16,
     borderRadius: 2,
   },
   rtl: {
-    borderLeftWidth: 1,
-    borderRightWidth: 4,
+    borderLeftWidth: 4,
+    borderRightWidth: 1,
   },
   verseText: {
     fontSize: 22,
