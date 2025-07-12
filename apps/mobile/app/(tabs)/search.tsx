@@ -1,6 +1,4 @@
 import {
-  ActivityIndicator,
-  Button,
   FlatList,
   I18nManager,
   Keyboard,
@@ -32,6 +30,7 @@ import {
 } from "@amen24/shared";
 import { showToast } from "@/lib/toast";
 import BookDropdown from "@/components/search/BookDropdown";
+import LoadingIndicator from "@/components/ui/LoadingIndicator";
 
 function detectLanguage(text: string): "ar" | "en" {
   return /[\u0600-\u06FF]/.test(text) ? "ar" : "en";
@@ -206,12 +205,7 @@ export default function SearchScreen() {
         />
       )}
       {loading ? (
-        <ThemedView style={styles.loadingContainer}>
-          <ActivityIndicator
-            size="large"
-            color={Colors[colorScheme ?? "light"].primary}
-          />
-        </ThemedView>
+        <LoadingIndicator />
       ) : searchPerformed ? (
         verses.length > 0 ? (
           <FlatList
@@ -282,11 +276,6 @@ const styles = StyleSheet.create({
   },
   versesList: {
     paddingHorizontal: 16,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   feedbackText: {
     margin: 16,
