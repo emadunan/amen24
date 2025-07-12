@@ -78,7 +78,7 @@ const ChapterContent: FC<Props> = ({
         return separator + verseText;
       })
       .join("")
-      .trim(); // Trim to remove leading separator if present
+      .trim();
 
     const queryParameters = `v=${highlighted.sort((a, b) => a - b).join(",")}`;
 

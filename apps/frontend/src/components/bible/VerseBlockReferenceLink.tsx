@@ -33,7 +33,7 @@ const VerseBlockReferenceLink: React.FC<Props> = ({ featured, lang }) => {
   return (
     <Link
       className={styles.reference}
-      href={`/${bookKey}/${chapterNum}/${totalChapters}?${verseIdsQuery}`}
+      href={`/bible/${bookKey}/${chapterNum}/${totalChapters}?${verseIdsQuery}`}
     >
       &mdash; {BookMap[bookKey].title[lang as "en" | "ar"]}{" "}
       {formattedChapterNum} : {formattedFirstVerseNum}
