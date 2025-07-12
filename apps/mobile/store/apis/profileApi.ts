@@ -21,6 +21,7 @@ export const profileApi = createProfileApi(apiUrl, {
           setTokens(tokens.accessToken, tokens.refreshToken)
         }
         store.dispatch(authApi.util.invalidateTags(["User"]));
+        store.dispatch(profileApi.util.invalidateTags(["Profile"]));
         break;
 
       case "failure":

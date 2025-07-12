@@ -21,6 +21,7 @@ export const glossaryApi = createGlossaryApi(apiUrl, {
           setTokens(tokens.accessToken, tokens.refreshToken)
         }
         store.dispatch(authApi.util.invalidateTags(["User"]));
+        store.dispatch(glossaryApi.util.invalidateTags(["GlossaryTerm"]));
         break;
 
       case "failure":

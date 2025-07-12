@@ -21,6 +21,7 @@ export const progressApi = createProgressApi(apiUrl, {
           setTokens(tokens.accessToken, tokens.refreshToken)
         }
         store.dispatch(authApi.util.invalidateTags(["User"]));
+        store.dispatch(progressApi.util.invalidateTags(["Progress"]));
         break;
 
       case "failure":

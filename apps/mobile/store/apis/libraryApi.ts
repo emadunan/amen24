@@ -21,6 +21,7 @@ export const libraryApi = createLibraryApi(apiUrl, {
           setTokens(tokens.accessToken, tokens.refreshToken)
         }
         store.dispatch(authApi.util.invalidateTags(["User"]));
+        store.dispatch(libraryApi.util.invalidateTags(["LibraryBook"]));
         break;
 
       case "failure":

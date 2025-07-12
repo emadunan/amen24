@@ -21,6 +21,7 @@ export const favoriteApi = createFavoriteApi(apiUrl, {
           setTokens(tokens.accessToken, tokens.refreshToken)
         }
         store.dispatch(authApi.util.invalidateTags(["User"]));
+        store.dispatch(favoriteApi.util.invalidateTags(["Favorite"]));
         break;
 
       case "failure":

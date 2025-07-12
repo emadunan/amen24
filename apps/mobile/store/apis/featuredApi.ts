@@ -21,6 +21,7 @@ export const featuredApi = createFeaturedApi(apiUrl, {
           setTokens(tokens.accessToken, tokens.refreshToken)
         }
         store.dispatch(authApi.util.invalidateTags(["User"]));
+        store.dispatch(featuredApi.util.invalidateTags(["Featured"]));
         break;
 
       case "failure":
