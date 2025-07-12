@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { ThemedView } from "@/components/ui/ThemedView";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { useSQLiteContext } from "expo-sqlite";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -94,10 +94,6 @@ export default function SearchScreen() {
     setQuery(inputText);
   }
 
-  const backgroundTheme = {
-    backgroundColor: Colors[colorScheme ?? "light"].secondary,
-  };
-
   async function handleSearch() {
     setShowDropdown(false);
 
@@ -152,8 +148,8 @@ export default function SearchScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedView>
-        <ThemedView style={[styles.searchGroup, backgroundTheme]}>
+      <ThemedView style={[styles.searchContainer, { backgroundColor: theme.secondary }]}>
+        <ThemedView style={[styles.searchGroup, { backgroundColor: theme.secondary }]}>
           <Pressable
             style={styles.filterBtn}
             onPress={() => setShowDropdown((prev) => !prev)}
@@ -161,12 +157,12 @@ export default function SearchScreen() {
             <Feather
               name="filter"
               size={24}
-              color={Colors[colorScheme ?? "light"].text}
+              color={Colors[colorScheme ?? "light"].primary}
               style={I18nManager.isRTL && styles.flipIcon}
             />
           </Pressable>
           <ThemedTextInput
-            style={styles.searchInput}
+            style={[styles.searchInput, { borderColor: theme.primary }]}
             value={query}
             onChangeText={handleQuery}
           />
@@ -190,7 +186,8 @@ export default function SearchScreen() {
               {t("searchEngine.resultsCount")}:{" "}
               {formatNumber(verses.length, i18n.language as Lang)}
             </ThemedText>
-            <Pressable onPress={handleSearchReset}>
+            <Pressable onPress={handleSearchReset} style={[styles.resetBtn, { backgroundColor: theme.background, borderColor: theme.primary }]}>
+              <Ionicons name="sync-sharp" size={24} color={theme.text} />
               <ThemedText>{t("searchEngine.resetSearch")}</ThemedText>
             </Pressable>
           </ThemedView>
@@ -238,17 +235,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  searchContainer: {
+    padding: 16,
+  },
   searchGroup: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 32,
-    paddingBottom: 16,
+    paddingBottom: 12
   },
   searchReport: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
   },
   searchInput: {
@@ -260,16 +257,26 @@ const styles = StyleSheet.create({
   },
   filterBtn: {
     position: "absolute",
-    top: 41,
-    left: 24,
+    top: 10,
+    left: 10,
     zIndex: 2,
   },
   searchBtn: {
     position: "absolute",
-    top: 35,
-    right: 19,
+    top: 3,
+    right: 3,
     borderRadius: 2,
     padding: 2,
+  },
+  resetBtn: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 2,
+    gap: 8
   },
   flipIcon: {
     transform: [{ scaleX: -1 }],

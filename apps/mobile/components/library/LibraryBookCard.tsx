@@ -25,7 +25,7 @@ const LibraryBookCard: React.FC<Props> = ({ slug, title, author, current }) => {
           styles.card,
           {
             backgroundColor: theme.secondary,
-            borderColor: theme.text,
+            borderColor: theme.primary,
             borderWidth: 1,
           },
         ]}
