@@ -129,14 +129,14 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderWidth: 1,
-    borderTopEndRadius: 8,
-    borderBottomStartRadius: 8,
+    borderTopStartRadius: 8,
+    borderBottomEndRadius: 8,
     zIndex: 999,
   },
   item: {
     paddingVertical: 8,
     fontSize: 16,
-    textAlign: I18nManager.isRTL ? "right" : "left",
+    textAlign: I18nManager.isRTL ? "left" : "right",
   },
   divider: {
     height: 1,
