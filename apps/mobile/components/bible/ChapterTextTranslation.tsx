@@ -20,7 +20,6 @@ interface Props {
 const ChapterTextTranslation: React.FC<Props> = ({
   lang,
   verses,
-  verseNum,
   highlighted,
   onHighlight,
   textJustify,
@@ -31,33 +30,36 @@ const ChapterTextTranslation: React.FC<Props> = ({
   if (textJustify) {
     return (
       <ThemedText style={styles.chapterContent}>
-        {verses.map((verse) => (
-          <ThemedText key={verse.num} onPress={() => onHighlight(verse.id)}>
-            <ThemedText
-              style={[
-                styles.verseNum,
-                { color: theme.danger },
-                highlighted.includes(verse.id) && {
-                  backgroundColor: theme.highlight,
-                },
-              ]}
-              numberOfLines={1}
-            >
-              {formatNumber(verse.num, lang as Lang)}
-              {"\u00A0"}
+        {verses.map((verse) => {
+          return (
+            <ThemedText key={verse.num} onPress={() => onHighlight(verse.id)}>
+              <ThemedText
+                style={[
+                  styles.verseNum,
+                  { color: theme.danger },
+                  highlighted.includes(verse.id) && {
+                    backgroundColor: theme.highlight,
+                  },
+                ]}
+                numberOfLines={1}
+              >
+                {formatNumber(verse.num, lang as Lang)}
+                {"\u00A0"}
+              </ThemedText>
+              <ThemedText
+                style={[
+                  styles.verseText,
+                  highlighted.includes(verse.id) && {
+                    backgroundColor: theme.highlight,
+                  },
+                ]}
+              >
+                {verse.textDiacritized}{" "}
+              </ThemedText>
             </ThemedText>
-            <ThemedText
-              style={[
-                styles.verseText,
-                highlighted.includes(verse.id) && {
-                  backgroundColor: theme.highlight,
-                },
-              ]}
-            >
-              {verse.textDiacritized}{" "}
-            </ThemedText>
-          </ThemedText>
-        ))}
+          )
+        }
+        )}
       </ThemedText>
     );
   }

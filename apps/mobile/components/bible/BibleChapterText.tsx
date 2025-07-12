@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
 import { BookKey } from "@amen24/shared";
@@ -24,8 +24,8 @@ interface Props {
   bookKey: BookKey;
   bookId: string;
   chapterNum: string;
-  verseNum?: string;
   textJustify: boolean;
+  selectedVerseIds?: number[];
 }
 
 const BibleChapterText: FC<Props> = ({
@@ -34,8 +34,8 @@ const BibleChapterText: FC<Props> = ({
   bookKey,
   bookId,
   chapterNum,
-  verseNum,
-  textJustify
+  textJustify,
+  selectedVerseIds,
 }) => {
   const db = useSQLiteContext();
   const { highlighted, toggleHighlight } = useHighlightContext();
@@ -112,14 +112,27 @@ const BibleChapterText: FC<Props> = ({
     fetchChapter();
   }, [uiLang, translationLang, chapterNum, bookId]);
 
-  useEffect(() => {
-    if (!verseNum || verses.length === 0) return;
+  const hasHighlightedInitialVerses = useRef(false);
 
-    const verse = verses.find((v) => v.num === +verseNum);
-    if (verse && !highlighted.includes(verse.id)) {
-      toggleHighlight(verse.id);
-    }
-  }, [verseNum, verses]);
+  useEffect(() => {
+    if (
+      hasHighlightedInitialVerses.current ||
+      !selectedVerseIds ||
+      selectedVerseIds.length === 0 ||
+      verses.length === 0
+    )
+      return;
+
+    selectedVerseIds.forEach((id) => {
+      if (!highlighted.includes(id)) {
+        toggleHighlight(id);
+      }
+    });
+
+    hasHighlightedInitialVerses.current = true;
+  }, [selectedVerseIds, verses]);
+
+
 
   function handleHighlight(verseId: number) {
     toggleHighlight(verseId);
@@ -144,7 +157,6 @@ const BibleChapterText: FC<Props> = ({
               verses={verses}
               highlighted={highlighted}
               onHighlight={handleHighlight}
-              verseNum={verseNum ? parseInt(verseNum) : undefined}
               textJustify={textJustify}
             />
           )}

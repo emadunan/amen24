@@ -72,8 +72,9 @@ const VerseBlock: React.FC<VerseBlockProps> = ({
 
       <ThemedView style={styles.actions}>
         <Link
-          href={`/(tabs)/bible/${bookKey}?bookId=${bookId}&bookLen=${totalChapters}&chapterNum=${chapterNum}&verseNum=${verseNum}`}
+          href={`/(tabs)/bible/${bookKey}?bookId=${bookId}&bookLen=${totalChapters}&chapterNum=${chapterNum}&v=${verses.map(v => v.id).join(",")}`}
         >
+
           <ThemedText
             type="title"
             style={[styles.reference, { color: theme.primary }]}

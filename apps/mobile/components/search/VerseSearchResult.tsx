@@ -15,12 +15,12 @@ import {
 } from "@amen24/shared";
 
 interface Props {
-  v: VerseWithMeta;
+  verse: VerseWithMeta;
   queryLang: string;
   query: string;
 }
 
-const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
+const VerseSearchResult: FC<Props> = ({ verse, queryLang, query }) => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -31,7 +31,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
 
   const handleDirectToChapter = () => {
     router.push(
-      `/(tabs)/bible/${v.bookKey}?bookId=${v.bookId}&bookLen=${v.bookLen}&chapterNum=${v.chapterNum}&verseNum=${v.num}`,
+      `/(tabs)/bible/${verse.bookKey}?bookId=${verse.bookId}&bookLen=${verse.bookLen}&chapterNum=${verse.chapterNum}&v=${verse.id}`,
     );
   };
 
@@ -79,7 +79,7 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
     <ThemedView
       style={[styles.verseContainer, isRtlQuery && { direction: "rtl" }]}
     >
-      <ThemedText style={styles.verseText}>{highlightText(v.text)}</ThemedText>
+      <ThemedText style={styles.verseText}>{highlightText(verse.text)}</ThemedText>
       <Pressable onPress={handleDirectToChapter}>
         <ThemedText
           type="subtitle"
@@ -88,11 +88,11 @@ const VerseSearchResult: FC<Props> = ({ v, queryLang, query }) => {
             { color: Colors[colorScheme ?? "light"].primary },
           ]}
         >
-          ( {t(v.bookKey, { ns: "book", lng: queryLang })}{" "}
+          ( {t(verse.bookKey, { ns: "book", lng: queryLang })}{" "}
           {queryLang === "ar"
-            ? Number(v.chapterNum).toLocaleString("ar-EG")
-            : v.chapterNum}{" "}
-          : {queryLang === "ar" ? Number(v.num).toLocaleString("ar-EG") : v.num}{" "}
+            ? Number(verse.chapterNum).toLocaleString("ar-EG")
+            : verse.chapterNum}{" "}
+          : {queryLang === "ar" ? Number(verse.num).toLocaleString("ar-EG") : verse.num}{" "}
           )
         </ThemedText>
       </Pressable>

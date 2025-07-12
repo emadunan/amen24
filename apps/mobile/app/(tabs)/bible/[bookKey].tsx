@@ -52,7 +52,6 @@ const BookDrawer: FC = () => {
         <Drawer.Screen
           key={chapter}
           name={`Chapter ${chapter}`}
-          // initialParams={{ chapter }}
         >
           {() => <BibleChapter />}
         </Drawer.Screen>

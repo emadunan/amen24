@@ -1,4 +1,4 @@
-import React, { FC, useLayoutEffect, useState } from "react";
+import React, { FC, useLayoutEffect, useMemo, useState } from "react";
 import { I18nManager, Pressable, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { ThemedView } from "@/components/ui/ThemedView";
@@ -20,7 +20,7 @@ type SearchParams = {
   bookId: string;
   bookLen: string;
   chapterNum: string;
-  verseNum?: string;
+  v?: string;
 };
 
 const BibleChapter: FC = () => {
@@ -36,7 +36,16 @@ const BibleChapter: FC = () => {
   const [layoutMenuVisible, setLayoutVisible] = useState(false);
   const [textJustify, setTextJustify] = useState(true);
 
-  const { bookKey, bookId, bookLen, chapterNum, verseNum } = params;
+  const { bookKey, bookId, bookLen, chapterNum, v } = params;
+
+  const selectedVerseIds = useMemo(() => {
+    if (!v) return undefined;
+
+    return v
+      .split(",")
+      .map((id) => parseInt(id.trim(), 10))
+      .filter((id) => !Number.isNaN(id));
+  }, [v]);
 
   useLayoutEffect(() => {
     if (bookKey) {
@@ -184,7 +193,7 @@ const BibleChapter: FC = () => {
             bookKey={bookKey as BookKey}
             bookId={bookId}
             chapterNum={chapterNum}
-            verseNum={verseNum}
+            selectedVerseIds={selectedVerseIds}
             textJustify={textJustify}
           />
         </HighlightProvider>

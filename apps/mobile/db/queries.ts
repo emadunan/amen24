@@ -22,7 +22,7 @@ export function buildVerseSearchQuery({
 
   const sql = `
     SELECT
-      vt.id,
+      v.id as id,
       vt.text,
       v.num,
       c.num AS chapterNum,

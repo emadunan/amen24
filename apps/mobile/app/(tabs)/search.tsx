@@ -220,7 +220,7 @@ export default function SearchScreen() {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <VerseSearchResult
-                v={item}
+                verse={item}
                 queryLang={queryLang}
                 query={lastQueryRef.current}
               />
