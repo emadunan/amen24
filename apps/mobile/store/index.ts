@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import RtlReducer from "./slices/rtlSlice";
+import rtlReducer from "./slices/rtlSlice";
+import networkReducer from "./slices/networkSlice";
+
 import { authApi } from "./apis/authApi";
 import { favoriteApi } from "./apis/favoriteApi";
 import { featuredApi } from "./apis/featuredApi";
@@ -11,7 +13,8 @@ import { setStore } from "./storeRef";
 export const MakeStore = () => {
   const store = configureStore({
     reducer: {
-      rtl: RtlReducer,
+      rtl: rtlReducer,
+      network: networkReducer,
       [authApi.reducerPath]: authApi.reducer,
       [favoriteApi.reducerPath]: favoriteApi.reducer,
       [featuredApi.reducerPath]: featuredApi.reducer,

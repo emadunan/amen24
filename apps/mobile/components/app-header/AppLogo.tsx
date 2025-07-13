@@ -1,4 +1,3 @@
-import { toastConfig } from "@/lib/toast";
 import React from "react";
 import {
   Image,
@@ -7,7 +6,6 @@ import {
   useColorScheme,
   Pressable,
 } from "react-native";
-import Toast from "react-native-toast-message";
 import { useRouter } from "expo-router";
 
 const AppLogo = () => {
@@ -36,7 +34,6 @@ const AppLogo = () => {
           resizeMode="contain"
         />
       </Pressable>
-      <Toast config={toastConfig} />
     </View>
   );
 };

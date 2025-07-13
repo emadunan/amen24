@@ -9,12 +9,12 @@ import { StyleSheet } from "react-native";
 import { FlatList } from "react-native";
 
 const Featured = () => {
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslation(["error"]);
   const lang = i18n.language as Lang;
 
   const { data: featured, isLoading } = useGetAllFeaturedQuery({
-    lang: i18n.language as Lang,
-  });
+    lang: i18n.language as Lang
+  }, { refetchOnReconnect: true });
 
   if (isLoading) return <LoadingIndicator />
 

@@ -1,5 +1,7 @@
 {
   "unknownError": "An unexpected error occurred. Please try again later.",
+  "noInternet": "No internet connection. Some features may not work.",
+  "noInternetConnection": "You're offline. Please check your internet connection.",
   "failedToFetch": "Failed to fetch data",
   "failedToChangeLanguage": "Failed to change language. Please try again.",
   "loginFailed": "The email or password you entered is incorrect. Please check your credentials and try again.",

@@ -11,7 +11,9 @@ const Favorites = () => {
   const { i18n } = useTranslation();
   const lang = i18n.language as Lang;
 
-  const { data: favorites, isLoading } = useGetUserFavoritesQuery(lang);
+  const { data: favorites, isLoading } = useGetUserFavoritesQuery(lang, {
+    refetchOnReconnect: true,
+  });
 
   if (isLoading) return <LoadingIndicator />
 

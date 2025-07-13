@@ -33,8 +33,8 @@ import { Colors } from "@/constants";
 import { useHighlightContext } from "@amen24/store";
 import { ThemedView } from "../ui/ThemedView";
 import { ThemedText } from "../ui/ThemedText";
-import { showToast } from "@/lib/toast";
 import GlossaryModal from "./GlossaryModal";
+import { useFeedback } from "@/hooks/useFeedback";
 
 const TOOLBOX_WIDTH = 190;
 const TOOLBOX_HEIGHT = 280;
@@ -50,6 +50,7 @@ const BibleChapterToolbox: React.FC<Props> = ({
   chapterNum,
   verses,
 }) => {
+  const { showMessage, showApiError } = useFeedback();
   const { t, i18n } = useTranslation();
   const window = Dimensions.get("window");
   const colorScheme = useColorScheme();
@@ -140,9 +141,9 @@ const BibleChapterToolbox: React.FC<Props> = ({
     try {
       copyHighlighted(verses, chapterNum, bookKey);
 
-      showToast("success", MESSAGE_KEYS.COPIED_TO_CLIPBOARD);
+      showMessage("success", MESSAGE_KEYS.COPIED_TO_CLIPBOARD);
     } catch (error) {
-      showToast("error", ERROR_KEYS.UNKNOWN_ERROR);
+      showApiError(error);
     }
   };
 
@@ -150,20 +151,18 @@ const BibleChapterToolbox: React.FC<Props> = ({
     try {
       await addFavorite(highlighted).unwrap();
 
-      showToast("success", MESSAGE_KEYS.ADDED_TO_FAVORITES);
+      showMessage("success", MESSAGE_KEYS.ADDED_TO_FAVORITES);
     } catch (error) {
-      console.error(error);
-      showToast("error", ERROR_KEYS.UNKNOWN_ERROR);
+      showApiError(error);
     }
   };
 
   const handleAddFeatured = async () => {
     try {
       await addFeatured(highlighted).unwrap();
-      showToast("success", MESSAGE_KEYS.ADDED_TO_FEATURED);
+      showMessage("success", MESSAGE_KEYS.ADDED_TO_FEATURED);
     } catch (error) {
-      console.error(error);
-      showToast("error", ERROR_KEYS.UNKNOWN_ERROR);
+      showApiError(error);
     }
   };
 
@@ -175,10 +174,10 @@ const BibleChapterToolbox: React.FC<Props> = ({
         profileEmail: user.email,
         verseId: lastHighlighted,
       }).unwrap();
-      showToast("success", MESSAGE_KEYS.READING_PROGRESS_SAVED);
+      showMessage("success", MESSAGE_KEYS.READING_PROGRESS_SAVED);
     } catch (error) {
       console.error(error);
-      showToast("error", ERROR_KEYS.UNKNOWN_ERROR);
+      showApiError(error);
     }
   };
 
@@ -276,30 +275,30 @@ const BibleChapterToolbox: React.FC<Props> = ({
                     user.profile.roles,
                     Permission.MANAGE_FEATURED,
                   ) && (
-                    <Pressable
-                      style={[
-                        styles.btn,
-                        { backgroundColor: theme.background },
-                      ]}
-                      onPress={handleAddFeatured}
-                    >
-                      <ThemedText>✨ {t("toolbox.addToFeatured")}</ThemedText>
-                    </Pressable>
-                  )}
+                      <Pressable
+                        style={[
+                          styles.btn,
+                          { backgroundColor: theme.background },
+                        ]}
+                        onPress={handleAddFeatured}
+                      >
+                        <ThemedText>✨ {t("toolbox.addToFeatured")}</ThemedText>
+                      </Pressable>
+                    )}
                   {hasPermission(
                     user.profile.roles,
                     Permission.CREATE_GLOSSARY_TERM,
                   ) && (
-                    <Pressable
-                      style={[
-                        styles.btn,
-                        { backgroundColor: theme.background },
-                      ]}
-                      onPress={() => setGlossaryOpen(true)}
-                    >
-                      <ThemedText>📖 {t("toolbox.addToGlossary")}</ThemedText>
-                    </Pressable>
-                  )}
+                      <Pressable
+                        style={[
+                          styles.btn,
+                          { backgroundColor: theme.background },
+                        ]}
+                        onPress={() => setGlossaryOpen(true)}
+                      >
+                        <ThemedText>📖 {t("toolbox.addToGlossary")}</ThemedText>
+                      </Pressable>
+                    )}
                 </>
               )}
 

@@ -49,8 +49,8 @@ const ChapterToolbox = () => {
   const [addFeatured] = useAddToFeaturedMutation();
 
   const [isGlossaryModalOpen, setIsGlossaryModalOpen] = useState(false);
-  const [isClient, setIsClient] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
   function handleCloseGlossaryModal() {
     setIsGlossaryModalOpen(false);

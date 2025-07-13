@@ -6,6 +6,7 @@ import {
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
 import { Mutex } from "async-mutex";
+import { isNetworkError } from "../utils/isNetworkError";
 
 // To prevent multiple refreshes
 const mutex = new Mutex();
@@ -21,6 +22,7 @@ export interface Options {
       refreshToken: string;
     };
   }) => void;
+  onError?: (type: "network" | "unauthorized" | "unknown", error?: unknown) => void;
 }
 
 interface TokenResponse {
@@ -69,6 +71,13 @@ export const createBaseQueryWithReauth = (
     }
 
     let result = await rawBaseQuery(args, api, extraOptions);
+
+    if (isNetworkError(result.error)) {
+      console.warn("🚫 No internet connection");
+
+      options?.onError?.("network", result.error);
+      return result;
+    }
 
     // Reauth flow
     if (

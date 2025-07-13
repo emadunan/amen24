@@ -1,5 +1,7 @@
 export const ERROR_KEYS = {
   UNKNOWN_ERROR: "error:unknownError",
+  NO_INTERNET: "error:noInternet",
+  NO_INTERNET_CONNECTION: "error:noInternetConnection",
   EMAIL_NOT_FOUND: "error:emailNotFound",
   USER_NOT_FOUND: "error:userNotFound",
   PROFILE_NOT_FOUND: "error:profileNotFound",

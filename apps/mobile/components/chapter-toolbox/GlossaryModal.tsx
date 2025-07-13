@@ -16,10 +16,10 @@ import { Colors } from "@/constants";
 import { Lang, BookKey, sanitizeWord, ERROR_KEYS } from "@amen24/shared";
 import GlossaryVerse from "./GlossaryVerse";
 import { useAddTermMutation } from "@/store/apis/glossaryApi";
-import { showToast } from "@/lib/toast";
 import { ThemedView } from "../ui/ThemedView";
 import { ThemedText } from "../ui/ThemedText";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useFeedback } from "@/hooks/useFeedback";
 
 type Props = {
   verseId: number;
@@ -42,6 +42,8 @@ export default function GlossaryModal({
     glossaryReducer,
     initialState,
   );
+
+  const { showMessage, showError, showApiError } = useFeedback();
   const [handleAddTerm] = useAddTermMutation();
   const db = useSQLiteContext();
   const colorScheme = useColorScheme();
@@ -102,7 +104,7 @@ export default function GlossaryModal({
       ([lang]) => lang !== "na",
     )) {
       if (words.length < 1) {
-        showToast("error", ERROR_KEYS.GLOSSARY_MISSING_TERM);
+        showError(ERROR_KEYS.GLOSSARY_MISSING_TERM);
         return;
       }
 
@@ -123,11 +125,11 @@ export default function GlossaryModal({
       const result = await handleAddTerm(payload).unwrap();
       console.log(result);
 
-      showToast("success", result.message);
+      showMessage("success", result.message);
       handleClearTerm();
       onClose();
     } catch (error) {
-      showToast("error", error as string);
+      showApiError(error);
     }
   };
 

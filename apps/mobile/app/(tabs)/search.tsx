@@ -4,18 +4,23 @@ import {
   Keyboard,
   Pressable,
   StyleSheet,
+  TextInput,
 } from "react-native";
-import { ThemedView } from "@/components/ui/ThemedView";
-import { Feather, Ionicons } from "@expo/vector-icons";
-import { useSQLiteContext } from "expo-sqlite";
 import { useRef, useState } from "react";
+import { useSQLiteContext } from "expo-sqlite";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { VerseWithMeta } from "@/interfaces/verse";
-import VerseSearchResult from "@/components/search/VerseSearchResult";
-import { ThemedTextInput } from "@/components/ui/ThemedTextInput";
+
+import { ThemedView } from "@/components/ui/ThemedView";
+import { ThemedText } from "@/components/ui/ThemedText";
 import { Colors } from "@/constants";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { ThemedText } from "@/components/ui/ThemedText";
+import VerseSearchResult from "@/components/search/VerseSearchResult";
+import BookDropdown from "@/components/search/BookDropdown";
+import LoadingIndicator from "@/components/ui/LoadingIndicator";
+import { useFeedback } from "@/hooks/useFeedback";
+
+import { VerseWithMeta } from "@/interfaces/verse";
 import { buildVerseSearchQuery } from "@/db/queries";
 import {
   Lang,
@@ -23,14 +28,10 @@ import {
   MESSAGE_KEYS,
   normalizeArText,
   removeArDiacritics,
-  removeNaDiacritics,
   replaceWaslaAlef,
   categoryList,
   formatNumber,
 } from "@amen24/shared";
-import { showToast } from "@/lib/toast";
-import BookDropdown from "@/components/search/BookDropdown";
-import LoadingIndicator from "@/components/ui/LoadingIndicator";
 
 function detectLanguage(text: string): "ar" | "en" {
   return /[\u0600-\u06FF]/.test(text) ? "ar" : "en";
@@ -39,15 +40,19 @@ function detectLanguage(text: string): "ar" | "en" {
 export default function SearchScreen() {
   const db = useSQLiteContext();
   const { i18n, t } = useTranslation();
+  const { showMessage } = useFeedback();
   const [verses, setVerses] = useState<VerseWithMeta[]>([]);
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
   const [queryLang, setQuerylang] = useState(i18n.language);
   const [loading, setLoading] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
-  const [selectedBooks, setSelectedBooks] = useState<string[]>(
-    Object.values(BookKey),
-  );
+  const [selectedBooks, setSelectedBooks] = useState<string[]>(Object.values(BookKey));
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const lastQueryRef = useRef<string>("");
+
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
 
   const isWholeBibleSelected =
     selectedBooks.length === Object.values(BookKey).length;
@@ -56,138 +61,124 @@ export default function SearchScreen() {
     categoryList[category]?.every((book) => selectedBooks.includes(book));
 
   const toggleBookSelection = (book: string) => {
-    if (book === "WholeBible") {
-      setSelectedBooks(isWholeBibleSelected ? [] : [...Object.values(BookKey)]);
-      return;
-    }
-
     const selectedSet = new Set(selectedBooks);
 
-    if (Object.values(BookKey).includes(book as BookKey)) {
-      // Toggle single book selection
-      if (selectedSet.has(book)) {
-        selectedSet.delete(book);
-      } else {
-        selectedSet.add(book);
-      }
+    if (book === "WholeBible") {
+      setSelectedBooks(isWholeBibleSelected ? [] : [...Object.values(BookKey)]);
+    } else if (Object.values(BookKey).includes(book as BookKey)) {
+      selectedSet.has(book) ? selectedSet.delete(book) : selectedSet.add(book);
+      setSelectedBooks(Array.from(selectedSet));
     } else if (categoryList[book]) {
-      // Toggle category selection
       const allBooksInCategory = new Set(categoryList[book]);
       const allSelected = categoryList[book].every((b) => selectedSet.has(b));
-
-      if (allSelected) {
-        allBooksInCategory.forEach((b) => selectedSet.delete(b));
-      } else {
-        allBooksInCategory.forEach((b) => selectedSet.add(b));
-      }
+      allSelected
+        ? allBooksInCategory.forEach((b) => selectedSet.delete(b))
+        : allBooksInCategory.forEach((b) => selectedSet.add(b));
+      setSelectedBooks(Array.from(selectedSet));
     }
-
-    setSelectedBooks(Array.from(selectedSet));
   };
 
-  const lastQueryRef = useRef<string>("");
-
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? "light"];
-
-  function handleQuery(inputText: string) {
-    setQuery(inputText);
-  }
+  const handleQuery = (text: string) => setQuery(text);
 
   async function handleSearch() {
     setShowDropdown(false);
 
     if (!query.trim() || query.trim().length < 3) {
-      showToast("info", MESSAGE_KEYS.SEARCH_KEYWORD_TOO_SHORT);
+      showMessage("info", MESSAGE_KEYS.SEARCH_KEYWORD_TOO_SHORT);
       return;
     }
 
     Keyboard.dismiss();
-
-    let text = query;
-    let textNormalized = query;
-
     setLoading(true);
     setSearchPerformed(true);
     setVerses([]);
 
-    const language = detectLanguage(query);
-    setQuerylang(language);
+    let text = query;
+    let normalized = query;
 
-    if (language === Lang.ARABIC) {
+    const lang = detectLanguage(query);
+    setQuerylang(lang);
+
+    if (lang === Lang.ARABIC) {
       text = replaceWaslaAlef(text);
       text = removeArDiacritics(text);
-      textNormalized = normalizeArText(text);
+      normalized = normalizeArText(text);
     }
 
     lastQueryRef.current = text ?? "";
 
     try {
       const { sql, params } = buildVerseSearchQuery({
-        lang: language,
-        query: textNormalized ?? "",
+        lang,
+        query: normalized ?? "",
         selectedBooks,
       });
 
-      const result = await db.getAllAsync<VerseWithMeta>(sql, params);
-      setVerses(result);
-    } catch (error) {
-      console.error("Search error:", error);
+      const results = await db.getAllAsync<VerseWithMeta>(sql, params);
+      setVerses(results);
+    } catch (err) {
+      console.error("Search error:", err);
     } finally {
       setLoading(false);
     }
   }
 
-  function handleSearchReset() {
+  const handleSearchReset = () => {
     setQuery("");
     setShowDropdown(false);
     setSelectedBooks(Object.values(BookKey));
     setSearchPerformed(false);
     setVerses([]);
-  }
+  };
 
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={[styles.searchContainer, { backgroundColor: theme.secondary }]}>
-        <ThemedView style={[styles.searchGroup, { backgroundColor: theme.secondary }]}>
+        <ThemedView style={[styles.searchGroupWrapper, { borderColor: theme.primary }]}>
           <Pressable
-            style={styles.filterBtn}
+            style={styles.inlineBtn}
             onPress={() => setShowDropdown((prev) => !prev)}
           >
             <Feather
               name="filter"
-              size={24}
-              color={Colors[colorScheme ?? "light"].primary}
+              size={20}
+              color={theme.primary}
               style={I18nManager.isRTL && styles.flipIcon}
             />
           </Pressable>
-          <ThemedTextInput
-            style={[styles.searchInput, { borderColor: theme.primary }]}
+
+          <TextInput
+            style={[styles.searchInput, { backgroundColor: theme.background }]}
             value={query}
             onChangeText={handleQuery}
+            placeholder={t("searchEngine.inviteMessage")}
+            placeholderTextColor={theme.text}
           />
+
           <Pressable
-            style={[styles.searchBtn, { backgroundColor: theme.text }]}
+            style={[styles.inlineBtn, { backgroundColor: theme.primary }]}
             onPress={handleSearch}
           >
             <Feather
               name="search"
-              size={32}
-              color={Colors[colorScheme ?? "light"].background}
+              size={20}
+              color={theme.background}
               style={I18nManager.isRTL && styles.flipIcon}
             />
           </Pressable>
         </ThemedView>
+
         {verses.length > 0 && (
-          <ThemedView
-            style={[styles.searchReport, { backgroundColor: theme.secondary }]}
-          >
+          <ThemedView style={[styles.searchReport, { backgroundColor: theme.secondary }]}>
             <ThemedText>
               {t("searchEngine.resultsCount")}:{" "}
               {formatNumber(verses.length, i18n.language as Lang)}
             </ThemedText>
-            <Pressable onPress={handleSearchReset} style={[styles.resetBtn, { backgroundColor: theme.background, borderColor: theme.primary }]}>
-              <Ionicons name="sync-sharp" size={24} color={theme.text} />
+            <Pressable
+              onPress={handleSearchReset}
+              style={[styles.resetBtn, { backgroundColor: theme.background, borderColor: theme.primary }]}
+            >
+              <Ionicons name="sync-sharp" size={20} color={theme.text} />
               <ThemedText>{t("searchEngine.resetSearch")}</ThemedText>
             </Pressable>
           </ThemedView>
@@ -201,6 +192,7 @@ export default function SearchScreen() {
           isCategorySelected={isCategorySelected}
         />
       )}
+
       {loading ? (
         <LoadingIndicator />
       ) : searchPerformed ? (
@@ -232,54 +224,41 @@ export default function SearchScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  searchContainer: {
-    padding: 16,
-  },
-  searchGroup: {
+  container: { flex: 1 },
+  searchContainer: { padding: 16 },
+  searchGroupWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    paddingBottom: 12
+    borderRadius: 2,
+    borderWidth: 1,
+    overflow: "hidden",
+    marginBottom: 12,
+  },
+  inlineBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  searchInput: {
+    flex: 1,
+    paddingHorizontal: 12,
+    fontSize: 14,
+    textAlign: I18nManager.isRTL ? "right" : "left",
   },
   searchReport: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-  searchInput: {
-    flex: 1,
-    paddingHorizontal: 12,
-    borderRadius: 2,
-    borderWidth: 1,
-    textAlign: "center",
-  },
-  filterBtn: {
-    position: "absolute",
-    top: 10,
-    left: 10,
-    zIndex: 2,
-  },
-  searchBtn: {
-    position: "absolute",
-    top: 3,
-    right: 3,
-    borderRadius: 2,
-    padding: 2,
-  },
   resetBtn: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 2,
-    gap: 8
-  },
-  flipIcon: {
-    transform: [{ scaleX: -1 }],
+    gap: 8,
   },
   versesList: {
     paddingHorizontal: 16,
@@ -289,5 +268,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     lineHeight: 48,
+  },
+  flipIcon: {
+    transform: [{ scaleX: -1 }],
   },
 });

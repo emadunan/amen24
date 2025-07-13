@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { I18nManager, Platform, StyleSheet } from "react-native";
 import { HapticTab } from "@/components/ui/HapticTab";
 import TabBarBackground from "@/components/ui/TabBarBackground";
@@ -10,11 +10,22 @@ import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "@/constants";
 import { Ionicons } from "@expo/vector-icons";
 import BackBtn from "@/components/ui/BackBtn";
+import { useDispatch } from "react-redux";
+import { setConnectionStatus } from "@/store/slices/networkSlice";
+import NetInfo from "@react-native-community/netinfo";
 
 export default function TabLayout() {
   const { t } = useTranslation();
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      dispatch(setConnectionStatus(state.isConnected));
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <Tabs

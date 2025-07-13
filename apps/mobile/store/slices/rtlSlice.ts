@@ -11,8 +11,8 @@ const initialState: RtlState = {
   isRtl: false,
 };
 
-export const RtlSlice = createSlice({
-  name: "Rtl",
+export const rtlSlice = createSlice({
+  name: "rtl",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
@@ -25,9 +25,9 @@ export const RtlSlice = createSlice({
   },
 });
 
-export const { toggleRtl, setRtl } = RtlSlice.actions;
+export const { toggleRtl, setRtl } = rtlSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectIsRtl = (state: RootState) => state.rtl.isRtl;
 
-export default RtlSlice.reducer;
+export default rtlSlice.reducer;

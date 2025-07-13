@@ -20,6 +20,11 @@ import { Colors } from "@/constants";
 import StoreProvider from "@/providers/StoreProvider";
 import AppLogo from "@/components/app-header/AppLogo";
 import { ThemedView } from "@/components/ui/ThemedView";
+import NetworkIndicator from "@/components/ui/NetworkIndicator";
+import Toast from "react-native-toast-message";
+import { toastConfig } from "@/lib/toast";
+import { View } from "react-native";
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -60,6 +65,7 @@ export default function RootLayout() {
             >
               <ThemedView style={{ flex: 1 }}>
                 <AppLogo />
+                <NetworkIndicator />
                 <Stack>
                   <Stack.Screen
                     name="(tabs)"
@@ -70,6 +76,20 @@ export default function RootLayout() {
               </ThemedView>
               <StatusBar style="auto" />
             </ThemeProvider>
+            <View
+              pointerEvents="box-none"
+              style={{
+                position: "absolute",
+                top: 24,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: 99999,
+                elevation: 99999,
+              }}
+            >
+              <Toast config={toastConfig} />
+            </View>
           </SQLiteProvider>
         </I18nextProvider>
       </StoreProvider>

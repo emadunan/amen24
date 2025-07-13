@@ -4,6 +4,8 @@ import { createFeaturedApi } from "@amen24/store";
 import * as SecureStore from "expo-secure-store";
 import { getStore } from "../storeRef";
 import { authApi } from "./authApi";
+import { showToast } from "@/lib/toast";
+import { ERROR_KEYS } from "@amen24/shared";
 
 if (!apiUrl) throw new Error("Api url must be defined!");
 
@@ -29,7 +31,12 @@ export const featuredApi = createFeaturedApi(apiUrl, {
         // Optionally redirect to login screen or show alert
         break;
     }
-  }
+  },
+  onError: (type) => {
+    if (type === "network") {
+      showToast("error", ERROR_KEYS.NO_INTERNET_CONNECTION);
+    }
+  },
 });
 
 export const {
