@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { ThemedText } from "@/components/ui/ThemedText";
 import { useFeedback } from "@/hooks/useFeedback";
+import OfflineFallbackText from "@/components/ui/OfflineFallbackText";
 
 const Favorites = () => {
   const { showError } = useFeedback();
@@ -32,7 +33,7 @@ const Favorites = () => {
   if (isLoading) return <LoadingIndicator />
 
   if (!isLoading && (!favorites || favorites.length === 0)) {
-    return <ThemedText>No favorites found or offline.</ThemedText>;
+    return <OfflineFallbackText />;
   }
 
   return (

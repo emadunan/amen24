@@ -1,5 +1,6 @@
 {
   "unknownError": "An unexpected error occurred. Please try again later.",
+  "noDataOrOffline": "No data available. Please check your internet connection.",
   "noInternet": "No internet connection. Some features may not work.",
   "noInternetConnection": "You're offline. Please check your internet connection.",
   "failedToFetch": "Failed to fetch data",

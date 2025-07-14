@@ -1,11 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LibraryBookCard from "./LibraryBookCard";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { useGetLibraryBooksQuery } from "@/store/apis/libraryApi";
 import { ThemedView } from "../ui/ThemedView";
+import { useFeedback } from "@/hooks/useFeedback";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { ERROR_KEYS } from "@amen24/shared";
+import LoadingIndicator from "../ui/LoadingIndicator";
+import { ThemedText } from "../ui/ThemedText";
+import OfflineFallbackText from "../ui/OfflineFallbackText";
 
 const Library: React.FC = () => {
-  const { data: books } = useGetLibraryBooksQuery();
+  const { showError } = useFeedback();
+
+  const isConnected = useSelector((state: RootState) => state.network.isConnected);
+
+  useEffect(() => {
+    if (!isConnected) {
+      showError(ERROR_KEYS.NO_INTERNET_CONNECTION);
+    }
+  }, [isConnected]);
+
+  const { data: books, isLoading } = useGetLibraryBooksQuery(undefined, {
+    skip: !isConnected,
+    refetchOnReconnect: true,
+  });
+
+  if (isLoading) return <LoadingIndicator />
+
+  if (!isLoading && (!books || books.length === 0)) {
+    return <OfflineFallbackText />;
+  }
 
   return (
     <ThemedView style={styles.container}>

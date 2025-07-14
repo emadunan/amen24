@@ -4,7 +4,6 @@ import { createAuthApi } from "@amen24/store";
 import * as SecureStore from "expo-secure-store";
 import { getStore } from "../storeRef";
 import { showToast } from "@/lib/toast";
-import i18n from "@/i18n/i18n";
 import { ERROR_KEYS } from "@amen24/shared";
 
 if (!apiUrl) throw new Error("Api url must be defined!");
