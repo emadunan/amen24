@@ -148,10 +148,9 @@ export default function SearchScreen() {
           </Pressable>
 
           <TextInput
-            style={[styles.searchInput, { backgroundColor: theme.background }]}
+            style={[styles.searchInput, { color: theme.text, backgroundColor: theme.background }]}
             value={query}
             onChangeText={handleQuery}
-            placeholder={t("searchEngine.inviteMessage")}
             placeholderTextColor={theme.text}
           />
 
@@ -243,7 +242,6 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     paddingHorizontal: 12,
-    fontSize: 14,
     textAlign: I18nManager.isRTL ? "right" : "left",
   },
   searchReport: {

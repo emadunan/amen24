@@ -21,10 +21,8 @@ const UserMenu = () => {
   const [open, setOpen] = useState(false);
   const colorScheme = useColorScheme() ?? "light";
   const theme = Colors[colorScheme];
-  const isRTL = I18nManager.isRTL;
   const dispatch = useDispatch();
   const { data: user } = useGetMeQuery();
-  const router = useRouter();
   const { t } = useTranslation();
 
   const firstLetter = user?.displayName?.[0]?.toUpperCase() ?? "?";
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
   item: {
     paddingVertical: 8,
     fontSize: 16,
-    textAlign: I18nManager.isRTL ? "left" : "right",
+    textAlign: "left",
   },
   divider: {
     height: 1,

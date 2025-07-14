@@ -59,7 +59,7 @@ const SettingsScreen = () => {
         </ThemedText>
       </ThemedView>
 
-      <Pressable
+      {/* <Pressable
         style={[styles.linkBtn, { borderColor: theme.primary }]}
         onPress={() => router.push("/")}
       >
@@ -72,7 +72,7 @@ const SettingsScreen = () => {
         <ThemedText style={[styles.linkText, { color: theme.primary }]}>
           {t("signin.resetPassword")}
         </ThemedText>
-      </Pressable>
+      </Pressable> */}
 
       <Pressable
         style={[styles.deleteBtn, { backgroundColor: theme.danger }]}
