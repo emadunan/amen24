@@ -1,21 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ThemedView } from "@/components/ui/ThemedView";
 import { useGetUserFavoritesQuery } from "@/store/apis/favoriteApi";
 import VerseFavorite from "@/components/favorite/VerseFavorite";
 import { useTranslation } from "react-i18next";
-import { Lang } from "@amen24/shared";
+import { ERROR_KEYS, Lang } from "@amen24/shared";
 import { FlatList, StyleSheet } from "react-native";
 import LoadingIndicator from "@/components/ui/LoadingIndicator";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { ThemedText } from "@/components/ui/ThemedText";
+import { useFeedback } from "@/hooks/useFeedback";
 
 const Favorites = () => {
+  const { showError } = useFeedback();
   const { i18n } = useTranslation();
   const lang = i18n.language as Lang;
 
+  const isConnected = useSelector((state: RootState) => state.network.isConnected);
+
+  useEffect(() => {
+    if (!isConnected) {
+      showError(ERROR_KEYS.NO_INTERNET_CONNECTION);
+    }
+  }, [isConnected]);
+
   const { data: favorites, isLoading } = useGetUserFavoritesQuery(lang, {
+    skip: !isConnected,
     refetchOnReconnect: true,
   });
 
   if (isLoading) return <LoadingIndicator />
+
+  if (!isLoading && (!favorites || favorites.length === 0)) {
+    return <ThemedText>No favorites found or offline.</ThemedText>;
+  }
 
   return (
     <ThemedView style={styles.container}>
