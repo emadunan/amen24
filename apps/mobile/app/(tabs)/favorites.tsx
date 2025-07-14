@@ -40,6 +40,7 @@ const Favorites = () => {
     <ThemedView style={styles.container}>
       <FlatList
         data={favorites}
+        contentContainerStyle={styles.listContent}
         renderItem={({ item }) => (
           <VerseFavorite key={item.id} favorite={item} lang={lang} />
         )}
@@ -51,6 +52,12 @@ const Favorites = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  listContent: {
+    paddingHorizontal: 16,
+    paddingTop: 32,
+    paddingBottom: 64,
+    gap: 16,
   },
 });
 

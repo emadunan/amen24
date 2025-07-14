@@ -73,8 +73,7 @@ const GlossaryFilterForm: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 16,
-    marginBottom: 16,
+    margin: 16,
     gap: 12,
   },
   input: {

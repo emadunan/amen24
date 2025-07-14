@@ -69,13 +69,32 @@ const BibleChapter: FC = () => {
 
   return (
     <ThemedView style={styles.container}>
-      {/* Language Toggle Button */}
-      <Pressable
-        style={[styles.languageToggle]}
-        onPress={() => setTranslationMenuVisible((prev) => !prev)}
-      >
-        <FontAwesome5 name="language" size={24} color={theme.text} />
-      </Pressable>
+      <ThemedView style={[styles.displaySettings, { borderColor: theme.secondary }]}>
+        <View style={styles.leftControls}>
+          {!translationLang && (
+            <Pressable
+              style={[{ backgroundColor: theme.background }]}
+              onPress={() => setLayoutVisible((prev) => !prev)}
+            >
+              {textJustify ? (
+                <Feather name="align-justify" size={23} color={theme.text} />
+              ) : I18nManager.isRTL ? (
+                <Feather name="align-right" size={23} color={theme.text} />
+              ) : (
+                <Feather name="align-left" size={23} color={theme.text} />
+              )}
+            </Pressable>
+          )}
+        </View>
+
+        <Pressable
+          style={[{ backgroundColor: theme.background }]}
+          onPress={() => setTranslationMenuVisible((prev) => !prev)}
+        >
+          <FontAwesome5 name="language" size={24} color={theme.text} />
+        </Pressable>
+      </ThemedView>
+
 
       {/* Toggle Menu */}
       {translationMenuVisible && (
@@ -139,20 +158,7 @@ const BibleChapter: FC = () => {
         </View>
       )}
 
-      {!translationLang && (
-        <Pressable
-          style={[styles.layoutToggle]}
-          onPress={() => setLayoutVisible((prev) => !prev)}
-        >
-          {textJustify ? (
-            <Feather name="align-justify" size={20} color={theme.text} />
-          ) : I18nManager.isRTL ? (
-            <Feather name="align-right" size={20} color={theme.text} />
-          ) : (
-            <Feather name="align-left" size={20} color={theme.text} />
-          )}
-        </Pressable>
-      )}
+
 
       {layoutMenuVisible && (
         <View
@@ -160,6 +166,7 @@ const BibleChapter: FC = () => {
             styles.layoutMenu,
             {
               backgroundColor: theme.background,
+              borderColor: theme.secondary,
             },
           ]}
         >
@@ -209,28 +216,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   chapterContainer: {
-    marginVertical: 32,
-    marginHorizontal: 16,
     display: "flex",
     flexDirection: "row",
     gap: 16,
   },
-  languageToggle: {
-    position: "absolute",
-    top: 0,
-    right: 4,
-    zIndex: 100,
+  displaySettings: {
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
   },
-  layoutToggle: {
-    position: "absolute",
-    top: 0,
-    left: 4,
-    zIndex: 100,
+  leftControls: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    flex: 1, // this pushes the language icon to the end
   },
   menu: {
     position: "absolute",
-    top: 24,
-    right: 4,
+    top: 22,
+    right: 16,
     paddingVertical: 8,
     paddingHorizontal: 12,
     zIndex: 101,
@@ -243,8 +250,9 @@ const styles = StyleSheet.create({
   layoutMenu: {
     position: "absolute",
     top: 24,
-    left: 4,
+    left: 16,
     zIndex: 101,
+    borderWidth: 1,
   },
   menuItem: {
     paddingVertical: 6,

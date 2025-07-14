@@ -105,8 +105,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderLeftWidth: 4,
     padding: 12,
-    marginVertical: 8,
-    marginHorizontal: 16,
     borderRadius: 2,
   },
   verseText: {

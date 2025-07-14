@@ -43,6 +43,7 @@ const Featured = () => {
     <ThemedView style={styles.container}>
       <FlatList
         data={featured}
+        contentContainerStyle={styles.listContent}
         renderItem={({ item }) => (
           <VerseFeatured key={item.id} featured={item} lang={lang} />
         )}
@@ -54,7 +55,13 @@ const Featured = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
+  listContent: {
+    paddingHorizontal: 16,
+    paddingTop: 32,
+    paddingBottom: 64,
+    gap: 16,
+  },
 });
 
 export default Featured;

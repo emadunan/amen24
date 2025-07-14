@@ -197,9 +197,9 @@ export default function SearchScreen() {
       ) : searchPerformed ? (
         verses.length > 0 ? (
           <FlatList
-            style={styles.versesList}
             data={verses}
             keyExtractor={(item) => item.id.toString()}
+            contentContainerStyle={styles.listContent}
             renderItem={({ item }) => (
               <VerseSearchResult
                 verse={item}
@@ -258,9 +258,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     gap: 8,
   },
-  versesList: {
-    paddingHorizontal: 16,
-  },
   feedbackText: {
     margin: 16,
     fontSize: 18,
@@ -269,5 +266,10 @@ const styles = StyleSheet.create({
   },
   flipIcon: {
     transform: [{ scaleX: -1 }],
+  },
+  listContent: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 64,
   },
 });

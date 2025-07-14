@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 2,
     padding: 12,
-    marginBottom: 12,
   },
   term: {
     fontSize: 20,

@@ -1,7 +1,7 @@
 {
   "name": "@amen24/mobile",
   "author": "emadunan",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
@@ -24,6 +24,7 @@
     "@amen24/store": "file:../../packages/store",
     "@babel/runtime": "^7.26.9",
     "@expo/vector-icons": "^14.0.2",
+    "@react-native-community/netinfo": "11.4.1",
     "@react-native-picker/picker": "2.11.1",
     "@react-native/virtualized-lists": "^0.80.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
@@ -61,7 +62,6 @@
     "react-native": "0.79.5",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-markdown-display": "^7.0.2",
-    "react-native-marked": "^7.0.2",
     "react-native-modal": "^14.0.0-rc.1",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
@@ -71,8 +71,7 @@
     "react-native-webview": "13.13.5",
     "react-redux": "^9.2.0",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7",
-    "@react-native-community/netinfo": "11.4.1"
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

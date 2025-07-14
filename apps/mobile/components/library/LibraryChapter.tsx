@@ -5,7 +5,6 @@ import { StyleSheet, Text, useColorScheme } from "react-native";
 import { Colors } from "@/constants";
 import { useGetLibraryBookQuery } from "@/store/apis/libraryApi";
 import { ThemedView } from "../ui/ThemedView";
-import Marked from "react-native-marked";
 import { MarkdownContent } from "../ui/MarkdownContent";
 
 type SearchParams = {
@@ -45,7 +44,6 @@ const LibraryChapter: FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
   chapterTitle: {
     marginTop: 12,

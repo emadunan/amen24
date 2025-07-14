@@ -140,7 +140,7 @@ const BibleChapterText: FC<Props> = ({
 
   return (
     <>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <ThemedView style={styles.translationsContainer}>
           {isVerseWithTranslationArray(verses) ? (
             <ChapterTextWithTranslation
@@ -178,6 +178,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 32,
   },
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 64,
+  }
 });
 
 export default BibleChapterText;

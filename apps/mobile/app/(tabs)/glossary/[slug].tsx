@@ -20,6 +20,17 @@ const GlossaryDetails = () => {
   const { data: term, isLoading } = useGetOneTermQuery(slug);
 
   useEffect(() => {
+    // Set a placeholder title early
+    navigation.setOptions({
+      headerTitle: () => <ThemedText type="title">...</ThemedText>,
+      headerRight: () => null,
+      headerStyle: {
+        backgroundColor: theme.secondary,
+      },
+    });
+  }, [theme.secondary]);
+
+  useEffect(() => {
     if (!term) return;
 
     const translation = term.translations.find((t) => t.lang === i18n.language);
@@ -51,6 +62,5 @@ export default GlossaryDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
 });

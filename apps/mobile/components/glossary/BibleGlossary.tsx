@@ -12,6 +12,7 @@ import { ThemedView } from "../ui/ThemedView";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useFeedback } from "@/hooks/useFeedback";
+import LoadingIndicator from "../ui/LoadingIndicator";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -73,15 +74,12 @@ const BibleGlossary = () => {
       />
 
       {isLoading ? (
-        <ActivityIndicator
-          size="large"
-          color={theme.primary}
-          style={styles.loader}
-        />
+        <LoadingIndicator />
       ) : (
         <FlatList
           data={data?.data || []}
           keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.listContent}
           renderItem={({ item }) => <BibleGlossaryItem bgItem={item} />}
           ListFooterComponent={() =>
             data ? (
@@ -105,9 +103,9 @@ export default BibleGlossary;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
-  loader: {
-    marginTop: 32,
-  },
+  listContent: {
+    paddingHorizontal: 16,
+    gap: 16
+  }
 });
