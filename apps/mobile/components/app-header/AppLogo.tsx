@@ -14,7 +14,7 @@ const AppLogo = () => {
   const router = useRouter();
 
   const handlePress = () => {
-    router.replace("/");
+    router.replace("/(tabs)/bible");
   };
 
   return (
