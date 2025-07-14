@@ -9,7 +9,7 @@ const OfflineFallbackText: React.FC = () => {
   const { t } = useTranslation();
 
   return <ThemedView style={styles.container}>
-    <ThemedText>{t(ERROR_KEYS.NO_DATA_OR_OFFLINE)}</ThemedText>
+    <ThemedText>{t(ERROR_KEYS.NO_DATA)}</ThemedText>
   </ThemedView>;
 }
 

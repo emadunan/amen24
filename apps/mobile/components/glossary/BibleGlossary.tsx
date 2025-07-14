@@ -12,8 +12,6 @@ import { ThemedView } from "../ui/ThemedView";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useFeedback } from "@/hooks/useFeedback";
-import { ThemedText } from "../ui/ThemedText";
-import OfflineFallbackText from "../ui/OfflineFallbackText";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -62,10 +60,6 @@ const BibleGlossary = () => {
       setPage(newPage);
     }
   };
-
-  if (!isLoading && (!data || data.data.length === 0)) {
-    return <OfflineFallbackText />;
-  }
 
   return (
     <ThemedView
