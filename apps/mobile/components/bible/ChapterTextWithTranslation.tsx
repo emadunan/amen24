@@ -84,8 +84,9 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
                 onPress={() => onHighlight(verse.id)}
                 style={[
                   styles.verseText,
-                  uiLang === Lang.ARABIC && styles.textAr,
-                  uiLang === Lang.ENGLISH && styles.textEn,
+                  renderLang === Lang.ARABIC && styles.textAr,
+                  renderLang === Lang.ENGLISH && styles.textEn,
+                  renderLang === Lang.HEBREW && styles.textHe,
                   highlighted.includes(verse.id) && {
                     backgroundColor: theme.highlight,
                   },
@@ -95,8 +96,10 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
                   style={[
                     styles.verseNum,
                     { color: theme.danger },
-                    uiLang === Lang.ARABIC && styles.textAr,
-                    uiLang === Lang.ENGLISH && styles.textEn,
+                    renderLang === Lang.ARABIC && styles.textAr,
+                    renderLang === Lang.ENGLISH && styles.textEn,
+                    renderLang === Lang.HEBREW && styles.textHe,
+                    renderLang === Lang.GREEK && styles.textEl,
                   ]}
                 >
                   {formatNumber(verse.num, renderLang as Lang)}
@@ -143,8 +146,14 @@ const styles = StyleSheet.create({
     lineHeight: 40,
   },
   textEn: {
-    lineHeight: 28,
+    lineHeight: 32,
   },
+  textHe: {
+    lineHeight: 34,
+  },
+  textEl: {
+    lineHeight: 32,
+  }
 });
 
 export default ChapterTextWithTranslation;
