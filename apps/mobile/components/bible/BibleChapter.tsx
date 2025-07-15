@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     position: "absolute",
-    top: 22,
+    top: 24,
     right: 16,
     paddingVertical: 8,
     paddingHorizontal: 12,

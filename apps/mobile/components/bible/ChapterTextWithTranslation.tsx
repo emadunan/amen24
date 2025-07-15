@@ -99,7 +99,7 @@ const ChapterTextWithTranslation: React.FC<Props> = ({
                     uiLang === Lang.ENGLISH && styles.textEn,
                   ]}
                 >
-                  {formatNumber(verse.num, translationLang as Lang)}
+                  {formatNumber(verse.num, renderLang as Lang)}
                   {"\u00A0"}
                 </ThemedText>
                 {verse.text2Diacritized}

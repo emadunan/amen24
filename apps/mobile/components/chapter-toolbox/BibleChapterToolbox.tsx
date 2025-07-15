@@ -196,12 +196,13 @@ const BibleChapterToolbox: React.FC<Props> = ({
         {...panResponder.panHandlers}
       >
         <ThemedView
-          style={[styles.toolbox, { backgroundColor: theme.secondary }]}
+          style={[styles.toolbox, { backgroundColor: theme.secondary, borderColor: theme.primary }]}
         >
           <View style={styles.toolboxHeader}>
             <MaterialIcons
               name="drag-indicator"
               size={24}
+              color={theme.primary}
               style={styles.dragIcon}
             />
             <ThemedText type="title" style={styles.title}>
@@ -266,7 +267,7 @@ const BibleChapterToolbox: React.FC<Props> = ({
                         </ThemedText>
                         <ThemedText
                           style={styles.progressRefText}
-                        >{`${t(`book:${progressBookKey}`)} ${progressChapterNum && formatNumber(progressChapterNum, i18n.language as Lang)}:${progressVerseNum && formatNumber(progressVerseNum, i18n.language as Lang)}`}</ThemedText>
+                        >{`${t(`book:${progressBookKey}`)} ${progressChapterNum && formatNumber(progressChapterNum, i18n.language as Lang)} : ${progressVerseNum && formatNumber(progressVerseNum, i18n.language as Lang)}`}</ThemedText>
                       </ThemedView>
                     </ThemedView>
                   </Pressable>
@@ -325,11 +326,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 2,
     borderWidth: 1,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 4,
+    // elevation: 5,
     width: TOOLBOX_WIDTH,
   },
   toolboxHeader: {

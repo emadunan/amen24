@@ -8,7 +8,6 @@ import { FlatList, StyleSheet } from "react-native";
 import LoadingIndicator from "@/components/ui/LoadingIndicator";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { ThemedText } from "@/components/ui/ThemedText";
 import { useFeedback } from "@/hooks/useFeedback";
 import OfflineFallbackText from "@/components/ui/OfflineFallbackText";
 
