@@ -57,7 +57,7 @@ export const HighlightProvider: React.FC<HighlightProviderProps> = ({ children, 
     const verseRef = `(${bookName} ${chapterStr} : ${firstVerseNum}${firstVerseNum !== lastVerseNum ? ` - ${lastVerseNum}` : ""})`;
 
     const baseUrl = `https://amen24.org/${language}`;
-    const passageUrl = `${baseUrl}/${bookKey}/${chapterNum}/${BookMap[bookKey].len}?v=${highlighted.join(",")}`;
+    const passageUrl = `${baseUrl}/bible/${bookKey}/${chapterNum}/${BookMap[bookKey].len}?v=${highlighted.join(",")}`;
 
     const formattedText = `${verseText}\n${verseRef}\n\n${t("main.readMore")}: ${passageUrl}`;
 

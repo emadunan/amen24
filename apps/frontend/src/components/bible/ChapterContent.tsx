@@ -102,7 +102,7 @@ const ChapterContent: FC<Props> = ({
     })`;
 
     const baseUrl = `https://amen24.org/${i18n.language}`;
-    const passageUrl = `${baseUrl}/${bookKey}/${chapterNum}/${BookMap[bookKey].len}?${queryParameters}`;
+    const passageUrl = `${baseUrl}/bible/${bookKey}/${chapterNum}/${BookMap[bookKey].len}?${queryParameters}`;
 
     const formattedText = `${verseString} ${verseRefString}\n\n${t("main.readMore")}: ${passageUrl}`;
 
