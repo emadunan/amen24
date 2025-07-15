@@ -69,6 +69,16 @@ const BibleChapter: FC = () => {
 
   return (
     <ThemedView style={styles.container}>
+      {/* Menus Backdrop */}
+      {(translationMenuVisible || layoutMenuVisible) && (
+        <Pressable
+          onPress={() => {
+            setTranslationMenuVisible(false);
+            setLayoutVisible(false);
+          }}
+          style={styles.backdrop}
+        />
+      )}
       <ThemedView style={[styles.displaySettings, { borderColor: theme.secondary }]}>
         <View style={styles.leftControls}>
           {!translationLang && (
@@ -157,8 +167,6 @@ const BibleChapter: FC = () => {
           )}
         </View>
       )}
-
-
 
       {layoutMenuVisible && (
         <View
@@ -257,5 +265,9 @@ const styles = StyleSheet.create({
   menuItem: {
     paddingVertical: 6,
     fontSize: 16,
+  }, backdrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "transparent",
+    zIndex: 100,
   },
 });

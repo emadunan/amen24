@@ -1,5 +1,5 @@
 import React from "react";
-import { I18nManager, StyleSheet, useColorScheme, View } from "react-native";
+import { StyleSheet, useColorScheme, View } from "react-native";
 import { Colors } from "@/constants";
 import { ThemedText } from "../ui/ThemedText";
 import { ThemedView } from "../ui/ThemedView";
