@@ -9,6 +9,7 @@ import ChapterTextWithTranslation from "./ChapterTextWithTranslation";
 import { Verse, VerseWithTranslation } from "@/interfaces/verse";
 import { type Verse as SharedVerse } from "@amen24/shared";
 import { ThemedView } from "../ui/ThemedView";
+import LoadingIndicator from "../ui/LoadingIndicator";
 
 export type BibleLang = "en" | "ar" | "na";
 
@@ -136,6 +137,10 @@ const BibleChapterText: FC<Props> = ({
 
   function handleHighlight(verseId: number) {
     toggleHighlight(verseId);
+  }
+
+  if (!verses || verses.length <= 0) {
+    return <LoadingIndicator />
   }
 
   return (

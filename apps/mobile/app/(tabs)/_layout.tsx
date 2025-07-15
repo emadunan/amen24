@@ -157,15 +157,6 @@ export default function TabLayout() {
           headerLeft: () => <BackBtn uri={"/bible"} />,
         }}
       />
-
-      <Tabs.Screen
-        name="locale"
-        options={{
-          href: null,
-          title: t("userMenu.favorite"),
-          headerLeft: () => <BackBtn uri={"/bible"} />,
-        }}
-      />
     </Tabs>
   );
 }

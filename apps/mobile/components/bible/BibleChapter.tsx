@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   chapterContainer: {
-    display: "flex",
+    flex: 1,
     flexDirection: "row",
     gap: 16,
   },

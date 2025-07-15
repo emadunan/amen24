@@ -1,5 +1,5 @@
 import { ThemedView } from "@/components/ui/ThemedView";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   I18nManager,
@@ -12,6 +12,7 @@ import { useNavigation } from "expo-router";
 import BackBtn from "@/components/ui/BackBtn";
 import RadioBtn from "@/components/ui/RadioBtn";
 import { Colors } from "@/constants";
+import { ThemedText } from "@/components/ui/ThemedText";
 
 const LocaleScreen = () => {
   const { t, i18n } = useTranslation();
@@ -20,9 +21,12 @@ const LocaleScreen = () => {
 
   const colorScheme = useColorScheme();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
-      title: t("main.locale"),
+      headerTitle: () => <ThemedView style={{ marginTop:44, marginBottom: 12 }}>
+        <ThemedText type="subtitle">{t("main.locale")}</ThemedText>
+      </ThemedView>,
+      headerLeft: () => <BackBtn style={{ marginTop:44, marginBottom: 12 }}/>,
       headerStyle: {
         backgroundColor: Colors[colorScheme ?? "light"].background,
       },
@@ -80,12 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  backBtn: {
-    position: "absolute",
-    top: 16,
-    left: 0,
-  },
+  }
 });
 
 export default LocaleScreen;
