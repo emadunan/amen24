@@ -32,7 +32,7 @@ const AudioPlayer: React.FC = () => {
   const dispatch = useDispatch();
 
   const isRTL = isRtl(i18n.language as Lang);
-  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?bible\/[A-Z]{3}\/\d+\/\d+$/.test(pathname);
+  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?bible\/(?:[1-3]?[A-Z]{2})\/\d+\/\d+$/.test(pathname);
 
   const { isOpen } = useSelector((state: RootState) => state.audioPlayer);
 

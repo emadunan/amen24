@@ -28,7 +28,7 @@ const BibleNavigator = () => {
   const { position, handleMouseDown, handleTouchStart, elementRef } =
     useDraggable(5, 5, isRTL, 12, headerRef);
 
-  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?bible\/[A-Z]{3}\/\d+\/\d+$/.test(pathname);
+  const isBookChapterPage = /^\/(?:[a-z]{2}\/)?bible\/(?:[1-3]?[A-Z]{2})\/\d+\/\d+$/.test(pathname);
 
   const [openBook, setOpenBook] = useState<BookKey | null>(null);
 
