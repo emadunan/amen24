@@ -70,21 +70,18 @@ function splitTextIntoChunks(text, maxBytes) {
 }
 
 function splitTextIntoChunks2(text, maxBytes) {
-  const MAX_SENTENCE_BYTES = 900;
+  const sentences = text.split(/(?<=\n|[.!؟])\s+/);
   const chunks = [];
+
   let currentChunk = '';
   let currentBytes = 0;
 
-  // Split into sentences using punctuation or newlines
-  const sentences = text.split(/(?<=\n|[.!؟])\s+/);
-
   for (let sentence of sentences) {
-    let sentenceBytes = Buffer.byteLength(sentence, 'utf8');
+    const sentenceBytes = Buffer.byteLength(sentence, 'utf8');
 
-    // 🚨 If the sentence is too large, split it by words
-    if (sentenceBytes > MAX_SENTENCE_BYTES) {
-      const words = sentence.split(/(?<=[،؛,;])\s+| +/); // Arabic & Latin punctuation
-
+    // Fallback: sentence too large to fit in one chunk, split by words
+    if (sentenceBytes > maxBytes) {
+      const words = sentence.split(/(?<=[،؛,;])\s+| +/); // Arabic/Latin punctuation or space
       let partial = '';
       let partialBytes = 0;
 
@@ -92,15 +89,8 @@ function splitTextIntoChunks2(text, maxBytes) {
         const wordWithSpace = word + ' ';
         const wordBytes = Buffer.byteLength(wordWithSpace, 'utf8');
 
-        if (wordBytes > MAX_SENTENCE_BYTES) {
-          console.warn(`⚠️ Skipping oversized word: "${word}" (${wordBytes} bytes)`);
-          continue;
-        }
-
-        if (partialBytes + wordBytes > MAX_SENTENCE_BYTES) {
-          if (partial.trim()) {
-            chunks.push(partial.trim());
-          }
+        if (partialBytes + wordBytes > maxBytes) {
+          if (partial.trim()) chunks.push(partial.trim());
           partial = wordWithSpace;
           partialBytes = wordBytes;
         } else {
@@ -109,18 +99,13 @@ function splitTextIntoChunks2(text, maxBytes) {
         }
       }
 
-      if (partial.trim()) {
-        chunks.push(partial.trim());
-      }
-
-      continue; // Skip normal sentence handling
+      if (partial.trim()) chunks.push(partial.trim());
+      continue; // Skip normal handling
     }
 
-    // 🧩 Add sentence to current chunk if fits
+    // Normal sentence fits in current chunk
     if (currentBytes + sentenceBytes > maxBytes) {
-      if (currentChunk.trim()) {
-        chunks.push(currentChunk.trim());
-      }
+      if (currentChunk.trim()) chunks.push(currentChunk.trim());
       currentChunk = sentence + ' ';
       currentBytes = sentenceBytes;
     } else {
@@ -129,9 +114,7 @@ function splitTextIntoChunks2(text, maxBytes) {
     }
   }
 
-  if (currentChunk.trim()) {
-    chunks.push(currentChunk.trim());
-  }
+  if (currentChunk.trim()) chunks.push(currentChunk.trim());
 
   return chunks;
 }
@@ -180,9 +163,9 @@ async function synthesizeChapter(title, text, index) {
 
 (async () => {
   for (const [index, match] of matches.entries()) {
-    const title = match[1];
-    const chapterText = match[2];
-    console.log(`\n🔊 Processing chapter: ${title}`);
-    await synthesizeChapter(title, chapterText.trim(), index);
-  }
+  const title = match[1];
+  const chapterText = match[2];
+  console.log(`\n🔊 Processing chapter: ${title}`);
+  await synthesizeChapter(title, chapterText.trim(), index);
+}
 })();
