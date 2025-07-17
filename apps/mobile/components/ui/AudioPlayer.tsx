@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, Pressable, useColorScheme, Dimensions, I18nManager } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
@@ -22,6 +22,29 @@ const AudioPlayer: React.FC<Props> = ({ bookId, bookKey, chapterNum }) => {
   const duration = status.duration ?? 0;
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? 'light'];
+
+  useEffect(() => {
+    if (status.didJustFinish) {
+      try {
+        player.pause(); // In case it's still playing
+        player.seekTo(0);
+      } catch (err) {
+        console.error("Reset after finish error:", err);
+      }
+    }
+  }, [status.didJustFinish]);
+
+  useEffect(() => {
+    // When props (route params) change, stop and reset previous audio
+    return () => {
+      try {
+        player.pause();
+        player.seekTo(0);
+      } catch (err) {
+        console.error("Audio cleanup on param change:", err);
+      }
+    };
+  }, [bookId, bookKey, chapterNum]);
 
   const handlePlayPause = () => {
     try {

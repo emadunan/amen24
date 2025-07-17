@@ -103,6 +103,7 @@ const BibleChapter: FC = () => {
         {/* CENTER: Audio Player (absolutely centered) */}
         <View style={[styles.audioCenter, { left: screenWidth / 2 - 39 }]}>
           <AudioPlayer
+            key={`${bookId}-${bookKey}-${chapterNum}`}
             bookId={bookId}
             bookKey={bookKey}
             chapterNum={chapterNum}
@@ -264,12 +265,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   audioCenter: {
-  position: "absolute",
-  top: 0,
-  bottom: 0,
-  justifyContent: "center",
-  alignItems: "center",
-},
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   menu: {
     position: "absolute",
     top: 32,
