@@ -3,12 +3,10 @@
 import { useRef, useState, useEffect } from "react";
 import styles from "./AudioPlayer.module.css";
 import {
-  FaPlay,
-  FaPause,
-  FaVolumeUp,
-  FaVolumeMute,
-  FaStepForward,
-  FaStepBackward,
+  FaRegPauseCircle,
+  FaRegPlayCircle,
+  FaForward,
+  FaBackward,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useDraggable } from "@amen24/ui";
@@ -41,7 +39,6 @@ const AudioPlayer: React.FC = () => {
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -74,7 +71,6 @@ const AudioPlayer: React.FC = () => {
       audio.removeEventListener("pause", onPause);
       audio.removeEventListener("ended", onEnded);
       setIsPlaying(false);
-      setIsMuted(false);
       setProgress(0);
     };
   }, [isOpen, bookKey, chapterNum]);
@@ -88,13 +84,6 @@ const AudioPlayer: React.FC = () => {
     } else {
       audio.pause();
     }
-  };
-
-  const toggleMute = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.muted = !audio.muted;
-    setIsMuted(audio.muted);
   };
 
   const skip = (seconds: number) => {
@@ -130,7 +119,7 @@ const AudioPlayer: React.FC = () => {
     return null;
 
   const audioFileName = `${String(BookMap[bookKey].id).padStart(2, "0")}_${bookKey}__${String(chapterNum).padStart(3, "0")}`;
-  const src = `/sound/chapters/${audioFileName}.mp3`;
+  const src = `https://amen24.org/sound/chapters/${audioFileName}.mp3`;
 
   return (
     <div
@@ -142,7 +131,7 @@ const AudioPlayer: React.FC = () => {
       style={{ left: position.x, top: position.y }}
     >
       <div className={styles.header} ref={headerRef}>
-        <RxDragHandleDots2 className={styles.dragIcon} />
+        <RxDragHandleDots2 size={24} color="var(--primary)" className={styles.dragIcon} />
         {`${t(`book:${bookKey}`)} ${formatNumber(+chapterNum, i18n.language as Lang)}` ||
           "Audio"}
         <CloseDraggableBtn absolute onClose={() => dispatch(close())} />
@@ -152,24 +141,17 @@ const AudioPlayer: React.FC = () => {
 
       <div className={styles.controls}>
         <button onClick={() => skip(-10)}>
-          <FaStepBackward className={isRTL ? styles.iconRtl : ""} />
+          <FaBackward className={isRTL ? styles.iconRtl : ""} />
         </button>
         <button onClick={togglePlay} className={styles.play}>
           {isPlaying ? (
-            <FaPause className={isRTL ? styles.iconRtl : ""} />
+            <FaRegPauseCircle size={32} color="var(--accent)"/>
           ) : (
-            <FaPlay className={isRTL ? styles.iconRtl : ""} />
+            <FaRegPlayCircle size={32}/>
           )}
         </button>
         <button onClick={() => skip(10)}>
-          <FaStepForward className={isRTL ? styles.iconRtl : ""} />
-        </button>
-        <button onClick={toggleMute}>
-          {isMuted ? (
-            <FaVolumeMute className={isRTL ? styles.iconRtl : ""} />
-          ) : (
-            <FaVolumeUp className={isRTL ? styles.iconRtl : ""} />
-          )}
+          <FaForward className={isRTL ? styles.iconRtl : ""} />
         </button>
       </div>
 

@@ -13,7 +13,7 @@ const CloseDraggableBtn: FC<Props> = ({ onClose, absolute }) => {
       className={`${styles.closeButton} ${absolute ? styles.absolute : ""}`}
       onClick={onClose}
     >
-      <FaRegWindowClose size="1rem" className={styles.closeIcon} />
+      <FaRegWindowClose size={24} className={styles.closeIcon} />
     </button>
   );
 };
