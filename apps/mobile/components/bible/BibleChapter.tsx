@@ -1,5 +1,5 @@
 import React, { FC, useLayoutEffect, useMemo, useState } from "react";
-import { I18nManager, Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, I18nManager, Pressable, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { ThemedView } from "@/components/ui/ThemedView";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import { HighlightProvider } from "@amen24/store";
 import * as Clipboard from "expo-clipboard";
 import { ThemedText } from "../ui/ThemedText";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
+import AudioPlayer from "../ui/AudioPlayer";
 
 type SearchParams = {
   bookKey: string;
@@ -35,6 +36,7 @@ const BibleChapter: FC = () => {
   const [translationMenuVisible, setTranslationMenuVisible] = useState(false);
   const [layoutMenuVisible, setLayoutVisible] = useState(false);
   const [textJustify, setTextJustify] = useState(true);
+  const { width: screenWidth } = Dimensions.get("window");
 
   const { bookKey, bookId, bookLen, chapterNum, v } = params;
 
@@ -80,6 +82,7 @@ const BibleChapter: FC = () => {
         />
       )}
       <ThemedView style={[styles.displaySettings, { borderColor: theme.secondary }]}>
+        {/* LEFT: Translation Button */}
         <View style={styles.leftControls}>
           {!translationLang && (
             <Pressable
@@ -97,12 +100,24 @@ const BibleChapter: FC = () => {
           )}
         </View>
 
-        <Pressable
-          style={[{ backgroundColor: theme.background }]}
-          onPress={() => setTranslationMenuVisible((prev) => !prev)}
-        >
-          <FontAwesome5 name="language" size={24} color={theme.text} />
-        </Pressable>
+        {/* CENTER: Audio Player (absolutely centered) */}
+        <View style={[styles.audioCenter, { left: screenWidth / 2 - 39 }]}>
+          <AudioPlayer
+            bookId={bookId}
+            bookKey={bookKey}
+            chapterNum={chapterNum}
+          />
+        </View>
+
+        {/* RIGHT: Language Icon */}
+        <View style={styles.rightControls}>
+          <Pressable
+            style={[{ backgroundColor: theme.background }]}
+            onPress={() => setTranslationMenuVisible((prev) => !prev)}
+          >
+            <FontAwesome5 name="language" size={24} color={theme.text} />
+          </Pressable>
+        </View>
       </ThemedView>
 
 
@@ -230,21 +245,34 @@ const styles = StyleSheet.create({
   },
   displaySettings: {
     paddingHorizontal: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderBottomWidth: 1,
+    height: 44,
     borderTopWidth: 1,
+    // borderBottomWidth: 1,
+    justifyContent: "center",
   },
   leftControls: {
+    position: "absolute",
+    left: 16,
     flexDirection: "row",
     alignItems: "center",
     gap: 16,
-    flex: 1, // this pushes the language icon to the end
   },
+  rightControls: {
+    position: "absolute",
+    right: 16,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  audioCenter: {
+  position: "absolute",
+  top: 0,
+  bottom: 0,
+  justifyContent: "center",
+  alignItems: "center",
+},
   menu: {
     position: "absolute",
-    top: 24,
+    top: 32,
     right: 16,
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -257,7 +285,7 @@ const styles = StyleSheet.create({
   },
   layoutMenu: {
     position: "absolute",
-    top: 24,
+    top: 32,
     left: 16,
     zIndex: 101,
     borderWidth: 1,
