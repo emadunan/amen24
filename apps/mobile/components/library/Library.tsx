@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import LibraryBookCard from "./LibraryBookCard";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, useColorScheme } from "react-native";
 import { useGetLibraryBooksQuery } from "@/store/apis/libraryApi";
 import { ThemedView } from "../ui/ThemedView";
 import { useFeedback } from "@/hooks/useFeedback";
@@ -8,11 +8,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { ERROR_KEYS } from "@amen24/shared";
 import LoadingIndicator from "../ui/LoadingIndicator";
-import { ThemedText } from "../ui/ThemedText";
 import OfflineFallbackText from "../ui/OfflineFallbackText";
+import { Colors } from "@/constants";
 
 const Library: React.FC = () => {
   const { showError } = useFeedback();
+  const colorScheme = useColorScheme() ?? "light";
+  const theme = Colors[colorScheme];
 
   const isConnected = useSelector((state: RootState) => state.network.isConnected);
 
@@ -34,7 +36,7 @@ const Library: React.FC = () => {
   }
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={[styles.container, { backgroundColor: theme.background }]}>
       <FlatList
         data={books}
         keyExtractor={(item) => item.id}

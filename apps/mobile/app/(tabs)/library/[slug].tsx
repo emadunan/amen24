@@ -7,6 +7,7 @@ import { Colors } from "@/constants";
 import LibraryBookDrawerContent from "@/components/library/LibraryDrawerContent";
 import { useGetLibraryBookQuery } from "@/store/apis/libraryApi";
 import LibraryChapter from "@/components/library/LibraryChapter";
+import LoadingIndicator from "@/components/ui/LoadingIndicator";
 
 const Drawer = createDrawerNavigator();
 
@@ -21,7 +22,7 @@ const LibraryBookDrawer: FC = () => {
 
   const colorScheme = useColorScheme();
 
-  if (!chapters) return null;
+  if (!chapters) return <LoadingIndicator />;
 
   return (
     <Drawer.Navigator
@@ -35,6 +36,7 @@ const LibraryBookDrawer: FC = () => {
         />
       )}
       screenOptions={{
+        lazy: true,
         headerStyle: {
           backgroundColor: Colors[colorScheme ?? "light"].secondary,
         },
