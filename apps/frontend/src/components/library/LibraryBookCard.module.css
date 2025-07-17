@@ -1,39 +1,15 @@
 .card {
   display: block;
-  width: 12rem;
-  height: 18rem;
   border-radius: 2px;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  box-shadow: 0 4px 10px rgba(var(--text-rgb), 0.1);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+  background-color: var(--secondary);
+  padding: 1rem;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(var(--text-rgb), 0.15);
-}
-
-.overlay {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to top,
-    rgba(var(--background-rgb), 0.7) 0%,
-    rgba(var(--background-rgb), 0.3) 40%,
-    transparent 80%
-  );
-  display: flex;
-  align-items: flex-end;
-  padding: 1rem;
-  padding-bottom: 0.2rem;
+  background-color: var(--secondary-hover);
 }
 
 .content {
@@ -44,7 +20,6 @@
   font-size: 1.2rem;
   font-weight: bold;
   margin: 0;
-  text-align: center;
 }
 
 .author {
@@ -55,11 +30,6 @@
 
 /* Mobile responsiveness */
 @media (max-width: 48em) {
-  .card {
-    width: 9rem;
-    height: 13.5rem;
-  }
-
   .title {
     font-size: 1rem;
     font-weight: bold;

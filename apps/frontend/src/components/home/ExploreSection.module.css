@@ -1,16 +1,19 @@
 .exploreSection {
+  margin: 10rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 2rem;
-  padding: 4rem 2rem;
+  align-items: stretch; /* key line */
+  row-gap: 10rem;
+  column-gap: 5rem;
   border-radius: 2px;
-  margin: 3rem 0;
   color: var(--text);
 }
 
 .content {
-  max-width: 37.5rem;
+  height: 100%; /* key line */
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 .heading {
@@ -35,6 +38,7 @@
   font-weight: 600;
   text-decoration: none;
   transition: background-color 0.3s ease;
+  margin-top: auto;
 }
 
 .link:hover {
@@ -55,10 +59,9 @@
 @media (max-width: 768px) {
   .exploreSection {
     grid-template-columns: 1fr;
-    text-align: center;
   }
 
   .content {
-    margin: 0 auto;
-  }
+  align-items: center;
+}
 }

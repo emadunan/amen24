@@ -13,22 +13,20 @@ const LibraryBookCard: React.FC<LibraryBookCardProps> = ({
   title,
   author,
 }) => {
-  const imageBaseUrl =
-    process.env.NEXT_PUBLIC_IMAGE_BASE_URL || "http://localhost";
+  // const imageBaseUrl =
+  //   process.env.NEXT_PUBLIC_IMAGE_BASE_URL || "http://localhost";
 
   return (
     <Link
       className={styles.card}
-      style={{
-        backgroundImage: `url(${imageBaseUrl}/img/library-book-covers/${encodeURIComponent(slug)}.webp)`,
-      }}
+      // style={{
+      //   backgroundImage: `url(${imageBaseUrl}/img/library-book-covers/${encodeURIComponent(slug)}.webp)`,
+      // }}
       href={`/library/${slug}`}
     >
-      <div className={styles.overlay}>
-        <div className={styles.content}>
-          <h3 className={styles.title}>{title}</h3>
-          {author && <p className={styles.author}>&mdash; {author}</p>}
-        </div>
+      <div className={styles.content}>
+        <h3 className={styles.title}>{title}</h3>
+        {author && <p className={styles.author}>&mdash; {author}</p>}
       </div>
     </Link>
   );
