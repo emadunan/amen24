@@ -1,4 +1,4 @@
-import React, { FC, useLayoutEffect, useMemo, useState } from "react";
+import React, { FC, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Dimensions, I18nManager, Pressable, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { ThemedView } from "@/components/ui/ThemedView";
@@ -14,7 +14,7 @@ import { HighlightProvider } from "@amen24/store";
 import * as Clipboard from "expo-clipboard";
 import { ThemedText } from "../ui/ThemedText";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
-import AudioPlayer from "../ui/AudioPlayer";
+import ChapterAudioPlayer from "../ui/ChapterAudioPlayer";
 
 type SearchParams = {
   bookKey: string;
@@ -102,7 +102,7 @@ const BibleChapter: FC = () => {
 
         {/* CENTER: Audio Player (absolutely centered) */}
         <View style={[styles.audioCenter, { left: screenWidth / 2 - 39 }]}>
-          <AudioPlayer
+          <ChapterAudioPlayer
             key={`${bookId}-${bookKey}-${chapterNum}`}
             bookId={bookId}
             bookKey={bookKey}

@@ -23,6 +23,7 @@ const BookDrawer: FC = () => {
   return (
     <Drawer.Navigator
       key={bookKey}
+      detachInactiveScreens={true}
       drawerContent={(props) => (
         <BookDrawerContent
           bookKey={bookKey}
@@ -50,10 +51,10 @@ const BookDrawer: FC = () => {
     >
       {chapters.map((chapter) => (
         <Drawer.Screen
-          key={chapter}
-          name={`Chapter ${chapter}`}
+          key={`${bookKey}-${chapter}`}
+          name={`${bookKey}-${chapter}`}
         >
-          {() => <BibleChapter />}
+          {() => <BibleChapter key={`${bookKey}-${chapter}`}/>}
         </Drawer.Screen>
       ))}
     </Drawer.Navigator>
