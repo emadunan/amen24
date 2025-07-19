@@ -50,7 +50,7 @@ const UserMenu = () => {
             style={[
               styles.dropdown,
               {
-                backgroundColor: theme.background,
+                backgroundColor: theme.secondary,
                 borderColor: theme.primary,
                 right: 16,
               },

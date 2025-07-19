@@ -90,18 +90,18 @@ const BibleChapter: FC = () => {
               onPress={() => setLayoutVisible((prev) => !prev)}
             >
               {textJustify ? (
-                <Feather name="align-justify" size={23} color={theme.text} />
+                <Feather name="align-justify" size={24} color={theme.text} />
               ) : I18nManager.isRTL ? (
-                <Feather name="align-right" size={23} color={theme.text} />
+                <Feather name="align-right" size={24} color={theme.text} />
               ) : (
-                <Feather name="align-left" size={23} color={theme.text} />
+                <Feather name="align-left" size={24} color={theme.text} />
               )}
             </Pressable>
           )}
         </View>
 
         {/* CENTER: Audio Player (absolutely centered) */}
-        <View style={[styles.audioCenter, { left: screenWidth / 2 - 39 }]}>
+        <View style={[styles.audioCenter, { left: screenWidth / 2 - 49 }]}>
           <ChapterAudioPlayer
             key={`${bookId}-${bookKey}-${chapterNum}`}
             bookId={bookId}
@@ -116,7 +116,7 @@ const BibleChapter: FC = () => {
             style={[{ backgroundColor: theme.background }]}
             onPress={() => setTranslationMenuVisible((prev) => !prev)}
           >
-            <FontAwesome5 name="language" size={24} color={theme.text} />
+            <FontAwesome5 name="language" size={26} color={theme.text} />
           </Pressable>
         </View>
       </ThemedView>
@@ -128,7 +128,7 @@ const BibleChapter: FC = () => {
           style={[
             styles.menu,
             {
-              backgroundColor: theme.background,
+              backgroundColor: theme.secondary,
               borderColor: theme.primary,
             },
           ]}
@@ -189,20 +189,22 @@ const BibleChapter: FC = () => {
           style={[
             styles.layoutMenu,
             {
-              backgroundColor: theme.background,
-              borderColor: theme.secondary,
-            },
+              backgroundColor: theme.secondary,
+              borderColor: theme.primary,
+              borderWidth: 1,
+              borderRadius: 2
+            }
           ]}
         >
           <Pressable onPress={() => { setTextJustify((prev) => !prev); setLayoutVisible(false) }}>
             {textJustify ? (
               I18nManager.isRTL ? (
-                <Feather name="align-right" size={20} color={theme.text} />
+                <Feather name="align-right" size={24} color={theme.text} />
               ) : (
-                <Feather name="align-left" size={20} color={theme.text} />
+                <Feather name="align-left" size={24} color={theme.text} />
               )
             ) : (
-              <Feather name="align-justify" size={20} color={theme.text} />
+              <Feather name="align-justify" size={24} color={theme.text} />
             )}
           </Pressable>
         </View>
@@ -273,7 +275,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     position: "absolute",
-    top: 32,
+    top: 36,
     right: 16,
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -286,10 +288,13 @@ const styles = StyleSheet.create({
   },
   layoutMenu: {
     position: "absolute",
-    top: 32,
+    top: 36,
     left: 16,
+    padding: 4,
     zIndex: 101,
     borderWidth: 1,
+    borderTopEndRadius: 8,
+    borderBottomStartRadius: 8,
   },
   menuItem: {
     paddingVertical: 6,

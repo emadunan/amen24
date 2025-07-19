@@ -1,7 +1,7 @@
 {
   "name": "@amen24/mobile",
   "author": "emadunan",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "private": true,
   "main": "expo-router/entry",
   "scripts": {

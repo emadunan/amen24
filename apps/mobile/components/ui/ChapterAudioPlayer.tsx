@@ -60,21 +60,23 @@ const ChapterAudioPlayer: React.FC<Props> = ({ bookId, bookKey, chapterNum }) =>
 
       <View style={styles.controls}>
         <Pressable onPress={() => player.seekTo(Math.max(0, status.currentTime - 10))}>
-          <FontAwesome name={isRTL ? "forward" : "backward"} size={14} color={theme.primary} />
+          <FontAwesome name={isRTL ? "forward" : "backward"} size={16} color={theme.primary} />
+          {/* // size -> 18 */}
         </Pressable>
 
         <View style={styles.playPauseStop}>
           <Pressable onPress={handlePlayPause}>
             <FontAwesome6
               name={status.playing ? 'circle-pause' : 'circle-play'}
-              size={22}
+              size={24} // size -> 24
               color={status.playing ? theme.accent : theme.gray}
             />
           </Pressable>
         </View>
 
         <Pressable onPress={() => player.seekTo(Math.min((status.currentTime || 0) + 10, status.duration || 0))}>
-          <FontAwesome name={isRTL ? "backward" : "forward"} size={14} color={theme.primary} />
+          <FontAwesome name={isRTL ? "backward" : "forward"} size={16} color={theme.primary} />
+          {/* // size -> 18 */}
         </Pressable>
       </View>
     </View>
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   controls: {
-    width: 78,
+    width: 98,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: "center",
