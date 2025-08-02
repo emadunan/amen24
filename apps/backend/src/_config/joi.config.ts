@@ -17,6 +17,8 @@ export default Joi.object({
   ADMINSITE_URL: Joi.string(),
   ADMINSITE_ORIGINS: Joi.string(),
   SMTP_PORT: Joi.number().port().default(587),
+  SMTP_USER: Joi.string(),
+  SMTP_PASS: Joi.string(),
   DB_HOST: Joi.string(),
   DB_PORT: Joi.number().port().default(5432),
   DB_NAME: Joi.string(),

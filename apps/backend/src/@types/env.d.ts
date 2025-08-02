@@ -16,6 +16,8 @@ declare namespace NodeJS {
     ADMINSITE_URL: string;
     ADMINSITE_ORIGINS: string;
     SMTP_PORT: string;
+    SMTP_USER: string;
+    SMTP_PASS: string;
     DB_HOST: string;
     DB_PORT: string;
     DB_NAME: string;

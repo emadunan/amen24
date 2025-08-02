@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -27,7 +27,6 @@ import { QuotaTrackerModule } from './quota-tracker/quota-tracker.module';
 import joiConfig from './_config/joi.config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { createKeyv } from '@keyv/redis';
-import { Keyv } from 'keyv';
 import { LibraryModule } from './library/library.module';
 
 @Module({
@@ -49,19 +48,22 @@ import { LibraryModule } from './library/library.module';
     }),
     EventEmitterModule.forRoot(),
     ScheduleModule.forRoot(),
-    MailerModule.forRoot({
-      transport: {
-        host: 'smtp.zoho.com',
-        port: 587,
-        secure: false,
-        auth: {
-          user: 'marinaessam@amen24.org',
-          pass: 'marinaEssam24!',
+    MailerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        transport: {
+          host: 'smtp.zoho.com',
+          port: config.get<number>('SMTP_PORT'),
+          secure: false,
+          auth: {
+            user: config.get<string>('SMTP_USER'),
+            pass: config.get<string>('SMTP_PASS'),
+          },
         },
-      },
-      defaults: {
-        from: '"Support Team" <support@amen24.org>',
-      },
+        defaults: {
+          from: '"Support Team" <support@amen24.org>',
+        },
+      })
     }),
     AuthModule,
     UsersModule,
