@@ -38,8 +38,9 @@ const GlossaryVerse: React.FC<Props> = ({
   onClearTerm,
 }) => {
   const term = selectedWords.join(" ").toLowerCase();
-  const shouldQuery = term.trim().length > 0;
   const words: string[] = text.trim().split(/\s+/);
+  
+  const shouldQuery = term.trim().length > 0;
   const { data: isFound, isLoading } = useIsTermExistQuery(term, {
     skip: !shouldQuery,
   });

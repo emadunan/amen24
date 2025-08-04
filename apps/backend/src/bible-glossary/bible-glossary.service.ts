@@ -28,45 +28,44 @@ export class BibleGlossaryService {
   ) { }
 
   async create(dto: CreateBibleGlossaryDto) {
-    const terms = Object.values(dto.translations).map((bgItem) =>
-      bgItem.term.toLowerCase(),
-    );
     const targetVerseId = dto.verseIds?.[0];
 
-    const existing = await this.glossaryTranslationRepo.findOne({
-      where: { term: In(terms) },
-      relations: ['glossary', 'glossary.verses'],
+    // STEP 1: Check if slug already exists
+    const existingBySlug = await this.glossaryRepo.findOne({
+      where: { slug: dto.slug },
+      relations: ['verses', 'translations'],
     });
 
-    // CASE 1: term exists and already connected to this verse → throw error
+    // CASE 1: Slug exists and verse already linked → throw conflict
     if (
-      existing &&
-      existing.glossary.verses.some((v) => v.id === targetVerseId)
+      existingBySlug &&
+      targetVerseId &&
+      existingBySlug.verses.some((v) => v.id === targetVerseId)
     ) {
       throw new ConflictException({
         message: ERROR_KEYS.GLOSSARY_TERM_EXIST,
         meta: {
-          term: existing.term,
-          lang: existing.lang,
+          slug: existingBySlug.slug,
         },
       });
     }
 
-    // CASE 2: term exists but NOT connected to this verse → just connect
-    if (existing && existing.glossary) {
+    // CASE 2: Slug exists but not linked → connect it
+    if (existingBySlug) {
       if (targetVerseId) {
         const verse = await this.versesService.findOneById(targetVerseId);
         if (!verse) throw new NotFoundException();
-        existing.glossary.verses.push(verse);
-        existing.glossary.native = dto.native;
-        await this.glossaryRepo.save(existing.glossary);
 
-        return { message: MESSAGE_KEYS.CONNECTED_WITH_GLOSSARY };
+        existingBySlug.verses.push(verse);
       }
-      return existing.glossary; // no verse to connect, just return
+
+      existingBySlug.native = dto.native;
+      await this.glossaryRepo.save(existingBySlug);
+
+      return { message: MESSAGE_KEYS.CONNECTED_WITH_GLOSSARY };
     }
 
-    // CASE 3: term doesn't exist at all → create new glossary with verses
+    // CASE 3: Slug does not exist → create new glossary entry
     const translations = Object.entries(dto.translations).map(([lang, value]) =>
       this.glossaryTranslationRepo.create({
         lang: lang as Lang,
@@ -144,8 +143,6 @@ export class BibleGlossaryService {
     };
   }
 
-
-
   async checkExistByTerm(term: string) {
     const normalizedTerm = term.normalize('NFC');
 
@@ -157,6 +154,10 @@ export class BibleGlossaryService {
       .getExists();
 
     return exists;
+  }
+
+  async checkExistBySlug(slug: string) {
+    return await this.glossaryRepo.existsBy({ slug: slug });
   }
 
   async findOne(slug: string) {

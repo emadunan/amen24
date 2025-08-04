@@ -8,6 +8,9 @@ export const glossaryApi = createGlossaryApi(apiPublicUrl);
 export const {
   useAddTermMutation,
   useIsTermExistQuery,
+  useIsSlugExistQuery,
+  useLazyIsSlugExistQuery,
+  useLazyGetOneTermQuery,
   useGetAllTermsQuery,
   useGetOneTermQuery,
 } = glossaryApi;

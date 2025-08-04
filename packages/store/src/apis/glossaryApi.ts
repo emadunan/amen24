@@ -71,7 +71,11 @@ export const createGlossaryApi = (baseUrl: string, options?: Options) =>
         invalidatesTags: ["GlossaryTerm"],
       }),
       isTermExist: builder.query<boolean, string>({
-        query: (term) => `check/${term}`,
+        query: (term) => `check-term/${term}`,
+        providesTags: ["GlossaryTerm"],
+      }),
+      isSlugExist: builder.query<boolean, string>({
+        query: (slug) => `check-slug/${slug}`,
         providesTags: ["GlossaryTerm"],
       }),
       getOneTerm: builder.query<BibleGlossary, string>({

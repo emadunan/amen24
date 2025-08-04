@@ -31,6 +31,25 @@
   margin: 0;
 }
 
+.slug p {
+  display: inline;
+}
+
+.slugInput {
+  border: 1px solid var(--gray);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+  border-radius: 2px;
+  margin-left: 0.5rem;
+  direction: ltr;
+  width: 100%;
+  max-width: 300px;
+}
+
+.btnSlugEdit {
+  border: none;
+}
+
 .closeButton {
   position: absolute;
   top: 1rem;

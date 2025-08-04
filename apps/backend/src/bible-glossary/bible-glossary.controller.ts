@@ -43,11 +43,18 @@ export class BibleGlossaryController {
     return await this.bibleGlossaryService.findAll(query);
   }
 
-  @Get('check/:term')
+  @Get('check-term/:term')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @RequirePermissions(Permission.CREATE_GLOSSARY_TERM)
-  checkIsExist(@Param('term') term: string) {
+  checkIsExistByTerm(@Param('term') term: string) {
     return this.bibleGlossaryService.checkExistByTerm(term);
+  }
+
+  @Get('check-slug/:slug')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions(Permission.CREATE_GLOSSARY_TERM)
+  checkIsExistBySlug(@Param('slug') slug: string) {
+    return this.bibleGlossaryService.checkExistBySlug(slug);
   }
 
   @Get(':slug')

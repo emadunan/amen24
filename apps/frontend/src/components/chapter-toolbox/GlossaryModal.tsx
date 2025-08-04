@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import ReactDOM from "react-dom";
 import styles from "./GlossaryModal.module.css";
 import { useTranslation } from "react-i18next";
 import GlossaryVerse from "./GlossaryVerse";
 import { useParams } from "next/navigation";
 import { useGetVerseByIdQuery } from "@/store/apis/verseApi";
-import { BookKey, ERROR_KEYS, Lang, sanitizeWord } from "@amen24/shared";
+import { BibleGlossary, BookKey, ERROR_KEYS, Lang, sanitizeWord } from "@amen24/shared";
 import { ActiveLang, glossaryReducer, initialState } from "./glossaryReducer";
-import { useAddTermMutation } from "@/store/apis/glossaryApi";
+import { useAddTermMutation, useLazyGetOneTermQuery, useLazyIsSlugExistQuery } from "@/store/apis/glossaryApi";
+import { FaRegEdit } from "react-icons/fa";
 import { useFeedback } from "@amen24/ui";
+import Verified from "./Verified";
 
 interface GlossaryModalProps {
   onClose: () => void;
@@ -27,6 +29,9 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   isOpen,
   verseId,
 }) => {
+  const [isSlugEdit, setIsSlugEdit] = useState<boolean>(false);
+  const [customSlug, setCustomSlug] = useState<string>("");
+
   const [handleAddTerm] = useAddTermMutation();
   const params = useParams<{ book: [BookKey] }>();
   const bookKey = params.book?.[0];
@@ -47,6 +52,8 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   }
 
   function handleClearTerm(lang: ActiveLang | undefined = undefined) {
+    setVerifiedTerm(null);
+    setIsSlugEdit(false);
     glossaryDispatch({ type: "clear", lang });
   }
 
@@ -73,7 +80,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
     }
 
     const payload = {
-      slug: glossaryState.en.join("-").toLowerCase(),
+      slug: finalSlug,
       native: glossaryState.na.join(" "),
       verseIds: [verseId],
       translations,
@@ -110,6 +117,29 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   const verseArText = verseAr?.verseTranslations?.[0]?.text;
   const verseEnText = verseEn?.verseTranslations?.[0]?.text;
 
+  const autoSlug = glossaryState.en.join("-").toLowerCase();
+  const finalSlug = customSlug.trim() !== "" ? customSlug.trim() : autoSlug;
+
+  const [triggerSlugCheck, { data: isFound, isLoading }] = useLazyIsSlugExistQuery();
+
+  const [verifiedTerm, setVerifiedTerm] = useState<BibleGlossary | null>(null);
+  const [getVerifiedTermBySlug, { data: fetchedTerm }] = useLazyGetOneTermQuery();
+
+  useEffect(() => {
+    if (finalSlug) {
+      triggerSlugCheck(finalSlug);
+    }
+  }, [finalSlug, triggerSlugCheck]);
+
+  useEffect(() => {
+    if (finalSlug && isFound) {
+      getVerifiedTermBySlug(finalSlug)
+        .unwrap()
+        .then(setVerifiedTerm)
+        .catch(() => setVerifiedTerm(null));
+    }
+  }, [finalSlug, isFound, getVerifiedTermBySlug]);
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -119,6 +149,13 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
     }
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const autoSlug = glossaryState.en.join("-").toLowerCase();
+      setCustomSlug(autoSlug);
+    }
+  }, [isOpen, glossaryState.en]);
 
   if (!isOpen) return null;
 
@@ -131,8 +168,31 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
         <h2>{t("toolbox.addGlossaryTerm")}</h2>
         <div>
           <div className={styles.slug} dir="ltr">
-            Slug: {glossaryState.en.join("-").toLowerCase()}
+            <button
+              className={styles.btnSlugEdit}
+              onClick={() => setIsSlugEdit((prev) => !prev)}
+              title={isSlugEdit ? "Cancel edit" : "Edit slug manually"}
+            >
+              <FaRegEdit />
+            </button>
+
+            <p>Slug:</p>
+
+            {isSlugEdit ? (
+              <input
+                className={styles.slugInput}
+                type="text"
+                value={customSlug}
+                onChange={(e) => setCustomSlug(e.target.value)}
+                style={{ direction: "ltr" }}
+              />
+            ) : (
+              <p>{customSlug}</p>
+            )}
+            <Verified isLoading={isLoading} isFound={isFound} term={finalSlug} />
           </div>
+          {verifiedTerm && <p>{verifiedTerm.verses[0].verseTranslations.find(t => t.lang === Lang.ARABIC)!.textDiacritized}</p>}
+
           {verseNAText && (
             <GlossaryVerse
               lang={Lang.NATIVE}
