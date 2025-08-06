@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getDirection, Lang } from "@amen24/shared";
 import styles from "./AppFooter.module.css";
 import { useTranslation } from "react-i18next";
+import Image from "next/image";
 
 const AppFooter = () => {
   const { t, i18n } = useTranslation();
@@ -36,10 +37,13 @@ const AppFooter = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
+          <Image
             src={googlePlayBadge}
             alt={t("footer.downloadOnGooglePlay")}
             className={styles.storeBadge}
+            width={180}
+            height={60}
+            priority={false}
           />
         </a>
       </div>
