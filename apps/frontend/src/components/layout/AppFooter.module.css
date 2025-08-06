@@ -18,8 +18,11 @@
 
 .nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 0.5rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .link {
@@ -36,4 +39,17 @@
 
 .separator {
   color: var(--gray);
+}
+
+.storeBadgeWrapper {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.storeBadge {
+  height: auto;
+  width: 11.25rem;
+  max-width: 100%;
+  object-fit: contain;
 }
