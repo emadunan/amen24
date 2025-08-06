@@ -123,7 +123,7 @@ const GlossaryModal: React.FC<GlossaryModalProps> = ({
   const [triggerSlugCheck, { data: isFound, isLoading }] = useLazyIsSlugExistQuery();
 
   const [verifiedTerm, setVerifiedTerm] = useState<BibleGlossary | null>(null);
-  const [getVerifiedTermBySlug, { data: fetchedTerm }] = useLazyGetOneTermQuery();
+  const [getVerifiedTermBySlug] = useLazyGetOneTermQuery();
 
   useEffect(() => {
     if (finalSlug) {
