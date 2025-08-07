@@ -13,6 +13,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/:locale/home",
+        destination: "/:locale",
+        locale: false,
+        permanent: true,
+      },
+      {
         source: "/home",
         destination: "/",
         permanent: true,
