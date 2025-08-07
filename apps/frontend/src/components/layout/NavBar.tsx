@@ -33,7 +33,7 @@ const NavBar: FC<Props> = ({ normalizedPath, isBookPath }) => {
           <h3>{t("main.search")}</h3>
         </Link>
       </li>
-      <li
+      {/* <li
         className={`${styles.navItem} ${normalizedPath === "/glossary" ? styles.active : ""}`}
       >
         <Link className="link" href="/glossary">
@@ -46,7 +46,7 @@ const NavBar: FC<Props> = ({ normalizedPath, isBookPath }) => {
         <Link className="link" href="/library">
           <h3>{t("library.title")}</h3>
         </Link>
-      </li>
+      </li> */}
       <li
         className={`${styles.navItem} ${normalizedPath === "/contact-us" ? styles.active : ""}`}
       >

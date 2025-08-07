@@ -19,7 +19,7 @@ const ExploreSection = () => {
           {t("homepage.searchSectionButton")}
         </Link>
       </div>
-      <div className={styles.content}>
+      {/* <div className={styles.content}>
         <h2 className={styles.heading}>
           {t("homepage.glossarySectionHeading")}
         </h2>
@@ -29,7 +29,7 @@ const ExploreSection = () => {
         <Link href="/glossary" className={styles.link}>
           {t("homepage.glossarySectionButton")}
         </Link>
-      </div>
+      </div> */}
     </section>
   );
 };

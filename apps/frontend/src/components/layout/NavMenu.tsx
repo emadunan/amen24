@@ -58,7 +58,7 @@ const NavMenu: FC<Props> = ({ normalizedPath, isBookPath }) => {
               {t("main.search")}
             </Link>
           </li>
-          <li className={styles.navItem}>
+          {/* <li className={styles.navItem}>
             <Link
               className={`${styles.link} ${normalizedPath === "/glossary" ? styles.active : ""}`}
               href="/glossary"
@@ -75,7 +75,7 @@ const NavMenu: FC<Props> = ({ normalizedPath, isBookPath }) => {
             >
               {t("library.title")}
             </Link>
-          </li>
+          </li> */}
           <li className={styles.navItem}>
             <Link
               className={`${styles.link} ${normalizedPath === "/contact-us" ? styles.active : ""}`}
