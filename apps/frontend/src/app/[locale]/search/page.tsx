@@ -1,19 +1,13 @@
-// src/app/[locale]/search/page.tsx
-
 import BibleSearch from "@/components/bible/BibleSearch";
 import { Metadata } from "next";
 import React from "react";
 import { searchPageMetadata } from "@amen24/shared";
 
-interface Props {
-  params: { book: string[]; locale: string };
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const lang = params.locale;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
 
   const fallback = searchPageMetadata["en"];
-  const metadata = searchPageMetadata[lang] || fallback;
+  const metadata = searchPageMetadata[locale] || fallback;
 
   return {
     title: metadata.title,
@@ -21,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: metadata.title,
       description: metadata.description,
-      url: `https://amen24.org/${lang}/search`,
+      url: `https://amen24.org/${locale}/search`,
       siteName: "Amen24",
       type: "website",
       images: [
