@@ -1,12 +1,19 @@
-export const PageMetadata = {
-  search: {
-    title: {
-      en: "Bible Search Engine",
-      ar: "محرك بحث الكتاب المقدس",
-    },
-    description: {
-      en: "Explore the Bible in multiple languages using our advanced Bible Search Engine. Search by keywords to find verses across the entire Scripture.",
-      ar: "استكشف الكتاب المقدس بلغات متعددة باستخدام محرك البحث المتقدم. ابحث باستخدام الكلمات المفتاحية للعثور على الآيات في جميع أسفار الكتاب المقدس.",
-    },
+type SearchPageMetadata = {
+  [lang: string]: {
+    title: string;
+    description: string;
+  };
+};
+
+export const searchPageMetadata: SearchPageMetadata = {
+  en: {
+    title: "Advanced Bible Search | Explore Scripture by Keywords",
+    description:
+      "Use our advanced Bible search engine to explore the Word of God. Quickly find verses, keywords, and chapters in the Bible with full language support.",
+  },
+  ar: {
+    title: "بحث متقدم في الكتاب المقدس | استكشف الكلمة بسهولة",
+    description:
+      "استخدم محرك البحث المتقدم لاستكشاف كلمة الله. اعثر بسرعة على الآيات والكلمات والمقاطع في الكتاب المقدس بدقة وسهولة وبدعم لغوي كامل.",
   },
 };

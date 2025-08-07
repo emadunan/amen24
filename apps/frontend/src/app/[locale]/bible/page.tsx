@@ -14,8 +14,8 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { t } = await initTranslations((await params).locale, i18nNamespaces);
 
-  const title = "Amen24";
-  const description = t("homepage.description");
+  const title = t("meta.bibleBooksTitle");
+  const description = t("homepage.bibleBooksDescription");
   const url = `https://amen24.org/`;
   const imageUrl = "https://amen24.org/img/og-default.jpg?v=2";
 
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props) {
       title,
       description,
       url,
-      siteName: "Amen24",
+      siteName: t("meta.bibleBooksTitle"),
       type: "article",
       images: [
         {

@@ -22,6 +22,12 @@
     "contactUsTitle": "Contact",
     "contactUsDescription": "We are a dedicated team committed to providing the best service and user experience. If you need assistance or have any suggestions, we’d love to hear from you!"
   },
+  "meta": {
+    "siteTitle": "Amen24 - Bible for All",
+    "siteDescription": "Amen24 is a free, non-profit platform offering Bible content in multiple languages.",
+    "bibleBooksTitle": "Explore All Bible Books - Amen24",
+    "bibleBooksDescription": "Browse all books of the Holy Bible by Amen24, available in multiple languages."
+  },
   "homepage": {
     "title": "Amen24",
     "description": "Read and explore the Bible in multiple languages. Search, bookmark your favorite verses, and continue your reading from where you left off—anytime, anywhere.",

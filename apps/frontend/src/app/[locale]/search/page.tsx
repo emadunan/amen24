@@ -1,22 +1,44 @@
+// src/app/[locale]/search/page.tsx
+
 import BibleSearch from "@/components/bible/BibleSearch";
-import { Lang, PageMetadata } from "@amen24/shared";
 import { Metadata } from "next";
 import React from "react";
+import { searchPageMetadata } from "@amen24/shared";
 
 interface Props {
-  params: Promise<{ book: string[]; locale: string }>;
+  params: { book: string[]; locale: string };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  let lang = (await params).locale as Lang;
+  const lang = params.locale;
 
-  if (lang !== Lang.ENGLISH && lang !== Lang.ARABIC) {
-    lang = Lang.ENGLISH;
-  }
+  const fallback = searchPageMetadata["en"];
+  const metadata = searchPageMetadata[lang] || fallback;
 
   return {
-    title: PageMetadata.search.title[lang],
-    description: PageMetadata.search.description[lang],
+    title: metadata.title,
+    description: metadata.description,
+    openGraph: {
+      title: metadata.title,
+      description: metadata.description,
+      url: `https://amen24.org/${lang}/search`,
+      siteName: "Amen24",
+      type: "website",
+      images: [
+        {
+          url: "https://amen24.org/img/og-default.jpg?v=2",
+          width: 1200,
+          height: 630,
+          alt: "Amen24 Bible Search",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: metadata.title,
+      description: metadata.description,
+      images: ["https://amen24.org/img/og-default.jpg?v=2"],
+    },
   };
 }
 

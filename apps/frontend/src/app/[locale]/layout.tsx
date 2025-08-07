@@ -21,14 +21,49 @@ import "@amen24/ui/dist/index.css";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-export const metadata: Metadata = {
-  title: "amen24",
-  description:
-    "Amen24 is a free non-profitable project to introduce bible content for all",
-  icons: {
-    icon: "/img/favicon.ico",
-  },
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const { t } = await initTranslations(locale, ["common"]);
+
+  const title = t("meta.siteTitle", { defaultValue: "Amen24 - Bible for All" });
+  const description = t("meta.siteDescription", {
+    defaultValue: "Amen24 is a free, non-profit platform offering Bible content in multiple languages.",
+  });
+
+  const url = `https://amen24.org/${locale}`;
+  const imageUrl = "https://amen24.org/img/og-default.jpg?v=2";
+
+  return {
+    title,
+    description,
+    metadataBase: new URL("https://amen24.org"),
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Amen24",
+      type: "website",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      locale: locale,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    },
+    icons: {
+      icon: "/img/logo-light.png",
+    },
+  };
+}
 
 const i18nNamespaces = [
   "common",
