@@ -5,11 +5,8 @@ export async function GET() {
   const baseUrl = "https://amen24.org";
   const staticRoutes = [
     "",
+    "/bible",
     "/search",
-    "/library",
-    "/favorites",
-    "/featured",
-    "/glossary",
     "/contact-us",
     "/privacy",
     "/terms",

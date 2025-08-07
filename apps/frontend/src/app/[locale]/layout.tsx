@@ -100,6 +100,10 @@ const RootLayout: FC<Props> = async ({ children, params }) => {
   return (
     <html lang={locale} dir={dir}>
       <head>
+        <link rel="canonical" href={`https://amen24.org/${locale}`} />
+        <link rel="alternate" href="https://amen24.org/en" hrefLang="en" />
+        <link rel="alternate" href="https://amen24.org/ar" hrefLang="ar" />
+        <link rel="alternate" href="https://amen24.org/en" hrefLang="x-default" />
         <meta name="google-adsense-account" content="ca-pub-7915506753470331" />
         <Script
           async
